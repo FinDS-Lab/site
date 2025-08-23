@@ -185,31 +185,35 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   async function importList(srcUrl, listSelectors, targetId, limit = 3){
     const target = document.getElementById(targetId);
     if (!target) return;
-
+  
     if (location.protocol === 'file:') {
       target.innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
       return;
     }
-
+  
     try {
       const res = await fetch(srcUrl, { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const html = await res.text();
       const doc = new DOMParser().parseFromString(html, 'text/html');
-
+  
       let items = [];
       for (const sel of listSelectors) {
         items = Array.from(doc.querySelectorAll(sel));
         if (items.length) break;
       }
-
+  
       target.innerHTML = '';
       if (items.length === 0) {
         target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
         return;
       }
-
-      items.slice(0, limit).forEach((li) => target.appendChild(li.cloneNode(true)));
+  
+      // 🔥 최근 3개만 보이게 (역순 정렬 포함)
+      items.slice(-limit).reverse().forEach((li) => 
+        target.appendChild(li.cloneNode(true))
+      );
+  
     } catch (err) {
       console.error('임베드 오류:', err);
       target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
