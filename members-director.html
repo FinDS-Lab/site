@@ -1,15 +1,3 @@
-여기 전체 코드로 교체하면 돼.
-요구사항 반영 사항:
-
-* 왼쪽 프로필 카드: `position: sticky; top: 22vh;`로 “페이지 중간”에서 시작해 스크롤을 따라옴(잘림 방지).
-* 각 섹션을 카드로 분리해 살짝 떠 있는 느낌(`.section-card`, `.lift`).
-* 타임라인: 빨간 bullet이 선 “위”에 얹히는 스타일.
-* Education: 학교/학과 줄바꿈, **B.E.로 변경**, 석사 1개만, 학위별 **수상 문구 포함**, **로고 앞에 배치**.
-* 발렌딕토리안 문구: *graduated as valedictorian (1st out of 86)*.
-
-> 로고 파일 경로(`assets/img/logos/kaist.png`, `assets/img/logos/kyunghee.png`)만 네 자산에 맞게 바꿔줘.
-
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -427,6 +415,8 @@
   <footer class="mt-10 border-t border-slate-200 bg-white">
     <div class="max-w-7xl mx-auto px-4 py-8">
       <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교</a> |
+        <a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교 경영학과</a> |
         <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
         <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
       </p>
@@ -458,4 +448,3 @@
   </script>
 </body>
 </html>
-```
