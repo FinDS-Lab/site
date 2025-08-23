@@ -7,8 +7,9 @@
   <title>FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)</title>
   <meta name="description" content="Financial Data Science Lab. (FINDS Lab.) — Dongduk Woman's University" />
 
-  <!-- Fonts & Tailwind -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -16,72 +17,53 @@
       --accent: rgb(172, 14, 14);
       --gold:   rgb(214, 177, 77);
       --fg-on-accent:#ffffff;
+      --bg:#ffffff;
       --bg-soft:#f8fafc;
       --ring:0 0 0 3px rgba(172,14,14,.25);
     }
-    html,body{font-family:"Noto Sans KR","Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+    html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
     body{background:var(--bg-soft)}
-    :focus-visible{outline:none;box-shadow:var(--ring)}
-
+    .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
+    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
+    .submenu-item{padding:.35rem .75rem; font-weight:700}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .btn-ghost{background:#0f172a;color:#fff;border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-ghost:hover{transform:translateY(-1px);opacity:.95}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
+    .warm-underline{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
+    :focus-visible{outline:none;box-shadow:var(--ring)}
 
     /* 한국어 헤드라인 줄바꿈 품질 향상 */
     .ko-tight{word-break:keep-all;line-break:strict;overflow-wrap:break-word;}
     @supports (text-wrap: balance){ .ko-tight{ text-wrap: balance; } }
 
-    /* ---------- HERO / CAROUSEL ---------- */
+    /* Carousel */
     .carousel{position:relative;overflow:hidden;border-radius:1.25rem;background:#0b1020}
     .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.6,.2,1)}
-    .carousel-slide{
-      position:relative; min-width:100%;
-      height: clamp(420px, 52vw, 560px); /* 반응형 높이 */
-      background:#0b1020;
-    }
-    /* 이미지를 요소로 넣어 항상 꽉 채움 */
-    .slide-bg{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover; object-position:center center;
-      display:block;
-      filter:brightness(.98);
-    }
-    /* 어두운 캡션 그라디언트 (덮개) */
-    .caption-cover{
-      position:absolute; inset:0;
-      /* 오른쪽이 너무 비지 않도록 그라디언트 폭 조정 */
-      background:linear-gradient(90deg,rgba(0,0,0,.60) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.08) 75%, rgba(0,0,0,0) 100%);
-      pointer-events:none;
-    }
-    .caption-wrap{
-      position:absolute; inset:0; display:flex; align-items:center; color:#fff;
-      padding:0 1rem;
-    }
-    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
-    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
-    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
-
+    .carousel-slide{min-width:100%;height:520px;position:relative;background:#0b1020}
+    .carousel-slide img.bg{width:100%;height:100%;object-fit:cover;display:block}
+    .carousel-caption{position:absolute;inset:0;display:flex;align-items:center;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));color:#fff;padding:0 1rem}
     .dot{width:10px;height:10px;border-radius:9999px;background:#e5e7eb}
     .dot.active{background:var(--accent)}
-
-    /* Cards */
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
-    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
-    .warm-underline{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
 
     /* Scrollbar */
     *{scrollbar-width:thin;scrollbar-color:var(--accent) #f1f5f9}
     *::-webkit-scrollbar{height:8px;width:8px}
     *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
 
-    /* Header submenu fade */
+    /* Desktop submenu fade */
     .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
     .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body>
-  <!-- ===== Header (인라인 버전) ===== -->
-  <div class="border-b border-slate-200 sticky top-0 z-50 backdrop-blur-md bg-white/85">
+  <!-- Header -->
+  <div class="sticky-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <a href="./" class="flex items-center gap-3">
         <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
@@ -97,37 +79,42 @@
         <!-- About FINDS -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 w-[13.5rem] text-[13px] leading-5 shadow-xl js-submenu">
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="about-introduction.html">Introduction</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="about-notice.html">Notice</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="about-awards.html">Awards</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="about-location.html">Location</a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
           </div>
         </div>
 
         <!-- Members -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="members-director.html"><b>Members</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 w-[13.5rem] text-[13px] leading-5 shadow-xl js-submenu">
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="members-director.html">Director</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="members-current.html">Current Students</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="members-alumni.html">Alumni</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
           </div>
         </div>
 
+        <!-- Publications (single page) -->
         <a class="nav-link" href="publications.html"><b>Publications</b></a>
+
+        <!-- Lectures -->
         <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
+
+        <!-- Projects -->
         <a class="nav-link" href="projects.html"><b>Projects</b></a>
 
         <!-- Archives -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 w-[13.5rem] text-[13px] leading-5 shadow-xl js-submenu">
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="archives-news.html">News</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
-            <a class="block px-3 py-1.5 font-bold hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
           </div>
         </div>
       </nav>
@@ -181,20 +168,18 @@
       </div>
     </div>
   </div>
-  <!-- ===== /Header ===== -->
 
-  <!-- ===== Hero ===== -->
+  <!-- Hero -->
   <section class="max-w-7xl mx-auto px-4 mt-6">
     <div class="carousel" id="carousel" aria-roledescription="carousel">
       <div class="carousel-track" id="carouselTrack">
         <!-- Slide 1 -->
         <div class="carousel-slide">
-          <img class="slide-bg" src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" />
-          <div class="caption-cover" aria-hidden="true"></div>
-          <div class="caption-wrap">
+          <img class="bg" src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" />
+          <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
-              <h1 class="mt-3 text-[22px] md:text-[32px] lg:text-[44px] font-extrabold leading-tight ko-tight">
+              <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
                 Towards Data-Inspired Financial Management
               </h1>
               <div class="mt-4 flex gap-3">
@@ -206,12 +191,11 @@
 
         <!-- Slide 2 -->
         <div class="carousel-slide">
-          <img class="slide-bg" src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" />
-          <div class="caption-cover" aria-hidden="true"></div>
-          <div class="caption-wrap">
+          <img class="bg" src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" />
+          <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
-              <h2 class="mt-3 text-[22px] md:text-[32px] lg:text-[44px] font-extrabold leading-tight ko-tight">
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
                 Accomplishments
               </h2>
               <div class="mt-4 flex gap-3">
@@ -225,12 +209,11 @@
 
         <!-- Slide 3 -->
         <div class="carousel-slide">
-          <img class="slide-bg" src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" />
-          <div class="caption-cover" aria-hidden="true"></div>
-          <div class="caption-wrap">
+          <img class="bg" src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" />
+          <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
-              <h2 class="mt-3 text-[22px] md:text-[32px] lg:text-[44px] font-extrabold leading-tight ko-tight">
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
                 Updates
               </h2>
               <div class="mt-4 flex gap-3">
@@ -298,7 +281,7 @@
     </div>
   </section>
 
-  <!-- ===== Footer (인라인 버전) ===== -->
+  <!-- Footer -->
   <footer class="mt-10 border-t border-slate-200 bg-white">
     <div class="max-w-7xl mx-auto px-4 py-8">
       <p class="text-center text-sm text-slate-500 font-semibold">
@@ -313,16 +296,13 @@
 
   <!-- Scripts -->
   <script>
-    // 연도 자동
-    document.getElementById('year').textContent = new Date().getFullYear();
-
     // Mobile menu toggle
     const btnMobile = document.getElementById('btnMobile');
     const mobileNav = document.getElementById('mobileNav');
-    btnMobile?.addEventListener('click', ()=> mobileNav?.classList.toggle('hidden'));
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
 
-    // Desktop submenu delay
-    const MENU_DELAY = 70;
+    // Desktop menus: keep submenu open while moving cursor
+    const MENU_DELAY = 70; // ms
     document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
       const panel = grp.querySelector('.js-submenu');
       if(!panel) return;
@@ -335,15 +315,13 @@
       grp.addEventListener('focusout', close);
     });
 
-    // ---------- Carousel ----------
-    const $ = (sel, root = document) => root.querySelector(sel);
-    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const track = $('#carouselTrack');
-      const dots  = $$('[data-dot]');
-      if (!track || dots.length === 0) return;
-
+    // Carousel
+    const track = document.getElementById('carouselTrack');
+    const dots  = Array.from(document.querySelectorAll('[data-dot]'));
+    if (track && dots.length){
       let idx = 0;
       const total = track.children.length;
       let timer;
@@ -361,16 +339,10 @@
         auto();
       }));
 
-      // 이미지 로딩 지연 방지: onload 후 첫 슬라이드 갱신
-      const firstImg = track.querySelector('.carousel-slide .slide-bg');
-      if (firstImg && !firstImg.complete) {
-        firstImg.addEventListener('load', ()=> { go(0); auto(); }, { once:true });
-      } else {
-        go(0); auto();
-      }
-    });
+      go(0); auto();
+    }
 
-    // ---------- Embed loaders (News / Notice) ----------
+    // Embed loaders (News / Notice)
     async function importList(srcUrl, listSelectors, targetId, limit = 3){
       const target = document.getElementById(targetId);
       if (!target) return;
@@ -405,16 +377,15 @@
       }
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      importList('archives-news.html',
-        ['#news-list > li', '#news ul > li', 'ul#news > li', 'main ul > li'],
-        'news-feed', 3
-      );
-      importList('about-notice.html',
-        ['#notice-list > li', '#notices ul > li', 'ul#notice > li', 'main ul > li'],
-        'notice-feed', 3
-      );
-    });
+    // Load lists
+    importList('archives-news.html',
+      ['#news-list > li', '#news ul > li', 'ul#news > li', 'main ul > li'],
+      'news-feed', 3
+    );
+    importList('about-notice.html',
+      ['#notice-list > li', '#notices ul > li', 'ul#notice > li', 'main ul > li'],
+      'notice-feed', 3
+    );
   </script>
 </body>
 </html>
