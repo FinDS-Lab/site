@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Director | FINDS Lab (Dongduk Woman University)</title>
+  <meta name="description" content="FINDS Lab — Director profile, education, employment, honors, activities." />
+
+  <!-- Fonts & Tailwind -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --accent: rgb(172, 14, 14);
+      --gold:   rgb(214, 177, 77);
+      --fg-on-accent:#ffffff;
+      --bg:#ffffff;
+      --bg-soft:#f8fafc;
+      --ring:0 0 0 3px rgba(172,14,14,.25);
+    }
+    html,body{font-family:"Noto Sans KR","Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+    .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
+    .nav-link{font-weight:800}
+    .nav-link:hover{color:var(--accent)}
+    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
+    .submenu-item{padding:.35rem .75rem; font-weight:700}
+    :focus-visible{outline:none;box-shadow:var(--ring)}
+
+    .tag-accent{background:var(--accent);color:#fff;border-radius:9999px;padding:.25rem .6rem;font-size:.72rem;font-weight:900}
+    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .6rem;font-size:.72rem;font-weight:900}
+    .pill{display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .6rem;border-radius:9999px;background:var(--gold);color:#111827;font-weight:800;font-size:.75rem}
+
+    .btn-primary{background:var(--accent);color:#fff;border-radius:.75rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.2s}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .btn-ghost{background:#0f172a;color:#fff;border-radius:.75rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:.2s}
+    .btn-ghost:hover{transform:translateY(-1px);opacity:.95}
+
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.1rem}
+    .card:hover{box-shadow:0 10px 26px rgba(0,0,0,.06)}
+    .card-soft{background:#fff;border:1px solid #e5e7eb;border-radius:1rem}
+
+    .icon-16{width:16px;height:16px}
+    .icon-18{width:18px;height:18px}
+    .icon-20{width:20px;height:20px}
+    .icon-24{width:24px;height:24px}
+
+    /* Desktop submenu fade */
+    .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
+    .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
+
+    /* Section divider */
+    .section-title{display:flex;align-items:center;gap:.5rem;font-weight:900}
+    .section-title::before{content:"";display:inline-block;width:6px;height:18px;border-radius:9999px;background:var(--gold)}
+    .list-timeline{position:relative;padding-left:1rem}
+    .list-timeline::before{content:"";position:absolute;left:.28rem;top:.2rem;bottom:.2rem;width:2px;background:#e5e7eb;border-radius:3px}
+    .list-timeline li{position:relative;margin-left:.35rem;padding-left:1rem}
+    .list-timeline li::before{content:"";position:absolute;left:-.52rem;top:.35rem;width:10px;height:10px;border-radius:9999px;background:var(--accent)}
+  </style>
+</head>
+<body class="bg-[var(--bg-soft)]">
+
+  <!-- Header (site-wide) -->
+  <div class="sticky-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="./" class="flex items-center gap-3">
+        <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
+        <div class="leading-tight">
+          <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
+          <div class="text-[12px] font-semibold text-slate-600">Dongduk Woman University</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="nav-link" href="./"><b>Home</b></a>
+
+        <!-- About -->
+        <div class="relative menu-group" data-menu>
+          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
+          </div>
+        </div>
+
+        <!-- Members -->
+        <div class="relative menu-group" data-menu>
+          <a class="nav-link" href="members-director.html" aria-current="page"><b>Members</b></a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="publications.html"><b>Publications</b></a>
+        <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
+        <a class="nav-link" href="projects.html"><b>Projects</b></a>
+
+        <div class="relative menu-group" data-menu>
+          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
+          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile toggle -->
+      <div class="flex items-center gap-2">
+        <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
+      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="./">Home</a>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="about-introduction.html">Introduction</a>
+            <a class="py-1 hover:underline font-bold" href="about-vision-area.html">Research Area</a>
+            <a class="py-1 hover:underline font-bold" href="about-notice.html">Notice</a>
+            <a class="py-1 hover:underline font-bold" href="about-awards.html">Awards</a>
+            <a class="py-1 hover:underline font-bold" href="about-location.html">Location</a>
+          </div>
+        </div>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="members-director.html">Director</a>
+            <a class="py-1 hover:underline font-bold" href="members-current.html">Current Students</a>
+            <a class="py-1 hover:underline font-bold" href="members-alumni.html">Alumni</a>
+            <a class="py-1 hover:underline font-bold" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications.html">Publications</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="archives-news.html">News</a>
+            <a class="py-1 hover:underline font-bold" href="archives-seminar.html">Seminar</a>
+            <a class="py-1 hover:underline font-bold" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero / Cover -->
+  <section class="max-w-7xl mx-auto px-4 mt-6">
+    <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+      <img src="assets/img/people/director-cover.jpg" alt="Director cover" class="w-full h-[260px] md:h-[320px] object-cover">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-transparent"></div>
+
+      <!-- Profile card floating -->
+      <div class="absolute left-4 right-4 md:left-6 md:right-auto bottom-4">
+        <div class="flex items-end gap-4">
+          <img src="assets/img/people/director.jpg" alt="Director photo" class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg" />
+          <div class="text-white drop-shadow">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="tag-gold">Director</span>
+              <span class="tag-accent">FINDS Lab</span>
+            </div>
+            <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">[Your Name, Ph.D.] <span class="opacity-90 font-semibold">/ 황윤태</span></h1>
+            <p class="text-sm md:text-[15px] opacity-95">
+              Dept. of Business Administration, Dongduk Woman University
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro + Quick info -->
+  <section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-[320px,1fr] gap-6">
+    <!-- Sidebar card -->
+    <aside class="card-soft p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-extrabold">Profile</h3>
+        <img src="assets/img/brand/logo-univ.png" alt="University Logo" class="h-7 w-auto object-contain" />
+      </div>
+
+      <div class="mt-3 grid gap-2 text-[14px] text-slate-700">
+        <div class="flex items-start gap-2">
+          <img src="assets/img/icons/role.png" class="icon-18" alt="">
+          <div><b>Position</b><br/>Assistant Professor (or) Director, FINDS Lab</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <img src="assets/img/icons/building.png" class="icon-18" alt="">
+          <div><b>Affiliation</b><br/>Dept. of Business Administration, DWU</div>
+        </div>
+        <div class="flex items-start gap-2">
+          <img src="assets/img/icons/location.png" class="icon-18" alt="">
+          <div><b>Office</b><br/>Humanities Building (Dept. Office) · Room TBD</div>
+        </div>
+      </div>
+
+      <div class="mt-4 h-px bg-slate-200"></div>
+
+      <div class="mt-4 grid gap-2 text-[14px]">
+        <a class="flex items-center gap-2 hover:underline" href="mailto:yoontaeResearch@gmail.com">
+          <img src="assets/img/icons/mail.png" class="icon-18" alt=""><span><b>E-mail</b> · yoontaeResearch@gmail.com</span>
+        </a>
+        <div class="flex items-center gap-2">
+          <img src="assets/img/icons/phone.png" class="icon-18" alt=""><span><b>Dept. Office</b> · 02-940-4420</span>
+        </div>
+        <a class="flex items-center gap-2 hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">
+          <img src="assets/img/icons/scholar.png" class="icon-18" alt=""><span>Google Scholar</span>
+        </a>
+        <a class="flex items-center gap-2 hover:underline" href="#" target="_blank" rel="noopener">
+          <img src="assets/img/icons/orcid.png" class="icon-18" alt=""><span>ORCID</span>
+        </a>
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        <a class="btn-primary text-sm" href="assets/docs/CV_Director.pdf" target="_blank" rel="noopener">
+          <span class="inline-flex items-center gap-2"><img src="assets/img/icons/cv.png" class="icon-18" alt="">Download CV</span>
+        </a>
+        <a class="btn-ghost text-sm" href="publications.html">
+          <span class="inline-flex items-center gap-2"><img src="assets/img/icons/book.png" class="icon-18" alt="">Publications</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main body -->
+    <main class="grid gap-6">
+      <!-- About -->
+      <section class="card">
+        <h2 class="section-title text-xl">About</h2>
+        <p class="mt-3 text-[15px] leading-7 text-slate-700">
+          금융 데이터로부터 의사결정 가치를 끌어내는 연구를 수행합니다. 시계열 예측·설명가능 AI·자산배분·리스크 관리 등
+          <span class="font-semibold">Financial Data Science</span> 전반의 문제를 산업 파트너와의 협업 및 오픈 연구로 풀어갑니다.
+          (간략 소개 문구는 자유롭게 수정하세요.)
+        </p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          <span class="pill">Financial Data Science</span>
+          <span class="pill">Time Series</span>
+          <span class="pill">Explainable AI</span>
+          <span class="pill">Portfolio</span>
+        </div>
+      </section>
+
+      <!-- Research Interests -->
+      <section class="card">
+        <h2 class="section-title text-xl">Research Interests</h2>
+        <div class="mt-3 grid sm:grid-cols-2 gap-3 text-[15px]">
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 시계열 모델링·멀티태스크 QA</li>
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 설명가능성 (feature-centric, attribution)</li>
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 포트폴리오 최적화·리스크 관리</li>
+          </ul>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> Tabular + Graph 융합</li>
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> LLM × Decision-making</li>
+            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 산업 데이터 분석 파이프라인</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Education & Employment -->
+      <section class="card">
+        <h2 class="section-title text-xl">Education</h2>
+        <ul class="mt-3 list-timeline space-y-3 text-[15px]">
+          <li><b>Ph.D.</b> in [Major], [University], [Year]</li>
+          <li><b>M.S.</b> in [Major], [University], [Year]</li>
+          <li><b>B.S.</b> in [Major], [University], [Year]</li>
+        </ul>
+
+        <h2 class="section-title text-xl mt-6">Employment</h2>
+        <ul class="mt-3 list-timeline space-y-3 text-[15px]">
+          <li><b>Assistant Professor</b>, Dept. of Business Administration, Dongduk Woman University (20XX–present)</li>
+          <li><b>[Position]</b>, [Affiliation] (20XX–20XX)</li>
+          <li><b>[Position]</b>, [Affiliation] (20XX–20XX)</li>
+        </ul>
+      </section>
+
+      <!-- Honors -->
+      <section class="card">
+        <h2 class="section-title text-xl">Honors & Awards</h2>
+        <div class="mt-3 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div class="p-4 border border-slate-200 rounded-xl">
+            <div class="text-[13px] text-slate-500">2025</div>
+            <div class="mt-1 font-bold flex items-start gap-2">
+              <img src="assets/img/icons/trophy.png" class="icon-18" alt=""> Outstanding Paper Award
+            </div>
+            <div class="text-sm text-slate-600 mt-1">[Conference/Org]</div>
+          </div>
+          <div class="p-4 border border-slate-200 rounded-xl">
+            <div class="text-[13px] text-slate-500">2024</div>
+            <div class="mt-1 font-bold flex items-start gap-2">
+              <img src="assets/img/icons/trophy.png" class="icon-18" alt=""> Teaching Excellence
+            </div>
+            <div class="text-sm text-slate-600 mt-1">[University]</div>
+          </div>
+          <div class="p-4 border border-slate-200 rounded-xl">
+            <div class="text-[13px] text-slate-500">20XX</div>
+            <div class="mt-1 font-bold flex items-start gap-2">
+              <img src="assets/img/icons/trophy.png" class="icon-18" alt=""> [Award name]
+            </div>
+            <div class="text-sm text-slate-600 mt-1">[Org]</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Selected Publications -->
+      <section class="card">
+        <div class="flex items-center justify-between">
+          <h2 class="section-title text-xl">Selected Publications</h2>
+          <a class="text-sm font-bold underline decoration-2 underline-offset-4" style="text-decoration-color:var(--gold)" href="publications.html">View all</a>
+        </div>
+        <ul class="mt-3 space-y-3 text-[15px]">
+          <li class="p-3 border border-slate-200 rounded-lg">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="tag-accent">Conference</span><span class="tag-gold">2025</span>
+            </div>
+            <div class="mt-1 font-semibold">Time-MQA: Time Series Multi-Task QA with Context Enhancement</div>
+            <div class="text-sm text-slate-600">ACL 2025 · [Authors]</div>
+          </li>
+          <li class="p-3 border border-slate-200 rounded-lg">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="tag-accent">Conference</span><span class="tag-gold">2024</span>
+            </div>
+            <div class="mt-1 font-semibold">CAFO: Feature-Centric Explanation on Time Series Classification</div>
+            <div class="text-sm text-slate-600">KDD 2024 · [Authors]</div>
+          </li>
+          <li class="p-3 border border-slate-200 rounded-lg">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="tag-gold">Journal</span><span class="tag-accent">SSCI</span>
+            </div>
+            <div class="mt-1 font-semibold">Household Financial Health: ML for Diagnosis and Prescription</div>
+            <div class="text-sm text-slate-600">Quantitative Finance 2023 · [Authors]</div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Professional Activities -->
+      <section class="card">
+        <h2 class="section-title text-xl">Professional Activities</h2>
+        <ul class="mt-3 list-timeline space-y-3 text-[15px]">
+          <li><b>Program Committee</b> — [Conf/Year]</li>
+          <li><b>Reviewer</b> — [Journal/Year]</li>
+          <li><b>Organizer</b> — FINDS Lab Seminar Series (2025–)</li>
+        </ul>
+      </section>
+    </main>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-10 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <ul class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm font-semibold">
+        <li><a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank">동덕여자대학교</a></li>
+        <li><a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank">동덕여자대학교 경영학과</a></li>
+        <li><a class="hover:underline" href="https://scholar.google.com/" target="_blank">Google Scholar</a></li>
+        <li><a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank">한국연구재단</a></li>
+      </ul>
+      <p class="mt-4 text-center text-xs text-slate-500">
+        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Mobile menu toggle
+    const btnMobile = document.getElementById('btnMobile');
+    const mobileNav = document.getElementById('mobileNav');
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+
+    // Desktop menus: keep submenu open while moving cursor
+    const MENU_DELAY = 70;
+    document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
+      const panel = grp.querySelector('.js-submenu');
+      let t;
+      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
+      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
+      grp.addEventListener('mouseenter', open);
+      grp.addEventListener('mouseleave', close);
+      grp.addEventListener('focusin', open);
+      grp.addEventListener('focusout', close);
+    });
+  </script>
+</body>
+</html>
