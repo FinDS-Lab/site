@@ -9,3 +9,15 @@ baseurl: "/website"
 
 # (선택) 테마가 필요 없다면 주석 처리
 # theme: minima
+# _config.yml
+collections:
+  news:
+    output: true
+    permalink: /news/:name.html
+
+defaults:
+  - scope:
+      path: ""
+      type: news
+    values:
+      layout: news_post   # 개별 뉴스 페이지 기본 레이아웃
