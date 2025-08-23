@@ -1,6 +1,7 @@
 <header class="sticky-blur border-b border-slate-200">
-  <div class="container-root py-3 flex items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-3">
+  <div class="container-root py-3 flex items-center justify-between gap-4 min-w-0">
+    <!-- 로고: 줄어들지 않게 -->
+    <a href="/" class="flex items-center gap-3 shrink-0">
       <img src="/assets/img/brand/logo-finds.png" alt="FINDS Lab Logo"
            class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
       <div class="leading-tight">
@@ -9,10 +10,11 @@
       </div>
     </a>
 
-    <nav class="hidden md:flex items-center gap-6">
+    <!-- nav: lg 이상에서만 노출 + 넘치면 가로 스크롤 -->
+    <nav class="hidden lg:flex items-center gap-6 min-w-0 overflow-x-auto whitespace-nowrap scrollbar-none">
       <a class="nav-link" href="/"><b>Home</b></a>
 
-      <div class="menu-group" data-menu>
+      <div class="menu-group relative" data-menu>
         <a class="nav-link" href="/about-introduction.html"><b>About FINDS</b></a>
         <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
           <a class="block submenu-item hover:bg-slate-50" href="/about-introduction.html">Introduction</a>
@@ -23,7 +25,7 @@
         </div>
       </div>
 
-      <div class="menu-group" data-menu>
+      <div class="menu-group relative" data-menu>
         <a class="nav-link" href="/members-director.html"><b>Members</b></a>
         <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
           <a class="block submenu-item hover:bg-slate-50" href="/members-director.html">Director</a>
@@ -37,7 +39,7 @@
       <a class="nav-link" href="/lectures.html"><b>Lectures</b></a>
       <a class="nav-link" href="/projects.html"><b>Projects</b></a>
 
-      <div class="menu-group" data-menu>
+      <div class="menu-group relative" data-menu>
         <a class="nav-link" href="/archives-news.html"><b>Archives</b></a>
         <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
           <a class="block submenu-item hover:bg-slate-50" href="/archives-news.html">News</a>
@@ -47,7 +49,8 @@
       </div>
     </nav>
 
-    <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
+    <!-- 햄버거: lg 미만에서만 -->
+    <button id="btnMobile" class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -55,7 +58,7 @@
   </div>
 
   <!-- Mobile Nav -->
-  <div id="mobileNav" class="md:hidden container-root pb-3 hidden">
+  <div id="mobileNav" class="lg:hidden container-root pb-3 hidden">
     <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
       <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="/">Home</a>
       <div class="px-3 py-2">
