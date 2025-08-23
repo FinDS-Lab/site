@@ -25,11 +25,21 @@
       --ring:0 0 0 3px rgba(172,14,14,.25);
     }
     html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
-    .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
+    .sticky-blur{position:sticky;top:0;z-index:3000;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
     .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
     .submenu-item{padding:.35rem .75rem; font-weight:700}
+
+    /* 서브메뉴: 지도 위에서도 안전하게 */
+    .menu-group{position:relative}
+    .menu-group .js-submenu{
+      visibility:hidden;opacity:0;transform:translateY(6px);
+      transition:visibility .18s ease, opacity .18s ease, transform .18s ease;
+      z-index:4000; pointer-events:auto;
+    }
+    .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
+
     .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:transform .18s ease, opacity .18s ease}
     .btn-primary:hover{transform:translateY(-1px);opacity:.95}
     .tag-accent{background:var(--accent);color:var(--fg-on-accent);border-radius:9999px;padding:.22rem .55rem;font-size:.72rem;font-weight:900}
@@ -40,12 +50,8 @@
     *::-webkit-scrollbar{height:8px;width:8px}
     *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
 
-    /* Desktop submenu show/hide */
-    .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
-    .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
-
-    /* Map responsive box */
-    #kakao-map{width:100%; height:460px; border-radius:1rem; overflow:hidden; border:1px solid #e5e7eb;}
+    /* Map */
+    #kakao-map{width:100%; height:460px; border-radius:1rem; overflow:hidden; border:1px solid #e5e7eb; position:relative; z-index:1;}
     @media (max-width: 640px){
       #kakao-map{height:360px;}
     }
@@ -168,10 +174,9 @@
           <span class="tag-accent">About FINDS</span>
           <span class="tag-gold">Location</span>
         </div>
-        <h1 class="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">동덕여자대학교 인문관</h1>
-        <p class="text-sm text-slate-600 mt-1">Dongduk Woman University · Humanities Building (인문관)</p>
+        <h1 class="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">동덕여자대학교 인문관 (학교부속시설)</h1>
+        <p class="text-sm text-slate-600 mt-1">서울 성북구 화랑로13길 60 · (지번) 상월곡동 86-78</p>
       </div>
-      <!-- Contact 링크 제거 -->
     </div>
   </section>
 
@@ -198,19 +203,19 @@
         <div class="info-row">
           <img src="assets/icons/marker.png" alt="" />
           <div>
-            <div id="addr-ko" class="text-[15px] font-semibold text-slate-900">주소 검색 중…</div>
-            <div id="addr-en" class="text-[12px] text-slate-600">Open in Kakao Map for more details</div>
+            <div id="addr-ko" class="text-[15px] font-semibold text-slate-900">서울 성북구 화랑로13길 60</div>
+            <div id="addr-jibun" class="text-[12px] text-slate-600">(지번) 상월곡동 86-78</div>
             <div class="mt-1">
               <button id="btnCopyAddr" class="copy-btn" title="주소 복사">Copy address</button>
             </div>
           </div>
         </div>
-        <!-- 전화/이메일 섹션 제거 -->
+        <!-- 전화/이메일 섹션은 요청에 따라 제거 -->
       </div>
 
       <div class="mt-5 p-3 rounded-lg bg-slate-50 border border-slate-200">
         <div class="text-[12px] text-slate-600">
-          * 장소명이 ‘인문관’으로 정확히 매핑되지 않을 경우, 캠퍼스 중심 좌표로 안내될 수 있습니다. 지도에서 확대해 위치를 확인하세요.
+          * 장소명이 정확히 매핑되지 않을 경우, 캠퍼스 중심 좌표로 안내될 수 있습니다. 지도에서 확대하여 위치를 확인하세요.
         </div>
       </div>
     </aside>
@@ -221,4 +226,89 @@
     <div class="max-w-7xl mx-auto px-4 py-8">
       <ul class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm font-semibold">
         <li><a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교</a></li>
-        <li><a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="no_
+        <li><a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교 경영학과</a></li>
+        <li><a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+        <li><a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a></li>
+      </ul>
+      <p class="mt-4 text-center text-xs text-slate-500">
+        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Mobile menu toggle =====
+    const btnMobile = document.getElementById('btnMobile');
+    const mobileNav = document.getElementById('mobileNav');
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+
+    // ===== Desktop submenu keep-open (70ms) =====
+    const MENU_DELAY = 70;
+    document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
+      const panel = grp.querySelector('.js-submenu');
+      let t;
+      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
+      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
+      grp.addEventListener('mouseenter', open);
+      grp.addEventListener('mouseleave', close);
+      grp.addEventListener('focusin', open);
+      grp.addEventListener('focusout', close);
+    });
+
+    // ===== Kakao Map Setup (고정 주소 지오코딩) =====
+    const mapEl = document.getElementById('kakao-map');
+    const btnCopyAddr = document.getElementById('btnCopyAddr');
+    const btnDirections = document.getElementById('btnDirections');
+    const btnRecenter = document.getElementById('btnRecenter');
+
+    const geocoder = new kakao.maps.services.Geocoder();
+
+    const PLACE_NAME = '동덕여자대학교 인문관 (학교부속시설)';
+    const ADDR_ROAD  = '서울 성북구 화랑로13길 60';
+    const ADDR_JIBUN = '서울 성북구 상월곡동 86-78';
+
+    // 지도 기본(서울 중심)
+    const map = new kakao.maps.Map(mapEl, {
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
+      level: 5
+    });
+
+    let currentPos = null;
+
+    function setMarkerAndInfo(lat, lng, name, addressRoad){
+      const pos = new kakao.maps.LatLng(lat, lng);
+      currentPos = pos;
+      map.setCenter(pos);
+
+      const marker = new kakao.maps.Marker({ position: pos });
+      marker.setMap(map);
+
+      const iwContent = `
+        <div style="padding:8px 10px; font-size:12px; max-width:240px;">
+          <div style="font-weight:800; margin-bottom:4px; color:#111827;">${name}</div>
+          <div style="color:#374151;">${addressRoad}</div>
+          <div style="color:#6b7280; font-size:11px; margin-top:2px;">(지번) ${ADDR_JIBUN}</div>
+          <div style="margin-top:6px;">
+            <a href="https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener" style="color:#ac0e0e; font-weight:800; text-decoration:underline; text-underline-offset:2px;">길찾기</a>
+          </div>
+        </div>
+      `;
+      new kakao.maps.InfoWindow({ position: pos, content: iwContent }).open(map, marker);
+
+      // Directions 버튼
+      btnDirections.href = `https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}`;
+    }
+
+    // 도로명 주소로 좌표 조회 → 마커/인포윈도우 세팅
+    geocoder.addressSearch(ADDR_ROAD, (result, status) => {
+      if (status === kakao.maps.services.Status.OK && result[0]) {
+        const { x, y } = result[0]; // x=lng, y=lat
+        setMarkerAndInfo(y, x, PLACE_NAME, ADDR_ROAD);
+      } else {
+        // 지오코딩 실패 시: 서울시청 임시 포커스 + 버튼은 주소 링크만
+        setMarkerAndInfo(37.5665, 126.9780, PLACE_NAME, ADDR_ROAD);
+        console.warn('주소 지오코딩 실패: ', status, result);
+      }
+    });
+
+    // 주소 복사
