@@ -6,18 +6,29 @@ permalink: /members-director.html
 
 <!-- 페이지 전용 보정 스타일 (타임라인/불릿/줄바꿈 + 이미지) -->
 <style>
-  /* 타임라인: 빨간 점 + 금색 라인(빨간 점 중앙 관통) */
+  /* ========== 타임라인: 금색 라인이 빨간 점 중앙을 관통하도록 ========== */
   .timeline{position:relative; padding-left:1.75rem;}
   .timeline::before{
-    content:""; position:absolute; left:-3.5px;
-    top:0.4rem; bottom:0.4rem; width:3px;
-    background:var(--gold, #d6b14d); border-radius:2px;
+    content:"";
+    position:absolute;
+    left:0;                 /* 기준축 0으로 통일 */
+    top:0.4rem; bottom:0.4rem;
+    width:3px;
+    background:var(--gold, #d6b14d);
+    border-radius:2px;
+    transform:translateX(-50%); /* 선의 중심을 축에 맞춤 */
   }
   .timeline > li{position:relative; margin-left:.25rem; padding-left:1rem;}
   .timeline > li::before{
-    content:""; position:absolute; left:-.56rem; top:.55rem;
-    width:11px; height:11px; background:var(--accent,#ac0e0e);
-    border-radius:9999px; box-shadow:0 0 0 3px rgba(172,14,14,.08);
+    content:"";
+    position:absolute;
+    left:0;                 /* 선과 같은 축 공유 */
+    top:.55rem;
+    width:11px; height:11px;
+    background:var(--accent,#ac0e0e);
+    border-radius:50%;
+    box-shadow:0 0 0 3px rgba(172,14,14,.08);
+    transform:translateX(-50%); /* 점을 선 중심과 정확히 정렬 */
   }
 
   /* Education 전용 (텍스트-로고 좌우) */
@@ -40,6 +51,9 @@ permalink: /members-director.html
 
   /* 이미지 CLS 최소화 (폭/높이 지정되어 있으면 브라우저가 자리 예약) */
   img[width][height]{height:auto}
+
+  /* 히어로 텍스트 간격 보정 */
+  .hero-sub{margin-top:.35rem;} /* 이름 밑 직함 간 살짝 띄우기 */
 </style>
 
 <!-- ===== Hero ===== -->
@@ -47,7 +61,6 @@ permalink: /members-director.html
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <!-- webp 우선 + jpg 백업 + 반응형 -->
     <picture>
-      <!-- 작은 화면용 -->
       <source
         srcset="
           {{ '/assets/img/people/director-cover-800.webp'  | relative_url }} 800w,
@@ -90,7 +103,8 @@ permalink: /members-director.html
         <div class="text-white drop-shadow">
           <span class="inline-block px-2 py-1 rounded-full font-extrabold text-xs" style="background:#ac0e0e;">Director</span>
           <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-          <p class="text-sm md:text-[15px] opacity-95">Assistant Professor, Dept. of Business Administration, Dongduk Woman's University</p>
+          <!-- 간격 살짝 추가: hero-sub -->
+          <p class="hero-sub text-sm md:text-[15px] opacity-95">Assistant Professor, Dept. of Business Administration, Dongduk Woman's University</p>
         </div>
       </div>
     </div>
@@ -140,10 +154,18 @@ permalink: /members-director.html
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
       </h2>
       <p class="mt-3 text-[15px] leading-7 text-slate-700">
-        데이터에서 재무 의사결정 가치를 추출합니다. 시계열 예측, 설명가능 AI, 자산배분, 리스크 관리 중심으로
-        <b>Financial Data Science</b> 문제를 산업 파트너와 협업 및 오픈 연구로 해결합니다.
+        My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
+        with a particular focus on <b>integrating data science and financial engineering</b> to address <b>real-world financial challenges</b>. 
+        I strive to make <b>financial services</b> more intuitive and accessible by <b>simplifying complex concepts</b> and developing 
+        <b>user-friendly tools</b> for <b>asset management</b>.
       </p>
-    </section>
+      
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
+        <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>. 
+        With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>, 
+        I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
+      </p>
 
     <!-- Research Interests -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
@@ -270,26 +292,26 @@ permalink: /members-director.html
           <div class="title font-extrabold">Assistant Professor</div>
           <div class="desc text-slate-600">Deptartment of Business Administration, Dongduk Woman's University</div>
         </li>
-          <li>
-      <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
-      <div class="title font-extrabold">Lecturer</div>
-      <div class="desc text-slate-600">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
-          </li>
-          <li>
-      <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
-      <div class="title font-extrabold">Lecturer</div>
-      <div class="desc text-slate-600">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
-          </li>
-          <li>
-      <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2024.03.– 2024.08.</div>
-      <div class="title font-extrabold">Lecturer</div>
-      <div class="desc text-slate-600">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
-          </li>
-          <li>
-      <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2020.03.– 2020.05.</div>
-      <div class="title font-extrabold">Intern</div>
-      <div class="desc text-slate-600">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
-          </li>
+        <li>
+          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
+          <div class="title font-extrabold">Lecturer</div>
+          <div class="desc text-slate-600">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
+        </li>
+        <li>
+          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
+          <div class="title font-extrabold">Lecturer</div>
+          <div class="desc text-slate-600">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
+        </li>
+        <li>
+          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2024.03.– 2024.08.</div>
+          <div class="title font-extrabold">Lecturer</div>
+          <div class="desc text-slate-600">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+        </li>
+        <li>
+          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2020.03.– 2020.05.</div>
+          <div class="title font-extrabold">Intern</div>
+          <div class="desc text-slate-600">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
+        </li>
       </ul>
     </section>
 
@@ -307,4 +329,3 @@ permalink: /members-director.html
     </section>
   </main>
 </section>
-
