@@ -15,7 +15,8 @@
     :root{
       --accent: rgb(131, 0, 24);     /* 버건디 */
       --gold:   rgb(214, 177, 77);   /* 214/177/77 */
-      --fg-on-accent:#ffffff;
+      --kaist:  #005BAC;             /* KAIST Blue */
+      --khu:    #990000;             /* Kyung Hee Crimson */
       --bg:#ffffff;
       --bg-soft:#f8fafc;
       --ring:0 0 0 3px rgba(131,0,24,.22);
@@ -37,30 +38,43 @@
     .btn-ghost{background:#0f172a;color:#fff;border-radius:.9rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 10px 28px rgba(0,0,0,.14);transition:.25s}
     .btn-ghost:hover{transform:translateY(-1px);opacity:.97}
 
-    /* 살짝 떠 있는 느낌 */
+    /* 살짝 떠 있는 카드들 */
     .lift{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;box-shadow:0 12px 30px rgba(0,0,0,.08)}
     .section-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.1rem;box-shadow:0 10px 26px rgba(0,0,0,.06)}
-    /* sticky: 화면 중간에서 고정 시작 */
-    .sticky-card{position:sticky;top:22vh;align-self:start}
+
+    /* sticky 프로필: 화면 중간에서 시작 */
+    .sticky-card{position:sticky;top:20vh;align-self:start}
 
     /* 섹션 타이틀 */
     .section-title{display:flex;align-items:center;gap:.5rem;font-weight:900}
     .section-title::before{content:"";display:inline-block;width:6px;height:18px;border-radius:9999px;background:var(--gold)}
     .eyebrow{font-size:.82rem;font-weight:900;color:var(--accent);letter-spacing:.02em}
 
-    /* 타임라인(선 + 선 위 bullet) */
+    /* 타임라인(선 + 선 위 버건디 불릿) */
     .timeline{position:relative;padding-left:1.25rem}
     .timeline::before{content:"";position:absolute;left:.5rem;top:.25rem;bottom:.25rem;width:2px;background:#e5e7eb;border-radius:2px}
     .timeline li{position:relative;margin-left:.25rem;padding-left:1rem}
     .timeline li::before{content:"";position:absolute;left:-.56rem;top:.55rem;width:11px;height:11px;background:var(--accent);border-radius:9999px;box-shadow:0 0 0 3px rgba(131,0,24,.08)}
     .timeline .year{font-size:.82rem;font-weight:900;color:var(--accent)}
     .timeline .title{font-weight:800}
-    .timeline .desc{font-size:.9rem;color:#64748b}
+    .timeline .desc{font-size:.92rem;color:#475569}
 
-    /* 학교 로고 */
+    /* Education 전용 라인: 학과/학교 분리 + 색상 */
+    .edu-line{margin-top:.15rem;font-size:.95rem;line-height:1.45rem}
+    .edu-line .dept{font-weight:700;color:#334155}
+    .edu-line .school{font-weight:900}
+    .school.kaist{color:var(--kaist)}
+    .school.khu{color:var(--khu)}
     .school-logo{width:28px;height:28px;object-fit:contain;border-radius:6px;margin-right:.5rem;vertical-align:-6px}
 
-    /* 아이콘 사이즈 */
+    /* 수상/메타 */
+    .badge{display:inline-flex;gap:.35rem;align-items:center;background:var(--gold);
+           color:#111827;font-weight:900;border-radius:9999px;padding:.22rem .55rem;font-size:.78rem}
+    .meta-dots{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.4rem}
+    .meta-dots li{position:relative;padding-left:.85rem;font-size:.88rem;color:#64748b}
+    .meta-dots li::before{content:"";position:absolute;left:.2rem;top:.48rem;width:.38rem;height:.38rem;border-radius:9999px;background:var(--accent)}
+
+    /* 아이콘 크기 */
     .icon-18{width:18px;height:18px}
   </style>
 </head>
@@ -81,80 +95,20 @@
         <a class="nav-link" href="./"><b>Home</b></a>
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
-            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
-            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
-            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
-            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
-          </div>
         </div>
-
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="members-director.html" aria-current="page"><b>Members</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
-            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
-            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
-            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
-          </div>
         </div>
-
         <a class="nav-link" href="publications.html"><b>Publications</b></a>
         <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
         <a class="nav-link" href="projects.html"><b>Projects</b></a>
-
-        <div class="relative menu-group" data-menu>
-          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
-          <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
-            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
-            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
-          </div>
-        </div>
+        <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
       </nav>
 
       <div class="flex items-center gap-2">
         <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-      </div>
-    </div>
-
-    <!-- Mobile Nav -->
-    <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
-      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="./">Home</a>
-        <div class="px-3 py-2">
-          <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
-          <div class="pl-3 grid text-[14px]">
-            <a class="py-1 hover:underline font-bold" href="about-introduction.html">Introduction</a>
-            <a class="py-1 hover:underline font-bold" href="about-vision-area.html">Research Area</a>
-            <a class="py-1 hover:underline font-bold" href="about-notice.html">Notice</a>
-            <a class="py-1 hover:underline font-bold" href="about-awards.html">Awards</a>
-            <a class="py-1 hover:underline font-bold" href="about-location.html">Location</a>
-          </div>
-        </div>
-        <div class="px-3 py-2">
-          <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
-          <div class="pl-3 grid text-[14px]">
-            <a class="py-1 hover:underline font-bold" href="members-director.html">Director</a>
-            <a class="py-1 hover:underline font-bold" href="members-current.html">Current Students</a>
-            <a class="py-1 hover:underline font-bold" href="members-alumni.html">Alumni</a>
-            <a class="py-1 hover:underline font-bold" href="members-mentorship.html">Mentorship</a>
-          </div>
-        </div>
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications.html">Publications</a>
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
-        <div class="px-3 py-2">
-          <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
-          <div class="pl-3 grid text-[14px]">
-            <a class="py-1 hover:underline font-bold" href="archives-news.html">News</a>
-            <a class="py-1 hover:underline font-bold" href="archives-seminar.html">Seminar</a>
-            <a class="py-1 hover:underline font-bold" href="archives-gallery.html">Gallery</a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -165,7 +119,7 @@
       <img src="assets/img/people/director-cover.jpg" alt="Director cover" class="w-full h-[260px] md:h-[320px] object-cover">
       <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent"></div>
 
-      <!-- Profile card floating -->
+      <!-- Profile block -->
       <div class="absolute left-4 right-4 md:left-6 md:right-auto bottom-4">
         <div class="flex items-end gap-4">
           <img src="assets/img/people/director.jpg" alt="Director photo" class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg" />
@@ -185,9 +139,9 @@
     </div>
   </section>
 
-  <!-- Intro + Quick info -->
-  <section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-[320px,1fr] gap-6">
-    <!-- Sidebar: sticky + lift -->
+  <!-- Body: sticky left + lifted right sections -->
+  <section class="max-w-7xl mx-auto px-4 mt-8 grid md:grid-cols-[320px,1fr] gap-6">
+    <!-- Sticky Profile -->
     <aside class="sticky-card lift p-4">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-extrabold">Profile</h3>
@@ -205,7 +159,7 @@
         </div>
         <div class="flex items-start gap-2">
           <img src="assets/img/icons/location.png" class="icon-18" alt="">
-          <div><b>Office</b><br/>Humanities Building (Dept. Office) · Room 302</div>
+          <div><b>Office</b><br/>Humanities Building · Room 302</div>
         </div>
       </div>
 
@@ -236,8 +190,9 @@
       </div>
     </aside>
 
-    <!-- Right: section cards -->
+    <!-- Right column -->
     <main class="grid gap-6">
+
       <!-- About -->
       <section class="section-card">
         <div class="eyebrow">About</div>
@@ -267,13 +222,15 @@
               <img src="assets/img/logos/kaist.png" alt="KAIST" class="school-logo">
               Doctor of Philosophy (Ph.D.) in Engineering
             </div>
-            <div class="desc">
-              Industrial and Systems Engineering<br>
-              Korea Advanced Institute of Science and Technology (KAIST)
+            <div class="edu-line">
+              <span class="dept">Industrial and Systems Engineering</span><br>
+              <span class="school kaist">Korea Advanced Institute of Science and Technology (KAIST)</span>
             </div>
-            <div class="desc mt-1">
-              <span class="tag-gold">Award</span>
-              &nbsp;&lt;한국경영과학회 제11회 박사학위논문상 수상&gt;
+            <div class="mt-2">
+              <span class="badge">Honor</span>
+              <ul class="meta-dots">
+                <li>Awarded the <b>11th Best Doctoral Dissertation Award</b> by the Korean Operations Research and Management Science Society.</li>
+              </ul>
             </div>
           </li>
 
@@ -284,13 +241,15 @@
               <img src="assets/img/logos/kaist.png" alt="KAIST" class="school-logo">
               Master of Science (M.S.)
             </div>
-            <div class="desc">
-              Industrial and Systems Engineering<br>
-              Korea Advanced Institute of Science and Technology (KAIST)
+            <div class="edu-line">
+              <span class="dept">Industrial and Systems Engineering</span><br>
+              <span class="school kaist">Korea Advanced Institute of Science and Technology (KAIST)</span>
             </div>
-            <div class="desc mt-1">
-              <span class="tag-gold">Award</span>
-              &nbsp;&lt;대한산업공학회 제17회 석사논문경진대회 수상&gt;
+            <div class="mt-2">
+              <span class="badge">Honor</span>
+              <ul class="meta-dots">
+                <li>Awarded in the <b>17th Best Master Thesis Award</b> hosted by the Korea Institute of Industrial Engineers (KIIE).</li>
+              </ul>
             </div>
           </li>
 
@@ -301,13 +260,13 @@
               <img src="assets/img/logos/kyunghee.png" alt="Kyung Hee University" class="school-logo">
               Bachelor of Engineering (B.E.)
             </div>
-            <div class="desc">
-              Industrial and Management Systems Engineering<br>
-              Kyung Hee University
+            <div class="edu-line">
+              <span class="dept">Industrial and Management Systems Engineering</span><br>
+              <span class="school khu">Kyung Hee University</span>
             </div>
-            <div class="desc mt-1">
-              graduated as <b>valedictorian</b> (1st out of 86)
-            </div>
+            <ul class="meta-dots">
+              <li><b>Graduated as the college valedictorian (1st out of 86)</b>.</li>
+            </ul>
           </li>
 
         </ul>
@@ -322,11 +281,6 @@
             <div class="year">20XX–Present</div>
             <div class="title text-[17px]">Assistant Professor</div>
             <div class="desc">Dept. of Business Administration, Dongduk Woman University</div>
-          </li>
-          <li>
-            <div class="year">20XX–20XX</div>
-            <div class="title text-[17px]">[Position]</div>
-            <div class="desc">[Affiliation]</div>
           </li>
           <li>
             <div class="year">20XX–20XX</div>
@@ -361,17 +315,17 @@
         <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <div class="lift p-4 rounded-xl">
             <div class="year">2025</div>
-            <div class="title mt-1">Outstanding Paper Award</div>
+            <div class="title mt-1 font-bold">Outstanding Paper Award</div>
             <div class="desc mt-1">[Conference/Org]</div>
           </div>
           <div class="lift p-4 rounded-xl">
             <div class="year">2024</div>
-            <div class="title mt-1">Teaching Excellence</div>
+            <div class="title mt-1 font-bold">Teaching Excellence</div>
             <div class="desc mt-1">[University]</div>
           </div>
           <div class="lift p-4 rounded-xl">
             <div class="year">20XX</div>
-            <div class="title mt-1">[Award name]</div>
+            <div class="title mt-1 font-bold">[Award name]</div>
             <div class="desc mt-1">[Org]</div>
           </div>
         </div>
@@ -408,6 +362,7 @@
           </li>
         </ul>
       </section>
+
     </main>
   </section>
 
@@ -432,19 +387,6 @@
     const btnMobile = document.getElementById('btnMobile');
     const mobileNav = document.getElementById('mobileNav');
     btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
-
-    // Desktop menus hover/focus open-close
-    const MENU_DELAY = 70;
-    document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
-      const panel = grp.querySelector('.js-submenu');
-      let t;
-      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
-      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
-      grp.addEventListener('mouseenter', open);
-      grp.addEventListener('mouseleave', close);
-      grp.addEventListener('focusin', open);
-      grp.addEventListener('focusout', close);
-    });
   </script>
 </body>
 </html>
