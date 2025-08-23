@@ -89,13 +89,17 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   </div>
 </section>
 
-<!-- Intro -->
-<section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-3 gap-6 items-center">
-  <div class="lg:col-span-1">
-    <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo" class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
+<!-- Intro (교체본) -->
+<section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-[auto,1fr] gap-4 items-center">
+  <div>
+    <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}"
+         alt="FINDS Lab Logo"
+         class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
   </div>
-  <div class="lg:col-span-2">
+
+  <div>
     <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman's University</p>
+
     <h3 class="text-3xl mt-1">
       <span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
       <span class="font-extrabold">D</span><span class="font-light">ata</span>
@@ -103,10 +107,12 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
       <span class="font-extrabold"> Lab. - </span>
       <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
     </h3>
+
     <p class="mt-3 text-[15px] leading-7 text-slate-700">
       동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실 (Financial Data Science)</b> 홈페이지입니다.
     </p>
-    <div class="mt-5">
+
+    <div class="mt-4">
       <a class="btn-primary text-sm" href="{{ '/about-introduction.html' | relative_url }}">Read More</a>
     </div>
   </div>
