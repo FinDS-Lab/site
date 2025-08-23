@@ -14,7 +14,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   .dot{width:10px;height:10px;border-radius:9999px;background:#e5e7eb}
   .dot.active{background:var(--accent, #ac0e0e)}
 
-  /* CLS(흔들림) 최소화: 높이 고정(모바일에서만 낮춤) */
   @media (max-width: 768px){
     .carousel-slide{height:420px}
   }
@@ -26,7 +25,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
     <div class="carousel-track" id="carouselTrack">
       <!-- Slide 1 -->
       <div class="carousel-slide">
-        <!-- 여기에 '슬라이드1' 배경 이미지 경로 -->
         <img class="bg" src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
@@ -43,7 +41,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
 
       <!-- Slide 2 -->
       <div class="carousel-slide">
-        <!-- 여기에 '슬라이드2' 배경 이미지 경로 -->
         <img class="bg" src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
@@ -62,7 +59,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
 
       <!-- Slide 3 -->
       <div class="carousel-slide">
-        <!-- 여기에 '슬라이드3' 배경 이미지 경로 -->
         <img class="bg" src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
@@ -89,7 +85,7 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   </div>
 </section>
 
-<!-- Intro (교체본) -->
+<!-- Intro -->
 <section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-[auto,1fr] gap-4 items-center">
   <div>
     <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}"
@@ -159,7 +155,7 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
     }
 
     function auto(){
-      timer = setInterval(() => go(idx + 1), 5000); // 5초마다 자동 전환
+      timer = setInterval(() => go(idx + 1), 5000);
     }
 
     dots.forEach((d) => d.addEventListener('click', () => {
@@ -168,11 +164,9 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
       auto();
     }));
 
-    // 초기 진입
     go(0);
     auto();
 
-    // 탭 전환 시 타이머 일시정지/재개 (배터리/퍼포먼스 최적화)
     document.addEventListener('visibilitychange', () => {
       if (document.hidden){ clearInterval(timer); }
       else { auto(); }
@@ -180,53 +174,148 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   })();
 </script>
 
-<!-- ====== News/Notice 임베드 로더(그대로 유지 가능) ====== -->
+<!-- ====== News/Notice 임베드 로더 (JSON 우선, HTML 폴백) ====== -->
 <script>
-  async function importList(srcUrl, listSelectors, targetId, limit = 3){
-    const target = document.getElementById(targetId);
-    if (!target) return;
-  
-    if (location.protocol === 'file:') {
-      target.innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
+  function formatDateYMD(iso){
+    const d = new Date(iso);
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const dd= String(d.getDate()).padStart(2,'0');
+    return `${y}.${m}.${dd}`;
+  }
+
+  function renderSimpleList(targetId, items){
+    const ul = document.getElementById(targetId);
+    if (!ul) return;
+    ul.innerHTML = '';
+    if (!items || !items.length){
+      ul.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
       return;
     }
-  
-    try {
-      const res = await fetch(srcUrl, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    items.forEach(it=>{
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <a class="block font-bold hover:underline" href="${it.url}">${it.title}</a>
+        <div class="text-xs text-slate-500 mt-0.5">${formatDateYMD(it.date)}</div>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  async function loadNewsFromJSON(){
+    const url = '{{ "/assets/data/news.json" | relative_url }}';
+    const res = await fetch(url + '?_=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('news.json not found');
+    const data = await res.json(); // [{date,title,url,excerpt,...}]
+    // 최신순 정렬 후 상위 3개
+    const top3 = data
+      .slice()
+      .sort((a,b)=> new Date(b.date) - new Date(a.date))
+      .slice(0,3);
+    renderSimpleList('news-feed', top3);
+  }
+
+  async function loadNoticesFromJSON(){
+    const url = '{{ "/assets/data/notices.json" | relative_url }}';
+    const res = await fetch(url + '?_=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('notices.json not found');
+    const data = await res.json(); // [{date,title,url}]
+    const top3 = data
+      .slice()
+      .sort((a,b)=> new Date(b.date) - new Date(a.date))
+      .slice(0,3);
+    renderSimpleList('notice-feed', top3);
+  }
+
+  // HTML 폴백: archives-news.html 구조 지원(#board .board-row .sbj)
+  async function loadNewsFromHTML(){
+    const target = document.getElementById('news-feed');
+    if (!target) return;
+    try{
+      const res = await fetch('{{ "/archives-news.html" | relative_url }}', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
       const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-  
-      let items = [];
-      for (const sel of listSelectors) {
-        items = Array.from(doc.querySelectorAll(sel));
-        if (items.length) break;
-      }
-  
-      target.innerHTML = '';
-      if (items.length === 0) {
-        target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
+      const doc  = new DOMParser().parseFromString(html, 'text/html');
+
+      // 보드 행에서 제목/링크/날짜 추출
+      const rows = Array.from(doc.querySelectorAll('#board .board-row'));
+      if (!rows.length){
+        // 구형 선택자 폴백들
+        const legacy = Array.from(doc.querySelectorAll('#news-list > li, #news ul > li, ul#news > li, main ul > li'));
+        if (!legacy.length){
+          renderSimpleList('news-feed', []);
+          return;
+        }
+        // 구형은 그 상태로 최근 3개만 표시(역순)
+        const items = legacy.slice(-3).reverse().map(li=>{
+          const a = li.querySelector('a');
+          return { title:a ? a.textContent.trim() : li.textContent.trim(), url:a ? a.getAttribute('href') : '#', date:new Date().toISOString().slice(0,10) };
+        });
+        renderSimpleList('news-feed', items);
         return;
       }
-  
-      // 🔥 최근 3개만 보이게 (역순 정렬 포함)
-      items.slice(-limit).reverse().forEach((li) => 
-        target.appendChild(li.cloneNode(true))
-      );
-  
-    } catch (err) {
-      console.error('임베드 오류:', err);
-      target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
+
+      const items = rows.map(row=>{
+        const a   = row.querySelector('.sbj a, a.sbj, .sbj'); // 제목 링크
+        const ym  = row.querySelector('.date-ym')?.textContent?.trim() || '';
+        const dd  = row.querySelector('.date-d')?.textContent?.trim() || '';
+        const date= (ym && dd) ? ym.replace('.', '-') + '-' + dd.padStart(2,'0') : '';
+        return {
+          title: a ? a.textContent.trim() : 'Untitled',
+          url: a ? a.getAttribute('href') : '#',
+          date: date ? new Date(date.replace('.', '-')).toISOString().slice(0,10) : new Date().toISOString().slice(0,10)
+        };
+      })
+      .sort((a,b)=> new Date(b.date) - new Date(a.date))
+      .slice(0,3);
+
+      renderSimpleList('news-feed', items);
+    }catch(e){
+      console.error(e);
+      renderSimpleList('news-feed', []);
     }
   }
 
-  // Load lists
-  importList('{{ "/archives-news.html" | relative_url }}',
-    ['#news-list > li', '#news ul > li', 'ul#news > li', 'main ul > li'],
-    'news-feed', 3
-  );
-  importList('{{ "/about-notice.html" | relative_url }}',
-    ['#notice-list > li', '#notices ul > li', 'ul#notice > li', 'main ul > li'],
-    'notice-feed', 3
-  );
+  // Notice HTML 폴백(구조 모르면 a 태그 3개만 뽑기)
+  async function loadNoticesFromHTML(){
+    const target = document.getElementById('notice-feed');
+    if (!target) return;
+    try{
+      const res = await fetch('{{ "/about-notice.html" | relative_url }}', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const html = await res.text();
+      const doc  = new DOMParser().parseFromString(html, 'text/html');
+
+      // heuristics: 본문 내 공지 리스트의 링크 3개
+      const anchors = Array.from(doc.querySelectorAll('main a, #content a, article a, .board-row .sbj a'))
+                        .filter(a=> a.getAttribute('href') && a.textContent.trim())
+                        .slice(0,3);
+      const items = anchors.map(a=>({
+        title: a.textContent.trim(),
+        url: a.getAttribute('href'),
+        date: new Date().toISOString().slice(0,10)
+      }));
+      renderSimpleList('notice-feed', items);
+    }catch(e){
+      console.error(e);
+      renderSimpleList('notice-feed', []);
+    }
+  }
+
+  (async function boot(){
+    // JSON 우선
+    let newsOk = false, noticeOk = false;
+    try{ await loadNewsFromJSON(); newsOk = true; }catch(e){ /* fallback 아래서 */ }
+    try{ await loadNoticesFromJSON(); noticeOk = true; }catch(e){ /* fallback 아래서 */ }
+
+    // 폴백: HTML 파싱
+    if (!newsOk)   await loadNewsFromHTML();
+    if (!noticeOk) await loadNoticesFromHTML();
+
+    // 로컬 파일 열람시 차단 메시지
+    if (location.protocol === 'file:'){
+      document.getElementById('news-feed').innerHTML   = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
+      document.getElementById('notice-feed').innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
+    }
+  })();
 </script>
