@@ -98,15 +98,19 @@ permalink: /members-director.html
   .timeline{list-style:none; margin:0; padding:0;}
   .tl{
     display:grid;
-    align-items:start;
-    row-gap:.4rem;             /* 3줄 사이 간격 */
+    grid-auto-rows:auto;
+    align-items:stretch;          /* ★ 레일이 행 높이에 맞춰 늘어나도록 */
+    row-gap:.4rem;                /* 3줄 사이 간격 */
     position:relative;
   }
   .tl .rail{
     position:relative;
     width:var(--rail);
+    align-self:stretch;           /* ★ 레일 셀 자체도 늘려줌 */
+    height:100%;
+    min-height:3.25rem;           /* ★ 내용 적어도 선/점이 보이게 최소 높이 */
   }
-  .tl .rail::before{           /* 금색 선 (뒤) */
+  .tl .rail::before{              /* 금색 선 (뒤) */
     content:"";
     position:absolute;
     left:50%; top:0; bottom:0;
@@ -115,10 +119,10 @@ permalink: /members-director.html
     border-radius:2px;
     z-index:0;
   }
-  .tl .rail::after{            /* 빨간 점 (앞) */
+  .tl .rail::after{               /* 빨간 점 (앞) */
     content:"";
     position:absolute;
-    left:50%; top:1rem;        /* 줄 기준 높이 */
+    left:50%; top:1rem;           /* 첫 줄 기준 높이 */
     width:var(--dot); height:var(--dot);
     background:var(--accent);
     border-radius:50%;
@@ -257,7 +261,7 @@ permalink: /members-director.html
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
       </h2>
 
-      <ul class="timeline mt-6 space-y-8">
+      <ul class="timeline mt-10 space-y-8">
         <!-- Ph.D. -->
         <li class="tl edu">
           <div class="rail" aria-hidden="true"></div>
@@ -335,7 +339,7 @@ permalink: /members-director.html
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment
       </h2>
 
-      <ul class="timeline mt-6 space-y-6">
+      <ul class="timeline mt-10 space-y-6">
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
@@ -344,7 +348,6 @@ permalink: /members-director.html
             <div class="row3 desc">Department of Business Administration, Dongduk Woman's University</div>
           </div>
         </li>
-
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
@@ -353,7 +356,6 @@ permalink: /members-director.html
             <div class="row3 desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
           </div>
         </li>
-
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
@@ -362,7 +364,6 @@ permalink: /members-director.html
             <div class="row3 desc">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
           </div>
         </li>
-
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
@@ -371,7 +372,6 @@ permalink: /members-director.html
             <div class="row3 desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
           </div>
         </li>
-
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
@@ -389,7 +389,7 @@ permalink: /members-director.html
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation
       </h2>
 
-      <ul class="timeline mt-6 space-y-6">
+      <ul class="timeline mt-10 space-y-6">
         <li class="tl simple">
           <div class="rail" aria-hidden="true"></div>
           <div>
