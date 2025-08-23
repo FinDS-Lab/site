@@ -123,28 +123,31 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
 <!-- News & Notice (overflow 고친 버전) -->
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
   <!-- News: /news/에서 최신 3개 (제목만) -->
-  <div class="home-panel min-w-0">
-    <div class="flex items-center justify-between gap-3">
-      <h4 class="text-xl font-extrabold m-0">News</h4>
-      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-news.html' | relative_url }}">More</a>
-    </div>
+<div class="card">
+  <div class="flex items-center justify-between">
+    <h4 class="text-xl font-extrabold">News</h4>
+    <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+  </div>
 
-    {%- assign pool = site.pages | where_exp: "p", "p.url and p.url contains '/news/' and p.date" -%}
-    {%- assign pool = pool | sort: "date" | reverse -%}
-    {%- assign shown = 0 -%}
-    <ul class="mt-4 space-y-2">
-      {%- for post in pool -%}
+  {% assign all = site.pages | concat: site.posts %}
+  {% assign all_sorted = all | sort: 'date' | reverse %}
+  {% assign shown = 0 %}
+  <ul class="mt-4 space-y-2">
+    {% for post in all_sorted %}
+      {% if post.url and post.date and post.url contains '/news/' %}
         <li class="text-[14px] leading-6">
           <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
         </li>
-        {%- assign shown = shown | plus: 1 -%}
-        {%- if shown == 3 -%}{%- break -%}{%- endif -%}
-      {%- endfor -%}
-      {%- if shown == 0 -%}
-        <li class="text-sm text-slate-500">게시글이 없습니다.</li>
-      {%- endif -%}
-    </ul>
-  </div>
+        {% assign shown = shown | plus: 1 %}
+        {% if shown == 3 %}{% break %}{% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if shown == 0 %}
+      <li class="text-sm text-slate-500">게시글이 없습니다.</li>
+    {% endif %}
+  </ul>
+</div>
 
   <!-- Notice: /about-notice.html에서 상위 3개 링크만 추출 (제목만) -->
   <div class="home-panel min-w-0">
