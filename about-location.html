@@ -175,7 +175,6 @@
         <span class="tag-accent">About FINDS</span>
         <span class="tag-gold">Location</span>
       </div>
-      <!-- Contact 버튼 제거 (요청사항) -->
     </div>
   </section>
 
@@ -194,55 +193,98 @@
       </div>
     </div>
 
-    <!-- Info -->
-    <aside class="card">
-      <h3 class="text-lg font-extrabold text-slate-900">동덕여자대학교 경영학과</h3>
-      <p class="text-sm text-slate-600 mt-1">000호</p>
+    <!-- Right column: two stacked cards -->
+    <aside class="space-y-6">
+      <!-- FINDS Lab (332호) -->
+      <section class="card">
+        <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
+          금융데이터사이언스 연구실 <span class="opacity-90">(FINDS Lab.)</span>
+        </div>
 
-      <div class="mt-4 space-y-3">
-        <div class="info-row">
-          <img src="assets/icons/marker.png" alt="" />
-          <div>
-            <div id="addr-ko" class="text-[15px] font-semibold text-slate-900">
-              (02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관
+        <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 경영학과</h3>
+        <p class="text-sm text-slate-600 mt-1">인문관 332호</p>
+
+        <div class="mt-4 space-y-3">
+          <div class="info-row">
+            <img src="assets/icons/marker.png" alt="" />
+            <div>
+              <div class="text-[15px] font-semibold text-slate-900">
+                (02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관
+              </div>
+              <div class="text-[12px] text-slate-600">
+                60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul (Dongduk Women’s Univ. — Humanities Bldg.)
+              </div>
+              <div class="text-[12px] text-slate-500 mt-1">
+                (지번) 하월곡동 23-1
+              </div>
+              <div class="mt-1">
+                <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
+              </div>
             </div>
-            <div id="addr-en" class="text-[12px] text-slate-600">
-              60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul (Dongduk Women’s Univ. — Humanities Bldg.)
-            </div>
-            <div class="text-[12px] text-slate-500 mt-1">
-              (지번) 하월곡동 23-1
-            </div>
-            <div class="mt-1">
-              <button id="btnCopyAddr" class="copy-btn" title="주소 복사">Copy address</button>
+          </div>
+
+          <div class="info-row">
+            <img src="assets/icons/info.png" alt="" />
+            <div class="text-[12px] text-slate-600">
+              * 포털/지도에 ‘인문관’이 별도 POI로 등록되지 않은 경우, 캠퍼스 중심 좌표로 안내될 수 있습니다.
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- Tel 제거 요청: 연락처 블럭 없음 -->
-        <div class="info-row">
-          <img src="assets/icons/info.png" alt="" />
-          <div class="text-[12px] text-slate-600">
-            * 포털/지도에 ‘인문관’이 별도 POI로 등록되지 않은 경우, 캠퍼스 중심 좌표로 안내될 수 있습니다.
+      <!-- 최인수 교수 연구실 (303호) -->
+      <section class="card">
+        <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
+          최인수 교수님 연구실 <span class="opacity-90">(Professor Choi, Insoo)</span>
+        </div>
+
+        <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 경영학과</h3>
+        <p class="text-sm text-slate-600 mt-1">인문관 303호</p>
+
+        <div class="mt-4 space-y-3">
+          <div class="info-row">
+            <img src="assets/icons/marker.png" alt="" />
+            <div>
+              <div class="text-[15px] font-semibold text-slate-900">
+                (02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관
+              </div>
+              <div class="text-[12px] text-slate-600">
+                60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul (Dongduk Women’s Univ. — Humanities Bldg.)
+              </div>
+              <div class="text-[12px] text-slate-500 mt-1">
+                (지번) 하월곡동 23-1
+              </div>
+              <div class="mt-1">
+                <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <img src="assets/icons/info.png" alt="" />
+            <div class="text-[12px] text-slate-600">
+              * 포털/지도에 ‘인문관’이 별도 POI로 등록되지 않은 경우, 캠퍼스 중심 좌표로 안내될 수 있습니다.
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </aside>
   </main>
 
   <!-- Footer -->
-<footer class="mt-10 border-t border-slate-200 bg-white">
-  <div class="max-w-7xl mx-auto px-4 py-8">
-    <p class="text-center text-sm text-slate-500 font-semibold">
-      <a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교</a> |
-      <a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교 경영학과</a> |
-      <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
-      <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
-    </p>
-    <p class="mt-4 text-center text-xs text-slate-400">
-      Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
-    </p>
-  </div>
-</footer>
+  <footer class="mt-10 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교</a> |
+        <a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교 경영학과</a> |
+        <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
+        <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
+      </p>
+      <p class="mt-4 text-center text-xs text-slate-400">
+        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
 
   <script>
     // ===== Mobile menu toggle =====
@@ -264,10 +306,8 @@
     });
 
     // ===== Kakao Map Setup =====
-    const mapWrap = document.getElementById('kakao-map-wrap');
     const mapEl = document.getElementById('kakao-map');
     const errorEl = document.getElementById('mapError');
-    const btnCopyAddr = document.getElementById('btnCopyAddr');
     const btnDirections = document.getElementById('btnDirections');
     const btnRecenter = document.getElementById('btnRecenter');
 
@@ -353,16 +393,19 @@
       showError('지도를 초기화할 수 없습니다.');
     }
 
-    // 주소 복사
-    btnCopyAddr.addEventListener('click', async () => {
-      const text = '서울 성북구 화랑로13길 60 (지번: 상월곡동 86-78) — 동덕여자대학교 인문관';
-      try{
-        await navigator.clipboard.writeText(text);
-        btnCopyAddr.textContent = 'Copied!';
-        setTimeout(()=> btnCopyAddr.textContent = 'Copy address', 1200);
-      }catch(err){
-        alert('복사 실패: 브라우저 권한을 확인하세요.');
-      }
+    // 주소 복사 (두 카드 공통)
+    document.querySelectorAll('[data-copy-addr]').forEach(btn=>{
+      btn.addEventListener('click', async () => {
+        const text = '서울 성북구 화랑로13길 60 (지번: 하월곡동 23-1) — 동덕여자대학교 인문관';
+        try{
+          await navigator.clipboard.writeText(text);
+          const old = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(()=> btn.textContent = old, 1200);
+        }catch(err){
+          alert('복사 실패: 브라우저 권한을 확인하세요.');
+        }
+      });
     });
 
     // 지도 다시 맞추기
@@ -375,4 +418,3 @@
   </script>
 </body>
 </html>
-
