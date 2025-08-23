@@ -148,24 +148,30 @@ permalink: /members-director.html
 
   <!-- Main -->
   <main class="grid gap-6">
+    
     <!-- Introduction -->
-    <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
-      </h2>
-      <p class="mt-3 text-[15px] leading-7 text-slate-700">
-        My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
-        with a particular focus on <b>integrating data science and financial engineering</b> to address <b>real-world financial challenges</b>. 
-        I strive to make <b>financial services</b> more intuitive and accessible by <b>simplifying complex concepts</b> and developing 
-        <b>user-friendly tools</b> for <b>asset management</b>.
-      </p>
-      
-      <p class="mt-3 text-[15px] leading-7 text-slate-700">
-        Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
-        <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>. 
-        With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>, 
-        I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
-      </p>
+    <section class="max-w-7xl mx-auto px-4">
+      <div class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
+        <h2 class="text-xl font-extrabold flex items-center gap-2">
+          <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
+        </h2>
+    
+        <p class="mt-3 text-[15px] leading-7 text-slate-700">
+          My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
+          with a particular focus on <b>integrating data science and financial engineering</b> to address 
+          <b>real-world financial challenges</b>. I strive to make <b>financial services</b> more intuitive and accessible 
+          by <b>simplifying complex concepts</b> and developing <b>user-friendly tools</b> for <b>asset management</b>.
+        </p>
+    
+        <p class="mt-3 text-[15px] leading-7 text-slate-700">
+          Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
+          <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>. 
+          With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>, 
+          I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
+        </p>
+      </div>
+    </section>
+
 
     <!-- Research Interests -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
@@ -206,80 +212,99 @@ permalink: /members-director.html
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
       </h2>
-      <ul class="timeline mt-4 space-y-6">
+    
+      <ul class="timeline mt-6 space-y-8">
         <!-- Ph.D. -->
-        <li class="edu-item">
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.02.</div>
-          <div class="edu-header">
-            <div class="edu-text">
-              <div class="degree">Ph.D. in Engineering</div>
-              <div class="dept">Industrial and Systems Engineering</div>
-              <div class="school" style="color:#003366;">KAIST</div>
+        <li class="edu-item flex gap-4 items-start">
+          <!-- 로고 -->
+          <picture>
+            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" 
+                 alt="KAIST logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
+                 width="48" height="48" loading="lazy" decoding="async"
+                 onerror="this.style.display='none'">
+          </picture>
+    
+          <!-- 텍스트 -->
+          <div class="flex-1">
+            <div class="flex justify-between items-start gap-2">
+              <div>
+                <div class="degree font-extrabold">Ph.D. in Engineering</div>
+                <div class="dept font-semibold text-slate-700">Industrial and Systems Engineering</div>
+                <div class="school font-black" style="color:#003366;">KAIST</div>
+              </div>
+              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.02.</div>
             </div>
-            <picture>
-              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp" />
-              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo"
-                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
-                   onerror="this.style.display='none'">
-            </picture>
-          </div>
-          <div class="mt-2">
-            <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-            <ul class="bullets-honor mt-2">
-              <li><b>Best Doctoral Dissertation Award</b>, Korean Operations Research and Management Science Society (한국경영과학회)</li>
-            </ul>
+    
+            <div class="mt-2">
+              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+              <ul class="bullets-honor mt-2">
+                <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
+              </ul>
+            </div>
           </div>
         </li>
-
+    
         <!-- M.S. -->
-        <li class="edu-item">
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2021.02.</div>
-          <div class="edu-header">
-            <div class="edu-text">
-              <div class="degree">Master of Science</div>
-              <div class="dept">Industrial and Systems Engineering</div>
-              <div class="school" style="color:#003366;">KAIST</div>
+        <li class="edu-item flex gap-4 items-start">
+          <picture>
+            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" 
+                 alt="KAIST logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
+                 width="48" height="48" loading="lazy" decoding="async"
+                 onerror="this.style.display='none'">
+          </picture>
+    
+          <div class="flex-1">
+            <div class="flex justify-between items-start gap-2">
+              <div>
+                <div class="degree font-extrabold">Master of Science</div>
+                <div class="dept font-semibold text-slate-700">Industrial and Systems Engineering</div>
+                <div class="school font-black" style="color:#003366;">KAIST</div>
+              </div>
+              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2021.02.</div>
             </div>
-            <picture>
-              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp" />
-              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo"
-                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
-                   onerror="this.style.display='none'">
-            </picture>
-          </div>
-          <div class="mt-2">
-            <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-            <ul class="bullets-honor mt-2">
-              <li><b>Best Master Thesis Award</b>, Korean Institute of Industrial Engineers (대한산업공학회)</li>
-            </ul>
+    
+            <div class="mt-2">
+              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+              <ul class="bullets-honor mt-2">
+                <li><b>Best Master Thesis Award</b>, KIIE</li>
+              </ul>
+            </div>
           </div>
         </li>
-
+    
         <!-- B.E. -->
-        <li class="edu-item">
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2018.02.</div>
-          <div class="edu-header">
-            <div class="edu-text">
-              <div class="degree">Bachelor of Engineering</div>
-              <div class="dept">Industrial &amp; Management Systems Engineering</div>
-              <div class="school" style="color:#990000;">Kyung Hee University</div>
+        <li class="edu-item flex gap-4 items-start">
+          <picture>
+            <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp">
+            <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" 
+                 alt="Kyung Hee Univ. logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
+                 width="48" height="48" loading="lazy" decoding="async"
+                 onerror="this.style.display='none'">
+          </picture>
+    
+          <div class="flex-1">
+            <div class="flex justify-between items-start gap-2">
+              <div>
+                <div class="degree font-extrabold">Bachelor of Engineering</div>
+                <div class="dept font-semibold text-slate-700">Industrial &amp; Management Systems Engineering</div>
+                <div class="school font-black" style="color:#990000;">Kyung Hee University</div>
+              </div>
+              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2018.02.</div>
             </div>
-            <picture>
-              <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp" />
-              <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" alt="Kyung Hee University logo"
-                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
-                   onerror="this.style.display='none'">
-            </picture>
-          </div>
-          <div class="mt-2">
-            <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-            <ul class="bullets-honor mt-2">
-              <li><b>Valedictorian</b>, 1st out of 86 students</li>
-            </ul>
+    
+            <div class="mt-2">
+              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+              <ul class="bullets-honor mt-2">
+                <li><b>Valedictorian</b>, 1st out of 86 students</li>
+              </ul>
+            </div>
           </div>
         </li>
       </ul>
     </section>
+
 
     <!-- Employment -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
@@ -329,4 +354,5 @@ permalink: /members-director.html
     </section>
   </main>
 </section>
+
 
