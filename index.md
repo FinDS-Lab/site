@@ -18,11 +18,11 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
     .carousel-slide{height:420px}
   }
 
-  /* 뉴스/공지: 제목 한 줄 말줄임 */
-  .line-1{
-    display:inline-block;max-width:100%;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;
-  }
+  /* ====== 홈 하단 News/Notice 패널 ====== */
+  .home-panel{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1rem}
+  .home-panel h4{margin:0}
+  .line-1{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .min-w-0{min-width:0} /* grid overflow 방지 */
 </style>
 
 <!-- Hero -->
@@ -120,38 +120,37 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   </div>
 </section>
 
-<!-- News & Notice -->
+<!-- News & Notice (overflow 고친 버전) -->
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- News (Liquid: /news/에서 최신 3개) -->
-  <div class="card">
-    <div class="flex items-center justify-between">
-      <h4 class="text-xl font-extrabold">News</h4>
-      <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+  <!-- News: /news/에서 최신 3개 (제목만) -->
+  <div class="home-panel min-w-0">
+    <div class="flex items-center justify-between gap-3">
+      <h4 class="text-xl font-extrabold m-0">News</h4>
+      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-news.html' | relative_url }}">More</a>
     </div>
 
-    {% assign pool = site.pages | where_exp: "p", "p.url and p.url contains '/news/' and p.date" %}
-    {% assign pool = pool | sort: "date" | reverse %}
-    {% assign shown = 0 %}
+    {%- assign pool = site.pages | where_exp: "p", "p.url and p.url contains '/news/' and p.date" -%}
+    {%- assign pool = pool | sort: "date" | reverse -%}
+    {%- assign shown = 0 -%}
     <ul class="mt-4 space-y-2">
-      {% for post in pool %}
+      {%- for post in pool -%}
         <li class="text-[14px] leading-6">
           <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
         </li>
-        {% assign shown = shown | plus: 1 %}
-        {% if shown == 3 %}{% break %}{% endif %}
-      {% endfor %}
-      {% if shown == 0 %}
+        {%- assign shown = shown | plus: 1 -%}
+        {%- if shown == 3 -%}{%- break -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if shown == 0 -%}
         <li class="text-sm text-slate-500">게시글이 없습니다.</li>
-      {% endif %}
+      {%- endif -%}
     </ul>
   </div>
 
-  <!-- Notice: /about-notice.html에서 상위 3개 링크만 스니핑 -->
-  <div class="card">
-    <div class="flex items-center justify-between">
-      <h4 class="text-xl font-extrabold">Notice</h4>
-      <a class="warm-underline font-bold" href="{{ '/about-notice.html' | relative_url }}">More</a>
+  <!-- Notice: /about-notice.html에서 상위 3개 링크만 추출 (제목만) -->
+  <div class="home-panel min-w-0">
+    <div class="flex items-center justify-between gap-3">
+      <h4 class="text-xl font-extrabold m-0">Notice</h4>
+      <a class="warm-underline font-bold shrink-0" href="{{ '/about-notice.html' | relative_url }}">More</a>
     </div>
     <ul id="notice-feed" class="mt-4 space-y-2">
       <li class="text-sm text-slate-500">불러오는 중…</li>
@@ -202,7 +201,7 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
       const html = await res.text();
       const doc  = new DOMParser().parseFromString(html, 'text/html');
 
-      // 본문에서 텍스트 있는 링크 3개 추출 (필요시 선택자 보강)
+      // 본문에서 텍스트 있는 링크 3개 추출 (필요 시 선택자 추가)
       const anchors = Array.from(doc.querySelectorAll('main a, article a, .board-row .sbj a, #content a'))
         .filter(a => a.getAttribute('href') && a.textContent.trim())
         .slice(0,3);
