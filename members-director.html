@@ -4,14 +4,14 @@ title: Members — Director | FINDS Lab
 permalink: /members-director.html
 ---
 
-<!-- 페이지 전용 보정 스타일 (타임라인/불릿/줄바꿈) -->
+<!-- 페이지 전용 보정 스타일 (타임라인/불릿/줄바꿈 + 이미지) -->
 <style>
-  /* 타임라인: 빨간 점 + 금색 라인 */
+  /* 타임라인: 빨간 점 + 금색 라인(빨간 점 중앙 관통) */
   .timeline{position:relative; padding-left:1.75rem;}
   .timeline::before{
-    content:""; position:absolute; left:.68rem;
-    top:.4rem; bottom:.4rem;
-    width:3px; background:var(--gold, #d6b14d); border-radius:2px;
+    content:""; position:absolute; left:-3.5px;
+    top:0.4rem; bottom:0.4rem; width:3px;
+    background:var(--gold, #d6b14d); border-radius:2px;
   }
   .timeline > li{position:relative; margin-left:.25rem; padding-left:1rem;}
   .timeline > li::before{
@@ -20,14 +20,14 @@ permalink: /members-director.html
     border-radius:9999px; box-shadow:0 0 0 3px rgba(172,14,14,.08);
   }
 
-  /* Education 전용 */
+  /* Education 전용 (텍스트-로고 좌우) */
   .edu-item{position:relative;}
   .edu-header{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;}
   .edu-text{min-width:0;}
   .edu-text .degree{font-weight:800;}
   .edu-text .dept{font-weight:600; color:#334155;}
   .edu-text .school{font-weight:900; white-space:nowrap;}
-  .edu-logo{width:40px; height:40px; object-fit:contain; border-radius:.5rem; flex:0 0 40px;}
+  .edu-logo{width:44px; height:44px; object-fit:contain; border-radius:.5rem; flex:0 0 44px;}
 
   /* 수상 bullet */
   .bullets-honor{list-style:disc; margin:.5rem 0 0 1.25rem; padding:0;}
@@ -37,19 +37,56 @@ permalink: /members-director.html
   .bullets{list-style:none; margin:0; padding:0;}
   .bullets li{position:relative; padding-left:1rem; font-size:.95rem; color:#475569;}
   .bullets li::before{content:"•"; position:absolute; left:0; top:0; color:#334155; font-weight:900;}
+
+  /* 이미지 CLS 최소화 (폭/높이 지정되어 있으면 브라우저가 자리 예약) */
+  img[width][height]{height:auto}
 </style>
 
 <!-- ===== Hero ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/people/director-cover.jpg' | relative_url }}" alt="Director cover"
-         class="w-full h-[260px] md:h-[320px] object-cover" width="1440" height="320">
+    <!-- webp 우선 + jpg 백업 + 반응형 -->
+    <picture>
+      <!-- 작은 화면용 -->
+      <source
+        srcset="
+          {{ '/assets/img/people/director-cover-800.webp'  | relative_url }} 800w,
+          {{ '/assets/img/people/director-cover-1200.webp' | relative_url }} 1200w,
+          {{ '/assets/img/people/director-cover-1600.webp' | relative_url }} 1600w
+        "
+        type="image/webp" />
+      <source
+        srcset="
+          {{ '/assets/img/people/director-cover-800.jpg'  | relative_url }} 800w,
+          {{ '/assets/img/people/director-cover-1200.jpg' | relative_url }} 1200w,
+          {{ '/assets/img/people/director-cover-1600.jpg' | relative_url }} 1600w
+        "
+        type="image/jpeg" />
+      <img
+        src="{{ '/assets/img/people/director-cover-1200.jpg' | relative_url }}"
+        alt="FINDS Lab Director cover"
+        class="w-full h-[260px] md:h-[320px] object-cover"
+        width="1600" height="480"
+        sizes="(max-width: 768px) 100vw, 1200px"
+        decoding="async"
+        fetchpriority="high" />
+    </picture>
+
     <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent"></div>
     <div class="absolute left-4 right-4 md:left-6 bottom-4">
       <div class="flex items-end gap-4">
-        <img src="{{ '/assets/img/people/director.jpg' | relative_url }}"
-             class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg"
-             alt="Director" width="224" height="224">
+        <!-- 프로필 이미지: webp + jpg, 고정 사각형 -->
+        <picture>
+          <source srcset="{{ '/assets/img/people/director-224.webp' | relative_url }}" type="image/webp" />
+          <source srcset="{{ '/assets/img/people/director-224.jpg'  | relative_url }}" type="image/jpeg" />
+          <img
+            src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
+            class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg"
+            alt="Insu Choi portrait"
+            width="224" height="224"
+            loading="eager" decoding="async" />
+        </picture>
+
         <div class="text-white drop-shadow">
           <span class="inline-block px-2 py-1 rounded-full font-extrabold text-xs" style="background:#ac0e0e;">Director</span>
           <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
@@ -67,23 +104,23 @@ permalink: /members-director.html
     <h3 class="text-lg font-extrabold">Profile</h3>
     <div class="mt-3 grid gap-3 text-[14px] text-slate-700">
       <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/role.png' | relative_url }}" alt="" width="18" height="18">
+        <img src="{{ '/assets/img/icons/role.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">Position</b>Assistant Professor · Director, FINDS Lab</div>
       </div>
       <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/building.png' | relative_url }}" alt="" width="18" height="18">
+        <img src="{{ '/assets/img/icons/building.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">Affiliation</b>Dept. of Business Administration, DWU</div>
       </div>
       <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/location.png' | relative_url }}" alt="" width="18" height="18">
+        <img src="{{ '/assets/img/icons/location.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">Office</b>Humanities Building · Room 302</div>
       </div>
       <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/phone.png' | relative_url }}" alt="" width="18" height="18">
+        <img src="{{ '/assets/img/icons/phone.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">Dept. Office</b>02-940-4420</div>
       </div>
       <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/mail.png' | relative_url }}" alt="" width="18" height="18">
+        <img src="{{ '/assets/img/icons/mail.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">E-mail</b><a href="mailto:insu.choi@dwu.ac.kr" class="hover:underline">insu.choi@dwu.ac.kr</a></div>
       </div>
     </div>
@@ -97,9 +134,11 @@ permalink: /members-director.html
 
   <!-- Main -->
   <main class="grid gap-6">
-    <!-- Intro -->
+    <!-- Introduction -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2"><span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction</h2>
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
+      </h2>
       <p class="mt-3 text-[15px] leading-7 text-slate-700">
         데이터에서 재무 의사결정 가치를 추출합니다. 시계열 예측, 설명가능 AI, 자산배분, 리스크 관리 중심으로
         <b>Financial Data Science</b> 문제를 산업 파트너와 협업 및 오픈 연구로 해결합니다.
@@ -108,7 +147,9 @@ permalink: /members-director.html
 
     <!-- Research Interests -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2"><span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Research Interests</h2>
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Research Interests
+      </h2>
 
       <div class="mt-3">
         <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Financial Data Analytics</span>
@@ -140,7 +181,9 @@ permalink: /members-director.html
 
     <!-- Education -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2"><span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education</h2>
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
+      </h2>
       <ul class="timeline mt-4 space-y-6">
         <!-- Ph.D. -->
         <li class="edu-item">
@@ -151,7 +194,12 @@ permalink: /members-director.html
               <div class="dept">Industrial and Systems Engineering</div>
               <div class="school" style="color:#003366;">KAIST</div>
             </div>
-            <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="edu-logo" onerror="this.style.display='none'">
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp" />
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo"
+                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
           </div>
           <div class="mt-2">
             <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
@@ -160,6 +208,7 @@ permalink: /members-director.html
             </ul>
           </div>
         </li>
+
         <!-- M.S. -->
         <li class="edu-item">
           <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2021.02.</div>
@@ -169,7 +218,12 @@ permalink: /members-director.html
               <div class="dept">Industrial and Systems Engineering</div>
               <div class="school" style="color:#003366;">KAIST</div>
             </div>
-            <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="edu-logo" onerror="this.style.display='none'">
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp" />
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo"
+                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
           </div>
           <div class="mt-2">
             <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
@@ -178,6 +232,7 @@ permalink: /members-director.html
             </ul>
           </div>
         </li>
+
         <!-- B.E. -->
         <li class="edu-item">
           <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2018.02.</div>
@@ -187,7 +242,12 @@ permalink: /members-director.html
               <div class="dept">Industrial &amp; Management Systems Engineering</div>
               <div class="school" style="color:#990000;">Kyung Hee University</div>
             </div>
-            <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee Univ." class="edu-logo" onerror="this.style.display='none'">
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp" />
+              <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" alt="Kyung Hee University logo"
+                   class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
           </div>
           <div class="mt-2">
             <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
@@ -201,7 +261,9 @@ permalink: /members-director.html
 
     <!-- Employment -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2"><span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment</h2>
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment
+      </h2>
       <ul class="timeline mt-4 space-y-6">
         <li>
           <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.09.–Present</div>
@@ -213,7 +275,9 @@ permalink: /members-director.html
 
     <!-- Affiliation -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2"><span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation</h2>
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation
+      </h2>
       <ul class="timeline mt-4 space-y-6">
         <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2024–Present</div><div class="title font-extrabold">Member</div><div class="desc text-slate-600">KORMS</div></li>
         <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2021–Present</div><div class="title font-extrabold">Member</div><div class="desc text-slate-600">KIIE</div></li>
