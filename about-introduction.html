@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About · Introduction | FINDS Lab (Financial Data Science Lab.)</title>
+  <meta name="description" content="동덕여자대학교 경영학과 금융데이터사이언스 연구실(FINDS Lab.) 소개" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --accent: #ac0e0e; /* index와 동일한 포인트 컬러 */
+      --fg-on-accent:#ffffff;
+      --bg:#ffffff;
+      --bg-soft:#f8fafc;
+      --ring:0 0 0 3px rgba(172,14,14,.25);
+    }
+    html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:.01em}
+    .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
+    .nav-link{font-weight:800}
+    .nav-link:hover{color:var(--accent)}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.7rem 1.1rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .chip{display:inline-flex;align-items:center;font-weight:800;font-size:.75rem;padding:.25rem .6rem;border-radius:9999px;background:var(--bg-soft);border:1px solid #e5e7eb}
+    .tag-accent{background:var(--accent);color:var(--fg-on-accent);border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
+    :focus-visible{outline:none;box-shadow:var(--ring)}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+
+    /* slim scrollbar */
+    *{scrollbar-width:thin;scrollbar-color:var(--accent) #f1f5f9}
+    *::-webkit-scrollbar{height:8px;width:8px}
+    *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
+
+    /* section anchor scroll offset */
+    .anchor:target{scroll-margin-top:110px}
+  </style>
+</head>
+<body class="bg-[var(--bg-soft)]">
+  <!-- Header (index와 동일 구조) -->
+  <div class="sticky-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="./" class="flex items-center gap-3">
+        <img src="logo1.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
+        <div class="leading-tight">
+          <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
+          <div class="text-[12px] font-semibold text-slate-600">Dongduk Woman University</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="nav-link" href="./">Home</a>
+        <div class="relative group">
+          <a class="nav-link" href="about-introduction.html">About FINDS</a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-64 shadow-xl">
+            <a class="block px-4 py-2 hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="about-vision-area.html">Research Vision & Research Area</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="about-location.html">Location</a>
+          </div>
+        </div>
+        <div class="relative group">
+          <a class="nav-link" href="members-director.html">Members</a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-72 shadow-xl">
+            <a class="block px-4 py-2 hover:bg-slate-50" href="members-director.html">Director (Edu/Employment/Honors/Activities)</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="members-current.html">Current Students (click → Education)</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="members-alumni.html">Alumni (Research Topic · Current Affiliation)</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="members-mentorship.html">Mentorship (List)</a>
+          </div>
+        </div>
+        <div class="relative group">
+          <a class="nav-link" href="publications-all.html">Publications</a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-72 shadow-xl">
+            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-all.html">All Papers</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-international-journal.html">International Journal Papers</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-domestic-journal.html">Domestic Journal Papers</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-conference.html">Conference Papers</a>
+          </div>
+        </div>
+        <a class="nav-link" href="teaching.html">Teaching</a>
+        <a class="nav-link" href="projects.html">Projects</a>
+        <div class="relative group">
+          <a class="nav-link" href="archives-news.html">Archives</a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-56 shadow-xl">
+            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile -->
+      <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
+      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3">
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="./">Home</a>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
+          <div class="pl-3 grid">
+            <a class="py-1 hover:underline" href="about-introduction.html">Introduction</a>
+            <a class="py-1 hover:underline" href="about-vision-area.html">Research Vision & Research Area</a>
+            <a class="py-1 hover:underline" href="about-notice.html">Notice</a>
+            <a class="py-1 hover:underline" href="about-awards.html">Awards</a>
+            <a class="py-1 hover:underline" href="about-location.html">Location</a>
+          </div>
+        </div>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
+          <div class="pl-3 grid">
+            <a class="py-1 hover:underline" href="members-director.html">Director</a>
+            <a class="py-1 hover:underline" href="members-current.html">Current Students</a>
+            <a class="py-1 hover:underline" href="members-alumni.html">Alumni</a>
+            <a class="py-1 hover:underline" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="publications-all.html">Publications</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="teaching.html">Teaching</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="projects.html">Projects</a>
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
+          <div class="pl-3 grid">
+            <a class="py-1 hover:underline" href="archives-news.html">News</a>
+            <a class="py-1 hover:underline" href="archives-seminar.html">Seminar</a>
+            <a class="py-1 hover:underline" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero / Page Title -->
+  <section class="relative">
+    <img src="hero-about.jpg" alt="FINDS Lab About Banner" class="w-full h-[280px] md:h-[360px] object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent"></div>
+    <div class="absolute inset-0 flex items-end">
+      <div class="max-w-7xl mx-auto w-full px-4 pb-6">
+        <span class="tag-accent">About FINDS</span>
+        <h1 class="mt-3 text-3xl md:text-4xl font-extrabold text-white">Introduction</h1>
+        <nav class="mt-2 text-xs font-semibold text-white/90">
+          <a href="./" class="hover:underline">Home</a>
+          <span class="mx-2">/</span>
+          <a href="about-introduction.html" class="hover:underline">About</a>
+          <span class="mx-2">/</span>
+          <span>Introduction</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local Subnav -->
+  <section class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center gap-2">
+      <a href="#intro" class="chip">연구실 소개</a>
+      <a href="#mission" class="chip">Mission</a>
+      <a href="#areas" class="chip">Research Areas</a>
+      <a href="#activities" class="chip">교육·세미나·산학</a>
+      <a href="#join" class="chip">참여 안내</a>
+      <a href="#contact" class="chip">연락처/위치</a>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section id="intro" class="anchor max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-3 gap-6 items-start">
+    <div class="lg:col-span-2">
+      <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman University</p>
+      <h2 class="text-3xl font-extrabold mt-1">Financial Data Science Lab. (FINDS Lab.)</h2>
+      <p class="mt-4 text-[15px] leading-7 text-slate-700">
+        동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실(FINDS Lab.)</b>은 <u>데이터로 금융 의사결정을 더 똑똑하게</u> 만드는 방법을 연구합니다.
+        우리의 핵심 주제는 <b>시계열</b>, <b>트레이딩</b>, <b>포트폴리오</b>, <b>ML/AI</b>이며,
+        학술 연구·교육·실무 프로젝트를 긴밀히 연결합니다.
+      </p>
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        본 홈페이지는 연구실의 <b>연구 성과와 자료 공유</b>, 그리고 <b>구성원/혁신 활동의 기록</b>을 목적으로 운영됩니다.
+        최신 소식은 <a href="archives-news.html" class="font-bold underline decoration-2 underline-offset-2" style="color:var(--accent)">News</a>, 공지는 <a href="about-notice.html" class="font-bold underline decoration-2 underline-offset-2" style="color:var(--accent)">Notice</a>에서 확인하십시오.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class="btn-primary" href="publications-all.html">Publications</a>
+        <a class="btn-primary" style="background:#0f172a;color:#fff" href="teaching.html">Teaching</a>
+        <a class="btn-primary" style="background:#0f172a;color:#fff" href="projects.html">Projects</a>
+      </div>
+    </div>
+    <div class="lg:col-span-1">
+      <div class="card">
+        <h3 class="text-sm font-extrabold text-slate-700">Quick Facts</h3>
+        <ul class="mt-3 space-y-2 text-sm text-slate-700">
+          <li>소속: 동덕여자대학교 경영학과</li>
+          <li>분야: Time Series · Trading · Portfolio · ML/AI</li>
+          <li>활동: 수업/세미나/산학 프로젝트</li>
+          <li>코드/데이터: (준비 중)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section id="mission" class="anchor max-w-7xl mx-auto px-4 py-10">
+    <h3 class="text-2xl font-extrabold">Mission</h3>
+    <div class="mt-4 grid md:grid-cols-3 gap-4">
+      <div class="card"><h4 class="font-bold">현실 문제 지향</h4><p class="mt-2 text-sm text-slate-700">금융 의사결정(예: 거래·리스크·자산배분)에 실제로 쓰일 수 있는 모델과 도구를 만듭니다.</p></div>
+      <div class="card"><h4 class="font-bold">데이터·모델·결정의 통합</h4><p class="mt-2 text-sm text-slate-700">정확도뿐 아니라 <b>설명가능성(XAI)</b>과 <b>의사결정 성과</b>를 최적화합니다.</p></div>
+      <div class="card"><h4 class="font-bold">개방과 재현성</h4><p class="mt-2 text-sm text-slate-700">가능한 범위에서 코드와 재현 가이드를 공개하고, 표준화된 벤치마크를 구축합니다.</p></div>
+    </div>
+  </section>
+
+  <!-- Research Areas -->
+  <section id="areas" class="anchor max-w-7xl mx-auto px-4 py-10">
+    <h3 class="text-2xl font-extrabold">Research Areas</h3>
+    <p class="mt-2 text-sm text-slate-700">연구 주제 예시이며, 산업체/교육과 연계하여 지속 확장합니다.</p>
+    <div class="mt-5 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">Time-Series Forecasting</h4><span class="chip">TS</span></div>
+        <p class="mt-2 text-sm text-slate-700">금융 시계열의 비정상성·레짐 변화를 고려한 예측 및 특성 공학.</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">Market Microstructure & Trading</h4><span class="chip">Trading</span></div>
+        <p class="mt-2 text-sm text-slate-700">고빈도 신호·체결 흐름·거래 비용을 반영한 전략 설계와 백테스트.</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">Portfolio Optimization</h4><span class="chip">Portfolio</span></div>
+        <p class="mt-2 text-sm text-slate-700">분산·제약·거래비용·리스크 한계를 반영한 <b>의사결정 연계형</b> 최적화.</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">Explainability for TS</h4><span class="chip">XAI</span></div>
+        <p class="mt-2 text-sm text-slate-700">시계열 모델 설명가능성 및 책임있는 AI.</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">LLMs for Finance</h4><span class="chip">LLM</span></div>
+        <p class="mt-2 text-sm text-slate-700">텍스트·수치·시계열의 멀티모달 학습과 LLM 기반 트레이딩/포트폴리오 보조.</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center justify-between"><h4 class="font-bold">Alternative Data</h4><span class="chip">Alt-Data</span></div>
+        <p class="mt-2 text-sm text-slate-700">뉴스/소셜·위성·거시·ESG 등 대체데이터의 가공과 활용.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activities -->
+  <section id="activities" class="anchor max-w-7xl mx-auto px-4 py-10">
+    <h3 class="text-2xl font-extrabold">Education · Seminar · Industry</h3>
+    <div class="mt-5 grid md:grid-cols-3 gap-4">
+      <div class="card">
+        <h4 class="font-bold">Teaching</h4>
+        <p class="mt-2 text-sm text-slate-700">학부/대학원 과목 운영 및 커리큘럼 개발. 실습 중심 과제와 케이스 스터디 제공.</p>
+        <a href="teaching.html" class="mt-3 inline-block btn-primary">Go to Teaching</a>
+      </div>
+      <div class="card">
+        <h4 class="font-bold">Seminar</h4>
+        <p class="mt-2 text-sm text-slate-700">정기 세미나/게스트 토크 운영. 논문·프로젝트 리뷰 및 리서치 멘토링.</p>
+        <a href="archives-seminar.html" class="mt-3 inline-block btn-primary">Go to Seminar</a>
+      </div>
+      <div class="card">
+        <h4 class="font-bold">Projects</h4>
+        <p class="mt-2 text-sm text-slate-700">산학/연구 과제를 통한 실제 문제 해결 및 데이터 파이프라인 구축.</p>
+        <a href="projects.html" class="mt-3 inline-block btn-primary">Go to Projects</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <section id="join" class="anchor max-w-7xl mx-auto px-4 py-10">
+    <h3 class="text-2xl font-extrabold">참여 안내</h3>
+    <div class="mt-5 grid md:grid-cols-2 gap-4">
+      <div class="card">
+        <h4 class="font-bold">Undergraduate RA</h4>
+        <p class="mt-2 text-sm text-slate-700">시계열/트레이딩/포트폴리오/ML에 관심 있는 학부 연구생을 상시 모집합니다. <b>Python</b>, <b>데이터 처리</b>, <b>기초 통계/최적화</b> 역량을 권장합니다.</p>
+      </div>
+      <div class="card">
+        <h4 class="font-bold">Graduate / Intern</h4>
+        <p class="mt-2 text-sm text-slate-700">프로젝트 기반 연구/실습 참여. 세미나 발표·논문 작성·코드 공개에 함께합니다.</p>
+      </div>
+    </div>
+    <p class="mt-4 text-sm text-slate-600">지원 방법과 공지는 <a href="about-notice.html" class="underline decoration-2 underline-offset-2" style="color:var(--accent)">Notice</a>에서 확인하세요.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="anchor max-w-7xl mx-auto px-4 py-10">
+    <h3 class="text-2xl font-extrabold">연락처 / 위치</h3>
+    <div class="mt-4 grid md:grid-cols-2 gap-4">
+      <div class="card">
+        <h4 class="font-bold">Contact</h4>
+        <p class="mt-2 text-sm text-slate-700">이메일: <span class="font-semibold">(추가 예정)</span></p>
+        <p class="mt-1 text-sm text-slate-700">협업/세미나 제안 및 RA 문의 환영합니다.</p>
+      </div>
+      <div class="card">
+        <h4 class="font-bold">Location</h4>
+        <p class="mt-2 text-sm text-slate-700">자세한 위치와 오시는 길은 <a href="about-location.html" class="font-bold underline decoration-2 underline-offset-2" style="color:var(--accent)">Location</a> 페이지를 참고하세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-16 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <ul class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm font-semibold">
+        <li><a class="hover:underline" href="#" target="_blank">동덕여자대학교</a></li>
+        <li><a class="hover:underline" href="#" target="_blank">동덕여자대학교 경영학과</a></li>
+        <li><a class="hover:underline" href="#" target="_blank">Google Scholar</a></li>
+        <li><a class="hover:underline" href="#" target="_blank">한국연구재단</a></li>
+      </ul>
+      <p class="mt-4 text-center text-xs text-slate-500">Copyright © 2025 Financial Data Science Lab. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const btnMobile = document.getElementById('btnMobile');
+    const mobileNav = document.getElementById('mobileNav');
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+  </script>
+</body>
+</html>
