@@ -9,45 +9,50 @@ permalink: /members-director.html
   :root{
     --accent:#ac0e0e;
     --gold:#d6b14d;
+    --year-size: 13px; /* 날짜 폰트와 포인트 크기 동기화 */
   }
 
-  /* ========== 타임라인 (공통) ========== */
-  /* 축을 좌측 1rem에 두고, 금색 라인이 빨간 점 중앙을 관통하도록 정렬 */
-  .timeline{position:relative; padding-left:3.25rem;} /* 로고가 들어가는 섹션(Edu)도 고려해 여유 */
+  /* ========== 공통 타임라인 ========== */
+  /* 축을 더 왼쪽(.5rem)으로 보내고, 여백은 충분히 확보 */
+  .timeline{position:relative; padding-left:3.75rem;}
   .timeline::before{
-    content:""; position:absolute; left:1rem; top:.5rem; bottom:.5rem;
+    content:""; position:absolute; left:.5rem; top:.5rem; bottom:.5rem;
     width:3px; background:var(--gold); border-radius:2px; transform:translateX(-50%);
   }
   .timeline > li{
     position:relative; margin:0; padding:0 0 0 .25rem;
-    line-height:1.5; /* 들뜸 방지 */
   }
+  /* 빨간 포인트: 날짜 폰트 크기(--year-size)와 동일한 지름 */
   .timeline > li::before{
-    content:""; position:absolute; left:1rem; top:.95rem; /* 첫 줄과 균형 */
-    width:11px; height:11px; background:var(--accent);
+    content:""; position:absolute; left:.5rem; top:.95rem;
+    width:var(--year-size); height:var(--year-size); background:var(--accent);
     border-radius:50%; box-shadow:0 0 0 3px rgba(172,14,14,.08);
     transform:translate(-50%,-50%);
   }
 
-  /* ========== 타임라인 행 내부 구성 (연도/콘텐츠 정렬 통일) ========== */
-  .row-head{display:flex; align-items:flex-start; gap:.5rem; flex-wrap:wrap;}
-  .year{font-size:.82rem; font-weight:900; color:var(--accent); line-height:1; margin-top:.1rem;}
+  /* ========== 3줄 템플릿 ========== */
+  .tl{display:grid; row-gap:.25rem;}
+  .tl-row1{display:flex; align-items:flex-start; gap:.5rem; flex-wrap:wrap;}
+  .tl-row2,.tl-row3{display:block;}
+
+  /* 날짜/텍스트 규격 */
+  .year{font-size:var(--year-size); font-weight:900; color:var(--accent); line-height:1;}
   .title{font-weight:800; color:#0f172a;}
   .desc{color:#475569; font-size:.95rem;}
+  .muted{color:#475569;}
+  .school{font-weight:900;}
 
-  /* ========== Education 전용 (로고가 점 바로 아래 열에 위치) ========== */
+  /* ========== Education 전용 (로고 열 + 본문 열) ========== */
   .edu-li{display:grid; grid-template-columns: 48px 1fr; column-gap:.75rem; align-items:start;}
   .edu-logo{
     width:44px; height:44px; object-fit:contain; border-radius:.5rem;
-    background:#fff; box-shadow:0 0 0 1px #e5e7eb;
-    margin-left:.25rem; /* 점과 너무 붙지 않게 */
+    background:#fff; box-shadow:0 0 0 1px #e5e7eb; margin-left:.25rem;
   }
   .degree{font-weight:900;}
   .dept{font-weight:600; color:#334155;}
-  .school{font-weight:900; white-space:nowrap;}
 
   /* 수상 bullet */
-  .bullets-honor{list-style:disc; margin:.35rem 0 0 1.25rem; padding:0;}
+  .bullets-honor{list-style:disc; margin:.25rem 0 0 1.25rem; padding:0;}
   .bullets-honor li{font-size:.95rem; color:#111827; padding-left:0;}
 
   /* Research Interests */
@@ -55,7 +60,7 @@ permalink: /members-director.html
   .bullets li{position:relative; padding-left:1rem; font-size:.95rem; color:#475569;}
   .bullets li::before{content:"•"; position:absolute; left:0; top:0; color:#334155; font-weight:900;}
 
-  /* 이미지 CLS 최소화 (폭/높이 지정되어 있으면 브라우저가 자리 예약) */
+  /* 이미지 CLS 최소화 */
   img[width][height]{height:auto}
 
   /* 히어로 텍스트 간격 보정 */
@@ -152,7 +157,7 @@ permalink: /members-director.html
   <!-- Main: 모든 카드 동일한 wrapper/패딩 -->
   <main class="grid gap-6">
 
-    <!-- Introduction (다른 카드와 동일한 박스 폭/패딩) -->
+    <!-- Introduction -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
@@ -205,7 +210,7 @@ permalink: /members-director.html
       </div>
     </section>
 
-    <!-- Education (로고가 점 바로 아래 열) -->
+    <!-- Education -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
@@ -215,25 +220,27 @@ permalink: /members-director.html
         <!-- Ph.D. -->
         <li>
           <div class="edu-li">
-            <!-- 로고: 점 바로 오른쪽 열 -->
             <picture>
               <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
               <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}"
                    alt="KAIST logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
                    onerror="this.style.display='none'">
             </picture>
-            <!-- 내용 -->
-            <div>
-              <div class="row-head">
-                <div class="year">2025.02.</div>
-                <div class="degree">Ph.D. in Engineering</div>
+            <div class="tl">
+              <!-- 1) 날짜 -->
+              <div class="tl-row1"><div class="year">2025.02.</div></div>
+              <!-- 2) 핵심 내용 -->
+              <div class="tl-row2">
+                <span class="degree">Ph.D. in Engineering</span>
+                <span class="muted"> · </span>
+                <span class="dept">Industrial and Systems Engineering</span>
+                <span class="muted"> · </span>
+                <span class="school" style="color:#003366;">KAIST</span>
               </div>
-              <div class="dept">Industrial and Systems Engineering</div>
-              <div class="school" style="color:#003366;">KAIST</div>
-
-              <div class="mt-2">
+              <!-- 3) 기타 내용 -->
+              <div class="tl-row3">
                 <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-                <ul class="bullets-honor mt-2">
+                <ul class="bullets-honor">
                   <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
                 </ul>
               </div>
@@ -250,17 +257,18 @@ permalink: /members-director.html
                    alt="KAIST logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
                    onerror="this.style.display='none'">
             </picture>
-            <div>
-              <div class="row-head">
-                <div class="year">2021.02.</div>
-                <div class="degree">Master of Science</div>
+            <div class="tl">
+              <div class="tl-row1"><div class="year">2021.02.</div></div>
+              <div class="tl-row2">
+                <span class="degree">Master of Science</span>
+                <span class="muted"> · </span>
+                <span class="dept">Industrial and Systems Engineering</span>
+                <span class="muted"> · </span>
+                <span class="school" style="color:#003366;">KAIST</span>
               </div>
-              <div class="dept">Industrial and Systems Engineering</div>
-              <div class="school" style="color:#003366;">KAIST</div>
-
-              <div class="mt-2">
+              <div class="tl-row3">
                 <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-                <ul class="bullets-honor mt-2">
+                <ul class="bullets-honor">
                   <li><b>Best Master Thesis Award</b>, KIIE</li>
                 </ul>
               </div>
@@ -277,17 +285,18 @@ permalink: /members-director.html
                    alt="Kyung Hee Univ. logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
                    onerror="this.style.display='none'">
             </picture>
-            <div>
-              <div class="row-head">
-                <div class="year">2018.02.</div>
-                <div class="degree">Bachelor of Engineering</div>
+            <div class="tl">
+              <div class="tl-row1"><div class="year">2018.02.</div></div>
+              <div class="tl-row2">
+                <span class="degree">Bachelor of Engineering</span>
+                <span class="muted"> · </span>
+                <span class="dept">Industrial &amp; Management Systems Engineering</span>
+                <span class="muted"> · </span>
+                <span class="school" style="color:#990000;">Kyung Hee University</span>
               </div>
-              <div class="dept">Industrial &amp; Management Systems Engineering</div>
-              <div class="school" style="color:#990000;">Kyung Hee University</div>
-
-              <div class="mt-2">
+              <div class="tl-row3">
                 <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-                <ul class="bullets-honor mt-2">
+                <ul class="bullets-honor">
                   <li><b>Valedictorian</b>, 1st out of 86 students</li>
                 </ul>
               </div>
@@ -297,31 +306,46 @@ permalink: /members-director.html
       </ul>
     </section>
 
-    <!-- Employment (연/제목/설명 모두 통일 레이아웃) -->
+    <!-- Employment -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment
       </h2>
       <ul class="timeline mt-6 space-y-6">
         <li>
-          <div class="row-head"><div class="year">2025.09.– Present</div><div class="title">Assistant Professor</div></div>
-          <div class="desc">Department of Business Administration, Dongduk Woman's University</div>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2025.09.– Present</div></div>
+            <div class="tl-row2"><span class="title">Assistant Professor</span> · Department of Business Administration</div>
+            <div class="tl-row3 desc">Dongduk Woman's University</div>
+          </div>
         </li>
         <li>
-          <div class="row-head"><div class="year">2025.03.– 2024.08.</div><div class="title">Lecturer</div></div>
-          <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2025.03.– 2024.08.</div></div>
+            <div class="tl-row2"><span class="title">Lecturer</span> · Department of Electronic and Semiconductor Engineering</div>
+            <div class="tl-row3 desc">Gangnam University</div>
+          </div>
         </li>
         <li>
-          <div class="row-head"><div class="year">2025.03.– 2024.08.</div><div class="title">Lecturer</div></div>
-          <div class="desc">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2025.03.– 2024.08.</div></div>
+            <div class="tl-row2"><span class="title">Lecturer</span> · Digital Business Major, Division of Convergence Business</div>
+            <div class="tl-row3 desc">College of Global Business, Korea University</div>
+          </div>
         </li>
         <li>
-          <div class="row-head"><div class="year">2024.03.– 2024.08.</div><div class="title">Lecturer</div></div>
-          <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2024.03.– 2024.08.</div></div>
+            <div class="tl-row2"><span class="title">Lecturer</span> · Department of Industrial and Management Systems Engineering</div>
+            <div class="tl-row3 desc">Kyung Hee University</div>
+          </div>
         </li>
         <li>
-          <div class="row-head"><div class="year">2020.03.– 2020.05.</div><div class="title">Intern</div></div>
-          <div class="desc">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2020.03.– 2020.05.</div></div>
+            <div class="tl-row2"><span class="title">Intern</span> · Performance Improvement Department, Consulting Division</div>
+            <div class="tl-row3 desc">EY Hanyoung (currently EY Consulting)</div>
+          </div>
         </li>
       </ul>
     </section>
@@ -332,10 +356,34 @@ permalink: /members-director.html
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation
       </h2>
       <ul class="timeline mt-6 space-y-6">
-        <li><div class="row-head"><div class="year">2025.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Institute of Industrial Engineers</div></li>
-        <li><div class="row-head"><div class="year">2023.09. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Securities Association</div></li>
-        <li><div class="row-head"><div class="year">2023.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Academic Society of Business Administration</div></li>
-        <li><div class="row-head"><div class="year">2022.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korea Intelligent Information Systems Society</div></li>
+        <li>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2025.06. – Present</div></div>
+            <div class="tl-row2"><span class="title">Lifetime Member</span></div>
+            <div class="tl-row3 desc">Korean Institute of Industrial Engineers</div>
+          </div>
+        </li>
+        <li>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2023.09. – Present</div></div>
+            <div class="tl-row2"><span class="title">Lifetime Member</span></div>
+            <div class="tl-row3 desc">Korean Securities Association</div>
+          </div>
+        </li>
+        <li>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2023.06. – Present</div></div>
+            <div class="tl-row2"><span class="title">Lifetime Member</span></div>
+            <div class="tl-row3 desc">Korean Academic Society of Business Administration</div>
+          </div>
+        </li>
+        <li>
+          <div class="tl">
+            <div class="tl-row1"><div class="year">2022.06. – Present</div></div>
+            <div class="tl-row2"><span class="title">Lifetime Member</span></div>
+            <div class="tl-row3 desc">Korea Intelligent Information Systems Society</div>
+          </div>
+        </li>
       </ul>
     </section>
 
