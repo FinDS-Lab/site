@@ -120,36 +120,35 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   </div>
 </section>
 
-<!-- News & Notice (overflow 고친 버전) -->
+<!-- News & Notice -->
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- News: /news/에서 최신 3개 (제목만) -->
-<div class="card">
-  <div class="flex items-center justify-between">
-    <h4 class="text-xl font-extrabold">News</h4>
-    <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+  <!-- News: 최신 3개 -->
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <h4 class="text-xl font-extrabold">News</h4>
+      <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+    </div>
+
+    {% assign all = site.pages | concat: site.posts %}
+    {% assign all_sorted = all | sort: 'date' | reverse %}
+    {% assign shown = 0 %}
+    <ul class="mt-4 space-y-2">
+      {% for post in all_sorted %}
+        {% if post.url and post.date and post.url contains '/news/' and shown < 3 %}
+          <li class="text-[14px] leading-6">
+            <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
+          </li>
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+      {% if shown == 0 %}
+        <li class="text-sm text-slate-500">게시글이 없습니다.</li>
+      {% endif %}
+    </ul>
   </div>
 
-  {% assign all = site.pages | concat: site.posts %}
-  {% assign all_sorted = all | sort: 'date' | reverse %}
-  {% assign shown = 0 %}
-  <ul class="mt-4 space-y-2">
-    {% for post in all_sorted %}
-      {% if post.url and post.date and post.url contains '/news/' %}
-        <li class="text-[14px] leading-6">
-          <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
-        </li>
-        {% assign shown = shown | plus: 1 %}
-        {% if shown == 3 %}{% break %}{% endif %}
-      {% endif %}
-    {% endfor %}
-    {% if shown == 0 %}
-      <li class="text-sm text-slate-500">게시글이 없습니다.</li>
-    {% endif %}
-  </ul>
-</div>
-
-  <!-- Notice: /about-notice.html에서 상위 3개 링크만 추출 (제목만) -->
+  <!-- Notice -->
   <div class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">Notice</h4>
@@ -192,7 +191,7 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   })();
 </script>
 
-<!-- ====== Notice 간단 로더: /about-notice.html에서 상위 3개 링크만 추출 ====== -->
+<!-- ====== Notice 간단 로더 ====== -->
 <script>
   (async function(){
     const target = document.getElementById('notice-feed');
@@ -204,7 +203,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
       const html = await res.text();
       const doc  = new DOMParser().parseFromString(html, 'text/html');
 
-      // 본문에서 텍스트 있는 링크 3개 추출 (필요 시 선택자 추가)
       const anchors = Array.from(doc.querySelectorAll('main a, article a, .board-row .sbj a, #content a'))
         .filter(a => a.getAttribute('href') && a.textContent.trim())
         .slice(0,3);
