@@ -14,7 +14,6 @@
 
   <style>
     :root{
-      /* 기본 테마 (고정) */
       --accent: rgb(172, 14, 14);
       --fg-on-accent:#ffffff;
       --bg:#ffffff;
@@ -25,6 +24,8 @@
     .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
+    .submenu-panel{font-size:13px; line-height:1.25rem; width:14rem} /* ↓ 서브메뉴 크기 축소 */
+    .submenu-item{padding:.35rem .75rem; font-weight:700} /* 작은 패딩 + 볼드 */
     .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.7rem 1.1rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
     .btn-primary:hover{transform:translateY(-1px);opacity:.95}
     .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
@@ -62,55 +63,55 @@
       </a>
 
       <nav class="hidden md:flex items-center gap-6">
-        <a class="nav-link" href="./">Home</a>
+        <a class="nav-link" href="./"><b>Home</b></a>
 
-        <!-- About FINDS: 상위 메뉴 클릭 시 첫 하위 페이지로 이동 -->
+        <!-- About FINDS -->
         <div class="relative group">
-          <a class="nav-link" href="about-introduction.html">About FINDS</a>
-          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-64 shadow-xl">
-            <a class="block px-4 py-2 hover:bg-slate-50" href="about-introduction.html">Introduction</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="about-vision-area.html">Research Vision & Research Area</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="about-notice.html">Notice</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="about-awards.html">Awards</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="about-location.html">Location</a>
+          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 submenu-panel shadow-xl">
+            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
           </div>
         </div>
 
-        <!-- Members -->
+        <!-- Members (괄호 내용 제거, 볼드) -->
         <div class="relative group">
-          <a class="nav-link" href="members-director.html">Members</a>
-          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-72 shadow-xl">
-            <a class="block px-4 py-2 hover:bg-slate-50" href="members-director.html">Director (Edu/Employment/Honors/Activities)</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="members-current.html">Current Students (click → Education)</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="members-alumni.html">Alumni (Research Topic · Current Affiliation)</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="members-mentorship.html">Mentorship (List)</a>
+          <a class="nav-link" href="members-director.html"><b>Members</b></a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 submenu-panel shadow-xl">
+            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
           </div>
         </div>
 
         <!-- Publications -->
         <div class="relative group">
-          <a class="nav-link" href="publications-all.html">Publications</a>
-          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-72 shadow-xl">
-            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-all.html">All Papers</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-international-journal.html">International Journal Papers</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-domestic-journal.html">Domestic Journal Papers</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="publications-conference.html">Conference Papers</a>
+          <a class="nav-link" href="publications-all.html"><b>Publications</b></a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 submenu-panel shadow-xl">
+            <a class="block submenu-item hover:bg-slate-50" href="publications-all.html">All Papers</a>
+            <a class="block submenu-item hover:bg-slate-50" href="publications-international-journal.html">International Journal</a>
+            <a class="block submenu-item hover:bg-slate-50" href="publications-domestic-journal.html">Domestic Journal</a>
+            <a class="block submenu-item hover:bg-slate-50" href="publications-conference.html">Conference</a>
           </div>
         </div>
 
-        <!-- Teaching (단일 페이지) -->
-        <a class="nav-link" href="teaching.html">Teaching</a>
+        <!-- Lectures (Teaching → Lectures로 변경) -->
+        <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
 
-        <!-- Projects (단일 페이지) -->
-        <a class="nav-link" href="projects.html">Projects</a>
+        <!-- Projects -->
+        <a class="nav-link" href="projects.html"><b>Projects</b></a>
 
         <!-- Archives -->
         <div class="relative group">
-          <a class="nav-link" href="archives-news.html">Archives</a>
-          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 w-56 shadow-xl">
-            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-news.html">News</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
-            <a class="block px-4 py-2 hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
+          <div class="absolute hidden group-hover:block bg-white border border-slate-200 rounded-xl mt-2 py-2 submenu-panel shadow-xl">
+            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
           </div>
         </div>
       </nav>
@@ -123,51 +124,51 @@
       </div>
     </div>
 
-    <!-- Mobile Nav -->
+    <!-- Mobile Nav (오버플로우 방지) -->
     <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
-      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3">
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="./">Home</a>
+      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="./">Home</a>
 
         <div class="px-3 py-2">
           <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
-          <div class="pl-3 grid">
-            <a class="py-1 hover:underline" href="about-introduction.html">Introduction</a>
-            <a class="py-1 hover:underline" href="about-vision-area.html">Research Vision & Research Area</a>
-            <a class="py-1 hover:underline" href="about-notice.html">Notice</a>
-            <a class="py-1 hover:underline" href="about-awards.html">Awards</a>
-            <a class="py-1 hover:underline" href="about-location.html">Location</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="about-introduction.html">Introduction</a>
+            <a class="py-1 hover:underline font-bold" href="about-vision-area.html">Research Area</a>
+            <a class="py-1 hover:underline font-bold" href="about-notice.html">Notice</a>
+            <a class="py-1 hover:underline font-bold" href="about-awards.html">Awards</a>
+            <a class="py-1 hover:underline font-bold" href="about-location.html">Location</a>
           </div>
         </div>
 
         <div class="px-3 py-2">
           <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
-          <div class="pl-3 grid">
-            <a class="py-1 hover:underline" href="members-director.html">Director</a>
-            <a class="py-1 hover:underline" href="members-current.html">Current Students</a>
-            <a class="py-1 hover:underline" href="members-alumni.html">Alumni</a>
-            <a class="py-1 hover:underline" href="members-mentorship.html">Mentorship</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="members-director.html">Director</a>
+            <a class="py-1 hover:underline font-bold" href="members-current.html">Current Students</a>
+            <a class="py-1 hover:underline font-bold" href="members-alumni.html">Alumni</a>
+            <a class="py-1 hover:underline font-bold" href="members-mentorship.html">Mentorship</a>
           </div>
         </div>
 
         <div class="px-3 py-2">
           <a class="block font-extrabold mb-1" href="publications-all.html">Publications</a>
-          <div class="pl-3 grid">
-            <a class="py-1 hover:underline" href="publications-all.html">All Papers</a>
-            <a class="py-1 hover:underline" href="publications-international-journal.html">International Journal</a>
-            <a class="py-1 hover:underline" href="publications-domestic-journal.html">Domestic Journal</a>
-            <a class="py-1 hover:underline" href="publications-conference.html">Conference</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="publications-all.html">All Papers</a>
+            <a class="py-1 hover:underline font-bold" href="publications-international-journal.html">International Journal</a>
+            <a class="py-1 hover:underline font-bold" href="publications-domestic-journal.html">Domestic Journal</a>
+            <a class="py-1 hover:underline font-bold" href="publications-conference.html">Conference</a>
           </div>
         </div>
 
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="teaching.html">Teaching</a>
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50" href="projects.html">Projects</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
 
         <div class="px-3 py-2">
           <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
-          <div class="pl-3 grid">
-            <a class="py-1 hover:underline" href="archives-news.html">News</a>
-            <a class="py-1 hover:underline" href="archives-seminar.html">Seminar</a>
-            <a class="py-1 hover:underline" href="archives-gallery.html">Gallery</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="archives-news.html">News</a>
+            <a class="py-1 hover:underline font-bold" href="archives-seminar.html">Seminar</a>
+            <a class="py-1 hover:underline font-bold" href="archives-gallery.html">Gallery</a>
           </div>
         </div>
       </div>
@@ -201,7 +202,7 @@
               <p class="mt-3 text-slate-100/90">수업 · 세미나 · 산학 프로젝트</p>
               <div class="mt-5 flex gap-3">
                 <a class="btn-primary" style="background:#0f172a;color:#fff" href="publications-all.html">Publications</a>
-                <a class="btn-primary" href="teaching.html">Teaching</a>
+                <a class="btn-primary" href="lectures.html">Lectures</a>
                 <a class="btn-primary" href="projects.html">Projects</a>
               </div>
             </div>
@@ -257,7 +258,6 @@
         <h4 class="text-xl font-extrabold">FINDS Lab News</h4>
         <a class="warm-underline font-bold" href="archives-news.html">More</a>
       </div>
-      <!-- 홈에서 자동 임베드: archives-news.html 내 #news-list 의 상위 3개 항목을 끌어옵니다. -->
       <ul id="news-feed" class="mt-4 space-y-3">
         <li class="text-sm text-slate-500">불러오는 중…</li>
       </ul>
@@ -268,7 +268,6 @@
         <h4 class="text-xl font-extrabold">FINDS Lab Notice</h4>
         <a class="warm-underline font-bold" href="about-notice.html">More</a>
       </div>
-      <!-- 홈에서 자동 임베드: about-notice.html 내 #notice-list 의 상위 3개 항목을 끌어옵니다. -->
       <ul id="notice-feed" class="mt-4 space-y-3">
         <li class="text-sm text-slate-500">불러오는 중…</li>
       </ul>
@@ -310,11 +309,7 @@
     dots.forEach(d=> d.addEventListener('click', ()=>{ clearInterval(timer); go(+d.dataset.dot); auto(); }));
     go(0); auto();
 
-    // ===== 홈 임베드 로더 =====
-    // 아래 형식을 각 페이지에 맞춰주세요.
-    // - archives-news.html 에는 <ul id="news-list"> ... </ul>
-    // - about-notice.html 에는 <ul id="notice-list"> ... </ul>
-    // 이 index.html 은 해당 리스트의 상위 3개 <li>를 그대로 복사/표시합니다.
+    // Embed loaders
     async function importList(srcUrl, listSelector, targetId, limit=3){
       try{
         const res = await fetch(srcUrl, { cache: 'no-store' });
@@ -323,14 +318,8 @@
         const items = Array.from(doc.querySelectorAll(listSelector)).slice(0, limit);
         const target = document.getElementById(targetId);
         target.innerHTML = '';
-        if(items.length===0){
-          target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
-          return;
-        }
-        items.forEach(li => {
-          const cloned = li.cloneNode(true);
-          target.appendChild(cloned);
-        });
+        if(items.length===0){ target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>'; return; }
+        items.forEach(li => target.appendChild(li.cloneNode(true)));
       }catch(err){
         const target = document.getElementById(targetId);
         target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
@@ -344,4 +333,3 @@
   </script>
 </body>
 </html>
-
