@@ -115,27 +115,30 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
 </section>
 
 <!-- News & Notice -->
-<section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 gap-6">
-  <div class="card">
-    <div class="flex items-center justify-between">
-      <h4 class="text-xl font-extrabold">News</h4>
-      <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
-    </div>
-    <ul id="news-feed" class="mt-4 space-y-3">
-      <li class="text-sm text-slate-500">불러오는 중…</li>
-    </ul>
+<div class="card">
+  <div class="flex items-center justify-between">
+    <h4 class="text-xl font-extrabold">News</h4>
+    <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
   </div>
 
-  <div class="card">
-    <div class="flex items-center justify-between">
-      <h4 class="text-xl font-extrabold">Notice</h4>
-      <a class="warm-underline font-bold" href="{{ '/about-notice.html' | relative_url }}">More</a>
-    </div>
-    <ul id="notice-feed" class="mt-4 space-y-3">
-      <li class="text-sm text-slate-500">불러오는 중…</li>
-    </ul>
-  </div>
-</section>
+  {% assign pages_sorted = site.pages | sort: "date" | reverse %}
+  {% assign shown = 0 %}
+  <ul class="mt-4 space-y-3">
+    {% for post in pages_sorted %}
+      {% if post.url and post.url contains '/news/' and post.date %}
+        <li class="text-[14px]">
+          <a class="font-bold hover:underline" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
+        </li>
+        {% assign shown = shown | plus: 1 %}
+        {% if shown == 3 %}{% break %}{% endif %}
+      {% endif %}
+    {% endfor %}
+    {% if shown == 0 %}
+      <li class="text-sm text-slate-500">게시글이 없습니다.</li>
+    {% endif %}
+  </ul>
+</div>
 
 <!-- ====== 캐러셀 전용 JS ====== -->
 <script>
