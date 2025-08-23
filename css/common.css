@@ -1,0 +1,22 @@
+<style>
+  /* 컨테이너 유틸 (반응형 고정폭 + 패딩) */
+  .container-root{max-width:80rem;margin:0 auto;padding-left:1rem;padding-right:1rem}
+  @media (min-width: 1024px){ .container-root{padding-left:1rem;padding-right:1rem} }
+
+  /* 가로 스크롤바 안 보이게 */
+  .scrollbar-none{scrollbar-width:none}
+  .scrollbar-none::-webkit-scrollbar{display:none}
+
+  /* 서브메뉴 기본/우측정렬 */
+  .submenu-panel{
+    position:absolute;top:100%;left:0;
+    width:14rem;font-size:13px;line-height:1.25rem;
+    background:#fff;border:1px solid #e5e7eb;border-radius:12px;
+    margin-top:.25rem;padding:.5rem 0;box-shadow:0 12px 28px rgba(0,0,0,.12);
+    z-index:100;visibility:hidden;opacity:0;transform:translateY(6px);
+    transition:visibility .18s ease,opacity .18s ease,transform .18s ease;
+    pointer-events:none;
+  }
+  .menu-group.open .submenu-panel{visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
+  .submenu-panel.align-right{left:auto;right:0}
+</style>
