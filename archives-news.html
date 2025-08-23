@@ -6,41 +6,17 @@ permalink: /archives-news.html
 
 <!-- ===== News Board Styles ===== -->
 <style>
-  /* 날짜 박스 */
   .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
   .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
   .date-ym{font-weight:800;font-size:12px;color:#6b7280}
-
-  /* 2줄 말줄임 */
-  .line-clamp-2{
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
-    overflow:hidden;
-  }
-
-  /* 리스트 레이아웃 */
-  .board-row{
-    display:grid;
-    grid-template-columns:88px 1fr 84px;
-    gap:14px;
-    align-items:center;
-    padding:14px 16px;
-    border-bottom:1px solid #e5e7eb
-  }
+  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
   @media (max-width:640px){
     .board-row{grid-template-columns:64px 1fr;gap:10px}
     .board-row .btn-cell{grid-column:1/-1;justify-self:end}
   }
-
-  /* 버튼(작게 조정) */
-  .btn-more{
-    display:inline-flex;align-items:center;justify-content:center;
-    border:1px solid #e5e7eb;border-radius:.6rem;
-    padding:.35rem .6rem;font-weight:800;font-size:12px
-  }
+  .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
   .btn-more:hover{background:#f8fafc}
-
   .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
 </style>
 
@@ -63,30 +39,52 @@ permalink: /archives-news.html
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
-      {%- assign sorted = site.news | sort: "date" -%} <!-- 오래된 글부터 위쪽에 표시 -->
-      {%- for post in sorted -%}
-        {%- assign y  = post.date | date: "%Y" -%}
-        {%- assign m  = post.date | date: "%m" -%}
-        {%- assign d  = post.date | date: "%d" -%}
-        <li class="board-row" role="listitem">
-          <div class="date-box">
-            <div class="date-d">{{ d }}</div>
-            <span class="date-ym">{{ y }}.{{ m }}</span>
-          </div>
-          <div>
-            <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
-              {{ post.title }}
-            </a>
-            <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
-              {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
+      {%- comment -%}
+        Robust source pool:
+        1) Regular posts under /news/ (site.posts)
+        2) Regular pages under /news/ (site.pages)  ← needs front matter date:
+        3) Optional collection `news` (site.news)   ← if you configured collections
+      {%- endcomment -%}
+
+      {%- assign posts_in_news = site.posts | where_exp: "p", "p.url contains '/news/'" -%}
+      {%- assign pages_in_news = site.pages | where_exp: "p", "p.url contains '/news/'" -%}
+      {%- assign coll_in_news  = site.news | default: empty -%}
+
+      {%- assign pool = pages_in_news | concat: posts_in_news -%}
+      {%- assign pool = pool | concat: coll_in_news -%}
+
+      {%- assign pool = pool | where_exp: "p", "p.url" -%}          {# ensure has url #}
+      {%- assign pool = pool | where_exp: "p", "p.date" -%}         {# ensure has date #}
+
+      {%- assign sorted = pool | sort: "date" -%}    {# oldest → newest #}
+
+      {%- if sorted.size == 0 -%}
+        <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
+      {%- else -%}
+        {%- for post in sorted -%}
+          {%- assign y = post.date | date: "%Y" -%}
+          {%- assign m = post.date | date: "%m" -%}
+          {%- assign d = post.date | date: "%d" -%}
+          <li class="board-row" role="listitem">
+            <div class="date-box">
+              <div class="date-d">{{ d }}</div>
+              <span class="date-ym">{{ y }}.{{ m }}</span>
             </div>
-            <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
-          </div>
-          <div class="btn-cell hidden sm:block">
-            <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
-          </div>
-        </li>
-      {%- endfor -%}
+            <div>
+              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
+                {{ post.title }}
+              </a>
+              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
+                {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
+              </div>
+              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            </div>
+            <div class="btn-cell hidden sm:block">
+              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
     </ul>
   </div>
 </section>
