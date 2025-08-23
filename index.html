@@ -22,6 +22,7 @@
       --ring:0 0 0 3px rgba(172,14,14,.25);
     }
     html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+    body{background:var(--bg-soft)}
     .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
@@ -50,9 +51,9 @@
     }
 
     /* Carousel */
-    .carousel{position:relative;overflow:hidden;border-radius:1.25rem}
+    .carousel{position:relative;overflow:hidden;border-radius:1.25rem;background:#0b1020}
     .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.6,.2,1)}
-    .carousel-slide{min-width:100%;height:520px;position:relative}
+    .carousel-slide{min-width:100%;height:520px;position:relative;background:#0b1020}
     .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
     .carousel-caption{position:absolute;inset:0;display:flex;align-items:center;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));color:#fff;padding:0 1rem}
     .dot{width:10px;height:10px;border-radius:9999px;background:#e5e7eb}
@@ -68,7 +69,7 @@
     .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
   </style>
 </head>
-<body class="bg-[var(--bg-soft)]">
+<body>
   <!-- Header -->
   <div class="sticky-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
@@ -106,7 +107,7 @@
           </div>
         </div>
 
-        <!-- Publications (단일 페이지) -->
+        <!-- Publications (single page) -->
         <a class="nav-link" href="publications.html"><b>Publications</b></a>
 
         <!-- Lectures -->
@@ -178,11 +179,11 @@
 
   <!-- Hero -->
   <section class="max-w-7xl mx-auto px-4 mt-6">
-    <div class="carousel" id="carousel">
+    <div class="carousel" id="carousel" aria-roledescription="carousel">
       <div class="carousel-track" id="carouselTrack">
         <!-- Slide 1 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" />
+          <img src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" onerror="this.style.display='none'" />
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
@@ -198,7 +199,7 @@
 
         <!-- Slide 2 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" />
+          <img src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" onerror="this.style.display='none'" />
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
@@ -216,7 +217,7 @@
 
         <!-- Slide 3 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" />
+          <img src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" onerror="this.style.display='none'" />
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
@@ -224,7 +225,8 @@
                 Updates
               </h2>
               <div class="mt-4 flex gap-3">
-                <a class="btn-primary text-sm" href="archives-notice.html">Notice</a>
+                <!-- 🔧 잘못된 링크 수정: archives-notice → about-notice -->
+                <a class="btn-primary text-sm" href="about-notice.html">Notice</a>
                 <a class="btn-primary text-sm" href="archives-news.html">News</a>
                 <a class="btn-primary text-sm" href="archives-seminar.html">Seminar</a>
               </div>
@@ -243,27 +245,27 @@
   </section>
 
   <!-- Intro -->
-<section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-3 gap-6 items-center">
-  <div class="lg:col-span-1">
-    <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
-  </div>
-  <div class="lg:col-span-2">
-    <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman's University</p>
-    <h3 class="text-3xl mt-1">
-      <span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
-      <span class="font-extrabold">D</span><span class="font-light">ata</span>
-      <span class="font-extrabold">S</span><span class="font-light">cience</span>
-      <span class="font-extrabold"> Lab. - </span>
-      <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
-    </h3>
-    <p class="mt-3 text-[15px] leading-7 text-slate-700">
-      동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실 (Financial Data Science)</b> 홈페이지입니다.
-    </p>
-    <div class="mt-5">
-      <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
+  <section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-3 gap-6 items-center">
+    <div class="lg:col-span-1">
+      <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
     </div>
-  </div>
-</section>
+    <div class="lg:col-span-2">
+      <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman's University</p>
+      <h3 class="text-3xl mt-1">
+        <span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
+        <span class="font-extrabold">D</span><span class="font-light">ata</span>
+        <span class="font-extrabold">S</span><span class="font-light">cience</span>
+        <span class="font-extrabold"> Lab. - </span>
+        <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
+      </h3>
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실 (Financial Data Science)</b> 홈페이지입니다.
+      </p>
+      <div class="mt-5">
+        <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
+      </div>
+    </div>
+  </section>
 
   <!-- News & Notice -->
   <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 gap-6">
@@ -289,76 +291,127 @@
   </section>
 
   <!-- Footer -->
-<footer class="mt-10 border-t border-slate-200 bg-white">
-  <div class="max-w-7xl mx-auto px-4 py-8">
-    <p class="text-center text-sm text-slate-500 font-semibold">
-      <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
-      <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
-    </p>
-    <p class="mt-4 text-center text-xs text-slate-400">
-      Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
-    </p>
-  </div>
-</footer>
+  <footer class="mt-10 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
+        <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
+      </p>
+      <p class="mt-4 text-center text-xs text-slate-400">
+        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
 
   <!-- Scripts -->
-  <script>
-    // Mobile menu toggle
-    const btnMobile = document.getElementById('btnMobile');
-    const mobileNav = document.getElementById('mobileNav');
-    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+  <script defer>
+    // ---------- 작은 도우미 ----------
+    const $ = (sel, root = document) => root.querySelector(sel);
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-    // Desktop menus: keep submenu open while moving cursor
-    const MENU_DELAY = 70; // ms
-    document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
-      const panel = grp.querySelector('.js-submenu');
-      let t;
-      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
-      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
-      grp.addEventListener('mouseenter', open);
-      grp.addEventListener('mouseleave', close);
-      grp.addEventListener('focusin', open);
-      grp.addEventListener('focusout', close);
+    // ---------- Mobile menu toggle ----------
+    window.addEventListener('DOMContentLoaded', () => {
+      const btnMobile = $('#btnMobile');
+      const mobileNav = $('#mobileNav');
+      btnMobile?.addEventListener('click', () => mobileNav?.classList.toggle('hidden'));
     });
 
-    // Carousel
-    const track = document.getElementById('carouselTrack');
-    const dots = Array.from(document.querySelectorAll('[data-dot]'));
-    let idx = 0, total = 3, timer;
-    const go = i => {
-      idx = (i+total)%total;
-      track.style.transform = `translateX(-${idx*100}%)`;
-      dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
-    };
-    const auto = ()=> timer = setInterval(()=> go(idx+1), 5000);
-    dots.forEach(d=> d.addEventListener('click', ()=>{ clearInterval(timer); go(+d.dataset.dot); auto(); }));
-    go(0); auto();
+    // ---------- Desktop menus (지연 닫힘) ----------
+    window.addEventListener('DOMContentLoaded', () => {
+      const MENU_DELAY = 70; // ms
+      $$('.menu-group[data-menu]').forEach((grp) => {
+        const panel = grp.querySelector('.js-submenu');
+        if (!panel) return;
+        let t;
+        const open  = () => { clearTimeout(t); grp.classList.add('open'); };
+        const close = () => { t = setTimeout(() => grp.classList.remove('open'), MENU_DELAY); };
+        grp.addEventListener('mouseenter', open);
+        grp.addEventListener('mouseleave', close);
+        grp.addEventListener('focusin', open);
+        grp.addEventListener('focusout', close);
+      });
+    });
 
-    // Embed loaders
-    async function importList(srcUrl, listSelector, targetId, limit=3){
-      try{
+    // ---------- Carousel ----------
+    window.addEventListener('DOMContentLoaded', () => {
+      const track = $('#carouselTrack');
+      const dots  = $$('[data-dot]');
+      if (!track || dots.length === 0) return;
+
+      let idx = 0;
+      const total = track.children.length;
+      let timer;
+
+      const go = (i) => {
+        if (!track) return;
+        idx = (i + total) % total;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+      };
+
+      const auto = () => {
+        timer = setInterval(() => go(idx + 1), 5000);
+      };
+
+      dots.forEach((d) => d.addEventListener('click', () => {
+        clearInterval(timer);
+        go(+d.dataset.dot);
+        auto();
+      }));
+
+      // 초기화
+      go(0);
+      auto();
+    });
+
+    // ---------- Embed loaders (News / Notice) ----------
+    async function importList(srcUrl, listSelectors, targetId, limit = 3){
+      const target = document.getElementById(targetId);
+      if (!target) return;
+
+      // file:// 로 열면 CORS로 실패 → 사용자에게 명확한 안내
+      if (location.protocol === 'file:') {
+        target.innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
+        return;
+      }
+
+      try {
         const res = await fetch(srcUrl, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const html = await res.text();
         const doc = new DOMParser().parseFromString(html, 'text/html');
-        const items = Array.from(doc.querySelectorAll(listSelector)).slice(0, limit);
-        const target = document.getElementById(targetId);
+
+        // 우선순위대로 선택자 탐색
+        let items = [];
+        for (const sel of listSelectors) {
+          items = $$(sel, doc);
+          if (items.length) break;
+        }
+
         target.innerHTML = '';
-        if(items.length===0){ target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>'; return; }
-        items.forEach(li => target.appendChild(li.cloneNode(true)));
-      }catch(err){
-        const target = document.getElementById(targetId);
-        target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
+        if (items.length === 0) {
+          target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
+          return;
+        }
+
+        items.slice(0, limit).forEach((li) => target.appendChild(li.cloneNode(true)));
+      } catch (err) {
         console.error('임베드 오류:', err);
+        target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
       }
     }
-    document.addEventListener('DOMContentLoaded', ()=>{
-      importList('archives-news.html', '#news-list > li', 'news-feed', 3);
-      importList('about-notice.html', '#notice-list > li', 'notice-feed', 3);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // 다양한 마크업을 대비해 선택자 후보를 배열로 전달
+      importList('archives-news.html',
+        ['#news-list > li', '#news ul > li', 'ul#news > li', 'main ul > li'],
+        'news-feed', 3
+      );
+      importList('about-notice.html',
+        ['#notice-list > li', '#notices ul > li', 'ul#notice > li', 'main ul > li'],
+        'notice-feed', 3
+      );
     });
   </script>
 </body>
 </html>
-
-
-
-
