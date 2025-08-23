@@ -25,7 +25,7 @@
     .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
-    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem} /* compact submenu */
+    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
     .submenu-item{padding:.35rem .75rem; font-weight:700}
     .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
     .btn-primary:hover{transform:translateY(-1px);opacity:.95}
@@ -38,6 +38,16 @@
     .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
     .warm-underline{ text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
     :focus-visible{outline:none;box-shadow:var(--ring)}
+
+    /* 한국어 헤드라인 줄바꿈 품질 향상 */
+    .ko-tight{
+      word-break: keep-all;
+      line-break: strict;
+      overflow-wrap: break-word;
+    }
+    @supports (text-wrap: balance){
+      .ko-tight{ text-wrap: balance; }
+    }
 
     /* Carousel */
     .carousel{position:relative;overflow:hidden;border-radius:1.25rem}
@@ -96,7 +106,7 @@
           </div>
         </div>
 
-        <!-- Publications (상단은 단일 페이지로 이동) -->
+        <!-- Publications (단일 페이지) -->
         <a class="nav-link" href="publications.html"><b>Publications</b></a>
 
         <!-- Lectures -->
@@ -176,8 +186,9 @@
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
-              <!-- 제목 크기 살짝 축소 -->
-              <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">데이터사이언스를 바탕으로 한 개선된 금융 의사결정을 위해 달려갑니다.</h1>
+              <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                데이터 사이언스로 더 정교한 금융 의사결정
+              </h1>
               <div class="mt-4 flex gap-3">
                 <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
               </div>
@@ -191,7 +202,9 @@
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-gold">Financial Data Science Lab.</span>
-              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">연구 · 교육 · 실무를 잇는 FINDS Lab.</h2>
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                FINDS Lab의 연구·강의·프로젝트 성과
+              </h2>
               <div class="mt-4 flex gap-3">
                 <a class="btn-primary text-sm" href="publications.html">Publications</a>
                 <a class="btn-primary text-sm" href="lectures.html">Lectures</a>
@@ -207,7 +220,9 @@
           <div class="carousel-caption">
             <div class="max-w-xl px-6">
               <span class="tag-accent">FINDS Lab. Updates</span>
-              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">FINDS Lab.의 공지 및 최신 소식 확인하기</h2>
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                FINDS Lab의 최신 소식과 공지
+              </h2>
               <div class="mt-4 flex gap-3">
                 <a class="btn-primary text-sm" href="archives-news.html">Lab News</a>
                 <a class="btn-primary text-sm" href="archives-seminar.html">Seminar</a>
@@ -297,7 +312,6 @@
       const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
       grp.addEventListener('mouseenter', open);
       grp.addEventListener('mouseleave', close);
-      // keyboard
       grp.addEventListener('focusin', open);
       grp.addEventListener('focusout', close);
     });
@@ -339,4 +353,3 @@
   </script>
 </body>
 </html>
-
