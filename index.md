@@ -17,6 +17,12 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   @media (max-width: 768px){
     .carousel-slide{height:420px}
   }
+
+  /* 뉴스/공지: 제목 한 줄 말줄임 */
+  .line-1{
+    display:inline-block;max-width:100%;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;
+  }
 </style>
 
 <!-- Hero -->
@@ -115,30 +121,43 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
 </section>
 
 <!-- News & Notice -->
-<div class="card">
-  <div class="flex items-center justify-between">
-    <h4 class="text-xl font-extrabold">News</h4>
-    <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
-  </div>
+<section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <!-- News (Liquid: /news/에서 최신 3개) -->
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <h4 class="text-xl font-extrabold">News</h4>
+      <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+    </div>
 
-  {% assign pages_sorted = site.pages | sort: "date" | reverse %}
-  {% assign shown = 0 %}
-  <ul class="mt-4 space-y-3">
-    {% for post in pages_sorted %}
-      {% if post.url and post.url contains '/news/' and post.date %}
-        <li class="text-[14px]">
-          <a class="font-bold hover:underline" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    {% assign pool = site.pages | where_exp: "p", "p.url and p.url contains '/news/' and p.date" %}
+    {% assign pool = pool | sort: "date" | reverse %}
+    {% assign shown = 0 %}
+    <ul class="mt-4 space-y-2">
+      {% for post in pool %}
+        <li class="text-[14px] leading-6">
+          <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
           <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
         </li>
         {% assign shown = shown | plus: 1 %}
         {% if shown == 3 %}{% break %}{% endif %}
+      {% endfor %}
+      {% if shown == 0 %}
+        <li class="text-sm text-slate-500">게시글이 없습니다.</li>
       {% endif %}
-    {% endfor %}
-    {% if shown == 0 %}
-      <li class="text-sm text-slate-500">게시글이 없습니다.</li>
-    {% endif %}
-  </ul>
-</div>
+    </ul>
+  </div>
+
+  <!-- Notice: /about-notice.html에서 상위 3개 링크만 스니핑 -->
+  <div class="card">
+    <div class="flex items-center justify-between">
+      <h4 class="text-xl font-extrabold">Notice</h4>
+      <a class="warm-underline font-bold" href="{{ '/about-notice.html' | relative_url }}">More</a>
+    </div>
+    <ul id="notice-feed" class="mt-4 space-y-2">
+      <li class="text-sm text-slate-500">불러오는 중…</li>
+    </ul>
+  </div>
+</section>
 
 <!-- ====== 캐러셀 전용 JS ====== -->
 <script>
@@ -157,168 +176,52 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
       dots.forEach((d, j) => d.classList.toggle('active', j === idx));
     }
 
-    function auto(){
-      timer = setInterval(() => go(idx + 1), 5000);
-    }
+    function auto(){ timer = setInterval(() => go(idx + 1), 5000); }
 
     dots.forEach((d) => d.addEventListener('click', () => {
-      clearInterval(timer);
-      go(+d.dataset.dot);
-      auto();
+      clearInterval(timer); go(+d.dataset.dot); auto();
     }));
 
-    go(0);
-    auto();
+    go(0); auto();
 
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden){ clearInterval(timer); }
-      else { auto(); }
+      if (document.hidden){ clearInterval(timer); } else { auto(); }
     });
   })();
 </script>
 
-<!-- ====== News/Notice 임베드 로더 (JSON 우선, HTML 폴백) ====== -->
+<!-- ====== Notice 간단 로더: /about-notice.html에서 상위 3개 링크만 추출 ====== -->
 <script>
-  function formatDateYMD(iso){
-    const d = new Date(iso);
-    const y = d.getFullYear();
-    const m = String(d.getMonth()+1).padStart(2,'0');
-    const dd= String(d.getDate()).padStart(2,'0');
-    return `${y}.${m}.${dd}`;
-  }
-
-  function renderSimpleList(targetId, items){
-    const ul = document.getElementById(targetId);
-    if (!ul) return;
-    ul.innerHTML = '';
-    if (!items || !items.length){
-      ul.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
-      return;
-    }
-    items.forEach(it=>{
-      const li = document.createElement('li');
-      li.innerHTML = `
-        <a class="block font-bold hover:underline" href="${it.url}">${it.title}</a>
-        <div class="text-xs text-slate-500 mt-0.5">${formatDateYMD(it.date)}</div>
-      `;
-      ul.appendChild(li);
-    });
-  }
-
-  async function loadNewsFromJSON(){
-    const url = '{{ "/assets/data/news.json" | relative_url }}';
-    const res = await fetch(url + '?_=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('news.json not found');
-    const data = await res.json(); // [{date,title,url,excerpt,...}]
-    // 최신순 정렬 후 상위 3개
-    const top3 = data
-      .slice()
-      .sort((a,b)=> new Date(b.date) - new Date(a.date))
-      .slice(0,3);
-    renderSimpleList('news-feed', top3);
-  }
-
-  async function loadNoticesFromJSON(){
-    const url = '{{ "/assets/data/notices.json" | relative_url }}';
-    const res = await fetch(url + '?_=' + Date.now(), { cache: 'no-store' });
-    if (!res.ok) throw new Error('notices.json not found');
-    const data = await res.json(); // [{date,title,url}]
-    const top3 = data
-      .slice()
-      .sort((a,b)=> new Date(b.date) - new Date(a.date))
-      .slice(0,3);
-    renderSimpleList('notice-feed', top3);
-  }
-
-  // HTML 폴백: archives-news.html 구조 지원(#board .board-row .sbj)
-  async function loadNewsFromHTML(){
-    const target = document.getElementById('news-feed');
+  (async function(){
+    const target = document.getElementById('notice-feed');
     if (!target) return;
+
     try{
-      const res = await fetch('{{ "/archives-news.html" | relative_url }}', { cache: 'no-store' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const res = await fetch('{{ "/about-notice.html" | relative_url }}', { cache:'no-store' });
+      if(!res.ok) throw new Error(res.status);
       const html = await res.text();
       const doc  = new DOMParser().parseFromString(html, 'text/html');
 
-      // 보드 행에서 제목/링크/날짜 추출
-      const rows = Array.from(doc.querySelectorAll('#board .board-row'));
-      if (!rows.length){
-        // 구형 선택자 폴백들
-        const legacy = Array.from(doc.querySelectorAll('#news-list > li, #news ul > li, ul#news > li, main ul > li'));
-        if (!legacy.length){
-          renderSimpleList('news-feed', []);
-          return;
-        }
-        // 구형은 그 상태로 최근 3개만 표시(역순)
-        const items = legacy.slice(-3).reverse().map(li=>{
-          const a = li.querySelector('a');
-          return { title:a ? a.textContent.trim() : li.textContent.trim(), url:a ? a.getAttribute('href') : '#', date:new Date().toISOString().slice(0,10) };
-        });
-        renderSimpleList('news-feed', items);
+      // 본문에서 텍스트 있는 링크 3개 추출 (필요시 선택자 보강)
+      const anchors = Array.from(doc.querySelectorAll('main a, article a, .board-row .sbj a, #content a'))
+        .filter(a => a.getAttribute('href') && a.textContent.trim())
+        .slice(0,3);
+
+      target.innerHTML = '';
+      if (anchors.length === 0){
+        target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
         return;
       }
 
-      const items = rows.map(row=>{
-        const a   = row.querySelector('.sbj a, a.sbj, .sbj'); // 제목 링크
-        const ym  = row.querySelector('.date-ym')?.textContent?.trim() || '';
-        const dd  = row.querySelector('.date-d')?.textContent?.trim() || '';
-        const date= (ym && dd) ? ym.replace('.', '-') + '-' + dd.padStart(2,'0') : '';
-        return {
-          title: a ? a.textContent.trim() : 'Untitled',
-          url: a ? a.getAttribute('href') : '#',
-          date: date ? new Date(date.replace('.', '-')).toISOString().slice(0,10) : new Date().toISOString().slice(0,10)
-        };
-      })
-      .sort((a,b)=> new Date(b.date) - new Date(a.date))
-      .slice(0,3);
-
-      renderSimpleList('news-feed', items);
+      anchors.forEach(a => {
+        const li = document.createElement('li');
+        li.className = 'text-[14px] leading-6';
+        li.innerHTML = `<a class="font-bold hover:underline line-1" href="${a.getAttribute('href')}">${a.textContent.trim()}</a>`;
+        target.appendChild(li);
+      });
     }catch(e){
       console.error(e);
-      renderSimpleList('news-feed', []);
-    }
-  }
-
-  // Notice HTML 폴백(구조 모르면 a 태그 3개만 뽑기)
-  async function loadNoticesFromHTML(){
-    const target = document.getElementById('notice-feed');
-    if (!target) return;
-    try{
-      const res = await fetch('{{ "/about-notice.html" | relative_url }}', { cache: 'no-store' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const html = await res.text();
-      const doc  = new DOMParser().parseFromString(html, 'text/html');
-
-      // heuristics: 본문 내 공지 리스트의 링크 3개
-      const anchors = Array.from(doc.querySelectorAll('main a, #content a, article a, .board-row .sbj a'))
-                        .filter(a=> a.getAttribute('href') && a.textContent.trim())
-                        .slice(0,3);
-      const items = anchors.map(a=>({
-        title: a.textContent.trim(),
-        url: a.getAttribute('href'),
-        date: new Date().toISOString().slice(0,10)
-      }));
-      renderSimpleList('notice-feed', items);
-    }catch(e){
-      console.error(e);
-      renderSimpleList('notice-feed', []);
-    }
-  }
-
-  (async function boot(){
-    // JSON 우선
-    let newsOk = false, noticeOk = false;
-    try{ await loadNewsFromJSON(); newsOk = true; }catch(e){ /* fallback 아래서 */ }
-    try{ await loadNoticesFromJSON(); noticeOk = true; }catch(e){ /* fallback 아래서 */ }
-
-    // 폴백: HTML 파싱
-    if (!newsOk)   await loadNewsFromHTML();
-    if (!noticeOk) await loadNoticesFromHTML();
-
-    // 로컬 파일 열람시 차단 메시지
-    if (location.protocol === 'file:'){
-      document.getElementById('news-feed').innerHTML   = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
-      document.getElementById('notice-feed').innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
+      target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
     }
   })();
 </script>
