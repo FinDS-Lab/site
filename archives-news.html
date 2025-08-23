@@ -39,32 +39,37 @@ permalink: /archives-news.html
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
-      {%- comment -%}
-        Robust source pool:
-        1) Regular posts under /news/ (site.posts)
-        2) Regular pages under /news/ (site.pages)  ← needs front matter date:
-        3) Optional collection `news` (site.news)   ← if you configured collections
-      {%- endcomment -%}
 
-      {%- assign posts_in_news = site.posts | where_exp: "p", "p.url contains '/news/'" -%}
-      {%- assign pages_in_news = site.pages | where_exp: "p", "p.url contains '/news/'" -%}
-      {%- assign coll_in_news  = site.news | default: empty -%}
+      {% comment %}
+      /news 폴더에 있는 “페이지(=posts 아님)”를 수집합니다.
+      각 파일에는 반드시 front matter에 `date:`가 있어야 정렬됩니다.
+      예) date: 2025-09-01
+      {% endcomment %}
 
-      {%- assign pool = pages_in_news | concat: posts_in_news -%}
-      {%- assign pool = pool | concat: coll_in_news -%}
+      {% assign pages_in_news = site.pages | where_exp: "p", "p.url and p.url contains '/news/'" %}
 
-      {%- assign pool = pool | where_exp: "p", "p.url" -%}          {# ensure has url #}
-      {%- assign pool = pool | where_exp: "p", "p.date" -%}         {# ensure has date #}
+      {% comment %}
+      날짜 없는 문서는 제외(정렬 불가)
+      {% endcomment %}
+      {% assign dated_pages = "" | split: "" %}
+      {% for p in pages_in_news %}
+        {% if p.date %}
+          {% assign dated_pages = dated_pages | push: p %}
+        {% endif %}
+      {% endfor %}
 
-      {%- assign sorted = pool | sort: "date" -%}    {# oldest → newest #}
+      {% comment %}
+      정렬: 오래된 것 → 최신 (원하면 | reverse 로 뒤집으세요)
+      {% endcomment %}
+      {% assign sorted = dated_pages | sort: "date" %}
 
-      {%- if sorted.size == 0 -%}
+      {% if sorted.size == 0 %}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
-      {%- else -%}
-        {%- for post in sorted -%}
-          {%- assign y = post.date | date: "%Y" -%}
-          {%- assign m = post.date | date: "%m" -%}
-          {%- assign d = post.date | date: "%d" -%}
+      {% else %}
+        {% for post in sorted %}
+          {% assign y = post.date | date: "%Y" %}
+          {% assign m = post.date | date: "%m" %}
+          {% assign d = post.date | date: "%d" %}
           <li class="board-row" role="listitem">
             <div class="date-box">
               <div class="date-d">{{ d }}</div>
@@ -75,7 +80,11 @@ permalink: /archives-news.html
                 {{ post.title }}
               </a>
               <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
-                {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
+                {% if post.excerpt %}
+                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
+                {% else %}
+                  {{ post.content | strip_html | strip | truncate: 160 }}
+                {% endif %}
               </div>
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
@@ -83,8 +92,8 @@ permalink: /archives-news.html
               <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
             </div>
           </li>
-        {%- endfor -%}
-      {%- endif -%}
+        {% endfor %}
+      {% endif %}
     </ul>
   </div>
 </section>
