@@ -5,7 +5,12 @@
       <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
     </p>
     <p class="mt-4 text-center text-xs text-slate-400">
-      Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      Copyright © <span id="year"></span> Financial Data Science Lab. All Rights Reserved.
     </p>
   </div>
 </footer>
+
+<script>
+  // 현재 연도를 자동으로 출력
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
