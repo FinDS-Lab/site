@@ -4,11 +4,12 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Location | FINDS Lab (Dongduk Women’s University)</title>
-  <meta name="description" content="FINDS Lab — Location & Directions" />
+  <title>FINDS Lab | Financial Data Science Lab. (Dongduk Woman University)</title>
+  <meta name="description" content="Financial Data Science Lab. (FINDS Lab.) — Dongduk Woman University" />
 
-  <!-- Fonts & Tailwind -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -24,18 +25,41 @@
     .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
-    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
+    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem} /* compact submenu */
     .submenu-item{padding:.35rem .75rem; font-weight:700}
-    .tag-accent{background:var(--accent);color:#fff;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .btn-ghost{background:#0f172a;color:#fff;border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-ghost:hover{transform:translateY(-1px);opacity:.95}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+    .chip{display:inline-flex;align-items:center;font-weight:800;font-size:.75rem;padding:.25rem .6rem;border-radius:9999px;background:var(--bg-soft);border:1px solid #e5e7eb}
+    .tag-accent{background:var(--accent);color:var(--fg-on-accent);border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
     .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
+    .warm-underline{ text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
     :focus-visible{outline:none;box-shadow:var(--ring)}
+
+    /* Carousel */
+    .carousel{position:relative;overflow:hidden;border-radius:1.25rem}
+    .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.6,.2,1)}
+    .carousel-slide{min-width:100%;height:520px;position:relative}
+    .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
+    .carousel-caption{position:absolute;inset:0;display:flex;align-items:center;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));color:#fff;padding:0 1rem}
+    .dot{width:10px;height:10px;border-radius:9999px;background:#e5e7eb}
+    .dot.active{background:var(--accent)}
+
+    /* Scrollbar */
+    *{scrollbar-width:thin;scrollbar-color:var(--accent) #f1f5f9}
+    *::-webkit-scrollbar{height:8px;width:8px}
+    *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
+
     /* Desktop submenu fade */
     .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
     .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body class="bg-[var(--bg-soft)]">
-  <!-- Header (index.html과 동일한 네비게이션) -->
+  <!-- Header -->
   <div class="sticky-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       <a href="./" class="flex items-center gap-3">
@@ -49,6 +73,7 @@
       <nav class="hidden md:flex items-center gap-6">
         <a class="nav-link" href="./"><b>Home</b></a>
 
+        <!-- About FINDS (robust hover) -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
           <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
@@ -56,10 +81,11 @@
             <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
             <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
             <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
-            <a class="block submenu-item hover:bg-slate-50" href="about-location.html" aria-current="page">Location</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
           </div>
         </div>
 
+        <!-- Members -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="members-director.html"><b>Members</b></a>
           <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
@@ -70,10 +96,16 @@
           </div>
         </div>
 
-        <a class="nav-link" href="publications-all.html"><b>Publications</b></a>
+        <!-- Publications (상단은 단일 페이지로 이동) -->
+        <a class="nav-link" href="publications.html"><b>Publications</b></a>
+
+        <!-- Lectures -->
         <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
+
+        <!-- Projects -->
         <a class="nav-link" href="projects.html"><b>Projects</b></a>
 
+        <!-- Archives -->
         <div class="relative menu-group" data-menu>
           <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
           <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
@@ -84,6 +116,7 @@
         </div>
       </nav>
 
+      <!-- Mobile toggle -->
       <div class="flex items-center gap-2">
         <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -117,7 +150,7 @@
           </div>
         </div>
 
-        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications-all.html">Publications</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications.html">Publications</a>
         <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
         <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
 
@@ -133,51 +166,110 @@
     </div>
   </div>
 
-  <!-- Page title -->
+  <!-- Hero -->
   <section class="max-w-7xl mx-auto px-4 mt-6">
-    <div class="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 flex items-center justify-between">
-      <div>
-        <span class="tag-gold">Location</span>
-        <h1 class="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight text-slate-900">동덕여자대학교 경영학과 · 캠퍼스 위치</h1>
-        <p class="mt-1 text-sm text-slate-600">방문 전 건물/호실을 확인해 주세요.</p>
+    <div class="carousel" id="carousel">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <img src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" />
+          <div class="carousel-caption">
+            <div class="max-w-xl px-6">
+              <span class="tag-gold">Financial Data Science Lab.</span>
+              <!-- 제목 크기 살짝 축소 -->
+              <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">데이터로 금융 의사결정을 더 똑똑하게</h1>
+              <div class="mt-4 flex gap-3">
+                <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <img src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" />
+          <div class="carousel-caption">
+            <div class="max-w-xl px-6">
+              <span class="tag-gold">Financial Data Science Lab.</span>
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">연구 · 교육 · 실무를 잇는 FINDS Lab.</h2>
+              <p class="mt-2 text-[13px] md:text-[14px] text-slate-100/90">수업 · 세미나 · 산학 프로젝트</p>
+              <div class="mt-4 flex gap-3">
+                <a class="btn-primary text-sm" href="publications.html">Publications</a>
+                <a class="btn-primary text-sm" href="lectures.html">Lectures</a>
+                <a class="btn-primary text-sm" href="projects.html">Projects</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <img src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" />
+          <div class="carousel-caption">
+            <div class="max-w-xl px-6">
+              <span class="tag-accent">FINDS Lab. Updates</span>
+              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight">최신 소식과 공지 확인하기</h2>
+              <p class="mt-2 text-[13px] md:text-[14px] text-slate-100/90">Lab News · Notice · Seminar</p>
+              <div class="mt-4 flex gap-3">
+                <a class="btn-primary text-sm" href="archives-news.html">Lab News</a>
+                <a class="btn-primary text-sm" href="archives-seminar.html">Seminar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
+        <button class="dot" data-dot="0" aria-label="slide 1"></button>
+        <button class="dot" data-dot="1" aria-label="slide 2"></button>
+        <button class="dot" data-dot="2" aria-label="slide 3"></button>
       </div>
     </div>
   </section>
 
-  <!-- Map -->
-  <section class="max-w-7xl mx-auto px-4 mt-6">
-    <div id="ddwuMap" class="w-full h-[360px] md:h-[420px] rounded-2xl border border-slate-200 overflow-hidden bg-slate-100"></div>
-    <p class="mt-2 text-xs text-slate-500">※ 지도는 인문관(경영학과 사무실) 기준으로 표시됩니다.</p>
-  </section>
-
-  <!-- Addresses -->
-  <section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-2 gap-4">
-    <div class="bg-white border border-slate-200 rounded-xl p-4">
-      <h3 class="text-lg font-extrabold text-slate-900">동덕여자대학교 (본교)</h3>
-      <p class="mt-2 text-sm text-slate-700">
-        [02748] 서울특별시 성북구 화랑로13길 60 (하월곡동 23-1)
+  <!-- Intro -->
+  <section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-3 gap-6 items-center">
+    <div class="lg:col-span-1">
+      <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
+    </div>
+    <div class="lg:col-span-2">
+      <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman University</p>
+      <h3 class="text-3xl font-extrabold mt-1">Financial Data Science Lab. (FINDS Lab.)</h3>
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실 (Financial Data Science)</b> 홈페이지입니다.
       </p>
-      <p class="text-sm text-slate-700">Tel. 02-940-4000</p>
-      <div class="mt-3 flex flex-wrap gap-2">
-        <span class="tag-accent">Main Campus</span>
-      </div>
-    </div>
-
-    <div class="bg-white border border-slate-200 rounded-xl p-4">
-      <h3 class="text-lg font-extrabold text-slate-900">경영학과 사무실 (인문관 B503)</h3>
-      <p class="mt-2 text-sm text-slate-700">
-        서울특별시 성북구 화랑로13길 60, <b>인문관 B503</b>
-      </p>
-      <p class="text-sm text-slate-700">Tel. 02-940-4420</p>
-      <div class="mt-3 flex flex-wrap gap-2">
-        <span class="tag-gold">Humanities Building</span>
-        <span class="tag-accent">B503</span>
+      <div class="mt-5">
+        <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer (간단형) -->
-  <footer class="mt-10 border-t border-slate-200 bg-white">
+  <!-- News & Notice -->
+  <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 gap-6">
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <h4 class="text-xl font-extrabold">FINDS Lab News</h4>
+        <a class="warm-underline font-bold" href="archives-news.html">More</a>
+      </div>
+      <ul id="news-feed" class="mt-4 space-y-3">
+        <li class="text-sm text-slate-500">불러오는 중…</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="flex items-center justify-between">
+        <h4 class="text-xl font-extrabold">FINDS Lab Notice</h4>
+        <a class="warm-underline font-bold" href="about-notice.html">More</a>
+      </div>
+      <ul id="notice-feed" class="mt-4 space-y-3">
+        <li class="text-sm text-slate-500">불러오는 중…</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-16 border-t border-slate-200 bg-white">
     <div class="max-w-7xl mx-auto px-4 py-8">
       <ul class="flex flex-wrap gap-x-4 gap-y-2 justify-center text-sm font-semibold">
         <li><a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank">동덕여자대학교</a></li>
@@ -191,17 +283,15 @@
     </div>
   </footer>
 
-  <!-- Kakao Maps SDK (appkey 교체 필요) -->
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_APP_KEY"></script>
-
+  <!-- Scripts -->
   <script>
     // Mobile menu toggle
     const btnMobile = document.getElementById('btnMobile');
     const mobileNav = document.getElementById('mobileNav');
     btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
 
-    // Desktop menus: keep submenu open
-    const MENU_DELAY = 70;
+    // Desktop menus: keep submenu open while moving cursor
+    const MENU_DELAY = 70; // ms
     document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
       const panel = grp.querySelector('.js-submenu');
       let t;
@@ -209,35 +299,45 @@
       const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
       grp.addEventListener('mouseenter', open);
       grp.addEventListener('mouseleave', close);
+      // keyboard
       grp.addEventListener('focusin', open);
       grp.addEventListener('focusout', close);
     });
 
-    // ===== Kakao Map: 인문관(B503) 기준 =====
-    // 좌표 출처: 공용 주소 좌표 데이터(화랑로13길 60) — 위도 37.60584058, 경도 127.04134158
-    // (필요 시 level 값을 조정하세요. 3~5 권장)
-    const centerLat = 37.605840582028;
-    const centerLng = 127.04134157886;
-
-    const mapContainer = document.getElementById('ddwuMap');
-    const mapOption = {
-      center: new kakao.maps.LatLng(centerLat, centerLng),
-      level: 3
+    // Carousel
+    const track = document.getElementById('carouselTrack');
+    const dots = Array.from(document.querySelectorAll('[data-dot]'));
+    let idx = 0, total = 3, timer;
+    const go = i => {
+      idx = (i+total)%total;
+      track.style.transform = `translateX(-${idx*100}%)`;
+      dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
     };
-    const map = new kakao.maps.Map(mapContainer, mapOption);
+    const auto = ()=> timer = setInterval(()=> go(idx+1), 5000);
+    dots.forEach(d=> d.addEventListener('click', ()=>{ clearInterval(timer); go(+d.dataset.dot); auto(); }));
+    go(0); auto();
 
-    const markerPos = new kakao.maps.LatLng(centerLat, centerLng);
-    const marker = new kakao.maps.Marker({ position: markerPos });
-    marker.setMap(map);
-
-    const iwContent = `
-      <div style="padding:8px 10px;font-size:12px;line-height:1.4;">
-        <b>동덕여자대학교 인문관</b><br/>
-        경영학과 사무실 B503<br/>
-        <span style="color:#64748b">Tel. 02-940-4420</span>
-      </div>`;
-    const iw = new kakao.maps.InfoWindow({ content: iwContent });
-    iw.open(map, marker);
+    // Embed loaders
+    async function importList(srcUrl, listSelector, targetId, limit=3){
+      try{
+        const res = await fetch(srcUrl, { cache: 'no-store' });
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const items = Array.from(doc.querySelectorAll(listSelector)).slice(0, limit);
+        const target = document.getElementById(targetId);
+        target.innerHTML = '';
+        if(items.length===0){ target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>'; return; }
+        items.forEach(li => target.appendChild(li.cloneNode(true)));
+      }catch(err){
+        const target = document.getElementById(targetId);
+        target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
+        console.error('임베드 오류:', err);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      importList('archives-news.html', '#news-list > li', 'news-feed', 3);
+      importList('about-notice.html', '#notice-list > li', 'notice-feed', 3);
+    });
   </script>
 </body>
 </html>
