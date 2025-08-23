@@ -45,3 +45,31 @@ body{background:var(--bg-soft)}
 /* Desktop submenu fade */
 .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
 .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
+
+/* 스크롤바 생겼다가 사라질 때 폭이 요동하는 문제 방지 */
+html { scrollbar-gutter: stable both-edges; }
+
+/* 모바일에서도 최소 폭 확보(임의: 360px) */
+@media (max-width: 360px){ html, body { min-width: 360px; } }
+
+/* 이미지/비디오로 인한 시프트 방지 */
+img, video { display:block; max-width:100%; height:auto; }
+/* 가로세로 비가 알려진 이미지는 width/height 속성으로 공간 예약(예: 로고) */
+img[width][height] { height:auto; }
+
+/* 비율 고정이 필요한 곳은 aspect-ratio 사용 (예: 썸네일) */
+.ar-16x9 { aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* 지도/캐러셀 등 위에서 보이는 블록은 높이 미리 예약 */
+#kakao-map { height: 460px; }
+@media (max-width: 640px){ #kakao-map { height: 360px; } }
+
+/* 리스트 임베드(News/Notice) 로딩 중 높이 출렁임 방지 */
+#news-feed, #notice-feed { min-height: 4.5rem; }
+
+/* 모바일 메뉴 열릴 때 바디 스크롤 잠금 */
+body.no-scroll { overflow: hidden; }
+
+/* 헤더 고정 중 컨텐츠 점프 완화(살짝 패딩) */
+.sticky-blur { will-change: transform; }
+
