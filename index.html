@@ -2,528 +2,602 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FINDS Lab | Finance & Intelligent Data Science</title>
-  <meta name="description" content="FINDS Lab — Finance & Intelligent Data Science Lab. Publications, Teaching, and Projects with powerful on-page filters. Single-file site for GitHub Pages." />
+  <title>FINDS Lab | Financial Intelligence & Decision Systems</title>
 
-  <!-- CDN (GitHub Pages-ready / no build needed) -->
+  <!-- Meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="FINDS Lab — Publications, Teaching, Projects with rich filters." />
+
+  <!-- Fonts: Noto Sans KR + Noto Sans + Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&family=Noto+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 
   <style>
-    html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif; }
-    .chip { @apply px-3 py-1 text-xs font-medium rounded-full cursor-pointer select-none transition; }
-    .card { @apply bg-white rounded-xl shadow hover:shadow-lg transition p-4; }
-    .tag { @apply text-[10px] font-semibold px-2 py-0.5 rounded-full; }
+    :root {
+      --warm-start: #ef4444; /* red-500 */
+      --warm-end:   #f59e0b; /* amber-500 (gold 느낌) */
+    }
+    body {
+      font-family: "Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      letter-spacing: 0.01em;
+    }
+    /* sticky blur header / filter bars */
+    .sticky-blur {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: saturate(180%) blur(6px);
+      -webkit-backdrop-filter: saturate(180%) blur(6px);
+    }
+    /* slim scrollbar */
+    * { scrollbar-width: thin; scrollbar-color: #f59e0b #f1f5f9; }
+    *::-webkit-scrollbar { height: 8px; width: 8px; }
+    *::-webkit-scrollbar-thumb { background: #f59e0b; border-radius: 9999px; }
+    *::-webkit-scrollbar-track { background: #f1f5f9; }
+    /* subtle card hover */
+    .card-hover { transition: transform .2s ease, box-shadow .2s ease; }
+    .card-hover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
   </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gradient-to-b from-white to-slate-50 min-h-screen">
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useMemo, useEffect, Fragment } = React;
+    const { useMemo, useState, useEffect, Fragment } = React;
 
-    // ---------------------------------------------------------------------
-    // Sample DATA (edit freely). Add as many items as you want.
-    // ---------------------------------------------------------------------
-    // Publications
-    //  - type: 'journal' | 'conference'
-    //  - journalLocale: 'international' | 'domestic' (for journals)
-    //  - journalIndex: 'SSCI' | 'SCIE' | 'A&HCI' | 'Scopus' | 'Other' | 'KCI Excellent Accredited' | 'KCI Accredited'
-    //  - conferenceType: 'International' | 'International - Domestic Joint' | 'Domestic' (for conferences)
-    const publications = [
-      {
-        id: 'J-2025-1',
-        type: 'journal',
-        year: 2025,
-        title: 'Decision-informed Neural Networks for Portfolio Optimization',
-        authors: ['Yoontae Hwang', 'Yaxuan Kong', 'Stefan Zohren', 'Yongjae Lee'],
-        venue: 'Quantitative Finance',
-        journalLocale: 'international',
-        journalIndex: 'SSCI',
-        topics: ['Portfolio Theory', 'Deep Learning', 'Time-Series'],
-        links: [{ text: 'paper', href: 'https://arxiv.org/abs/2502.00828' }, { text: 'code', href: '#' }]
-      },
-      {
-        id: 'J-2023-2',
-        type: 'journal',
-        year: 2023,
-        title: 'Household Financial Health via Machine Learning',
-        authors: ['Kyeongbin Kim*', 'Yoontae Hwang*', 'Junghye Lee', 'Yongjae Lee'],
-        venue: 'Quantitative Finance',
-        journalLocale: 'international',
-        journalIndex: 'SSCI',
-        topics: ['Household Finance', 'Machine Learning'],
-        links: [{ text: 'paper', href: 'https://www.tandfonline.com/' }]
-      },
-      {
-        id: 'J-2022-1',
-        type: 'journal',
-        year: 2022,
-        title: '국내 주식시장 거래 행태 분석',
-        authors: ['Yoontae Hwang', 'Junpyo Park', 'Yongjae Lee'],
-        venue: '한국금융학회지',
-        journalLocale: 'domestic',
-        journalIndex: 'KCI Accredited',
-        topics: ['Trading', 'Behavior'],
-        links: []
-      },
-      {
-        id: 'C-2024-1',
-        type: 'conference',
-        year: 2024,
-        title: 'CAFO: Feature-Centric Explanation on Time Series Classification',
-        authors: ['Jaeho Kim', 'Seok-ju Hahn', 'Yoontae Hwang', 'Junghye Lee', 'Seulki Lee'],
-        venue: 'KDD',
-        conferenceType: 'International',
-        topics: ['Time-Series', 'Explainability', 'Deep Learning'],
-        links: [{ text: 'paper', href: 'https://arxiv.org/abs/2406.01833' }, { text: 'code', href: 'https://github.com/eai-lab/CAFO' }]
-      },
-      {
-        id: 'C-2023-1',
-        type: 'conference',
-        year: 2023,
-        title: 'SimStock: Representation Model for Stock Similarities',
-        authors: ['Yoontae Hwang', 'Junhyeong Lee', 'Daham Kim', 'Seunghwan Noh', 'Joohwan Hong', 'Yongjae Lee'],
-        venue: 'ICAIF',
-        conferenceType: 'International',
-        topics: ['Trading', 'Representation Learning', 'Deep Learning'],
-        links: [{ text: 'paper', href: 'https://dl.acm.org/' }, { text: 'code', href: 'https://github.com/Yoontae6719/SimStock-Representation-Model-for-Stock-Similarities' }]
-      },
-      {
-        id: 'C-2022-2',
-        type: 'conference',
-        year: 2022,
-        title: '국내·국제 공동 워크숍 발표 예시',
-        authors: ['A. Researcher', 'B. Researcher'],
-        venue: 'KIIE & INFORMS Joint Workshop',
-        conferenceType: 'International - Domestic Joint',
-        topics: ['Operations Research'],
-        links: []
-      },
-      {
-        id: 'C-2021-1',
-        type: 'conference',
-        year: 2021,
-        title: '국내 학회 발표 예시',
-        authors: ['C. Researcher'],
-        venue: '대한산업공학회 추계학술대회',
-        conferenceType: 'Domestic',
-        topics: ['Optimization'],
-        links: []
-      }
-    ];
+    // ================== Warm palette helpers (red → gold) ==================
+    const warmScale = d3.interpolateLab(getComputedStyle(document.documentElement).getPropertyValue('--warm-start') || '#ef4444',
+                                        getComputedStyle(document.documentElement).getPropertyValue('--warm-end')   || '#f59e0b');
 
-    // Teaching (강의)
-    //  - school: e.g., 'PNU', 'UNIST', 'Oxford', etc.
-    //  - topics: e.g., ['Time-Series', 'ML', 'Optimization']
-    const teachings = [
-      { id: 'T-2026-1', title: 'Quantitative Finance', school: 'PNU', term: '2026 Spring', topics: ['Portfolio Theory', 'Time-Series'], status: 'Ongoing', links: [] },
-      { id: 'T-2025-2', title: 'Machine Learning for Data Science', school: 'UNIST', term: '2025 Fall', topics: ['ML', 'Deep Learning'], status: 'Finished', links: [] },
-      { id: 'T-2024-1', title: 'Optimization Methods', school: 'Oxford', term: '2024 Hilary', topics: ['Optimization'], status: 'Finished', links: [] },
-    ];
+    const hashIndex = (s, modulo=17) => {
+      let h = 0;
+      for (let i=0;i<String(s).length;i++) h = (h*31 + String(s).charCodeAt(i)) >>> 0;
+      return modulo ? (h % modulo) : 0;
+    };
+    const pickWarm = (key) => {
+      const steps = 17;
+      const t = steps>1 ? hashIndex(key, steps)/(steps-1) : 0.5;
+      return warmScale(t);
+    };
+    const readableColor = (bg) => {
+      const c = d3.color(bg) || {r:255,g:255,b:255};
+      const L = (0.2126*c.r + 0.7152*c.g + 0.0722*c.b)/255;
+      return L < 0.55 ? '#ffffff' : '#111827'; // slate-900
+    };
 
-    // Projects (연구과제)
-    //  - funded: true|false
-    //  - status: 'Ongoing' | 'Finished'
-    const projects = [
-      { id: 'P-2025-1', title: 'Financial Foundation Model', org: 'NRF (Sejong Fellowship)', funded: true, amount: '₩70,000,000', period: '2024.09–2025.08', status: 'Ongoing', topics: ['Time-Series', 'Foundation Model'] },
-      { id: 'P-2024-1', title: 'Portfolio Construction for Retail Investors', org: 'Internal', funded: false, amount: '-', period: '2024.03–2024.12', status: 'Finished', topics: ['Portfolio Theory', 'Optimization'] },
-      { id: 'P-2023-2', title: 'Sports Analytics — Player Performance Modeling', org: 'Industry Contract', funded: true, amount: '₩30,000,000', period: '2023.05–2023.12', status: 'Finished', topics: ['Sports', 'Time-Series'] },
-    ];
+    // ================== UI atoms ==================
+    const Tag = ({ text, colorKey=null, className="" }) => {
+      const color = pickWarm(colorKey ?? text);
+      const fg = readableColor(color);
+      return (
+        <span
+          className={`px-2 py-0.5 text-[12px] font-semibold rounded-full inline-flex items-center ${className}`}
+          style={{ backgroundColor: color, color: fg, boxShadow:'inset 0 0 0 1px rgba(0,0,0,0.06)' }}
+          title={text}
+        >
+          {text}
+        </span>
+      );
+    };
 
-    // ---------------------------------------------------------------------
-    // Small helpers
-    // ---------------------------------------------------------------------
-    const uniq = (arr) => Array.from(new Set(arr));
-    const sortByYearDesc = (a, b) => (b.year ?? 0) - (a.year ?? 0);
+    const FilterChip = ({ text, selected, onClick }) => {
+      const base = pickWarm(text);
+      const bg = selected ? base : d3.interpolateLab(base, '#ffffff')(0.75);
+      const border = d3.interpolateLab(base, '#000')(0.18);
+      const fg = readableColor(bg);
+      return (
+        <button
+          onClick={onClick}
+          className="px-3 py-1 text-xs font-semibold rounded-full border transition-colors"
+          style={{ backgroundColor:bg, color:fg, borderColor:border }}
+        >
+          {text}
+        </button>
+      );
+    };
 
-    const Badge = ({children, className=''}) => (
-      <span className={`tag ${className}`}>{children}</span>
+    const Segmented = ({ value, onChange, options }) => (
+      <div className="inline-flex rounded-lg border border-slate-200 bg-white shadow-sm overflow-hidden">
+        {options.map((opt, idx) => {
+          const active = value === opt.value;
+          const base = pickWarm(opt.label);
+          const bg = active ? base : 'transparent';
+          const fg = active ? readableColor(bg) : '#334155'; // slate-600
+        return (
+          <button
+            key={opt.value}
+            onClick={()=>onChange(opt.value)}
+            className={`px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold ${idx>0?'border-l border-slate-200':''}`}
+            style={{ backgroundColor:bg, color:fg }}
+          >
+            {opt.label}
+          </button>
+        );})}
+      </div>
     );
 
-    const StatusBadge = ({status}) => (
-      status === 'Ongoing'
-        ? <Badge className="bg-green-100 text-green-700">Ongoing</Badge>
-        : <Badge className="bg-gray-200 text-gray-700">Finished</Badge>
+    const StickyFilterBar = ({ children }) => (
+      <div className="sticky-blur bg-white/80 border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 py-3">{children}</div>
+      </div>
     );
 
-    const SectionCard = ({title, right, children}) => (
-      <section className="card">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-          {right}
+    const Section = ({ title, subtitle, children }) => (
+      <section className="max-w-6xl mx-auto px-4">
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
+          {subtitle && <p className="text-sm text-slate-600 mt-1">{subtitle}</p>}
         </div>
         {children}
       </section>
     );
 
-    const FilterPill = ({active, onClick, children}) => (
-      <button
-        className={`chip ${active ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    );
+    // ================== Sample Data ==================
+    // Publications
+    // Fields:
+    // type: 'journal' | 'conference' | 'preprint'
+    // journalRegion: 'international' | 'domestic' | null
+    // journalType: 'SSCI'|'SCIE'|'A&HCI'|'Scopus'|'Other'|'KCI Excellent Accredited'|'KCI Accredited'|null
+    // confType: 'International'|'International - Domestic Joint'|'Domestic'|null
+    const publications = [
+      { id:"[C4]", title:"Time-MQA: Time Series Multi-Task QA with Context Enhancement",
+        venue:"ACL", year:2025, type:"conference", confType:"International", journalRegion:null, journalType:null,
+        topics:["Time-Series","Deep Learning","NLP"], authors:["Yaxuan Kong*","Yiyuan Yang*","Yoontae Hwang","Wenjie Du","Stefan Zohren","Zhangyang Wang","Ming Jin","Qingsong Wen"],
+        links:[{text:"paper", href:"https://arxiv.org/abs/2503.01875"}]
+      },
+      { id:"[C3]", title:"Geodesic Flow Kernels for Semi-Supervised Learning on Mixed-Variable Tabular Dataset",
+        venue:"AAAI", year:2025, type:"conference", confType:"International", journalRegion:null, journalType:null,
+        topics:["Tabular","Deep Learning"], authors:["Yoontae Hwang","Yongjae Lee"],
+        links:[{text:"paper",href:"https://arxiv.org/abs/2412.12864"}]
+      },
+      { id:"[C2]", title:"CAFO: Feature-Centric Explanation on Time Series Classification",
+        venue:"KDD", year:2024, type:"conference", confType:"International",
+        topics:["Time-Series","Explainability","Deep Learning"], authors:["Jaeho Kim","Seok-ju Hahn","Yoontae Hwang","Junghye Lee","Seulki Lee"],
+        links:[{text:"paper",href:"https://arxiv.org/abs/2406.01833"}]
+      },
+      { id:"[C1]", title:"SimStock: Representation Model for Stock Similarities",
+        venue:"ICAIF", year:2023, type:"conference", confType:"International",
+        topics:["Trading","Deep Learning"], authors:["Yoontae Hwang","Junhyeong Lee","Daham Kim","Seunghwan Noh","Joohwan Hong","Yongjae Lee"],
+        links:[{text:"paper",href:"https://dl.acm.org/doi/10.1145/3604237.3626888"}]
+      },
+      { id:"[J5]", title:"Heterogeneous Trading Behaviors of Individual Investors",
+        venue:"Finance Research Letters", year:2023, type:"journal", journalRegion:"international", journalType:"SSCI",
+        topics:["Trading","Behavior"], authors:["Yoontae Hwang","Junpyo Park","Jang Ho Kim","Yongjae Lee","Frank J Fabozzi"],
+        links:[{text:"paper",href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612324005117"}]
+      },
+      { id:"[J4]", title:"Identifying Household Finance Heterogeneity via Deep Clustering",
+        venue:"Annals of Operations Research", year:2023, type:"journal", journalRegion:"international", journalType:"SCIE",
+        topics:["Household Finance","Deep Learning"], authors:["Yoontae Hwang","Yongjae Lee","Frank J Fabozzi"],
+        links:[{text:"paper",href:"https://link.springer.com/article/10.1007/s10479-022-04900-3"}]
+      },
+      { id:"[J3]", title:"Household Financial Health: ML for Diagnosis and Prescription",
+        venue:"Quantitative Finance", year:2023, type:"journal", journalRegion:"international", journalType:"SSCI",
+        topics:["Household Finance","ML"], authors:["Kyeongbin Kim*","Yoontae Hwang*","Dongcheol Lim","Suhyeon Kim","Junghye Lee","Yongjae Lee"],
+        links:[{text:"paper",href:"https://www.tandfonline.com/doi/full/10.1080/14697688.2023.2254335"}]
+      },
+      { id:"[J2]", title:"Stop-loss Adjusted Labels for ML-based Trading of Risky Assets",
+        venue:"Finance Research Letters", year:2023, type:"journal", journalRegion:"international", journalType:"SSCI",
+        topics:["Trading","Deep Learning"], authors:["Yoontae Hwang","Junpyo Park","Dong-Young Lim","Yongjae Lee"],
+        links:[{text:"paper",href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612323006578"}]
+      },
+      { id:"[J1]", title:"Estimation of Apartment Price Index: ML Focus",
+        venue:"Journal of Money & Finance (KMFA)", year:2019, type:"journal", journalRegion:"domestic", journalType:"KCI Accredited",
+        topics:["Time-Series","Household Finance"], authors:["Yoontae Hwang"],
+        links:[{text:"paper",href:"https://kiss.kstudy.com/Detail/Ar?key=3707638"}]
+      },
+      { id:"[W]", title:"Decision-informed Neural Networks with LLM Integration for Portfolio Optimization",
+        venue:"arXiv", year:2025, type:"preprint", journalRegion:null, journalType:"Other",
+        topics:["Portfolio","Deep Learning"], authors:["Yoontae Hwang","Yaxuan Kong","Stefan Zohren","Yongjae Lee"],
+        links:[{text:"paper",href:"https://arxiv.org/abs/2502.00828"}]
+      },
+    ];
 
-    // ---------------------------------------------------------------------
-    // Publications View
-    // ---------------------------------------------------------------------
-    function Publications() {
-      const allTopics = useMemo(() => uniq(publications.flatMap(p => p.topics || [])).sort(), []);
-      const allJournalIndexes = ['SSCI','SCIE','A&HCI','Scopus','Other','KCI Excellent Accredited','KCI Accredited'];
-      const allConferenceTypes = ['International', 'International - Domestic Joint', 'Domestic'];
+    // Teaching (학교 / Topic)
+    const teaching = [
+      { school:"Pusan National University", title:"AI for Financial Time Series", term:"2025-Fall", topics:["Time-Series","Finance","Deep Learning"] },
+      { school:"University of Oxford", title:"Quantitative Finance Seminar", term:"2025-Spring", topics:["Finance","Seminar"] },
+      { school:"UNIST", title:"Machine Learning", term:"2023-Fall", topics:["ML","Fundamentals"] },
+      { school:"UNIST", title:"Optimization for Data Science", term:"2022-Fall", topics:["Optimization","Math"] },
+    ];
 
-      const [scope, setScope] = useState('all'); // 'all' | 'journal-intl' | 'journal-domestic' | 'conference'
-      const [query, setQuery] = useState('');
-      const [activeTopics, setActiveTopics] = useState([]);
-      const [venueQuery, setVenueQuery] = useState('');
-      const [journalTypes, setJournalTypes] = useState([]); // multi
-      const [confTypes, setConfTypes] = useState([]); // multi
+    // Projects (Funding/End + Ongoing/Finished)
+    const projects = [
+      { title:"Sejong Science Fellowship (Oversea Track)", org:"NRF", funded:true,  start:"2024-09-01", end:"2025-08-31" },
+      { title:"Ph.D. Fellowship",                          org:"NRF", funded:true,  start:"2022-06-01", end:"2024-05-31" },
+      { title:"Internal Study: Tokenization for TS",       org:"FINDS Lab", funded:false, start:"2025-02-01", end:"2025-12-31" },
+      { title:"Pilot: Sports Betting Model",               org:"FINDS Lab", funded:false, start:"2023-01-01", end:"2023-06-30" },
+    ];
 
-      const toggleArr = (arr, setArr, v) => setArr(arr.includes(v) ? arr.filter(x=>x!==v) : [...arr, v]);
-      const reset = () => { setScope('all'); setQuery(''); setActiveTopics([]); setVenueQuery(''); setJournalTypes([]); setConfTypes([]); };
+    // ================== Publications ==================
+    const PubItem = ({ p }) => {
+      const isJournal = p.type === 'journal';
+      const isConf    = p.type === 'conference';
+      const isPrep    = p.type === 'preprint';
+      return (
+        <li className="p-5 bg-white rounded-xl border border-slate-200 card-hover">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-bold text-slate-600">{p.id}</span>
+            {isJournal && <Tag text="Journal" />}
+            {isConf    && <Tag text="Conference" />}
+            {isPrep    && <Tag text="Preprint" />}
+            {isJournal && p.journalType && <Tag text={p.journalType} />}
+            {isConf    && p.confType && <Tag text={p.confType} />}
+            {isJournal && p.journalRegion && (
+              <Tag text={p.journalRegion === 'international' ? 'International Journal' : 'Domestic Journal'} />
+            )}
+          </div>
+          <p className="mt-2 text-lg font-semibold text-slate-900">{p.title}</p>
+          <p className="text-sm text-slate-600">{p.venue} · {p.year}</p>
+          <p className="mt-2 text-[13px] text-slate-700">{p.authors.join(', ')}</p>
+          <div className="mt-3 flex flex-wrap gap-2">{p.topics.map(t => <Tag key={t} text={t} />)}</div>
+          {p.links?.length>0 && (
+            <div className="mt-3 flex flex-wrap gap-3">
+              {p.links.map((l,i)=>(
+                <a key={i} href={l.href} target="_blank" rel="noopener noreferrer"
+                   className="text-sm font-semibold underline decoration-2 underline-offset-2"
+                   style={{ color: pickWarm('link') }}>
+                  [{l.text}]
+                </a>
+              ))}
+            </div>
+          )}
+        </li>
+      );
+    };
 
-      const filtered = useMemo(() => {
-        return publications
-          .filter(p => {
-            // scope
-            if (scope === 'journal-intl' && !(p.type==='journal' && p.journalLocale==='international')) return false;
-            if (scope === 'journal-domestic' && !(p.type==='journal' && p.journalLocale==='domestic')) return false;
-            if (scope === 'conference' && p.type !== 'conference') return false;
+    const PublicationsTab = () => {
+      const categoryOptions = [
+        { value:'all', label:'All Papers' },
+        { value:'intl', label:'International Journal Papers' },
+        { value:'dom',  label:'Domestic Journal Papers' },
+        { value:'conf', label:'Conference Papers' },
+      ];
+      const [cat, setCat] = useState('all');
+
+      // Filters
+      const [topics, setTopics] = useState(new Set());
+      const [venues, setVenues] = useState(new Set());
+      const [jTypes, setJTypes] = useState(new Set());
+      const [cTypes, setCTypes] = useState(new Set());
+
+      // Options
+      const allTopics = useMemo(()=> [...new Set(publications.flatMap(p=>p.topics))].sort(), []);
+      const allVenues = useMemo(()=>{
+        const list = publications
+          .filter(p=>{
+            if (cat==='intl') return p.type==='journal' && p.journalRegion==='international';
+            if (cat==='dom')  return p.type==='journal' && p.journalRegion==='domestic';
+            if (cat==='conf') return p.type==='conference';
             return true;
           })
-          .filter(p => {
-            // keyword query across title/authors
-            if (!query.trim()) return true;
-            const q = query.toLowerCase();
-            const hay = [p.title, (p.authors||[]).join(' '), p.venue].join(' ').toLowerCase();
-            return hay.includes(q);
-          })
-          .filter(p => {
-            // topic filter (must include all selected topics)
-            if (activeTopics.length === 0) return true;
-            const pts = p.topics || [];
-            return activeTopics.every(t => pts.includes(t));
-          })
-          .filter(p => {
-            // venue text filter
-            if (!venueQuery.trim()) return true;
-            return (p.venue||'').toLowerCase().includes(venueQuery.toLowerCase());
-          })
-          .filter(p => {
-            // journal type
-            if (p.type !== 'journal') return confTypes.length ? false : true; // if user selected conf types only, journals should pass only when none selected
-            if (journalTypes.length === 0) return true;
-            return journalTypes.includes(p.journalIndex);
-          })
-          .filter(p => {
-            // conference type
-            if (p.type !== 'conference') return journalTypes.length ? false : true;
-            if (confTypes.length === 0) return true;
-            return confTypes.includes(p.conferenceType);
-          })
-          .sort(sortByYearDesc);
-      }, [scope, query, activeTopics, venueQuery, journalTypes, confTypes]);
+          .map(p=>p.venue);
+        return [...new Set(list)].sort();
+      }, [cat]);
 
-      return (
-        <SectionCard
-          title="Publications"
-          right={
-            <div className="flex flex-wrap gap-2">
-              <FilterPill active={scope==='all'} onClick={()=>setScope('all')}>All Papers</FilterPill>
-              <FilterPill active={scope==='journal-intl'} onClick={()=>setScope('journal-intl')}>International Journal Papers</FilterPill>
-              <FilterPill active={scope==='journal-domestic'} onClick={()=>setScope('journal-domestic')}>Domestic Journal Papers</FilterPill>
-              <FilterPill active={scope==='conference'} onClick={()=>setScope('conference')}>Conference Papers</FilterPill>
-            </div>
-          }
-        >
-          {/* Controls */}
-          <div className="grid md:grid-cols-2 gap-3">
-            <input className="w-full border rounded-lg px-3 py-2" placeholder="Search title / author..." value={query} onChange={e=>setQuery(e.target.value)} />
-            <input className="w-full border rounded-lg px-3 py-2" placeholder="Filter by Journal / Conference (venue)..." value={venueQuery} onChange={e=>setVenueQuery(e.target.value)} />
-          </div>
+      const allJournalTypes = ["SSCI","SCIE","A&HCI","Scopus","Other","KCI Excellent Accredited","KCI Accredited"];
+      const allConfTypes    = ["International","International - Domestic Joint","Domestic"];
 
-          {/* Topic chips */}
-          <div className="mt-3 flex flex-wrap gap-2">
-            {allTopics.map(t => (
-              <FilterPill key={t} active={activeTopics.includes(t)} onClick={()=>toggleArr(activeTopics, setActiveTopics, t)}>{t}</FilterPill>
-            ))}
-          </div>
-
-          {/* Journal & Conference Type */}
-          <div className="mt-3 grid md:grid-cols-2 gap-3">
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by Journal Type</p>
-              <div className="flex flex-wrap gap-2">
-                {allJournalIndexes.map(j => (
-                  <FilterPill key={j} active={journalTypes.includes(j)} onClick={()=>toggleArr(journalTypes, setJournalTypes, j)}>{j}</FilterPill>
-                ))}
-              </div>
-            </div>
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by Conference Type</p>
-              <div className="flex flex-wrap gap-2">
-                {allConferenceTypes.map(c => (
-                  <FilterPill key={c} active={confTypes.includes(c)} onClick={()=>toggleArr(confTypes, setConfTypes, c)}>{c}</FilterPill>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-3 flex justify-end">
-            <button onClick={reset} className="text-sm px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200">Reset Filters</button>
-          </div>
-
-          {/* Results */}
-          <ul className="mt-4 divide-y">
-            {filtered.map(p => (
-              <li key={p.id} className="py-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm text-gray-500">{p.id} · {p.year}</p>
-                    <h3 className="text-lg font-semibold text-gray-800">{p.title}</h3>
-                    <p className="text-gray-700 text-sm mt-1">{p.authors.join(', ')}</p>
-                    <p className="text-gray-500 text-sm">{p.venue}{p.type==='journal' && p.journalIndex ? ` · ${p.journalIndex}`: ''}{p.type==='conference' && p.conferenceType ? ` · ${p.conferenceType}`: ''}</p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {(p.topics||[]).map(t => (
-                        <span key={t} className="tag bg-blue-100 text-blue-700">{t}</span>
-                      ))}
-                    </div>
-                    {p.links?.length ? (
-                      <div className="mt-2 flex flex-wrap gap-3">
-                        {p.links.map(l => (
-                          <a key={l.text+l.href} className="text-blue-600 text-sm hover:underline" target="_blank" rel="noreferrer noopener" href={l.href}>[{l.text}]</a>
-                        ))}
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="whitespace-nowrap text-right text-sm text-gray-500">
-                    <span className="inline-block px-2 py-1 rounded-full bg-gray-100">{p.type === 'journal' ? 'Journal' : 'Conference'}</span>
-                  </div>
-                </div>
-              </li>
-            ))}
-            {filtered.length === 0 && (
-              <li className="py-10 text-center text-gray-500">검색 조건에 맞는 결과가 없습니다.</li>
-            )}
-          </ul>
-        </SectionCard>
-      );
-    }
-
-    // ---------------------------------------------------------------------
-    // Teaching View
-    // ---------------------------------------------------------------------
-    function Teaching() {
-      const allSchools = useMemo(() => uniq(teachings.map(t => t.school)).sort(), []);
-      const allTopics = useMemo(() => uniq(teachings.flatMap(t => t.topics||[])).sort(), []);
-
-      const [schools, setSchools] = useState([]); // multi
-      const [topics, setTopics] = useState([]); // multi
-      const [q, setQ] = useState('');
-
-      const toggleArr = (arr, setArr, v) => setArr(arr.includes(v) ? arr.filter(x=>x!==v) : [...arr, v]);
-      const reset = () => { setSchools([]); setTopics([]); setQ(''); };
-
-      const filtered = useMemo(() => {
-        return teachings
-          .filter(t => schools.length ? schools.includes(t.school) : true)
-          .filter(t => topics.length ? topics.every(tp => (t.topics||[]).includes(tp)) : true)
-          .filter(t => q.trim() ? `${t.title} ${t.term}`.toLowerCase().includes(q.toLowerCase()) : true);
-      }, [schools, topics, q]);
-
-      return (
-        <SectionCard
-          title="Teaching"
-          right={<button className="text-sm px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200" onClick={reset}>Reset Filters</button>}
-        >
-          <div className="grid md:grid-cols-3 gap-3">
-            <input className="border rounded-lg px-3 py-2" placeholder="검색 (강의명/학기)" value={q} onChange={e=>setQ(e.target.value)} />
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by 학교</p>
-              <div className="flex flex-wrap gap-2">
-                {allSchools.map(s => (
-                  <FilterPill key={s} active={schools.includes(s)} onClick={()=>toggleArr(schools, setSchools, s)}>{s}</FilterPill>
-                ))}
-              </div>
-            </div>
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by Topic</p>
-              <div className="flex flex-wrap gap-2">
-                {allTopics.map(t => (
-                  <FilterPill key={t} active={topics.includes(t)} onClick={()=>toggleArr(topics, setTopics, t)}>{t}</FilterPill>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-4 grid md:grid-cols-2 gap-4">
-            {filtered.map(t => (
-              <div key={t.id} className="card">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-800">{t.title}</h3>
-                    <p className="text-sm text-gray-600">{t.school} · {t.term}</p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {(t.topics||[]).map(tp => (
-                        <span key={tp} className="tag bg-indigo-100 text-indigo-700">{tp}</span>
-                      ))}
-                    </div>
-                  </div>
-                  <StatusBadge status={t.status} />
-                </div>
-              </div>
-            ))}
-            {filtered.length === 0 && (
-              <div className="col-span-full text-center text-gray-500 py-10">검색 조건에 맞는 강의가 없습니다.</div>
-            )}
-          </div>
-        </SectionCard>
-      );
-    }
-
-    // ---------------------------------------------------------------------
-    // Projects View
-    // ---------------------------------------------------------------------
-    function Projects() {
-      const allTopics = useMemo(() => uniq(projects.flatMap(p => p.topics||[])).sort(), []);
-
-      const [funding, setFunding] = useState('all'); // 'all' | 'funded' | 'not-funded'
-      const [endState, setEndState] = useState('all'); // 'all' | 'ongoing' | 'finished'
-      const [topics, setTopics] = useState([]);
-      const [q, setQ] = useState('');
-
-      const toggleArr = (arr, setArr, v) => setArr(arr.includes(v) ? arr.filter(x=>x!==v) : [...arr, v]);
-      const reset = () => { setFunding('all'); setEndState('all'); setTopics([]); setQ(''); };
-
-      const filtered = useMemo(() => {
-        return projects
-          .filter(p => funding==='all' ? true : (funding==='funded' ? p.funded : !p.funded))
-          .filter(p => endState==='all' ? true : (endState==='ongoing' ? p.status==='Ongoing' : p.status==='Finished'))
-          .filter(p => topics.length ? topics.every(t => (p.topics||[]).includes(t)) : true)
-          .filter(p => q.trim() ? `${p.title} ${p.org}`.toLowerCase().includes(q.toLowerCase()) : true);
-      }, [funding, endState, topics, q]);
-
-      return (
-        <SectionCard
-          title="Projects"
-          right={<button className="text-sm px-3 py-2 rounded-md bg-gray-100 hover:bg-gray-200" onClick={reset}>Reset Filters</button>}
-        >
-          <div className="grid md:grid-cols-4 gap-3">
-            <input className="border rounded-lg px-3 py-2" placeholder="검색 (프로젝트명/기관)" value={q} onChange={e=>setQ(e.target.value)} />
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by Funding</p>
-              <div className="flex gap-2 flex-wrap">
-                <FilterPill active={funding==='all'} onClick={()=>setFunding('all')}>All</FilterPill>
-                <FilterPill active={funding==='funded'} onClick={()=>setFunding('funded')}>Funded</FilterPill>
-                <FilterPill active={funding==='not-funded'} onClick={()=>setFunding('not-funded')}>Not Funded</FilterPill>
-              </div>
-            </div>
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by End 여부</p>
-              <div className="flex gap-2 flex-wrap">
-                <FilterPill active={endState==='all'} onClick={()=>setEndState('all')}>All</FilterPill>
-                <FilterPill active={endState==='ongoing'} onClick={()=>setEndState('ongoing')}>Ongoing</FilterPill>
-                <FilterPill active={endState==='finished'} onClick={()=>setEndState('finished')}>Finished</FilterPill>
-              </div>
-            </div>
-            <div className="card p-3">
-              <p className="text-sm font-semibold mb-2">Filter by Topic</p>
-              <div className="flex flex-wrap gap-2">
-                {allTopics.map(t => (
-                  <FilterPill key={t} active={topics.includes(t)} onClick={()=>toggleArr(topics, setTopics, t)}>{t}</FilterPill>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-4 grid md:grid-cols-2 gap-4">
-            {filtered.map(p => (
-              <div key={p.id} className="card">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-800">{p.title}</h3>
-                    <p className="text-sm text-gray-600">{p.org} · {p.period}</p>
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {p.funded ? <Badge className="bg-amber-100 text-amber-800">Funded</Badge> : <Badge className="bg-gray-100 text-gray-700">Not Funded</Badge>}
-                      <StatusBadge status={p.status} />
-                      {(p.amount && p.amount !== '-') && <Badge className="bg-blue-100 text-blue-700">{p.amount}</Badge>}
-                      {(p.topics||[]).map(t => (
-                        <span key={t} className="tag bg-indigo-100 text-indigo-700">{t}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {filtered.length === 0 && (
-              <div className="col-span-full text-center text-gray-500 py-10">검색 조건에 맞는 프로젝트가 없습니다.</div>
-            )}
-          </div>
-        </SectionCard>
-      );
-    }
-
-    // ---------------------------------------------------------------------
-    // App Layout with hash-based tabs (GitHub Pages friendly)
-    // ---------------------------------------------------------------------
-    function App(){
-      const tabs = [
-        { key: 'publications', label: 'Publications' },
-        { key: 'teaching', label: 'Teaching' },
-        { key: 'projects', label: 'Projects' },
-      ];
-
-      const getFromHash = () => {
-        const h = (location.hash || '').replace('#','');
-        return tabs.some(t=>t.key===h) ? h : 'publications';
+      const toggleSet = (setState, value) => {
+        setState(prev=>{
+          const next = new Set(prev);
+          if (next.has(value)) next.delete(value);
+          else next.add(value);
+          return next;
+        });
       };
-      const [active, setActive] = useState(getFromHash());
-      useEffect(()=>{
-        const onHash = ()=> setActive(getFromHash());
-        window.addEventListener('hashchange', onHash);
-        return ()=> window.removeEventListener('hashchange', onHash);
-      },[]);
-      useEffect(()=>{ if (location.hash !== '#'+active) location.hash = active; }, [active]);
+
+      const resetFilters = () => {
+        setTopics(new Set());
+        setVenues(new Set());
+        setJTypes(new Set());
+        setCTypes(new Set());
+      };
+
+      const filtered = useMemo(()=>{
+        return publications.filter(p=>{
+          // Category gate
+          if (cat==='intl' && !(p.type==='journal' && p.journalRegion==='international')) return false;
+          if (cat==='dom'  && !(p.type==='journal' && p.journalRegion==='domestic')) return false;
+          if (cat==='conf' && !(p.type==='conference')) return false;
+
+          // Topic
+          if (topics.size>0 && !p.topics.some(t=>topics.has(t))) return false;
+
+          // Venue
+          if (venues.size>0 && !venues.has(p.venue)) return false;
+
+          // Journal type
+          if (p.type==='journal' && jTypes.size>0 && p.journalType && !jTypes.has(p.journalType)) return false;
+          if (p.type==='journal' && jTypes.size>0 && !p.journalType) return false; // only if filtering jTypes
+
+          // Conf type
+          if (p.type==='conference' && cTypes.size>0 && p.confType && !cTypes.has(p.confType)) return false;
+          if (p.type==='conference' && cTypes.size>0 && !p.confType) return false;
+
+          return true;
+        }).sort((a,b)=>b.year-a.year);
+      }, [cat, topics, venues, jTypes, cTypes]);
 
       return (
-        <div className="max-w-6xl mx-auto p-4 sm:p-8">
-          <header className="text-center space-y-1">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800">FINDS Lab</h1>
-            <p className="text-gray-600">Finance & Intelligent Data Science Lab</p>
-            <p className="text-xs text-gray-500">Single-file site • GitHub Pages ready</p>
-          </header>
+        <>
+          <StickyFilterBar>
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <Segmented value={cat} onChange={setCat} options={categoryOptions} />
+                <button onClick={resetFilters}
+                  className="px-3 py-2 text-xs sm:text-sm font-semibold rounded-md border border-slate-200 bg-white hover:bg-slate-50"
+                  style={{ color: pickWarm('Reset') }}>
+                  Reset Filters
+                </button>
+              </div>
 
-          <nav className="mt-6 flex justify-center flex-wrap gap-2 bg-gray-100 p-1 rounded-xl shadow-inner">
-            {tabs.map(t => (
-              <button key={t.key}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition ${active===t.key ? 'bg-white text-gray-900 shadow' : 'text-gray-600 hover:bg-gray-200'}`}
-                onClick={()=>setActive(t.key)}>
-                {t.label}
-              </button>
-            ))}
-          </nav>
+              <div className="grid grid-cols-1 gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-slate-600">Filter by Topic</span>
+                  {allTopics.map(t=>(
+                    <FilterChip key={t} text={t} selected={topics.has(t)} onClick={()=>toggleSet(setTopics, t)} />
+                  ))}
+                </div>
 
-          <main className="mt-6 space-y-6">
-            {active==='publications' && <Publications/>}
-            {active==='teaching' && <Teaching/>}
-            {active==='projects' && <Projects/>}
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-slate-600">Filter by Journal / Conference</span>
+                  {allVenues.map(v=>(
+                    <FilterChip key={v} text={v} selected={venues.has(v)} onClick={()=>toggleSet(setVenues, v)} />
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-slate-600">Filter by Journal Type</span>
+                  {allJournalTypes.map(j=>(
+                    <FilterChip key={j} text={j} selected={jTypes.has(j)} onClick={()=>toggleSet(setJTypes, j)} />
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-bold text-slate-600">Filter by Conference Type</span>
+                  {allConfTypes.map(c=>(
+                    <FilterChip key={c} text={c} selected={cTypes.has(c)} onClick={()=>toggleSet(setCTypes, c)} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </StickyFilterBar>
+
+          <Section title="Publications" subtitle="Select a category and refine with filters.">
+            <p className="text-sm text-slate-600 mb-3">Results: <span className="font-semibold" style={{color:pickWarm('count')}}>{filtered.length}</span></p>
+            <ul className="grid gap-4 sm:gap-5">{filtered.map(p=><PubItem key={p.id+p.title} p={p} />)}</ul>
+          </Section>
+        </>
+      );
+    };
+
+    // ================== Teaching ==================
+    const TeachingCard = ({ c }) => (
+      <div className="p-5 bg-white rounded-xl border border-slate-200 card-hover">
+        <div className="flex flex-wrap items-center gap-2">
+          <Tag text={c.school} />
+          <Tag text={c.term} />
+        </div>
+        <p className="mt-2 text-lg font-semibold text-slate-900">{c.title}</p>
+        <div className="mt-3 flex flex-wrap gap-2">{c.topics.map(t => <Tag key={t} text={t} />)}</div>
+      </div>
+    );
+
+    const TeachingTab = () => {
+      const [schools, setSchools] = useState(new Set());
+      const [topics, setTopics] = useState(new Set());
+      const allSchools = useMemo(()=> [...new Set(teaching.map(t=>t.school))].sort(), []);
+      const allTopics  = useMemo(()=> [...new Set(teaching.flatMap(t=>t.topics))].sort(), []);
+
+      const toggle = (setter, v) => setter(prev=>{ const n=new Set(prev); n.has(v)?n.delete(v):n.add(v); return n; });
+      const reset  = () => { setSchools(new Set()); setTopics(new Set()); };
+
+      const filtered = useMemo(()=> {
+        return teaching.filter(c=>{
+          if (schools.size>0 && !schools.has(c.school)) return false;
+          if (topics.size>0  && !c.topics.some(t=>topics.has(t))) return false;
+          return true;
+        });
+      }, [schools, topics]);
+
+      return (
+        <>
+          <StickyFilterBar>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-sm font-bold text-slate-700">Teaching Filters</h3>
+                <button onClick={reset}
+                  className="px-3 py-2 text-xs sm:text-sm font-semibold rounded-md border border-slate-200 bg-white hover:bg-slate-50"
+                  style={{ color: pickWarm('Reset T') }}>
+                  Reset
+                </button>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-slate-600">Filter by 학교</span>
+                {allSchools.map(s=>(
+                  <FilterChip key={s} text={s} selected={schools.has(s)} onClick={()=>toggle(setSchools, s)} />
+                ))}
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-slate-600">Filter by Topic</span>
+                {allTopics.map(t=>(
+                  <FilterChip key={t} text={t} selected={topics.has(t)} onClick={()=>toggle(setTopics, t)} />
+                ))}
+              </div>
+            </div>
+          </StickyFilterBar>
+
+          <Section title="Teaching" subtitle="Filter by School and Topic.">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {filtered.map((c,i)=><TeachingCard key={i} c={c} />)}
+            </div>
+          </Section>
+        </>
+      );
+    };
+
+    // ================== Projects ==================
+    const isFinished = (end) => {
+      try {
+        const today = new Date();
+        const endDate = new Date(end);
+        return endDate < new Date(today.toISOString().slice(0,10));
+      } catch { return false; }
+    };
+
+    const ProjectCard = ({ p }) => {
+      const finished = isFinished(p.end);
+      return (
+        <div className="p-5 bg-white rounded-xl border border-slate-200 card-hover">
+          <div className="flex flex-wrap items-center gap-2">
+            <Tag text={p.org} />
+            <Tag text={p.funded ? "Funded" : "Not Funded"} />
+            <Tag text={finished ? "Finished" : "Ongoing"} />
+          </div>
+          <p className="mt-2 text-lg font-semibold text-slate-900">{p.title}</p>
+          <p className="text-sm text-slate-600 mt-1">{p.start} → {p.end}</p>
+        </div>
+      );
+    };
+
+    const ProjectsTab = () => {
+      const [fundingSel, setFundingSel] = useState(new Set()); // "Funded","Not Funded"
+      const [statusSel, setStatusSel]   = useState(new Set()); // "Ongoing","Finished"
+
+      const toggle = (setter, v) => setter(prev=>{ const n=new Set(prev); n.has(v)?n.delete(v):n.add(v); return n; });
+      const reset  = () => { setFundingSel(new Set()); setStatusSel(new Set()); };
+
+      const filtered = useMemo(()=>{
+        return projects.filter(p=>{
+          const fText = p.funded ? "Funded" : "Not Funded";
+          const sText = isFinished(p.end) ? "Finished" : "Ongoing";
+          if (fundingSel.size>0 && !fundingSel.has(fText)) return false;
+          if (statusSel.size>0  && !statusSel.has(sText)) return false;
+          return true;
+        });
+      }, [fundingSel, statusSel]);
+
+      return (
+        <>
+          <StickyFilterBar>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-sm font-bold text-slate-700">Project Filters</h3>
+                <button onClick={reset}
+                  className="px-3 py-2 text-xs sm:text-sm font-semibold rounded-md border border-slate-200 bg-white hover:bg-slate-50"
+                  style={{ color: pickWarm('Reset P') }}>
+                  Reset
+                </button>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-slate-600">Filter by Funding</span>
+                {["Funded","Not Funded"].map(v=>(
+                  <FilterChip key={v} text={v} selected={fundingSel.has(v)} onClick={()=>toggle(setFundingSel, v)} />
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-slate-600">Filter by End 여부</span>
+                {["Ongoing","Finished"].map(v=>(
+                  <FilterChip key={v} text={v} selected={statusSel.has(v)} onClick={()=>toggle(setStatusSel, v)} />
+                ))}
+              </div>
+            </div>
+          </StickyFilterBar>
+
+          <Section title="Projects" subtitle="Ongoing / Finished 태그와 Funding 여부를 확인하세요.">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {filtered.map((p,i)=><ProjectCard key={i} p={p} />)}
+            </div>
+          </Section>
+        </>
+      );
+    };
+
+    // ================== App (Tabs) ==================
+    const TabButton = ({ value, active, onClick, children }) => {
+      const base = pickWarm(value);
+      return (
+        <button
+          onClick={onClick}
+          className={`px-3 sm:px-4 py-2 text-sm font-semibold rounded-md border transition-all ${
+            active ? 'bg-white shadow-sm' : 'hover:bg-white/60'
+          }`}
+          style={{ borderColor:'#e2e8f0', color: active ? readableColor(base) : '#334155', backgroundColor: active ? d3.interpolateLab(base,'#ffffff')(0.65) : 'transparent' }}
+        >
+          {children}
+        </button>
+      );
+    };
+
+    const App = () => {
+      const tabs = [
+        { id:'publications', label:'Publications', el:<PublicationsTab/> },
+        { id:'teaching',     label:'Teaching',     el:<TeachingTab/> },
+        { id:'projects',     label:'Projects',     el:<ProjectsTab/> },
+      ];
+      const [active, setActive] = useState('publications');
+
+      useEffect(()=>{
+        const fromHash = window.location.hash.replace('#','');
+        if (tabs.some(t=>t.id===fromHash)) setActive(fromHash || 'publications');
+        const onHash = ()=> {
+          const h = window.location.hash.replace('#','');
+          if (tabs.some(t=>t.id===h)) setActive(h);
+        };
+        window.addEventListener('hashchange', onHash);
+        return ()=>window.removeEventListener('hashchange', onHash);
+      }, []);
+
+      useEffect(()=>{ window.location.hash = active; }, [active]);
+
+      return (
+        <div className="min-h-screen">
+          {/* Header */}
+          <div className="sticky-blur bg-white/80 border-b border-slate-200">
+            <header className="max-w-6xl mx-auto px-4 py-5 flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-800">FINDS Lab</h1>
+                <p className="text-sm text-slate-600">Financial Intelligence & Decision Systems</p>
+              </div>
+              <a href="mailto:yoontaeResearch@gmail.com"
+                 className="text-sm font-semibold underline decoration-2 underline-offset-4"
+                 style={{ color: pickWarm('contact') }}>
+                Contact
+              </a>
+            </header>
+            {/* Tabs */}
+            <nav className="max-w-6xl mx-auto px-4 pb-3">
+              <div className="flex flex-wrap gap-2 bg-slate-100/70 p-1 rounded-lg border border-slate-200">
+                {tabs.map(t=>(
+                  <TabButton key={t.id} value={t.id} active={active===t.id} onClick={()=>setActive(t.id)}>
+                    {t.label}
+                  </TabButton>
+                ))}
+              </div>
+            </nav>
+          </div>
+
+          {/* Content */}
+          <main className="py-6">
+            {tabs.find(t=>t.id===active)?.el}
           </main>
 
-          <footer className="text-center text-xs text-gray-500 mt-10">
-            © {new Date().getFullYear()} FINDS Lab. Built for GitHub Pages.
+          <footer className="max-w-6xl mx-auto px-4 py-10 text-center text-xs text-slate-500">
+            © {new Date().getFullYear()} FINDS Lab. Built for GitHub Pages (single-file).
           </footer>
         </div>
       );
-    }
+    };
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App/>);
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
 </html>
