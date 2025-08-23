@@ -67,14 +67,15 @@
     .timeline .title{font-weight:800}
     .timeline .desc{font-size:.92rem;color:#475569}
 
-    /* Bullets */
+    /* Bullets (일반) */
     .bullets{list-style:none;margin:0;padding:0}
     .bullets li{position:relative;padding-left:1rem;font-size:.95rem;color:#475569}
     .bullets li::before{content:"•";position:absolute;left:0;top:0;color:#334155;font-weight:900}
 
-    /* Honor: black default discs only */
+    /* Honor: 기본 불릿만 (커스텀 ::before 제거) */
     .bullets-honor{list-style:disc;margin:0 0 0 1.2rem;padding:0}
-    .bullets-honor li{font-size:.95rem;color:#111827}
+    .bullets-honor li{font-size:.95rem;color:#111827;position:static;padding-left:0}
+    .bullets-honor li::before{content:none !important}
 
     /* Education lines */
     .edu-line{margin-top:.15rem;font-size:.95rem;line-height:1.5rem}
@@ -92,7 +93,7 @@
 </head>
 <body class="bg-[var(--bg-soft)]">
 
-  <!-- ===== 공통 Header (partials/header.html 주입) ===== -->
+  <!-- ===== 공통 Header (partials/headers.html 주입) ===== -->
   <div id="site-header"></div>
 
   <!-- Hero -->
@@ -300,49 +301,4 @@
     </main>
   </section>
 
-  <!-- ===== 공통 Footer (partials/footer.html 주입) ===== -->
-  <div id="site-footer" class="mt-10"></div>
-
-  <!-- Scripts -->
-  <script>
-    /* ====== 공통 header/footer 주입 ====== */
-    const PARTIALS_DIR = 'partials'; // 상대경로 유지
-    async function injectPartial(elId, file){
-      try{
-        const res = await fetch(`${PARTIALS_DIR}/${file}`, { cache: 'no-store' });
-        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
-        const html = await res.text();
-        document.getElementById(elId).innerHTML = html;
-      }catch(err){
-        console.error('Partial load error:', err);
-      }
-    }
-
-    function bindHeaderInteractions(){
-      // Mobile nav
-      const btnMobile = document.getElementById('btnMobile');
-      const mobileNav = document.getElementById('mobileNav');
-      btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
-
-      // Desktop submenu (hover/focus)
-      const MENU_DELAY = 80;
-      document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
-        let t;
-        const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
-        const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
-        grp.addEventListener('mouseenter', open);
-        grp.addEventListener('mouseleave', close);
-        grp.addEventListener('focusin', open);
-        grp.addEventListener('focusout', close);
-        grp.addEventListener('keydown', (e)=>{ if(e.key==='Escape') grp.classList.remove('open'); });
-      });
-    }
-
-    (async () => {
-      await injectPartial('site-header', 'header.html');
-      bindHeaderInteractions();
-      await injectPartial('site-footer', 'footer.html');
-    })();
-  </script>
-</body>
-</html>
+  <!--
