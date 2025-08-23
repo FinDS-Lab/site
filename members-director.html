@@ -13,13 +13,13 @@
 
   <style>
     :root{
-      --accent: rgb(131, 0, 24);     /* 버건디 */
-      --gold:   rgb(214, 177, 77);   /* 214/177/77 */
-      --kaist:  #005BAC;             /* KAIST Blue */
-      --khu:    #990000;             /* Kyung Hee Crimson */
+      --accent: rgb(172, 14, 14);   /* 버건디 (172,14,14) */
+      --gold:   rgb(214, 177, 77);  /* 214/177/77 */
+      --kaist:  #003366;            /* KAIST Dark Blue */
+      --khu:    #990000;            /* Kyung Hee Crimson */
       --bg:#ffffff;
       --bg-soft:#f8fafc;
-      --ring:0 0 0 3px rgba(131,0,24,.22);
+      --ring:0 0 0 3px rgba(172,14,14,.22);
     }
     html,body{font-family:"Noto Sans KR","Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
     .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
@@ -48,18 +48,17 @@
     /* 섹션 타이틀 */
     .section-title{display:flex;align-items:center;gap:.5rem;font-weight:900}
     .section-title::before{content:"";display:inline-block;width:6px;height:18px;border-radius:9999px;background:var(--gold)}
-    .eyebrow{font-size:.82rem;font-weight:900;color:var(--accent);letter-spacing:.02em}
 
-    /* 타임라인(선 + 선 위 버건디 불릿) */
+    /* 타임라인 */
     .timeline{position:relative;padding-left:1.25rem}
     .timeline::before{content:"";position:absolute;left:.5rem;top:.25rem;bottom:.25rem;width:2px;background:#e5e7eb;border-radius:2px}
     .timeline li{position:relative;margin-left:.25rem;padding-left:1rem}
-    .timeline li::before{content:"";position:absolute;left:-.56rem;top:.55rem;width:11px;height:11px;background:var(--accent);border-radius:9999px;box-shadow:0 0 0 3px rgba(131,0,24,.08)}
+    .timeline li::before{content:"";position:absolute;left:-.56rem;top:.55rem;width:11px;height:11px;background:var(--accent);border-radius:9999px;box-shadow:0 0 0 3px rgba(172,14,14,.08)}
     .timeline .year{font-size:.82rem;font-weight:900;color:var(--accent)}
     .timeline .title{font-weight:800}
     .timeline .desc{font-size:.92rem;color:#475569}
 
-    /* Education 전용 라인: 학과/학교 분리 + 색상 */
+    /* Education */
     .edu-line{margin-top:.15rem;font-size:.95rem;line-height:1.45rem}
     .edu-line .dept{font-weight:700;color:#334155}
     .edu-line .school{font-weight:900}
@@ -93,27 +92,17 @@
 
       <nav class="hidden md:flex items-center gap-6">
         <a class="nav-link" href="./"><b>Home</b></a>
-        <div class="relative menu-group" data-menu>
-          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
-        </div>
-        <div class="relative menu-group" data-menu>
-          <a class="nav-link" href="members-director.html" aria-current="page"><b>Members</b></a>
-        </div>
+        <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
+        <a class="nav-link" href="members-director.html" aria-current="page"><b>Members</b></a>
         <a class="nav-link" href="publications.html"><b>Publications</b></a>
         <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
         <a class="nav-link" href="projects.html"><b>Projects</b></a>
         <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
       </nav>
-
-      <div class="flex items-center gap-2">
-        <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
     </div>
   </div>
 
-  <!-- Hero / Cover -->
+  <!-- Hero -->
   <section class="max-w-7xl mx-auto px-4 mt-6">
     <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
       <img src="assets/img/people/director-cover.jpg" alt="Director cover" class="w-full h-[260px] md:h-[320px] object-cover">
@@ -124,12 +113,8 @@
         <div class="flex items-end gap-4">
           <img src="assets/img/people/director.jpg" alt="Director photo" class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg" />
           <div class="text-white drop-shadow">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="tag-accent">Director</span>
-            </div>
-            <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">
-              Insu Choi, Ph.D.
-            </h1>
+            <span class="tag-accent">Director</span>
+            <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
             <p class="text-sm md:text-[15px] opacity-95">
               Assistant Professor, Dept. of Business Administration, Dongduk Woman University
             </p>
@@ -139,83 +124,65 @@
     </div>
   </section>
 
-  <!-- Body: sticky left + lifted right sections -->
+  <!-- Body -->
   <section class="max-w-7xl mx-auto px-4 mt-8 grid md:grid-cols-[320px,1fr] gap-6">
     <!-- Sticky Profile -->
     <aside class="sticky-card lift p-4">
-      <div class="flex items-center justify-between">
-        <h3 class="text-lg font-extrabold">Profile</h3>
-        <img src="assets/img/brand/logo-univ.png" alt="University Logo" class="h-7 w-auto object-contain" />
-      </div>
-
+      <h3 class="text-lg font-extrabold">Profile</h3>
       <div class="mt-3 grid gap-2 text-[14px] text-slate-700">
-        <div class="flex items-start gap-2">
-          <img src="assets/img/icons/role.png" class="icon-18" alt="">
-          <div><b>Position</b><br/>Assistant Professor · Director, FINDS Lab</div>
-        </div>
-        <div class="flex items-start gap-2">
-          <img src="assets/img/icons/building.png" class="icon-18" alt="">
-          <div><b>Affiliation</b><br/>Dept. of Business Administration, DWU</div>
-        </div>
-        <div class="flex items-start gap-2">
-          <img src="assets/img/icons/location.png" class="icon-18" alt="">
-          <div><b>Office</b><br/>Humanities Building · Room 302</div>
-        </div>
+        <div><b>Position</b><br/>Assistant Professor · Director, FINDS Lab</div>
+        <div><b>Affiliation</b><br/>Dept. of Business Administration, DWU</div>
+        <div><b>Office</b><br/>Humanities Building · Room 302</div>
       </div>
 
       <div class="mt-4 h-px bg-slate-200"></div>
 
       <div class="mt-4 grid gap-2 text-[14px]">
         <a class="flex items-center gap-2 hover:underline" href="mailto:insu.choi@dwu.ac.kr">
-          <img src="assets/img/icons/mail.png" class="icon-18" alt=""><span><b>E-mail</b> · insu.choi@dwu.ac.kr</span>
+          <b>E-mail</b> · insu.choi@dwu.ac.kr
         </a>
-        <div class="flex items-center gap-2">
-          <img src="assets/img/icons/phone.png" class="icon-18" alt=""><span><b>Dept. Office</b> · 02-940-4420</span>
-        </div>
-        <a class="flex items-center gap-2 hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">
-          <img src="assets/img/icons/scholar.png" class="icon-18" alt=""><span>Google Scholar</span>
-        </a>
-        <a class="flex items-center gap-2 hover:underline" href="#" target="_blank" rel="noopener">
-          <img src="assets/img/icons/orcid.png" class="icon-18" alt=""><span>ORCID</span>
-        </a>
+        <div><b>Dept. Office</b> · 02-940-4420</div>
       </div>
 
       <div class="mt-5 flex flex-wrap gap-2">
-        <a class="btn-primary text-sm" href="assets/docs/CV_InsuChoi.pdf" target="_blank" rel="noopener">
-          <span class="inline-flex items-center gap-2"><img src="assets/img/icons/cv.png" class="icon-18" alt="">Download CV</span>
-        </a>
-        <a class="btn-ghost text-sm" href="publications.html">
-          <span class="inline-flex items-center gap-2"><img src="assets/img/icons/book.png" class="icon-18" alt="">Publications</span>
-        </a>
+        <a class="btn-primary text-sm" href="assets/docs/CV_InsuChoi.pdf" target="_blank">Download CV</a>
+        <a class="btn-ghost text-sm" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
       </div>
     </aside>
 
     <!-- Right column -->
     <main class="grid gap-6">
 
-      <!-- About -->
+      <!-- Introduction -->
       <section class="section-card">
-        <div class="eyebrow">About</div>
-        <h2 class="section-title text-xl mt-1">Education & Research Focus</h2>
+        <h2 class="section-title text-xl mt-1">Introduction</h2>
         <p class="mt-3 text-[15px] leading-7 text-slate-700">
           데이터에서 재무 의사결정 가치를 추출합니다. 시계열 예측, 설명가능 AI, 자산배분, 리스크 관리를 중심으로
-          <span class="font-semibold">Financial Data Science</span>의 문제를 산업 파트너와의 협업 및 오픈 연구로 해결합니다.
+          <span class="font-semibold">Financial Data Science</span> 문제를 산업 파트너와의 협업 및 오픈 연구로 해결합니다.
         </p>
-        <div class="mt-3 flex flex-wrap gap-2">
-          <span class="pill">Financial Data Science</span>
-          <span class="pill">Time Series</span>
-          <span class="pill">Explainable AI</span>
-          <span class="pill">Portfolio</span>
+      </section>
+
+      <!-- Research Interests -->
+      <section class="section-card">
+        <h2 class="section-title text-xl mt-1">Research Interests</h2>
+        <div class="mt-3 grid sm:grid-cols-2 gap-3 text-[15px]">
+          <ul class="space-y-2">
+            <li>시계열 모델링·멀티태스크 QA</li>
+            <li>설명가능성 (feature-centric, attribution)</li>
+            <li>포트폴리오 최적화·리스크 관리</li>
+          </ul>
+          <ul class="space-y-2">
+            <li>Tabular + Graph 융합</li>
+            <li>LLM × Decision-making</li>
+            <li>산업 데이터 분석 파이프라인</li>
+          </ul>
         </div>
       </section>
 
       <!-- Education -->
       <section class="section-card">
-        <div class="eyebrow">Education</div>
         <h2 class="section-title text-xl mt-1">Education</h2>
         <ul class="timeline mt-4 space-y-6">
-
-          <!-- Ph.D. -->
           <li>
             <div class="year">2025</div>
             <div class="title text-[17px] flex items-start">
@@ -228,13 +195,9 @@
             </div>
             <div class="mt-2">
               <span class="badge">Honor</span>
-              <ul class="meta-dots">
-                <li>Awarded the <b>11th Best Doctoral Dissertation Award</b> by the Korean Operations Research and Management Science Society (KORMS) (한국경영과학회).</li>
-              </ul>
+              <ul class="meta-dots"><li>Awarded the 11th Best Doctoral Dissertation Award (KORMS).</li></ul>
             </div>
           </li>
-
-          <!-- M.S. -->
           <li>
             <div class="year">2021</div>
             <div class="title text-[17px] flex items-start">
@@ -247,13 +210,9 @@
             </div>
             <div class="mt-2">
               <span class="badge">Honor</span>
-              <ul class="meta-dots">
-                <li>Awarded in the <b>17th Best Master Thesis Award</b> hosted by the Korea Institute of Industrial Engineers (KIIE) (대한산업공학회).</li>
-              </ul>
+              <ul class="meta-dots"><li>Awarded the 17th Best Master Thesis Award (KIIE).</li></ul>
             </div>
           </li>
-
-          <!-- B.E. -->
           <li>
             <div class="year">2018</div>
             <div class="title text-[17px] flex items-start">
@@ -264,132 +223,33 @@
               <span class="dept">Industrial and Management Systems Engineering</span><br>
               <span class="school khu">Kyung Hee University</span>
             </div>
-              <div class="mt-2">
+            <div class="mt-2">
               <span class="badge">Honor</span>
-            <ul class="meta-dots">
-              <li><b>Graduated as the valedictorian (1st out of 86)</b>.</li>
-            </ul>
+              <ul class="meta-dots"><li>Graduated as the valedictorian (1st out of 86).</li></ul>
+            </div>
           </li>
-
         </ul>
       </section>
 
       <!-- Employment -->
       <section class="section-card">
-        <div class="eyebrow">Employment</div>
         <h2 class="section-title text-xl mt-1">Employment</h2>
         <ul class="timeline mt-4 space-y-6">
-          <li>
-            <div class="year">20XX–Present</div>
-            <div class="title text-[17px]">Assistant Professor</div>
-            <div class="desc">Dept. of Business Administration, Dongduk Woman University</div>
-          </li>
-          <li>
-            <div class="year">20XX–20XX</div>
-            <div class="title text-[17px]">[Position]</div>
-            <div class="desc">[Affiliation]</div>
-          </li>
+          <li><div class="year">20XX–Present</div><div class="title text-[17px]">Assistant Professor</div><div class="desc">Dept. of Business Administration, Dongduk Woman University</div></li>
         </ul>
       </section>
 
-      <!-- Research Interests -->
+      <!-- Affiliations -->
       <section class="section-card">
-        <div class="eyebrow">Research</div>
-        <h2 class="section-title text-xl mt-1">Research Interests</h2>
-        <div class="mt-3 grid sm:grid-cols-2 gap-3 text-[15px]">
-          <ul class="space-y-2">
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 시계열 모델링·멀티태스크 QA</li>
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 설명가능성 (feature-centric, attribution)</li>
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 포트폴리오 최적화·리스크 관리</li>
-          </ul>
-          <ul class="space-y-2">
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> Tabular + Graph 융합</li>
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> LLM × Decision-making</li>
-            <li class="flex items-start gap-2"><img src="assets/img/icons/check.png" class="icon-18" alt=""> 산업 데이터 분석 파이프라인</li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- Honors -->
-      <section class="section-card">
-        <div class="eyebrow">Honors & Awards</div>
-        <h2 class="section-title text-xl mt-1">Honors & Awards</h2>
-        <div class="mt-4 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <div class="lift p-4 rounded-xl">
-            <div class="year">2025</div>
-            <div class="title mt-1 font-bold">Outstanding Paper Award</div>
-            <div class="desc mt-1">[Conference/Org]</div>
-          </div>
-          <div class="lift p-4 rounded-xl">
-            <div class="year">2024</div>
-            <div class="title mt-1 font-bold">Teaching Excellence</div>
-            <div class="desc mt-1">[University]</div>
-          </div>
-          <div class="lift p-4 rounded-xl">
-            <div class="year">20XX</div>
-            <div class="title mt-1 font-bold">[Award name]</div>
-            <div class="desc mt-1">[Org]</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Selected Publications -->
-      <section class="section-card">
-        <div class="eyebrow">Publications</div>
-        <div class="flex items-center justify-between">
-          <h2 class="section-title text-xl mt-1">Selected Publications</h2>
-          <a class="text-sm font-bold underline decoration-2 underline-offset-4" style="text-decoration-color:var(--gold)" href="publications.html">View all</a>
-        </div>
-        <ul class="mt-3 space-y-3 text-[15px]">
-          <li class="p-3 border border-slate-200 rounded-lg">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="tag-accent">Conference</span><span class="tag-gold">2025</span>
-            </div>
-            <div class="mt-1 font-semibold">Time-MQA: Time Series Multi-Task QA with Context Enhancement</div>
-            <div class="text-sm text-slate-600">ACL 2025 · [Authors]</div>
-          </li>
-          <li class="p-3 border border-slate-200 rounded-lg">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="tag-accent">Conference</span><span class="tag-gold">2024</span>
-            </div>
-            <div class="mt-1 font-semibold">CAFO: Feature-Centric Explanation on Time Series Classification</div>
-            <div class="text-sm text-slate-600">KDD 2024 · [Authors]</div>
-          </li>
-          <li class="p-3 border border-slate-200 rounded-lg">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="tag-gold">Journal</span><span class="tag-accent">SSCI</span>
-            </div>
-            <div class="mt-1 font-semibold">Household Financial Health: ML for Diagnosis and Prescription</div>
-            <div class="text-sm text-slate-600">Quantitative Finance 2023 · [Authors]</div>
-          </li>
+        <h2 class="section-title text-xl mt-1">Affiliations</h2>
+        <ul class="space-y-2 text-[15px]">
+          <li>Member, Korean Operations Research and Management Science Society</li>
+          <li>Member, Korea Institute of Industrial Engineers</li>
+          <li>Reviewer, Quantitative Finance</li>
         </ul>
       </section>
 
     </main>
   </section>
-
-  <!-- Footer -->
-  <footer class="mt-10 border-t border-slate-200 bg-white">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-      <p class="text-center text-sm text-slate-500 font-semibold">
-        <a class="hover:underline" href="https://www.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교</a> |
-        <a class="hover:underline" href="https://manage.dongduk.ac.kr/" target="_blank" rel="noopener">동덕여자대학교 경영학과</a> |
-        <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
-        <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
-      </p>
-      <p class="mt-4 text-center text-xs text-slate-400">
-        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
-      </p>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script>
-    // Mobile menu toggle
-    const btnMobile = document.getElementById('btnMobile');
-    const mobileNav = document.getElementById('mobileNav');
-    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
-  </script>
 </body>
 </html>
-
