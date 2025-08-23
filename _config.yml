@@ -1,3 +1,11 @@
 title: FINDS Lab
-url: "https://<username>.github.io"
-baseurl: "/<repo>"   # 사용자/오거나니제이션 사이트면 "" 로 두세요
+description: "Financial Data Science Lab. (Dongduk Woman's University)"
+
+# 사이트 기본 URL (GitHub Pages 도메인)
+url: "https://finds-lab.github.io"
+
+# 프로젝트 페이지니까 반드시 repo 이름 붙여야 함
+baseurl: "/website"
+
+# (선택) 테마가 필요 없다면 주석 처리
+# theme: minima
