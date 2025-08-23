@@ -24,7 +24,7 @@
     html,body{font-family:"Noto Sans KR","Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
     :focus-visible{outline:none;box-shadow:var(--ring)}
 
-    /* Header/Nav */
+    /* Header/Nav helpers (header는 partial에서 들어옴) */
     .sticky-blur{position:sticky;top:0;z-index:60;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.9)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
@@ -88,68 +88,12 @@
     .icon-18{width:18px;height:18px}
     .row{display:flex;gap:.5rem;align-items:flex-start}
     .row b{display:block}
-
-    /* Breadcrumb */
-    .crumbs{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
-    .crumb{display:inline-flex;align-items:center;font-weight:900;border-radius:.6rem;padding:.35rem .6rem;line-height:1}
-    .crumb-home{background:#fff;color:#0f172a;border:1.75px solid #0f172a}
-    .crumb-gold{background:var(--gold);color:#111827}
-    .crumb-sep{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:9999px;border:1.5px solid #0f172a;background:#fff}
-    .crumb-sep svg{width:14px;height:14px}
   </style>
 </head>
 <body class="bg-[var(--bg-soft)]">
 
-  <!-- Header -->
-  <div class="sticky-blur border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-      <a href="./" class="flex items-center gap-3">
-        <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
-        <div class="leading-tight">
-          <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
-          <div class="text-[12px] font-semibold text-slate-600">Dongduk Woman's University</div>
-        </div>
-      </a>
-
-      <nav class="hidden md:flex items-center gap-6">
-        <a class="nav-link" href="./"><b>Home</b></a>
-
-        <div class="menu-group" data-menu>
-          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
-          <div class="submenu-panel js-submenu" role="menu" aria-label="About submenu">
-            <a class="block submenu-item" href="about-introduction.html">Introduction</a>
-            <a class="block submenu-item" href="about-vision-area.html">Research Area</a>
-            <a class="block submenu-item" href="about-notice.html">Notice</a>
-            <a class="block submenu-item" href="about-awards.html">Awards</a>
-            <a class="block submenu-item" href="about-location.html">Location</a>
-          </div>
-        </div>
-
-        <div class="menu-group" data-menu>
-          <a class="nav-link" href="members-director.html" aria-current="page"><b>Members</b></a>
-          <div class="submenu-panel js-submenu" role="menu" aria-label="Members submenu">
-            <a class="block submenu-item" href="members-director.html">Director</a>
-            <a class="block submenu-item" href="members-current.html">Current Students</a>
-            <a class="block submenu-item" href="members-alumni.html">Alumni</a>
-            <a class="block submenu-item" href="members-mentorship.html">Mentorship</a>
-          </div>
-        </div>
-
-        <a class="nav-link" href="publications.html"><b>Publications</b></a>
-        <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
-        <a class="nav-link" href="projects.html"><b>Projects</b></a>
-
-        <div class="menu-group" data-menu>
-          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
-          <div class="submenu-panel js-submenu" role="menu" aria-label="Archives submenu">
-            <a class="block submenu-item" href="archives-news.html">News</a>
-            <a class="block submenu-item" href="archives-seminar.html">Seminar</a>
-            <a class="block submenu-item" href="archives-gallery.html">Gallery</a>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div>
+  <!-- ===== 공통 Header (partials/header.html 주입) ===== -->
+  <div id="site-header"></div>
 
   <!-- Hero -->
   <section class="max-w-7xl mx-auto px-4 mt-6">
@@ -271,7 +215,7 @@
               <span class="gold-label">Honor</span>
               <ul class="bullets-honor mt-2">
                 <li>
-                  11th Best Doctoral Dissertation Award — Korean Operations Research and Management Science Society (한국경영과학회)
+                  <b>Awarded in the 11th Best Doctoral Dissertation Award</b> hosted by the <i>Korean Operations Research and Management Science Society</i> (한국경영과학회)
                 </li>
               </ul>
             </div>
@@ -292,7 +236,7 @@
               <span class="gold-label">Honor</span>
               <ul class="bullets-honor mt-2">
                 <li>
-                  17th Best Master Thesis Award — Korea Institute of Industrial Engineers (대한산업공학회)
+                  <b>Awarded in the 17th Best Master Thesis Award</b> hosted by the <i>Korea Institute of Industrial Engineers</i> (대한산업공학회)
                 </li>
               </ul>
             </div>
@@ -331,7 +275,7 @@
         </ul>
       </section>
 
-      <!-- Affiliation (Employment 스타일로 변경) -->
+      <!-- Affiliation -->
       <section class="section-card">
         <h2 class="section-title text-xl mt-1">Affiliation</h2>
         <ul class="timeline mt-4 space-y-6">
@@ -356,23 +300,49 @@
     </main>
   </section>
 
+  <!-- ===== 공통 Footer (partials/footer.html 주입) ===== -->
+  <div id="site-footer" class="mt-10"></div>
+
   <!-- Scripts -->
   <script>
-    // ===== Desktop submenus (hover & focus) =====
-    const MENU_DELAY = 80;
-    document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
-      const panel = grp.querySelector('.js-submenu');
-      let t;
-      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
-      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
-      grp.addEventListener('mouseenter', open);
-      grp.addEventListener('mouseleave', close);
-      grp.addEventListener('focusin', open);
-      grp.addEventListener('focusout', close);
-      // 키보드 접근성: ESC로 닫기
-      grp.addEventListener('keydown', (e)=>{ if(e.key==='Escape') grp.classList.remove('open'); });
-    });
+    /* ====== 공통 header/footer 주입 ====== */
+    const PARTIALS_DIR = 'partials'; // 상대경로 유지
+    async function injectPartial(elId, file){
+      try{
+        const res = await fetch(`${PARTIALS_DIR}/${file}`, { cache: 'no-store' });
+        if(!res.ok) throw new Error(res.status + ' ' + res.statusText);
+        const html = await res.text();
+        document.getElementById(elId).innerHTML = html;
+      }catch(err){
+        console.error('Partial load error:', err);
+      }
+    }
+
+    function bindHeaderInteractions(){
+      // Mobile nav
+      const btnMobile = document.getElementById('btnMobile');
+      const mobileNav = document.getElementById('mobileNav');
+      btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+
+      // Desktop submenu (hover/focus)
+      const MENU_DELAY = 80;
+      document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
+        let t;
+        const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
+        const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
+        grp.addEventListener('mouseenter', open);
+        grp.addEventListener('mouseleave', close);
+        grp.addEventListener('focusin', open);
+        grp.addEventListener('focusout', close);
+        grp.addEventListener('keydown', (e)=>{ if(e.key==='Escape') grp.classList.remove('open'); });
+      });
+    }
+
+    (async () => {
+      await injectPartial('site-header', 'header.html');
+      bindHeaderInteractions();
+      await injectPartial('site-footer', 'footer.html');
+    })();
   </script>
 </body>
 </html>
-
