@@ -55,11 +55,16 @@ permalink: /archives-news.html
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
-      {% assign pages_sorted = site.pages | sort: "date" | reverse %}
+      {% comment %}
+        Jekyll 3 호환: 필터(where_exp) 없이 pages+posts를 합치고 date로 정렬,
+        루프 안에서 '/news/'와 date가 있는 것만 출력.
+      {% endcomment %}
+      {% assign all = site.pages | concat: site.posts %}
+      {% assign all_sorted = all | sort: 'date' | reverse %}
       {% assign count = 0 %}
 
-      {% for post in pages_sorted %}
-        {% if post.url and post.url contains '/news/' and post.date %}
+      {% for post in all_sorted %}
+        {% if post.url and post.date and post.url contains '/news/' %}
           {% assign count = count | plus: 1 %}
           {% assign y = post.date | date: "%Y" %}
           {% assign m = post.date | date: "%m" %}
@@ -74,11 +79,7 @@ permalink: /archives-news.html
                 {{ post.title }}
               </a>
               <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
-                {% if post.excerpt %}
-                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
-                {% else %}
-                  {{ post.content | strip_html | strip | truncate: 160 }}
-                {% endif %}
+                {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
               </div>
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
