@@ -12,23 +12,56 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="assets/css/common.css" />
-  <!-- 공통 레이아웃(헤더/푸터 주입 + 동작 바인딩) -->
-  <script src="assets/js/include-layout.js" defer></script>
-
   <!-- Kakao Maps SDK (services 포함) -->
   <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2288f6c721287408c4bdc22f994230ad&libraries=services"></script>
 
   <style>
-    /* 이 페이지(로케이션) 전용 스타일만 남겼습니다. 공통 헤더/푸터 스타일은 common.css가 담당 */
     :root{
-      --accent: rgb(172, 14, 14);
-      --gold:   rgb(214, 177, 77);
+      --accent: rgb(172, 14, 14);   /* red */
+      --gold:   rgb(214, 177, 77);  /* gold */
       --fg-on-accent:#ffffff;
       --bg:#ffffff;
       --bg-soft:#f8fafc;
       --ring:0 0 0 3px rgba(172,14,14,.25);
+    }
+    html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+    .sticky-blur{position:sticky;top:0;z-index:9999;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
+    .nav-link{font-weight:800}
+    .nav-link:hover{color:var(--accent)}
+    .submenu-panel{position:absolute; z-index:6000; font-size:13px; line-height:1.25rem; width:13.5rem}
+    .submenu-item{padding:.35rem .75rem; font-weight:700}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:transform .18s ease, opacity .18s ease}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .tag-accent{background:var(--accent);color:var(--fg-on-accent);border-radius:9999px;padding:.22rem .55rem;font-size:.72rem;font-weight:900}
+    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.22rem .55rem;font-size:.72rem;font-weight:900}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.1rem}
+    :focus-visible{outline:none;box-shadow:var(--ring)}
+    *{scrollbar-width:thin;scrollbar-color:var(--accent) #f1f5f9}
+    *::-webkit-scrollbar{height:8px;width:8px}
+    *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
+
+    /* Desktop submenu show/hide (robust hover) */
+    .menu-group{position:relative}
+    .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
+    .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
+
+    /* Breadcrumb */
+    .crumbs{display:flex; align-items:center; gap:.4rem; flex-wrap:wrap}
+    .crumb{display:inline-flex; align-items:center; font-weight:900; border-radius:.6rem; padding:.35rem .6rem; line-height:1}
+    .crumb-home{background:#fff; color:#0f172a; border:1.75px solid #0f172a}
+    .crumb-gold{background:var(--gold); color:#111827}
+    .crumb a{display:inline-flex; align-items:center; gap:.35rem}
+    .crumb a:hover{opacity:.85}
+    .crumb-sep{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:26px; height:26px; border-radius:9999px; border:1.5px solid #0f172a;
+      background:#fff;
+      box-shadow:0 2px 6px rgba(0,0,0,.06);
+    }
+    .crumb-sep svg{width:14px; height:14px}
+    @media (max-width:480px){
+      .crumb-sep{width:24px;height:24px}
+      .crumb{padding:.3rem .5rem}
     }
 
     /* Map box */
@@ -37,7 +70,6 @@
     @media (max-width: 640px){
       #kakao-map{height:360px;}
     }
-
     .info-row{display:flex; align-items:flex-start; gap:.6rem}
     .info-row img{width:18px; height:18px; margin-top:.15rem}
     .copy-btn{display:inline-flex; align-items:center; gap:.35rem; padding:.25rem .55rem; border-radius:.6rem; border:1px solid #e5e7eb; font-weight:700; font-size:.75rem}
@@ -53,12 +85,142 @@
   </style>
 </head>
 <body class="bg-[var(--bg-soft)]">
+  <!-- Header -->
+  <div class="sticky-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="./" class="flex items-center gap-3">
+        <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
+        <div class="leading-tight">
+          <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
+          <div class="text-[12px] font-semibold text-slate-600">Dongduk Woman's University</div>
+        </div>
+      </a>
 
-  <!-- 공통 Header 자동 주입 -->
-  <header id="site-header"></header>
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="nav-link" href="./"><b>Home</b></a>
 
-  <!-- 본문 -->
-  <main class="container-root px-4 mt-6 grid lg:grid-cols-3 gap-6">
+        <!-- About FINDS -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
+          </div>
+        </div>
+
+        <!-- Members -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="members-director.html"><b>Members</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="publications-all.html"><b>Publications</b></a>
+        <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
+        <a class="nav-link" href="projects.html"><b>Projects</b></a>
+
+        <!-- Archives -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile toggle -->
+      <div class="flex items-center gap-2">
+        <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
+      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="./">Home</a>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="about-introduction.html">Introduction</a>
+            <a class="py-1 hover:underline font-bold" href="about-vision-area.html">Research Area</a>
+            <a class="py-1 hover:underline font-bold" href="about-notice.html">Notice</a>
+            <a class="py-1 hover:underline font-bold" href="about-awards.html">Awards</a>
+            <a class="py-1 hover:underline font-bold" href="about-location.html">Location</a>
+          </div>
+        </div>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="members-director.html">Director</a>
+            <a class="py-1 hover:underline font-bold" href="members-current.html">Current Students</a>
+            <a class="py-1 hover:underline font-bold" href="members-alumni.html">Alumni</a>
+            <a class="py-1 hover:underline font-bold" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications-all.html">Publications</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
+          <div class="pl-3 grid text:[14px]">
+            <a class="py-1 hover:underline font-bold" href="archives-news.html">News</a>
+            <a class="py-1 hover:underline font-bold" href="archives-seminar.html">Seminar</a>
+            <a class="py-1 hover:underline font-bold" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Title (Breadcrumb) -->
+  <section class="max-w-7xl mx-auto px-4 mt-6">
+    <nav aria-label="Breadcrumb" class="rounded-xl border border-slate-200 bg-white p-4">
+      <ol class="crumbs">
+        <li class="crumb crumb-home">
+          <a href="./" aria-current="false">Home</a>
+        </li>
+
+        <li class="crumb-sep" aria-hidden="true" title="Go to next">
+          <!-- Stylized chevron arrow -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </li>
+
+        <li class="crumb crumb-gold">
+          <a href="about-introduction.html">About FINDS</a>
+        </li>
+
+        <li class="crumb-sep" aria-hidden="true" title="Go to next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </li>
+
+        <li class="crumb crumb-gold" aria-current="page">
+          <span>Location</span>
+        </li>
+      </ol>
+    </nav>
+  </section>
+
+  <!-- Map + Info -->
+  <main class="max-w-7xl mx-auto px-4 mt-6 grid lg:grid-cols-3 gap-6">
     <!-- Map -->
     <div class="lg:col-span-2 card" id="kakao-map-wrap">
       <div id="kakao-map" role="img" aria-label="동덕여자대학교 인문관 위치 지도"></div>
@@ -134,10 +296,38 @@
     </aside>
   </main>
 
-  <!-- 공통 Footer 자동 주입 -->
-  <footer id="site-footer" class="mt-10"></footer>
+  <!-- Footer -->
+  <footer class="mt-10 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
+        <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
+      </p>
+      <p class="mt-4 text-center text-xs text-slate-400">
+        Copyright © 2025 Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
 
   <script>
+    // ===== Mobile menu toggle =====
+    const btnMobile = document.getElementById('btnMobile');
+    const mobileNav = document.getElementById('mobileNav');
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+
+    // ===== Desktop submenu keep-open (70ms) =====
+    const MENU_DELAY = 70;
+    document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
+      const panel = grp.querySelector('.js-submenu');
+      let t;
+      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
+      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
+      grp.addEventListener('mouseenter', open);
+      grp.addEventListener('mouseleave', close);
+      grp.addEventListener('focusin', open);
+      grp.addEventListener('focusout', close);
+    });
+
     // ===== Kakao Map Setup =====
     const mapEl = document.getElementById('kakao-map');
     const errorEl = document.getElementById('mapError');
@@ -218,7 +408,6 @@
       showError('지도를 초기화할 수 없습니다.');
     }
 
-    // 주소 복사
     document.querySelectorAll('[data-copy-addr]').forEach(btn=>{
       btn.addEventListener('click', async () => {
         const text = '서울 성북구 화랑로13길 60 (지번: 하월곡동 23-1) — 동덕여자대학교 인문관';
@@ -233,7 +422,6 @@
       });
     });
 
-    // 지도 다시 맞추기
     btnRecenter.addEventListener('click', () => { if (map && currentPos) map.setCenter(currentPos); });
 
     console.info('[Kakao Maps] 현재 도메인:', location.origin, '— 카카오 디벨로퍼스(내 애플리케이션 > 플랫폼 > Web)에 등록되어 있어야 합니다.');
