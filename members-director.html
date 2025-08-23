@@ -6,42 +6,48 @@ permalink: /members-director.html
 
 <!-- 페이지 전용 보정 스타일 (타임라인/불릿/줄바꿈 + 이미지) -->
 <style>
-  /* ========== 타임라인: 금색 라인이 빨간 점 중앙을 관통하도록 ========== */
-  .timeline{position:relative; padding-left:1.75rem;}
-  .timeline::before{
-    content:"";
-    position:absolute;
-    left:0;                 /* 기준축 0으로 통일 */
-    top:0.4rem; bottom:0.4rem;
-    width:3px;
-    background:var(--gold, #d6b14d);
-    border-radius:2px;
-    transform:translateX(-50%); /* 선의 중심을 축에 맞춤 */
-  }
-  .timeline > li{position:relative; margin-left:.25rem; padding-left:1rem;}
-  .timeline > li::before{
-    content:"";
-    position:absolute;
-    left:0;                 /* 선과 같은 축 공유 */
-    top:.55rem;
-    width:11px; height:11px;
-    background:var(--accent,#ac0e0e);
-    border-radius:50%;
-    box-shadow:0 0 0 3px rgba(172,14,14,.08);
-    transform:translateX(-50%); /* 점을 선 중심과 정확히 정렬 */
+  :root{
+    --accent:#ac0e0e;
+    --gold:#d6b14d;
   }
 
-  /* Education 전용 (텍스트-로고 좌우) */
-  .edu-item{position:relative;}
-  .edu-header{display:flex; align-items:flex-start; justify-content:space-between; gap:1rem;}
-  .edu-text{min-width:0;}
-  .edu-text .degree{font-weight:800;}
-  .edu-text .dept{font-weight:600; color:#334155;}
-  .edu-text .school{font-weight:900; white-space:nowrap;}
-  .edu-logo{width:44px; height:44px; object-fit:contain; border-radius:.5rem; flex:0 0 44px;}
+  /* ========== 타임라인 (공통) ========== */
+  /* 축을 좌측 1rem에 두고, 금색 라인이 빨간 점 중앙을 관통하도록 정렬 */
+  .timeline{position:relative; padding-left:3.25rem;} /* 로고가 들어가는 섹션(Edu)도 고려해 여유 */
+  .timeline::before{
+    content:""; position:absolute; left:1rem; top:.5rem; bottom:.5rem;
+    width:3px; background:var(--gold); border-radius:2px; transform:translateX(-50%);
+  }
+  .timeline > li{
+    position:relative; margin:0; padding:0 0 0 .25rem;
+    line-height:1.5; /* 들뜸 방지 */
+  }
+  .timeline > li::before{
+    content:""; position:absolute; left:1rem; top:.95rem; /* 첫 줄과 균형 */
+    width:11px; height:11px; background:var(--accent);
+    border-radius:50%; box-shadow:0 0 0 3px rgba(172,14,14,.08);
+    transform:translate(-50%,-50%);
+  }
+
+  /* ========== 타임라인 행 내부 구성 (연도/콘텐츠 정렬 통일) ========== */
+  .row-head{display:flex; align-items:flex-start; gap:.5rem; flex-wrap:wrap;}
+  .year{font-size:.82rem; font-weight:900; color:var(--accent); line-height:1; margin-top:.1rem;}
+  .title{font-weight:800; color:#0f172a;}
+  .desc{color:#475569; font-size:.95rem;}
+
+  /* ========== Education 전용 (로고가 점 바로 아래 열에 위치) ========== */
+  .edu-li{display:grid; grid-template-columns: 48px 1fr; column-gap:.75rem; align-items:start;}
+  .edu-logo{
+    width:44px; height:44px; object-fit:contain; border-radius:.5rem;
+    background:#fff; box-shadow:0 0 0 1px #e5e7eb;
+    margin-left:.25rem; /* 점과 너무 붙지 않게 */
+  }
+  .degree{font-weight:900;}
+  .dept{font-weight:600; color:#334155;}
+  .school{font-weight:900; white-space:nowrap;}
 
   /* 수상 bullet */
-  .bullets-honor{list-style:disc; margin:.5rem 0 0 1.25rem; padding:0;}
+  .bullets-honor{list-style:disc; margin:.35rem 0 0 1.25rem; padding:0;}
   .bullets-honor li{font-size:.95rem; color:#111827; padding-left:0;}
 
   /* Research Interests */
@@ -53,13 +59,12 @@ permalink: /members-director.html
   img[width][height]{height:auto}
 
   /* 히어로 텍스트 간격 보정 */
-  .hero-sub{margin-top:.35rem;} /* 이름 밑 직함 간 살짝 띄우기 */
+  .hero-sub{margin-top:.35rem;}
 </style>
 
 <!-- ===== Hero ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <!-- webp 우선 + jpg 백업 + 반응형 -->
     <picture>
       <source
         srcset="
@@ -88,7 +93,6 @@ permalink: /members-director.html
     <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent"></div>
     <div class="absolute left-4 right-4 md:left-6 bottom-4">
       <div class="flex items-end gap-4">
-        <!-- 프로필 이미지: webp + jpg, 고정 사각형 -->
         <picture>
           <source srcset="{{ '/assets/img/people/director-224.webp' | relative_url }}" type="image/webp" />
           <source srcset="{{ '/assets/img/people/director-224.jpg'  | relative_url }}" type="image/jpeg" />
@@ -103,7 +107,6 @@ permalink: /members-director.html
         <div class="text-white drop-shadow">
           <span class="inline-block px-2 py-1 rounded-full font-extrabold text-xs" style="background:#ac0e0e;">Director</span>
           <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-          <!-- 간격 살짝 추가: hero-sub -->
           <p class="hero-sub text-sm md:text-[15px] opacity-95">Assistant Professor, Dept. of Business Administration, Dongduk Woman's University</p>
         </div>
       </div>
@@ -111,7 +114,7 @@ permalink: /members-director.html
   </div>
 </section>
 
-<!-- ===== Body ===== -->
+<!-- ===== Body (좌측 프로필 + 우측 본문 카드들 동일 폭으로) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-8 grid md:grid-cols-[320px,1fr] gap-6">
   <!-- Profile aside -->
   <aside class="bg-white border border-slate-200 rounded-2xl shadow-md p-4 sticky top-24 self-start">
@@ -146,32 +149,27 @@ permalink: /members-director.html
     </div>
   </aside>
 
-  <!-- Main -->
+  <!-- Main: 모든 카드 동일한 wrapper/패딩 -->
   <main class="grid gap-6">
-    
-    <!-- Introduction -->
-    <section class="max-w-7xl mx-auto px-4">
-      <div class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-        <h2 class="text-xl font-extrabold flex items-center gap-2">
-          <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
-        </h2>
-    
-        <p class="mt-3 text-[15px] leading-7 text-slate-700">
-          My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
-          with a particular focus on <b>integrating data science and financial engineering</b> to address 
-          <b>real-world financial challenges</b>. I strive to make <b>financial services</b> more intuitive and accessible 
-          by <b>simplifying complex concepts</b> and developing <b>user-friendly tools</b> for <b>asset management</b>.
-        </p>
-    
-        <p class="mt-3 text-[15px] leading-7 text-slate-700">
-          Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
-          <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>. 
-          With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>, 
-          I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
-        </p>
-      </div>
-    </section>
 
+    <!-- Introduction (다른 카드와 동일한 박스 폭/패딩) -->
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
+      <h2 class="text-xl font-extrabold flex items-center gap-2">
+        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
+      </h2>
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>,
+        with a particular focus on <b>integrating data science and financial engineering</b> to address
+        <b>real-world financial challenges</b>. I strive to make <b>financial services</b> more intuitive and accessible
+        by <b>simplifying complex concepts</b> and developing <b>user-friendly tools</b> for <b>asset management</b>.
+      </p>
+      <p class="mt-3 text-[15px] leading-7 text-slate-700">
+        Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing
+        <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
+        With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>,
+        I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
+      </p>
+    </section>
 
     <!-- Research Interests -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
@@ -207,135 +205,123 @@ permalink: /members-director.html
       </div>
     </section>
 
-    <!-- Education -->
+    <!-- Education (로고가 점 바로 아래 열) -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
       </h2>
-    
+
       <ul class="timeline mt-6 space-y-8">
         <!-- Ph.D. -->
-        <li class="edu-item flex gap-4 items-start">
-          <!-- 로고 -->
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" 
-                 alt="KAIST logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
-                 width="48" height="48" loading="lazy" decoding="async"
-                 onerror="this.style.display='none'">
-          </picture>
-    
-          <!-- 텍스트 -->
-          <div class="flex-1">
-            <div class="flex justify-between items-start gap-2">
-              <div>
-                <div class="degree font-extrabold">Ph.D. in Engineering</div>
-                <div class="dept font-semibold text-slate-700">Industrial and Systems Engineering</div>
-                <div class="school font-black" style="color:#003366;">KAIST</div>
+        <li>
+          <div class="edu-li">
+            <!-- 로고: 점 바로 오른쪽 열 -->
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}"
+                   alt="KAIST logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
+            <!-- 내용 -->
+            <div>
+              <div class="row-head">
+                <div class="year">2025.02.</div>
+                <div class="degree">Ph.D. in Engineering</div>
               </div>
-              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.02.</div>
-            </div>
-    
-            <div class="mt-2">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor mt-2">
-                <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
-              </ul>
+              <div class="dept">Industrial and Systems Engineering</div>
+              <div class="school" style="color:#003366;">KAIST</div>
+
+              <div class="mt-2">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor mt-2">
+                  <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
+                </ul>
+              </div>
             </div>
           </div>
         </li>
-    
+
         <!-- M.S. -->
-        <li class="edu-item flex gap-4 items-start">
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" 
-                 alt="KAIST logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
-                 width="48" height="48" loading="lazy" decoding="async"
-                 onerror="this.style.display='none'">
-          </picture>
-    
-          <div class="flex-1">
-            <div class="flex justify-between items-start gap-2">
-              <div>
-                <div class="degree font-extrabold">Master of Science</div>
-                <div class="dept font-semibold text-slate-700">Industrial and Systems Engineering</div>
-                <div class="school font-black" style="color:#003366;">KAIST</div>
+        <li>
+          <div class="edu-li">
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}"
+                   alt="KAIST logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
+            <div>
+              <div class="row-head">
+                <div class="year">2021.02.</div>
+                <div class="degree">Master of Science</div>
               </div>
-              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2021.02.</div>
-            </div>
-    
-            <div class="mt-2">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor mt-2">
-                <li><b>Best Master Thesis Award</b>, KIIE</li>
-              </ul>
+              <div class="dept">Industrial and Systems Engineering</div>
+              <div class="school" style="color:#003366;">KAIST</div>
+
+              <div class="mt-2">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor mt-2">
+                  <li><b>Best Master Thesis Award</b>, KIIE</li>
+                </ul>
+              </div>
             </div>
           </div>
         </li>
-    
+
         <!-- B.E. -->
-        <li class="edu-item flex gap-4 items-start">
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" 
-                 alt="Kyung Hee Univ. logo" class="w-12 h-12 object-contain rounded-md ring-1 ring-slate-200 bg-white"
-                 width="48" height="48" loading="lazy" decoding="async"
-                 onerror="this.style.display='none'">
-          </picture>
-    
-          <div class="flex-1">
-            <div class="flex justify-between items-start gap-2">
-              <div>
-                <div class="degree font-extrabold">Bachelor of Engineering</div>
-                <div class="dept font-semibold text-slate-700">Industrial &amp; Management Systems Engineering</div>
-                <div class="school font-black" style="color:#990000;">Kyung Hee University</div>
+        <li>
+          <div class="edu-li">
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}"
+                   alt="Kyung Hee Univ. logo" class="edu-logo" width="44" height="44" loading="lazy" decoding="async"
+                   onerror="this.style.display='none'">
+            </picture>
+            <div>
+              <div class="row-head">
+                <div class="year">2018.02.</div>
+                <div class="degree">Bachelor of Engineering</div>
               </div>
-              <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2018.02.</div>
-            </div>
-    
-            <div class="mt-2">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor mt-2">
-                <li><b>Valedictorian</b>, 1st out of 86 students</li>
-              </ul>
+              <div class="dept">Industrial &amp; Management Systems Engineering</div>
+              <div class="school" style="color:#990000;">Kyung Hee University</div>
+
+              <div class="mt-2">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor mt-2">
+                  <li><b>Valedictorian</b>, 1st out of 86 students</li>
+                </ul>
+              </div>
             </div>
           </div>
         </li>
       </ul>
     </section>
 
-
-    <!-- Employment -->
+    <!-- Employment (연/제목/설명 모두 통일 레이아웃) -->
     <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment
       </h2>
-      <ul class="timeline mt-4 space-y-6">
+      <ul class="timeline mt-6 space-y-6">
         <li>
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.09.– Present</div>
-          <div class="title font-extrabold">Assistant Professor</div>
-          <div class="desc text-slate-600">Deptartment of Business Administration, Dongduk Woman's University</div>
+          <div class="row-head"><div class="year">2025.09.– Present</div><div class="title">Assistant Professor</div></div>
+          <div class="desc">Department of Business Administration, Dongduk Woman's University</div>
         </li>
         <li>
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
-          <div class="title font-extrabold">Lecturer</div>
-          <div class="desc text-slate-600">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
+          <div class="row-head"><div class="year">2025.03.– 2024.08.</div><div class="title">Lecturer</div></div>
+          <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
         </li>
         <li>
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.03.– 2024.08.</div>
-          <div class="title font-extrabold">Lecturer</div>
-          <div class="desc text-slate-600">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
+          <div class="row-head"><div class="year">2025.03.– 2024.08.</div><div class="title">Lecturer</div></div>
+          <div class="desc">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
         </li>
         <li>
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2024.03.– 2024.08.</div>
-          <div class="title font-extrabold">Lecturer</div>
-          <div class="desc text-slate-600">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+          <div class="row-head"><div class="year">2024.03.– 2024.08.</div><div class="title">Lecturer</div></div>
+          <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
         </li>
         <li>
-          <div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2020.03.– 2020.05.</div>
-          <div class="title font-extrabold">Intern</div>
-          <div class="desc text-slate-600">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
+          <div class="row-head"><div class="year">2020.03.– 2020.05.</div><div class="title">Intern</div></div>
+          <div class="desc">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
         </li>
       </ul>
     </section>
@@ -345,14 +331,13 @@ permalink: /members-director.html
       <h2 class="text-xl font-extrabold flex items-center gap-2">
         <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation
       </h2>
-      <ul class="timeline mt-4 space-y-6">
-        <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2025.06. - Present</div><div class="title font-extrabold">Lifetime Member</div><div class="desc text-slate-600">Korean Institute of Industrial Engineers</div></li>
-        <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2023.09. - Present</div><div class="title font-extrabold">Lifetime Member</div><div class="desc text-slate-600">Korean Securities Association</div></li>
-        <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2023.06. - Present</div><div class="title font-extrabold">Lifetime Member</div><div class="desc text-slate-600">Korean Academic Society of Business Administration</div></li>
-        <li><div class="year text-[.82rem] font-black" style="color:#ac0e0e;">2022.06. - Present</div><div class="title font-extrabold">Lifetime Member</div><div class="desc text-slate-600">Korea Intelligent Information Systems Society</div></li>
+      <ul class="timeline mt-6 space-y-6">
+        <li><div class="row-head"><div class="year">2025.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Institute of Industrial Engineers</div></li>
+        <li><div class="row-head"><div class="year">2023.09. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Securities Association</div></li>
+        <li><div class="row-head"><div class="year">2023.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korean Academic Society of Business Administration</div></li>
+        <li><div class="row-head"><div class="year">2022.06. – Present</div><div class="title">Lifetime Member</div></div><div class="desc">Korea Intelligent Information Systems Society</div></li>
       </ul>
     </section>
+
   </main>
 </section>
-
-
