@@ -1,65 +1,381 @@
----
-layout: default
-title: Location | FINDS Lab — Dongduk Woman's University
-description: "FINDS Lab Location — Dongduk Woman's University College of Business"
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Location | FINDS Lab — Dongduk Woman's University</title>
+  <meta name="description" content="FINDS Lab Location — Dongduk Woman's University College of Business" />
 
-<!-- Map + Info -->
-<main class="max-w-7xl mx-auto px-4 mt-6 grid lg:grid-cols-3 gap-6">
-  <!-- Map -->
-  <div class="lg:col-span-2 card" id="kakao-map-wrap">
-    <div id="kakao-map" role="img" aria-label="동덕여자대학교 인문관 위치 지도"></div>
-    <div id="mapError" class="map-error" style="display:none;"></div>
-    <div class="mt-3 flex items-center justify-between">
-      <div class="text-[12px] text-slate-500">Powered by Kakao Maps</div>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --accent: rgb(172, 14, 14);   /* red */
+      --gold:   rgb(214, 177, 77);  /* gold */
+      --fg-on-accent:#ffffff;
+      --bg:#ffffff;
+      --bg-soft:#f8fafc;
+      --ring:0 0 0 3px rgba(172,14,14,.25);
+    }
+    html,body{font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+    body{background:var(--bg-soft)}
+    .sticky-blur{position:sticky;top:0;z-index:9999;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
+    .nav-link{font-weight:800}
+    .nav-link:hover{color:var(--accent)}
+    .submenu-panel{position:absolute; z-index:6000; font-size:13px; line-height:1.25rem; width:13.5rem}
+    .submenu-item{padding:.35rem .75rem; font-weight:700}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem 1rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:transform .18s ease, opacity .18s ease}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .tag-accent{background:var(--accent);color:var(--fg-on-accent);border-radius:9999px;padding:.22rem .55rem;font-size:.72rem;font-weight:900}
+    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.22rem .55rem;font-size:.72rem;font-weight:900}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.1rem}
+    :focus-visible{outline:none;box-shadow:var(--ring)}
+    *{scrollbar-width:thin;scrollbar-color:var(--accent) #f1f5f9}
+    *::-webkit-scrollbar{height:8px;width:8px}
+    *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
+
+    /* Desktop submenu show/hide (robust hover) */
+    .menu-group{position:relative}
+    .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
+    .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
+
+    /* Map box */
+    #kakao-map-wrap{position:relative; z-index:1;}
+    #kakao-map{width:100%; height:460px; border-radius:1rem; overflow:hidden; border:1px solid #e5e7eb;}
+    @media (max-width: 640px){
+      #kakao-map{height:360px;}
+    }
+    .info-row{display:flex; align-items:flex-start; gap:.6rem}
+    .info-row img{width:18px; height:18px; margin-top:.15rem}
+    .copy-btn{display:inline-flex; align-items:center; gap:.35rem; padding:.25rem .55rem; border-radius:.6rem; border:1px solid #e5e7eb; font-weight:700; font-size:.75rem}
+    .copy-btn:hover{background:#f8fafc}
+
+    /* error banner over the map */
+    .map-error{
+      position:absolute; top:8px; left:8px; right:auto;
+      background:rgba(255,255,255,.95); border:1px solid #e5e7eb; border-radius:.5rem;
+      padding:.5rem .65rem; font-size:.75rem; color:#7f1d1d; font-weight:800; z-index:5;
+      box-shadow:0 6px 20px rgba(0,0,0,.08)
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="sticky-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <a href="./" class="flex items-center gap-3">
+        <img src="assets/img/brand/logo-finds.png" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
+        <div class="leading-tight">
+          <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
+          <div class="text-[12px] font-semibold text-slate-600">Dongduk Woman's University</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <a class="nav-link" href="./"><b>Home</b></a>
+
+        <!-- About FINDS -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="about-introduction.html"><b>About FINDS</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="about-introduction.html">Introduction</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-vision-area.html">Research Area</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-notice.html">Notice</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-awards.html">Awards</a>
+            <a class="block submenu-item hover:bg-slate-50" href="about-location.html">Location</a>
+          </div>
+        </div>
+
+        <!-- Members -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="members-director.html"><b>Members</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="members-director.html">Director</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-current.html">Current Students</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-alumni.html">Alumni</a>
+            <a class="block submenu-item hover:bg-slate-50" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+
+        <a class="nav-link" href="publications-all.html"><b>Publications</b></a>
+        <a class="nav-link" href="lectures.html"><b>Lectures</b></a>
+        <a class="nav-link" href="projects.html"><b>Projects</b></a>
+
+        <!-- Archives -->
+        <div class="menu-group" data-menu>
+          <a class="nav-link" href="archives-news.html"><b>Archives</b></a>
+          <div class="bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
+            <a class="block submenu-item hover:bg-slate-50" href="archives-news.html">News</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-seminar.html">Seminar</a>
+            <a class="block submenu-item hover:bg-slate-50" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Mobile toggle -->
       <div class="flex items-center gap-2">
-        <button id="btnRecenter" class="copy-btn" title="지도 다시 맞추기">Re-center</button>
-        <a id="btnDirections" href="#" target="_blank" rel="noopener noreferrer" class="copy-btn" title="카카오맵 길찾기">Directions</a>
+        <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav -->
+    <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
+      <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="./">Home</a>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="about-introduction.html">About FINDS</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="about-introduction.html">Introduction</a>
+            <a class="py-1 hover:underline font-bold" href="about-vision-area.html">Research Area</a>
+            <a class="py-1 hover:underline font-bold" href="about-notice.html">Notice</a>
+            <a class="py-1 hover:underline font-bold" href="about-awards.html">Awards</a>
+            <a class="py-1 hover:underline font-bold" href="about-location.html">Location</a>
+          </div>
+        </div>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="members-director.html">Members</a>
+          <div class="pl-3 grid text-[14px]">
+            <a class="py-1 hover:underline font-bold" href="members-director.html">Director</a>
+            <a class="py-1 hover:underline font-bold" href="members-current.html">Current Students</a>
+            <a class="py-1 hover:underline font-bold" href="members-alumni.html">Alumni</a>
+            <a class="py-1 hover:underline font-bold" href="members-mentorship.html">Mentorship</a>
+          </div>
+        </div>
+
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="publications-all.html">Publications</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="lectures.html">Lectures</a>
+        <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="projects.html">Projects</a>
+
+        <div class="px-3 py-2">
+          <a class="block font-extrabold mb-1" href="archives-news.html">Archives</a>
+          <div class="pl-3 grid text:[14px]">
+            <a class="py-1 hover:underline font-bold" href="archives-news.html">News</a>
+            <a class="py-1 hover:underline font-bold" href="archives-seminar.html">Seminar</a>
+            <a class="py-1 hover:underline font-bold" href="archives-gallery.html">Gallery</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Right column -->
-  <aside class="space-y-6">
-    <!-- FINDS Lab -->
-    <section class="card">
-      <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
-        금융데이터사이언스 연구실 <span class="opacity-90">(FINDS Lab.)</span>
-      </div>
-      <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 331호</h3>
-      <div class="mt-4 space-y-3">
-        <div class="info-row">
-          <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" />
-          <div>
-            <div class="text-[15px] font-semibold text-slate-900">(02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관</div>
-            <div class="text-[12px] text-slate-600">(02748) 60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul</div>
-            <div class="text-[12px] text-slate-500 mt-1">(지번) 하월곡동 23-1</div>
-            <div class="mt-1"><button class="copy-btn" data-copy-addr>Copy address</button></div>
-          </div>
+  <!-- Map + Info -->
+  <main class="max-w-7xl mx-auto px-4 mt-6 grid lg:grid-cols-3 gap-6">
+    <!-- Map -->
+    <div class="lg:col-span-2 card" id="kakao-map-wrap">
+      <div id="kakao-map" role="img" aria-label="동덕여자대학교 인문관 위치 지도"></div>
+      <div id="mapError" class="map-error" style="display:none;"></div>
+      <div class="mt-3 flex items-center justify-between">
+        <div class="text-[12px] text-slate-500">Powered by Kakao Maps</div>
+        <div class="flex items-center gap-2">
+          <button id="btnRecenter" class="copy-btn" title="지도 다시 맞추기">Re-center</button>
+          <a id="btnDirections" href="#" target="_blank" rel="noopener noreferrer" class="copy-btn" title="카카오맵 길찾기">Directions</a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Professor Office -->
-    <section class="card">
-      <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
-        최인수 교수 연구실 <span class="opacity-90">(Prf. Insu Choi's Office)</span>
-      </div>
-      <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 303호</h3>
-      <div class="mt-4 space-y-3">
-        <div class="info-row">
-          <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" />
-          <div>
-            <div class="text-[15px] font-semibold text-slate-900">(02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관</div>
-            <div class="text-[12px] text-slate-600">(02748) 60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul</div>
-            <div class="text-[12px] text-slate-500 mt-1">(지번) 하월곡동 23-1</div>
-            <div class="mt-1"><button class="copy-btn" data-copy-addr>Copy address</button></div>
+    <!-- Right column: two stacked cards -->
+    <aside class="space-y-6">
+      <!-- FINDS Lab (331호) -->
+      <section class="card">
+        <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
+          금융데이터사이언스 연구실 <span class="opacity-90">(FINDS Lab.)</span>
+        </div>
+
+        <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 331호</h3>
+
+        <div class="mt-4 space-y-3">
+          <div class="info-row">
+            <img src="assets/icons/marker.png" alt="" />
+            <div>
+              <div class="text-[15px] font-semibold text-slate-900">
+                (02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관
+              </div>
+              <div class="text-[12px] text-slate-600">
+                (02748) 60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul (Dongduk Women’s Univ. — Humanities Bldg.)
+              </div>
+              <div class="text-[12px] text-slate-500 mt-1">
+                (지번) 하월곡동 23-1
+              </div>
+              <div class="mt-1">
+                <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </aside>
-</main>
+      </section>
 
-<!-- Page scripts -->
-<script src="{{ '/assets/js/location.js' | relative_url }}"></script>
+      <!-- 최인수 교수 연구실 (303호) -->
+      <section class="card">
+        <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
+          최인수 교수 연구실 <span class="opacity-90">(Prf. Insu Choi's Office)</span>
+        </div>
+
+        <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 303호</h3>
+
+        <div class="mt-4 space-y-3">
+          <div class="info-row">
+            <img src="assets/icons/marker.png" alt="" />
+            <div>
+              <div class="text-[15px] font-semibold text-slate-900">
+                (02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 인문관
+              </div>
+              <div class="text-[12px] text-slate-600">
+                (02748) 60, Hwarang-ro 13-gil, Seongbuk-gu, Seoul (Dongduk Women’s Univ. — Humanities Bldg.)
+              </div>
+              <div class="text-[12px] text-slate-500 mt-1">
+                (지번) 하월곡동 23-1
+              </div>
+              <div class="mt-1">
+                <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-10 border-t border-slate-200 bg-white">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
+        <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
+      </p>
+      <p class="mt-4 text-center text-xs text-slate-400">
+        Copyright © <span id="year"></span> Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===== Common JS ===== -->
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const btnMobile = document.getElementById('btnMobile');
+    const mobileNav = document.getElementById('mobileNav');
+    btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
+
+    // Desktop submenu keep-open (70ms)
+    const MENU_DELAY = 70;
+    document.querySelectorAll('.menu-group[data-menu]').forEach(grp=>{
+      const panel = grp.querySelector('.js-submenu');
+      if (!panel) return;
+      let t;
+      const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
+      const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
+      grp.addEventListener('mouseenter', open);
+      grp.addEventListener('mouseleave', close);
+      grp.addEventListener('focusin', open);
+      grp.addEventListener('focusout', close);
+    });
+  </script>
+
+  <!-- ===== Kakao Maps SDK (autoload=false) ===== -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2288f6c721287408c4bdc22f994230ad&libraries=services&autoload=false"></script>
+
+  <!-- ===== Kakao Map Init ===== -->
+  <script>
+    (function start(){
+      // 지도/에러 요소
+      const mapEl       = document.getElementById('kakao-map');
+      const errorEl     = document.getElementById('mapError');
+      const btnRecenter = document.getElementById('btnRecenter');
+      const btnDirections = document.getElementById('btnDirections');
+
+      // 에러 표시
+      function showError(msg){
+        if (!errorEl) return;
+        errorEl.style.display = 'block';
+        errorEl.textContent = msg;
+      }
+
+      // 실제 초기화
+      function init(){
+        try{
+          const FALLBACK = { lat: 37.60584058, lng: 127.04134158, name: '동덕여자대학교(캠퍼스)' };
+          const QUERY_PRIMARY = '동덕여자대학교 인문관';
+          const QUERY_ALT1 = '상월곡동 86-78';
+          const QUERY_ALT2 = '서울 성북구 화랑로13길 60';
+
+          const places   = new kakao.maps.services.Places();
+          const geocoder = new kakao.maps.services.Geocoder();
+
+          let map, currentPos;
+
+          function apply(lat, lng, name){
+            const pos = new kakao.maps.LatLng(lat, lng);
+            currentPos = pos;
+
+            map = new kakao.maps.Map(mapEl, { center: pos, level: 4 });
+            const marker = new kakao.maps.Marker({ position: pos });
+            marker.setMap(map);
+
+            const html = `
+              <div style="padding:8px 10px; font-size:12px; max-width:220px;">
+                <div style="font-weight:800; margin-bottom:4px; color:#111827;">${name}</div>
+                <div style="color:#374151;">서울 성북구 화랑로13길 60 (지번: 상월곡동 86-78)</div>
+                <div style="margin-top:6px;">
+                  <a href="https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}"
+                     target="_blank" rel="noopener"
+                     style="color:#ac0e0e; font-weight:800; text-decoration:underline; text-underline-offset:2px;">길찾기</a>
+                </div>
+              </div>`;
+            new kakao.maps.InfoWindow({ position: pos, content: html }).open(map, marker);
+
+            if (btnDirections) btnDirections.href = `https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}`;
+            if (btnRecenter)   btnRecenter.onclick = ()=> map.setCenter(currentPos);
+          }
+
+          // 1) 키워드 → 2) 지번 → 3) 도로명 → 4) Fallback
+          places.keywordSearch(QUERY_PRIMARY, (data, status) => {
+            if (status === kakao.maps.services.Status.OK && data.length){
+              const p = data[0];
+              apply(+p.y, +p.x, p.place_name || '동덕여자대학교 인문관');
+            } else {
+              geocoder.addressSearch(QUERY_ALT1, (result, st1)=>{
+                if (st1 === kakao.maps.services.Status.OK && result[0]){
+                  apply(+result[0].y, +result[0].x, '동덕여자대학교 인문관');
+                } else {
+                  geocoder.addressSearch(QUERY_ALT2, (result2, st2)=>{
+                    if (st2 === kakao.maps.services.Status.OK && result2[0]){
+                      apply(+result2[0].y, +result2[0].x, '동덕여자대학교 인문관');
+                    } else {
+                      showError('지오코딩 실패: 캠퍼스 중심 좌표로 표시합니다.');
+                      apply(FALLBACK.lat, FALLBACK.lng, FALLBACK.name);
+                    }
+                  });
+                }
+              });
+            }
+          }, { size: 3 });
+
+        }catch(e){
+          console.error(e);
+          showError('지도를 초기화할 수 없습니다.');
+        }
+      }
+
+      // SDK 로드 후 init
+      if (!window.kakao || !('maps' in kakao)) {
+        showError('Kakao Maps SDK 로드 실패: 앱 키 또는 도메인 등록을 확인하세요.');
+      } else {
+        kakao.maps.load(init);
+      }
+
+      // 디버깅 메시지 (도메인 등록 체크)
+      console.info('[Kakao Maps] 현재 도메인:', location.origin, '— 카카오 디벨로퍼스(내 애플리케이션 > 플랫폼 > Web)에 등록 필요');
+    })();
+  </script>
+</body>
+</html>
