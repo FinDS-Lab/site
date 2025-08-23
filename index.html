@@ -23,21 +23,11 @@
     }
     html,body{font-family:"Noto Sans KR","Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
     body{background:var(--bg-soft)}
-    .sticky-blur{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.85)}
     .nav-link{font-weight:800}
     .nav-link:hover{color:var(--accent)}
-    .submenu-panel{font-size:13px; line-height:1.25rem; width:13.5rem}
-    .submenu-item{padding:.35rem .75rem; font-weight:700}
-    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
-    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
-    .btn-ghost{background:#0f172a;color:#fff;border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
-    .btn-ghost:hover{transform:translateY(-1px);opacity:.95}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
-    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
-    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
-    .warm-underline{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
     :focus-visible{outline:none;box-shadow:var(--ring)}
 
+    /* 한국어 헤드라인 줄바꿈 품질 향상 */
     .ko-tight{word-break:keep-all;line-break:strict;overflow-wrap:break-word;}
     @supports (text-wrap: balance){ .ko-tight{ text-wrap: balance; } }
 
@@ -45,8 +35,61 @@
     .carousel{position:relative;overflow:hidden;border-radius:1.25rem;background:#0b1020}
     .carousel-track{display:flex;transition:transform .6s cubic-bezier(.2,.6,.2,1)}
     .carousel-slide{min-width:100%;height:520px;position:relative;background:#0b1020}
-    .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
-    .carousel-caption{position:absolute;inset:0;display:flex;align-items:center;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));color:#fff;padding:0 1rem}
+    .carousel-slide img.bg{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* 어두운 캡션 그라디언트 */
+    .carousel-caption{
+      position:absolute; inset:0; display:flex; align-items:center;
+      background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));
+      color:#fff; padding:0 1rem; overflow:hidden;
+    }
+
+    /* 캡션 장식 이미지(슬라이드별) */
+    .caption-stage{position:relative; width:100%;}
+    .caption-art{
+      position:absolute; right:min(4vw,40px); bottom:min(4vw,32px);
+      width:min(40vw,560px); max-width:620px; height:auto;
+      opacity:.75; filter:drop-shadow(0 10px 30px rgba(0,0,0,.35));
+      pointer-events:none; user-select:none;
+      z-index:0; /* 텍스트 아래 */
+      transform-origin: bottom right;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+    /* 없으면 숨김 */
+    .caption-art[hidden]{display:none !important;}
+
+    /* 은은한 빛 번짐 */
+    .caption-glow{
+      position:absolute; right:0; bottom:0; z-index:0; pointer-events:none;
+      width:60vw; max-width:720px; height:60vw; max-height:720px;
+      background:
+        radial-gradient(50% 50% at 70% 70%, rgba(255,255,255,.22), transparent 60%),
+        radial-gradient(35% 35% at 85% 85%, rgba(255,200,120,.20), transparent 60%);
+      mix-blend-mode:screen; opacity:.5; filter:blur(6px);
+      transform:translate(10%, 10%);
+    }
+
+    /* 텍스트 레이어가 항상 위 */
+    .caption-content{position:relative; z-index:1;}
+
+    /* 반응형 */
+    @media (max-width: 1024px){
+      .carousel-slide{height:480px}
+      .caption-art{width:min(48vw,480px); opacity:.7}
+    }
+    @media (max-width: 640px){
+      .carousel-slide{height:420px}
+      .caption-art{right:12px; bottom:12px; width:min(58vw,380px); opacity:.6}
+      .caption-glow{opacity:.35}
+    }
+
+    .tag-gold{background:var(--gold);color:#111827;border-radius:9999px;padding:.25rem .55rem;font-size:.7rem;font-weight:900}
+    .btn-primary{background:var(--accent);color:var(--fg-on-accent);border-radius:.75rem;padding:.6rem .95rem;font-weight:900;box-shadow:0 6px 20px rgba(0,0,0,.12);transition:.2s}
+    .btn-primary:hover{transform:translateY(-1px);opacity:.95}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1.25rem;transition:.2s}
+    .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+    .warm-underline{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;text-decoration-color:var(--accent)}
+
     .dot{width:10px;height:10px;border-radius:9999px;background:#e5e7eb}
     .dot.active{background:var(--accent)}
 
@@ -55,14 +98,9 @@
     *::-webkit-scrollbar{height:8px;width:8px}
     *::-webkit-scrollbar-thumb{background:var(--accent);border-radius:9999px}
 
-    /* Desktop submenu fade (header에서 사용) */
+    /* Header 서브메뉴 페이드 (headers.html에서 사용) */
     .menu-group .js-submenu{visibility:hidden;opacity:0;transform:translateY(6px);transition:visibility .18s ease, opacity .18s ease, transform .18s ease}
     .menu-group.open .js-submenu{visibility:visible;opacity:1;transform:translateY(0)}
-
-    /* 작은 디버그 패널 */
-    #partials-debug{position:fixed;right:8px;bottom:8px;max-width:480px;background:#fff;border:1px solid #e5e7eb;border-radius:.75rem;padding:.6rem .8rem;font-size:12px;color:#334155;box-shadow:0 10px 28px rgba(0,0,0,.08);display:none}
-    #partials-debug b{color:#0f172a}
-    #partials-debug code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:.3rem;padding:0 .25rem}
   </style>
 </head>
 <body>
@@ -75,52 +113,68 @@
       <div class="carousel-track" id="carouselTrack">
         <!-- Slide 1 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" onerror="this.style.display='none'" />
+          <img class="bg" src="assets/img/hero/hero-1.jpg" alt="FINDS Lab Hero 1" onerror="this.style.display='none'" />
           <div class="carousel-caption">
-            <div class="max-w-xl px-6">
-              <span class="tag-gold">Financial Data Science Lab.</span>
-              <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-                Towards Data-Inspired Financial Management
-              </h1>
-              <div class="mt-4 flex gap-3">
-                <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
+            <div class="caption-stage max-w-xl px-6">
+              <!-- 텍스트 -->
+              <div class="caption-content">
+                <span class="tag-gold">Financial Data Science Lab.</span>
+                <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                  Towards Data-Inspired Financial Management
+                </h1>
+                <div class="mt-4 flex gap-3">
+                  <a class="btn-primary text-sm" href="about-introduction.html">Read More</a>
+                </div>
               </div>
+              <!-- 장식 이미지(슬라이드 1 전용) -->
+              <img class="caption-art" src="assets/img/hero/caption-1.png" alt="" loading="lazy" onerror="this.hidden=true" />
+              <div class="caption-glow" aria-hidden="true"></div>
             </div>
           </div>
         </div>
 
         <!-- Slide 2 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" onerror="this.style.display='none'" />
+          <img class="bg" src="assets/img/hero/hero-2.jpg" alt="FINDS Lab Hero 2" onerror="this.style.display='none'" />
           <div class="carousel-caption">
-            <div class="max-w-xl px-6">
-              <span class="tag-gold">Financial Data Science Lab.</span>
-              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-                Accomplishments
-              </h2>
-              <div class="mt-4 flex gap-3">
-                <a class="btn-primary text-sm" href="publications.html">Publications</a>
-                <a class="btn-primary text-sm" href="lectures.html">Lectures</a>
-                <a class="btn-primary text-sm" href="projects.html">Projects</a>
+            <div class="caption-stage max-w-xl px-6">
+              <div class="caption-content">
+                <span class="tag-gold">Financial Data Science Lab.</span>
+                <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                  Accomplishments
+                </h2>
+                <div class="mt-4 flex gap-3">
+                  <a class="btn-primary text-sm" href="publications.html">Publications</a>
+                  <a class="btn-primary text-sm" href="lectures.html">Lectures</a>
+                  <a class="btn-primary text-sm" href="projects.html">Projects</a>
+                </div>
               </div>
+              <!-- 장식 이미지(슬라이드 2 전용) -->
+              <img class="caption-art" src="assets/img/hero/caption-2.png" alt="" loading="lazy" onerror="this.hidden=true" />
+              <div class="caption-glow" aria-hidden="true"></div>
             </div>
           </div>
         </div>
 
         <!-- Slide 3 -->
         <div class="carousel-slide">
-          <img src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" onerror="this.style.display='none'" />
+          <img class="bg" src="assets/img/hero/hero-3.jpg" alt="FINDS Lab Hero 3" onerror="this.style.display='none'" />
           <div class="carousel-caption">
-            <div class="max-w-xl px-6">
-              <span class="tag-gold">Financial Data Science Lab.</span>
-              <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-                Updates
-              </h2>
-              <div class="mt-4 flex gap-3">
-                <a class="btn-primary text-sm" href="about-notice.html">Notice</a>
-                <a class="btn-primary text-sm" href="archives-news.html">News</a>
-                <a class="btn-primary text-sm" href="archives-seminar.html">Seminar</a>
+            <div class="caption-stage max-w-xl px-6">
+              <div class="caption-content">
+                <span class="tag-gold">Financial Data Science Lab.</span>
+                <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
+                  Updates
+                </h2>
+                <div class="mt-4 flex gap-3">
+                  <a class="btn-primary text-sm" href="about-notice.html">Notice</a>
+                  <a class="btn-primary text-sm" href="archives-news.html">News</a>
+                  <a class="btn-primary text-sm" href="archives-seminar.html">Seminar</a>
+                </div>
               </div>
+              <!-- 장식 이미지(슬라이드 3 전용) -->
+              <img class="caption-art" src="assets/img/hero/caption-3.png" alt="" loading="lazy" onerror="this.hidden=true" />
+              <div class="caption-glow" aria-hidden="true"></div>
             </div>
           </div>
         </div>
@@ -184,114 +238,51 @@
   <!-- Footer (partial) -->
   <div id="site-footer" class="mt-10"></div>
 
-  <!-- 디버그 패널 -->
-  <div id="partials-debug"></div>
-
   <!-- Scripts -->
   <script defer>
-    /***********************  강력한 Partial 로더  ***********************/
-    // 필요 시 수동 지정 (예: window.PARTIALS_BASE = '/my-site/';)
-    // 필요 시 커스텀 폴더 후보 (예: window.PARTIALS_DIRS = ['partials/','common/'];)
-    // 필요 시 파일명 후보 (예: window.PARTIALS_FILES = { header:['headers.html','header.html'] , footer:['footers.html','footer.html'] })
-
-    function unique(arr){ return [...new Set(arr.filter(Boolean))]; }
-    function nowQS(){ return `cb=${Date.now()}`; }
-
-    function guessBase(){
-      const host = location.hostname;
+    /***************  GitHub Pages 친화적 partial 로더  ***************/
+    function guessBase() {
+      const hostIsGh = location.hostname.endsWith('github.io');
       const parts = location.pathname.split('/').filter(Boolean);
-
-      // 1) raw.githubusercontent.com/user/repo/branch/...
-      if (host === 'raw.githubusercontent.com' && parts.length >= 3){
-        return '/' + parts.slice(0,3).join('/') + '/';
-      }
-      // 2) GitHub Pages (user.github.io/repo/…)
-      if (host.endsWith('github.io') && parts.length >= 1){
-        return '/' + parts[0] + '/';
-      }
-      // 3) 일반/커스텀 도메인 → 루트
+      if (hostIsGh && parts.length > 0) return '/' + parts[0] + '/';
       return '/';
     }
+    const BASE = (window.PARTIALS_BASE || guessBase()).replace(/\/+$/, '/') ;
 
-    function currentDir(){
-      // 현재 문서의 디렉토리 경로 (파일명 제거)
-      return location.pathname.endsWith('/') ? location.pathname : location.pathname.replace(/[^/]+$/, '');
-    }
+    async function injectPartial(elId, filename) {
+      const host = document.getElementById(elId);
+      if (!host) return;
 
-    async function injectPartial(elId, kind /* 'header' | 'footer' */){
-      const hostEl = document.getElementById(elId);
-      if(!hostEl) return;
-
-      const debugEl = document.getElementById('partials-debug');
-      const tried = [];
-
-      if (location.hostname === 'github.com'){
-        hostEl.innerHTML = '<div class="max-w-7xl mx-auto px-4 py-3 text-amber-700 text-sm font-bold bg-amber-50 rounded-lg border border-amber-200">⚠️ GitHub 코드 보기 페이지에서는 partial을 불러올 수 없습니다. GitHub Pages 또는 raw.githubusercontent.com, 혹은 로컬 서버에서 확인하세요.</div>';
-        return;
-      }
-      if (location.protocol === 'file:'){
-        hostEl.innerHTML = '<div class="max-w-7xl mx-auto px-4 py-3 text-amber-700 text-sm font-bold bg-amber-50 rounded-lg border border-amber-200">로컬 파일(file://)에서는 fetch가 차단됩니다. VS Code Live Server 등으로 띄워주세요.</div>';
+      if (location.protocol === 'file:') {
+        host.innerHTML = '<div class="max-w-7xl mx-auto px-4 py-3 text-amber-700 text-sm font-bold bg-amber-50 rounded-lg border border-amber-200">로컬 파일(file://)에서는 공통 헤더/푸터가 로드되지 않습니다. 로컬 서버 또는 GitHub Pages에서 확인하세요.</div>';
         return;
       }
 
-      const BASE = (window.PARTIALS_BASE || guessBase()).replace(/\/+$/,'/') + '';
-      const bases = unique([ BASE, '/', currentDir() ]);
-
-      const defaultDirs = ['','partials/','includes/','_includes/','assets/','assets/partials/','assets/includes/','components/','common/','shared/'];
-      const dirs = unique([ ...(window.PARTIALS_DIRS || []), ...defaultDirs ]);
-
-      const defaults = kind === 'header'
-        ? ['headers.html','header.html']
-        : ['footers.html','footer.html'];
-      const files = unique([ ...(window.PARTIALS_FILES?.[kind] || []), ...defaults ]);
-
-      const urls = [];
-      for (const b of bases){
-        for (const d of dirs){
-          for (const f of files){
-            const base = b.endsWith('/') ? b : (b + '/');
-            const dir  = d ? (d.endsWith('/') ? d : d + '/') : '';
-            urls.push(base + dir + f);
-          }
-        }
-      }
-      // 현재 폴더 직접/상위도 끝에 추가 (상대경로 보호)
-      files.forEach(f => {
-        urls.push(f);
-        urls.push('./' + f);
-        urls.push('../' + f);
-      });
+      const cb = `cb=${Date.now()}`;
+      const candidates = [
+        BASE + filename,
+        BASE + 'partials/' + filename,
+        filename,
+        './' + filename,
+        '../' + filename
+      ];
 
       let lastErr = '';
-      for (const u of urls){
-        const finalUrl = u + (u.includes('?') ? '&' : '?') + nowQS();
-        tried.push(finalUrl);
-        try{
+      for (const url of candidates) {
+        const finalUrl = url + (url.includes('?') ? '&' : '?') + cb;
+        try {
           const res = await fetch(finalUrl, { cache: 'no-store' });
-          if(res.ok){
-            hostEl.innerHTML = await res.text();
-            // footer라면 연도 자동 세팅
-            if (kind === 'footer'){
-              const y = new Date().getFullYear();
-              const span = document.getElementById('year');
-              if(span) span.textContent = y;
-            }
+          if (res.ok) {
+            host.innerHTML = await res.text();
             return;
           }
-          lastErr = `HTTP ${res.status}`;
-        }catch(e){
-          lastErr = e + '';
+          lastErr = `HTTP ${res.status} @ ${finalUrl}`;
+        } catch (e) {
+          lastErr = `${e} @ ${finalUrl}`;
         }
       }
-
-      hostEl.innerHTML = '<div class="max-w-7xl mx-auto px-4 py-3 text-rose-700 text-sm font-bold bg-rose-50 rounded-lg border border-rose-200">공통 영역을 불러오지 못했습니다.</div>';
-      // 디버그 패널에 시도한 URL 나열
-      try{
-        debugEl.style.display = 'block';
-        debugEl.innerHTML = '<b>partials 로드 실패</b><div style="margin:.35rem 0 .25rem 0">마지막 오류: <code>'+ (lastErr||'') +'</code></div><div style="max-height:160px;overflow:auto"><ol style="padding-left:1.1rem;margin:.25rem 0 0 0;">'
-          + tried.map(t => '<li><code>'+ t.replace(/&/g,'&amp;').replace(/</g,'&lt;') +'</code></li>').join('')
-          + '</ol></div>';
-      }catch(_){}
+      console.error('Partial load error:', filename, lastErr);
+      host.innerHTML = '<div class="max-w-7xl mx-auto px-4 py-3 text-rose-700 text-sm font-bold bg-rose-50 rounded-lg border border-rose-200">공통 영역을 불러오지 못했습니다.</div>';
     }
 
     function initHeaderInteractions(){
@@ -313,13 +304,20 @@
       });
     }
 
+    function initFooterYear(){
+      const y = new Date().getFullYear();
+      const span = document.getElementById('year');
+      if(span) span.textContent = y;
+    }
+
     (async ()=>{
-      await injectPartial('site-header', 'header');  // headers.html / header.html 자동 시도
+      await injectPartial('site-header', 'headers.html');
       initHeaderInteractions();
-      await injectPartial('site-footer', 'footer');  // footers.html / footer.html 자동 시도
+      await injectPartial('site-footer', 'footers.html');
+      initFooterYear();
     })();
 
-    /***********************  Carousel  ***********************/
+    /***************  Carousel  ***************/
     const $ = (sel, root = document) => root.querySelector(sel);
     const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -336,6 +334,15 @@
         idx = (i + total) % total;
         track.style.transform = `translateX(-${idx * 100}%)`;
         dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+
+        // 살짝 이미지 모션 (보였다가 고정)
+        const slide = track.children[idx];
+        const art = slide.querySelector('.caption-art');
+        if (art && !art.hidden){
+          art.style.transform = 'scale(1.02)';
+          art.style.opacity = getComputedStyle(art).opacity; // 유지
+          setTimeout(()=> art.style.transform = 'scale(1)', 350);
+        }
       };
       const auto = () => { timer = setInterval(() => go(idx + 1), 5000); };
 
@@ -347,7 +354,7 @@
       go(0); auto();
     });
 
-    /***********************  News / Notice 임베드  ***********************/
+    /***************  Embed loaders (News / Notice)  ***************/
     async function importList(srcUrl, listSelectors, targetId, limit = 3){
       const target = document.getElementById(targetId);
       if (!target) return;
@@ -357,7 +364,6 @@
         return;
       }
 
-      // GitHub Pages나 raw에서도 동작
       try {
         const res = await fetch(srcUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
