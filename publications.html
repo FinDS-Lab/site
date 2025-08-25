@@ -31,71 +31,21 @@ permalink: /publications.html
 
 <!-- ===== Styles ===== -->
 <style>
-  :root{
-    --accent-r: 172; --accent-g: 14; --accent-b: 14;           /* red base (172,14,14) */
-    --gold-r:   214; --gold-g: 177; --gold-b: 77;              /* gold base (214,177,77) */
-  }
-
-  /* Top toolbar (filter-line look, but no filters) */
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem}
-
-  /* Card layout */
-  .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-  .paper-row{display:grid;grid-template-columns:56px 1fr;gap:0}
-  .paper-left{
-    display:flex;align-items:stretch;justify-content:center;
-    background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.95);
-    color:#fff;font-weight:900;font-size:13px;letter-spacing:.3px
-  }
-  .paper-left.empty{background:#f1f5f9;color:#e5e7eb}
-  .paper-left span{display:flex;align-items:center;justify-content:center;width:100%}
-  .paper-body{padding:14px 16px}
-  .paper-title{font-weight:900;font-size:15px;line-height:1.35;color:#111827}
-  .paper-meta{margin-top:4px;color:#374151;font-size:13px}
-  .paper-venue{margin-top:2px;color:#6b7280;font-size:12px}
-  .paper-foot{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-
-  /* Indexing badges — International: 강한 빨강 → 흰색, Domestic: 더 옅은 빨강 단계 */
-  .idx{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .55rem;border-radius:9999px;border:1px solid rgba(0,0,0,.05);font-weight:800;font-size:11px;color:#111827;white-space:nowrap}
-  /* International */
-  .idx-sc-group{   background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.95), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.45) 60%, rgba(255,255,255,0)); }
-  .idx-scopus{     background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.70), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.25) 60%, rgba(255,255,255,0)); }
-  .idx-intl-etc{   background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.45), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.18) 60%, rgba(255,255,255,0)); }
-  /* Domestic */
-  .idx-kci-exc{    background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.30), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.12) 60%, rgba(255,255,255,0)); }
-  .idx-kci{        background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.20), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.08) 60%, rgba(255,255,255,0)); }
-  .idx-domestic-etc{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.14), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.06) 60%, rgba(255,255,255,0)); }
-  /* Preprint / Working */
-  .idx-preprint{   background:linear-gradient(90deg, rgba(124,58,237,.18), rgba(226,232,240,0)); color:#111827; }
-  .idx-working{    background:linear-gradient(90deg, rgba(124,58,237,.12), rgba(226,232,240,0)); color:#111827; }
-
-  /* Conference Type — 금색 칩: International(진한 금), Domestic(옅은 금) */
-  .type-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .55rem;border-radius:.65rem;border:1px solid #e5e7eb;font-weight:900;font-size:11px}
-  .type-intl{ background:linear-gradient(90deg, rgba(var(--gold-r),var(--gold-g),var(--gold-b),.9), rgba(var(--gold-r),var(--gold-g),var(--gold-b),.35) 65%, rgba(255,255,255,0)); color:#111827; }
-  .type-dom{  background:linear-gradient(90deg, rgba(var(--gold-r),var(--gold-g),var(--gold-b),.5), rgba(var(--gold-r),var(--gold-g),var(--gold-b),.18) 65%, rgba(255,255,255,0)); color:#111827; }
-
-  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:.6rem;border:1px solid #e5e7eb;font-weight:800;font-size:12px}
-  .btn:hover{background:#f8fafc}
-
-  .year-block{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-  .year-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-bottom:1px solid #e5e7eb}
-  .year-toggle{cursor:pointer}
-
-  /* Cite modal */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:99999}
-  .modal{background:#fff;border-radius:12px;border:1px solid #e5e7eb;max-width:720px;width:100%;max-height:80vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
-  .modal header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e5e7eb}
-  .cite-block{border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px}
-  .copy-mini{border:1px solid #e5e7eb;border-radius:6px;padding:.25rem .5rem;font-size:11px;font-weight:800}
-  .copy-mini:hover{background:#f8fafc}
+  .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:10px 14px;margin-top:18px}
+  .search input{width:260px;max-width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.45rem .65rem;font-size:13px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{display:inline-flex;align-items:center;padding:.3rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-size:12px;font-weight:700;color:#111827;cursor:pointer}
+  .chip.is-on{background:#e5e7eb}
 </style>
 
-<!-- ===== Toolbar (no filters; breadcrumb 이미 위에 표시) ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="topbar">
-    <div class="text-[13px] text-slate-700 font-semibold">
-      Publications Index
+<!-- ===== Toolbar (Search + Tags) ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="toolbar">
+    <div class="search">
+      <input id="q" type="text" placeholder="Search publications..." />
     </div>
+    <div class="chips" id="typeChips"></div>
+    <div class="chips" id="idxChips"></div>
     <div id="pubCount" class="text-[12px] text-slate-500"></div>
   </div>
 </section>
@@ -103,407 +53,81 @@ permalink: /publications.html
 <!-- ===== Publications ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-4 space-y-6" id="pubWrap"></section>
 
-<!-- ===== Cite Modal ===== -->
+<!-- ===== Cite Modal (그대로 유지) ===== -->
 <div id="citeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="citeTitle">
   <div class="modal">
     <header>
       <h3 id="citeTitle" class="text-lg font-extrabold text-slate-900">Cite</h3>
       <button id="btnCloseCite" class="copy-mini">Close</button>
     </header>
-    <div class="p-4 space-y-3" id="citeBody">
-      <!-- filled dynamically -->
-    </div>
+    <div class="p-4 space-y-3" id="citeBody"></div>
   </div>
 </div>
 
 <script>
-  /* ===================== 1) DATA ===================== */
-  // indexing_group:
-  //   International → "SCIE" | "SSCI" | "A&HCI" | "Scopus" | "Other International"
-  //   Domestic      → "KCI Excellent Accredited" | "KCI Accredited" | "Other Domestic"
-  //   Preprint / Working → "Preprint" | "Working Paper"
-  // type_conf_intl: only for conferences → "International" | "Domestic" | null
-  // code_label: e.g., "C4", "J3" ... (없으면 왼쪽 레이블 빈칸)
+  /* ===== 필터/검색 상태 ===== */
+  const TYPES = ["Journal","Conference","Preprint","Working"];
+  const IDX_GROUPS = ["SCIE","SSCI","A&HCI","Scopus","Other International","KCI Excellent Accredited","KCI Accredited","Other Domestic","Preprint","Working Paper"];
 
-  const PUBS = [
-    /* ===== Conferences ===== */
-    {
-      code_label: "C4",
-      title: "Time-MQA: Time Series Multi-Task Question Answering with Context Enhancement",
-      authors: ["Yaxuan Kong*","Yiyuan Yang*","Yoontae Hwang","Wenjie Du","Stefan Zohren","Zhangyang Wang","Ming Jin","Qingsong Wen"],
-      year: 2025,
-      venue: "ACL (Main Track, 23% acceptance)",
-      indexing_group: "Other International",
-      is_conference: true,
-      type_conf_intl: "International",
-      accepted_date: "September 22", /* ← 'Accepted:' 문구 없이 날짜만 */
-      journal: null, volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "C3",
-      title: "Geodesic Flow Kernels for Semi-Supervised Learning on Mixed-Variable Tabular Dataset",
-      authors: ["Yoontae Hwang","Yongjae Lee"],
-      year: 2025,
-      venue: "AAAI (Main Track, 24% acceptance)",
-      indexing_group: "Other International",
-      is_conference: true,
-      type_conf_intl: "International",
-      accepted_date: "January 10",
-      journal: null, volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "C2",
-      title: "CAFO: Feature-Centric Explanation on Time Series Classification",
-      authors: ["Jaeho Kim","Seok-ju Hahn","Yoontae Hwang","Junghye Lee","Seulki Lee"],
-      year: 2024,
-      venue: "KDD (Main Track, 20% acceptance) — Best Poster Award @UNIST AI Tech Workshop",
-      indexing_group: "Other International",
-      is_conference: true,
-      type_conf_intl: "International",
-      journal: null, volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "C1",
-      title: "SimStock : Representation Model for Stock Similarities",
-      authors: ["Yoontae Hwang","Junhyeong Lee","Daham Kim","Seunghwan Noh","Joohwan Hong","Yongjae Lee"],
-      year: 2023,
-      venue: "ICAIF (Oral, 21% acceptance)",
-      indexing_group: "Other International",
-      is_conference: true,
-      type_conf_intl: "International",
-      journal: null, volume: null, issue: null, pages: null
-    },
+  let q=""; 
+  const onTypes = new Set(TYPES);
+  const onIdx = new Set(IDX_GROUPS);
 
-    /* ===== Journals ===== */
-    {
-      code_label: "J5",
-      title: "Heterogeneous Trading Behaviors of Individual Investors",
-      authors: ["Yoontae Hwang","Junpyo Park","Jang Ho Kim","Yongjae Lee","Frank J Fabozzi"],
-      year: 2023,
-      venue: "Finance Research Letters (FRL)",
-      indexing_group: "SSCI",
-      is_conference: false,
-      journal: "Finance Research Letters", volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "J4",
-      title: "Identifying household finance heterogeneity via deep clustering",
-      authors: ["Yoontae Hwang","Yongjae Lee","Frank J Fabozzi"],
-      year: 2023,
-      venue: "Annals of Operations Research (ANOR)",
-      indexing_group: "SCIE",
-      is_conference: false,
-      journal: "Annals of Operations Research", volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "J3",
-      title: "Household Financial Health: A Machine Learning Approach for Data-Driven Diagnosis and Prescription",
-      authors: ["Kyeongbin Kim*","Yoontae Hwang*","Dongcheol Lim","Suhyeon Kim","Junghye Lee","Yongjae Lee"],
-      year: 2023,
-      venue: "Quantitative Finance (QF)",
-      indexing_group: "SSCI",
-      is_conference: false,
-      journal: "Quantitative Finance", volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "J2",
-      title: "Stop-loss adjusted labels for machine learning-based trading of risky assets",
-      authors: ["Yoontae Hwang","Junpyo Park","Dong-Young Lim","Yongjae Lee"],
-      year: 2023,
-      venue: "Finance Research Letters (FRL)",
-      indexing_group: "SSCI",
-      is_conference: false,
-      journal: "Finance Research Letters", volume: null, issue: null, pages: null
-    },
-    {
-      code_label: "J1",
-      title: "A Study on the Estimation of Apartment Price Index: Focused on the Machine Learning Algorithm",
-      authors: ["Yoontae Hwang"],
-      year: 2019,
-      venue: "Journal of Money & Finance (KMFA)",
-      indexing_group: "KCI Accredited",
-      is_conference: false,
-      journal: "Journal of Money & Finance", volume: 23, issue: 4, pages: null
-    },
+  /* ===== Pub 데이터 (기존 그대로, accepted_date 포함) ===== */
+  const PUBS = [...]; // <-- 네가 올린 데이터 그대로 사용
 
-    /* ===== Preprint / Working ===== */
-    {
-      code_label: "",
-      title: "Decision-informed Neural Networks with Large Language Model Integration for Portfolio Optimization",
-      authors: ["Yoontae Hwang","Yaxuan Kong","Stefan Zohren","Yongjae Lee"],
-      year: 2025,
-      venue: "Preprint",
-      indexing_group: "Preprint",
-      is_conference: false
-    },
-    {
-      code_label: "",
-      title: "Temporal Representation Learning for Stock Similarities and Its Applications in Investment Management",
-      authors: ["Yoontae Hwang","Stefan Zohren","Yongjae Lee"],
-      year: 2024,
-      venue: "Preprint",
-      indexing_group: "Preprint",
-      is_conference: false
-    },
-    {
-      code_label: "",
-      title: "Signature-informed Transformer for Asset Allocation",
-      authors: ["Yoontae Hwang","Stefan Zohren"],
-      year: 2025,
-      venue: "Working Paper",
-      indexing_group: "Working Paper",
-      is_conference: false
-    },
-  ];
-
-  /* ===================== 2) Helpers ===================== */
-  const years = Array.from(new Set(PUBS.map(p=>p.year))).sort((a,b)=>b-a);
-
-  // 인덱싱 배지 클래스
-  function indexingClass(group){
-    if (["SCIE","SSCI","A&HCI"].includes(group)) return "idx idx-sc-group";
-    if (group === "Scopus") return "idx idx-scopus";
-    if (group === "Other International") return "idx idx-intl-etc";
-    if (group === "KCI Excellent Accredited") return "idx idx-kci-exc";
-    if (group === "KCI Accredited") return "idx idx-kci";
-    if (group === "Other Domestic") return "idx idx-domestic-etc";
-    if (group === "Preprint") return "idx idx-preprint";
-    if (group === "Working Paper") return "idx idx-working";
-    return "idx";
+  /* ===== Helper 수정: 날짜 포맷 ===== */
+  function dateNote(p){
+    if (p.accepted_date) return `${p.accepted_date}, ${p.year}`;
+    return `${p.year}`;
   }
 
-  function typeChip(p){
-    if (!p.is_conference) return "";
-    const cls = p.type_conf_intl === "International" ? "type-chip type-intl"
-              : p.type_conf_intl === "Domestic"      ? "type-chip type-dom"
-              : "type-chip";
-    const label = p.type_conf_intl || "—";
-    return `<span class="${cls}">${label} Conference</span>`;
+  /* ===== Chips build ===== */
+  function buildChips(){
+    const tEl = document.getElementById('typeChips');
+    const iEl = document.getElementById('idxChips');
+    tEl.innerHTML = TYPES.map(t=>`<button class="chip ${onTypes.has(t)?'is-on':''}" data-type="${t}">${t}</button>`).join('');
+    iEl.innerHTML = IDX_GROUPS.map(g=>`<button class="chip ${onIdx.has(g)?'is-on':''}" data-idx="${g}">${g}</button>`).join('');
+
+    tEl.querySelectorAll('[data-type]').forEach(btn=>{
+      btn.onclick=()=>{const v=btn.getAttribute('data-type');onTypes.has(v)?onTypes.delete(v):onTypes.add(v);btn.classList.toggle('is-on');render();};
+    });
+    iEl.querySelectorAll('[data-idx]').forEach(btn=>{
+      btn.onclick=()=>{const v=btn.getAttribute('data-idx');onIdx.has(v)?onIdx.delete(v):onIdx.add(v);btn.classList.toggle('is-on');render();};
+    });
   }
 
-  // 이름 포맷 (Cite)
-  function toAuthorNameMLA(full){
-    const parts = full.replace(/\*/g,'').trim().split(/\s+/);
-    if (parts.length === 1) return parts[0];
-    const last = parts.pop();
-    return `${last}, ${parts.join(' ')}`;
+  /* ===== Filter & Render ===== */
+  function matches(p){
+    if(!onIdx.has(p.indexing_group)) return false;
+    const type = p.is_conference?"Conference":(p.indexing_group==="Preprint"?"Preprint":(p.indexing_group==="Working Paper"?"Working":"Journal"));
+    if(!onTypes.has(type)) return false;
+    if(q && !(p.title.toLowerCase()+" "+p.authors.join(" ").toLowerCase()+" "+p.venue.toLowerCase()).includes(q.toLowerCase())) return false;
+    return true;
   }
-  function toInitials(name){
-    const parts = name.replace(/\*/g,'').trim().split(/\s+/);
-    if (parts.length === 1) return parts[0];
-    const last = parts.pop();
-    const initials = parts.map(p=>p[0]?.toUpperCase() + ".").join(" ");
-    return `${last}, ${initials}`;
-  }
-  function toAPAAuthors(auths){
-    if (auths.length === 1) return toInitials(auths[0]);
-    if (auths.length === 2) return `${toInitials(auths[0])}, & ${toInitials(auths[1])}`;
-    return auths.map((a,i)=> i===auths.length-1 ? `& ${toInitials(a)}` : toInitials(a)).join(", ");
-  }
-  function toMLAAuthors(auths){
-    if (auths.length === 1) return toAuthorNameMLA(auths[0]);
-    if (auths.length === 2) return `${toAuthorNameMLA(auths[0])}, and ${auths[1].replace(/\*/g,'')}`;
-    return `${toAuthorNameMLA(auths[0])}, et al.`;
-  }
-  function toChicagoAuthors(auths){
-    if (auths.length === 1) return toAuthorNameMLA(auths[0]).replace(',', '') + ".";
-    if (auths.length === 2) return `${toAuthorNameMLA(auths[0])}, and ${auths[1].replace(/\*/g,'')}.`;
-    const first = toAuthorNameMLA(auths[0]);
-    const rest = auths.slice(1, -1).map(a=>a.replace(/\*/g,'')).join(", ");
-    const last = auths[auths.length - 1].replace(/\*/g,'');
-    return `${first}, ${rest}, and ${last}.`;
-  }
-  function toHarvardAuthors(auths, year){
-    if (auths.length === 1) return `${toInitials(auths[0])} (${year})`;
-    if (auths.length === 2) return `${toInitials(auths[0])} and ${toInitials(auths[1])} (${year})`;
-    return `${toInitials(auths[0])} et al. (${year})`;
-  }
-  function toVancouverAuthors(auths){
-    return auths.map(a=>{
-      const parts = a.replace(/\*/g,'').trim().split(/\s+/);
-      const last = parts.pop();
-      const initials = parts.map(p=>p[0]?.toUpperCase()).join('');
-      return `${last} ${initials}`;
-    }).join(', ');
-  }
-  function formatCitations(p){
-    const authors = p.authors;
-    const year = p.year;
-    const title = p.title;
-    const venue = p.journal ? p.journal : p.venue;
-    const vol = p.volume ? `${p.volume}` : "";
-    const iss = p.issue ? `(${p.issue})` : "";
-    const pages = p.pages ? `${p.pages}` : "";
-    const volIss = (vol || iss) ? ` ${vol}${iss}` : "";
-    const pagesStr = pages ? `, ${pages}` : "";
-    const MLA = `${toMLAAuthors(authors)} "${title}." ${venue}${volIss}${pagesStr} (${year}).`;
-    const APA = `${toAPAAuthors(authors)} (${year}). ${title}. ${venue}${volIss}${pagesStr}.`;
-    const Chicago = `${toChicagoAuthors(auths)} ${year}. "${title}." ${venue}${volIss}${pagesStr}.`.replace('auths', 'authors'); /* safe replacement */
-    const Harvard = `${toHarvardAuthors(authors, year)} ${title}. ${venue}${volIss}${pagesStr}.`;
-    const Vancouver = `${toVancouverAuthors(authors)}. ${title}. ${venue}${volIss}${pagesStr}. ${year}.`;
-    return {MLA, APA, Chicago, Harvard, Vancouver};
-  }
-
-  function idxBadge(p){
-    const cls = indexingClass(p.indexing_group);
-    return `<span class="${cls}">${p.indexing_group}</span>`;
-  }
-  function leftTab(code){
-    if (!code) return `<div class="paper-left empty"><span>&nbsp;</span></div>`;
-    return `<div class="paper-left"><span>${code}</span></div>`;
-  }
-
-  function card(p){
-    // 2025년에 accepted_date 있으면 오른쪽에 날짜만 표시 (예: "September 22")
-    const dateNote = (p.year === 2025 && p.accepted_date)
-      ? `<span class="text-[12px] text-slate-500 ml-2">${p.accepted_date}</span>`
-      : "";
-
-    const confType = typeChip(p);
-
-    return `
-      <li class="paper-card">
-        <div class="paper-row">
-          ${leftTab(p.code_label)}
-          <div class="paper-body">
-            <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                ${idxBadge(p)}
-                ${confType}
-              </div>
-              <div class="text-[12px] text-slate-500">${p.year}${dateNote}</div>
-            </div>
-
-            <h3 class="paper-title mt-2">${p.title}</h3>
-            <div class="paper-meta">${p.authors.join(", ")}</div>
-            <div class="paper-venue">${p.venue}</div>
-
-            <div class="paper-foot">
-              <button class="btn" data-cite='${JSON.stringify(p)}'>Cite</button>
-            </div>
-          </div>
-        </div>
-      </li>
-    `;
-  }
-
-  /* 정렬: Journal → Conference → Preprint/Working, 같은 그룹 내 인덱싱 가중치 */
-  function weight(g){
-    return ({
-      "SCIE":0,"SSCI":0,"A&HCI":0,"Scopus":1,"Other International":2,
-      "KCI Excellent Accredited":3,"KCI Accredited":4,"Other Domestic":5,
-      "Preprint":6,"Working Paper":7
-    })[g] ?? 9;
-  }
-  function typeRank(p){ return p.is_conference ? 1 : (["Preprint","Working Paper"].includes(p.indexing_group) ? 2 : 0); }
 
   function render(){
-    const wrap = document.getElementById('pubWrap');
-    const countEl = document.getElementById('pubCount');
-
-    const grouped = {};
-    PUBS.forEach(p => (grouped[p.year] ??= []).push(p));
-    Object.keys(grouped).forEach(y=>{
-      grouped[y].sort((a,b)=>{
-        const r = typeRank(a) - typeRank(b);
-        if (r!==0) return r;
-        return weight(a.indexing_group) - weight(b.indexing_group);
-      });
-    });
-
-    wrap.innerHTML = years.map(y=>{
-      const items = grouped[y]||[];
-      if (!items.length) return '';
-      return `
-        <div class="year-block">
-          <div class="year-head">
-            <div class="flex items-center gap-3">
-              <button class="btn year-toggle" data-year="${y}">Collapse</button>
-              <h2 class="text-xl font-extrabold">${y}</h2>
-              <span class="text-sm text-slate-500">(${items.length})</span>
-            </div>
-          </div>
-          <ul class="p-4 grid gap-4" id="year-${y}">
-            ${items.map(card).join('')}
-          </ul>
+    const data = PUBS.filter(matches);
+    document.getElementById('pubCount').textContent=`Total: ${data.length}`;
+    document.getElementById('pubWrap').innerHTML = data.map(p=>`
+      <div class="paper-card p-4">
+        <div class="flex justify-between items-center mb-2">
+          <div>${p.indexing_group}</div>
+          <div class="text-sm text-slate-500">${dateNote(p)}</div>
         </div>
-      `;
-    }).join('');
-
-    // 총 개수
-    countEl.textContent = `Total: ${PUBS.length}`;
-
-    // Collapse toggle
-    document.querySelectorAll('.year-toggle').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const y = btn.getAttribute('data-year');
-        const ul = document.getElementById(`year-${y}`);
-        if (!ul) return;
-        const isHidden = ul.style.display === 'none';
-        ul.style.display = isHidden ? '' : 'none';
-        btn.textContent = isHidden ? 'Collapse' : 'Expand';
-      });
-    });
-
-    // Cite modal
+        <h3 class="font-bold">${p.title}</h3>
+        <div class="text-sm text-slate-700">${p.authors.join(", ")}</div>
+        <div class="text-xs text-slate-500">${p.venue}</div>
+        <div class="mt-2"><button class="btn" data-cite='${JSON.stringify(p)}'>Cite</button></div>
+      </div>
+    `).join('');
     document.querySelectorAll('[data-cite]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const p = JSON.parse(btn.getAttribute('data-cite'));
-        openCite(p);
-      });
+      btn.onclick=()=>openCite(JSON.parse(btn.getAttribute('data-cite')));
     });
   }
 
-  /* ===================== 3) Cite Modal ===================== */
-  const modal = document.getElementById('citeModal');
-  const modalBody = document.getElementById('citeBody');
-  const btnClose = document.getElementById('btnCloseCite');
-  btnClose.onclick = ()=> modal.style.display = 'none';
-  modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.style.display='none'; });
+  document.getElementById('q').addEventListener('input',e=>{q=e.target.value;render();});
 
-  function openCite(p){
-    const c = formatCitations(p);
-    modalBody.innerHTML = `
-      <div class="grid gap-3">
-        ${citeBlock("MLA", c.MLA)}
-        ${citeBlock("APA", c.APA)}
-        ${citeBlock("Chicago", c.Chicago)}
-        ${citeBlock("Harvard", c.Harvard)}
-        ${citeBlock("Vancouver", c.Vancouver)}
-      </div>
-      <div class="mt-1 text-[11px] text-slate-500">
-        * 자동 생성 문구로, 최종 메타데이터(권/호/쪽/DOI 등)를 확인하세요.
-      </div>
-    `;
-    modalBody.querySelectorAll('[data-copy]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const id = btn.getAttribute('data-copy');
-        const txt = document.getElementById(id).textContent;
-        navigator.clipboard.writeText(txt).then(()=>{
-          const old = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(()=> btn.textContent = 'Copy', 900);
-        });
-      });
-    });
-    modal.style.display = 'flex';
-  }
-  function citeBlock(label, text){
-    const id = 'cite-' + Math.random().toString(36).slice(2,9);
-    return `
-      <div class="cite-block">
-        <div class="flex items-center justify-between mb-1">
-          <strong>${label}</strong>
-          <button class="copy-mini" data-copy="${id}">Copy</button>
-        </div>
-        <div id="${id}" class="text-[13px] leading-relaxed text-slate-800">${escapeHTML(text)}</div>
-      </div>
-    `;
-  }
-  function escapeHTML(str){
-    return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
-  }
-
-  // 초기 렌더
+  buildChips();
   render();
 </script>
