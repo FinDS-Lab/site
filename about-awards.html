@@ -1,0 +1,165 @@
+---
+layout: default
+title: Awards | FINDS Lab
+permalink: /awards.html
+---
+
+<style>
+  /* ===== Awards timeline styles (lightweight, no external deps) ===== */
+  .awards-wrap{max-width:72rem;margin:2rem auto;padding:0 1rem}
+  .page-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+  .page-head h1{font-weight:800;margin:0}
+  .page-desc{color:#475569;margin:.25rem 0 0}
+
+  /* details / summary */
+  details.award-year{
+    border:1px solid #e5e7eb;border-radius:1rem;background:#fff;margin:1rem 0;overflow:hidden
+  }
+  details.award-year[open]{border-color:#d4af37;box-shadow:0 1px 0 0 rgba(0,0,0,.02), 0 8px 24px rgba(0,0,0,.04)}
+  .year-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.875rem 1rem;background:#0b1020;color:#fff
+  }
+  .year-badge{
+    font-weight:900;letter-spacing:.5px
+  }
+  summary{list-style:none;cursor:pointer}
+  summary::-webkit-details-marker{display:none}
+  .year-count{font-size:.85rem;opacity:.9}
+
+  /* timeline list */
+  .tl{position:relative;padding:1rem}
+  .tl::before{
+    content:"";position:absolute;left:1.25rem;top:.5rem;bottom:.75rem;width:2px;background:#e5e7eb
+  }
+  .award{
+    position:relative;display:grid;grid-template-columns:2.5rem 1fr;gap:.75rem;padding:.75rem 0 .75rem 0
+  }
+  .award:first-child{padding-top:.25rem}
+  .award::before{
+    content:"";position:absolute;left:1.15rem;top:1.15rem;width:.7rem;height:.7rem;border:2px solid #0b1020;background:#fff;border-radius:9999px
+  }
+  .medal{display:inline-flex;align-items:center;gap:.5rem;background:#0b1020;color:#fff;border-radius:9999px;padding:.25rem .6rem;font-size:.8rem}
+  .medal i{font-style:normal}
+  .who{display:flex;flex-wrap:wrap;gap:.4rem;margin:.35rem 0 0}
+  .pill{
+    display:inline-flex;align-items:center;gap:.4rem;border:1px solid #e5e7eb;border-radius:9999px;padding:.2rem .55rem;font-size:.85rem;background:#fff
+  }
+  .pill img{width:20px;height:20px;object-fit:cover;border-radius:9999px;border:1px solid #e5e7eb;background:#fff}
+  .what{font-weight:700;margin:.2rem 0 0}
+  .meta{color:#475569;font-size:.9rem;margin:.1rem 0 0}
+  .sep{height:1px;background:#f1f5f9;margin:.25rem 0 0}
+
+  /* small utils */
+  .btn-primary{background:var(--accent,#ac0e0e);color:#fff;border-radius:.6rem;padding:.5rem .85rem;font-weight:700}
+  .head-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+  .muted{color:#64748b}
+  @media (max-width: 768px){
+    .tl::before{left:1rem}
+    .award{grid-template-columns:2rem 1fr}
+    .award::before{left:.9rem}
+  }
+</style>
+
+<section class="awards-wrap">
+  <!-- Header -->
+  <div class="page-head">
+    <div>
+      <h1 class="text-3xl md:text-4xl">Lab Awards</h1>
+      <p class="page-desc">연구실 구성원의 수상 실적을 연도별로 모았습니다.</p>
+    </div>
+    <div class="head-actions">
+      <a class="btn-primary text-sm" href="{{ '/archives-news.html' | relative_url }}">관련 뉴스 보기</a>
+    </div>
+  </div>
+
+  <!-- ===== 2025 (기본 펼침) ===== -->
+  <details class="award-year" open>
+    <summary class="year-bar">
+      <span class="year-badge">2025</span>
+      <span class="year-count muted">올해의 수상</span>
+    </summary>
+    <div class="tl">
+      <!-- 1 -->
+      <div class="award">
+        <div></div>
+        <div>
+          <span class="medal"><i>🏆</i> 최우수상</span>
+          <div class="who">
+            <!-- 사진이 있으면 src 넣고, 없으면 img 태그 지워도 됩니다 -->
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김재훈</span>
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">심세진</span>
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">이혜승</span>
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">박소연</span>
+          </div>
+          <div class="what">관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)</div>
+          <div class="meta">주최 · 관세청</div>
+          <div class="sep"></div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="award">
+        <div></div>
+        <div>
+          <span class="medal"><i>🏆</i> 최우수상</span>
+          <div class="who">
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">심세진</span>
+          </div>
+          <div class="what">제4회 성장통 사례 경진대회</div>
+          <div class="meta">4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단</div>
+          <div class="sep"></div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="award">
+        <div></div>
+        <div>
+          <span class="medal"><i>🏅</i> 석탑강의상</span>
+          <div class="who">
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김성범 교수님</span>
+          </div>
+          <div class="what">석탑강의상 (2024년 2학기)</div>
+          <div class="meta">고려대학교</div>
+          <div class="sep"></div>
+        </div>
+      </div>
+
+      <!-- 필요 시 계속 추가 -->
+    </div>
+  </details>
+
+  <!-- ===== 2024 (접힘) ===== -->
+  <details class="award-year">
+    <summary class="year-bar">
+      <span class="year-badge">2024</span>
+      <span class="year-count muted">클릭하여 펼치기</span>
+    </summary>
+    <div class="tl">
+      <!-- 예시 1 -->
+      <div class="award">
+        <div></div>
+        <div>
+          <span class="medal"><i>🏅</i> 석탑강의상</span>
+          <div class="who">
+            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김성범 교수님</span>
+          </div>
+          <div class="what">석탑강의상 (2024년 1학기)</div>
+          <div class="meta">고려대학교</div>
+          <div class="sep"></div>
+        </div>
+      </div>
+
+      <!-- 예시 2 -->
+      <div class="award">
+        <div></div>
+        <div>
+          <span class="medal"><i>🏆</i> 대상(1등)</span>
+          <div class="who">
+            <span class="pill">김재훈</span>
+            <span class="pill">추창욱</span>
+            <span class="pill">차민성</span>
+          </div>
+          <div class="what">ITRC 창의-자율과제, Smart Media Service Research Center</div>
+          <div class="meta">고려대학교</div>
