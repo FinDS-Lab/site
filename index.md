@@ -107,7 +107,7 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Women's University)
       <span class="font-extrabold">(Fin</span><span class="font-light">ancial</span>
       <span class="font-extrabold">D</span><span class="font-light">ata</span>
       <span class="font-extrabold">S</span><span class="font-light">cience</span>
-      <span class="font-extrabold"> Laboratory)- </span>
+      <span class="font-extrabold"> Laboratory) </span>
     </h3>
 
     <p class="mt-3 text-[15px] leading-7 text-slate-700">
