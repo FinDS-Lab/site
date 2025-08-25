@@ -34,16 +34,15 @@ permalink: /lectures.html
   .row{display:grid;grid-template-columns:8px 1fr}
   .strip{background:#b91c1c}
   .body{padding:14px 16px}
-  .title{font-weight:900;font-size:15px;color:#111827}
-  .subtitle{margin-top:2px;color:#6b7280;font-size:12px}
-  .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px}
+  .meta + .meta{margin-top:6px} /* role 줄 다음 줄 간격 */
   .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
   .badge-role-lect{background:var(--lect-red);color:#fff}
   .badge-role-ta{background:var(--ta-gold);color:#111}
   .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
   .badge-school{color:#fff}
-  .course-en{font-size:15px;font-weight:800;color:#111827}
-  .course-ko{font-size:13px;color:#374151}
+  .course-en{font-size:15px;font-weight:900;color:#111827;margin-top:10px}
+  .course-ko{font-size:13px;color:#374151;margin-top:2px}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
@@ -72,7 +71,7 @@ permalink: /lectures.html
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
     <div class="search">
-      <input id="q" type="text" placeholder="Search by course, org, role..." />
+      <input id="q" type="text" placeholder="Search by course, university, role..." />
     </div>
     <div>
       <label class="text-xs font-bold text-slate-600 block mb-1">Role</label>
@@ -81,6 +80,10 @@ permalink: /lectures.html
     <div>
       <label class="text-xs font-bold text-slate-600 block mb-1">University</label>
       <div class="chips" id="schoolChips"></div>
+    </div>
+    <div>
+      <label class="text-xs font-bold text-slate-600 block mb-1">Semester</label>
+      <div class="chips" id="semChips"></div>
     </div>
     <div class="count" id="count"></div>
   </div>
@@ -122,8 +125,15 @@ RAW.forEach(r=>{
 });
 
 /* ===== Utils ===== */
-function parseStartDate(period){const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);}
-function seasonLabelFrom(date){const y=date.getFullYear();const m=date.getMonth()+1;const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";return `${y} ${s}`;}
+function parseStartDate(period){
+  const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);
+}
+function seasonLabelFrom(date){
+  const y=date.getFullYear();const m=date.getMonth()+1;
+  const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
+  return `${y} ${s}`;
+}
 function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
 /* ===== Filters ===== */
@@ -136,7 +146,23 @@ const SCHOOL_COLORS={
   "Gangnam University":"var(--school-gangnam)",
   "KAIST":"var(--school-kaist)"
 };
-let q=""; const onRoles=new Set(ROLES); const onSchools=new Set(SCHOOLS);
+let q=""; 
+const onRoles=new Set(ROLES); 
+const onSchools=new Set(SCHOOLS);
+
+/* Build unique semesters from data (desc) */
+const ALL_SEMS = Array.from(new Set(
+  ITEMS.map(i=>seasonLabelFrom(parseStartDate(i.period)))
+)).sort((a,b)=>{
+  // sort by underlying start date desc
+  const d = s => {
+    const [yy, ss] = s.split(' ');
+    const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+    return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
+  };
+  return d(b)-d(a);
+});
+const onSems=new Set(ALL_SEMS);
 
 /* ===== DOM ===== */
 const grid=document.getElementById('grid');
@@ -144,33 +170,67 @@ const count=document.getElementById('count');
 const qInput=document.getElementById('q');
 const roleChips=document.getElementById('roleChips');
 const schoolChips=document.getElementById('schoolChips');
+const semChips=document.getElementById('semChips');
 
 function buildChips(){
   roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}" style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`).join('');
   schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
-  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{const r=btn.dataset.role;if(onRoles.has(r))onRoles.delete(r);else onRoles.add(r);render();});
-  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{const s=btn.dataset.school;if(onSchools.has(s))onSchools.delete(s);else onSchools.add(s);render();});
+  semChips.innerHTML=ALL_SEMS.map(s=>`<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`).join('');
+
+  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{
+    const r=btn.dataset.role;
+    if(onRoles.has(r)) onRoles.delete(r); else onRoles.add(r);
+    buildChips(); render();
+  });
+  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{
+    const s=btn.dataset.school;
+    if(onSchools.has(s)) onSchools.delete(s); else onSchools.add(s);
+    buildChips(); render();
+  });
+  semChips.querySelectorAll('[data-sem]').forEach(btn=>btn.onclick=()=>{
+    const s=btn.dataset.sem;
+    if(onSems.has(s)) onSems.delete(s); else onSems.add(s);
+    buildChips(); render();
+  });
 }
 
-function matchesQuery(i){if(!q)return true;const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();return t.includes(q.toLowerCase());}
-function filterItems(){return ITEMS.filter(i=>onRoles.has(i.role)).filter(i=>onSchools.has(i.school)).filter(matchesQuery).sort(byStartDesc);}
+function matchesQuery(i){
+  if(!q) return true;
+  const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();
+  return t.includes(q.toLowerCase());
+}
+function filterItems(){
+  return ITEMS
+    .filter(i=>onRoles.has(i.role))
+    .filter(i=>onSchools.has(i.school))
+    .filter(i=>onSems.has(seasonLabelFrom(parseStartDate(i.period))))
+    .filter(matchesQuery)
+    .sort(byStartDesc);
+}
 
+/* ===== Card ===== */
 function card(item){
   const season=seasonLabelFrom(parseStartDate(item.period));
   const roleClass=item.role==="Lecturer"?"badge-role-lect":"badge-role-ta";
   const schoolColor=SCHOOL_COLORS[item.school]||"#ccc";
   return `<article class="card">
     <div class="row"><div class="strip"></div><div class="body">
+      <!-- 1st line: Role -->
       <div class="meta">
         <span class="badge ${roleClass}">${item.role}</span>
-        <span class="badge badge-period">${season}</span>
-        <span class="badge badge-school" style="background:${schoolColor}">${item.school}</span>
       </div>
-      <div class="course-en mt-2">${item.courses[0].en}</div>
+      <!-- 2nd line: School / Semester -->
+      <div class="meta">
+        <span class="badge badge-school" style="background:${schoolColor}">${item.school}</span>
+        <span class="badge badge-period">${season}</span>
+      </div>
+      <!-- Course title big / Korean small -->
+      <div class="course-en">${item.courses[0].en}</div>
       <div class="course-ko">${item.courses[0].ko}</div>
     </div></div></article>`;
 }
 
+/* ===== Render ===== */
 function render(){
   const data=filterItems();
   grid.innerHTML=data.map(card).join('');
