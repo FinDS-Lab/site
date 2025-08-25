@@ -39,31 +39,60 @@ permalink: /archives-news.html
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
       {%- comment -%}
-        1) 컬렉션(_news)이 있으면 site.news 사용
-        2) 폴더가 news/인 경우를 대비해 site.pages에서 /news/ 경로도 함께 수집
+        ✅ 가능한 모든 소스에서 News를 수집:
+        1) 컬렉션(_news/) → site.collections['news'].docs
+        2) 일반 페이지(news/ 경로) → site.pages
+        3) 포스트 중 /news/ 경로 → site.posts
+        그리고 date 유무와 상관없이 합쳐서 date 기준(없는 건 마지막)으로 정렬합니다.
       {%- endcomment -%}
 
-      {%- assign from_collection = site.news | default: empty -%}
+      {%- assign from_collection = site.collections -%}
+      {%- if from_collection and from_collection['news'] and from_collection['news'].docs -%}
+        {%- assign from_collection = from_collection['news'].docs -%}
+      {%- else -%}
+        {%- assign from_collection = empty -%}
+      {%- endif -%}
+
       {%- assign from_pages = site.pages
-           | where_exp:"p","p.url != nil and p.url contains '/news/'"
-           | where_exp:"p","p.date != nil" -%}
-      {%- assign news_all = from_collection | concat: from_pages -%}
-      {%- assign news_sorted = news_all | sort: "date" | reverse -%}
+           | where_exp:"p","p.url != nil and p.url contains '/news/'" -%}
+      {%- assign from_posts = site.posts
+           | where_exp:"p","p.url != nil and p.url contains '/news/'" -%}
+
+      {%- assign news_all = from_collection | concat: from_pages | concat: from_posts -%}
+
+      {%- comment -%}
+        날짜가 없는 항목도 있을 수 있으므로, 먼저 date 있는 것/없는 것으로 나눠서
+        있는 것만 정렬 후, 없는 것들을 뒤에 이어붙입니다.
+      {%- endcomment -%}
+      {%- assign with_date = news_all | where_exp:"p","p.date != nil" -%}
+      {%- assign no_date  = news_all | where_exp:"p","p.date == nil" -%}
+      {%- assign news_sorted = with_date | sort: "date" | reverse | concat: no_date -%}
 
       {%- if news_sorted == empty -%}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
       {%- else -%}
         {%- for post in news_sorted -%}
-          {%- assign y = post.date | date: "%Y" -%}
-          {%- assign m = post.date | date: "%m" -%}
-          {%- assign d = post.date | date: "%d" -%}
+          {%- assign dt = post.date -%}
+          {%- assign has_date = dt != nil -%}
+          {%- if has_date -%}
+            {%- assign y = dt | date: "%Y" -%}
+            {%- assign m = dt | date: "%m" -%}
+            {%- assign d = dt | date: "%d" -%}
+          {%- endif -%}
 
           <li class="board-row" role="listitem">
+            <!-- Date -->
             <div class="date-box" aria-hidden="true">
-              <div class="date-d">{{ d }}</div>
-              <div class="date-ym">{{ y }}.{{ m }}</div>
+              {%- if has_date -%}
+                <div class="date-d">{{ d }}</div>
+                <div class="date-ym">{{ y }}.{{ m }}</div>
+              {%- else -%}
+                <div class="date-d">—</div>
+                <div class="date-ym">—</div>
+              {%- endif -%}
             </div>
 
+            <!-- Content -->
             <div class="min-w-0">
               <h2 class="title text-[15px] sm:text-base">
                 <a class="hover:underline" href="{{ post.url | relative_url }}">{{ post.title }}</a>
@@ -77,9 +106,12 @@ permalink: /archives-news.html
                 {%- endif -%}
               </div>
 
-              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+              {%- if has_date -%}
+                <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+              {%- endif -%}
             </div>
 
+            <!-- CTA -->
             <div class="btn-cell hidden sm:block">
               <a class="btn-more" href="{{ post.url | relative_url }}" aria-label="Read more about {{ post.title | escape }}">Read&nbsp;More</a>
             </div>
