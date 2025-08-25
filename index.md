@@ -1,6 +1,6 @@
 ---
 layout: default
-title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
+title: FINDS Lab | Financial Data Science Lab. (Dongduk Women's University)
 ---
 
 <!-- ====== 홈 히어로 캐러셀 전용 스타일 ====== -->
@@ -100,18 +100,18 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Woman's University)
   </div>
 
   <div>
-    <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Woman's University</p>
+    <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Women's University</p>
 
     <h3 class="text-3xl mt-1">
-      <span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
+      <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
+      <span class="font-extrabold">(Fin</span><span class="font-light">ancial</span>
       <span class="font-extrabold">D</span><span class="font-light">ata</span>
       <span class="font-extrabold">S</span><span class="font-light">cience</span>
-      <span class="font-extrabold"> Lab. - </span>
-      <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
+      <span class="font-extrabold"> Laboratory)- </span>
     </h3>
 
     <p class="mt-3 text-[15px] leading-7 text-slate-700">
-      동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실 (Financial Data Science)</b> 홈페이지입니다.
+      동덕여자대학교 경영학과 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
     </p>
 
     <div class="mt-4">
