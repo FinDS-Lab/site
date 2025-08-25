@@ -36,16 +36,37 @@ permalink: /lectures.html
     --accent: rgb(172, 14, 14);          /* main red */
     --gold:   rgb(214, 177, 77);         /* gold */
     --gold-soft: rgba(214,177,77,.35);   /* softer gold */
+    --dongduk: #e60012;                  /* 동덕여대 (빨강톤) */
+    --kyunghee: #a41e34;                 /* 경희대 (진홍색) */
+    --korea-sejong: #002f6c;             /* 고려대 세종 (네이비) */
+    --gangnam: #0072ce;                  /* 강남대 (파랑톤) */
+    --kaist: #005bac;                    /* KAIST 블루 */
   }
-  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:10px 14px;margin-top:18px}
-  .search input{width:260px;max-width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.45rem .65rem;font-size:13px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .65rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;color:#111827;cursor:pointer}
-  .chip.is-on{background:linear-gradient(90deg, var(--gold), var(--gold-soft) 65%, rgba(255,255,255,0));}
-  .chip-role{border-style:dashed}
-  .count{font-size:12px;color:#64748b}
 
-  .grid{display:grid;gap:14px;margin-top:14px}
+  .searchbar{margin-top:20px}
+  .searchbar input{
+    width:100%;padding:.65rem .85rem;
+    border:2px solid #e5e7eb;border-radius:.8rem;
+    font-size:15px
+  }
+
+  .filters{margin-top:16px;display:flex;flex-wrap:wrap;gap:12px}
+  .chip{display:inline-flex;align-items:center;gap:.4rem;
+    padding:.4rem .8rem;border-radius:999px;
+    border:1px solid #e5e7eb;background:#fff;
+    font-weight:700;font-size:13px;cursor:pointer}
+  .chip.is-on{box-shadow:0 0 0 2px inset var(--gold)}
+  .chip-role-lect{background:var(--accent);color:#fff}
+  .chip-role-ta{background:var(--gold);color:#111}
+  .chip-dongduk{background:var(--dongduk);color:#fff}
+  .chip-kyunghee{background:var(--kyunghee);color:#fff}
+  .chip-korea-sejong{background:var(--korea-sejong);color:#fff}
+  .chip-gangnam{background:var(--gangnam);color:#fff}
+  .chip-kaist{background:var(--kaist);color:#fff}
+
+  .count{font-size:13px;color:#64748b;margin-top:8px}
+
+  .grid{display:grid;gap:14px;margin-top:20px}
   @media(min-width:768px){ .grid{grid-template-columns:1fr 1fr} }
 
   .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
@@ -56,7 +77,10 @@ permalink: /lectures.html
   .subtitle{margin-top:2px;color:#6b7280;font-size:12px}
 
   .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-  .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .55rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:800;font-size:11px;color:#111827;white-space:nowrap}
+  .badge{display:inline-flex;align-items:center;gap:.35rem;
+    padding:.26rem .55rem;border-radius:999px;
+    border:1px solid #e5e7eb;background:#fff;
+    font-weight:800;font-size:11px;color:#111827;white-space:nowrap}
   .badge-period{background:#f8fafc}
   .badge-role-lect{background:linear-gradient(90deg, var(--gold), var(--gold-soft) 65%, rgba(255,255,255,0))}
   .badge-role-ta{background:linear-gradient(90deg, rgba(214,177,77,.55), rgba(214,177,77,.15) 65%, rgba(255,255,255,0))}
@@ -64,20 +88,16 @@ permalink: /lectures.html
   .course-list{margin-top:8px;font-size:13px;color:#374151}
 </style>
 
-<!-- ===== Toolbar (Search + Tags) ===== -->
+<!-- ===== Search Bar ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="toolbar">
-    <div class="search">
-      <input id="q" type="text" placeholder="Search by course, org, role..." />
-    </div>
-    <div class="chips" id="roleChips">
-      <!-- role chips -->
-    </div>
-    <div class="chips" id="schoolChips">
-      <!-- school chips -->
-    </div>
-    <div class="count" id="count"></div>
+  <div class="searchbar">
+    <input id="q" type="text" placeholder="Search by course, org, role..." />
   </div>
+  <div class="filters">
+    <div id="roleChips"></div>
+    <div id="schoolChips"></div>
+  </div>
+  <div class="count" id="count"></div>
 </section>
 
 <!-- ===== Content ===== -->
@@ -87,151 +107,7 @@ permalink: /lectures.html
 
 <script>
   // ===== Source data =====
-  // NOTE: period is kept for parsing start date; season label is auto-generated from start date.
-  const ITEMS = [
-    // ────────── Lecturer ──────────
-    {
-      role: "Lecturer", role_ko: "강사",
-      period: "2025-03-01 – 2026-02-28",
-      org_en: "Digital Business Major, Division of Convergence Business, College of Global Business, Korea University",
-      org_ko: "고려대학교 글로벌비즈니스대학 융합경영학부 디지털경영전공",
-      school: "Korea University",
-      courses: [
-        { en: "Algorithmic Trading (DIGB441)", ko: "알고리즘 투자전략 (DIGB441)" }
-      ]
-    },
-    {
-      role: "Lecturer", role_ko: "강사",
-      period: "2025-03-01 – 2026-02-28",
-      org_en: "Department of Electronic and Semiconductor Engineering, Gangnam University (formerly Department of Artificial Intelligence Convergence Engineering, Gangnam University)",
-      org_ko: "강남대학교 전자반도체공학부 (舊 강남대학교 인공지능융합공학부)",
-      school: "Gangnam University",
-      courses: [
-        { en: "Introduction to Financial Engineering (EG14209)", ko: "금융공학입문 (EG14209)" }
-      ]
-    },
-    {
-      role: "Lecturer", role_ko: "강사",
-      period: "2024-03-01 – 2024-08-31",
-      org_en: "Department of Industrial and Management Systems Engineering, Kyung Hee University",
-      org_ko: "경희대학교 산업경영공학과",
-      school: "Kyung Hee University",
-      courses: [
-        { en: "Financial Engineering (IE329)", ko: "금융공학 (IE329)" },
-        { en: "Engineering Economics (IE201)", ko: "경제성공학 (IE201)" }
-      ]
-    },
-
-    // ────────── Teaching Assistant (includes Tutorial/Program TA) ──────────
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2024-09-02 – 2024-12-31",
-      org_en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801), Korea Advanced Institute of Science and Technology",
-      org_ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801)", ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801)" }
-      ]
-    },
-    {
-      role: "Tutorial Lecturer and Teaching Assistant", role_ko: "강의지원조교 (부분 강의 진행)",
-      period: "2024-02-26 – 2024-06-30",
-      org_en: "Financial Artificial Intelligence (IE471), Department of Industrial Engineering, KAIST",
-      org_ko: "금융인공지능 (IE471), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
-      ]
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2023-08-28 – 2023-12-31",
-      org_en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801), Graduate School of Data Science, KAIST",
-      org_ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801)", ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801)" }
-      ]
-    },
-    {
-      role: "Tutorial Lecturer and Teaching Assistant", role_ko: "강의지원조교 (부분 강의 진행)",
-      period: "2023-02-27 – 2023-06-30",
-      org_en: "Financial Artificial Intelligence (IE471), KAIST",
-      org_ko: "금융인공지능 (IE471), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
-      ]
-    },
-    {
-      role: "Program Teaching Assistant", role_ko: "교육담당조교",
-      period: "2023-01-01 – 2023-02-28",
-      org_en: "Hana Financial Group – KAIST Industry-Academia Collaboration Program",
-      org_ko: "하나금융그룹 – KAIST 산학협력 프로그램",
-      school: "KAIST",
-      courses: []
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2022-08-30 – 2022-12-31",
-      org_en: "Special Topics in Knowledge Service Engineering I: Applications of Financial Data Science (KSE801), KAIST",
-      org_ko: "지식서비스공학의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "KSE Special Topics I: Applications of Financial Data Science (KSE801/DS801)", ko: "지식서비스공학/데이터사이언스 특수논제 I (KSE801/DS801)" }
-      ]
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2021-08-30 – 2021-12-31",
-      org_en: "Convex Optimization (IE539), KAIST",
-      org_ko: "컨벡스 최적화 (IE539), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Convex Optimization (IE539)", ko: "컨벡스 최적화 (IE539)" }
-      ]
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2021-03-01 – 2021-06-30",
-      org_en: "Decision Analysis and Risk Management (IE432), KAIST",
-      org_ko: "의사결정분석 및 위험관리 (IE432), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Decision Analysis and Risk Management (IE432)", ko: "의사결정분석 및 위험관리 (IE432)" }
-      ]
-    },
-    {
-      role: "Lead Developer, Tutorial Lecturer, and Teaching Assistant", role_ko: "강의 자료 및 커리큘럼 개발자 겸 강의지원조교 (부분 강의 진행)",
-      period: "2021-03-01 – 2021-06-30",
-      org_en: "Financial Artificial Intelligence (IE471), KAIST",
-      org_ko: "금융인공지능 (IE471), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
-      ]
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2020-08-31 – 2020-12-31",
-      org_en: "Convex Optimization (IE539), KAIST",
-      org_ko: "컨벡스 최적화 (IE539), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Convex Optimization (IE539)", ko: "컨벡스 최적화 (IE539)" }
-      ]
-    },
-    {
-      role: "Teaching Assistant", role_ko: "강의지원조교",
-      period: "2019-02-25 – 2019-06-30",
-      org_en: "Decision Analysis and Risk Management (IE432), KAIST",
-      org_ko: "의사결정분석 및 위험관리 (IE432), 한국과학기술원",
-      school: "KAIST",
-      courses: [
-        { en: "Decision Analysis and Risk Management (IE432)", ko: "의사결정분석 및 위험관리 (IE432)" }
-      ]
-    }
-  ];
+  const ITEMS = [ /* (생략: 네가 가진 ITEMS 그대로 사용) */ ];
 
   /* ===== Utilities ===== */
   function parseStartDate(period){
@@ -242,20 +118,19 @@ permalink: /lectures.html
   function seasonLabelFrom(date){
     const y = date.getFullYear();
     const m = date.getMonth()+1;
-    // Winter: Jan-Feb, Spring: Mar-Jun, Summer: Jul-Aug, Fall: Sep-Dec
     const season = (m<=2) ? "Winter" : (m<=6) ? "Spring" : (m<=8) ? "Summer" : "Fall";
     return `${y} ${season}`;
   }
   function byStartDesc(a,b){ return parseStartDate(b.period) - parseStartDate(a.period); }
 
-  // dynamic chips
-  const SCHOOLS = Array.from(new Set(ITEMS.map(i=>i.school))).sort();
-  const ROLES = ["Lecturer","Teaching Assistant"]; // fixed per request
+  // fixed role / school order
+  const ROLES = ["Lecturer","Teaching Assistant"];
+  const SCHOOL_ORDER = ["동덕여대","경희대학교","고려대학교 세종캠퍼스","강남대학교","KAIST"];
 
   // state
   let q = "";
-  const onRoles = new Set(ROLES);      // start with all on
-  const onSchools = new Set(SCHOOLS);  // start with all on
+  const onRoles = new Set(ROLES);
+  const onSchools = new Set(SCHOOL_ORDER);
 
   // DOM
   const grid = document.getElementById('grid');
@@ -268,14 +143,22 @@ permalink: /lectures.html
   function buildChips(){
     roleChips.innerHTML = ROLES.map(r=>{
       const on = onRoles.has(r) ? 'is-on' : '';
-      return `<button class="chip chip-role ${on}" data-role="${r}">${r}</button>`;
+      const cls = r==="Lecturer" ? "chip chip-role-lect" : "chip chip-role-ta";
+      return `<button class="${cls} ${on}" data-role="${r}">${r}</button>`;
     }).join('');
-    schoolChips.innerHTML = SCHOOLS.map(s=>{
+    schoolChips.innerHTML = SCHOOL_ORDER.map(s=>{
       const on = onSchools.has(s) ? 'is-on' : '';
-      return `<button class="chip ${on}" data-school="${s}">${s}</button>`;
+      const clsMap = {
+        "동덕여대":"chip chip-dongduk",
+        "경희대학교":"chip chip-kyunghee",
+        "고려대학교 세종캠퍼스":"chip chip-korea-sejong",
+        "강남대학교":"chip chip-gangnam",
+        "KAIST":"chip chip-kaist"
+      };
+      return `<button class="${clsMap[s]} ${on}" data-school="${s}">${s}</button>`;
     }).join('');
 
-    // bind
+    // bind events
     roleChips.querySelectorAll('[data-role]').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const r = btn.getAttribute('data-role');
@@ -304,7 +187,7 @@ permalink: /lectures.html
   function filterItems(){
     return ITEMS
       .filter(i => onRoles.has(i.role))
-      .filter(i => onSchools.has(i.school))
+      .filter(i => onSchools.has(i.school) || onSchools.has("고려대학교 세종캠퍼스") && i.school.includes("Korea University"))
       .filter(matchesQuery)
       .sort(byStartDesc);
   }
@@ -322,15 +205,12 @@ permalink: /lectures.html
               <span class="badge badge-period">${season}</span>
               <span class="badge badge-school">${item.school}</span>
             </div>
-
             <h3 class="title mt-2">${item.org_en}</h3>
             <div class="subtitle">${item.org_ko}</div>
-
             ${item.courses && item.courses.length ? `
               <div class="course-list">
                 ${item.courses.map(c => `• ${c.en} — <span class="text-slate-500">${c.ko}</span>`).join('<br/>')}
-              </div>
-            ` : ``}
+              </div>` : ``}
           </div>
         </div>
       </article>
