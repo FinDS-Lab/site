@@ -13,7 +13,6 @@ permalink: /archives-news.html
   .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
   .board-row:hover{background:#f9fafb}
   .title{font-weight:900;color:#111827}
-  .meta{font-size:12px;color:#6b7280}
   .btn-cell{justify-self:end}
   .btn-more{display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-weight:800;font-size:13px}
   .btn-more:hover{background:#f8fafc}
@@ -44,17 +43,13 @@ permalink: /archives-news.html
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
       {%- comment -%}
-        news 컬렉션(site.news)과 /news/ 경로의 pages, posts를 모두 합칩니다.
-        그런 다음 date 로 정렬하고 최신 → 오래된 순으로 표시합니다.
+        GitHub Pages의 Liquid 제한을 피하기 위해 site.news 컬렉션만 사용합니다.
+        모든 news 문서는 date를 갖고 있으므로 바로 정렬합니다.
       {%- endcomment -%}
 
-      {%- assign news_from_collection = site.news | where_exp: "p", "p.date" -%}
-      {%- assign news_from_pages = site.pages | where_exp: "p", "p.url and p.url contains '/news/' and p.date" -%}
-      {%- assign news_from_posts = site.posts | where_exp: "p", "p.url and p.url contains '/news/' and p.date" -%}
-      {%- assign news_all = news_from_collection | concat: news_from_pages | concat: news_from_posts -%}
-      {%- assign news_sorted = news_all | sort: "date" | reverse -%}
+      {%- assign news_sorted = site.news | sort: "date" | reverse -%}
 
-      {%- if news_sorted.size == 0 -%}
+      {%- if news_sorted == empty -%}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
       {%- else -%}
         {%- for post in news_sorted -%}
