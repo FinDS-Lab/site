@@ -29,20 +29,29 @@ permalink: /lectures.html
   .chip{padding:.4rem .8rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
   .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
 
-  /* Grid */
-  .grid{display:grid;gap:14px;margin-top:14px}
-  @media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
+  /* Grid: 한 줄에 한 강의 */
+  .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
   /* Card */
   .card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-  .inner{background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb}
-  .role-bar{height:6px;background:#ddd} /* 실제 색은 inline style로 지정 */
+  .inner{
+    position:relative;
+    background:#fff;border-radius:.9rem;margin:10px; /* 학교색 여백 */
+    overflow:hidden;border:1px solid #e5e7eb;
+  }
 
-  .body{padding:14px 16px}
+  /* 왼쪽 '살짝 파인' 역할색 포인트 */
+  .role-notch{
+    position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;
+    background:#ddd; /* 실제 색은 inline style로 지정 */
+  }
+
+  .body{padding:14px 16px 14px 44px} /* notch 공간 확보 */
   .meta{display:flex;flex-wrap:wrap;gap:6px}
   .meta + .meta{margin-top:6px}
   .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
-  /* 내부 배지는 흰색 */
+
+  /* 내부 배지는 흰색/연보더 */
   .badge-role-lect{background:#fff;color:#111;border:1px solid #f0d2d2}
   .badge-role-ta{background:#fff;color:#111;border:1px solid #eadba8}
   .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
@@ -131,7 +140,7 @@ const RAW = [
 const ITEMS = [];
 RAW.forEach(r => r.courses.forEach(c => ITEMS.push({...r, courses:[c]})));
 
-/* ===== Utils (ensure defined before used) ===== */
+/* ===== Utils ===== */
 function parseStartDate(period){
   const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
   return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
@@ -148,7 +157,7 @@ function seasonToDate(s){
 }
 function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
-/* ===== Filters (lists & active sets) ===== */
+/* ===== Filters: default = 모두 ON ===== */
 const ROLES = ["Lecturer","Teaching Assistant"];
 const SCHOOLS = ["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
 const SCHOOL_COLORS = {
@@ -159,14 +168,14 @@ const SCHOOL_COLORS = {
   "KAIST":"var(--school-kaist)"
 };
 let q = "";
-const onRoles = new Set(ROLES);
-const onSchools = new Set(SCHOOLS);
+const onRoles = new Set(ROLES);           // 기본 모두 ON
+const onSchools = new Set(SCHOOLS);       // 기본 모두 ON
 
-/* ===== Semesters (build AFTER utils) ===== */
+/* Semesters */
 const ALL_SEMS = Array.from(new Set(
   ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period)))
 )).sort((a,b)=> seasonToDate(b) - seasonToDate(a));
-const onSems = new Set(ALL_SEMS);
+const onSems = new Set(ALL_SEMS);         // 기본 모두 ON
 
 /* ===== DOM ===== */
 const grid = document.getElementById('grid');
@@ -176,9 +185,9 @@ const roleChips = document.getElementById('roleChips');
 const schoolChips = document.getElementById('schoolChips');
 const semChips = document.getElementById('semChips');
 
-/* ===== Chips ===== */
+/* ===== Chips (클릭 시 해당 토글 → 필터) ===== */
 function buildChips(){
-  // Role/University는 배너 색 유지
+  // Role/University는 컬러 유지
   roleChips.innerHTML = ROLES.map(r =>
     `<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}"
       style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`
@@ -187,12 +196,11 @@ function buildChips(){
     `<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}"
       style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`
   ).join('');
-  // Semester 칩은 기본(흰색)
+  // Semester는 기본 스타일
   semChips.innerHTML = ALL_SEMS.map(s =>
     `<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`
   ).join('');
 
-  // 핸들러 재바인딩
   roleChips.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => {
     const r = btn.dataset.role;
     onRoles.has(r) ? onRoles.delete(r) : onRoles.add(r);
@@ -229,25 +237,25 @@ function filterItems(){
 /* ===== Card ===== */
 function card(item){
   const season = seasonLabelFrom(parseStartDate(item.period));
-  const roleBarColor = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
+  const notchColor = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
   const schoolColor = SCHOOL_COLORS[item.school] || "#ccc";
   const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
 
   return `
   <article class="card" style="background:${schoolColor}">
     <div class="inner">
-      <div class="role-bar" style="background:${roleBarColor}"></div>
+      <div class="role-notch" style="background:${notchColor}"></div>
       <div class="body">
-        <!-- 줄1: Role -->
+        <!-- 1: Role (줄바꿈) -->
         <div class="meta">
           <span class="badge ${roleBadgeClass}">${item.role}</span>
         </div>
-        <!-- 줄2: School / Semester -->
+        <!-- 2: School / Semester -->
         <div class="meta">
           <span class="badge badge-school">${item.school}</span>
           <span class="badge badge-period">${season}</span>
         </div>
-        <!-- 과목명 크고/작게 -->
+        <!-- 3: 과목명 (EN 크게 / KO 작게) -->
         <div class="course-en">${item.courses[0].en}</div>
         <div class="course-ko">${item.courses[0].ko}</div>
       </div>
@@ -258,11 +266,9 @@ function card(item){
 /* ===== Render ===== */
 function render(){
   const data = filterItems();
-  if(data.length === 0){
-    grid.innerHTML = `<div class="empty">No lectures found. Try changing filters.</div>`;
-  }else{
-    grid.innerHTML = data.map(card).join('');
-  }
+  grid.innerHTML = data.length
+    ? data.map(card).join('')
+    : `<div class="empty">No lectures found. Try changing filters.</div>`;
   count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
 }
 
