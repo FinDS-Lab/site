@@ -4,39 +4,17 @@ title: Lectures | FINDS Lab
 permalink: /lectures.html
 ---
 
-<!-- ===== Breadcrumbs ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <nav aria-label="Breadcrumb" class="text-[12px] text-slate-200">
-    <ol class="flex items-center gap-2">
-      <li><a href="{{ '/' | relative_url }}" class="hover:underline">Home</a></li>
-      <li aria-hidden="true">›</li>
-      <li aria-current="page" class="text-white/90 font-semibold">Lectures</li>
-    </ol>
-  </nav>
-</section>
-
-<!-- ===== Page Title / Banner ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-2">
-  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" 
-         alt="Lectures banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
-    <div class="absolute inset-0 bg-black/45"></div>
-    <div class="absolute inset-x-0 bottom-4 px-4">
-      <div class="max-w-7xl mx-auto text-white">
-        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures & Teaching</h1>
-        <p class="text-sm md:text-[15px] opacity-95">Courses taught and instructional roles.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== Styles ===== -->
 <style>
+  /* Breadcrumbs */
+  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+  .breadcrumbs a{color:#e5e7eb}
+  .breadcrumbs a:hover{text-decoration:underline}
+  .breadcrumbs .sep{opacity:.8}
+
   :root{
-    --accent: rgb(172,14,14); /* main red */
-    --lect-red: #b91c1c;       /* Lecturer badge red */
-    --ta-gold: #d4b14d;        /* TA badge gold */
+    --lect-red: #b91c1c;   /* Lecturer badge red */
+    --ta-gold: #d4b14d;    /* TA badge gold */
     --school-dongduk: #e60039;
     --school-kyunghee: #880022;
     --school-korea: #a50034;
@@ -54,7 +32,7 @@ permalink: /lectures.html
 
   .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
   .row{display:grid;grid-template-columns:8px 1fr}
-  .strip{background:var(--accent)}
+  .strip{background:#b91c1c}
   .body{padding:14px 16px}
   .title{font-weight:900;font-size:15px;color:#111827}
   .subtitle{margin-top:2px;color:#6b7280;font-size:12px}
@@ -64,8 +42,31 @@ permalink: /lectures.html
   .badge-role-ta{background:var(--ta-gold);color:#111}
   .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
   .badge-school{color:#fff}
-  .course-list{margin-top:8px;font-size:13px;color:#374151}
+  .course-en{font-size:15px;font-weight:800;color:#111827}
+  .course-ko{font-size:13px;color:#374151}
 </style>
+
+<!-- ===== Page Title / Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" alt="Lectures banner"
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-4 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Lectures</span>
+        </nav>
+        <!-- Title -->
+        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures & Teaching</h1>
+        <p class="text-sm md:text-[15px] opacity-95">Courses taught and instructional roles.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
@@ -94,27 +95,21 @@ permalink: /lectures.html
 /* ===== Raw Data ===== */
 const RAW = [
   { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    org_en:"Digital Business Major, Korea University Sejong", 
-    org_ko:"고려대학교 세종캠퍼스 글로벌비즈니스대학", 
-    school:"Korea Univ. Sejong",
+    school:"Korea University Sejong Campus",
     courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]},
   { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    org_en:"Dept. of Electronic & Semiconductor Eng., Gangnam Univ.", 
-    org_ko:"강남대학교 전자반도체공학부", 
-    school:"Gangnam Univ.",
+    school:"Gangnam University",
     courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]},
   { role:"Lecturer", period:"2024-03-01 – 2024-08-31",
-    org_en:"Dept. of Industrial & Mgmt. Systems Eng., Kyung Hee Univ.", 
-    org_ko:"경희대학교 산업경영공학과", 
-    school:"Kyung Hee Univ.",
+    school:"Kyung Hee University",
     courses:[
       {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
       {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]},
   { role:"Teaching Assistant", period:"2024-09-02 – 2024-12-31",
-    org_en:"KAIST", org_ko:"한국과학기술원", school:"KAIST",
+    school:"KAIST",
     courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"}]},
   { role:"Teaching Assistant", period:"2023-02-27 – 2023-06-30",
-    org_en:"KAIST", org_ko:"한국과학기술원", school:"KAIST",
+    school:"KAIST",
     courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]},
 ];
 
@@ -133,12 +128,12 @@ function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.perio
 
 /* ===== Filters ===== */
 const ROLES=["Lecturer","Teaching Assistant"];
-const SCHOOLS=["Dongduk Women’s Univ.","Kyung Hee Univ.","Korea Univ. Sejong","Gangnam Univ.","KAIST"];
+const SCHOOLS=["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
 const SCHOOL_COLORS={
-  "Dongduk Women’s Univ.":"var(--school-dongduk)",
-  "Kyung Hee Univ.":"var(--school-kyunghee)",
-  "Korea Univ. Sejong":"var(--school-korea)",
-  "Gangnam Univ.":"var(--school-gangnam)",
+  "Dongduk Women’s University":"var(--school-dongduk)",
+  "Kyung Hee University":"var(--school-kyunghee)",
+  "Korea University Sejong Campus":"var(--school-korea)",
+  "Gangnam University":"var(--school-gangnam)",
   "KAIST":"var(--school-kaist)"
 };
 let q=""; const onRoles=new Set(ROLES); const onSchools=new Set(SCHOOLS);
@@ -151,13 +146,13 @@ const roleChips=document.getElementById('roleChips');
 const schoolChips=document.getElementById('schoolChips');
 
 function buildChips(){
-  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}">${r}</button>`).join('');
+  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}" style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`).join('');
   schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
-  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{const r=btn.dataset.role;if(onRoles.has(r))onRoles.delete(r);else onRoles.add(r);btn.classList.toggle('is-on');render();});
+  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{const r=btn.dataset.role;if(onRoles.has(r))onRoles.delete(r);else onRoles.add(r);render();});
   schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{const s=btn.dataset.school;if(onSchools.has(s))onSchools.delete(s);else onSchools.add(s);render();});
 }
 
-function matchesQuery(i){if(!q)return true;const t=(i.role+" "+i.org_en+" "+i.org_ko+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();return t.includes(q.toLowerCase());}
+function matchesQuery(i){if(!q)return true;const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();return t.includes(q.toLowerCase());}
 function filterItems(){return ITEMS.filter(i=>onRoles.has(i.role)).filter(i=>onSchools.has(i.school)).filter(matchesQuery).sort(byStartDesc);}
 
 function card(item){
@@ -171,9 +166,8 @@ function card(item){
         <span class="badge badge-period">${season}</span>
         <span class="badge badge-school" style="background:${schoolColor}">${item.school}</span>
       </div>
-      <h3 class="title mt-2">${item.org_en}</h3>
-      <div class="subtitle">${item.org_ko}</div>
-      <div class="course-list">• ${item.courses[0].en} — <span class="text-slate-500">${item.courses[0].ko}</span></div>
+      <div class="course-en mt-2">${item.courses[0].en}</div>
+      <div class="course-ko">${item.courses[0].ko}</div>
     </div></div></article>`;
 }
 
