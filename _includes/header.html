@@ -55,40 +55,53 @@
   <!-- Mobile Nav -->
   <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
     <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="{{ '/' | relative_url }}">Home</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/' | relative_url }}">Home</a>
 
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1" href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
+        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
         <div class="pl-3 grid text-[14px]">
-          <a class="py-1 hover:underline font-bold" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/about-vision-area.html'  | relative_url }}">Research Area</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/about-awards.html'       | relative_url }}">Awards</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/about-location.html'     | relative_url }}">Location</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-vision-area.html'  | relative_url }}">Research Area</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-awards.html'       | relative_url }}">Awards</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-location.html'     | relative_url }}">Location</a>
         </div>
       </div>
 
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1" href="{{ '/members-director.html' | relative_url }}">Members</a>
+        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/members-director.html' | relative_url }}">Members</a>
         <div class="pl-3 grid text-[14px]">
-          <a class="py-1 hover:underline font-bold" href="{{ '/members-director.html'   | relative_url }}">Director</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/members-current.html'    | relative_url }}">Current Students</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/members-alumni.html'     | relative_url }}">Alumni</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-director.html'   | relative_url }}">Director</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-current.html'    | relative_url }}">Current Students</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-alumni.html'     | relative_url }}">Alumni</a>
         </div>
       </div>
 
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="{{ '/publications.html' | relative_url }}">Publications</a>
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="{{ '/lectures.html'     | relative_url }}">Lectures</a>
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold" href="{{ '/projects.html'     | relative_url }}">Projects</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/publications.html' | relative_url }}">Publications</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/lectures.html'     | relative_url }}">Lectures</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/projects.html'     | relative_url }}">Projects</a>
 
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1" href="{{ '/archives-news.html' | relative_url }}">Archives</a>
+        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/archives-news.html' | relative_url }}">Archives</a>
         <div class="pl-3 grid text-[14px]">
-          <a class="py-1 hover:underline font-bold" href="{{ '/archives-news.html'    | relative_url }}">News</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/about-notice.html'     | relative_url }}">Notice</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/archives-seminar.html' | relative_url }}">Seminar</a>
-          <a class="py-1 hover:underline font-bold" href="{{ '/archives-gallery.html' | relative_url }}">Gallery</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/archives-news.html'    | relative_url }}">News</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-notice.html'     | relative_url }}">Notice</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/archives-seminar.html' | relative_url }}">Seminar</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/archives-gallery.html' | relative_url }}">Gallery</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Hover Color Styles -->
+<style>
+  .nav-link, .submenu-item, .mobile-link {
+    color: #1f2937; /* slate-800 */
+    transition: color 0.2s ease;
+  }
+  .nav-link:hover,
+  .submenu-item:hover,
+  .mobile-link:hover {
+    color: rgb(214, 177, 77); /* gold */
+  }
+</style>
