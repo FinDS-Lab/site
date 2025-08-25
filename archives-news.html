@@ -1,55 +1,35 @@
 ---
 layout: default
-title: Lectures | FINDS Lab
-permalink: /lectures.html
+title: Archives — News | FINDS Lab
+permalink: /archives-news.html
 ---
 
-<!-- ===== Styles ===== -->
+<!-- ===== News Board Styles ===== -->
 <style>
+  .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
+  .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
+  .date-ym{font-weight:800;font-size:12px;color:#6b7280}
+  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
+  @media (max-width:640px){
+    .board-row{grid-template-columns:64px 1fr;gap:10px}
+    .board-row .btn-cell{grid-column:1/-1;justify-self:end}
+  }
+  .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
+  .btn-more:hover{background:#f8fafc}
+  .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
+
   /* Breadcrumbs */
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
   .breadcrumbs .sep{opacity:.8}
-
-  :root{
-    --lect-red: #b91c1c;   /* Lecturer badge red */
-    --ta-gold: #d4b14d;    /* TA badge gold */
-    --school-dongduk: #e60039;
-    --school-kyunghee: #880022;
-    --school-korea: #a50034;
-    --school-gangnam: #0066b3;
-    --school-kaist: #003DA5;
-  }
-  .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
-  .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{padding:.4rem .8rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
-  .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
-
-  .grid{display:grid;gap:14px;margin-top:14px}
-  @media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
-
-  .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-  .row{display:grid;grid-template-columns:8px 1fr}
-  .strip{background:#b91c1c}
-  .body{padding:14px 16px}
-  .title{font-weight:900;font-size:15px;color:#111827}
-  .subtitle{margin-top:2px;color:#6b7280;font-size:12px}
-  .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-  .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
-  .badge-role-lect{background:var(--lect-red);color:#fff}
-  .badge-role-ta{background:var(--ta-gold);color:#111}
-  .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
-  .badge-school{color:#fff}
-  .course-en{font-size:15px;font-weight:800;color:#111827}
-  .course-ko{font-size:13px;color:#374151}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" alt="Lectures banner"
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="News banner"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
@@ -58,126 +38,62 @@ permalink: /lectures.html
         <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
-          <span aria-current="page" class="font-semibold">Lectures</span>
+          <a href="{{ '/archives-news.html' | relative_url }}">Archives</a>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">News</span>
         </nav>
+
         <!-- Title -->
-        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures & Teaching</h1>
-        <p class="text-sm md:text-[15px] opacity-95">Courses taught and instructional roles.</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold">News</h1>
+        <p class="text-sm md:text-[15px] opacity-95">Updates, achievements, and events from FINDS Lab.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Toolbar (Search + Filters) ===== -->
-<section class="max-w-7xl mx-auto px-4">
-  <div class="toolbar">
-    <div class="search">
-      <input id="q" type="text" placeholder="Search by course, org, role..." />
-    </div>
-    <div>
-      <label class="text-xs font-bold text-slate-600 block mb-1">Role</label>
-      <div class="chips" id="roleChips"></div>
-    </div>
-    <div>
-      <label class="text-xs font-bold text-slate-600 block mb-1">University</label>
-      <div class="chips" id="schoolChips"></div>
-    </div>
-    <div class="count" id="count"></div>
+<!-- ===== News List (newest → oldest) ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+    <ul id="news-list" role="list">
+      {% assign pages_sorted = site.pages | sort: "date" | reverse %}
+      {% comment %}
+        Jekyll 3 호환: 필터(where_exp) 없이 pages+posts를 합치고 date로 정렬,
+        루프 안에서 '/news/'와 date가 있는 것만 출력.
+      {% endcomment %}
+      {% assign all = site.pages | concat: site.posts %}
+      {% assign all_sorted = all | sort: 'date' | reverse %}
+      {% assign count = 0 %}
+
+      {% for post in pages_sorted %}
+        {% if post.url and post.url contains '/news/' and post.date %}
+      {% for post in all_sorted %}
+        {% if post.url and post.date and post.url contains '/news/' %}
+          {% assign count = count | plus: 1 %}
+          {% assign y = post.date | date: "%Y" %}
+          {% assign m = post.date | date: "%m" %}
+@@ -74,24 +79,20 @@
+                {{ post.title }}
+              </a>
+              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
+                {% if post.excerpt %}
+                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
+                {% else %}
+                  {{ post.content | strip_html | strip | truncate: 160 }}
+                {% endif %}
+                {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
+              </div>
+              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            </div>
+            <div class="btn-cell hidden sm:block">
+              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
+            </div>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      {% if count == 0 %}
+        <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
+      {% endif %}
+    </ul>
   </div>
 </section>
-
-<!-- ===== Content ===== -->
-<section class="max-w-7xl mx-auto px-4">
-  <div class="grid" id="grid"></div>
-</section>
-
-<script>
-/* ===== Raw Data ===== */
-const RAW = [
-  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    school:"Korea University Sejong Campus",
-    courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]},
-  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    school:"Gangnam University",
-    courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]},
-  { role:"Lecturer", period:"2024-03-01 – 2024-08-31",
-    school:"Kyung Hee University",
-    courses:[
-      {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
-      {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]},
-  { role:"Teaching Assistant", period:"2024-09-02 – 2024-12-31",
-    school:"KAIST",
-    courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"}]},
-  { role:"Teaching Assistant", period:"2023-02-27 – 2023-06-30",
-    school:"KAIST",
-    courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]},
-];
-
-/* ===== Expand courses into ITEMS ===== */
-const ITEMS = [];
-RAW.forEach(r=>{
-  r.courses.forEach(c=>{
-    ITEMS.push({...r, courses:[c]});
-  });
-});
-
-/* ===== Utils ===== */
-function parseStartDate(period){const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);}
-function seasonLabelFrom(date){const y=date.getFullYear();const m=date.getMonth()+1;const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";return `${y} ${s}`;}
-function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
-
-/* ===== Filters ===== */
-const ROLES=["Lecturer","Teaching Assistant"];
-const SCHOOLS=["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
-const SCHOOL_COLORS={
-  "Dongduk Women’s University":"var(--school-dongduk)",
-  "Kyung Hee University":"var(--school-kyunghee)",
-  "Korea University Sejong Campus":"var(--school-korea)",
-  "Gangnam University":"var(--school-gangnam)",
-  "KAIST":"var(--school-kaist)"
-};
-let q=""; const onRoles=new Set(ROLES); const onSchools=new Set(SCHOOLS);
-
-/* ===== DOM ===== */
-const grid=document.getElementById('grid');
-const count=document.getElementById('count');
-const qInput=document.getElementById('q');
-const roleChips=document.getElementById('roleChips');
-const schoolChips=document.getElementById('schoolChips');
-
-function buildChips(){
-  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}" style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`).join('');
-  schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
-  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{const r=btn.dataset.role;if(onRoles.has(r))onRoles.delete(r);else onRoles.add(r);render();});
-  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{const s=btn.dataset.school;if(onSchools.has(s))onSchools.delete(s);else onSchools.add(s);render();});
-}
-
-function matchesQuery(i){if(!q)return true;const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();return t.includes(q.toLowerCase());}
-function filterItems(){return ITEMS.filter(i=>onRoles.has(i.role)).filter(i=>onSchools.has(i.school)).filter(matchesQuery).sort(byStartDesc);}
-
-function card(item){
-  const season=seasonLabelFrom(parseStartDate(item.period));
-  const roleClass=item.role==="Lecturer"?"badge-role-lect":"badge-role-ta";
-  const schoolColor=SCHOOL_COLORS[item.school]||"#ccc";
-  return `<article class="card">
-    <div class="row"><div class="strip"></div><div class="body">
-      <div class="meta">
-        <span class="badge ${roleClass}">${item.role}</span>
-        <span class="badge badge-period">${season}</span>
-        <span class="badge badge-school" style="background:${schoolColor}">${item.school}</span>
-      </div>
-      <div class="course-en mt-2">${item.courses[0].en}</div>
-      <div class="course-ko">${item.courses[0].ko}</div>
-    </div></div></article>`;
-}
-
-function render(){
-  const data=filterItems();
-  grid.innerHTML=data.map(card).join('');
-  count.textContent=`Showing ${data.length} of ${ITEMS.length}`;
-}
-
-/* ===== Init ===== */
-qInput.oninput=e=>{q=e.target.value;render();};
-buildChips(); render();
-</script>
