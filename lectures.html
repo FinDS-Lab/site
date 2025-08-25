@@ -26,10 +26,15 @@ permalink: /lectures.html
   .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
   .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{padding:.4rem .8rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
-  /* 활성(선택됨)일 때만 검은 테두리 */
-  .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
-  .chip:focus-visible{outline:2px solid #111827; outline-offset:2px}
+
+  /* Chips: 기본은 테두리/강조 없음, 활성 시만 진한 보더 */
+  .chip{
+    padding:.4rem .8rem;border-radius:999px;
+    border:1px solid transparent; /* 기본 테두리 제거 */
+    background:#fff;font-weight:700;font-size:12px;cursor:pointer
+  }
+  .chip.is-on{ box-shadow:inset 0 0 0 2px #111827 }  /* 활성 시 검은 내측 테두리 */
+  .chip:focus-visible{ outline:2px solid #111827; outline-offset:2px } /* 접근성 */
 
   /* Grid: 한 줄에 한 강의 */
   .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
@@ -159,7 +164,7 @@ function seasonToDate(s){
 }
 function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
-/* ===== Filters: 기본 모두 표시 (세트는 비어있고, 비어있으면 필터 미적용) ===== */
+/* ===== Filters: 초기엔 전부 미선택(=필터 미적용) ===== */
 const ROLES = ["Lecturer","Teaching Assistant"];
 const SCHOOLS = ["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
 const SCHOOL_COLORS = {
@@ -170,14 +175,12 @@ const SCHOOL_COLORS = {
   "KAIST":"var(--school-kaist)"
 };
 let q = "";
-const onRoles = new Set();     // 초기엔 비어있음 → Role 필터 미적용
-const onSchools = new Set();   // 초기엔 비어있음 → University 필터 미적용
-
-/* Semesters */
+const onRoles = new Set();     // 비어있으면 Role 필터 미적용
+const onSchools = new Set();   // 비어있으면 University 필터 미적용
 const ALL_SEMS = Array.from(new Set(
   ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period)))
 )).sort((a,b)=> seasonToDate(b) - seasonToDate(a));
-const onSems = new Set();      // 초기엔 비어있음 → Semester 필터 미적용
+const onSems = new Set();      // 비어있으면 Semester 필터 미적용
 
 /* ===== DOM ===== */
 const grid = document.getElementById('grid');
@@ -187,9 +190,9 @@ const roleChips = document.getElementById('roleChips');
 const schoolChips = document.getElementById('schoolChips');
 const semChips = document.getElementById('semChips');
 
-/* ===== Chips (선택된 칩만 is-on → 검은 테두리 + 배경색) ===== */
+/* ===== Chips (활성된 칩만 is-on) ===== */
 function buildChips(){
-  // Role 칩: 선택 시 배경색, 미선택 시 흰색
+  // Role 칩: 활성 시 배경색, 미선택 시 흰색
   roleChips.innerHTML = ROLES.map(r => {
     const active = onRoles.has(r);
     const bg = active ? (r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)') : '#fff';
@@ -197,7 +200,7 @@ function buildChips(){
     return `<button class="chip ${active?'is-on':''}" data-role="${r}" style="background:${bg};color:${fg}">${r}</button>`;
   }).join('');
 
-  // University 칩: 선택 시 학교색, 미선택 시 흰색
+  // University 칩: 활성 시 학교색, 미선택 시 흰색
   schoolChips.innerHTML = SCHOOLS.map(s => {
     const active = onSchools.has(s);
     const bg = active ? SCHOOL_COLORS[s] : '#fff';
@@ -205,7 +208,7 @@ function buildChips(){
     return `<button class="chip ${active?'is-on':''}" data-school="${s}" style="background:${bg};color:${fg}">${s}</button>`;
   }).join('');
 
-  // Semester 칩: 선택 시 검은 테두리만 (배경은 기본 흰색 유지)
+  // Semester 칩: 배경 흰색, 활성 시 검은 테두리만
   semChips.innerHTML = ALL_SEMS.map(s => {
     const active = onSems.has(s);
     return `<button class="chip ${active?'is-on':''}" data-sem="${s}">${s}</button>`;
@@ -263,7 +266,7 @@ function card(item){
     <div class="inner">
       <div class="role-notch" style="background:${notchColor}"></div>
       <div class="body">
-        <!-- 1: Role (줄바꿈) -->
+        <!-- 1: Role -->
         <div class="meta">
           <span class="badge ${roleBadgeClass}">${item.role}</span>
         </div>
