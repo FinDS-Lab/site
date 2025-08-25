@@ -18,7 +18,8 @@ permalink: /lectures.html
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-2">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" alt="Lectures banner"
+    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" 
+         alt="Lectures banner"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
@@ -33,71 +34,55 @@ permalink: /lectures.html
 <!-- ===== Styles ===== -->
 <style>
   :root{
-    --accent: rgb(172, 14, 14);          /* main red */
-    --gold:   rgb(214, 177, 77);         /* gold */
-    --gold-soft: rgba(214,177,77,.35);   /* softer gold */
-    --dongduk: #e60012;                  /* 동덕여대 (빨강톤) */
-    --kyunghee: #a41e34;                 /* 경희대 (진홍색) */
-    --korea-sejong: #002f6c;             /* 고려대 세종 (네이비) */
-    --gangnam: #0072ce;                  /* 강남대 (파랑톤) */
-    --kaist: #005bac;                    /* KAIST 블루 */
+    --accent: rgb(172,14,14); /* main red */
+    --lect-red: #b91c1c;       /* Lecturer badge red */
+    --ta-gold: #d4b14d;        /* TA badge gold */
+    --school-dongduk: #e60039;
+    --school-kyunghee: #880022;
+    --school-korea: #a50034;
+    --school-gangnam: #0066b3;
+    --school-kaist: #003DA5;
   }
+  .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
+  .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:.4rem .8rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
+  .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
 
-  .searchbar{margin-top:20px}
-  .searchbar input{
-    width:100%;padding:.65rem .85rem;
-    border:2px solid #e5e7eb;border-radius:.8rem;
-    font-size:15px
-  }
-
-  .filters{margin-top:16px;display:flex;flex-wrap:wrap;gap:12px}
-  .chip{display:inline-flex;align-items:center;gap:.4rem;
-    padding:.4rem .8rem;border-radius:999px;
-    border:1px solid #e5e7eb;background:#fff;
-    font-weight:700;font-size:13px;cursor:pointer}
-  .chip.is-on{box-shadow:0 0 0 2px inset var(--gold)}
-  .chip-role-lect{background:var(--accent);color:#fff}
-  .chip-role-ta{background:var(--gold);color:#111}
-  .chip-dongduk{background:var(--dongduk);color:#fff}
-  .chip-kyunghee{background:var(--kyunghee);color:#fff}
-  .chip-korea-sejong{background:var(--korea-sejong);color:#fff}
-  .chip-gangnam{background:var(--gangnam);color:#fff}
-  .chip-kaist{background:var(--kaist);color:#fff}
-
-  .count{font-size:13px;color:#64748b;margin-top:8px}
-
-  .grid{display:grid;gap:14px;margin-top:20px}
-  @media(min-width:768px){ .grid{grid-template-columns:1fr 1fr} }
+  .grid{display:grid;gap:14px;margin-top:14px}
+  @media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
 
   .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
   .row{display:grid;grid-template-columns:8px 1fr}
   .strip{background:var(--accent)}
   .body{padding:14px 16px}
-  .title{font-weight:900;font-size:15px;line-height:1.35;color:#111827}
+  .title{font-weight:900;font-size:15px;color:#111827}
   .subtitle{margin-top:2px;color:#6b7280;font-size:12px}
-
   .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-  .badge{display:inline-flex;align-items:center;gap:.35rem;
-    padding:.26rem .55rem;border-radius:999px;
-    border:1px solid #e5e7eb;background:#fff;
-    font-weight:800;font-size:11px;color:#111827;white-space:nowrap}
-  .badge-period{background:#f8fafc}
-  .badge-role-lect{background:linear-gradient(90deg, var(--gold), var(--gold-soft) 65%, rgba(255,255,255,0))}
-  .badge-role-ta{background:linear-gradient(90deg, rgba(214,177,77,.55), rgba(214,177,77,.15) 65%, rgba(255,255,255,0))}
-  .badge-school{background:#fff}
+  .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
+  .badge-role-lect{background:var(--lect-red);color:#fff}
+  .badge-role-ta{background:var(--ta-gold);color:#111}
+  .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
+  .badge-school{color:#fff}
   .course-list{margin-top:8px;font-size:13px;color:#374151}
 </style>
 
-<!-- ===== Search Bar ===== -->
+<!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="searchbar">
-    <input id="q" type="text" placeholder="Search by course, org, role..." />
+  <div class="toolbar">
+    <div class="search">
+      <input id="q" type="text" placeholder="Search by course, org, role..." />
+    </div>
+    <div>
+      <label class="text-xs font-bold text-slate-600 block mb-1">Role</label>
+      <div class="chips" id="roleChips"></div>
+    </div>
+    <div>
+      <label class="text-xs font-bold text-slate-600 block mb-1">University</label>
+      <div class="chips" id="schoolChips"></div>
+    </div>
+    <div class="count" id="count"></div>
   </div>
-  <div class="filters">
-    <div id="roleChips"></div>
-    <div id="schoolChips"></div>
-  </div>
-  <div class="count" id="count"></div>
 </section>
 
 <!-- ===== Content ===== -->
@@ -106,127 +91,99 @@ permalink: /lectures.html
 </section>
 
 <script>
-  // ===== Source data =====
-  const ITEMS = [ /* (생략: 네가 가진 ITEMS 그대로 사용) */ ];
+/* ===== Raw Data ===== */
+const RAW = [
+  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
+    org_en:"Digital Business Major, Korea University Sejong", 
+    org_ko:"고려대학교 세종캠퍼스 글로벌비즈니스대학", 
+    school:"Korea Univ. Sejong",
+    courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]},
+  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
+    org_en:"Dept. of Electronic & Semiconductor Eng., Gangnam Univ.", 
+    org_ko:"강남대학교 전자반도체공학부", 
+    school:"Gangnam Univ.",
+    courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]},
+  { role:"Lecturer", period:"2024-03-01 – 2024-08-31",
+    org_en:"Dept. of Industrial & Mgmt. Systems Eng., Kyung Hee Univ.", 
+    org_ko:"경희대학교 산업경영공학과", 
+    school:"Kyung Hee Univ.",
+    courses:[
+      {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
+      {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]},
+  { role:"Teaching Assistant", period:"2024-09-02 – 2024-12-31",
+    org_en:"KAIST", org_ko:"한국과학기술원", school:"KAIST",
+    courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"}]},
+  { role:"Teaching Assistant", period:"2023-02-27 – 2023-06-30",
+    org_en:"KAIST", org_ko:"한국과학기술원", school:"KAIST",
+    courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]},
+];
 
-  /* ===== Utilities ===== */
-  function parseStartDate(period){
-    const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    if(!m) return new Date(0);
-    return new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`);
-  }
-  function seasonLabelFrom(date){
-    const y = date.getFullYear();
-    const m = date.getMonth()+1;
-    const season = (m<=2) ? "Winter" : (m<=6) ? "Spring" : (m<=8) ? "Summer" : "Fall";
-    return `${y} ${season}`;
-  }
-  function byStartDesc(a,b){ return parseStartDate(b.period) - parseStartDate(a.period); }
+/* ===== Expand courses into ITEMS ===== */
+const ITEMS = [];
+RAW.forEach(r=>{
+  r.courses.forEach(c=>{
+    ITEMS.push({...r, courses:[c]});
+  });
+});
 
-  // fixed role / school order
-  const ROLES = ["Lecturer","Teaching Assistant"];
-  const SCHOOL_ORDER = ["동덕여대","경희대학교","고려대학교 세종캠퍼스","강남대학교","KAIST"];
+/* ===== Utils ===== */
+function parseStartDate(period){const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);}
+function seasonLabelFrom(date){const y=date.getFullYear();const m=date.getMonth()+1;const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";return `${y} ${s}`;}
+function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
-  // state
-  let q = "";
-  const onRoles = new Set(ROLES);
-  const onSchools = new Set(SCHOOL_ORDER);
+/* ===== Filters ===== */
+const ROLES=["Lecturer","Teaching Assistant"];
+const SCHOOLS=["Dongduk Women’s Univ.","Kyung Hee Univ.","Korea Univ. Sejong","Gangnam Univ.","KAIST"];
+const SCHOOL_COLORS={
+  "Dongduk Women’s Univ.":"var(--school-dongduk)",
+  "Kyung Hee Univ.":"var(--school-kyunghee)",
+  "Korea Univ. Sejong":"var(--school-korea)",
+  "Gangnam Univ.":"var(--school-gangnam)",
+  "KAIST":"var(--school-kaist)"
+};
+let q=""; const onRoles=new Set(ROLES); const onSchools=new Set(SCHOOLS);
 
-  // DOM
-  const grid = document.getElementById('grid');
-  const count = document.getElementById('count');
-  const qInput = document.getElementById('q');
-  const roleChips = document.getElementById('roleChips');
-  const schoolChips = document.getElementById('schoolChips');
+/* ===== DOM ===== */
+const grid=document.getElementById('grid');
+const count=document.getElementById('count');
+const qInput=document.getElementById('q');
+const roleChips=document.getElementById('roleChips');
+const schoolChips=document.getElementById('schoolChips');
 
-  // build chips
-  function buildChips(){
-    roleChips.innerHTML = ROLES.map(r=>{
-      const on = onRoles.has(r) ? 'is-on' : '';
-      const cls = r==="Lecturer" ? "chip chip-role-lect" : "chip chip-role-ta";
-      return `<button class="${cls} ${on}" data-role="${r}">${r}</button>`;
-    }).join('');
-    schoolChips.innerHTML = SCHOOL_ORDER.map(s=>{
-      const on = onSchools.has(s) ? 'is-on' : '';
-      const clsMap = {
-        "동덕여대":"chip chip-dongduk",
-        "경희대학교":"chip chip-kyunghee",
-        "고려대학교 세종캠퍼스":"chip chip-korea-sejong",
-        "강남대학교":"chip chip-gangnam",
-        "KAIST":"chip chip-kaist"
-      };
-      return `<button class="${clsMap[s]} ${on}" data-school="${s}">${s}</button>`;
-    }).join('');
+function buildChips(){
+  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}">${r}</button>`).join('');
+  schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
+  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{const r=btn.dataset.role;if(onRoles.has(r))onRoles.delete(r);else onRoles.add(r);btn.classList.toggle('is-on');render();});
+  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{const s=btn.dataset.school;if(onSchools.has(s))onSchools.delete(s);else onSchools.add(s);render();});
+}
 
-    // bind events
-    roleChips.querySelectorAll('[data-role]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const r = btn.getAttribute('data-role');
-        if(onRoles.has(r)) onRoles.delete(r); else onRoles.add(r);
-        btn.classList.toggle('is-on');
-        render();
-      });
-    });
-    schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const s = btn.getAttribute('data-school');
-        if(onSchools.has(s)) onSchools.delete(s); else onSchools.add(s);
-        btn.classList.toggle('is-on');
-        render();
-      });
-    });
-  }
+function matchesQuery(i){if(!q)return true;const t=(i.role+" "+i.org_en+" "+i.org_ko+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();return t.includes(q.toLowerCase());}
+function filterItems(){return ITEMS.filter(i=>onRoles.has(i.role)).filter(i=>onSchools.has(i.school)).filter(matchesQuery).sort(byStartDesc);}
 
-  function matchesQuery(item){
-    if(!q) return true;
-    const text = (item.role + " " + item.role_ko + " " + item.org_en + " " + item.org_ko + " " +
-                  item.courses.map(c=>c.en + " " + c.ko).join(" ")).toLowerCase();
-    return text.includes(q.toLowerCase());
-  }
+function card(item){
+  const season=seasonLabelFrom(parseStartDate(item.period));
+  const roleClass=item.role==="Lecturer"?"badge-role-lect":"badge-role-ta";
+  const schoolColor=SCHOOL_COLORS[item.school]||"#ccc";
+  return `<article class="card">
+    <div class="row"><div class="strip"></div><div class="body">
+      <div class="meta">
+        <span class="badge ${roleClass}">${item.role}</span>
+        <span class="badge badge-period">${season}</span>
+        <span class="badge badge-school" style="background:${schoolColor}">${item.school}</span>
+      </div>
+      <h3 class="title mt-2">${item.org_en}</h3>
+      <div class="subtitle">${item.org_ko}</div>
+      <div class="course-list">• ${item.courses[0].en} — <span class="text-slate-500">${item.courses[0].ko}</span></div>
+    </div></div></article>`;
+}
 
-  function filterItems(){
-    return ITEMS
-      .filter(i => onRoles.has(i.role))
-      .filter(i => onSchools.has(i.school) || onSchools.has("고려대학교 세종캠퍼스") && i.school.includes("Korea University"))
-      .filter(matchesQuery)
-      .sort(byStartDesc);
-  }
+function render(){
+  const data=filterItems();
+  grid.innerHTML=data.map(card).join('');
+  count.textContent=`Showing ${data.length} of ${ITEMS.length}`;
+}
 
-  function card(item){
-    const season = seasonLabelFrom(parseStartDate(item.period));
-    const isLect = item.role.toLowerCase().includes('lecturer') && !item.role.toLowerCase().includes('assistant');
-    return `
-      <article class="card">
-        <div class="row">
-          <div class="strip"></div>
-          <div class="body">
-            <div class="meta">
-              <span class="badge ${isLect ? 'badge-role-lect':'badge-role-ta'}">${item.role}</span>
-              <span class="badge badge-period">${season}</span>
-              <span class="badge badge-school">${item.school}</span>
-            </div>
-            <h3 class="title mt-2">${item.org_en}</h3>
-            <div class="subtitle">${item.org_ko}</div>
-            ${item.courses && item.courses.length ? `
-              <div class="course-list">
-                ${item.courses.map(c => `• ${c.en} — <span class="text-slate-500">${c.ko}</span>`).join('<br/>')}
-              </div>` : ``}
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
-  function render(){
-    const data = filterItems();
-    grid.innerHTML = data.map(card).join('');
-    count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
-  }
-
-  // events
-  qInput.addEventListener('input', (e)=>{ q = e.target.value || ""; render(); });
-
-  // init
-  buildChips();
-  render();
+/* ===== Init ===== */
+qInput.oninput=e=>{q=e.target.value;render();};
+buildChips(); render();
 </script>
