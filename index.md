@@ -75,7 +75,6 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Women's University)
             <div class="mt-4 flex gap-3">
               <a class="btn-primary text-sm" href="{{ '/about-notice.html'     | relative_url }}">Notice</a>
               <a class="btn-primary text-sm" href="{{ '/archives-news.html'    | relative_url }}">News</a>
-              <a class="btn-primary text-sm" href="{{ '/archives-seminar.html' | relative_url }}">Seminar</a>
             </div>
           </div>
         </div>
