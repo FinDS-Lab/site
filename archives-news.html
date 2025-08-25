@@ -40,12 +40,13 @@ permalink: /archives-news.html
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
       {%- comment -%}
-        pages + posts를 합치고, /news/ 하위이면서 date가 있는 것만 추립니다.
-        정렬: 오래된 것 → 최신 (필요하면 | reverse 추가)
+        pages + posts를 합치고, /news/ 경로이면서 date가 있는 항목만 추립니다.
+        정렬: 오래된 것 → 최신 (최신순 원하면 아래 줄 끝에 | reverse 추가)
       {%- endcomment -%}
       {%- assign pages_posts = site.pages | concat: site.posts -%}
       {%- assign news_all = pages_posts | where_exp: "p", "p.url and p.url contains '/news/' and p.date" -%}
       {%- assign news_sorted = news_all | sort: "date" -%}
+      {# {%- assign news_sorted = news_all | sort: "date" | reverse -%}  <!-- 최신→오래된 순 --> #}
 
       {%- if news_sorted.size == 0 -%}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
