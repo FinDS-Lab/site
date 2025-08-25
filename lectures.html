@@ -34,29 +34,25 @@ permalink: /lectures.html
   @media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
 
   /* Card */
-  .card{
-    border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;
-    /* 배경은 동적으로 school color 지정 (inline style) */
-  }
-  .inner{
-    background:#fff;border-radius:.9rem;margin:10px; /* 컬러 여백 */
-    overflow:hidden;border:1px solid #e5e7eb;
-  }
+  .card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
+  .inner{background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb}
   .role-bar{height:6px;background:#ddd} /* 실제 색은 inline style로 지정 */
 
   .body{padding:14px 16px}
   .meta{display:flex;flex-wrap:wrap;gap:6px}
   .meta + .meta{margin-top:6px}
   .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
-  /* 카드 내부의 Role 배지는 흰색(텍스트 진한 회색)로 */
+  /* 내부 배지는 흰색 */
   .badge-role-lect{background:#fff;color:#111;border:1px solid #f0d2d2}
   .badge-role-ta{background:#fff;color:#111;border:1px solid #eadba8}
   .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
-  /* 학교 배지는 흰색 배경 유지 */
   .badge-school{background:#fff;color:#111;border:1px solid #e5e7eb}
 
   .course-en{font-size:15px;font-weight:900;color:#111827;margin-top:10px}
   .course-ko{font-size:13px;color:#374151;margin-top:2px}
+
+  /* Empty state */
+  .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
@@ -109,6 +105,7 @@ permalink: /lectures.html
 </section>
 
 <script>
+(() => {
 /* ===== Raw Data ===== */
 const RAW = [
   { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
@@ -132,110 +129,125 @@ const RAW = [
 
 /* ===== Expand courses into ITEMS ===== */
 const ITEMS = [];
-RAW.forEach(r=>{ r.courses.forEach(c=>ITEMS.push({...r, courses:[c]})); });
+RAW.forEach(r => r.courses.forEach(c => ITEMS.push({...r, courses:[c]})));
 
-/* ===== Utils ===== */
+/* ===== Utils (ensure defined before used) ===== */
 function parseStartDate(period){
-  const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);
+  const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
 }
 function seasonLabelFrom(date){
-  const y=date.getFullYear(); const m=date.getMonth()+1;
-  const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
+  const y = date.getFullYear(), m = date.getMonth() + 1;
+  const s = (m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
   return `${y} ${s}`;
+}
+function seasonToDate(s){
+  const [yy, ss] = s.split(' ');
+  const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+  return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
 }
 function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
-/* ===== Filters ===== */
-const ROLES=["Lecturer","Teaching Assistant"];
-const SCHOOLS=["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
-const SCHOOL_COLORS={
+/* ===== Filters (lists & active sets) ===== */
+const ROLES = ["Lecturer","Teaching Assistant"];
+const SCHOOLS = ["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
+const SCHOOL_COLORS = {
   "Dongduk Women’s University":"var(--school-dongduk)",
   "Kyung Hee University":"var(--school-kyunghee)",
   "Korea University Sejong Campus":"var(--school-korea)",
   "Gangnam University":"var(--school-gangnam)",
   "KAIST":"var(--school-kaist)"
 };
-let q="";
-const onRoles=new Set(ROLES);
-const onSchools=new Set(SCHOOLS);
+let q = "";
+const onRoles = new Set(ROLES);
+const onSchools = new Set(SCHOOLS);
 
-/* Build semesters from data */
+/* ===== Semesters (build AFTER utils) ===== */
 const ALL_SEMS = Array.from(new Set(
-  ITEMS.map(i=>seasonLabelFrom(parseStartDate(i.period)))
-)).sort((a,b)=>{
-  const toDate = s => {
-    const [yy, ss] = s.split(' ');
-    const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
-    return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
-  };
-  return toDate(b)-toDate(a);
-});
-const onSems=new Set(ALL_SEMS);
+  ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period)))
+)).sort((a,b)=> seasonToDate(b) - seasonToDate(a));
+const onSems = new Set(ALL_SEMS);
 
 /* ===== DOM ===== */
-const grid=document.getElementById('grid');
-const count=document.getElementById('count');
-const qInput=document.getElementById('q');
-const roleChips=document.getElementById('roleChips');
-const schoolChips=document.getElementById('schoolChips');
-const semChips=document.getElementById('semChips');
+const grid = document.getElementById('grid');
+const count = document.getElementById('count');
+const qInput = document.getElementById('q');
+const roleChips = document.getElementById('roleChips');
+const schoolChips = document.getElementById('schoolChips');
+const semChips = document.getElementById('semChips');
 
+/* ===== Chips ===== */
 function buildChips(){
-  /* Role/University는 기존 배너색 유지 */
-  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}" style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`).join('');
-  schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
-  /* Semester 칩은 기본(흰색) */
-  semChips.innerHTML=ALL_SEMS.map(s=>`<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`).join('');
+  // Role/University는 배너 색 유지
+  roleChips.innerHTML = ROLES.map(r =>
+    `<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}"
+      style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`
+  ).join('');
+  schoolChips.innerHTML = SCHOOLS.map(s =>
+    `<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}"
+      style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`
+  ).join('');
+  // Semester 칩은 기본(흰색)
+  semChips.innerHTML = ALL_SEMS.map(s =>
+    `<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`
+  ).join('');
 
-  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{
-    const r=btn.dataset.role; onRoles.has(r)?onRoles.delete(r):onRoles.add(r); buildChips(); render();
+  // 핸들러 재바인딩
+  roleChips.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => {
+    const r = btn.dataset.role;
+    onRoles.has(r) ? onRoles.delete(r) : onRoles.add(r);
+    buildChips(); render();
   });
-  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{
-    const s=btn.dataset.school; onSchools.has(s)?onSchools.delete(s):onSchools.add(s); buildChips(); render();
+  schoolChips.querySelectorAll('[data-school]').forEach(btn => btn.onclick = () => {
+    const s = btn.dataset.school;
+    onSchools.has(s) ? onSchools.delete(s) : onSchools.add(s);
+    buildChips(); render();
   });
-  semChips.querySelectorAll('[data-sem]').forEach(btn=>btn.onclick=()=>{
-    const s=btn.dataset.sem; onSems.has(s)?onSems.delete(s):onSems.add(s); buildChips(); render();
+  semChips.querySelectorAll('[data-sem]').forEach(btn => btn.onclick = () => {
+    const s = btn.dataset.sem;
+    onSems.has(s) ? onSems.delete(s) : onSems.add(s);
+    buildChips(); render();
   });
 }
 
+/* ===== Filtering ===== */
 function matchesQuery(i){
   if(!q) return true;
-  const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();
+  const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
+  const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
   return t.includes(q.toLowerCase());
 }
 function filterItems(){
   return ITEMS
-    .filter(i=>onRoles.has(i.role))
-    .filter(i=>onSchools.has(i.school))
-    .filter(i=>onSems.has(seasonLabelFrom(parseStartDate(i.period))))
+    .filter(i => onRoles.has(i.role))
+    .filter(i => onSchools.has(i.school))
+    .filter(i => onSems.has(seasonLabelFrom(parseStartDate(i.period))))
     .filter(matchesQuery)
     .sort(byStartDesc);
 }
 
 /* ===== Card ===== */
 function card(item){
-  const season=seasonLabelFrom(parseStartDate(item.period));
-  const roleBarColor=item.role==="Lecturer"?"var(--lect-red)":"var(--ta-gold)";
-  const schoolColor=SCHOOL_COLORS[item.school]||"#ccc";
-  const roleBadgeClass=item.role==="Lecturer"?"badge-role-lect":"badge-role-ta";
+  const season = seasonLabelFrom(parseStartDate(item.period));
+  const roleBarColor = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
+  const schoolColor = SCHOOL_COLORS[item.school] || "#ccc";
+  const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
 
   return `
   <article class="card" style="background:${schoolColor}">
     <div class="inner">
       <div class="role-bar" style="background:${roleBarColor}"></div>
       <div class="body">
-        <!-- 1st line: Role (badge는 흰색) -->
+        <!-- 줄1: Role -->
         <div class="meta">
           <span class="badge ${roleBadgeClass}">${item.role}</span>
         </div>
-        <!-- 2nd line: School (흰 배경) / Semester -->
+        <!-- 줄2: School / Semester -->
         <div class="meta">
           <span class="badge badge-school">${item.school}</span>
           <span class="badge badge-period">${season}</span>
         </div>
-
-        <!-- Course title big / Korean small -->
+        <!-- 과목명 크고/작게 -->
         <div class="course-en">${item.courses[0].en}</div>
         <div class="course-ko">${item.courses[0].ko}</div>
       </div>
@@ -245,12 +257,17 @@ function card(item){
 
 /* ===== Render ===== */
 function render(){
-  const data=filterItems();
-  grid.innerHTML=data.map(card).join('');
-  count.textContent=\`Showing \${data.length} of \${ITEMS.length}\`;
+  const data = filterItems();
+  if(data.length === 0){
+    grid.innerHTML = `<div class="empty">No lectures found. Try changing filters.</div>`;
+  }else{
+    grid.innerHTML = data.map(card).join('');
+  }
+  count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
 }
 
 /* ===== Init ===== */
-qInput.oninput=e=>{q=e.target.value;render();};
+qInput.oninput = e => { q = e.target.value; render(); };
 buildChips(); render();
+})(); /* IIFE */
 </script>
