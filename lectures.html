@@ -1,0 +1,320 @@
+---
+layout: default
+title: Lectures | TSI Lab
+permalink: /lectures.html
+---
+
+<!-- ===== Breadcrumbs ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <nav aria-label="Breadcrumb" class="text-[12px] text-slate-200">
+    <ol class="flex items-center gap-2">
+      <li><a href="{{ '/' | relative_url }}" class="hover:underline">Home</a></li>
+      <li aria-hidden="true">›</li>
+      <li aria-current="page" class="text-white/90 font-semibold">Lectures</li>
+    </ol>
+  </nav>
+</section>
+
+<!-- ===== Page Title / Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-2">
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" alt="Lectures banner"
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-4 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures & Teaching</h1>
+        <p class="text-sm md:text-[15px] opacity-95">Courses taught and instructional roles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Styles ===== -->
+<style>
+  :root{
+    --accent: rgb(172, 14, 14);         /* main red */
+    --gold:   rgb(214, 177, 77);        /* gold */
+    --gold-soft: rgba(214,177,77,.35);  /* softer gold */
+  }
+  .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .55rem;border-radius:.65rem;border:1px solid #e5e7eb;font-weight:800;font-size:11px;color:#111827;white-space:nowrap}
+  .badge-role-lect{background:linear-gradient(90deg, var(--gold), var(--gold-soft) 65%, rgba(255,255,255,0))}
+  .badge-role-ta{  background:linear-gradient(90deg, rgba(214,177,77,.55), rgba(214,177,77,.15) 65%, rgba(255,255,255,0))}
+  .badge-period{background:#f8fafc}
+  .badge-code{background:#fff;border-style:dashed}
+  .badge-dept{background:#fff}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
+  .row{display:grid;grid-template-columns:8px 1fr;gap:0}
+  .strip{background:var(--accent)}
+  .body{padding:14px 16px}
+  .title{font-weight:900;font-size:15px;line-height:1.35;color:#111827}
+  .sub{margin-top:2px;color:#374151;font-size:13px}
+  .sub-ko{color:#6b7280;font-size:12px}
+  .course-list{margin-top:8px}
+  .course{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #e5e7eb;border-radius:.75rem}
+  .section-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem}
+  .section-head h2{font-size:1.25rem;font-weight:900;color:#111827}
+  .grid-wrap{margin-top:12px;display:grid;gap:12px}
+  @media (min-width: 768px){ .grid-wrap{grid-template-columns:1fr 1fr} }
+</style>
+
+<!-- ===== Data + Render ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6 space-y-8">
+  <!-- Lecturer -->
+  <div>
+    <div class="section-head">
+      <h2>Lecturer</h2>
+      <span class="badge badge-role-lect">Lecturer</span>
+    </div>
+    <div id="lecturerWrap" class="grid-wrap"></div>
+  </div>
+
+  <!-- Teaching Assistant (incl. Tutorial/Program TA) -->
+  <div>
+    <div class="section-head">
+      <h2>Teaching Assistant</h2>
+      <span class="badge badge-role-ta">Teaching Assistant</span>
+    </div>
+    <div id="taWrap" class="grid-wrap"></div>
+  </div>
+</section>
+
+<script>
+  // ===== Source data (filtered to Lecturer / TA family only) =====
+  const LECTURE_ITEMS = [
+    // ── Lecturer ─────────────────────────────────────────────────────────────
+    {
+      role: "Lecturer", role_ko: "강사",
+      period: "2025-03-01 – 2026-02-28",
+      org_en: "Digital Business Major, Division of Convergence Business, College of Global Business, Korea University",
+      org_ko: "고려대학교 글로벌비즈니스대학 융합경영학부 디지털경영전공",
+      courses: [
+        { en: "Algorithmic Trading (DIGB441)", ko: "알고리즘 투자전략 (DIGB441)" }
+      ]
+    },
+    {
+      role: "Lecturer", role_ko: "강사",
+      period: "2025-03-01 – 2026-02-28",
+      org_en: "Department of Electronic and Semiconductor Engineering, Gangnam University (formerly Department of Artificial Intelligence Convergence Engineering, Gangnam University)",
+      org_ko: "강남대학교 전자반도체공학부 (舊 강남대학교 인공지능융합공학부)",
+      courses: [
+        { en: "Introduction to Financial Engineering (EG14209)", ko: "금융공학입문 (EG14209)" }
+      ]
+    },
+    {
+      role: "Lecturer", role_ko: "강사",
+      period: "2024-03-01 – 2024-08-31",
+      org_en: "Department of Industrial and Management Systems Engineering, Kyung Hee University",
+      org_ko: "경희대학교 산업경영공학과",
+      courses: [
+        { en: "Financial Engineering (IE329)", ko: "금융공학 (IE329)" },
+        { en: "Engineering Economics (IE201)", ko: "경제성공학 (IE201)" }
+      ]
+    },
+
+    // ── Teaching Assistant (includes Tutorial/Program TA) ───────────────────
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2024-09-02 – 2024-12-31",
+      org_en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801), Korea Advanced Institute of Science and Technology",
+      org_ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
+      courses: [
+        { en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801)", ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Tutorial Lecturer and Teaching Assistant", role_ko: "강의지원조교 (부분 강의 진행)",
+      period: "2024-02-26 – 2024-06-30",
+      org_en: "Financial Artificial Intelligence (IE471), Department of Industrial Engineering, KAIST",
+      org_ko: "금융인공지능 (IE471), 한국과학기술원",
+      courses: [
+        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
+      ],
+      flags: ["Tutorial", "TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2023-08-28 – 2023-12-31",
+      org_en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801), Graduate School of Data Science, KAIST",
+      org_ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
+      courses: [
+        { en: "Special Topics in Data Science I: Applications of Financial Data Science (DS801)", ko: "데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Tutorial Lecturer and Teaching Assistant", role_ko: "강의지원조교 (부분 강의 진행)",
+      period: "2023-02-27 – 2023-06-30",
+      org_en: "Financial Artificial Intelligence (IE471), KAIST",
+      org_ko: "금융인공지능 (IE471), 한국과학기술원",
+      courses: [
+        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
+      ],
+      flags: ["Tutorial", "TA"]
+    },
+    {
+      role: "Program Teaching Assistant", role_ko: "교육담당조교",
+      period: "2023-01-01 – 2023-02-28",
+      org_en: "Hana Financial Group – KAIST Industry-Academia Collaboration Program",
+      org_ko: "하나금융그룹 – KAIST 산학협력 프로그램",
+      courses: [],
+      flags: ["Program", "TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2022-08-30 – 2022-12-31",
+      org_en: "Special Topics in Knowledge Service Engineering I: Applications of Financial Data Science (KSE801), KAIST",
+      org_ko: "지식서비스공학의 특수논제 I <금융데이터사이언스응용> (DS801), 한국과학기술원",
+      courses: [
+        { en: "KSE Special Topics I: Applications of Financial Data Science (KSE801/DS801)", ko: "지식서비스공학/데이터사이언스 특수논제 I (KSE801/DS801)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2022-02-28 – 2022-06-30",
+      org_en: "Special Topics in Industrial Systems Engineering I: You&IE (IE482), KAIST",
+      org_ko: "산업공학특강 I <You&IE> (IE482), 한국과학기술원",
+      courses: [
+        { en: "You&IE (IE482)", ko: "산업공학특강 I <You&IE> (IE482)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Tutorial Lecturer and Teaching Assistant", role_ko: "강의지원조교 (부분 강의 진행)",
+      period: "2022-02-28 – 2022-06-30",
+      org_en: "Financial Artificial Intelligence (IE471/IE412), KAIST & UNIST (Joint)",
+      org_ko: "금융인공지능 (IE471/IE412), 한국과학기술원 – 울산과학기술원 협동 강의",
+      courses: [
+        { en: "Financial Artificial Intelligence (IE471/IE412)", ko: "금융인공지능 (IE471/IE412)" }
+      ],
+      flags: ["Tutorial", "TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2021-08-30 – 2021-12-31",
+      org_en: "Convex Optimization (IE539), KAIST",
+      org_ko: "컨벡스 최적화 (IE539), 한국과학기술원",
+      courses: [
+        { en: "Convex Optimization (IE539)", ko: "컨벡스 최적화 (IE539)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2021-03-01 – 2021-06-30",
+      org_en: "Decision Analysis and Risk Management (IE432), KAIST",
+      org_ko: "의사결정분석 및 위험관리 (IE432), 한국과학기술원",
+      courses: [
+        { en: "Decision Analysis and Risk Management (IE432)", ko: "의사결정분석 및 위험관리 (IE432)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Lead Developer, Tutorial Lecturer, and Teaching Assistant", role_ko: "강의 자료 및 커리큘럼 개발자 겸 강의지원조교 (부분 강의 진행)",
+      period: "2021-03-01 – 2021-06-30",
+      org_en: "Financial Artificial Intelligence (IE471), KAIST",
+      org_ko: "금융인공지능 (IE471), 한국과학기술원",
+      courses: [
+        { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
+      ],
+      flags: ["Tutorial", "TA"]
+    },
+    {
+      role: "Program Teaching Assistant", role_ko: "교육담당조교",
+      period: "2021-01-01 – 2021-02-28",
+      org_en: "Shinhan Financial Group – KAIST Industry-Academia Collaboration Program",
+      org_ko: "신한금융지주 – KAIST 산학협력 프로그램",
+      courses: [],
+      flags: ["Program", "TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2020-08-31 – 2020-12-31",
+      org_en: "Convex Optimization (IE539), KAIST",
+      org_ko: "컨벡스 최적화 (IE539), 한국과학기술원",
+      courses: [
+        { en: "Convex Optimization (IE539)", ko: "컨벡스 최적화 (IE539)" }
+      ],
+      flags: ["TA"]
+    },
+    {
+      role: "Program Teaching Assistant", role_ko: "교육담당조교",
+      period: "2020-01-01 – 2020-02-28",
+      org_en: "Shinhan Financial Group – KAIST Industry-Academia Collaboration Program",
+      org_ko: "신한금융지주 – KAIST 산학협력 프로그램",
+      courses: [],
+      flags: ["Program", "TA"]
+    },
+    {
+      role: "Teaching Assistant", role_ko: "강의지원조교",
+      period: "2019-02-25 – 2019-06-30",
+      org_en: "Decision Analysis and Risk Management (IE432), KAIST",
+      org_ko: "의사결정분석 및 위험관리 (IE432), 한국과학기술원",
+      courses: [
+        { en: "Decision Analysis and Risk Management (IE432)", ko: "의사결정분석 및 위험관리 (IE432)" }
+      ],
+      flags: ["TA"]
+    }
+  ];
+
+  // Split into Lecturer / TA buckets
+  const lecturerData = LECTURE_ITEMS.filter(i => i.role.toLowerCase().includes("lecturer") && !i.role.toLowerCase().includes("assistant"));
+  const taData = LECTURE_ITEMS.filter(i => !lecturerData.includes(i));
+
+  // Sort by period start (desc). We parse YYYY-MM-DD at the start of the string.
+  function parseStartDate(period){
+    const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(!m) return new Date(0);
+    return new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`);
+  }
+  lecturerData.sort((a,b)=> parseStartDate(b.period) - parseStartDate(a.period));
+  taData.sort((a,b)=> parseStartDate(b.period) - parseStartDate(a.period));
+
+  function courseChips(courses){
+    if (!courses || !courses.length) return "";
+    return `
+      <div class="course-list grid gap-2">
+        ${courses.map(c=>`
+          <div class="course">
+            <span class="badge badge-code">${c.en}</span>
+            <span class="text-[13px] text-slate-700">${c.ko}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function cardTemplate(item, isLecturer){
+    return `
+      <article class="card">
+        <div class="row">
+          <div class="strip"></div>
+          <div class="body">
+            <div class="flex flex-wrap items-center gap-2 justify-between">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="badge ${isLecturer ? 'badge-role-lect' : 'badge-role-ta'}">${item.role}${item.role_ko ? ` · ${item.role_ko}` : ''}</span>
+                <span class="badge badge-period">${item.period}</span>
+              </div>
+            </div>
+
+            <h3 class="title mt-2">${item.org_en}</h3>
+            <div class="sub-ko">${item.org_ko}</div>
+
+            ${courseChips(item.courses)}
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function render(){
+    const lectWrap = document.getElementById('lecturerWrap');
+    const taWrap = document.getElementById('taWrap');
+    lectWrap.innerHTML = lecturerData.map(i=>cardTemplate(i, true)).join('');
+    taWrap.innerHTML   = taData.map(i=>cardTemplate(i, false)).join('');
+  }
+
+  render();
+</script>
