@@ -4,7 +4,6 @@ title: Archives — News
 permalink: /archives-news.html
 ---
 
-<!-- ===== News Board Styles ===== -->
 <style>
   .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
   .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
@@ -23,11 +22,9 @@ permalink: /archives-news.html
   }
 </style>
 
-<!-- ===== Hero / Header ===== -->
 <section class="relative">
   <div class="relative w-full h-40 md:h-56 overflow-hidden">
-    <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}"
-         alt="FINDS Lab News banner" class="absolute inset-0 w-full h-full object-cover">
+    <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab News banner" class="absolute inset-0 w-full h-full object-cover">
     <div class="absolute inset-0 bg-black/35"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -38,16 +35,20 @@ permalink: /archives-news.html
   </div>
 </section>
 
-<!-- ===== News List (newest → oldest) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
       {%- comment -%}
-        GitHub Pages의 Liquid 제한을 피하기 위해 site.news 컬렉션만 사용합니다.
-        모든 news 문서는 date를 갖고 있으므로 바로 정렬합니다.
+        1) 컬렉션(_news)이 있으면 site.news 사용
+        2) 폴더가 news/인 경우를 대비해 site.pages에서 /news/ 경로도 함께 수집
       {%- endcomment -%}
 
-      {%- assign news_sorted = site.news | sort: "date" | reverse -%}
+      {%- assign from_collection = site.news | default: empty -%}
+      {%- assign from_pages = site.pages
+           | where_exp:"p","p.url != nil and p.url contains '/news/'"
+           | where_exp:"p","p.date != nil" -%}
+      {%- assign news_all = from_collection | concat: from_pages -%}
+      {%- assign news_sorted = news_all | sort: "date" | reverse -%}
 
       {%- if news_sorted == empty -%}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
@@ -58,13 +59,11 @@ permalink: /archives-news.html
           {%- assign d = post.date | date: "%d" -%}
 
           <li class="board-row" role="listitem">
-            <!-- Date -->
             <div class="date-box" aria-hidden="true">
               <div class="date-d">{{ d }}</div>
               <div class="date-ym">{{ y }}.{{ m }}</div>
             </div>
 
-            <!-- Content -->
             <div class="min-w-0">
               <h2 class="title text-[15px] sm:text-base">
                 <a class="hover:underline" href="{{ post.url | relative_url }}">{{ post.title }}</a>
@@ -81,7 +80,6 @@ permalink: /archives-news.html
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
 
-            <!-- CTA -->
             <div class="btn-cell hidden sm:block">
               <a class="btn-more" href="{{ post.url | relative_url }}" aria-label="Read more about {{ post.title | escape }}">Read&nbsp;More</a>
             </div>
