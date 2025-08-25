@@ -18,12 +18,6 @@ permalink: /archives-news.html
   .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
   .btn-more:hover{background:#f8fafc}
   .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
-
-  /* Breadcrumbs */
-  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-  .breadcrumbs a{color:#e5e7eb}
-  .breadcrumbs a:hover{text-decoration:underline}
-  .breadcrumbs .sep{opacity:.8}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
@@ -34,44 +28,60 @@ permalink: /archives-news.html
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
-        <!-- Breadcrumbs -->
-        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <span class="sep">›</span>
-          <a href="{{ '/archives-news.html' | relative_url }}">Archives</a>
-          <span class="sep">›</span>
-          <span aria-current="page" class="font-semibold">News</span>
-        </nav>
-
-        <!-- Title -->
-        <h1 class="text-2xl md:text-3xl font-extrabold">News</h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold">Lab News</h1>
         <p class="text-sm md:text-[15px] opacity-95">Updates, achievements, and events from FINDS Lab.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== News List (newest → oldest) ===== -->
+<!-- ===== News List (oldest → newest) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
     <ul id="news-list" role="list">
-      {% assign pages_sorted = site.pages | sort: "date" | reverse %}
-      {% comment %}
-        Jekyll 3 호환: 필터(where_exp) 없이 pages+posts를 합치고 date로 정렬,
-        루프 안에서 '/news/'와 date가 있는 것만 출력.
-      {% endcomment %}
-      {% assign all = site.pages | concat: site.posts %}
-      {% assign all_sorted = all | sort: 'date' | reverse %}
+      {% assign pages_sorted = site.pages | sort: "date" %}
       {% assign count = 0 %}
 
+      {% comment %}
+      /news 폴더에 있는 “페이지(=posts 아님)”를 수집합니다.
+      각 파일에는 반드시 front matter에 `date:`가 있어야 정렬됩니다.
+      예) date: 2025-09-01
+      {% endcomment %}
+
+      {% assign pages_in_news = site.pages | where_exp: "p", "p.url and p.url contains '/news/'" %}
+
+      {% comment %}
+      날짜 없는 문서는 제외(정렬 불가)
+      {% endcomment %}
+      {% assign dated_pages = "" | split: "" %}
+      {% for p in pages_in_news %}
+        {% if p.date %}
+          {% assign dated_pages = dated_pages | push: p %}
+        {% endif %}
+      {% endfor %}
+
+      {% comment %}
+      정렬: 오래된 것 → 최신 (원하면 | reverse 로 뒤집으세요)
+      {% endcomment %}
+      {% assign sorted = dated_pages | sort: "date" %}
+
+      {% if sorted.size == 0 %}
+        <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
+      {% else %}
+        {% for post in sorted %}
       {% for post in pages_sorted %}
         {% if post.url and post.url contains '/news/' and post.date %}
-      {% for post in all_sorted %}
-        {% if post.url and post.date and post.url contains '/news/' %}
           {% assign count = count | plus: 1 %}
           {% assign y = post.date | date: "%Y" %}
           {% assign m = post.date | date: "%m" %}
-@@ -74,24 +79,20 @@
+          {% assign d = post.date | date: "%d" %}
+          <li class="board-row" role="listitem">
+            <div class="date-box">
+              <div class="date-d">{{ d }}</div>
+              <span class="date-ym">{{ y }}.{{ m }}</span>
+            </div>
+            <div>
+              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
                 {{ post.title }}
               </a>
               <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
@@ -80,7 +90,6 @@ permalink: /archives-news.html
                 {% else %}
                   {{ post.content | strip_html | strip | truncate: 160 }}
                 {% endif %}
-                {{ post.excerpt | default: post.content | strip_html | strip | truncate: 160 }}
               </div>
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
@@ -88,6 +97,7 @@ permalink: /archives-news.html
               <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
             </div>
           </li>
+        {% endfor %}
         {% endif %}
       {% endfor %}
 
@@ -96,4 +106,3 @@ permalink: /archives-news.html
       {% endif %}
     </ul>
   </div>
-</section>
