@@ -1,454 +1,371 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>TSI Lab — Publications</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+---
+layout: default
+title: Publications | TSI Lab
+permalink: /publications.html
+---
 
-  <!-- Tailwind + React + Babel -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- ===== Hero / Page Title ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/publications-hero.jpg' | relative_url }}" alt="Publications banner"
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-4 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <h1 class="text-2xl md:text-3xl font-extrabold">Publications</h1>
+        <p class="text-sm md:text-[15px] opacity-95">
+          Color intensity of the indexing badge encodes tier: SCIE/SSCI/A&amp;HCI ＞ Scopus ＞ Intl. ＞ KCI(우수) ＞ KCI.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!-- Inter Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<!-- ===== Styles (배지 그라데이션: rgb(172,14,14) → 투명) ===== -->
+<style>
+  :root{ --accent: 172,14,14; } /* rgb(172,14,14) */
 
-  <style>
-    :root{
-      --accent: 172,14,14; /* rgb(172,14,14) */
-    }
-    html,body{font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;}
-    /* ===== Badge (indexing) palette by intensity ===== */
-    .idx-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .6rem;border-radius:9999px;border:1px solid rgba(0,0,0,.06);font-weight:800;font-size:12px;white-space:nowrap}
-    .idx-sc{ /* SCIE / SSCI / A&HCI (strongest) */
-      background:linear-gradient(90deg, rgba(var(--accent),.95) 0%, rgba(var(--accent),.45) 60%, rgba(255,255,255,0) 100%);
-      color:#111827;
-    }
-    .idx-scopus{ /* a bit lighter than SC group */
-      background:linear-gradient(90deg, rgba(var(--accent),.70) 0%, rgba(var(--accent),.25) 60%, rgba(255,255,255,0) 100%);
-      color:#111827;
-    }
-    .idx-intl{ /* 기타 국제 저널 */
-      background:linear-gradient(90deg, rgba(var(--accent),.45) 0%, rgba(var(--accent),.18) 60%, rgba(255,255,255,0) 100%);
-      color:#111827;
-    }
-    .idx-kci-exc{ /* KCI 우수등재지 */
-      background:linear-gradient(90deg, rgba(var(--accent),.30) 0%, rgba(var(--accent),.12) 60%, rgba(255,255,255,0) 100%);
-      color:#111827;
-    }
-    .idx-kci{ /* KCI 등재지 (lightest) */
-      background:linear-gradient(90deg, rgba(var(--accent),.20) 0%, rgba(var(--accent),.08) 60%, rgba(255,255,255,0) 100%);
-      color:#111827;
-    }
-    /* neutral badges */
-    .idx-topconf{ background:linear-gradient(90deg, rgba(30,41,59,.18), rgba(226,232,240,0)); color:#111827; }
-    .idx-conf{ background:linear-gradient(90deg, rgba(30,41,59,.12), rgba(226,232,240,0)); color:#111827; }
-    .idx-arxiv{ background:linear-gradient(90deg, rgba(124,58,237,.15), rgba(226,232,240,0)); color:#111827; }
+  .idx-badge{
+    display:inline-flex;align-items:center;gap:.35rem;
+    padding:.28rem .6rem;border-radius:9999px;
+    border:1px solid rgba(0,0,0,.06);font-weight:800;font-size:12px;white-space:nowrap;
+    color:#111827;
+  }
+  /* 진함 → 옅음 순서 */
+  .idx-strong{  background:linear-gradient(90deg, rgba(var(--accent),.95), rgba(var(--accent),.45) 60%, rgba(255,255,255,0)); }
+  .idx-high{    background:linear-gradient(90deg, rgba(var(--accent),.70), rgba(var(--accent),.25) 60%, rgba(255,255,255,0)); }
+  .idx-med{     background:linear-gradient(90deg, rgba(var(--accent),.45), rgba(var(--accent),.18) 60%, rgba(255,255,255,0)); }
+  .idx-light{   background:linear-gradient(90deg, rgba(var(--accent),.30), rgba(var(--accent),.12) 60%, rgba(255,255,255,0)); }
+  .idx-lighter{ background:linear-gradient(90deg, rgba(var(--accent),.20), rgba(var(--accent),.08) 60%, rgba(255,255,255,0)); }
 
-    .tag{display:inline-flex;align-items:center;padding:.18rem .5rem;border-radius:9999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:11px}
-    .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1rem}
-    .pill{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .6rem;border:1px solid #e5e7eb;border-radius:.65rem;font-weight:700;font-size:12px}
-    .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:.6rem;border:1px solid #e5e7eb;font-weight:800;font-size:12px}
-    .btn:hover{background:#f8fafc}
-    .year-toggle{cursor:pointer}
-  </style>
-</head>
-<body class="bg-gray-50">
-  <div id="app"></div>
+  /* 타입 뱃지(중립) */
+  .type-pill{display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .6rem;border:1px solid #e5e7eb;border-radius:.65rem;font-weight:800;font-size:12px;background:#fff;color:#374151}
 
-  <script type="text/babel">
-    const {useMemo, useState, useEffect, Fragment} = React;
+  /* 태그 */
+  .tag{display:inline-flex;align-items:center;padding:.18rem .5rem;border-radius:9999px;background:#eef2ff;color:#3730a3;font-weight:700;font-size:11px}
 
-    /* =========================================================
-       1) Data — 샘플은 너가 준 리스트를 반영하고, 인덱스 속성을 부여
-       --------------------------------------------------------- */
-    const publications = [
-      // ====== Journals ======
-      {
-        id: "[J5]",
-        title: "Heterogeneous Trading Behaviors of Individual Investors",
-        authors: ["Yoontae Hwang", "Junpyo Park", "Jang Ho Kim", "Yongjae Lee", "Frank J Fabozzi"],
-        venue: "Finance Research Letters (FRL), 2023",
-        links: [{text:"paper", href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612324005117"}],
-        topics: ["Trading","Deep Learning"],
-        year: 2023,
-        type: "Journal",
-        indexing: "SSCI"
-      },
-      {
-        id: "[J4]",
-        title: "Identifying household finance heterogeneity via deep clustering",
-        authors: ["Yoontae Hwang", "Yongjae Lee", "Frank J Fabozzi"],
-        venue: "Annals of Operations Research (ANOR), 2023",
-        links: [{text:"paper", href:"https://link.springer.com/article/10.1007/s10479-022-04900-3"}],
-        topics: ["Household Finance","Deep Learning"],
-        year: 2023,
-        type: "Journal",
-        indexing: "SCIE"
-      },
-      {
-        id: "[J3]",
-        title: "Household Financial Health: A Machine Learning Approach for Data-Driven Diagnosis and Prescription",
-        authors: ["Kyeongbin Kim*", "Yoontae Hwang*", "Dongcheol Lim", "Suhyeon Kim", "Junghye Lee", "Yongjae Lee"],
-        venue: "Quantitative Finance (QF), 2023",
-        links: [{text:"paper", href:"https://www.tandfonline.com/doi/full/10.1080/14697688.2023.2254335"}],
-        topics: ["Household Finance","Deep Learning"],
-        year: 2023,
-        type: "Journal",
-        indexing: "SSCI"
-      },
-      {
-        id: "[J2]",
-        title: "Stop-loss adjusted labels for machine learning-based trading of risky assets",
-        authors: ["Yoontae Hwang", "Junpyo Park", "Dong-Young Lim", "Yongjae Lee"],
-        venue: "Finance Research Letters (FRL), 2023",
-        links: [
-          {text:"paper", href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612323006578"},
-          {text:"code", href:"https://github.com/Yoontae6719/Stop-loss-adjusted-labels"}
-        ],
-        topics: ["Trading","Deep Learning"],
-        year: 2023,
-        type: "Journal",
-        indexing: "SSCI"
-      },
-      {
-        id: "[J1]",
-        title: "A Study on the Estimation of Apartment Price Index: Focused on the Machine Learning Algorithm",
-        authors: ["Yoontae Hwang"],
-        venue: "Journal of Money & Finance (KMFA), 2019",
-        links: [{text:"paper", href:"https://kiss.kstudy.com/Detail/Ar?key=3707638"}],
-        topics: ["Household Finance","Time-Series Analysis","Deep Learning"],
-        year: 2019,
-        type: "Journal",
-        indexing: "KCI" // (등재지로 처리)
-      },
+  /* 카드 */
+  .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;padding:1rem}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:.6rem;border:1px solid #e5e7eb;font-weight:800;font-size:12px}
+  .btn:hover{background:#f8fafc}
+  .pill{display:inline-flex;align-items:center;gap:.4rem;padding:.28rem .6rem;border:1px solid #e5e7eb;border-radius:.65rem;font-weight:700;font-size:12px}
+  .year-toggle{cursor:pointer}
+</style>
 
-      // ====== Conferences ======
-      {
-        id: "[C4]",
-        title: "Time-MQA: Time Series Multi-Task Question Answering with Context Enhancement",
-        authors: ["Yaxuan Kong*","Yiyuan Yang*","Yoontae Hwang","Wenjie Du","Stefan Zohren","Zhangyang Wang","Ming Jin","Qingsong Wen"],
-        venue: "ACL 2025 (Main Track, 23% acc.)",
-        links: [{text:"paper", href:"https://arxiv.org/abs/2503.01875"},{text:"code", href:"https://huggingface.co/Time-QA"}],
-        topics: ["Time-Series Analysis","Deep Learning"],
-        year: 2025,
-        type: "Conference",
-        indexing: "Top Conference"
-      },
-      {
-        id: "[C3]",
-        title: "Geodesic Flow Kernels for Semi-Supervised Learning on Mixed-Variable Tabular Dataset",
-        authors: ["Yoontae Hwang","Yongjae Lee"],
-        venue: "AAAI 2025 (Main Track, 24% acc.)",
-        links: [
-          {text:"paper", href:"https://arxiv.org/abs/2412.12864"},
-          {text:"code", href:"https://github.com/Yoontae6719/Geodesic-Flow-Kernels-for-Semi-Supervised-Learning-on-Mixed-Variable-Tabular-Dataset"},
-          {text:"seminar@UNIST", href:"ppt/GFTab_UNIST.pdf"}
-        ],
-        topics: ["Tabular Modeling","Deep Learning"],
-        year: 2025,
-        type: "Conference",
-        indexing: "Top Conference"
-      },
-      {
-        id: "[C2]",
-        title: "CAFO: Feature-Centric Explanation on Time Series Classification",
-        authors: ["Jaeho Kim","Seok-ju Hahn","Yoontae Hwang","Junghye Lee","Seulki Lee"],
-        venue: "KDD 2024 (Main Track, 20% acc.) — Best Poster Award @UNIST AI Tech Workshop",
-        links: [{text:"paper", href:"https://arxiv.org/abs/2406.01833"},{text:"code", href:"https://github.com/eai-lab/CAFO"}],
-        topics: ["Time-Series Analysis","Deep Learning"],
-        year: 2024,
-        type: "Conference",
-        indexing: "Top Conference"
-      },
-      {
-        id: "[C1]",
-        title: "SimStock : Representation Model for Stock Similarities",
-        authors: ["Yoontae Hwang","Junhyeong Lee","Daham Kim","Seunghwan Noh","Joohwan Hong","Yongjae Lee"],
-        venue: "ICAIF 2023 (Oral, 21% acc.)",
-        links: [
-          {text:"paper", href:"https://dl.acm.org/doi/10.1145/3604237.3626888"},
-          {text:"code", href:"https://github.com/Yoontae6719/SimStock-Representation-Model-for-Stock-Similarities"},
-          {text:"seminar@SKKU", href:"ppt/SimStock_SKKU.pdf"}
-        ],
-        topics: ["Trading","Deep Learning"],
-        year: 2023,
-        type: "Conference",
-        indexing: "Conference"
-      },
+<!-- ===== Filters ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 md:p-6 space-y-4">
+    <div class="flex flex-col md:flex-row gap-3">
+      <div class="relative flex-1">
+        <input id="q" type="text" placeholder="Search title / author / venue / topic..."
+               class="w-full border border-gray-300 rounded-md pl-9 pr-3 py-2 focus:ring-2 focus:ring-[rgb(172,14,14)] focus:border-[rgb(172,14,14)]">
+        <svg class="w-5 h-5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <button id="btnReset" class="btn">Reset</button>
+    </div>
 
-      // ====== Working / Submitted ======
-      {
-        id: "[S]",
-        title: "Decision-informed Neural Networks with Large Language Model Integration for Portfolio Optimization",
-        authors: ["Yoontae Hwang","Yaxuan Kong","Stefan Zohren","Yongjae Lee"],
-        venue: "Finance Journal, 2025.01 (intended)",
-        links: [
-          {text:"paper", href:"https://arxiv.org/abs/2502.00828"},
-          {text:"code", href:"https://github.com/Yoontae6719/Decision-informed-Neural-Networks-with-Large-Language-Model-Integration-for-Portfolio-Optimization/tree/main"}
-        ],
-        topics: ["Portfolio Theory","Deep Learning"],
-        year: 2025,
-        type: "Working",
-        indexing: "ArXiv"
-      },
-      {
-        id: "[S]",
-        title: "Temporal Representation Learning for Stock Similarities and Its Applications in Investment Management",
-        authors: ["Yoontae Hwang","Stefan Zohren","Yongjae Lee"],
-        venue: "Finance Journal, 2024.12",
-        links: [
-          {text:"paper", href:"https://arxiv.org/abs/2407.13751"},
-          {text:"code", href:"https://github.com/Yoontae6719/SimStock-Representation-Model-for-Stock-Similarities"}
-        ],
-        topics: ["Trading","Portfolio Theory","Deep Learning"],
-        year: 2024,
-        type: "Working",
-        indexing: "ArXiv"
-      },
-      {
-        id: "[S]",
-        title: "Signature-informed Transformer for Asset Allocation",
-        authors: ["Yoontae Hwang","Stefan Zohren"],
-        venue: "Top AI Conference, 2025.09 (intended)",
-        links: [{text:"code", href:"https://github.com/Yoontae6719/Signature-Informed-Transformer-For-Asset-Allocation"}],
-        topics: ["Portfolio Theory","Deep Learning"],
-        year: 2025,
-        type: "Working",
-        indexing: "ArXiv"
-      }
-    ];
+    <div class="grid md:grid-cols-3 gap-3">
+      <div>
+        <h4 class="text-[13px] font-bold text-gray-700 mb-1">Indexing</h4>
+        <div id="idxFilter" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div>
+        <h4 class="text-[13px] font-bold text-gray-700 mb-1">Type</h4>
+        <div id="typeFilter" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div class="text-[13px] text-gray-600">
+        선택한 인덱싱 배지의 **색 강도 자체**가 등급을 의미합니다.
+      </div>
+    </div>
+  </div>
+</section>
 
-    /* =========================================================
-       2) Helpers
-       --------------------------------------------------------- */
-    const INDEX_CLASS = {
-      "SCIE": "idx-sc",
-      "SSCI": "idx-sc",
-      "A&HCI": "idx-sc",
-      "Scopus": "idx-scopus",
-      "International": "idx-intl",
-      "KCI 우수등재지": "idx-kci-exc",
-      "KCI": "idx-kci",
-      "Top Conference": "idx-topconf",
-      "Conference": "idx-conf",
-      "ArXiv": "idx-arxiv"
-    };
+<!-- ===== Year Groups ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6 space-y-6" id="yearGroups"></section>
 
-    const ALL_INDEXES = [
-      "SCIE","SSCI","A&HCI","Scopus","International","KCI 우수등재지","KCI",
-      "Top Conference","Conference","ArXiv"
-    ];
+<!-- ===== Scripts (Vanilla JS 렌더러) ===== -->
+<script>
+  // 1) 원자료 (요청하신 리스트 반영)
+  const DATA = [
+    // Journals
+    { id:"[J5]", title:"Heterogeneous Trading Behaviors of Individual Investors",
+      authors:["Yoontae Hwang","Junpyo Park","Jang Ho Kim","Yongjae Lee","Frank J Fabozzi"],
+      venue:"Finance Research Letters (FRL), 2023",
+      links:[{text:"paper", href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612324005117"}],
+      topics:["Trading","Deep Learning"], year:2023, type:"Journal", indexing:"SSCI" },
+    { id:"[J4]", title:"Identifying household finance heterogeneity via deep clustering",
+      authors:["Yoontae Hwang","Yongjae Lee","Frank J Fabozzi"],
+      venue:"Annals of Operations Research (ANOR), 2023",
+      links:[{text:"paper", href:"https://link.springer.com/article/10.1007/s10479-022-04900-3"}],
+      topics:["Household Finance","Deep Learning"], year:2023, type:"Journal", indexing:"SCIE" },
+    { id:"[J3]", title:"Household Financial Health: A Machine Learning Approach for Data-Driven Diagnosis and Prescription",
+      authors:["Kyeongbin Kim*","Yoontae Hwang*","Dongcheol Lim","Suhyeon Kim","Junghye Lee","Yongjae Lee"],
+      venue:"Quantitative Finance (QF), 2023",
+      links:[{text:"paper", href:"https://www.tandfonline.com/doi/full/10.1080/14697688.2023.2254335"}],
+      topics:["Household Finance","Deep Learning"], year:2023, type:"Journal", indexing:"SSCI" },
+    { id:"[J2]", title:"Stop-loss adjusted labels for machine learning-based trading of risky assets",
+      authors:["Yoontae Hwang","Junpyo Park","Dong-Young Lim","Yongjae Lee"],
+      venue:"Finance Research Letters (FRL), 2023",
+      links:[
+        {text:"paper", href:"https://www.sciencedirect.com/science/article/abs/pii/S1544612323006578"},
+        {text:"code", href:"https://github.com/Yoontae6719/Stop-loss-adjusted-labels"}],
+      topics:["Trading","Deep Learning"], year:2023, type:"Journal", indexing:"SSCI" },
+    { id:"[J1]", title:"A Study on the Estimation of Apartment Price Index: Focused on the Machine Learning Algorithm",
+      authors:["Yoontae Hwang"],
+      venue:"Journal of Money & Finance (KMFA), 2019",
+      links:[{text:"paper", href:"https://kiss.kstudy.com/Detail/Ar?key=3707638"}],
+      topics:["Household Finance","Time-Series Analysis","Deep Learning"], year:2019, type:"Journal", indexing:"KCI" },
 
-    const uniq = (arr)=>Array.from(new Set(arr));
+    // Conferences
+    { id:"[C4]", title:"Time-MQA: Time Series Multi-Task Question Answering with Context Enhancement",
+      authors:["Yaxuan Kong*","Yiyuan Yang*","Yoontae Hwang","Wenjie Du","Stefan Zohren","Zhangyang Wang","Ming Jin","Qingsong Wen"],
+      venue:"ACL 2025 (Main Track, 23% acc.)",
+      links:[{text:"paper", href:"https://arxiv.org/abs/2503.01875"},{text:"code", href:"https://huggingface.co/Time-QA"}],
+      topics:["Time-Series Analysis","Deep Learning"], year:2025, type:"Conference", indexing:"Top Conference" },
+    { id:"[C3]", title:"Geodesic Flow Kernels for Semi-Supervised Learning on Mixed-Variable Tabular Dataset",
+      authors:["Yoontae Hwang","Yongjae Lee"],
+      venue:"AAAI 2025 (Main Track, 24% acc.)",
+      links:[
+        {text:"paper", href:"https://arxiv.org/abs/2412.12864"},
+        {text:"code", href:"https://github.com/Yoontae6719/Geodesic-Flow-Kernels-for-Semi-Supervised-Learning-on-Mixed-Variable-Tabular-Dataset"},
+        {text:"seminar@UNIST", href:"ppt/GFTab_UNIST.pdf"}],
+      topics:["Tabular Modeling","Deep Learning"], year:2025, type:"Conference", indexing:"Top Conference" },
+    { id:"[C2]", title:"CAFO: Feature-Centric Explanation on Time Series Classification",
+      authors:["Jaeho Kim","Seok-ju Hahn","Yoontae Hwang","Junghye Lee","Seulki Lee"],
+      venue:"KDD 2024 (Main Track, 20% acc.) — Best Poster Award @UNIST AI Tech Workshop",
+      links:[{text:"paper", href:"https://arxiv.org/abs/2406.01833"},{text:"code", href:"https://github.com/eai-lab/CAFO"}],
+      topics:["Time-Series Analysis","Deep Learning"], year:2024, type:"Conference", indexing:"Top Conference" },
+    { id:"[C1]", title:"SimStock : Representation Model for Stock Similarities",
+      authors:["Yoontae Hwang","Junhyeong Lee","Daham Kim","Seunghwan Noh","Joohwan Hong","Yongjae Lee"],
+      venue:"ICAIF 2023 (Oral, 21% acc.)",
+      links:[
+        {text:"paper", href:"https://dl.acm.org/doi/10.1145/3604237.3626888"},
+        {text:"code", href:"https://github.com/Yoontae6719/SimStock-Representation-Model-for-Stock-Similarities"},
+        {text:"seminar@SKKU", href:"ppt/SimStock_SKKU.pdf"}],
+      topics:["Trading","Deep Learning"], year:2023, type:"Conference", indexing:"Conference" },
 
-    /* =========================================================
-       3) Components
-       --------------------------------------------------------- */
-    function Badge({indexing}){
-      const cls = INDEX_CLASS[indexing] || "idx-intl";
-      return <span className={`idx-badge ${cls}`}>{indexing}</span>;
-    }
+    // Working / Submitted
+    { id:"[S]", title:"Decision-informed Neural Networks with Large Language Model Integration for Portfolio Optimization",
+      authors:["Yoontae Hwang","Yaxuan Kong","Stefan Zohren","Yongjae Lee"],
+      venue:"Finance Journal, 2025.01 (intended)",
+      links:[
+        {text:"paper", href:"https://arxiv.org/abs/2502.00828"},
+        {text:"code", href:"https://github.com/Yoontae6719/Decision-informed-Neural-Networks-with-Large-Language-Model-Integration-for-Portfolio-Optimization/tree/main"}],
+      topics:["Portfolio Theory","Deep Learning"], year:2025, type:"Working", indexing:"ArXiv" },
+    { id:"[S]", title:"Temporal Representation Learning for Stock Similarities and Its Applications in Investment Management",
+      authors:["Yoontae Hwang","Stefan Zohren","Yongjae Lee"],
+      venue:"Finance Journal, 2024.12",
+      links:[
+        {text:"paper", href:"https://arxiv.org/abs/2407.13751"},
+        {text:"code", href:"https://github.com/Yoontae6719/SimStock-Representation-Model-for-Stock-Similarities"}],
+      topics:["Trading","Portfolio Theory","Deep Learning"], year:2024, type:"Working", indexing:"ArXiv" },
+    { id:"[S]", title:"Signature-informed Transformer for Asset Allocation",
+      authors:["Yoontae Hwang","Stefan Zohren"],
+      venue:"Top AI Conference, 2025.09 (intended)",
+      links:[{text:"code", href:"https://github.com/Yoontae6719/Signature-Informed-Transformer-For-Asset-Allocation"}],
+      topics:["Portfolio Theory","Deep Learning"], year:2025, type:"Working", indexing:"ArXiv" },
+  ];
 
-    function PaperItem({item}){
-      return (
-        <li className="paper-card">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Badge indexing={item.indexing}/>
-              <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-700 text-[11px] font-bold">{item.type}</span>
-            </div>
-            <div className="text-sm text-gray-500">{item.year}</div>
+  // 2) 인덱싱 → 배지 강도 클래스 매핑
+  const IDX_CLASS = (idx) => {
+    if (idx === "SCIE" || idx === "SSCI" || idx === "A&HCI") return "idx-strong";
+    if (idx === "Scopus") return "idx-high";
+    if (idx === "International") return "idx-med";
+    if (idx === "KCI 우수등재지") return "idx-light";
+    if (idx === "KCI") return "idx-lighter";
+    // 중립(컨퍼런스, 아카이브 등)은 라벨만, 색은 배지 기본 배경(연한 중립색)으로 표기하지 않고 type-pill로 구분
+    return "";
+  };
+
+  const ALL_INDEXES = ["SCIE","SSCI","A&HCI","Scopus","International","KCI 우수등재지","KCI","Top Conference","Conference","ArXiv"];
+  const ALL_TYPES   = ["Journal","Conference","Working"];
+
+  // 3) 상태
+  let state = {
+    q: "",
+    activeIdx: [],
+    activeType: [],
+    collapsed: {} // {year:true}
+  };
+
+  // 4) 유틸
+  const uniq = (arr)=> Array.from(new Set(arr));
+  const years = uniq(DATA.map(d=>d.year)).sort((a,b)=>b-a);
+  const topicsAll = uniq(DATA.flatMap(d=>d.topics||[])).sort();
+
+  // 5) 필터 버튼 렌더
+  function renderFilters(){
+    const idxWrap = document.getElementById('idxFilter');
+    const typeWrap = document.getElementById('typeFilter');
+    idxWrap.innerHTML = "";
+    typeWrap.innerHTML = "";
+
+    ALL_INDEXES.forEach(ix=>{
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.textContent = ix;
+      if (state.activeIdx.includes(ix)) btn.classList.add('bg-gray-100');
+      btn.onclick = ()=>{
+        if (state.activeIdx.includes(ix)) state.activeIdx = state.activeIdx.filter(x=>x!==ix);
+        else state.activeIdx.push(ix);
+        renderAll();
+      };
+      idxWrap.appendChild(btn);
+    });
+
+    ALL_TYPES.forEach(t=>{
+      const btn = document.createElement('button');
+      btn.className = 'pill';
+      btn.textContent = t;
+      if (state.activeType.includes(t)) btn.classList.add('bg-gray-100');
+      btn.onclick = ()=>{
+        if (state.activeType.includes(t)) state.activeType = state.activeType.filter(x=>x!==t);
+        else state.activeType.push(t);
+        renderAll();
+      };
+      typeWrap.appendChild(btn);
+    });
+  }
+
+  // 6) 필터링
+  function getFiltered(){
+    const q = state.q.trim().toLowerCase();
+    return DATA.filter(p=>{
+      const matchesQ = !q ||
+        p.title.toLowerCase().includes(q) ||
+        p.venue.toLowerCase().includes(q) ||
+        p.authors.some(a=>a.toLowerCase().includes(q)) ||
+        (p.topics||[]).some(t=>t.toLowerCase().includes(q));
+
+      // 인덱싱 필터: 컨퍼런스/아카이브는 인덱싱 필터에서 선택되면 그대로 통과, 아니면 무시
+      const matchesIdx = state.activeIdx.length===0 ||
+        state.activeIdx.includes(p.indexing);
+
+      const matchesType = state.activeType.length===0 || state.activeType.includes(p.type);
+      return matchesQ && matchesIdx && matchesType;
+    });
+  }
+
+  // 7) 카드 템플릿
+  function paperCard(p){
+    const idxCls = IDX_CLASS(p.indexing);
+    const idxBadge = p.indexing
+      ? `<span class="idx-badge ${idxCls}">${p.indexing}</span>`
+      : '';
+
+    const typeBadge = `<span class="type-pill">${p.type}</span>`;
+
+    const links = (p.links||[]).map(l=>`
+      <a class="btn" target="_blank" rel="noopener noreferrer" href="${l.href}">[${l.text}]</a>
+    `).join('');
+
+    const tags = (p.topics||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+
+    return `
+      <li class="paper-card">
+        <div class="flex flex-wrap items-start justify-between gap-2">
+          <div class="flex items-center gap-2">
+            ${idxBadge}
+            ${typeBadge}
           </div>
+          <div class="text-sm text-gray-500">${p.year}</div>
+        </div>
 
-          <h3 className="mt-2 text-[15px] sm:text-lg font-extrabold text-gray-900 leading-snug">
-            {item.id}&nbsp;{item.title}
-          </h3>
+        <h3 class="mt-2 text-[15px] sm:text-lg font-extrabold text-gray-900 leading-snug">
+          ${p.id}&nbsp;${p.title}
+        </h3>
 
-          <p className="mt-1 text-gray-700 text-sm">
-            {item.authors.join(", ")}
-          </p>
+        <p class="mt-1 text-gray-700 text-sm">${p.authors.join(", ")}</p>
+        <p class="mt-1 text-gray-500 text-sm">${p.venue}</p>
 
-          <p className="mt-1 text-gray-500 text-sm">{item.venue}</p>
+        <div class="mt-2 flex flex-wrap items-center gap-2">
+          <div class="flex flex-wrap gap-2">${links}</div>
+          <div class="flex flex-wrap gap-2 ml-auto">${tags}</div>
+        </div>
+      </li>
+    `;
+  }
 
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <div className="flex flex-wrap gap-2">
-              {item.links?.map(l=>(
-                <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn">
-                  [{l.text}]
-                </a>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-2 ml-auto">
-              {item.topics?.map(t=> <span key={t} className="tag">{t}</span>)}
+  // 8) 연도 그룹 렌더
+  function renderYearGroups(){
+    const wrap = document.getElementById('yearGroups');
+    const filtered = getFiltered();
+
+    // 연도→목록
+    const bucket = {};
+    filtered.forEach(p=>{ (bucket[p.year] ??= []).push(p); });
+
+    // 정렬: type 우선(Journal, Conference, Working) → 인덱싱 가중치
+    const typeRank = t => t==="Journal"?0 : t==="Conference"?1 : 2;
+    const idxWeight = x => ({
+      "SCIE":0,"SSCI":0,"A&HCI":0,"Scopus":1,"International":2,"KCI 우수등재지":3,"KCI":4,
+      "Top Conference":1,"Conference":2,"ArXiv":5
+    })[x] ?? 9;
+
+    years.forEach(y=>{
+      const items = bucket[y]||[];
+      items.sort((a,b)=>{
+        const r = typeRank(a.type)-typeRank(b.type);
+        if (r!==0) return r;
+        return idxWeight(a.indexing)-idxWeight(b.indexing);
+      });
+    });
+
+    wrap.innerHTML = years.map(y=>{
+      const items = bucket[y]||[];
+      if (!items.length) return '';
+      const isCol = !!state.collapsed[y];
+      return `
+        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
+          <div class="flex items-center justify-between px-4 sm:px-6 py-3 bg-gray-50 border-b">
+            <div class="flex items-center gap-3">
+              <button class="year-toggle btn" data-year="${y}">
+                ${isCol ? 'Expand' : 'Collapse'}
+              </button>
+              <h2 class="text-xl font-extrabold">${y}</h2>
+              <span class="text-sm text-gray-500">(${items.length})</span>
             </div>
           </div>
-        </li>
-      );
-    }
-
-    function Legend(){
-      const items = [
-        {name:"SCIE / SSCI / A&HCI", cls:"idx-sc"},
-        {name:"Scopus", cls:"idx-scopus"},
-        {name:"기타 국제 저널", cls:"idx-intl"},
-        {name:"KCI 우수등재지", cls:"idx-kci-exc"},
-        {name:"KCI 등재지", cls:"idx-kci"},
-        {name:"Top Conf.", cls:"idx-topconf"},
-        {name:"Conf.", cls:"idx-conf"},
-        {name:"ArXiv/Working", cls:"idx-arxiv"},
-      ];
-      return (
-        <div className="flex flex-wrap gap-2">
-          {items.map(i=>(
-            <span key={i.name} className={`idx-badge ${i.cls}`}>{i.name}</span>
-          ))}
+          ${isCol ? '' : `
+          <ul class="p-4 sm:p-6 grid gap-4">
+            ${items.map(paperCard).join('')}
+          </ul>`}
         </div>
-      );
-    }
+      `;
+    }).join('');
 
-    function PublicationsApp(){
-      const [q, setQ] = useState("");
-      const [activeIdx, setActiveIdx] = useState([]); // indexing filters
-      const [activeType, setActiveType] = useState([]); // Journal / Conference / Working
-      const [collapsed, setCollapsed] = useState({}); // year -> true/false
-
-      const allYears = useMemo(()=> uniq(publications.map(p=>p.year)).sort((a,b)=>b-a), []);
-      const allTopics = useMemo(()=> uniq(publications.flatMap(p=>p.topics||[])).sort(), []);
-
-      const filtered = useMemo(()=>{
-        const query = q.trim().toLowerCase();
-        return publications.filter(p=>{
-          const matchesQ = !query ||
-            p.title.toLowerCase().includes(query) ||
-            p.venue.toLowerCase().includes(query) ||
-            p.authors.some(a=>a.toLowerCase().includes(query)) ||
-            (p.topics||[]).some(t=>t.toLowerCase().includes(query));
-          const matchesIdx = activeIdx.length===0 || activeIdx.includes(p.indexing) ||
-            (p.indexing==="SSCI" && activeIdx.includes("SCIE")) || // 사용 편의를 위해 SCIE/SSCI/A&HCI 묶음 선택 시 교차 포함 옵션이 필요하면 여기 확장
-            (p.indexing==="A&HCI" && activeIdx.includes("SCIE"));
-          const matchesType = activeType.length===0 || activeType.includes(p.type);
-          return matchesQ && matchesIdx && matchesType;
-        });
-      }, [q, activeIdx, activeType]);
-
-      const byYear = useMemo(()=>{
-        const d = {};
-        for(const p of filtered){
-          (d[p.year] ??= []).push(p);
-        }
-        Object.keys(d).forEach(y=> d[y].sort((a,b)=>{
-          // Journals first, then Conferences, then Working
-          const rank = t => t==="Journal" ? 0 : t==="Conference" ? 1 : 2;
-          const r = rank(a.type) - rank(b.type);
-          if (r!==0) return r;
-          // tie-breaker: indexing weight
-          const w = x => ({
-            "SCIE":0,"SSCI":0,"A&HCI":0,"Scopus":1,"International":2,"KCI 우수등재지":3,"KCI":4,
-            "Top Conference":0,"Conference":1,"ArXiv":5
-          })[x] ?? 9;
-          return w(a.indexing) - w(b.indexing);
-        }));
-        return d;
-      }, [filtered]);
-
-      const toggleIdx = (idx)=>{
-        setActiveIdx(prev => prev.includes(idx) ? prev.filter(x=>x!==idx) : [...prev, idx]);
+    // year toggle 바인딩
+    wrap.querySelectorAll('.year-toggle').forEach(btn=>{
+      btn.onclick = ()=>{
+        const y = btn.getAttribute('data-year');
+        state.collapsed[y] = !state.collapsed[y];
+        renderYearGroups();
       };
-      const toggleType = (t)=>{
-        setActiveType(prev => prev.includes(t) ? prev.filter(x=>x!==t) : [...prev, t]);
-      };
-      const resetFilters = ()=>{
-        setQ(""); setActiveIdx([]); setActiveType([]);
-      };
+    });
+  }
 
-      return (
-        <div className="max-w-6xl mx-auto p-4 sm:p-8 space-y-8">
-          <header className="text-center">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900">Publications</h1>
-            <p className="mt-2 text-gray-600">Color intensity encodes journal indexing tiers from strong <span className="font-bold" style={{color:"rgb(172,14,14)"}}>red</span> to pale.</p>
-          </header>
+  // 9) 전체 렌더
+  function renderAll(){
+    renderFilters();
+    renderYearGroups();
+  }
 
-          <section className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 shadow-sm space-y-4 sticky top-2 z-10">
-            <div className="flex flex-col md:flex-row gap-3">
-              <div className="relative flex-1">
-                <input placeholder="Search title / author / venue / topic..."
-                       value={q}
-                       onChange={e=>setQ(e.target.value)}
-                       className="w-full border border-gray-300 rounded-md pl-9 pr-3 py-2 focus:ring-2 focus:ring-[rgb(172,14,14)] focus:border-[rgb(172,14,14)]"/>
-                <svg className="w-5 h-5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-              </div>
-              <button onClick={resetFilters} className="btn">Reset</button>
-            </div>
+  // 10) 이벤트
+  document.getElementById('q').addEventListener('input', (e)=>{
+    state.q = e.target.value;
+    renderYearGroups();
+  });
+  document.getElementById('btnReset').addEventListener('click', ()=>{
+    state.q = "";
+    state.activeIdx = [];
+    state.activeType = [];
+    state.collapsed = {};
+    document.getElementById('q').value = "";
+    renderAll();
+  });
 
-            <div className="grid md:grid-cols-3 gap-3">
-              <div>
-                <h4 className="text-[13px] font-bold text-gray-700 mb-1">Indexing</h4>
-                <div className="flex flex-wrap gap-2">
-                  {ALL_INDEXES.map(ix=>(
-                    <button key={ix}
-                            onClick={()=>toggleIdx(ix)}
-                            className={`pill ${activeIdx.includes(ix)?'bg-gray-100':''}`}>
-                      {ix}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="text-[13px] font-bold text-gray-700 mb-1">Type</h4>
-                <div className="flex flex-wrap gap-2">
-                  {["Journal","Conference","Working"].map(t=>(
-                    <button key={t} onClick={()=>toggleType(t)} className={`pill ${activeType.includes(t)?'bg-gray-100':''}`}>{t}</button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="text-[13px] font-bold text-gray-700 mb-1">Legend</h4>
-                <Legend/>
-              </div>
-            </div>
-          </section>
-
-          {/* Year groups */}
-          <section className="space-y-6">
-            {allYears.map(y=>{
-              const items = byYear[y] || [];
-              if (items.length===0) return null;
-              const isCollapsed = !!collapsed[y];
-              return (
-                <div key={y} className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-                  <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-gray-50 border-b">
-                    <div className="flex items-center gap-3">
-                      <button className="year-toggle btn" onClick={()=>setCollapsed(s=>({...s, [y]:!isCollapsed}))}
-                              aria-expanded={!isCollapsed} aria-controls={`year-${y}`}>
-                        {isCollapsed ? "Expand" : "Collapse"}
-                      </button>
-                      <h2 className="text-xl font-extrabold">{y}</h2>
-                      <span className="text-sm text-gray-500">({items.length})</span>
-                    </div>
-                  </div>
-                  {!isCollapsed && (
-                    <ul id={`year-${y}`} className="p-4 sm:p-6 grid gap-4">
-                      {items.map(p=><PaperItem key={p.id+p.title} item={p}/>)}
-                    </ul>
-                  )}
-                </div>
-              );
-            })}
-          </section>
-
-          <footer className="text-center text-sm text-gray-500 py-6">
-            © {new Date().getFullYear()} TSI Lab — Time Series Intelligence, Pusan National University
-          </footer>
-        </div>
-      );
-    }
-
-    const root = ReactDOM.createRoot(document.getElementById('app'));
-    root.render(<PublicationsApp/>);
-  </script>
-</body>
-</html>
+  // 초기 렌더
+  renderAll();
+</script>
