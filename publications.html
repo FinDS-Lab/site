@@ -31,19 +31,44 @@ permalink: /publications.html
 
 <!-- ===== Styles ===== -->
 <style>
+  :root{ --accent-r:172;--accent-g:14;--accent-b:14; --gold-r:214;--gold-g:177;--gold-b:77; }
   .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:10px 14px;margin-top:18px}
   .search input{width:260px;max-width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.45rem .65rem;font-size:13px}
   .chips{display:flex;flex-wrap:wrap;gap:6px}
   .chip{display:inline-flex;align-items:center;padding:.3rem .6rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-size:12px;font-weight:700;color:#111827;cursor:pointer}
   .chip.is-on{background:#e5e7eb}
+
+  .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
+  .paper-body{padding:14px 16px}
+  .paper-title{font-weight:900;font-size:15px;color:#111827}
+  .paper-meta{margin-top:4px;color:#374151;font-size:13px}
+  .paper-venue{margin-top:2px;color:#6b7280;font-size:12px}
+  .paper-foot{margin-top:10px;display:flex;gap:8px;align-items:center}
+
+  .idx{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .55rem;border-radius:9999px;font-weight:800;font-size:11px;white-space:nowrap}
+  .idx-sc-group{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.95), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.45) 60%)}
+  .idx-scopus{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.70), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.25) 60%)}
+  .idx-intl-etc{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.45), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.18) 60%)}
+  .idx-kci-exc{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.30), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.12) 60%)}
+  .idx-kci{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.20), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.08) 60%)}
+  .idx-domestic-etc{background:linear-gradient(90deg, rgba(var(--accent-r),var(--accent-g),var(--accent-b),.14), rgba(var(--accent-r),var(--accent-g),var(--accent-b),.06) 60%)}
+  .idx-preprint{background:linear-gradient(90deg, rgba(124,58,237,.18), rgba(226,232,240,0))}
+  .idx-working{background:linear-gradient(90deg, rgba(124,58,237,.12), rgba(226,232,240,0))}
+
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:.6rem;border:1px solid #e5e7eb;font-weight:800;font-size:12px}
+  .btn:hover{background:#f8fafc}
+
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:99999}
+  .modal{background:#fff;border-radius:12px;border:1px solid #e5e7eb;max-width:720px;width:100%;max-height:80vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+  .modal header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e5e7eb}
+  .cite-block{border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px}
+  .copy-mini{border:1px solid #e5e7eb;border-radius:6px;padding:.25rem .5rem;font-size:11px;font-weight:800}
 </style>
 
-<!-- ===== Toolbar (Search + Tags) ===== -->
+<!-- ===== Toolbar ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="search">
-      <input id="q" type="text" placeholder="Search publications..." />
-    </div>
+    <div class="search"><input id="q" type="text" placeholder="Search publications..."></div>
     <div class="chips" id="typeChips"></div>
     <div class="chips" id="idxChips"></div>
     <div id="pubCount" class="text-[12px] text-slate-500"></div>
@@ -53,11 +78,11 @@ permalink: /publications.html
 <!-- ===== Publications ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-4 space-y-6" id="pubWrap"></section>
 
-<!-- ===== Cite Modal (그대로 유지) ===== -->
-<div id="citeModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="citeTitle">
+<!-- ===== Cite Modal ===== -->
+<div id="citeModal" class="modal-backdrop">
   <div class="modal">
     <header>
-      <h3 id="citeTitle" class="text-lg font-extrabold text-slate-900">Cite</h3>
+      <h3 class="text-lg font-extrabold text-slate-900">Cite</h3>
       <button id="btnCloseCite" class="copy-mini">Close</button>
     </header>
     <div class="p-4 space-y-3" id="citeBody"></div>
@@ -65,69 +90,72 @@ permalink: /publications.html
 </div>
 
 <script>
-  /* ===== 필터/검색 상태 ===== */
-  const TYPES = ["Journal","Conference","Preprint","Working"];
-  const IDX_GROUPS = ["SCIE","SSCI","A&HCI","Scopus","Other International","KCI Excellent Accredited","KCI Accredited","Other Domestic","Preprint","Working Paper"];
+/* ========== Data (생략 없이 붙여넣기: PUBS = [...]) ========== */
+const PUBS = [...]; // 네가 준 데이터 그대로
 
-  let q=""; 
-  const onTypes = new Set(TYPES);
-  const onIdx = new Set(IDX_GROUPS);
+/* ===== Helpers ===== */
+const TYPES=["Journal","Conference","Preprint","Working"];
+const IDX_GROUPS=["SCIE","SSCI","A&HCI","Scopus","Other International","KCI Excellent Accredited","KCI Accredited","Other Domestic","Preprint","Working Paper"];
+let q=""; const onTypes=new Set(TYPES); const onIdx=new Set(IDX_GROUPS);
 
-  /* ===== Pub 데이터 (기존 그대로, accepted_date 포함) ===== */
-  const PUBS = [...]; // <-- 네가 올린 데이터 그대로 사용
+function dateNote(p){ return p.accepted_date ? `${p.accepted_date}, ${p.year}` : `${p.year}`; }
+function indexingClass(g){if(["SCIE","SSCI","A&HCI"].includes(g))return"idx idx-sc-group";if(g==="Scopus")return"idx idx-scopus";if(g==="Other International")return"idx idx-intl-etc";if(g==="KCI Excellent Accredited")return"idx idx-kci-exc";if(g==="KCI Accredited")return"idx idx-kci";if(g==="Other Domestic")return"idx idx-domestic-etc";if(g==="Preprint")return"idx idx-preprint";if(g==="Working Paper")return"idx idx-working";return"idx";}
+function idxBadge(p){return `<span class="${indexingClass(p.indexing_group)}">${p.indexing_group}</span>`;}
 
-  /* ===== Helper 수정: 날짜 포맷 ===== */
-  function dateNote(p){
-    if (p.accepted_date) return `${p.accepted_date}, ${p.year}`;
-    return `${p.year}`;
-  }
+/* Cite formatting */
+function toInitials(name){const parts=name.replace(/\*/g,'').split(" ");const last=parts.pop();return `${last}, ${parts.map(p=>p[0]+".").join(" ")}`;}
+function formatCitations(p){
+  const A=p.authors,Y=p.year,T=p.title,V=p.journal||p.venue;
+  return {
+    MLA: `${A[0]} et al. "${T}." ${V} (${Y}).`,
+    APA: `${A.map(toInitials).join(", ")} (${Y}). ${T}. ${V}.`,
+    Chicago: `${A[0]}, et al. ${Y}. "${T}." ${V}.`,
+    Harvard: `${toInitials(A[0])} et al. (${Y}) ${T}. ${V}.`,
+    Vancouver: `${A.join(", ")}. ${T}. ${V}. ${Y}.`
+  };
+}
 
-  /* ===== Chips build ===== */
-  function buildChips(){
-    const tEl = document.getElementById('typeChips');
-    const iEl = document.getElementById('idxChips');
-    tEl.innerHTML = TYPES.map(t=>`<button class="chip ${onTypes.has(t)?'is-on':''}" data-type="${t}">${t}</button>`).join('');
-    iEl.innerHTML = IDX_GROUPS.map(g=>`<button class="chip ${onIdx.has(g)?'is-on':''}" data-idx="${g}">${g}</button>`).join('');
+/* Chips */
+function buildChips(){
+  const t=document.getElementById("typeChips"),i=document.getElementById("idxChips");
+  t.innerHTML=TYPES.map(x=>`<button class="chip is-on" data-type="${x}">${x}</button>`).join("");
+  i.innerHTML=IDX_GROUPS.map(x=>`<button class="chip is-on" data-idx="${x}">${x}</button>`).join("");
+  t.querySelectorAll("[data-type]").forEach(b=>b.onclick=()=>{const v=b.dataset.type;onTypes.has(v)?onTypes.delete(v):onTypes.add(v);b.classList.toggle("is-on");render();});
+  i.querySelectorAll("[data-idx]").forEach(b=>b.onclick=()=>{const v=b.dataset.idx;onIdx.has(v)?onIdx.delete(v):onIdx.add(v);b.classList.toggle("is-on");render();});
+}
 
-    tEl.querySelectorAll('[data-type]').forEach(btn=>{
-      btn.onclick=()=>{const v=btn.getAttribute('data-type');onTypes.has(v)?onTypes.delete(v):onTypes.add(v);btn.classList.toggle('is-on');render();};
-    });
-    iEl.querySelectorAll('[data-idx]').forEach(btn=>{
-      btn.onclick=()=>{const v=btn.getAttribute('data-idx');onIdx.has(v)?onIdx.delete(v):onIdx.add(v);btn.classList.toggle('is-on');render();};
-    });
-  }
+/* Render */
+function matches(p){
+  const type=p.is_conference?"Conference":(p.indexing_group==="Preprint"?"Preprint":p.indexing_group==="Working Paper"?"Working":"Journal");
+  if(!onTypes.has(type)||!onIdx.has(p.indexing_group))return false;
+  if(q&&!`${p.title} ${p.authors.join(" ")} ${p.venue}`.toLowerCase().includes(q.toLowerCase()))return false;
+  return true;
+}
+function render(){
+  const D=PUBS.filter(matches);
+  document.getElementById("pubCount").textContent=`Total: ${D.length}`;
+  document.getElementById("pubWrap").innerHTML=D.map(p=>`
+    <div class="paper-card p-4">
+      <div class="flex justify-between"><div>${idxBadge(p)}</div><div class="text-sm text-slate-500">${dateNote(p)}</div></div>
+      <h3 class="paper-title mt-2">${p.title}</h3>
+      <div class="paper-meta">${p.authors.join(", ")}</div>
+      <div class="paper-venue">${p.venue}</div>
+      <div class="paper-foot"><button class="btn" data-cite='${JSON.stringify(p)}'>Cite</button></div>
+    </div>`).join("");
+  document.querySelectorAll("[data-cite]").forEach(b=>b.onclick=()=>openCite(JSON.parse(b.dataset.cite)));
+}
+document.getElementById("q").oninput=e=>{q=e.target.value;render();};
 
-  /* ===== Filter & Render ===== */
-  function matches(p){
-    if(!onIdx.has(p.indexing_group)) return false;
-    const type = p.is_conference?"Conference":(p.indexing_group==="Preprint"?"Preprint":(p.indexing_group==="Working Paper"?"Working":"Journal"));
-    if(!onTypes.has(type)) return false;
-    if(q && !(p.title.toLowerCase()+" "+p.authors.join(" ").toLowerCase()+" "+p.venue.toLowerCase()).includes(q.toLowerCase())) return false;
-    return true;
-  }
+/* Cite modal */
+const modal=document.getElementById("citeModal"),body=document.getElementById("citeBody");
+document.getElementById("btnCloseCite").onclick=()=>modal.style.display="none";
+function openCite(p){
+  const c=formatCitations(p);
+  body.innerHTML=Object.entries(c).map(([k,v])=>`<div class="cite-block"><div class="flex justify-between mb-1"><strong>${k}</strong><button class="copy-mini" data-copy="${k}">Copy</button></div><div id="${k}" class="text-[13px]">${v}</div></div>`).join("");
+  body.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent));
+  modal.style.display="flex";
+}
 
-  function render(){
-    const data = PUBS.filter(matches);
-    document.getElementById('pubCount').textContent=`Total: ${data.length}`;
-    document.getElementById('pubWrap').innerHTML = data.map(p=>`
-      <div class="paper-card p-4">
-        <div class="flex justify-between items-center mb-2">
-          <div>${p.indexing_group}</div>
-          <div class="text-sm text-slate-500">${dateNote(p)}</div>
-        </div>
-        <h3 class="font-bold">${p.title}</h3>
-        <div class="text-sm text-slate-700">${p.authors.join(", ")}</div>
-        <div class="text-xs text-slate-500">${p.venue}</div>
-        <div class="mt-2"><button class="btn" data-cite='${JSON.stringify(p)}'>Cite</button></div>
-      </div>
-    `).join('');
-    document.querySelectorAll('[data-cite]').forEach(btn=>{
-      btn.onclick=()=>openCite(JSON.parse(btn.getAttribute('data-cite')));
-    });
-  }
-
-  document.getElementById('q').addEventListener('input',e=>{q=e.target.value;render();});
-
-  buildChips();
-  render();
+/* Init */
+buildChips(); render();
 </script>
