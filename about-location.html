@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Location | FINDS Lab — Dongduk Woman's University
+title: Location | FINDS Lab — Dongduk Womern's University
 permalink: /about-location.html
 ---
 
@@ -8,7 +8,7 @@ permalink: /about-location.html
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <img src="{{ '/assets/img/banners/location-hero.jpg' | relative_url }}" alt="Location banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320" loading="eager" fetchpriority="high">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -23,7 +23,7 @@ permalink: /about-location.html
 
         <!-- Title -->
         <h1 class="text-2xl md:text-3xl font-extrabold">Location</h1>
-        <p class="text-sm md:text-[15px] opacity-95">Find our lab and professor’s office at Dongduk Women’s University.</p>
+        <p class="text-sm md:text-[15px] opacity-95">Find our lab and professor’s office at Dongduk Womern's University.</p>
       </div>
     </div>
   </div>
@@ -33,7 +33,19 @@ permalink: /about-location.html
 <main class="max-w-7xl mx-auto px-4 mt-6 grid lg:grid-cols-3 gap-6">
   <!-- Map -->
   <div class="lg:col-span-2 card" id="kakao-map-wrap">
-    <div id="kakao-map" role="img" aria-label="동덕여자대학교 인문관 위치 지도"></div>
+    <style>
+      /* Page-local styles: map & cards reuse site tokens */
+      #kakao-map{width:100%;height:380px;border-radius:12px;border:1px solid #e5e7eb}
+      @media (min-width:768px){#kakao-map{height:460px}}
+      .map-error{margin-top:10px;padding:10px;border-radius:8px;background:#fef2f2;color:#991b1b;font-weight:700;border:1px solid #fecaca}
+      .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+      .info-row{display:flex;gap:12px}
+      .copy-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-weight:800;font-size:13px}
+      .copy-btn:hover{background:#f8fafc}
+      .breadcrumbs a{text-decoration:underline;text-underline-offset:2px}
+    </style>
+
+    <div id="kakao-map" role="img" aria-label="동덕여자대학교 숭인관 위치 지도"></div>
     <div id="mapError" class="map-error" style="display:none;"></div>
     <div class="mt-3 flex items-center justify-between">
       <div class="text-[12px] text-slate-500">Powered by Kakao Maps</div>
@@ -105,6 +117,119 @@ permalink: /about-location.html
 <!-- ===== Page-specific Scripts ===== -->
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2288f6c721287408c4bdc22f994230ad&libraries=services&autoload=false"></script>
 <script>
-  // 지도 초기화 스크립트 (기존 코드 그대로 유지)
-  // ...
+  (function(){
+    // ----- Constants -----
+    const PLACE_NAME = '동덕여자대학교 숭인관';
+    const ADDRESS_TEXT = '(02748) 서울특별시 성북구 화랑로13길 60 동덕여자대학교 숭인관';
+    // Optional fallback 좌표 (숭인관 인근, 검색 실패 시 사용) — 필요시 미세조정 가능
+    const FALLBACK = { lat: 37.6067, lng: 127.0505 };
+
+    const elMap = document.getElementById('kakao-map');
+    const elErr = document.getElementById('mapError');
+    const elBtnRecenter = document.getElementById('btnRecenter');
+    const elBtnDirections = document.getElementById('btnDirections');
+
+    let map, marker, currentCenter;
+
+    function showError(msg){
+      elErr.style.display = 'block';
+      elErr.textContent = msg;
+    }
+
+    function setDirectionsLink(lat, lng, name){
+      // Kakao link/to: https://map.kakao.com/link/to/{name},{lat},{lng}
+      const url = `https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}`;
+      elBtnDirections.setAttribute('href', url);
+    }
+
+    function initMapAt(lat, lng, name){
+      currentCenter = new kakao.maps.LatLng(lat, lng);
+      const options = {
+        center: currentCenter,
+        level: 3
+      };
+      if(!map){
+        map = new kakao.maps.Map(elMap, options);
+      }else{
+        map.setCenter(currentCenter);
+      }
+
+      if(!marker){
+        marker = new kakao.maps.Marker({ position: currentCenter, map });
+      }else{
+        marker.setPosition(currentCenter);
+      }
+
+      const iwContent = `
+        <div style="padding:8px 10px;font-weight:700;font-size:13px;">
+          ${name}<br>
+          <span style="font-weight:500;color:#4b5563;">FINDS Lab · DWU</span>
+        </div>`;
+      const infowindow = new kakao.maps.InfoWindow({ content: iwContent, removable: false });
+      infowindow.open(map, marker);
+
+      setDirectionsLink(lat, lng, name);
+    }
+
+    function wireButtons(){
+      elBtnRecenter.addEventListener('click', function(){
+        if(map && currentCenter){
+          map.setCenter(currentCenter);
+          map.setLevel(3);
+        }
+      });
+
+      document.querySelectorAll('[data-copy-addr]').forEach(btn=>{
+        btn.addEventListener('click', async ()=>{
+          try{
+            await navigator.clipboard.writeText(ADDRESS_TEXT);
+            btn.textContent = 'Copied!';
+            setTimeout(()=>{ btn.textContent = 'Copy address'; }, 1200);
+          }catch(err){
+            alert('복사에 실패했습니다. 잠시 후 다시 시도해주세요.');
+          }
+        });
+      });
+    }
+
+    function locateByKeyword(){
+      const places = new kakao.maps.services.Places();
+      places.keywordSearch(PLACE_NAME, function(data, status){
+        if(status === kakao.maps.services.Status.OK && data && data.length){
+          // 숭인관/인문관 표기가 섞일 수 있어, 일치도 높은 항목 우선
+          const exact = data.find(d => (d.place_name||'').includes('숭인관')) || data[0];
+          const lat = parseFloat(exact.y), lng = parseFloat(exact.x);
+          initMapAt(lat, lng, exact.place_name || PLACE_NAME);
+        }else{
+          // 검색 실패 시 fallback
+          initMapAt(FALLBACK.lat, FALLBACK.lng, PLACE_NAME);
+          showError('지오코딩 결과를 찾지 못해 근사 위치로 표시했습니다.');
+        }
+      }, { size: 5 });
+    }
+
+    function bootstrap(){
+      try{
+        kakao.maps.load(function(){
+          // 지도 인스턴스 선생성(빈 center), 이후 검색 성공 시 이동
+          initMapAt(FALLBACK.lat, FALLBACK.lng, PLACE_NAME);
+          locateByKeyword();
+          wireButtons();
+        });
+      }catch(e){
+        showError('지도를 불러오는 중 오류가 발생했습니다. 네트워크 상태를 확인해주세요.');
+      }
+    }
+
+    // autoload=false 이므로 명시적으로 부팅
+    if (window.kakao && kakao.maps) {
+      bootstrap();
+    } else {
+      // SDK가 아직 준비되지 않은 경우 안전장치
+      window.addEventListener('load', ()=>{
+        if(window.kakao && kakao.maps){ bootstrap(); }
+        else showError('카카오 지도 SDK 로딩에 실패했습니다.');
+      });
+    }
+  })();
 </script>
