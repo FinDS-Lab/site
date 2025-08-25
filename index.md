@@ -1,6 +1,3 @@
-여기에 \*\*헤더 블록을 포함한 전체 `index.md`\*\*를 합친 버전 넣었습니다. 그대로 붙여 넣으면 됩니다.
-
-```html
 ---
 layout: default
 title: FINDS Lab | Financial Data Science Lab. (Dongduk Women's University)
@@ -359,4 +356,3 @@ title: FINDS Lab | Financial Data Science Lab. (Dongduk Women's University)
     }
   })();
 </script>
-```
