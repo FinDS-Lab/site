@@ -20,7 +20,9 @@ permalink: /projects.html
 
 /* Toolbar */
 .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
-.search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
+.search-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search{flex:1;min-width:0}
+.search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
 
 /* Grid: 한 줄에 한 프로젝트 */
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
@@ -122,9 +124,26 @@ permalink: /projects.html
 
 /* Count 표시 */
 .count{
-  font-size:14px;
+  font-size:13px;
   color:#6b7280;
   font-weight:600;
+  background:#fff;
+  padding:.4rem .8rem;
+  border:1px solid #e5e7eb;
+  border-radius:.5rem;
+  white-space:nowrap;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .search-container{flex-direction:column;align-items:stretch}
+  .search{width:100%}
+  .count{text-align:center;width:100%}
+  .meta-label{min-width:70px;font-size:11px}
+  .meta-value{font-size:11px}
+  .project-title-en{font-size:14px}
+  .project-title-ko{font-size:12px}
+  .keyword-badge{font-size:10px;padding:.2rem .5rem}
 }
 </style>
 
@@ -154,10 +173,12 @@ permalink: /projects.html
 <!-- ===== Toolbar (Search Only) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="search">
-      <input id="q" type="text" placeholder="Search by project name, funding agency, keyword..." />
+    <div class="search-container">
+      <div class="search">
+        <input id="q" type="text" placeholder="Search projects..." />
+      </div>
+      <div class="count" id="count"></div>
     </div>
-    <div class="count" id="count"></div>
   </div>
 </section>
 
@@ -394,7 +415,7 @@ permalink: /projects.html
       grid.innerHTML = data.map(createCard).join('');
     }
     
-    count.textContent = `Showing ${data.length} of ${PROJECTS.length} projects`;
+    count.textContent = `${data.length} of ${PROJECTS.length}`;
   }
 
   /* ===== Initialize ===== */
