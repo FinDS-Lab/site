@@ -45,16 +45,22 @@ permalink: /lectures.html
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
 /* Card */
-.card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
+.card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;background:#fff}
 .inner{
   position:relative;
-  background:#fff;border-radius:.9rem;margin:10px; /* 학교색 여백 */
-  overflow:hidden;border:1px solid #e5e7eb;
+  background:#fff;
+  overflow:hidden;
+}
+
+/* 상단 학교 색상 배너 */
+.school-banner{
+  height:8px;
+  background:#ccc; /* 실제 색은 inline style로 지정 */
 }
 
 /* 왼쪽 '살짝 파인' 역할색 포인트 */
 .role-notch{
-  position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;
+  position:absolute;left:12px;top:20px;bottom:12px;width:8px;border-radius:8px;
   background:#ddd; /* 실제 색은 inline style로 지정 */
 }
 
@@ -74,6 +80,28 @@ permalink: /lectures.html
 
 /* Empty state */
 .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
+
+/* Count 표시 */
+.search-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search{flex:1;min-width:0}
+.search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
+.count{
+  font-size:13px;
+  color:#6b7280;
+  font-weight:600;
+  background:#fff;
+  padding:.4rem .8rem;
+  border:1px solid #e5e7eb;
+  border-radius:.5rem;
+  white-space:nowrap;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .search-container{flex-direction:column;align-items:stretch}
+  .search{width:100%}
+  .count{text-align:center;width:100%}
+}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
@@ -102,8 +130,11 @@ permalink: /lectures.html
 <!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="search">
-      <input id="q" type="text" placeholder="Search by course, university, role..." />
+    <div class="search-container">
+      <div class="search">
+        <input id="q" type="text" placeholder="Search by course, university, role..." />
+      </div>
+      <div class="count" id="count"></div>
     </div>
     <div>
       <label class="text-xs font-bold text-slate-600 block mb-1">Role</label>
@@ -117,7 +148,6 @@ permalink: /lectures.html
       <label class="text-xs font-bold text-slate-600 block mb-1">Semester</label>
       <div class="chips" id="semChips"></div>
     </div>
-    <div class="count" id="count"></div>
   </div>
 </section>
 
@@ -329,7 +359,7 @@ permalink: /lectures.html
     grid.innerHTML = data.length 
       ? data.map(card).join('') 
       : `<div class="empty">No lectures found. Try changing filters.</div>`;
-    count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
+    count.textContent = `${data.length} of ${ITEMS.length}`;
   }
 
   /* ===== Init ===== */
