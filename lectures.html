@@ -17,7 +17,7 @@ permalink: /lectures.html
     --ta-gold:#d4b14d;    /* TA */
     --school-dongduk:#e60039;
     --school-kyunghee:#880022;
-    --school-korea:#a50034;
+    --school-korea:#a50034;       /* Korea Univ. (Sejong 포함) */
     --school-gangnam:#0066b3;
     --school-kaist:#003DA5;
   }
@@ -27,16 +27,16 @@ permalink: /lectures.html
   .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
 
-  /* Chips: 기본은 테두리/강조 없음, 활성 시만 진한 보더 */
+  /* Chips */
   .chip{
     padding:.4rem .8rem;border-radius:999px;
-    border:1px solid transparent; /* 기본 테두리 제거 */
+    border:1px solid transparent;
     background:#fff;font-weight:700;font-size:12px;cursor:pointer
   }
-  .chip.is-on{ box-shadow:inset 0 0 0 2px #111827 }  /* 활성 시 검은 내측 테두리 */
-  .chip:focus-visible{ outline:2px solid #111827; outline-offset:2px } /* 접근성 */
+  .chip.is-on{ box-shadow:inset 0 0 0 2px #111827 }
+  .chip:focus-visible{ outline:2px solid #111827; outline-offset:2px }
 
-  /* Grid: 한 줄에 한 강의 */
+  /* Grid */
   .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
   /* Card */
@@ -47,18 +47,17 @@ permalink: /lectures.html
     overflow:hidden;border:1px solid #e5e7eb;
   }
 
-  /* 왼쪽 '살짝 파인' 역할색 포인트 */
+  /* 왼쪽 역할 포인트 */
   .role-notch{
     position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;
-    background:#ddd; /* 실제 색은 inline style로 지정 */
+    background:#ddd;
   }
 
-  .body{padding:14px 16px 14px 44px} /* notch 공간 확보 */
+  .body{padding:14px 16px 14px 44px}
   .meta{display:flex;flex-wrap:wrap;gap:6px}
   .meta + .meta{margin-top:6px}
   .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
 
-  /* 내부 배지는 흰색/연보더 */
   .badge-role-lect{background:#fff;color:#111;border:1px solid #f0d2d2}
   .badge-role-ta{background:#fff;color:#111;border:1px solid #eadba8}
   .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
@@ -121,50 +120,88 @@ permalink: /lectures.html
 
 <script>
 (() => {
-/* ===== Raw Data ===== */
+/* ========= Raw teaching data (Lecturer & TA only) =========
+   - 학기만 사용: "YYYY-Season" (Winter/Spring/Summer/Fall)
+   - 동일 과목은 한 항목에 sems 배열로 누적
+   - 같은 학기 다분반은 같은 학기를 sems에 중복 push (예: "2025-Fall", "2025-Fall")
+*/
 const RAW = [
-  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    school:"Korea University Sejong Campus",
-    courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]},
-  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
-    school:"Gangnam University",
-    courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]},
-  { role:"Lecturer", period:"2024-03-01 – 2024-08-31",
-    school:"Kyung Hee University",
-    courses:[
-      {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
-      {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]},
-  { role:"Teaching Assistant", period:"2024-09-02 – 2024-12-31",
-    school:"KAIST",
-    courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"}]},
-  { role:"Teaching Assistant", period:"2023-02-27 – 2023-06-30",
-    school:"KAIST",
-    courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]},
+  /* ===== Lecturer ===== */
+  { role:"Lecturer", school:"Korea University Sejong Campus",
+    course:{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"},
+    sems:["2025-Spring","2025-Fall"] },
+
+  { role:"Lecturer", school:"Gangnam University",
+    course:{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"},
+    sems:["2025-Spring","2025-Fall"] },
+
+  { role:"Lecturer", school:"Kyung Hee University",
+    course:{en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
+    sems:["2024-Spring"] },
+
+  { role:"Lecturer", school:"Kyung Hee University",
+    course:{en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"},
+    sems:["2024-Spring"] },
+
+  { role:"Lecturer", school:"Gangnam University",
+    course:{en:"Applied Statistics (EG14204-00)", ko:"응용통계"},
+    sems:["2025-Fall"] },
+
+  { role:"Lecturer", school:"Gangnam University",
+    course:{en:"Management Decision Making and Data Analysis", ko:"경영의사결정과자료분석"},
+    sems:["2025-Fall"] },
+
+  /* 파이썬 2분반: 같은 학기 2회 표기 */
+  { role:"Lecturer", school:"Gangnam University",
+    course:{en:"Foundations of Programming with Python", ko:"파이썬을활용한프로그래밍기초"},
+    sems:["2025-Fall","2025-Fall"] },
+
+  /* ===== Teaching Assistant ===== */
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"},
+    sems:["2024-Fall","2023-Fall"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"},
+    sems:["2024-Spring","2023-Spring","2022-Spring","2021-Spring"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Special Topics in KSE I (KSE801): Applications of Financial Data Science", ko:"지식서비스공학 특수논제 I (KSE801): 금융데이터사이언스응용"},
+    sems:["2022-Fall"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Special Topics in Industrial Systems Engineering I: You&IE (IE482)", ko:"산업공학특강 I: You&IE (IE482)"},
+    sems:["2022-Spring"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Convex Optimization (IE539)", ko:"컨벡스 최적화 (IE539)"},
+    sems:["2021-Fall","2020-Fall"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Decision Analysis and Risk Management (IE432)", ko:"의사결정분석 및 위험관리 (IE432)"},
+    sems:["2021-Spring","2019-Spring"] },
+
+  /* 프로그램형 TA (산학협력) */
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Shinhan Financial Group – KAIST Industry-Academia Program", ko:"신한금융지주 – KAIST 산학협력 프로그램"},
+    sems:["2019-Summer","2020-Winter","2021-Winter","2021-Summer"] },
+
+  { role:"Teaching Assistant", school:"KAIST",
+    course:{en:"Hana Financial Group – KAIST Industry-Academia Program", ko:"하나금융그룹 – KAIST 산학협력 프로그램"},
+    sems:["2023-Winter"] },
 ];
 
-/* ===== Expand courses into ITEMS ===== */
-const ITEMS = [];
-RAW.forEach(r => r.courses.forEach(c => ITEMS.push({...r, courses:[c]})));
+/* ========= Season sort helpers ========= */
+const SEASON_ORDER = {Winter:1, Spring:2, Summer:3, Fall:4};
+function parseSem(sem){ const [y,s] = sem.split('-'); return {year: +y, season:s}; }
+function cmpSemDesc(a,b){
+  const A = parseSem(a), B = parseSem(b);
+  if (A.year !== B.year) return B.year - A.year;
+  return SEASON_ORDER[B.season] - SEASON_ORDER[A.season];
+}
 
-/* ===== Utils ===== */
-function parseStartDate(period){
-  const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
-}
-function seasonLabelFrom(date){
-  const y = date.getFullYear(), m = date.getMonth() + 1;
-  const s = (m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
-  return `${y} ${s}`;
-}
-function seasonToDate(s){
-  const [yy, ss] = s.split(' ');
-  const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
-  return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
-}
-function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
-
-/* ===== Filters: 초기엔 전부 미선택(=필터 미적용) ===== */
-const ROLES = ["Lecturer","Teaching Assistant"];
+/* ========= Filters ========= */
+const ROLES   = ["Lecturer","Teaching Assistant"];
 const SCHOOLS = ["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
 const SCHOOL_COLORS = {
   "Dongduk Women’s University":"var(--school-dongduk)",
@@ -173,25 +210,23 @@ const SCHOOL_COLORS = {
   "Gangnam University":"var(--school-gangnam)",
   "KAIST":"var(--school-kaist)"
 };
+
 let q = "";
-const onRoles = new Set();     // 비어있으면 Role 필터 미적용
-const onSchools = new Set();   // 비어있으면 University 필터 미적용
-const ALL_SEMS = Array.from(new Set(
-  ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period)))
-)).sort((a,b)=> seasonToDate(b) - seasonToDate(a));
-const onSems = new Set();      // 비어있으면 Semester 필터 미적용
+const onRoles   = new Set();
+const onSchools = new Set();
+const ALL_SEMS = Array.from(new Set(RAW.flatMap(i => i.sems))).sort(cmpSemDesc);
+const onSems    = new Set();
 
-/* ===== DOM ===== */
-const grid = document.getElementById('grid');
-const count = document.getElementById('count');
-const qInput = document.getElementById('q');
-const roleChips = document.getElementById('roleChips');
+/* ========= DOM ========= */
+const grid        = document.getElementById('grid');
+const count       = document.getElementById('count');
+const qInput      = document.getElementById('q');
+const roleChips   = document.getElementById('roleChips');
 const schoolChips = document.getElementById('schoolChips');
-const semChips = document.getElementById('semChips');
+const semChips    = document.getElementById('semChips');
 
-/* ===== Chips (활성된 칩만 is-on) ===== */
+/* ========= Chips ========= */
 function buildChips(){
-  // Role 칩: 활성 시 배경색, 미선택 시 흰색
   roleChips.innerHTML = ROLES.map(r => {
     const active = onRoles.has(r);
     const bg = active ? (r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)') : '#fff';
@@ -199,21 +234,18 @@ function buildChips(){
     return `<button class="chip ${active?'is-on':''}" data-role="${r}" style="background:${bg};color:${fg}">${r}</button>`;
   }).join('');
 
-  // University 칩: 활성 시 학교색, 미선택 시 흰색
   schoolChips.innerHTML = SCHOOLS.map(s => {
     const active = onSchools.has(s);
-    const bg = active ? SCHOOL_COLORS[s] : '#fff';
+    const bg = active ? (SCHOOL_COLORS[s] || '#333') : '#fff';
     const fg = active ? '#fff' : '#111';
     return `<button class="chip ${active?'is-on':''}" data-school="${s}" style="background:${bg};color:${fg}">${s}</button>`;
   }).join('');
 
-  // Semester 칩: 배경 흰색, 활성 시 검은 테두리만
   semChips.innerHTML = ALL_SEMS.map(s => {
     const active = onSems.has(s);
     return `<button class="chip ${active?'is-on':''}" data-sem="${s}">${s}</button>`;
   }).join('');
 
-  // 핸들러
   roleChips.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => {
     const r = btn.dataset.role;
     onRoles.has(r) ? onRoles.delete(r) : onRoles.add(r);
@@ -231,68 +263,77 @@ function buildChips(){
   });
 }
 
-/* ===== Filtering ===== */
+/* ========= Filtering ========= */
 function matchesQuery(i){
   if(!q) return true;
-  const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
-  const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
+  const t = `${i.role} ${i.school} ${i.course.en} ${i.course.ko}`.toLowerCase();
   return t.includes(q.toLowerCase());
 }
-function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
+function passRoles(i){   return onRoles.size   ? onRoles.has(i.role) : true; }
 function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
-function passSems(i){
-  const sem = seasonLabelFrom(parseStartDate(i.period));
-  return onSems.size ? onSems.has(sem) : true;
+function passSems(i){    return onSems.size    ? i.sems.some(s => onSems.has(s)) : true; }
+
+/* 최신 학기 기준 정렬 */
+function latestSemOf(item){
+  return item.sems.slice().sort(cmpSemDesc)[0] || "0000-Winter";
 }
-function filterItems(){
-  return ITEMS
+function byLatestDesc(a,b){ return cmpSemDesc(latestSemOf(a), latestSemOf(b)); }
+
+function filterData(){
+  return RAW
     .filter(passRoles)
     .filter(passSchools)
     .filter(passSems)
     .filter(matchesQuery)
-    .sort(byStartDesc);
+    .sort(byLatestDesc);
 }
 
-/* ===== Card ===== */
+/* ========= Card ========= */
 function card(item){
-  const season = seasonLabelFrom(parseStartDate(item.period));
-  const notchColor = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
+  const notchColor  = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
   const schoolColor = SCHOOL_COLORS[item.school] || "#ccc";
   const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
+  const semsSorted = item.sems.slice().sort(cmpSemDesc); /* 중복 유지 정렬 */
 
   return `
   <article class="card" style="background:${schoolColor}">
     <div class="inner">
       <div class="role-notch" style="background:${notchColor}"></div>
       <div class="body">
-        <!-- 1: Role -->
+        <!-- Role -->
         <div class="meta">
           <span class="badge ${roleBadgeClass}">${item.role}</span>
         </div>
-        <!-- 2: School / Semester -->
+        <!-- School + Semesters (중복 포함) -->
         <div class="meta">
           <span class="badge badge-school">${item.school}</span>
-          <span class="badge badge-period">${season}</span>
+          ${semsSorted.map(s => `<span class="badge badge-period">${s}</span>`).join('')}
         </div>
-        <!-- 3: 과목명 (EN 크게 / KO 작게) -->
-        <div class="course-en">${item.courses[0].en}</div>
-        <div class="course-ko">${item.courses[0].ko}</div>
+        <!-- Course -->
+        <div class="course-en">${item.course.en}</div>
+        <div class="course-ko">${item.course.ko}</div>
       </div>
     </div>
   </article>`;
 }
 
-/* ===== Render ===== */
+/* ========= Render ========= */
 function render(){
-  const data = filterItems();
+  const data = filterData();
   grid.innerHTML = data.length
     ? data.map(card).join('')
     : `<div class="empty">No lectures found. Try changing filters.</div>`;
-  count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
+  count.textContent = `Showing ${data.length} of ${RAW.length}`;
 }
 
-/* ===== Init ===== */
-qInput.oninput = e => { q = e.target.value; render(); };
+/* ========= Init ========= */
+const qInput = document.getElementById('q'); qInput.oninput = e => { q = e.target.value; render(); };
+const grid = document.getElementById('grid');
+const count = document.getElementById('count');
+const roleChips = document.getElementById('roleChips');
+const schoolChips = document.getElementById('schoolChips');
+const semChips = document.getElementById('semChips');
+
 buildChips(); render();
 })(); /* IIFE */
 </script>
