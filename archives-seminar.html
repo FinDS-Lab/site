@@ -73,19 +73,19 @@ permalink: /archives-seminar.html
       ---
       {% endcomment %}
       {% assign all_items = site.pages | concat: site.posts %}
-      {% assign Seminar = "" | split: "" %}
+      {% assign seminars = "" | split: "" %}
       {% for item in all_items %}
         {% if item.url and item.url contains '/seminar/' and item.date %}
-          {% assign Seminar = Seminar | push: item %}
+          {% assign seminars = seminars | push: item %}
         {% endif %}
       {% endfor %}
-      {% assign Seminar = Seminar | sort: 'date' %}
+      {% assign seminars = seminars | sort: 'date' %}
 
-      {% if Seminar.size == 0 %}
+      {% if seminars.size == 0 %}
         <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
       {% else %}
         {% assign count = 0 %}
-        {% for post in Seminar %}
+        {% for post in seminars %}
           {% assign count = count | plus: 1 %}
           {% assign y = post.date | date: "%Y" %}
           {% assign m = post.date | date: "%m" %}
