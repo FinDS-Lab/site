@@ -34,11 +34,21 @@ permalink: /members-alumni.html
 <!-- ===== Styles ===== -->
 <style>
   :root{
-    --accent:#ac0e0e;   /* PhD 배너 */
-    --gold:#d6b14d;     /* MS 배너 */
+    --accent:#ac0e0e;   /* M.S. banner (red) */
+    --gold:#d6b14d;     /* Ph.D. banner (gold) */
     --gold-fg:#111827;
   }
   .alumni-wrap{max-width:72rem;margin:1rem auto 2rem;padding:0 1rem}
+
+  /* Section head (current와 동일 스타일) */
+  .sec-head{
+    font-weight:900; color:#0f172a; margin:1.25rem 0 .6rem;
+    font-size:clamp(16px,2.2vw,20px);
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .sec-head::before{
+    content:""; width:.6rem; height:1rem; border-radius:.25rem; background:var(--gold);
+  }
 
   .hint{font-size:12px;color:#6b7280;margin:.25rem 0 1rem}
 
@@ -57,8 +67,8 @@ permalink: /members-alumni.html
     padding:.55rem .8rem;font-weight:900;letter-spacing:.2px;
     font-size:clamp(13px,1.8vw,14.5px)
   }
-  .head.phd{background:var(--accent);color:#fff}
-  .head.ms{background:var(--gold);color:var(--gold-fg)}
+  .head.phd{background:var(--gold);color:var(--gold-fg)}
+  .head.ms{background:var(--accent);color:#fff}
   .body{padding:.9rem}
 
   .row{display:grid;grid-template-columns:88px 1fr;gap:.75rem;align-items:start}
@@ -79,11 +89,12 @@ permalink: /members-alumni.html
 </style>
 
 <section class="alumni-wrap">
-  <p class="hint">※ 카드 상단 배너 색상: <b style="color:#ac0e0e">Ph.D. Graduate</b> (빨강), <b style="color:#6b5d26">M.S. Graduate</b> (금색)</p>
+  <p class="hint">Banner colors — <b style="color:#6b5d26">Ph.D. Graduate: Gold</b>, <b style="color:#ac0e0e">M.S. Graduate: Red</b></p>
 
+  <!-- ===== PhD Graduates ===== -->
+  <h2 class="sec-head">PhD Graduates</h2>
   <div class="grid">
-
-    <!-- ===== PhD Alumni (예시) ===== -->
+    <!-- PhD Alumni #1 -->
     <article class="card">
       <div class="head phd">Ph.D. Graduate</div>
       <div class="body">
@@ -92,7 +103,7 @@ permalink: /members-alumni.html
           <div>
             <div class="name">Eok Cho (조 억)</div>
             <div class="label">Financial Data Science</div>
-            <div class="period">재학: 2019.09. – 2025.02.</div>
+            <div class="period">Years: 2019.09 – 2025.02</div>
             <div class="sep"></div>
             <div class="kv"><b>Current Position</b>: Assistant Research Scientist</div>
             <div class="kv"><b>Affiliation</b>: Lorem Institute of Quantitative Finance</div>
@@ -101,6 +112,7 @@ permalink: /members-alumni.html
       </div>
     </article>
 
+    <!-- PhD Alumni #2 -->
     <article class="card">
       <div class="head phd">Ph.D. Graduate</div>
       <div class="body">
@@ -109,7 +121,7 @@ permalink: /members-alumni.html
           <div>
             <div class="name">Minsu Park (박 민수)</div>
             <div class="label">Business Analytics</div>
-            <div class="period">재학: 2020.03. – 2024.08.</div>
+            <div class="period">Years: 2020.03 – 2024.08</div>
             <div class="sep"></div>
             <div class="kv"><b>Current Position</b>: Data Scientist</div>
             <div class="kv"><b>Affiliation</b>: Ipsum Asset Management</div>
@@ -117,8 +129,12 @@ permalink: /members-alumni.html
         </div>
       </div>
     </article>
+  </div>
 
-    <!-- ===== MS Alumni (예시) ===== -->
+  <!-- ===== M.S. Graduates ===== -->
+  <h2 class="sec-head">M.S. Graduates</h2>
+  <div class="grid">
+    <!-- MS Alumni #1 -->
     <article class="card">
       <div class="head ms">M.S. Graduate</div>
       <div class="body">
@@ -127,7 +143,7 @@ permalink: /members-alumni.html
           <div>
             <div class="name">Lorem Lee (이 로렘)</div>
             <div class="label">Financial Data Science</div>
-            <div class="period">재학: 2023.03. – 2025.02.</div>
+            <div class="period">Years: 2023.03 – 2025.02</div>
             <div class="sep"></div>
             <div class="kv"><b>Current Position</b>: Quant Researcher</div>
             <div class="kv"><b>Affiliation</b>: Dolor Capital Partners</div>
@@ -136,6 +152,7 @@ permalink: /members-alumni.html
       </div>
     </article>
 
+    <!-- MS Alumni #2 -->
     <article class="card">
       <div class="head ms">M.S. Graduate</div>
       <div class="body">
@@ -144,7 +161,7 @@ permalink: /members-alumni.html
           <div>
             <div class="name">Dolor Kim (김 돌로르)</div>
             <div class="label">Business Analytics</div>
-            <div class="period">재학: 2022.09. – 2024.08.</div>
+            <div class="period">Years: 2022.09 – 2024.08</div>
             <div class="sep"></div>
             <div class="kv"><b>Current Position</b>: Data Analyst</div>
             <div class="kv"><b>Affiliation</b>: Sit Amet Securities</div>
@@ -153,6 +170,7 @@ permalink: /members-alumni.html
       </div>
     </article>
 
+    <!-- MS Alumni #3 -->
     <article class="card">
       <div class="head ms">M.S. Graduate</div>
       <div class="body">
@@ -161,7 +179,7 @@ permalink: /members-alumni.html
           <div>
             <div class="name">Ipsum Park (박 입섬)</div>
             <div class="label">Financial Engineering</div>
-            <div class="period">재학: 2021.09. – 2023.08.</div>
+            <div class="period">Years: 2021.09 – 2023.08</div>
             <div class="sep"></div>
             <div class="kv"><b>Current Position</b>: Risk Analyst</div>
             <div class="kv"><b>Affiliation</b>: Consectetur Bank</div>
@@ -169,6 +187,5 @@ permalink: /members-alumni.html
         </div>
       </div>
     </article>
-
   </div>
 </section>
