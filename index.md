@@ -53,7 +53,7 @@ title: home
               Updates
             </h2>
             <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/about-notice.html'  | relative_url }}">Notice</a>
+              <a class="btn-primary text-sm" href="{{ '/archives-notice.html'  | relative_url }}">Notice</a>
               <a class="btn-primary text-sm" href="{{ '/archives-news.html' | relative_url }}">News</a>
             </div>
           </div>
@@ -130,7 +130,7 @@ title: home
   <div id="notice-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">Notice</h4>
-      <a class="warm-underline font-bold shrink-0" href="{{ '/about-notice.html' | relative_url }}">More</a>
+      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-notice.html' | relative_url }}">More</a>
     </div>
     <ul id="notice-feed" class="mt-4 space-y-2">
       <li class="text-sm text-slate-500">불러오는 중…</li>
@@ -175,7 +175,7 @@ title: home
     if (!target) return;
 
     try{
-      const res = await fetch('{{ "/about-notice.html" | relative_url }}', { cache:'no-store' });
+      const res = await fetch('{{ "/archives-notice.html" | relative_url }}', { cache:'no-store' });
       if(!res.ok) throw new Error(res.status);
       const html = await res.text();
       const doc  = new DOMParser().parseFromString(html, 'text/html');
