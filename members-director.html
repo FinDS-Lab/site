@@ -105,55 +105,70 @@ permalink: /members-director.html
   .bullets .text-[15px]{ word-break:keep-all; overflow-wrap:anywhere; }
 
   img[width][height]{height:auto}
+
+  /* ===== Research Interests 토글 ===== */
+  .ri-group + .ri-group{margin-top:1rem;}
+  .ri-toggle{
+    display:inline-flex; align-items:center; gap:.5rem;
+    background:var(--gold); color:var(--gold-fg);
+    border:1px solid #e5e7eb; border-radius:.7rem;
+    padding:.4rem .7rem; font-weight:900; font-size:14px; cursor:pointer;
+  }
+  .ri-toggle .chev{transition:transform .18s ease;}
+  .ri-toggle[aria-expanded="true"] .chev{transform:rotate(90deg);}
+  .ri-panel[hidden]{display:none;}
 </style>
 
 <!-- ===== Body (좌측 프로필 + 우측 본문 카드들) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-[320px,1fr] gap-6">
-  <!-- Profile aside (그대로) -->
-  <aside class="bg-white border border-slate-200 rounded-2xl shadow-md p-4 md:sticky md:top-24 self-start">
-    <h3 class="text-lg font-extrabold">Profile</h3>
+  <!-- Profile aside: 골드 뚜껑 카드로 변경 -->
+  <aside class="md:sticky md:top-24 self-start">
+    <section class="card">
+      <div class="card-head">Profile</div>
+      <div class="card-body">
+        <!-- 인물 블록 -->
+        <div class="flex flex-col gap-3">
+          <div class="rounded-xl ring-4 ring-white bg-white shadow-lg overflow-hidden">
+            <img
+              src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
+              alt="Portrait of Insu Choi"
+              class="block w-full object-cover"
+              style="aspect-ratio: 4 / 5;"
+              width="800" height="1000"
+              loading="eager" decoding="async"
+              sizes="(max-width: 768px) 100vw, 320px" />
+          </div>
+          <h1 class="text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
+        </div>
 
-    <!-- 이동된 인물 블록 (사진 = aside 가로폭 100%, 4:5 비율 고정) -->
-    <div class="flex flex-col gap-3 mt-2">
-      <div class="rounded-xl ring-4 ring-white bg-white shadow-lg overflow-hidden">
-        <img
-          src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
-          alt="Portrait of Insu Choi"
-          class="block w-full object-cover"
-          style="aspect-ratio: 4 / 5;"
-          width="800" height="1000"
-          loading="eager" decoding="async"
-          sizes="(max-width: 768px) 100vw, 320px" />
-      </div>
-      <h1 class="text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-    </div>
+        <!-- 기본 프로필 정보 -->
+        <div class="mt-5 grid gap-3 text-[14px] text-slate-700">
+          <div class="flex gap-2 items-start">
+            <img src="{{ '/assets/img/icons/role.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
+            <div><b class="block">Position</b>Director, FINDS Lab</div>
+          </div>
+          <div class="flex gap-2 items-start">
+            <img src="{{ '/assets/img/icons/building.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
+            <div><b class="block">Affiliation</b>Assistant Professor, Division of Business Administration, Dongduk Women’s University</div>
+          </div>
+          <div class="flex gap-2 items-start">
+            <img src="{{ '/assets/img/icons/location.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
+            <div><b class="block">Office</b>Sungin Hall · Room 702</div>
+          </div>
+          <div class="flex gap-2 items-start">
+            <img src="{{ '/assets/img/icons/mail.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
+            <div><b class="block">E-mail</b><a href="mailto:ischoi@dwu.ac.kr" class="hover:underline">ischoi@dwu.ac.kr</a></div>
+          </div>
+        </div>
 
-    <!-- 기본 프로필 정보 -->
-    <div class="mt-5 grid gap-3 text-[14px] text-slate-700">
-      <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/role.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <div><b class="block">Position</b>Director, FINDS Lab</div>
+        <div class="mt-5 flex flex-wrap gap-2">
+          <a class="inline-flex items-center justify-center font-black text-sm rounded-xl px-4 py-2 text-white"
+             style="background:#ac0e0e" href="{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}" target="_blank" rel="noopener">Download CV</a>
+          <a class="inline-flex items-center justify-center font-black text-sm rounded-xl px-4 py-2 text-white"
+             style="background:#ac0e0e" href="https://scholar.google.com/citations?user=p9JwRLwAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
       </div>
-      <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/building.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <div><b class="block">Affiliation</b>Assistant Professor, Division of Business Administration, Dongduk Women’s University</div>
-      </div>
-      <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/location.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <div><b class="block">Office</b>Sungin Hall · Room 702</div>
-      </div>
-      <div class="flex gap-2 items-start">
-        <img src="{{ '/assets/img/icons/mail.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
-        <div><b class="block">E-mail</b><a href="mailto:ischoi@dwu.ac.kr" class="hover:underline">ischoi@dwu.ac.kr</a></div>
-      </div>
-    </div>
-
-    <div class="mt-5 flex flex-wrap gap-2">
-      <a class="inline-flex items-center justify-center font-black text-sm rounded-xl px-4 py-2 text-white"
-         style="background:#ac0e0e" href="{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}" target="_blank" rel="noopener">Download CV</a>
-      <a class="inline-flex items-center justify-center font-black text-sm rounded-xl px-4 py-2 text-white"
-         style="background:#ac0e0e" href="https://scholar.google.com/citations?user=p9JwRLwAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
-    </div>
+    </section>
   </aside>
 
   <!-- Main -->
@@ -178,62 +193,77 @@ permalink: /members-director.html
       </div>
     </section>
 
-    <!-- Research Interests (골드 뚜껑) -->
-    <section class="card">
+    <!-- Research Interests (골드 뚜껑 + 토글) -->
+    <section class="card" id="research-interests">
       <div class="card-head">Research Interests</div>
       <div class="card-body">
-        <div class="mt-1">
-          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Financial Data Science</span>
-          <ul class="bullets mt-2 space-y-2">
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
-              <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
-              <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
-              <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
-            </li>
-          </ul>
+        <!-- Financial Data Science -->
+        <div class="ri-group">
+          <button class="ri-toggle" type="button" aria-expanded="false" data-target="#ri-fds">
+            <span class="chev">▶</span><span>Financial Data Science</span>
+          </button>
+          <div class="ri-panel mt-2" id="ri-fds" hidden>
+            <ul class="bullets mt-2 space-y-2">
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
+                <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
+                <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
+                <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="mt-4">
-          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Business Analytics</span>
-          <ul class="bullets mt-2 space-y-2">
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
-              <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
-              <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Business Analytics Across Industries: Risk, Customers, Performance, Market Insights</span>
-              <span class="block text-[13px] text-slate-600">다양한 산업 분야에서의 애널리틱스 응용: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
-            </li>
-          </ul>
+        <!-- Business Analytics -->
+        <div class="ri-group">
+          <button class="ri-toggle" type="button" aria-expanded="false" data-target="#ri-ba">
+            <span class="chev">▶</span><span>Business Analytics</span>
+          </button>
+          <div class="ri-panel mt-2" id="ri-ba" hidden>
+            <ul class="bullets mt-2 space-y-2">
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
+                <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
+                <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Business Analytics Across Industries: Risk, Customers, Performance, Market Insights</span>
+                <span class="block text-[13px] text-slate-600">다양한 산업 분야에서의 애널리틱스 응용: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div class="mt-4">
-          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Data-Inspired Decision Making</span>
-          <ul class="bullets mt-2 space-y-2">
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems with Graphs &amp; Reinforcement Learning</span>
-              <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
-              <span class="block text-[13px] text-slate-600">리스크 인지 및 사용자 친화적 스마트 금융 의사결정 도구</span>
-            </li>
-            <li>
-              <span class="block font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
-              <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
-            </li>
-          </ul>
+        <!-- Data-Inspired Decision Making -->
+        <div class="ri-group">
+          <button class="ri-toggle" type="button" aria-expanded="false" data-target="#ri-didm">
+            <span class="chev">▶</span><span>Data-Inspired Decision Making</span>
+          </button>
+          <div class="ri-panel mt-2" id="ri-didm" hidden>
+            <ul class="bullets mt-2 space-y-2">
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems with Graphs &amp; Reinforcement Learning</span>
+                <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
+                <span class="block text-[13px] text-slate-600">리스크 인지 및 사용자 친화적 스마트 금융 의사결정 도구</span>
+              </li>
+              <li>
+                <span class="block font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
+                <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -408,4 +438,19 @@ permalink: /members-director.html
   </main>
 </section>
 
+<script>
+  // Research Interests: 토글 동작
+  (function () {
+    const toggles = document.querySelectorAll('.ri-toggle[data-target]');
+    toggles.forEach(btn => {
+      const panel = document.querySelector(btn.dataset.target);
+      if (!panel) return;
 
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.hidden = expanded;
+      });
+    });
+  })();
+</script>
