@@ -115,7 +115,7 @@ title: home
 </style>
 
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- News: 최신 3개 (archive-style) -->
+  <!-- News: 최신 3개 (제목만) -->
   <div id="news-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">News</h4>
@@ -149,13 +149,7 @@ title: home
               <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
                 {{ post.title }}
               </a>
-              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
-                {% if post.excerpt %}
-                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
-                {% else %}
-                  {{ post.content | strip_html | strip | truncate: 160 }}
-                {% endif %}
-              </div>
+              <!-- 제목만 표시 (요약/본문 제거) -->
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
             <div class="btn-cell hidden sm:block">
@@ -167,7 +161,7 @@ title: home
     </ul>
   </div>
 
-  <!-- Notice: 최신 3개 (archive-style) -->
+  <!-- Notice: 최신 3개 (제목만) -->
   <div id="notice-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">Notice</h4>
@@ -200,13 +194,7 @@ title: home
               <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
                 {{ post.title }}
               </a>
-              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
-                {% if post.excerpt %}
-                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
-                {% else %}
-                  {{ post.content | strip_html | strip | truncate: 160 }}
-                {% endif %}
-              </div>
+              <!-- 제목만 표시 (요약/본문 제거) -->
               <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
             <div class="btn-cell hidden sm:block">
