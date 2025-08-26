@@ -1,5 +1,5 @@
 <!-- Header / Global Nav -->
-<div class="sticky-blur border-b border-slate-200">
+<div class="sticky-blur">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
     <!-- Brand -->
     <a href="{{ '/' | relative_url }}" class="flex items-center gap-3" aria-label="FINDS Lab Home">
@@ -17,6 +17,7 @@
 
       <!-- About -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(Introduction) -->
         <a class="nav-link" href="{{ '/about-introduction.html' | relative_url }}"><b>About FINDS</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="About FINDS submenu">
           <a class="block submenu-item" href="{{ '/about-introduction.html'  | relative_url }}" role="menuitem">Introduction</a>
@@ -28,6 +29,7 @@
 
       <!-- Members -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(Director) -->
         <a class="nav-link" href="{{ '/members-director.html' | relative_url }}"><b>Members</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="Members submenu">
           <a class="block submenu-item" href="{{ '/members-director.html'   | relative_url }}" role="menuitem">Director</a>
@@ -42,6 +44,7 @@
 
       <!-- Archives -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(News) -->
         <a class="nav-link" href="{{ '/archives-news.html' | relative_url }}"><b>Archives</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="Archives submenu">
           <a class="block submenu-item" href="{{ '/archives-news.html'    | relative_url }}" role="menuitem">News</a>
@@ -72,7 +75,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-about">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-about" aria-label="Toggle About submenu">▾</button>
         </div>
         <div id="mob-about" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
@@ -86,7 +89,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/members-director.html' | relative_url }}">Members</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-members">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-members" aria-label="Toggle Members submenu">▾</button>
         </div>
         <div id="mob-members" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/members-director.html'   | relative_url }}">Director</a>
@@ -103,7 +106,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/archives-news.html' | relative_url }}">Archives</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-archives">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-archives" aria-label="Toggle Archives submenu">▾</button>
         </div>
         <div id="mob-archives" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/archives-news.html'    | relative_url }}">News</a>
@@ -137,7 +140,7 @@
       g.addEventListener('focusout', close);
     });
 
-    // 모바일 내비 토글
+    // 모바일 메뉴 토글
     const btn = document.getElementById('btnMobile');
     const panel = document.getElementById('mobileNav');
     if (btn && panel){
