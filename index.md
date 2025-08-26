@@ -14,7 +14,7 @@ title: home
         <img class="bg" src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
-            <span class="tag-gold">Financial Data Science Lab.</span>
+            <span class="tag-gold">FINDS Lab.</span>
             <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
               Towards Data-Inspired Financial Management
             </h1>
@@ -31,7 +31,7 @@ title: home
         <img class="bg" src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
-            <span class="tag-gold">Financial Data Science Lab.</span>
+            <span class="tag-gold">FINDS Lab.</span>
             <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
               Accomplishments
             </h2>
@@ -48,7 +48,7 @@ title: home
         <img class="bg" src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy" />
         <div class="carousel-caption">
           <div class="max-w-xl px-6">
-            <span class="tag-gold">Financial Data Science Lab.</span>
+            <span class="tag-gold">FINDS Lab.</span>
             <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
               Updates
             </h2>
