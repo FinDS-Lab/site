@@ -34,35 +34,46 @@ permalink: /members-current.html
 <!-- ===== Styles ===== -->
 <style>
   :root{
-    --accent:#ac0e0e;
-    --gold:#d6b14d;
+    --accent:#ac0e0e;     /* 빨간 포인트 */
+    --gold:#d6b14d;       /* 섹션/카드 헤더 */
     --gold-fg:#111827;
   }
 
-  /* ===== Grid ===== */
   .members-wrap{max-width:72rem;margin:1rem auto 2rem; padding:0 1rem}
+  .sec-head{
+    font-weight:900; color:#0f172a; margin:1.25rem 0 .6rem;
+    font-size:clamp(16px,2.2vw,20px);
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .sec-head::before{
+    content:""; width:.6rem; height:1rem; border-radius:.25rem; background:var(--gold);
+  }
+
+  /* ===== Grid ===== */
   .members-grid{display:grid; gap:14px}
   @media (min-width: 640px){ .members-grid{grid-template-columns:repeat(2,1fr)} }
   @media (min-width: 1100px){ .members-grid{grid-template-columns:repeat(3,1fr)} }
 
   /* ===== Card (summary) ===== */
   .card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.04)}
-  .card-head{background:var(--gold);color:var(--gold-fg);font-weight:900;letter-spacing:.2px;padding:.7rem .9rem;font-size:clamp(15px,2.2vw,18px)}
-  .card-body{padding:.9rem}
+  .card-head{background:var(--gold);color:var(--gold-fg);font-weight:900;letter-spacing:.2px;padding:.65rem .9rem;font-size:clamp(14px,2vw,17px)}
+  .card-body{padding:.85rem}
 
-  .member-grid{display:grid;grid-template-columns:88px 1fr;gap:.75rem;align-items:start}
-  @media (min-width:480px){ .member-grid{grid-template-columns:108px 1fr} }
+  .member-grid{display:grid;grid-template-columns:84px 1fr;gap:.7rem;align-items:start}
+  @media (min-width:480px){ .member-grid{grid-template-columns:100px 1fr} }
 
-  .avatar{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:.75rem;background:#fff;box-shadow:0 0 0 1px #e5e7eb, 0 6px 18px rgba(0,0,0,.06)}
-  .name{font-weight:900;color:#0f172a;font-size:clamp(15px,2.2vw,17px)}
-  .role{font-weight:800;color:#111827;margin-top:.1rem;font-size:13px}
+  .avatar{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:.7rem;background:#fff;box-shadow:0 0 0 1px #e5e7eb, 0 6px 18px rgba(0,0,0,.06)}
+  .name{font-weight:900;color:#0f172a;font-size:clamp(15px,2vw,16.5px)}
+  .role{font-weight:800;color:#111827;margin-top:.1rem;font-size:12.5px}
   .dates{color:#64748b;font-size:12px;margin-top:.1rem}
-  .kv{font-size:13px;color:#334155;line-height:1.5;margin-top:.25rem}
+  .kv{font-size:12.5px;color:#334155;line-height:1.55;margin-top:.2rem}
   .kv b{color:#0f172a}
-  .btn-more{margin-top:.55rem;font-weight:900;font-size:12px;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;background:#f8fafc}
+  .btn-more{
+    margin-top:.5rem;font-weight:900;font-size:12px;border:1px solid #e5e7eb;border-radius:.55rem;padding:.32rem .6rem;background:#f8fafc
+  }
   .btn-more:hover{background:#eef2f7}
 
-  /* ===== Peek (right drawer like Notion) ===== */
+  /* ===== Peek (right drawer) ===== */
   .peek{position:fixed;inset:0;z-index:60;display:none}
   .peek.show{display:block}
   .peek-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s}
@@ -75,212 +86,298 @@ permalink: /members-current.html
   }
   .peek.show .peek-panel{transform:translateX(0)}
   .peek-head{
-    background:var(--gold);color:var(--gold-fg);padding:.9rem 1rem;
-    font-weight:900;font-size:clamp(16px,2.4vw,19px);display:flex;align-items:center;justify-content:space-between;gap:.5rem
+    background:var(--gold);color:var(--gold-fg);padding:.85rem 1rem;
+    font-weight:900;font-size:clamp(15px,2.2vw,18px);
+    display:flex;align-items:center;justify-content:space-between;gap:.5rem
   }
-  .peek-close{
-    border:none;background:transparent;font-size:20px;line-height:1;font-weight:900;cursor:pointer;color:#111827
+  .peek-close{border:none;background:transparent;font-size:20px;line-height:1;font-weight:900;cursor:pointer;color:#111827}
+  .peek-ribbon{
+    background:var(--accent);color:#fff;font-weight:900;
+    padding:.5rem 1rem;font-size:13px;letter-spacing:.2px
   }
   .peek-body{padding:1rem;overflow:auto}
-  .peek-body .subhead{font-weight:900;color:#0f172a;margin:.5rem 0 .35rem;font-size:clamp(15px,2.2vw,17px)}
-  .peek-body .list{margin:.2rem 0 0 1.1rem;padding:0}
-  .peek-body .list li{margin:.25rem 0;color:#334155;line-height:1.55;font-size:14px}
-  .peek-body .pubs>li,.peek-body .honors>li{list-style:decimal}
 
-  /* small helpers */
   .mini{font-size:12px;color:#475569}
+  .subhead{
+    font-weight:900;color:#0f172a;margin:.8rem 0 .45rem;
+    font-size:clamp(14px,1.9vw,16px)
+  }
+
+  /* ===== Education list (timeline-ish) ===== */
+  .edu-list{list-style:none;margin:.2rem 0 0;padding:0}
+  .edu-item{position:relative;border:1px solid #e5e7eb;border-radius:.75rem;padding:.6rem .75rem;margin:.5rem 0;background:#fff}
+  .deg-badge{
+    display:inline-flex;align-items:center;gap:.35rem;
+    font-weight:900;font-size:12px;border-radius:.5rem;padding:.2rem .5rem;margin-right:.4rem
+  }
+  .deg-badge.bs{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+  .deg-badge.ms{background:#e0e7ff;color:#3730a3;border:1px solid #c7d2fe}
+  .deg-badge.phd{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+
+  .edu-main{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+  .edu-school{font-weight:800;color:#111827;font-size:13.5px}
+  .edu-year{color:#475569;font-size:12px}
+  .edu-dept{color:#334155;font-size:12.5px;margin-top:.2rem}
+
+  /* ===== Publications / Honors ===== */
+  .list{margin:.2rem 0 0 1.1rem;padding:0}
+  .list li{margin:.25rem 0;color:#334155;line-height:1.55;font-size:13.5px}
+  .pubs>li,.honors>li{list-style:decimal}
+
+  /* 모바일에서 패널을 시트처럼 꽉 차게 */
+  @media (max-width: 520px){
+    .peek-panel{width:100%}
+  }
 </style>
 
-<!-- ===== Members Grid ===== -->
+<!-- ===== Members ===== -->
 <section class="members-wrap">
-  <div class="members-grid">
 
-    <!-- === Member 1: Uk Jo === -->
-    <section class="card" data-member="uk-jo">
-      <div class="card-head">Uk Jo (조 억)</div>
+  <!-- === PhD Students === -->
+  <h2 class="sec-head">PhD Students</h2>
+  <div class="members-grid">
+    <!-- PhD #1: 조억 (임의) -->
+    <section class="card" data-member="eok-cho">
+      <div class="card-head">Eok Cho (조 억)</div>
       <div class="card-body">
         <div class="member-grid">
-          <img src="{{ '/assets/img/members/uk-jo.jpg' | relative_url }}" alt="Photo of Uk Jo" class="avatar" width="480" height="600" loading="lazy" decoding="async">
+          <img src="{{ '/assets/img/members/eok-cho.jpg' | relative_url }}" alt="Photo of Eok Cho" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
           <div>
-            <div class="name">Uk Jo</div>
+            <div class="name">Eok Cho</div>
             <div class="role">Ph.D. Candidate</div>
             <div class="dates">(September 1, 2019 ~ Present)</div>
             <div class="kv"><b>Research Interest</b>: Reinforcement Learning, Game AI</div>
-            <div class="kv"><b>E-mail</b>: <a href="mailto:ukjo@korea.ac.kr" class="underline">ukjo@korea.ac.kr</a></div>
-            <button class="btn-more" data-open="uk-jo">More details →</button>
+            <div class="kv"><b>E-mail</b>: <a href="mailto:eok.cho@example.edu" class="underline">eok.cho@example.edu</a></div>
+            <button class="btn-more" data-open="eok-cho">More details →</button>
           </div>
         </div>
       </div>
 
-      <!-- Hidden template for peek -->
-      <template id="tpl-uk-jo">
+      <!-- Peek template (PhD: with red ribbon) -->
+      <template id="tpl-eok-cho">
         <div class="peek-head">
-          <span id="peekTitle">Uk Jo (조 억)</span>
+          <span id="peekTitle">Eok Cho (조 억)</span>
           <button class="peek-close" aria-label="Close">×</button>
         </div>
+        <div class="peek-ribbon">Ph.D. Candidate</div>
         <div class="peek-body">
           <div class="mini">Ph.D. Candidate · (September 1, 2019 ~ Present)</div>
 
           <div class="subhead">Education</div>
-          <ul class="list">
-            <li>B.S. in Mathematics, Dongduk Women's University, 2018</li>
+          <ul class="edu-list">
+            <li class="edu-item">
+              <span class="deg-badge phd">Ph.D.</span>
+              <div class="edu-main">
+                <span class="edu-school">Dongduk Women’s University</span>
+                <span class="edu-year">In progress</span>
+              </div>
+              <div class="edu-dept">Business Analytics (Advisor: Lorem Ipsum)</div>
+            </li>
+            <li class="edu-item">
+              <span class="deg-badge bs">B.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">Dongduk Women’s University</span>
+                <span class="edu-year">2018</span>
+              </div>
+              <div class="edu-dept">Mathematics</div>
+            </li>
           </ul>
 
           <div class="subhead">Publications</div>
           <ol class="list pubs">
             <li>
-              Son, Guijin; Ko, Hyunwoo; <b>Lee, Hoyoung</b>; Kim, Yewon; Hong, Seunghyeok (2025).
-              “Multilingual Challenges in Automated Evaluators: A Case Study on English and Korean”.
-              <em>AAAI 2025 Workshop on Preparing Good Data for Generative AI (Good-Data)</em>.
+              Lorem Ipsum; Dolor Sit (2025). “Multilingual Challenges in Automated Evaluators”.
+              <em>AAAI Workshop on Preparing Good Data for Generative AI</em>.
             </li>
             <li>
-              <b>Lee, Hoyoung</b>; Choi, Youngsoo; Kwon, Yuhee (2024).
-              “Quantifying Qualitative Insights: Leveraging LLMs to Market Predict”.
-              <em>ICAIF’24 Workshop on LLMs and Generative AI for Finance (AI4F)</em>.
+              Lorem Ipsum; Dolor Sit (2024). “Quantifying Qualitative Insights with LLMs”.
+              <em>ICAIF Workshop on LLMs and Generative AI for Finance</em>.
             </li>
           </ol>
 
           <div class="subhead">Honors &amp; awards</div>
           <ol class="list honors">
-            <li>ACM-ICAIF'24 FinanceRAG Challenge, <em>ICAIF</em>, 2024</li>
-            <li>NH Investment &amp; Securities Big Data Competition, <em>NH Investment &amp; Securities</em>, 2023</li>
+            <li>FinanceRAG Challenge, <em>ICAIF</em>, 2024</li>
+            <li>Big Data Competition, <em>NH Investment &amp; Securities</em>, 2023</li>
+          </ol>
+        </div>
+      </template>
+    </section>
+  </div>
+
+  <!-- === Master Students === -->
+  <h2 class="sec-head">Master Students</h2>
+  <div class="members-grid">
+    <!-- MS #1 -->
+    <section class="card" data-member="lorem-lee">
+      <div class="card-head">Lorem Lee (이 로렘)</div>
+      <div class="card-body">
+        <div class="member-grid">
+          <img src="{{ '/assets/img/members/lorem-lee.jpg' | relative_url }}" alt="Photo of Lorem Lee" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Lorem Lee</div>
+            <div class="role">Master Student</div>
+            <div class="dates">(— ~ Present)</div>
+            <div class="kv"><b>Research Interest</b>: Financial NLP, Evaluation</div>
+            <div class="kv"><b>E-mail</b>: <a href="mailto:l.lee@example.edu" class="underline">l.lee@example.edu</a></div>
+            <button class="btn-more" data-open="lorem-lee">More details →</button>
+          </div>
+        </div>
+      </div>
+      <template id="tpl-lorem-lee">
+        <div class="peek-head">
+          <span id="peekTitle">Lorem Lee (이 로렘)</span>
+          <button class="peek-close" aria-label="Close">×</button>
+        </div>
+        <div class="peek-body">
+          <div class="mini">Master Student</div>
+
+          <div class="subhead">Education</div>
+          <ul class="edu-list">
+            <li class="edu-item">
+              <span class="deg-badge ms">M.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">Dongduk Women’s University</span>
+                <span class="edu-year">Expected 2026</span>
+              </div>
+              <div class="edu-dept">Financial Data Science</div>
+            </li>
+            <li class="edu-item">
+              <span class="deg-badge bs">B.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">— University</span>
+                <span class="edu-year">2024</span>
+              </div>
+              <div class="edu-dept">Computer Science</div>
+            </li>
+          </ul>
+
+          <div class="subhead">Publications</div>
+          <ol class="list pubs">
+            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+          </ol>
+
+          <div class="subhead">Honors &amp; awards</div>
+          <ol class="list honors">
+            <li>Dolor sit amet award, 2024</li>
           </ol>
         </div>
       </template>
     </section>
 
-    <!-- === Member 2: Sample === -->
-    <section class="card" data-member="member-2">
-      <div class="card-head">Yewon Kim (김 예원)</div>
+    <!-- MS #2 -->
+    <section class="card" data-member="ipsum-park">
+      <div class="card-head">Ipsum Park (박 입섬)</div>
       <div class="card-body">
         <div class="member-grid">
-          <img src="{{ '/assets/img/members/yewon-kim.jpg' | relative_url }}" alt="Photo of Yewon Kim" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <img src="{{ '/assets/img/members/ipsum-park.jpg' | relative_url }}" alt="Photo of Ipsum Park" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
           <div>
-            <div class="name">Yewon Kim</div>
-            <div class="role">M.S. Student</div>
+            <div class="name">Ipsum Park</div>
+            <div class="role">Master Student</div>
             <div class="dates">(— ~ Present)</div>
-            <div class="kv"><b>Research Interest</b>: NLP for Finance, Evaluation</div>
-            <div class="kv"><b>E-mail</b>: <a href="mailto:sample@dwu.ac.kr" class="underline">sample@dwu.ac.kr</a></div>
-            <button class="btn-more" data-open="member-2">More details →</button>
+            <div class="kv"><b>Research Interest</b>: Time-series, Asset Pricing</div>
+            <div class="kv"><b>E-mail</b>: <a href="mailto:i.park@example.edu" class="underline">i.park@example.edu</a></div>
+            <button class="btn-more" data-open="ipsum-park">More details →</button>
           </div>
         </div>
       </div>
-      <template id="tpl-member-2">
+      <template id="tpl-ipsum-park">
         <div class="peek-head">
-          <span id="peekTitle">Yewon Kim (김 예원)</span>
+          <span id="peekTitle">Ipsum Park (박 입섬)</span>
           <button class="peek-close" aria-label="Close">×</button>
         </div>
         <div class="peek-body">
-          <div class="mini">M.S. Student</div>
+          <div class="mini">Master Student</div>
+
           <div class="subhead">Education</div>
-          <ul class="list"><li>B.S., —</li></ul>
+          <ul class="edu-list">
+            <li class="edu-item">
+              <span class="deg-badge ms">M.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">Dongduk Women’s University</span>
+                <span class="edu-year">Expected 2026</span>
+              </div>
+              <div class="edu-dept">Business Analytics</div>
+            </li>
+            <li class="edu-item">
+              <span class="deg-badge bs">B.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">— University</span>
+                <span class="edu-year">2023</span>
+              </div>
+              <div class="edu-dept">Industrial Engineering</div>
+            </li>
+          </ul>
+
           <div class="subhead">Publications</div>
-          <ol class="list pubs"><li>—</li></ol>
+          <ol class="list pubs">
+            <li>Consectetur adipiscing elit, sed do eiusmod tempor.</li>
+          </ol>
+
           <div class="subhead">Honors &amp; awards</div>
-          <ol class="list honors"><li>—</li></ol>
+          <ol class="list honors">
+            <li>Ut labore et dolore magna aliqua, 2023</li>
+          </ol>
         </div>
       </template>
     </section>
 
-    <!-- === Member 3: Sample === -->
-    <section class="card" data-member="member-3">
-      <div class="card-head">Hoyoung Lee (이 호영)</div>
+    <!-- MS #3 -->
+    <section class="card" data-member="dolor-kim">
+      <div class="card-head">Dolor Kim (김 돌로르)</div>
       <div class="card-body">
         <div class="member-grid">
-          <img src="{{ '/assets/img/members/hoyoung-lee.jpg' | relative_url }}" alt="Photo of Hoyoung Lee" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <img src="{{ '/assets/img/members/dolor-kim.jpg' | relative_url }}" alt="Photo of Dolor Kim" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
           <div>
-            <div class="name">Hoyoung Lee</div>
-            <div class="role">M.S. Student</div>
-            <div class="dates">(— ~ Present)</div>
-            <div class="kv"><b>Research Interest</b>: LLM for Markets</div>
-            <div class="kv"><b>E-mail</b>: <a href="mailto:sample@dwu.ac.kr" class="underline">sample@dwu.ac.kr</a></div>
-            <button class="btn-more" data-open="member-3">More details →</button>
-          </div>
-        </div>
-      </div>
-      <template id="tpl-member-3">
-        <div class="peek-head">
-          <span id="peekTitle">Hoyoung Lee (이 호영)</span>
-          <button class="peek-close" aria-label="Close">×</button>
-        </div>
-        <div class="peek-body">
-          <div class="mini">M.S. Student</div>
-          <div class="subhead">Education</div>
-          <ul class="list"><li>B.S., —</li></ul>
-          <div class="subhead">Publications</div>
-          <ol class="list pubs"><li>—</li></ol>
-          <div class="subhead">Honors &amp; awards</div>
-          <ol class="list honors"><li>—</li></ol>
-        </div>
-      </template>
-    </section>
-
-    <!-- === Member 4: Sample === -->
-    <section class="card" data-member="member-4">
-      <div class="card-head">Seunghyeok Hong (홍 승혁)</div>
-      <div class="card-body">
-        <div class="member-grid">
-          <img src="{{ '/assets/img/members/seunghyeok-hong.jpg' | relative_url }}" alt="Photo of Seunghyeok Hong" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
-          <div>
-            <div class="name">Seunghyeok Hong</div>
-            <div class="role">M.S. Student</div>
+            <div class="name">Dolor Kim</div>
+            <div class="role">Master Student</div>
             <div class="dates">(— ~ Present)</div>
             <div class="kv"><b>Research Interest</b>: Data-Driven Trading</div>
-            <div class="kv"><b>E-mail</b>: <a href="mailto:sample@dwu.ac.kr" class="underline">sample@dwu.ac.kr</a></div>
-            <button class="btn-more" data-open="member-4">More details →</button>
+            <div class="kv"><b>E-mail</b>: <a href="mailto:d.kim@example.edu" class="underline">d.kim@example.edu</a></div>
+            <button class="btn-more" data-open="dolor-kim">More details →</button>
           </div>
         </div>
       </div>
-      <template id="tpl-member-4">
+      <template id="tpl-dolor-kim">
         <div class="peek-head">
-          <span id="peekTitle">Seunghyeok Hong (홍 승혁)</span>
+          <span id="peekTitle">Dolor Kim (김 돌로르)</span>
           <button class="peek-close" aria-label="Close">×</button>
         </div>
         <div class="peek-body">
-          <div class="mini">M.S. Student</div>
+          <div class="mini">Master Student</div>
+
           <div class="subhead">Education</div>
-          <ul class="list"><li>B.S., —</li></ul>
+          <ul class="edu-list">
+            <li class="edu-item">
+              <span class="deg-badge ms">M.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">Dongduk Women’s University</span>
+                <span class="edu-year">Expected 2026</span>
+              </div>
+              <div class="edu-dept">Financial Data Science</div>
+            </li>
+            <li class="edu-item">
+              <span class="deg-badge bs">B.S.</span>
+              <div class="edu-main">
+                <span class="edu-school">— University</span>
+                <span class="edu-year">2024</span>
+              </div>
+              <div class="edu-dept">Statistics</div>
+            </li>
+          </ul>
+
           <div class="subhead">Publications</div>
-          <ol class="list pubs"><li>—</li></ol>
+          <ol class="list pubs">
+            <li>Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</li>
+          </ol>
+
           <div class="subhead">Honors &amp; awards</div>
-          <ol class="list honors"><li>—</li></ol>
+          <ol class="list honors">
+            <li>Accusantium doloremque laudantium, 2022</li>
+          </ol>
         </div>
       </template>
     </section>
-
-    <!-- === Member 5: Sample === -->
-    <section class="card" data-member="member-5">
-      <div class="card-head">Hyunwoo Ko (고 현우)</div>
-      <div class="card-body">
-        <div class="member-grid">
-          <img src="{{ '/assets/img/members/hyunwoo-ko.jpg' | relative_url }}" alt="Photo of Hyunwoo Ko" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
-          <div>
-            <div class="name">Hyunwoo Ko</div>
-            <div class="role">M.S. Student</div>
-            <div class="dates">(— ~ Present)</div>
-            <div class="kv"><b>Research Interest</b>: ML Evaluation, Finance</div>
-            <div class="kv"><b>E-mail</b>: <a href="mailto:sample@dwu.ac.kr" class="underline">sample@dwu.ac.kr</a></div>
-            <button class="btn-more" data-open="member-5">More details →</button>
-          </div>
-        </div>
-      </div>
-      <template id="tpl-member-5">
-        <div class="peek-head">
-          <span id="peekTitle">Hyunwoo Ko (고 현우)</span>
-          <button class="peek-close" aria-label="Close">×</button>
-        </div>
-        <div class="peek-body">
-          <div class="mini">M.S. Student</div>
-          <div class="subhead">Education</div>
-          <ul class="list"><li>B.S., —</li></ul>
-          <div class="subhead">Publications</div>
-          <ol class="list pubs"><li>—</li></ol>
-          <div class="subhead">Honors &amp; awards</div>
-          <ol class="list honors"><li>—</li></ol>
-        </div>
-      </template>
-    </section>
-
   </div>
 </section>
 
