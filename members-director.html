@@ -21,7 +21,6 @@ permalink: /members-director.html
         <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
-          <!-- Members 목록 페이지가 있다면 아래 링크를 그 페이지로 바꿔도 됩니다 -->
           <a href="{{ '/members-director.html' | relative_url }}">Members</a>
           <span class="sep">›</span>
           <span aria-current="page" class="font-semibold">Director</span>
@@ -35,48 +34,47 @@ permalink: /members-director.html
 <!-- ===== 페이지 전용 스타일 ===== -->
 <style>
   :root{
-    --accent:#ac0e0e;     /* 빨간 점 */
-    --gold:#d6b14d;       /* 금색 선 */
-    --year-size:16px;     /* 날짜 폰트 (≈ +2pt) */
-    --dot:16px;           /* 점 지름 = 날짜 폰트와 동일 */
-    --rail:28px;          /* 레일(선/점 열) 너비 */
+    --accent:#ac0e0e;
+    --gold:#d6b14d;
+    --gold-fg:#111827;
+    --year-size:16px;
+    --dot:16px;
+    --rail:28px;
   }
 
-  /* ===== 공통 타임라인(선/점 겹침) ===== */
+  /* ===== 공통 카드: 상단 골드 뚜껑 + 본문 ===== */
+  .card{
+    background:#fff; border:1px solid #e5e7eb; border-radius:1rem;
+    overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,.04);
+  }
+  .card-head{
+    background:var(--gold); color:var(--gold-fg);
+    font-weight:900; letter-spacing:.2px;
+    padding:.85rem 1rem;
+    font-size:clamp(16px, 2.4vw, 20px);
+    line-height:1.25;
+  }
+  .card-body{ padding:1.25rem; }
+
+  /* ===== 타임라인 ===== */
   .timeline{list-style:none; margin:0; padding:0;}
   .tl{
-    display:grid;
-    grid-auto-rows:auto;
-    align-items:stretch;
-    row-gap:.65rem;
-    position:relative;
+    display:grid; grid-auto-rows:auto; align-items:stretch;
+    row-gap:.65rem; position:relative;
   }
   .tl .rail{
-    position:relative;
-    width:var(--rail);
-    align-self:stretch;
-    height:100%;
-    min-height:3.4rem;
+    position:relative; width:var(--rail); align-self:stretch;
+    height:100%; min-height:3.4rem;
   }
   .tl .rail::before{
-    content:"";
-    position:absolute;
-    left:50%; top:0; bottom:0;
-    width:3px; background:var(--gold);
-    transform:translateX(-50%);
-    border-radius:2px;
-    z-index:0;
+    content:""; position:absolute; left:50%; top:0; bottom:0;
+    width:3px; background:var(--gold); transform:translateX(-50%); border-radius:2px; z-index:0;
   }
   .tl .rail::after{
-    content:"";
-    position:absolute;
-    left:50%; top:1.05rem;
-    width:var(--dot); height:var(--dot);
-    background:var(--accent);
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    box-shadow:0 0 0 3px rgba(172,14,14,.08);
-    z-index:1;
+    content:""; position:absolute; left:50%; top:1.05rem;
+    width:var(--dot); height:var(--dot); background:var(--accent);
+    border-radius:50%; transform:translate(-50%,-50%);
+    box-shadow:0 0 0 3px rgba(172,14,14,.08); z-index:1;
   }
 
   .row1,.row2,.row3{display:block;}
@@ -95,19 +93,15 @@ permalink: /members-director.html
     width:44px; height:44px; object-fit:contain; border-radius:.5rem;
     background:#fff; box-shadow:0 0 0 1px #e5e7eb;
   }
-
   .tl.simple{grid-template-columns:var(--rail) 1fr; column-gap:.85rem;}
 
-  .section-tl h2{margin-bottom:.25rem;}
-  .section-tl .timeline{margin-top:1.6rem;}
-
+  .section-tl .timeline{margin-top:1.1rem;}
   .bullets-honor{list-style:disc; margin:.3rem 0 0 1.25rem; padding:0;}
   .bullets-honor li{font-size:.95rem; color:#111827; line-height:1.6;}
 
   .bullets{list-style:none; margin:0; padding:0;}
   .bullets li{position:relative; padding-left:1rem; font-size:.95rem; color:#475569; line-height:1.6;}
   .bullets li::before{content:"•"; position:absolute; left:0; top:0; color:#334155; font-weight:900;}
-  /* 긴 영어 제목 모바일 줄바꿈 보완 */
   .bullets .text-[15px]{ word-break:keep-all; overflow-wrap:anywhere; }
 
   img[width][height]{height:auto}
@@ -115,25 +109,24 @@ permalink: /members-director.html
 
 <!-- ===== Body (좌측 프로필 + 우측 본문 카드들) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-[320px,1fr] gap-6">
-  <!-- Profile aside -->
+  <!-- Profile aside (그대로) -->
   <aside class="bg-white border border-slate-200 rounded-2xl shadow-md p-4 md:sticky md:top-24 self-start">
     <h3 class="text-lg font-extrabold">Profile</h3>
 
-  <!-- 이동된 인물 블록 (사진 = aside 가로폭 100%, 4:5 비율 고정) -->
-  <div class="flex flex-col gap-3">
-    <div class="rounded-xl ring-4 ring-white bg-white shadow-lg overflow-hidden">
-      <img
-        src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
-        alt="Portrait of Insu Choi"
-        class="block w-full object-cover"
-        style="aspect-ratio: 4 / 5;"
-        width="800" height="1000"
-        loading="eager" decoding="async"
-        sizes="(max-width: 768px) 100vw, 320px" />
+    <!-- 이동된 인물 블록 (사진 = aside 가로폭 100%, 4:5 비율 고정) -->
+    <div class="flex flex-col gap-3 mt-2">
+      <div class="rounded-xl ring-4 ring-white bg-white shadow-lg overflow-hidden">
+        <img
+          src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
+          alt="Portrait of Insu Choi"
+          class="block w-full object-cover"
+          style="aspect-ratio: 4 / 5;"
+          width="800" height="1000"
+          loading="eager" decoding="async"
+          sizes="(max-width: 768px) 100vw, 320px" />
+      </div>
+      <h1 class="text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
     </div>
-  
-    <h1 class="text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-  </div>
 
     <!-- 기본 프로필 정보 -->
     <div class="mt-5 grid gap-3 text-[14px] text-slate-700">
@@ -170,259 +163,251 @@ permalink: /members-director.html
   <!-- Main -->
   <main class="grid gap-6">
 
-    <!-- Introduction -->
-    <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
-      </h2>
-      <p class="mt-3 text-[15px] leading-7 text-slate-700">
-        My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>,
-        with a particular focus on <b>integrating data science and financial engineering</b> to address
-        <b>real-world financial challenges</b>. I strive to make <b>financial services</b> more intuitive and accessible
-        by <b>simplifying complex concepts</b> and developing <b>user-friendly tools</b> for <b>asset management</b>.
-      </p>
-      <p class="mt-3 text-[15px] leading-7 text-slate-700">
-        Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing
-        <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
-        With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>,
-        I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
-      </p>
-    </section>
-
-    <!-- Research Interests -->
-    <section class="bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Introduction
-      </h2>
-      <div class="mt-3">
-        <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Financial Data Science</span>
-        <ul class="bullets mt-2 space-y-2">
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
-            <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
-            <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
-            <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="mt-4">
-        <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Business Analytics</span>
-        <ul class="bullets mt-2 space-y-2">
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
-            <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
-            <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Business Analytics Across Industries: Risk, Customers, Performance, Market Insights</span>
-            <span class="block text-[13px] text-slate-600">다양한 산업 분야에서의 애널리틱스 응용: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="mt-4">
-        <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Data-Inspired Decision Making</span>
-        <ul class="bullets mt-2 space-y-2">
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems with Graphs &amp; Reinforcement Learning</span>
-            <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
-            <span class="block text-[13px] text-slate-600">리스크 인지 및 사용자 친화적 스마트 금융 의사결정 도구</span>
-          </li>
-          <li>
-            <span class="block font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
-            <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
-          </li>
-        </ul>
+    <!-- Introduction (골드 뚜껑) -->
+    <section class="card">
+      <div class="card-head">Introduction</div>
+      <div class="card-body">
+        <p class="text-[15px] leading-7 text-slate-700">
+          My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>,
+          with a particular focus on <b>integrating data science and financial engineering</b> to address
+          <b>real-world financial challenges</b>. I strive to make <b>financial services</b> more intuitive and accessible
+          by <b>simplifying complex concepts</b> and developing <b>user-friendly tools</b> for <b>asset management</b>.
+        </p>
+        <p class="mt-3 text-[15px] leading-7 text-slate-700">
+          Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing
+          <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
+          With a <b>strong academic background</b> and a sincere passion for <b>impactful research</b>,
+          I remain committed to advancing <b>fintech innovation</b> in ways that create <b>meaningful and lasting value</b> for society.
+        </p>
       </div>
     </section>
 
-    <!-- Education -->
-    <section class="section-tl bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Education
-      </h2>
+    <!-- Research Interests (골드 뚜껑) -->
+    <section class="card">
+      <div class="card-head">Research Interests</div>
+      <div class="card-body">
+        <div class="mt-1">
+          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Financial Data Science</span>
+          <ul class="bullets mt-2 space-y-2">
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
+              <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
+              <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
+              <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
+            </li>
+          </ul>
+        </div>
 
-      <ul class="timeline space-y-8">
-        <!-- Ph.D. -->
-        <li class="tl edu">
-          <div class="rail" aria-hidden="true"></div>
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
-          </picture>
-          <div>
-            <div class="row1"><span class="year">2025.02.</span></div>
-            <div class="row2">
-              <span class="line degree">Ph.D. in Engineering</span>
-              <span class="line dept">Industrial and Systems Engineering</span>
-              <span class="line school" style="color:#003366;">KAIST</span>
-            </div>
-            <div class="row3">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor">
-                <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
-              </ul>
-            </div>
-          </div>
-        </li>
+        <div class="mt-4">
+          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Business Analytics</span>
+          <ul class="bullets mt-2 space-y-2">
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
+              <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
+              <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Business Analytics Across Industries: Risk, Customers, Performance, Market Insights</span>
+              <span class="block text-[13px] text-slate-600">다양한 산업 분야에서의 애널리틱스 응용: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
+            </li>
+          </ul>
+        </div>
 
-        <!-- M.S. -->
-        <li class="tl edu">
-          <div class="rail" aria-hidden="true"></div>
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
-          </picture>
-          <div>
-            <div class="row1"><span class="year">2021.02.</span></div>
-            <div class="row2">
-              <span class="line degree">Master of Science</span>
-              <span class="line dept">Industrial and Systems Engineering</span>
-              <span class="line school" style="color:#003366;">KAIST</span>
-            </div>
-            <div class="row3">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor">
-                <li><b>Best Master Thesis Award</b>, KIIE</li>
-              </ul>
-            </div>
-          </div>
-        </li>
-
-        <!-- B.E. -->
-        <li class="tl edu">
-          <div class="rail" aria-hidden="true"></div>
-          <picture>
-            <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp">
-            <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" alt="Kyung Hee Univ. logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
-          </picture>
-          <div>
-            <div class="row1"><span class="year">2018.02.</span></div>
-            <div class="row2">
-              <span class="line degree">Bachelor of Engineering</span>
-              <span class="line dept">Industrial &amp; Management Systems Engineering</span>
-              <span class="line school" style="color:#990000;">Kyung Hee University</span>
-            </div>
-            <div class="row3">
-              <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
-              <ul class="bullets-honor">
-                <li><b>Valedictorian</b>, 1st out of 86 students</li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
+        <div class="mt-4">
+          <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Data-Inspired Decision Making</span>
+          <ul class="bullets mt-2 space-y-2">
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems with Graphs &amp; Reinforcement Learning</span>
+              <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
+              <span class="block text-[13px] text-slate-600">리스크 인지 및 사용자 친화적 스마트 금융 의사결정 도구</span>
+            </li>
+            <li>
+              <span class="block font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
+              <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <!-- Employment -->
-    <section class="section-tl bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Employment
-      </h2>
+    <!-- Education (골드 뚜껑) -->
+    <section class="card section-tl">
+      <div class="card-head">Education</div>
+      <div class="card-body">
+        <ul class="timeline space-y-8">
+          <!-- Ph.D. -->
+          <li class="tl edu">
+            <div class="rail" aria-hidden="true"></div>
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
+            </picture>
+            <div>
+              <div class="row1"><span class="year">2025.02.</span></div>
+              <div class="row2">
+                <span class="line degree">Ph.D. in Engineering</span>
+                <span class="line dept">Industrial and Systems Engineering</span>
+                <span class="line school" style="color:#003366;">KAIST</span>
+              </div>
+              <div class="row3">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor">
+                  <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
+                </ul>
+              </div>
+            </div>
+          </li>
 
-      <ul class="timeline space-y-6">
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2025.09.– Present</span></div>
-            <div class="row2"><span class="title">Assistant Professor</span></div>
-            <div class="row3 desc">Department of Business Administration, Dongduk Women’s University</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2025.03.– 2024.08.</span></div>
-            <div class="row2"><span class="title">Lecturer</span></div>
-            <div class="row3 desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2025.03.– 2024.08.</span></div>
-            <div class="row2"><span class="title">Lecturer</span></div>
-            <div class="row3 desc">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2024.03.– 2024.08.</span></div>
-            <div class="row2"><span class="title">Lecturer</span></div>
-            <div class="row3 desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2020.03.– 2020.05.</span></div>
-            <div class="row2"><span class="title">Intern</span></div>
-            <div class="row3 desc">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
-          </div>
-        </li>
-      </ul>
+          <!-- M.S. -->
+          <li class="tl edu">
+            <div class="rail" aria-hidden="true"></div>
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kaist-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kaist-64.png' | relative_url }}" alt="KAIST logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
+            </picture>
+            <div>
+              <div class="row1"><span class="year">2021.02.</span></div>
+              <div class="row2">
+                <span class="line degree">Master of Science</span>
+                <span class="line dept">Industrial and Systems Engineering</span>
+                <span class="line school" style="color:#003366;">KAIST</span>
+              </div>
+              <div class="row3">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor">
+                  <li><b>Best Master Thesis Award</b>, KIIE</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+          <!-- B.E. -->
+          <li class="tl edu">
+            <div class="rail" aria-hidden="true"></div>
+            <picture>
+              <source srcset="{{ '/assets/img/logos/kyunghee-64.webp' | relative_url }}" type="image/webp">
+              <img src="{{ '/assets/img/logos/kyunghee-64.png' | relative_url }}" alt="Kyung Hee Univ. logo" class="logo" width="44" height="44" loading="lazy" decoding="async" onerror="this.style.display='none'">
+            </picture>
+            <div>
+              <div class="row1"><span class="year">2018.02.</span></div>
+              <div class="row2">
+                <span class="line degree">Bachelor of Engineering</span>
+                <span class="line dept">Industrial &amp; Management Systems Engineering</span>
+                <span class="line school" style="color:#990000;">Kyung Hee University</span>
+              </div>
+              <div class="row3">
+                <span class="inline-flex items-center font-black rounded-lg px-2.5 py-1" style="background:#d6b14d;color:#111827">Honor</span>
+                <ul class="bullets-honor">
+                  <li><b>Valedictorian</b>, 1st out of 86 students</li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
 
-    <!-- Affiliation -->
-    <section class="section-tl bg-white border border-slate-200 rounded-2xl shadow-md p-5">
-      <h2 class="text-xl font-extrabold flex items-center gap-2">
-        <span class="inline-block w-1.5 h-4 rounded-full" style="background:#d6b14d"></span>Affiliation
-      </h2>
+    <!-- Employment (골드 뚜껑) -->
+    <section class="card section-tl">
+      <div class="card-head">Employment</div>
+      <div class="card-body">
+        <ul class="timeline space-y-6">
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2025.09.– Present</span></div>
+              <div class="row2"><span class="title">Assistant Professor</span></div>
+              <div class="row3 desc">Department of Business Administration, Dongduk Women’s University</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2025.03.– 2024.08.</span></div>
+              <div class="row2"><span class="title">Lecturer</span></div>
+              <div class="row3 desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2025.03.– 2024.08.</span></div>
+              <div class="row2"><span class="title">Lecturer</span></div>
+              <div class="row3 desc">Digital Business Major, Division of Convergence Business, College of Global Business, Korea University</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2024.03.– 2024.08.</span></div>
+              <div class="row2"><span class="title">Lecturer</span></div>
+              <div class="row3 desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2020.03.– 2020.05.</span></div>
+              <div class="row2"><span class="title">Intern</span></div>
+              <div class="row3 desc">Performance Improvement Department, Consulting Division, EY Hanyoung (currently EY Consulting)</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-      <ul class="timeline space-y-6">
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2025.06. – Present</span></div>
-            <div class="row2"><span class="title">Lifetime Member</span></div>
-            <div class="row3 desc">Korean Institute of Industrial Engineers</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2023.09. – Present</span></div>
-            <div class="row2"><span class="title">Lifetime Member</span></div>
-            <div class="row3 desc">Korean Securities Association</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2023.06. – Present</span></div>
-            <div class="row2"><span class="title">Lifetime Member</span></div>
-            <div class="row3 desc">Korean Academic Society of Business Administration</div>
-          </div>
-        </li>
-        <li class="tl simple">
-          <div class="rail" aria-hidden="true"></div>
-          <div>
-            <div class="row1"><span class="year">2022.06. – Present</span></div>
-            <div class="row2"><span class="title">Lifetime Member</span></div>
-            <div class="row3 desc">Korea Intelligent Information Systems Society</div>
-          </div>
-        </li>
-      </ul>
+    <!-- Affiliation (골드 뚜껑) -->
+    <section class="card section-tl">
+      <div class="card-head">Affiliation</div>
+      <div class="card-body">
+        <ul class="timeline space-y-6">
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2025.06. – Present</span></div>
+              <div class="row2"><span class="title">Lifetime Member</span></div>
+              <div class="row3 desc">Korean Institute of Industrial Engineers</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2023.09. – Present</span></div>
+              <div class="row2"><span class="title">Lifetime Member</span></div>
+              <div class="row3 desc">Korean Securities Association</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2023.06. – Present</span></div>
+              <div class="row2"><span class="title">Lifetime Member</span></div>
+              <div class="row3 desc">Korean Academic Society of Business Administration</div>
+            </div>
+          </li>
+          <li class="tl simple">
+            <div class="rail" aria-hidden="true"></div>
+            <div>
+              <div class="row1"><span class="year">2022.06. – Present</span></div>
+              <div class="row2"><span class="title">Lifetime Member</span></div>
+              <div class="row3 desc">Korea Intelligent Information Systems Society</div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
 
   </main>
 </section>
-
-
-
-
-
