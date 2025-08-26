@@ -1,0 +1,172 @@
+---
+layout: default
+title: Research Areas | FINDS Lab
+permalink: /about-vision-area.html
+---
+
+<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+    .breadcrumbs a{color:#e5e7eb}
+    .breadcrumbs a:hover{text-decoration:underline}
+    .breadcrumbs .sep{opacity:.85}
+  </style>
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="Research banner"
+         class="w-full h-[180px] md:h-[220px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-4 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <span>Research</span>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Areas</span>
+        </nav>
+        <h1 class="text-2xl md:text-3xl font-extrabold">Research Areas</h1>
+        <p class="text-sm md:text-[15px] opacity-95">Focus topics, methods, and applications at FINDS Lab.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Page Styles (local) ===== -->
+<style>
+  .topic-card{
+    display:grid; gap:1rem; background:#fff;
+    border:1px solid #e5e7eb; border-radius:1rem; padding:1rem;
+    box-shadow:0 6px 18px rgba(0,0,0,.04);
+  }
+  @media (min-width: 768px){
+    .topic-card{ grid-template-columns: 1.2fr 1fr; align-items:center; padding:1.25rem; }
+    .topic-card.rev{ grid-template-columns: 1fr 1.2fr; }
+  }
+  .topic-img{
+    border-radius: .9rem; overflow:hidden; ring:1px solid #e5e7eb;
+  }
+  .topic-img img{ width:100%; height:100%; object-fit:cover; aspect-ratio: 16/10; }
+  .badge{
+    display:inline-flex; align-items:center; font-weight:900; font-size:12px;
+    padding:.25rem .55rem; border-radius:.6rem; background:#d6b14d; color:#111827;
+  }
+  .bullets{ list-style:none; margin:0; padding:0; }
+  .bullets li{ padding-left:1rem; position:relative; margin:.5rem 0; }
+  .bullets li::before{ content:"•"; position:absolute; left:0; top:0; font-weight:900; color:#334155; }
+  /* 긴 영문 타이틀 줄바꿈 보호 + 모바일 대응 */
+  .en-title{ word-break:keep-all; overflow-wrap:anywhere; }
+</style>
+
+<!-- ===== Research Area Sections ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6 space-y-6">
+
+  <!-- 1) Financial Data Science -->
+  <article class="topic-card">
+    <div class="pr-1">
+      <span class="badge">Financial Data Science</span>
+      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Financial Data Science</h2>
+      <p class="mt-1 text-[13px] text-slate-600">AI × quantitative methods for markets and asset management.</p>
+
+      <ul class="bullets mt-3 space-y-2">
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
+          <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
+          <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
+          <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="topic-img">
+      <picture>
+        <!-- 교체 권장: /assets/img/research/fds-1200.webp / fds-1200.jpg -->
+        <source srcset="{{ '/assets/img/research/fds-1200.webp' | relative_url }}" type="image/webp">
+        <img
+          src="{{ '/assets/img/research/fds-1200.jpg' | relative_url }}"
+          alt="Financial Data Science visual"
+          width="1200" height="750"
+          onerror="this.onerror=null;this.src='{{ '/assets/img/placeholders/research-hero.jpg' | relative_url }}'">
+      </picture>
+    </div>
+  </article>
+
+  <!-- 2) Business Analytics (reverse layout on desktop) -->
+  <article class="topic-card rev">
+    <div class="topic-img order-2 md:order-1">
+      <picture>
+        <!-- 교체 권장: /assets/img/research/ba-1200.webp / ba-1200.jpg -->
+        <source srcset="{{ '/assets/img/research/ba-1200.webp' | relative_url }}" type="image/webp">
+        <img
+          src="{{ '/assets/img/research/ba-1200.jpg' | relative_url }}"
+          alt="Business Analytics visual"
+          width="1200" height="750"
+          onerror="this.onerror=null;this.src='{{ '/assets/img/placeholders/research-hero.jpg' | relative_url }}'">
+      </picture>
+    </div>
+
+    <div class="pl-1 order-1 md:order-2">
+      <span class="badge">Business Analytics</span>
+      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Business Analytics</h2>
+      <p class="mt-1 text-[13px] text-slate-600">Decision-focused analytics across industries.</p>
+
+      <ul class="bullets mt-3 space-y-2">
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
+          <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
+          <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Business Analytics across Industries: Risk, Customers, Performance, Market Insights</span>
+          <span class="block text-[13px] text-slate-600">다양한 산업 분야 애널리틱스: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
+        </li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- 3) Data-Inspired Decision Making -->
+  <article class="topic-card">
+    <div class="pr-1">
+      <span class="badge">Data-Inspired Decision Making</span>
+      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Data-Inspired Decision Making</h2>
+      <p class="mt-1 text-[13px] text-slate-600">From graph reasoning to user-friendly financial tools.</p>
+
+      <ul class="bullets mt-3 space-y-2">
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems using Graph Representations &amp; Reinforcement Learning</span>
+          <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
+          <span class="block text-[13px] text-slate-600">리스크를 인지하고 사용자 친화적인 스마트 금융 의사결정 도구</span>
+        </li>
+        <li>
+          <span class="block en-title font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
+          <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="topic-img">
+      <picture>
+        <!-- 교체 권장: /assets/img/research/dim-1200.webp / dim-1200.jpg -->
+        <source srcset="{{ '/assets/img/research/dim-1200.webp' | relative_url }}" type="image/webp">
+        <img
+          src="{{ '/assets/img/research/dim-1200.jpg' | relative_url }}"
+          alt="Data-Inspired Decision Making visual"
+          width="1200" height="750"
+          onerror="this.onerror=null;this.src='{{ '/assets/img/placeholders/research-hero.jpg' | relative_url }}'">
+      </picture>
+    </div>
+  </article>
+
+</section>
