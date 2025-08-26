@@ -1,0 +1,199 @@
+---
+layout: default
+title: members-current
+permalink: /members-current.html
+---
+
+<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+    .breadcrumbs a{color:#e5e7eb}
+    .breadcrumbs a:hover{text-decoration:underline}
+    .breadcrumbs .sep{opacity:.8}
+  </style>
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/members-hero.jpg' | relative_url }}" alt="Members banner"
+         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-3 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <a href="{{ '/members-current.html' | relative_url }}">Members</a>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Current Students</span>
+        </nav>
+        <h1 class="text-xl md:text-2xl font-extrabold">Current Students</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Page Styles ===== -->
+<style>
+  :root{
+    --accent:#ac0e0e;   /* lab red */
+    --gold:#d6b14d;     /* header gold */
+    --gold-fg:#111827;  /* header text */
+  }
+  /* 카드: 상단 골드 뚜껑 */
+  .card{
+    background:#fff; border:1px solid #e5e7eb; border-radius:1rem;
+    overflow:hidden; box-shadow:0 6px 20px rgba(0,0,0,.04);
+  }
+  .card-head{
+    background:var(--gold); color:var(--gold-fg);
+    font-weight:900; letter-spacing:.2px;
+    padding:.85rem 1rem; font-size:clamp(16px, 2.4vw, 20px); line-height:1.25;
+  }
+  .card-body{ padding:1.1rem; }
+
+  /* 멤버 카드 내부 레이아웃 */
+  .member-grid{
+    display:grid; grid-template-columns:100px 1fr; gap:12px; align-items:start;
+  }
+  @media (min-width: 480px){
+    .member-grid{ grid-template-columns:120px 1fr; }
+  }
+  .avatar{
+    width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:.75rem;
+    background:#fff; box-shadow:0 0 0 1px #e5e7eb, 0 6px 18px rgba(0,0,0,.06);
+  }
+  .kv{display:grid; gap:.25rem; font-size:14px; color:#334155}
+  .kv b{font-weight:900; color:#0f172a}
+  .name-line{font-weight:900; font-size:clamp(16px,2.5vw,18px); color:#0f172a}
+  .role-line{font-weight:800; color:#111827; margin-top:.15rem}
+  .dates{color:#475569; font-size:13px}
+  .mail a{color:#0f172a; text-decoration:underline; text-underline-offset:2px}
+
+  /* 펼침(details) */
+  details.member-more{margin-top:.75rem; border-top:1px dashed #e5e7eb; padding-top:.75rem}
+  details.member-more > summary{
+    list-style:none; cursor:pointer; user-select:none;
+    display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    background:#f8fafc; border:1px solid #e5e7eb; padding:.55rem .8rem; border-radius:.6rem;
+    font-weight:900; color:#0f172a;
+  }
+  details.member-more > summary::-webkit-details-marker{display:none}
+  /* caret */
+  details.member-more > summary .caret{transition:transform .18s ease; font-weight:900}
+  details.member-more[open] > summary .caret{transform:rotate(90deg)}
+  .more-body{padding:.8rem .1rem 0 .1rem}
+
+  /* 섹션 타이틀 (펼침 내부) */
+  .subhead{
+    font-weight:900; color:#0f172a; margin:.4rem 0 .35rem;
+    font-size:clamp(16px,2.5vw,18px);
+  }
+  .list{margin:.1rem 0 0 1.25rem; padding:0}
+  .list li{margin:.25rem 0; color:#334155; line-height:1.55}
+  .pubs{counter-reset: pub}
+  .pubs > li{list-style:decimal}
+  .honors{counter-reset: hon}
+  .honors > li{list-style:decimal}
+
+  /* 페이지 그리드 */
+  .members-wrap{max-width:72rem;margin:1rem auto 2rem; padding:0 1rem}
+  .members-grid{display:grid; gap:16px}
+  @media (min-width: 768px){
+    .members-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (min-width: 1100px){
+    .members-grid{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+
+<!-- ===== Members Grid ===== -->
+<section class="members-wrap">
+  <div class="members-grid">
+
+    <!-- === Member: Uk Jo (조 억) === -->
+    <section class="card">
+      <div class="card-head">Uk Jo (조 억)</div>
+      <div class="card-body">
+        <div class="member-grid">
+          <img src="{{ '/assets/img/members/uk-jo.jpg' | relative_url }}" alt="Photo of Uk Jo"
+               class="avatar" width="480" height="600" loading="lazy" decoding="async">
+          <div class="kv">
+            <div class="name-line">Uk Jo</div>
+            <div class="role-line">Ph.D. Candidate</div>
+            <div class="dates">(September 1, 2019 ~ Present)</div>
+            <div><b>Research Interest</b>: Reinforcement Learning, Game AI</div>
+            <div class="mail"><b>E-mail</b>: <a href="mailto:ukjo@korea.ac.kr">ukjo@korea.ac.kr</a></div>
+          </div>
+        </div>
+
+        <!-- 펼침: Education / Publications / Honors -->
+        <details class="member-more">
+          <summary><span>More details</span><span class="caret">▶</span></summary>
+          <div class="more-body">
+            <div class="subhead">Education</div>
+            <ul class="list">
+              <li>B.S. in Mathematics, Dongduk Women's University, 2018</li>
+            </ul>
+
+            <div class="subhead" style="margin-top:.75rem">Publications</div>
+            <ol class="list pubs">
+              <li>
+                Son, Guijin; Ko, Hyunwoo; <b>Lee, Hoyoung</b>; Kim, Yewon; Hong, Seunghyeok (2025).
+                “Multilingual Challenges in Automated Evaluators: A Case Study on English and Korean”.
+                <em>AAAI 2025 Workshop on Preparing Good Data for Generative AI (Good-Data)</em>.
+              </li>
+              <li>
+                <b>Lee, Hoyoung</b>; Choi, Youngsoo; Kwon, Yuhee (2024).
+                “Quantifying Qualitative Insights: Leveraging LLMs to Market Predict”.
+                <em>ICAIF’24 Workshop on LLMs and Generative AI for Finance (AI4F)</em>.
+              </li>
+            </ol>
+
+            <div class="subhead" style="margin-top:.75rem">Honors &amp; awards</div>
+            <ol class="list honors">
+              <li>ACM-ICAIF'24 FinanceRAG Challenge, <em>ICAIF</em>, 2024</li>
+              <li>NH Investment &amp; Securities Big Data Competition, <em>NH Investment &amp; Securities</em>, 2023</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- === (복제해서 더 추가하면 됨) === -->
+    <!--
+    <section class="card">
+      <div class="card-head">Name (이름 한글)</div>
+      <div class="card-body">
+        <div class="member-grid">
+          <img src="{{ '/assets/img/members/NAME.jpg' | relative_url }}" alt="Photo of Name"
+               class="avatar" width="480" height="600" loading="lazy" decoding="async">
+          <div class="kv">
+            <div class="name-line">Name</div>
+            <div class="role-line">M.S. Student</div>
+            <div class="dates">(Month DD, YYYY ~ Present)</div>
+            <div><b>Research Interest</b>: …</div>
+            <div class="mail"><b>E-mail</b>: <a href="mailto:...">...</a></div>
+          </div>
+        </div>
+        <details class="member-more">
+          <summary><span>More details</span><span class="caret">▶</span></summary>
+          <div class="more-body">
+            <div class="subhead">Education</div>
+            <ul class="list">
+              <li>...</li>
+            </ul>
+            <div class="subhead" style="margin-top:.75rem">Publications</div>
+            <ol class="list pubs">
+              <li>...</li>
+            </ol>
+            <div class="subhead" style="margin-top:.75rem">Honors &amp; awards</div>
+            <ol class="list honors">
+              <li>...</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </section>
+    -->
+
+  </div>
+</section>
