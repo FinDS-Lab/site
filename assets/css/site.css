@@ -1,20 +1,59 @@
+/* =========================================================
+   site.css  — FINDS Lab Global Styles (FULL)
+   - Colors, Base, Header/Nav(dropdown), Buttons, Cards, etc.
+   - Hover intent 지연은 header.html JS가 data-open만 토글,
+     애니메이션/모션은 전부 CSS에서 처리
+   ========================================================= */
+
+/* ========== CSS Variables ========== */
+:root{
+  --accent: rgb(172, 14, 14); /* 브랜드 포인트 */
+  --gold:   rgb(214, 177, 77);
+  --gold-fg:#111827;          /* 골드 배경 위 전경색 */
+  --fg-on-accent:#ffffff;
+  --bg:#ffffff;
+  --bg-soft:#f8fafc;
+  --ring:0 0 0 3px rgba(172,14,14,.25);
+
+  /* 레이아웃 유틸 */
+  --header-height: 64px;
+}
+
+/* ========== Base ========== */
+html,body{
+  font-family:"Noto Sans KR","Noto Sans","Roboto",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+body{ background:var(--bg-soft); color:#0f172a; }
+img, video { display:block; max-width:100%; height:auto; }
+img[width][height] { height:auto; }
+:focus-visible{ outline:none; box-shadow:var(--ring); }
+html { scrollbar-gutter: stable both-edges; }
+@media (max-width: 360px){ html, body { min-width: 360px; } }
+
 /* ========== Header / Nav ========== */
+/* 상단 고정 + 살짝 블러 */
 .sticky-blur{
   position:sticky; top:0; z-index:50;
   backdrop-filter:saturate(180%) blur(8px);
   background:rgba(255,255,255,.85);
   will-change: transform;
+  border-bottom:1px solid #e5e7eb; /* 안전선 */
 }
 
-/* 공통 링크 */
+/* 공통 네비게이션 링크 기본형 */
 .nav-link{
   color:#1f2937; /* slate-800 */
   font-weight:800;
   border-radius:.6rem;
-  padding:.4rem .6rem;
-  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+  padding:.4rem .6rem;              /* pill 형태 */
+  transition:
+    background-color .2s ease,
+    color .2s ease,
+    box-shadow .2s ease,
+    transform .2s ease;
 }
 
+/* 드롭다운 패널/아이템 */
 .submenu-panel{ font-size:13px; line-height:1.25rem; width:13.5rem; }
 .submenu-item{
   color:#1f2937;
@@ -24,19 +63,23 @@
   transition: background-color .2s ease, color .2s ease;
 }
 
-/* 드롭다운: 기본 숨김(애니메이션은 CSS 담당) */
+/* 드롭다운 기본: 숨김 (애니메이션은 CSS 담당) */
 .js-submenu{
   position:absolute; top:100%; left:0; margin-top:.25rem;
   background:#fff; border:1px solid #e5e7eb; border-radius:.75rem;
   box-shadow:0 12px 40px rgba(0,0,0,.08);
   min-width:13.5rem; padding:.5rem 0;
 
+  /* 숨김 상태 */
   visibility:hidden; opacity:0; transform: translateY(6px) scale(.98);
   pointer-events:none;
   transition: visibility .18s ease, opacity .18s ease, transform .18s ease;
 }
 
-/* 보여지는 상태(세 가지 경로 지원: data-open, :hover, :focus-within) */
+/* 보여지는 상태 트리거 (세 경로 지원)
+   1) data-open="true" (JS 지연 토글)
+   2) :hover
+   3) :focus-within (키보드 접근성) */
 .menu-group[data-open="true"] .js-submenu,
 .menu-group:hover .js-submenu,
 .menu-group:focus-within .js-submenu{
@@ -52,7 +95,7 @@
   box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
-/* ✅ 골드 하이라이트(기존 hover 룰 유지) */
+/* ✅ 골드 하이라이트 (텍스트색이 아니라 '영역'을 금색으로) */
 .nav-link:hover,
 .submenu-item:hover,
 #mobileNav a:hover{
@@ -61,13 +104,124 @@
   box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
-/* 모바일 네비 링크 */
+/* 모바일 메뉴 내 링크(배경 유틸과 병행될 때도 자연스럽게) */
 #mobileNav a{
   border-radius:.6rem;
-  transition: background-color .2s ease, color .2s ease;
+  transition:background-color .2s ease, color .2s ease;
 }
 
-/* 접근성/성능 */
+/* 모바일 네비 상태 토글 (JS가 .hidden 토글) */
+#mobileNav.hidden{ display:none; }
+
+/* 접근성/성능 옵션 */
 @media (prefers-reduced-motion: reduce){
   .js-submenu{ transition:none; transform:none; }
+}
+
+/* ========== Buttons / Badges / Cards ========== */
+.btn-primary{
+  background:var(--accent); color:var(--fg-on-accent);
+  border-radius:.75rem; padding:.6rem .95rem; font-weight:900;
+  box-shadow:0 6px 20px rgba(0,0,0,.12); transition:.2s;
+}
+.btn-primary:hover{ transform:translateY(-1px); opacity:.95; }
+
+.btn-ghost{
+  background:#0f172a; color:#fff; border-radius:.75rem;
+  padding:.6rem .95rem; font-weight:900;
+  box-shadow:0 6px 20px rgba(0,0,0,.12); transition:.2s;
+}
+.btn-ghost:hover{ transform:translateY(-1px); opacity:.95; }
+
+.card{
+  background:#fff; border:1px solid #e5e7eb; border-radius:1rem;
+  padding:1.25rem; transition:.2s;
+}
+.card:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,.08); }
+
+.tag-gold{
+  background:var(--gold); color:#111827;
+  border-radius:9999px; padding:.25rem .55rem; font-size:.7rem; font-weight:900;
+}
+
+/* 텍스트 강조 언더라인 */
+.warm-underline{
+  text-decoration:underline;
+  text-decoration-thickness:2px;
+  text-underline-offset:4px;
+  text-decoration-color:var(--accent);
+}
+
+/* 링크 언더라인 슬라이드(footer 등에서 사용) */
+.link-underline{
+  position:relative; color:#334155; transition:color .2s ease;
+}
+.link-underline::after{
+  content:""; position:absolute; left:0; bottom:-2px;
+  width:100%; height:2px; background:linear-gradient(90deg, var(--gold), var(--gold));
+  transform:scaleX(0); transform-origin:left; transition:transform .2s ease; border-radius:1px;
+}
+.link-underline:hover{ color:var(--gold); }
+.link-underline:hover::after{ transform:scaleX(1); }
+
+/* ========== Typography helpers ========== */
+.ko-tight{ word-break:keep-all; line-break:strict; overflow-wrap:break-word; }
+@supports (text-wrap: balance){ .ko-tight{ text-wrap: balance; } }
+
+/* ========== Carousel ========== */
+.carousel{ position:relative; overflow:hidden; border-radius:1.25rem; background:#0b1020; }
+.carousel-track{ display:flex; transition:transform .6s cubic-bezier(.2,.6,.2,1); }
+.carousel-slide{ min-width:100%; height:520px; position:relative; background:#0b1020; }
+.carousel-slide img.bg{ width:100%; height:100%; object-fit:cover; display:block; }
+.carousel-caption{
+  position:absolute; inset:0; display:flex; align-items:center;
+  background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.15) 55%,rgba(0,0,0,0));
+  color:#fff; padding:0 1rem;
+}
+.dot{ width:10px; height:10px; border-radius:9999px; background:#e5e7eb; }
+.dot.active{ background:var(--accent); }
+
+/* ========== Scrollbar ========== */
+*{ scrollbar-width:thin; scrollbar-color:var(--accent) #f1f5f9; }
+*::-webkit-scrollbar{ height:8px; width:8px; }
+*::-webkit-scrollbar-thumb{ background:var(--accent); border-radius:9999px; }
+
+/* ========== Ratios / Layout helpers ========== */
+.ar-16x9 { aspect-ratio: 16 / 9; object-fit: cover; }
+.content-offset { scroll-margin-top: var(--header-height); }
+
+/* 지도/캐러셀 등 위에서 보이는 블록은 높이 미리 예약 */
+#kakao-map { height: 460px; }
+@media (max-width: 640px){ #kakao-map { height: 360px; } }
+
+/* 리스트 임베드(News/Notice) 로딩 중 높이 출렁임 방지 */
+#news-feed, #notice-feed { min-height: 4.5rem; }
+
+/* 모바일 메뉴 열릴 때 바디 스크롤 잠금 */
+body.no-scroll { overflow: hidden; }
+
+/* ========== Footer ========== */
+footer[aria-label="Site footer"]{
+  background:#ffffff;
+  border-top:1px solid #e5e7eb;
+}
+#btnTop{
+  opacity:0; transform:translateY(6px);
+  transition:opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+  z-index:40;
+}
+#btnTop.is-visible{ opacity:1; transform:translateY(0); }
+
+/* 다크 프리셋(선택) */
+@media (prefers-color-scheme: dark){
+  body{ background:#0b0f19; color:#e2e8f0; }
+  .sticky-blur{ background:rgba(11,15,25,.85); border-color:#1f2937; }
+  .submenu-item, .nav-link{ color:#e2e8f0; }
+  .js-submenu{ background:#0f172a; border-color:#1f2937; box-shadow:0 12px 40px rgba(0,0,0,.5); }
+  .card{ background:#0f172a; border-color:#1f2937; }
+  footer[aria-label="Site footer"]{ background:#0b0f19; border-color:#1f2937; }
+  .link-underline{ color:#cbd5e1; }
+  .link-underline:hover{ color:var(--gold); }
+  #btnTop{ background:rgba(15,23,42,.85); border:1px solid #334155; }
+  #btnTop svg{ color:#e2e8f0; }
 }
