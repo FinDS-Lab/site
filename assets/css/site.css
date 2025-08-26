@@ -6,7 +6,7 @@
 :root{
   --accent: rgb(172, 14, 14); /* 브랜드 포인트 */
   --gold:   rgb(214, 177, 77);
-  --gold-fg:#111827;          /* 골드 배경 위 전경색 */
+  --gold-fg:#111827;          /* 골드 배경 위 전경색 (옵션 B용, 현재 미사용) */
   --fg-on-accent:#ffffff;
   --bg:#ffffff;
   --bg-soft:#f8fafc;
@@ -80,21 +80,30 @@ html { scrollbar-gutter: stable both-edges; }
   pointer-events:auto;
 }
 
-/* 상위 탭 하이라이트: 그룹 활성/호버 시 */
+/* === 옵션 A: 텍스트만 골드(배경 그대로) === */
+/* 상위 탭 하이라이트(그룹 활성/호버 시) */
 .menu-group[data-open="true"] > .nav-link,
 .menu-group:hover > .nav-link{
-  background:var(--gold);
-  color:var(--gold-fg);
-  box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
+  color: var(--gold);
+  background: transparent;
+  box-shadow: none;
 }
 
-/* ✅ 골드 하이라이트 */
+/* 링크/서브아이템/모바일 링크 호버 시 텍스트만 골드 */
 .nav-link:hover,
 .submenu-item:hover,
 #mobileNav a:hover{
-  background:var(--gold);
-  color:var(--gold-fg);
-  box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
+  color: var(--gold);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* 키보드 포커스 시에도 일관된 피드백(텍스트 골드 + 포커스 링) */
+.nav-link:focus-visible,
+.submenu-item:focus-visible{
+  color: var(--gold);
+  background: transparent;
+  box-shadow: var(--ring);
 }
 
 /* 모바일 메뉴 링크 */
@@ -226,10 +235,26 @@ footer[aria-label="Site footer"]{
     color:#0f172a !important;
   }
 
+  /* === 옵션 A: 다크 모드에서도 텍스트만 골드 === */
+  .menu-group[data-open="true"] > .nav-link,
+  .menu-group:hover > .nav-link,
+  .nav-link:hover,
+  .submenu-item:hover,
+  #mobileNav a:hover{
+    color: var(--gold);
+    background: transparent;
+    box-shadow: none;
+  }
+  .nav-link:focus-visible,
+  .submenu-item:focus-visible{
+    color: var(--gold);
+    background: transparent;
+    box-shadow: var(--ring);
+  }
+
   footer[aria-label="Site footer"]{ background:#0b0f19; border-color:#1f2937; }
   .link-underline{ color:#cbd5e1; }
   .link-underline:hover{ color:var(--gold); }
   #btnTop{ background:rgba(15,23,42,.85); border:1px solid #334155; }
   #btnTop svg{ color:#e2e8f0; }
 }
-
