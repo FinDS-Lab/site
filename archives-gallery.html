@@ -6,24 +6,20 @@ permalink: /archives-gallery.html
 
 <!-- ===== Gallery Styles ===== -->
 <style>
-  /* Breadcrumbs (banner) */
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
   .breadcrumbs .sep{opacity:.85}
 
-  /* Toolbar */
   .gal-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:12px 14px;margin-top:18px}
   .gal-search{flex:1 1 260px}
   .gal-search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.55rem .8rem;font-size:14px}
   .gal-count{font-size:12px;font-weight:800;color:#64748b}
 
-  /* Grid */
   .gal-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
   @media (min-width:640px){ .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
   @media (min-width:1024px){ .gal-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
 
-  /* Card */
   .gal-card{display:block;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;background:#fff;transition:transform .2s ease, box-shadow .2s ease}
   .gal-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
   .gal-thumb{height:180px;background-size:cover;background-position:center}
@@ -33,7 +29,6 @@ permalink: /archives-gallery.html
   .gal-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
   .gal-tag{font-size:11px;font-weight:800;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#111827;padding:.15rem .5rem}
 
-  /* Empty state */
   .gal-empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
 </style>
 
@@ -45,7 +40,6 @@ permalink: /archives-gallery.html
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
-        <!-- Breadcrumbs -->
         <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
@@ -53,7 +47,6 @@ permalink: /archives-gallery.html
           <span class="sep">›</span>
           <span aria-current="page" class="font-semibold">Gallery</span>
         </nav>
-        <!-- Title -->
         <h1 class="text-2xl md:text-3xl font-extrabold">Lab Gallery</h1>
         <p class="text-sm md:text-[15px] opacity-95">Albums and photo stories from FINDS Lab.</p>
       </div>
@@ -71,40 +64,83 @@ permalink: /archives-gallery.html
   </div>
 </section>
 
-<!-- ===== Gallery List ===== -->
+<!-- ===== Gallery List (pull from folders too) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   {% comment %}
-    /gallery/ 경로의 페이지 또는 포스트 수집 (폴더형 index.md 포함)
-    정렬: 최신 날짜 우선
+    1) 모든 페이지/포스트 + 모든 컬렉션의 문서까지 합쳐서(all_items)
+    2) URL에 '/gallery/' 포함 & 제목 있는 것만 필터
+    3) 최신(date) 우선 정렬. date 없으면 뒤쪽으로 감.
   {% endcomment %}
+
   {% assign all_items = site.pages | concat: site.posts %}
+
+  {% for c in site.collections %}
+    {% unless c.label == 'posts' %}
+      {% assign all_items = all_items | concat: c.docs %}
+    {% endunless %}
+  {% endfor %}
+
   {% assign galleries = "" | split: "" %}
   {% for item in all_items %}
     {% if item.url and item.title and item.url contains '/gallery/' and item.url != '/archives-gallery.html' %}
       {% assign galleries = galleries | push: item %}
     {% endif %}
   {% endfor %}
-  {% assign galleries = galleries | sort: 'date' | reverse %}
 
-  {% if galleries.size == 0 %}
+  {%- comment -%}
+    날짜가 없는 페이지도 있을 수 있으므로, 먼저 date 있는 것 / 없는 것 분리 후 합치기
+  {%- endcomment -%}
+  {% assign dated = "" | split: "" %}
+  {% assign undated = "" | split: "" %}
+  {% for g in galleries %}
+    {% if g.date %}
+      {% assign dated = dated | push: g %}
+    {% else %}
+      {% assign undated = undated | push: g %}
+    {% endif %}
+  {% endfor %}
+  {% assign dated = dated | sort: 'date' | reverse %}
+  {% assign galleries_sorted = dated | concat: undated %}
+
+  {% if galleries_sorted.size == 0 %}
     <div class="gal-empty">게시글이 없습니다.</div>
   {% else %}
     <ul id="gal-grid" class="gal-grid" role="list">
-      {% for post in galleries %}
+      {% for post in galleries_sorted %}
+        {%- comment -%}
+          썸네일 결정 우선순위:
+          1) front matter: thumb / image / cover
+          2) 같은 폴더의 첫 번째 이미지(site.static_files에서 post.url 포함 경로 탐색)
+          3) 플레이스홀더
+        {%- endcomment -%}
         {%- assign raw_thumb = post.thumb | default: post.image | default: post.cover -%}
+        {%- assign thumb_url = nil -%}
+
         {%- if raw_thumb -%}
           {%- if raw_thumb contains '://' or raw_thumb startswith '/' -%}
             {%- assign thumb_url = raw_thumb | relative_url -%}
           {%- else -%}
-            {%- comment -%}
-              폴더형(index.md)일 경우: post.url 이 끝에 / 로 끝나므로 파일명 그대로 이어붙이면 됨.
-              파일형(.md)일 경우: 상대경로 thumb를 그대로 쓰는 것을 권장.
-            {%- endcomment -%}
-            {%- assign thumb_url = post.url | append: raw_thumb | relative_url -%}
+            {%- assign base = post.url -%}
+            {%- assign last = base | slice: -1, 1 -%}
+            {%- if last != '/' -%}{% assign base = base | append: '/' %}{%- endif -%}
+            {%- assign thumb_url = base | append: raw_thumb | relative_url -%}
           {%- endif -%}
-        {%- else -%}
-          {%- assign thumb_url = '/assets/img/placeholders/gallery.jpg' | relative_url -%}
         {%- endif -%}
+
+        {%- if thumb_url == nil -%}
+          {%- assign cand = site.static_files | where_exp: "f", "f.path contains post.url" -%}
+          {%- assign imgs1 = cand | where: "extname", ".jpg" -%}
+          {%- assign imgs2 = cand | where: "extname", ".jpeg" -%}
+          {%- assign imgs3 = cand | where: "extname", ".png" -%}
+          {%- assign imgs4 = cand | where: "extname", ".webp" -%}
+          {%- assign images = imgs1 | concat: imgs2 | concat: imgs3 | concat: imgs4 -%}
+          {%- assign first = images[0] -%}
+          {%- if first -%}{% assign thumb_url = first.path | relative_url %}{%- endif -%}
+        {%- endif -%}
+
+        {%- unless thumb_url -%}
+          {%- assign thumb_url = '/assets/img/placeholders/gallery.jpg' | relative_url -%}
+        {%- endunless -%}
 
         {%- assign date_txt = '' -%}
         {%- if post.date -%}
@@ -116,11 +152,7 @@ permalink: /archives-gallery.html
           {%- assign tag_text = post.tags | join: ' ' -%}
         {%- endif -%}
 
-        <li
-          class="gal-item"
-          role="listitem"
-          data-text="{{ post.title | escape }} {{ tag_text | escape }}"
-        >
+        <li class="gal-item" role="listitem" data-text="{{ post.title | escape }} {{ tag_text | escape }}">
           <a class="gal-card" href="{{ post.url | relative_url }}">
             <div class="gal-thumb" style="background-image:url('{{ thumb_url }}')"></div>
             <div class="gal-info">
@@ -141,7 +173,7 @@ permalink: /archives-gallery.html
   {% endif %}
 </section>
 
-<!-- ===== Page JS (client-side search) ===== -->
+<!-- ===== Page JS (검색) ===== -->
 <script>
   (function(){
     const q = document.getElementById('gal-q');
@@ -152,9 +184,7 @@ permalink: /archives-gallery.html
     const items = Array.from(grid.querySelectorAll('.gal-item'));
     const total = items.length;
 
-    function renderCount(n){
-      cnt.textContent = `Showing ${n} of ${total}`;
-    }
+    function renderCount(n){ cnt.textContent = `Showing ${n} of ${total}`; }
 
     function applyFilter(){
       const term = q.value.trim().toLowerCase();
@@ -163,7 +193,7 @@ permalink: /archives-gallery.html
         const text = (li.getAttribute('data-text') || '').toLowerCase();
         const show = !term || text.includes(term);
         li.style.display = show ? '' : 'none';
-        if (show) visible++;
+        if(show) visible++;
       });
       renderCount(visible);
     }
