@@ -1,0 +1,174 @@
+---
+layout: default
+title: alumni
+permalink: /members-alumni.html
+---
+
+<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+    .breadcrumbs a{color:#e5e7eb}
+    .breadcrumbs a:hover{text-decoration:underline}
+    .breadcrumbs .sep{opacity:.8}
+  </style>
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/members-hero.jpg' | relative_url }}" alt="Members banner"
+         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-3 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <a href="{{ '/members-alumni.html' | relative_url }}">Members</a>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Alumni</span>
+        </nav>
+        <h1 class="text-xl md:text-2xl font-extrabold">Alumni</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Styles ===== -->
+<style>
+  :root{
+    --accent:#ac0e0e;   /* PhD 배너 */
+    --gold:#d6b14d;     /* MS 배너 */
+    --gold-fg:#111827;
+  }
+  .alumni-wrap{max-width:72rem;margin:1rem auto 2rem;padding:0 1rem}
+
+  .hint{font-size:12px;color:#6b7280;margin:.25rem 0 1rem}
+
+  /* Grid */
+  .grid{display:grid;gap:14px}
+  @media (min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
+  @media (min-width:1100px){ .grid{grid-template-columns:repeat(3,1fr)} }
+
+  /* Card */
+  .card{
+    background:#fff;border:1px solid #e5e7eb;border-radius:1rem;
+    overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.04)
+  }
+  .head{
+    display:flex;align-items:center;justify-content:center;
+    padding:.55rem .8rem;font-weight:900;letter-spacing:.2px;
+    font-size:clamp(13px,1.8vw,14.5px)
+  }
+  .head.phd{background:var(--accent);color:#fff}
+  .head.ms{background:var(--gold);color:var(--gold-fg)}
+  .body{padding:.9rem}
+
+  .row{display:grid;grid-template-columns:88px 1fr;gap:.75rem;align-items:start}
+  @media (min-width:480px){ .row{grid-template-columns:98px 1fr} }
+
+  .avatar{
+    width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:.7rem;
+    background:#fff;box-shadow:0 0 0 1px #e5e7eb, 0 6px 18px rgba(0,0,0,.06)
+  }
+  .name{font-weight:900;color:#0f172a;font-size:clamp(14.5px,2vw,16px)}
+  .label{font-weight:800;color:#111827;font-size:12px;margin-top:.1rem}
+  .period{color:#64748b;font-size:12px;margin-top:.15rem}
+  .kv{font-size:12.5px;color:#334155;line-height:1.55;margin-top:.3rem}
+  .kv b{color:#0f172a}
+
+  /* 작은 캡션 구분선 */
+  .sep{height:1px;background:#f1f5f9;margin:.55rem 0}
+</style>
+
+<section class="alumni-wrap">
+  <p class="hint">※ 카드 상단 배너 색상: <b style="color:#ac0e0e">Ph.D. Graduate</b> (빨강), <b style="color:#6b5d26">M.S. Graduate</b> (금색)</p>
+
+  <div class="grid">
+
+    <!-- ===== PhD Alumni (예시) ===== -->
+    <article class="card">
+      <div class="head phd">Ph.D. Graduate</div>
+      <div class="body">
+        <div class="row">
+          <img src="{{ '/assets/img/members/alumni-cho-eok.jpg' | relative_url }}" alt="Photo of Eok Cho" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Eok Cho (조 억)</div>
+            <div class="label">Financial Data Science</div>
+            <div class="period">재학: 2019.09. – 2025.02.</div>
+            <div class="sep"></div>
+            <div class="kv"><b>Current Position</b>: Assistant Research Scientist</div>
+            <div class="kv"><b>Affiliation</b>: Lorem Institute of Quantitative Finance</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head phd">Ph.D. Graduate</div>
+      <div class="body">
+        <div class="row">
+          <img src="{{ '/assets/img/members/alumni-park-minsu.jpg' | relative_url }}" alt="Photo of Minsu Park" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Minsu Park (박 민수)</div>
+            <div class="label">Business Analytics</div>
+            <div class="period">재학: 2020.03. – 2024.08.</div>
+            <div class="sep"></div>
+            <div class="kv"><b>Current Position</b>: Data Scientist</div>
+            <div class="kv"><b>Affiliation</b>: Ipsum Asset Management</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== MS Alumni (예시) ===== -->
+    <article class="card">
+      <div class="head ms">M.S. Graduate</div>
+      <div class="body">
+        <div class="row">
+          <img src="{{ '/assets/img/members/alumni-lee-lorem.jpg' | relative_url }}" alt="Photo of Lorem Lee" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Lorem Lee (이 로렘)</div>
+            <div class="label">Financial Data Science</div>
+            <div class="period">재학: 2023.03. – 2025.02.</div>
+            <div class="sep"></div>
+            <div class="kv"><b>Current Position</b>: Quant Researcher</div>
+            <div class="kv"><b>Affiliation</b>: Dolor Capital Partners</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head ms">M.S. Graduate</div>
+      <div class="body">
+        <div class="row">
+          <img src="{{ '/assets/img/members/alumni-kim-dolor.jpg' | relative_url }}" alt="Photo of Dolor Kim" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Dolor Kim (김 돌로르)</div>
+            <div class="label">Business Analytics</div>
+            <div class="period">재학: 2022.09. – 2024.08.</div>
+            <div class="sep"></div>
+            <div class="kv"><b>Current Position</b>: Data Analyst</div>
+            <div class="kv"><b>Affiliation</b>: Sit Amet Securities</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="head ms">M.S. Graduate</div>
+      <div class="body">
+        <div class="row">
+          <img src="{{ '/assets/img/members/alumni-park-ipsum.jpg' | relative_url }}" alt="Photo of Ipsum Park" class="avatar" width="480" height="600" loading="lazy" decoding="async" onerror="this.src='{{ '/assets/img/members/sample.jpg' | relative_url }}'">
+          <div>
+            <div class="name">Ipsum Park (박 입섬)</div>
+            <div class="label">Financial Engineering</div>
+            <div class="period">재학: 2021.09. – 2023.08.</div>
+            <div class="sep"></div>
+            <div class="kv"><b>Current Position</b>: Risk Analyst</div>
+            <div class="kv"><b>Affiliation</b>: Consectetur Bank</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
