@@ -36,7 +36,61 @@ permalink: /members-current.html
   :root{
     --phd-gold: rgb(214, 177, 77);
     --ms-red: rgb(172, 14, 14);
+    --combined-gold: rgb(234, 207, 127); /* 옅은 금색 */
     --primary-dark: #111827;
+  }
+
+  /* Statistics Section */
+  .stats-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+    gap:16px;
+    margin-top:2rem;
+    margin-bottom:2rem;
+  }
+  
+  .stat-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:0.75rem;
+    padding:16px;
+    text-align:center;
+    transition:all 0.2s;
+  }
+  
+  .stat-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .stat-number{
+    font-size:28px;
+    font-weight:900;
+    color:#111827;
+  }
+  
+  .stat-label{
+    font-size:12px;
+    color:#6b7280;
+    margin-top:4px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  
+  .stat-card.phd-stat{
+    border-top:3px solid var(--phd-gold);
+  }
+  
+  .stat-card.ms-stat{
+    border-top:3px solid var(--ms-red);
+  }
+  
+  .stat-card.combined-stat{
+    border-top:3px solid var(--combined-gold);
+  }
+  
+  .stat-card.total-stat{
+    border-top:3px solid var(--primary-dark);
   }
 
   /* Section Headers */
@@ -76,6 +130,11 @@ permalink: /members-current.html
   .degree-badge-header.ms{
     background:var(--ms-red);
     color:#fff;
+  }
+  
+  .degree-badge-header.combined{
+    background:var(--combined-gold);
+    color:#111827;
   }
 
   /* Grid Layout */
@@ -117,6 +176,10 @@ permalink: /members-current.html
   
   .card-banner.ms{
     background:var(--ms-red);
+  }
+  
+  .card-banner.combined{
+    background:var(--combined-gold);
   }
   
   /* Card Content */
@@ -171,6 +234,12 @@ permalink: /members-current.html
     font-weight:700;
     text-transform:uppercase;
     margin-bottom:8px;
+  }
+  
+  .member-role.combined{
+    background:var(--combined-gold);
+    border-color:var(--combined-gold);
+    color:#111827;
   }
   
   .member-period{
@@ -229,6 +298,11 @@ permalink: /members-current.html
   
   .btn-details.ms:hover{
     background:var(--ms-red);
+  }
+  
+  .btn-details.combined:hover{
+    background:var(--combined-gold);
+    color:#111827;
   }
 
   /* Modal Overlay */
@@ -323,6 +397,11 @@ permalink: /members-current.html
   .modal-degree.ms{
     background:var(--ms-red);
     color:#fff;
+  }
+  
+  .modal-degree.combined{
+    background:var(--combined-gold);
+    color:#111827;
   }
   
   /* Modal Body */
@@ -442,6 +521,26 @@ permalink: /members-current.html
 <!-- ===== Members Content ===== -->
 <section class="max-w-7xl mx-auto px-4 pb-8">
 
+  <!-- Statistics Section -->
+  <div class="stats-container">
+    <div class="stat-card phd-stat">
+      <div class="stat-number" id="phdCount">0</div>
+      <div class="stat-label">Ph.D. Students</div>
+    </div>
+    <div class="stat-card ms-stat">
+      <div class="stat-number" id="msCount">0</div>
+      <div class="stat-label">M.S. Students</div>
+    </div>
+    <div class="stat-card combined-stat">
+      <div class="stat-number" id="combinedCount">0</div>
+      <div class="stat-label">Ph.D-M.S. Combined</div>
+    </div>
+    <div class="stat-card total-stat">
+      <div class="stat-number" id="totalCount">0</div>
+      <div class="stat-label">Total Students</div>
+    </div>
+  </div>
+
   <!-- PhD Students Section -->
   <div class="section-header">
     <h2 class="section-title">
@@ -472,6 +571,72 @@ permalink: /members-current.html
               <a href="mailto:eok.cho@example.edu" class="member-email">eok.cho@example.edu</a>
             </div>
             <button type="button" class="btn-details phd" onclick="openModal('eok-cho', 'phd'); return false;">
+              View Profile →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ph.D-M.S. Combined Students Section -->
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="degree-badge-header combined">Ph.D-M.S.</span>
+      Combined Program Students
+    </h2>
+  </div>
+  
+  <div class="members-grid">
+    <!-- Combined Student 1 -->
+    <div class="member-card">
+      <div class="card-banner combined"></div>
+      <div class="card-content">
+        <div class="member-info">
+          <img src="{{ '/assets/img/members/jane-choi.jpg' | relative_url }}" 
+               alt="Jane Choi" 
+               class="member-avatar"
+               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+          <div class="member-details">
+            <h3 class="member-name">Jane Choi (최 제인)</h3>
+            <span class="member-role combined">Ph.D-M.S. Combined</span>
+            <div class="member-period">Mar 2023 - Present</div>
+            <div class="member-field">
+              <strong>Research:</strong> Deep Learning for Finance, Portfolio Optimization
+            </div>
+            <div class="member-field">
+              <strong>Email:</strong> 
+              <a href="mailto:j.choi@example.edu" class="member-email">j.choi@example.edu</a>
+            </div>
+            <button type="button" class="btn-details combined" onclick="openModal('jane-choi', 'combined'); return false;">
+              View Profile →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combined Student 2 -->
+    <div class="member-card">
+      <div class="card-banner combined"></div>
+      <div class="card-content">
+        <div class="member-info">
+          <img src="{{ '/assets/img/members/david-han.jpg' | relative_url }}" 
+               alt="David Han" 
+               class="member-avatar"
+               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+          <div class="member-details">
+            <h3 class="member-name">David Han (한 데이비드)</h3>
+            <span class="member-role combined">Ph.D-M.S. Combined</span>
+            <div class="member-period">Sep 2022 - Present</div>
+            <div class="member-field">
+              <strong>Research:</strong> Algorithmic Trading, Market Microstructure
+            </div>
+            <div class="member-field">
+              <strong>Email:</strong> 
+              <a href="mailto:d.han@example.edu" class="member-email">d.han@example.edu</a>
+            </div>
+            <button type="button" class="btn-details combined" onclick="openModal('david-han', 'combined'); return false;">
               View Profile →
             </button>
           </div>
@@ -650,8 +815,69 @@ const memberData = {
     honors: [
       'Outstanding Undergraduate Thesis Award, 2023'
     ]
+  },
+  'jane-choi': {
+    name: 'Jane Choi (최 제인)',
+    role: 'Ph.D-M.S. Combined',
+    education: [
+      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2028', dept: 'Business Analytics'},
+      {degree: 'B.S.', school: 'Yonsei University', year: '2023', dept: 'Applied Mathematics'}
+    ],
+    publications: [
+      'Choi, J. & Kim, S. (2024). "Neural Network Approaches to Portfolio Management". KDD Workshop on AI in Finance.'
+    ],
+    honors: [
+      'Graduate Fellowship, Dongduk Women\'s University, 2023-2028',
+      'Summa Cum Laude, Yonsei University, 2023'
+    ]
+  },
+  'david-han': {
+    name: 'David Han (한 데이비드)',
+    role: 'Ph.D-M.S. Combined',
+    education: [
+      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2027', dept: 'Financial Data Science'},
+      {degree: 'B.S.', school: 'Seoul National University', year: '2022', dept: 'Computer Science & Economics (Double Major)'}
+    ],
+    publications: [
+      'Han, D. et al. (2023). "High-Frequency Trading Strategies Using Reinforcement Learning". ICML Workshop.',
+      'Han, D. (2022). "Market Microstructure Analysis with Deep Learning". Undergraduate Thesis.'
+    ],
+    honors: [
+      'Best Paper Award, ICML Workshop on Finance, 2023',
+      'Dean\'s List, Seoul National University, 2020-2022'
+    ]
   }
 };
+
+// Calculate and update statistics
+function updateStatistics() {
+  let phdCount = 1;  // Eok Cho
+  let msCount = 3;   // Lorem Lee, Ipsum Park, Dolor Kim
+  let combinedCount = 2; // Jane Choi, David Han
+  let totalCount = phdCount + msCount + combinedCount;
+  
+  // Animate numbers
+  animateNumber('phdCount', phdCount);
+  animateNumber('msCount', msCount);
+  animateNumber('combinedCount', combinedCount);
+  animateNumber('totalCount', totalCount);
+}
+
+// Animate number counting effect
+function animateNumber(elementId, finalValue) {
+  let current = 0;
+  const increment = Math.ceil(finalValue / 20);
+  const element = document.getElementById(elementId);
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= finalValue) {
+      current = finalValue;
+      clearInterval(timer);
+    }
+    element.textContent = current;
+  }, 50);
+}
 
 // Modal functions
 function openModal(memberId, degreeType) {
@@ -670,7 +896,7 @@ function openModal(memberId, degreeType) {
   if (member.education && member.education.length > 0) {
     bodyContent += '<div class="modal-section"><h4 class="modal-section-title">Education</h4>';
     member.education.forEach(edu => {
-      const degreeClass = edu.degree.toLowerCase().replace('.', '');
+      const degreeClass = edu.degree.toLowerCase().replace('.', '').replace('-', '');
       bodyContent += `
         <div class="edu-item">
           <span class="edu-degree ${degreeClass}">${edu.degree}</span>
@@ -724,4 +950,7 @@ document.addEventListener('keydown', function(e) {
     closeModal();
   }
 });
+
+// Initialize statistics on page load
+document.addEventListener('DOMContentLoaded', updateStatistics);
 </script>
