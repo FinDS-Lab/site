@@ -6,8 +6,8 @@
       <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo"
            class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
       <div class="leading-tight">
-        <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">FINDS Lab.</div>
-        <div class="text-[12px] font-extrabold" style="color:rgb(172,14,14)">Dongduk Women's University</div>
+        <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
+        <div class="text-[12px] font-semibold" style="color:var(--accent)">Dongduk Women's University</div>
       </div>
     </a>
 
@@ -17,7 +17,6 @@
 
       <!-- About -->
       <div class="relative menu-group" data-menu>
-        <!-- 메인 탭 클릭 시 기본 서브페이지(Introduction) -->
         <a class="nav-link" href="{{ '/about-introduction.html' | relative_url }}"><b>About FINDS</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="About FINDS submenu">
           <a class="block submenu-item" href="{{ '/about-introduction.html'  | relative_url }}" role="menuitem">Introduction</a>
@@ -29,7 +28,6 @@
 
       <!-- Members -->
       <div class="relative menu-group" data-menu>
-        <!-- 메인 탭 클릭 시 기본 서브페이지(Director) -->
         <a class="nav-link" href="{{ '/members-director.html' | relative_url }}"><b>Members</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="Members submenu">
           <a class="block submenu-item" href="{{ '/members-director.html'   | relative_url }}" role="menuitem">Director</a>
@@ -44,7 +42,6 @@
 
       <!-- Archives -->
       <div class="relative menu-group" data-menu>
-        <!-- 메인 탭 클릭 시 기본 서브페이지(News) -->
         <a class="nav-link" href="{{ '/archives-news.html' | relative_url }}"><b>Archives</b></a>
         <div class="submenu-panel js-submenu" role="menu" aria-label="Archives submenu">
           <a class="block submenu-item" href="{{ '/archives-news.html'    | relative_url }}" role="menuitem">News</a>
@@ -75,7 +72,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-about" aria-label="Toggle About submenu">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-about">▾</button>
         </div>
         <div id="mob-about" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
@@ -89,7 +86,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/members-director.html' | relative_url }}">Members</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-members" aria-label="Toggle Members submenu">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-members">▾</button>
         </div>
         <div id="mob-members" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/members-director.html'   | relative_url }}">Director</a>
@@ -106,7 +103,7 @@
       <div class="px-3 py-2">
         <div class="flex items-center justify-between">
           <a class="block font-extrabold mb-1 mobile-link" href="{{ '/archives-news.html' | relative_url }}">Archives</a>
-          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-archives" aria-label="Toggle Archives submenu">▾</button>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-archives">▾</button>
         </div>
         <div id="mob-archives" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 font-bold mobile-link" href="{{ '/archives-news.html'    | relative_url }}">News</a>
@@ -118,49 +115,3 @@
     </div>
   </div>
 </div>
-
-<!-- Interaction (지연 열림/닫힘 + 모바일 토글/아코디언) -->
-<script>
-  (function () {
-    // 데스크톱: hover intent (약간 늦게 열리고/닫히게)
-    const groups = document.querySelectorAll('[data-menu]');
-    groups.forEach(g => {
-      let enterTO, leaveTO;
-      const open = () => {
-        clearTimeout(leaveTO);
-        enterTO = setTimeout(() => g.setAttribute('data-open', 'true'), 80);
-      };
-      const close = () => {
-        clearTimeout(enterTO);
-        leaveTO = setTimeout(() => g.removeAttribute('data-open'), 120);
-      };
-      g.addEventListener('mouseenter', open);
-      g.addEventListener('mouseleave', close);
-      g.addEventListener('focusin', open);
-      g.addEventListener('focusout', close);
-    });
-
-    // 모바일 메뉴 토글
-    const btn = document.getElementById('btnMobile');
-    const panel = document.getElementById('mobileNav');
-    if (btn && panel){
-      btn.addEventListener('click', () => {
-        const hidden = panel.classList.contains('hidden');
-        panel.classList.toggle('hidden');
-        btn.setAttribute('aria-expanded', String(hidden));
-        document.body.classList.toggle('no-scroll', hidden);
-      });
-    }
-
-    // 모바일 아코디언
-    document.querySelectorAll('.mobile-acc-btn').forEach((accBtn) => {
-      accBtn.addEventListener('click', () => {
-        const panelId = accBtn.getAttribute('aria-controls');
-        const accPanel = document.getElementById(panelId);
-        const expanded = accBtn.getAttribute('aria-expanded') === 'true';
-        accBtn.setAttribute('aria-expanded', String(!expanded));
-        accPanel.classList.toggle('hidden');
-      });
-    });
-  })();
-</script>
