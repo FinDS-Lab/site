@@ -13,9 +13,8 @@ permalink: /about-honors.html
 .breadcrumbs .sep{opacity:.8}
 
 :root{
-  --award-gold:#d4af37;
-  --award-silver:#c0c0c0;
-  --award-bronze:#cd7f32;
+  --honor-red: rgb(172, 14, 14);
+  --award-gold: rgb(214, 177, 77);
   --primary-dark:#111827;
 }
 
@@ -119,36 +118,34 @@ permalink: /about-honors.html
   bottom:12px;
   width:6px;
   border-radius:6px;
-  background:var(--award-gold);
 }
 
-.award-indicator.silver{background:var(--award-silver)}
-.award-indicator.bronze{background:var(--award-bronze)}
-.award-indicator.honor{background:#6b7280}
+.award-indicator.honor{background:var(--honor-red)}
+.award-indicator.award{background:var(--award-gold)}
 
 /* Award body */
 .award-body{
   padding:14px 16px 14px 0;
 }
 
-/* Award badge */
+/* Award badge with icon */
 .award-badge{
   display:inline-flex;
   align-items:center;
   gap:6px;
-  background:#111827;
-  color:#fff;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
   border-radius:999px;
-  padding:4px 12px;
+  padding:5px 12px;
   font-size:11px;
   font-weight:800;
   text-transform:uppercase;
   margin-bottom:10px;
 }
 
-.award-badge.gold{background:var(--award-gold);color:#111}
-.award-badge.silver{background:var(--award-silver);color:#111}
-.award-badge.bronze{background:var(--award-bronze);color:#fff}
+.award-icon{
+  font-size:14px;
+}
 
 /* Award title */
 .award-title{
@@ -243,195 +240,216 @@ permalink: /about-honors.html
 
 <!-- ===== Content ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6 pb-8">
-  
-  <!-- 2025 Year Section (Open by default) -->
-  <div class="year-section">
-    <div class="year-header" onclick="toggleYear(this)">
-      <span class="year-badge">2025</span>
-      <div class="year-toggle">
-        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-      </div>
-    </div>
-    <div class="awards-container">
-      <div class="awards-grid">
-        
-        <!-- Award 1 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator"></div>
-            <div class="award-body">
-              <span class="award-badge gold">최우수상</span>
-              <div class="award-title">관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)</div>
-              <div class="award-meta">주최 · 관세청</div>
-              <div class="winners">
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  김재훈
-                </span>
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  심세진
-                </span>
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  이혜승
-                </span>
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  박소연
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Award 2 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator"></div>
-            <div class="award-body">
-              <span class="award-badge gold">최우수상</span>
-              <div class="award-title">제4회 성장통 사례 경진대회</div>
-              <div class="award-meta">4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단</div>
-              <div class="winners">
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  심세진
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Award 3 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator honor"></div>
-            <div class="award-body">
-              <span class="award-badge">석탑강의상</span>
-              <div class="award-title">석탑강의상 (2024년 2학기)</div>
-              <div class="award-meta">고려대학교</div>
-              <div class="winners">
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  김성범 교수님
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- 2024 Year Section (Collapsed) -->
-  <div class="year-section">
-    <div class="year-header collapsed" onclick="toggleYear(this)">
-      <span class="year-badge">2024</span>
-      <div class="year-toggle">
-        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-      </div>
-    </div>
-    <div class="awards-container hidden">
-      <div class="awards-grid">
-        
-        <!-- Award 1 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator honor"></div>
-            <div class="award-body">
-              <span class="award-badge">석탑강의상</span>
-              <div class="award-title">석탑강의상 (2024년 1학기)</div>
-              <div class="award-meta">고려대학교</div>
-              <div class="winners">
-                <span class="winner-pill">
-                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
-                  김성범 교수님
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Award 2 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator"></div>
-            <div class="award-body">
-              <span class="award-badge gold">대상</span>
-              <div class="award-title">ITRC 창의-자율과제, Smart Media Service Research Center</div>
-              <div class="award-meta">고려대학교</div>
-              <div class="winners">
-                <span class="winner-pill">김재훈</span>
-                <span class="winner-pill">추창욱</span>
-                <span class="winner-pill">차민성</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Award 3 (추가 예시) -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator silver"></div>
-            <div class="award-body">
-              <span class="award-badge silver">우수상</span>
-              <div class="award-title">빅데이터 분석 경진대회</div>
-              <div class="award-meta">한국데이터산업진흥원</div>
-              <div class="winners">
-                <span class="winner-pill">이준호</span>
-                <span class="winner-pill">박지민</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- 2023 Year Section (Collapsed) -->
-  <div class="year-section">
-    <div class="year-header collapsed" onclick="toggleYear(this)">
-      <span class="year-badge">2023</span>
-      <div class="year-toggle">
-        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-      </div>
-    </div>
-    <div class="awards-container hidden">
-      <div class="awards-grid">
-        
-        <!-- Award 1 -->
-        <div class="award-card">
-          <div class="award-inner">
-            <div class="award-indicator bronze"></div>
-            <div class="award-body">
-              <span class="award-badge bronze">장려상</span>
-              <div class="award-title">AI 활용 아이디어 공모전</div>
-              <div class="award-meta">과학기술정보통신부</div>
-              <div class="winners">
-                <span class="winner-pill">정민수</span>
-                <span class="winner-pill">강예진</span>
-                <span class="winner-pill">최준영</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
+  <div id="yearSections"></div>
 </section>
 
 <script>
+// 데이터 정의
+const honorsData = {
+  2025: [
+    {
+      type: 'award',
+      icon: '🏆',
+      title: '최우수상',
+      event: '관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)',
+      organization: '관세청',
+      winners: [
+        {name: '김재훈', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
+        {name: '심세진', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
+        {name: '이혜승', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
+        {name: '박소연', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+      ]
+    },
+    {
+      type: 'award',
+      icon: '🥇',
+      title: '최우수상',
+      event: '제4회 성장통 사례 경진대회',
+      organization: '4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단',
+      winners: [
+        {name: '심세진', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+      ]
+    },
+    {
+      type: 'honor',
+      icon: '🎖️',
+      title: '석탑강의상',
+      event: '석탑강의상 (2024년 2학기)',
+      organization: '고려대학교',
+      winners: [
+        {name: '김성범 교수님', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+      ]
+    }
+  ],
+  2024: [
+    {
+      type: 'honor',
+      icon: '🎖️',
+      title: '석탑강의상',
+      event: '석탑강의상 (2024년 1학기)',
+      organization: '고려대학교',
+      winners: [
+        {name: '김성범 교수님', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+      ]
+    },
+    {
+      type: 'award',
+      icon: '🏆',
+      title: '대상',
+      event: 'ITRC 창의-자율과제, Smart Media Service Research Center',
+      organization: '고려대학교',
+      winners: [
+        {name: '김재훈'},
+        {name: '추창욱'},
+        {name: '차민성'}
+      ]
+    },
+    {
+      type: 'award',
+      icon: '🥈',
+      title: '우수상',
+      event: '빅데이터 분석 경진대회',
+      organization: '한국데이터산업진흥원',
+      winners: [
+        {name: '이준호'},
+        {name: '박지민'}
+      ]
+    }
+  ],
+  2023: [
+    {
+      type: 'award',
+      icon: '🥉',
+      title: '장려상',
+      event: 'AI 활용 아이디어 공모전',
+      organization: '과학기술정보통신부',
+      winners: [
+        {name: '정민수'},
+        {name: '강예진'},
+        {name: '최준영'}
+      ]
+    },
+    {
+      type: 'honor',
+      icon: '🌟',
+      title: '우수논문상',
+      event: '한국데이터마이닝학회 추계학술대회',
+      organization: '한국데이터마이닝학회',
+      winners: [
+        {name: '박서연'},
+        {name: '김도현'}
+      ]
+    }
+  ],
+  2022: [
+    {
+      type: 'award',
+      icon: '🏅',
+      title: '금상',
+      event: '전국 대학생 프로그래밍 경진대회',
+      organization: '정보과학회',
+      winners: [
+        {name: '이성민'},
+        {name: '정우진'}
+      ]
+    }
+  ],
+  2021: [
+    {
+      type: 'honor',
+      icon: '⭐',
+      title: '학술상',
+      event: '인공지능학회 학술상',
+      organization: '한국인공지능학회',
+      winners: [
+        {name: '김성범 교수님'}
+      ]
+    }
+  ]
+};
+
+// 현재 연도 가져오기
+const currentYear = new Date().getFullYear();
+
+// 최근 3년 계산
+function getRecentYears() {
+  const years = Object.keys(honorsData).map(y => parseInt(y)).sort((a, b) => b - a);
+  return years.slice(0, 3);
+}
+
+// 수상 카드 생성
+function createAwardCard(item) {
+  const winnersHtml = item.winners.map(w => {
+    if (w.img) {
+      return `
+        <span class="winner-pill">
+          <img src="${w.img}" alt="" class="winner-img">
+          ${w.name}
+        </span>
+      `;
+    } else {
+      return `<span class="winner-pill">${w.name}</span>`;
+    }
+  }).join('');
+
+  return `
+    <div class="award-card">
+      <div class="award-inner">
+        <div class="award-indicator ${item.type}"></div>
+        <div class="award-body">
+          <span class="award-badge">
+            <span class="award-icon">${item.icon}</span>
+            ${item.title}
+          </span>
+          <div class="award-title">${item.event}</div>
+          <div class="award-meta">주최 · ${item.organization}</div>
+          <div class="winners">${winnersHtml}</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 연도 섹션 생성
+function createYearSection(year, isExpanded) {
+  const data = honorsData[year] || [];
+  const awardsHtml = data.map(item => createAwardCard(item)).join('');
+  
+  return `
+    <div class="year-section">
+      <div class="year-header ${isExpanded ? '' : 'collapsed'}" onclick="toggleYear(this)">
+        <span class="year-badge">${year}</span>
+        <div class="year-toggle">
+          <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="awards-container ${isExpanded ? '' : 'hidden'}">
+        <div class="awards-grid">
+          ${awardsHtml || '<div class="empty">No awards data for this year</div>'}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 페이지 초기화
+function initPage() {
+  const container = document.getElementById('yearSections');
+  const recentYears = getRecentYears();
+  const allYears = Object.keys(honorsData).map(y => parseInt(y)).sort((a, b) => b - a);
+  
+  let html = '';
+  allYears.forEach(year => {
+    const isExpanded = recentYears.includes(year);
+    html += createYearSection(year, isExpanded);
+  });
+  
+  container.innerHTML = html;
+}
+
+// 토글 함수
 function toggleYear(header) {
   const container = header.nextElementSibling;
   const isHidden = container.classList.contains('hidden');
@@ -444,4 +462,7 @@ function toggleYear(header) {
     header.classList.add('collapsed');
   }
 }
+
+// 페이지 로드 시 초기화
+initPage();
 </script>
