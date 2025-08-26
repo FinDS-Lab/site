@@ -4,14 +4,43 @@ title: honors
 permalink: /about-honors.html
 ---
 
+<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    /* page-scoped helpers (banner) */
+    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+    .breadcrumbs a{color:#e5e7eb}
+    .breadcrumbs a:hover{text-decoration:underline}
+    .breadcrumbs .sep{opacity:.85}
+  </style>
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="FINDS Lab banner"
+         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-3 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <span>About</span>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Honors</span>
+        </nav>
+        <h1 class="text-xl md:text-2xl font-extrabold">Honors &amp; Awards</h1>
+        <p class="text-xs md:text-[13px] opacity-95">연구실 구성원의 수상 실적을 연도별로 정리했습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Styles for timeline ===== -->
 <style>
   /* ===== Awards timeline styles (lightweight, no external deps) ===== */
-  .awards-wrap{max-width:72rem;margin:2rem auto;padding:0 1rem}
+  .awards-wrap{max-width:72rem;margin:1.25rem auto 2rem;padding:0 1rem}
   .page-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
   .page-head h1{font-weight:800;margin:0}
   .page-desc{color:#475569;margin:.25rem 0 0}
 
-  /* details / summary */
   details.award-year{
     border:1px solid #e5e7eb;border-radius:1rem;background:#fff;margin:1rem 0;overflow:hidden
   }
@@ -20,14 +49,11 @@ permalink: /about-honors.html
     display:flex;align-items:center;justify-content:space-between;
     padding:.875rem 1rem;background:#0b1020;color:#fff
   }
-  .year-badge{
-    font-weight:900;letter-spacing:.5px
-  }
+  .year-badge{font-weight:900;letter-spacing:.5px}
   summary{list-style:none;cursor:pointer}
   summary::-webkit-details-marker{display:none}
   .year-count{font-size:.85rem;opacity:.9}
 
-  /* timeline list */
   .tl{position:relative;padding:1rem}
   .tl::before{
     content:"";position:absolute;left:1.25rem;top:.5rem;bottom:.75rem;width:2px;background:#e5e7eb
@@ -50,9 +76,6 @@ permalink: /about-honors.html
   .meta{color:#475569;font-size:.9rem;margin:.1rem 0 0}
   .sep{height:1px;background:#f1f5f9;margin:.25rem 0 0}
 
-  /* small utils */
-  .btn-primary{background:var(--accent,#ac0e0e);color:#fff;border-radius:.6rem;padding:.5rem .85rem;font-weight:700}
-  .head-actions{display:flex;gap:.5rem;flex-wrap:wrap}
   .muted{color:#64748b}
   @media (max-width: 768px){
     .tl::before{left:1rem}
@@ -61,15 +84,13 @@ permalink: /about-honors.html
   }
 </style>
 
+<!-- ===== Body ===== -->
 <section class="awards-wrap">
-  <!-- Header -->
+  <!-- Header (button removed as requested) -->
   <div class="page-head">
     <div>
-      <h1 class="text-3xl md:text-4xl">Lab Awards</h1>
+      <h1 class="text-2xl md:text-3xl">Lab Awards</h1>
       <p class="page-desc">연구실 구성원의 수상 실적을 연도별로 모았습니다.</p>
-    </div>
-    <div class="head-actions">
-      <a class="btn-primary text-sm" href="{{ '/archives-news.html' | relative_url }}">관련 뉴스 보기</a>
     </div>
   </div>
 
@@ -86,11 +107,11 @@ permalink: /about-honors.html
         <div>
           <span class="medal"><i>🏆</i> 최우수상</span>
           <div class="who">
-            <!-- 사진이 있으면 src 넣고, 없으면 img 태그 지워도 됩니다 -->
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김재훈</span>
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">심세진</span>
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">이혜승</span>
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">박소연</span>
+            <!-- 사진이 있으면 src에 넣고, 없으면 img 태그 제거해도 됩니다 -->
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김재훈</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">심세진</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">이혜승</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">박소연</span>
           </div>
           <div class="what">관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)</div>
           <div class="meta">주최 · 관세청</div>
@@ -104,7 +125,7 @@ permalink: /about-honors.html
         <div>
           <span class="medal"><i>🏆</i> 최우수상</span>
           <div class="who">
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">심세진</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">심세진</span>
           </div>
           <div class="what">제4회 성장통 사례 경진대회</div>
           <div class="meta">4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단</div>
@@ -118,15 +139,13 @@ permalink: /about-honors.html
         <div>
           <span class="medal"><i>🏅</i> 석탑강의상</span>
           <div class="who">
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김성범 교수님</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김성범 교수님</span>
           </div>
           <div class="what">석탑강의상 (2024년 2학기)</div>
           <div class="meta">고려대학교</div>
           <div class="sep"></div>
         </div>
       </div>
-
-      <!-- 필요 시 계속 추가 -->
     </div>
   </details>
 
@@ -143,7 +162,7 @@ permalink: /about-honors.html
         <div>
           <span class="medal"><i>🏅</i> 석탑강의상</span>
           <div class="who">
-            <span class="pill"><img src="/assets/img/members/sample.png" alt="">김성범 교수님</span>
+            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김성범 교수님</span>
           </div>
           <div class="what">석탑강의상 (2024년 1학기)</div>
           <div class="meta">고려대학교</div>
@@ -163,3 +182,9 @@ permalink: /about-honors.html
           </div>
           <div class="what">ITRC 창의-자율과제, Smart Media Service Research Center</div>
           <div class="meta">고려대학교</div>
+          <div class="sep"></div>
+        </div>
+      </div>
+    </div>
+  </details>
+</section>
