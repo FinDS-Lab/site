@@ -259,20 +259,23 @@ footer[aria-label="Site footer"]{
   #btnTop svg{ color:#e2e8f0; }
 }
 
-/* Banner responsive text fix */
-.banner-head .breadcrumbs{ font-size: clamp(10px, 2.6vw, 12px); }
-.banner-head .banner-title { 
-  font-size: clamp(18px, 5vw, 24px); 
+/* === Banner responsive text fix (no HTML changes) === */
+/* 배너 캡션 컨테이너 안의 글자 크기를 화면폭에 맞춰 clamp */
+.absolute.inset-x-0.bottom-4.px-4 .breadcrumbs{
+  font-size: clamp(10px, 2.6vw, 12px);
+  line-height: 1.25;
+}
+.absolute.inset-x-0.bottom-4.px-4 h1{
+  font-size: clamp(18px, 5vw, 24px); /* 모바일에서 자동 축소 */
   line-height: 1.2;
   word-break: keep-all;
 }
-.banner-head .banner-sub {
+.absolute.inset-x-0.bottom-4.px-4 p{
   font-size: clamp(11px, 3.4vw, 15px);
   line-height: 1.4;
-  opacity: .95;
 }
 
+/* 아주 작은 화면에서 살짝 여백 보정 */
 @media (max-width: 420px){
-  /* 아주 작은 화면에서 살짝 여백 조정 */
-  .banner-head { padding-right: 0; }
+  .absolute.inset-x-0.bottom-4.px-4{ padding-right: 0; }
 }
