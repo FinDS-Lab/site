@@ -4,39 +4,230 @@ title: gallery
 permalink: /archives-gallery.html
 ---
 
-<!-- ===== Gallery Styles ===== -->
+<!-- ===== Styles ===== -->
 <style>
+  /* Breadcrumbs */
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
-  .breadcrumbs .sep{opacity:.85}
+  .breadcrumbs .sep{opacity:.8}
 
-  .gal-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:12px 14px;margin-top:18px}
-  .gal-search{flex:1 1 260px}
-  .gal-search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.55rem .8rem;font-size:14px}
-  .gal-count{font-size:12px;font-weight:800;color:#64748b}
+  /* Search Container */
+  .search-container{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    padding:16px;
+    margin-top:20px;
+  }
+  
+  .search-box{
+    flex:1;
+    min-width:0;
+  }
+  
+  .search-box input{
+    width:100%;
+    border:1px solid #e5e7eb;
+    border-radius:.6rem;
+    padding:.6rem .8rem;
+    font-size:14px;
+    box-sizing:border-box;
+  }
+  
+  .search-count{
+    font-size:13px;
+    color:#6b7280;
+    font-weight:600;
+    background:#fff;
+    padding:.4rem .8rem;
+    border:1px solid #e5e7eb;
+    border-radius:.5rem;
+    white-space:nowrap;
+  }
 
-  .gal-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
-  @media (min-width:640px){ .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-  @media (min-width:1024px){ .gal-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+  /* Gallery Grid */
+  .gallery-grid{
+    display:grid;
+    gap:20px;
+    margin-top:24px;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+  }
+  
+  @media (max-width: 640px) {
+    .gallery-grid{
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+  }
 
-  .gal-card{display:block;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;background:#fff;transition:transform .2s ease, box-shadow .2s ease}
-  .gal-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
-  .gal-thumb{height:180px;background-size:cover;background-position:center}
-  .gal-info{padding:12px 14px}
-  .gal-title{font-weight:900;font-size:15px;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .gal-date{margin-top:4px;font-size:12px;color:#6b7280}
-  .gal-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
-  .gal-tag{font-size:11px;font-weight:800;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#111827;padding:.15rem .5rem}
+  /* Gallery Card */
+  .gallery-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    overflow:hidden;
+    transition:all 0.2s;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+  }
+  
+  .gallery-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 32px rgba(0,0,0,0.1);
+  }
 
-  .gal-empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
+  /* Thumbnail */
+  .gallery-thumb{
+    width:100%;
+    height:200px;
+    background-color:#f3f4f6;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    position:relative;
+    overflow:hidden;
+  }
+  
+  .gallery-thumb::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom, transparent 70%, rgba(0,0,0,0.3));
+    opacity:0;
+    transition:opacity 0.2s;
+  }
+  
+  .gallery-card:hover .gallery-thumb::after{
+    opacity:1;
+  }
+
+  /* Card Content */
+  .gallery-content{
+    padding:16px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Date Badge */
+  .gallery-date{
+    display:inline-flex;
+    align-items:center;
+    padding:3px 8px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:600;
+    color:#6b7280;
+    margin-bottom:10px;
+    align-self:flex-start;
+  }
+
+  /* Title */
+  .gallery-title{
+    font-size:16px;
+    font-weight:800;
+    color:#111827;
+    line-height:1.4;
+    margin-bottom:8px;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+
+  /* Tags */
+  .gallery-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:auto;
+    padding-top:12px;
+  }
+  
+  .gallery-tag{
+    display:inline-flex;
+    padding:3px 10px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:600;
+    color:#374151;
+  }
+
+  /* Empty State */
+  .empty-state{
+    grid-column:1/-1;
+    padding:60px 20px;
+    text-align:center;
+  }
+  
+  .empty-icon{
+    width:80px;
+    height:80px;
+    margin:0 auto 20px;
+    background:#f3f4f6;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+  }
+  
+  .empty-title{
+    font-size:18px;
+    font-weight:800;
+    color:#111827;
+    margin-bottom:8px;
+  }
+  
+  .empty-text{
+    font-size:14px;
+    color:#6b7280;
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 640px) {
+    .search-container{
+      flex-direction:column;
+      align-items:stretch;
+      gap:12px;
+    }
+    
+    .search-box{
+      width:100%;
+    }
+    
+    .search-count{
+      text-align:center;
+      width:100%;
+    }
+    
+    .gallery-thumb{
+      height:160px;
+    }
+    
+    .gallery-title{
+      font-size:15px;
+    }
+  }
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="Gallery banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+    <img src="{{ '/assets/img/banners/gallery-hero.jpg' | relative_url }}" 
+         alt="Gallery" 
+         class="w-full h-[200px] md:h-[260px] object-cover" 
+         width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -47,156 +238,173 @@ permalink: /archives-gallery.html
           <span class="sep">›</span>
           <span aria-current="page" class="font-semibold">Gallery</span>
         </nav>
+        <h1 class="text-2xl md:text-3xl font-extrabold">Gallery</h1>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Toolbar ===== -->
+<!-- ===== Search ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="gal-toolbar">
-    <div class="gal-search">
-      <input id="gal-q" type="text" placeholder="Search by title or tag…">
+  <div class="search-container">
+    <div class="search-box">
+      <input id="searchInput" type="text" placeholder="Search by title or tags...">
     </div>
-    <div class="gal-count" id="gal-count"></div>
+    <div class="search-count" id="searchCount">Loading...</div>
   </div>
 </section>
 
-<!-- ===== Gallery List (pull from folders too) ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  {% comment %}
-    1) 모든 페이지/포스트 + 모든 컬렉션의 문서까지 합쳐서(all_items)
-    2) URL에 '/gallery/' 포함 & 제목 있는 것만 필터
-    3) 최신(date) 우선 정렬. date 없으면 뒤쪽으로 감.
-  {% endcomment %}
-
-  {% assign all_items = site.pages | concat: site.posts %}
-
-  {% for c in site.collections %}
-    {% unless c.label == 'posts' %}
-      {% assign all_items = all_items | concat: c.docs %}
-    {% endunless %}
-  {% endfor %}
-
-  {% assign galleries = "" | split: "" %}
-  {% for item in all_items %}
-    {% if item.url and item.title and item.url contains '/gallery/' and item.url != '/archives-gallery.html' %}
-      {% assign galleries = galleries | push: item %}
-    {% endif %}
-  {% endfor %}
-
-  {%- comment -%}
-    날짜가 없는 페이지도 있을 수 있으므로, 먼저 date 있는 것 / 없는 것 분리 후 합치기
-  {%- endcomment -%}
-  {% assign dated = "" | split: "" %}
-  {% assign undated = "" | split: "" %}
-  {% for g in galleries %}
-    {% if g.date %}
-      {% assign dated = dated | push: g %}
-    {% else %}
-      {% assign undated = undated | push: g %}
-    {% endif %}
-  {% endfor %}
-  {% assign dated = dated | sort: 'date' | reverse %}
-  {% assign galleries_sorted = dated | concat: undated %}
-
-  {% if galleries_sorted.size == 0 %}
-    <div class="gal-empty">게시글이 없습니다.</div>
-  {% else %}
-    <ul id="gal-grid" class="gal-grid" role="list">
-      {% for post in galleries_sorted %}
-        {%- comment -%}
-          썸네일 결정 우선순위:
-          1) front matter: thumb / image / cover
-          2) 같은 폴더의 첫 번째 이미지(site.static_files에서 post.url 포함 경로 탐색)
-          3) 플레이스홀더
-        {%- endcomment -%}
-        {%- assign raw_thumb = post.thumb | default: post.image | default: post.cover -%}
-        {%- assign thumb_url = nil -%}
-
-        {%- if raw_thumb -%}
-          {%- if raw_thumb contains '://' or raw_thumb startswith '/' -%}
-            {%- assign thumb_url = raw_thumb | relative_url -%}
-          {%- else -%}
-            {%- assign base = post.url -%}
-            {%- assign last = base | slice: -1, 1 -%}
-            {%- if last != '/' -%}{% assign base = base | append: '/' %}{%- endif -%}
-            {%- assign thumb_url = base | append: raw_thumb | relative_url -%}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- if thumb_url == nil -%}
-          {%- assign cand = site.static_files | where_exp: "f", "f.path contains post.url" -%}
-          {%- assign imgs1 = cand | where: "extname", ".jpg" -%}
-          {%- assign imgs2 = cand | where: "extname", ".jpeg" -%}
-          {%- assign imgs3 = cand | where: "extname", ".png" -%}
-          {%- assign imgs4 = cand | where: "extname", ".webp" -%}
-          {%- assign images = imgs1 | concat: imgs2 | concat: imgs3 | concat: imgs4 -%}
-          {%- assign first = images[0] -%}
-          {%- if first -%}{% assign thumb_url = first.path | relative_url %}{%- endif -%}
-        {%- endif -%}
-
-        {%- unless thumb_url -%}
-          {%- assign thumb_url = '/assets/img/placeholders/gallery.jpg' | relative_url -%}
-        {%- endunless -%}
-
-        {%- assign date_txt = '' -%}
-        {%- if post.date -%}
-          {%- assign date_txt = post.date | date: "%Y.%m.%d" -%}
-        {%- endif -%}
-
-        {%- assign tag_text = '' -%}
-        {%- if post.tags and post.tags.size > 0 -%}
-          {%- assign tag_text = post.tags | join: ' ' -%}
-        {%- endif -%}
-
-        <li class="gal-item" role="listitem" data-text="{{ post.title | escape }} {{ tag_text | escape }}">
-          <a class="gal-card" href="{{ post.url | relative_url }}">
-            <div class="gal-thumb" style="background-image:url('{{ thumb_url }}')"></div>
-            <div class="gal-info">
-              <h3 class="gal-title">{{ post.title }}</h3>
-              {% if date_txt != '' %}<p class="gal-date">{{ date_txt }}</p>{% endif %}
-              {% if post.tags and post.tags.size > 0 %}
-                <div class="gal-tags">
-                  {% for t in post.tags %}
-                    <span class="gal-tag">#{{ t }}</span>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+<!-- ===== Gallery Grid ===== -->
+<section class="max-w-7xl mx-auto px-4 pb-8">
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Gallery items will be inserted here via JavaScript -->
+  </div>
 </section>
 
-<!-- ===== Page JS (검색) ===== -->
 <script>
-  (function(){
-    const q = document.getElementById('gal-q');
-    const grid = document.getElementById('gal-grid');
-    const cnt = document.getElementById('gal-count');
-    if(!q || !grid) return;
+// Sample gallery data - replace with actual Jekyll data
+const galleryData = [
+  {
+    title: "Open Day 2025",
+    date: "2025-09-01",
+    thumb: "{{ '/assets/img/gallery/openday-2025-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2025-openday/' | relative_url }}",
+    tags: ["event", "2025", "openday"]
+  },
+  {
+    title: "Summer Workshop 2025",
+    date: "2025-07-15",
+    thumb: "{{ '/assets/img/gallery/workshop-2025-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2025-summer-workshop/' | relative_url }}",
+    tags: ["workshop", "2025", "summer"]
+  },
+  {
+    title: "Graduation Ceremony 2025",
+    date: "2025-02-20",
+    thumb: "{{ '/assets/img/gallery/graduation-2025-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2025-graduation/' | relative_url }}",
+    tags: ["graduation", "2025", "ceremony"]
+  },
+  {
+    title: "Lab Retreat 2024",
+    date: "2024-11-10",
+    thumb: "{{ '/assets/img/gallery/retreat-2024-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2024-retreat/' | relative_url }}",
+    tags: ["retreat", "2024", "team"]
+  },
+  {
+    title: "Conference Presentation ICML 2024",
+    date: "2024-07-23",
+    thumb: "{{ '/assets/img/gallery/icml-2024-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2024-icml/' | relative_url }}",
+    tags: ["conference", "2024", "ICML"]
+  },
+  {
+    title: "Spring Seminar Series",
+    date: "2024-04-05",
+    thumb: "{{ '/assets/img/gallery/seminar-2024-thumb.jpg' | relative_url }}",
+    url: "{{ '/gallery/2024-spring-seminar/' | relative_url }}",
+    tags: ["seminar", "2024", "spring"]
+  }
+];
 
-    const items = Array.from(grid.querySelectorAll('.gal-item'));
-    const total = items.length;
+// Format date for display
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
 
-    function renderCount(n){ cnt.textContent = `Showing ${n} of ${total}`; }
+// Create gallery card HTML
+function createGalleryCard(item) {
+  const formattedDate = formatDate(item.date);
+  const tagsHtml = item.tags ? item.tags.map(tag => 
+    `<span class="gallery-tag">#${tag}</span>`
+  ).join('') : '';
+  
+  return `
+    <div class="gallery-card" onclick="window.open('${item.url}', '_blank'); return false;" data-search="${item.title.toLowerCase()} ${item.tags ? item.tags.join(' ').toLowerCase() : ''}">
+      <div class="gallery-thumb" style="background-image:url('${item.thumb || '{{ "/assets/img/placeholder.jpg" | relative_url }}'}')"></div>
+      <div class="gallery-content">
+        ${formattedDate ? `<span class="gallery-date">${formattedDate}</span>` : ''}
+        <h3 class="gallery-title">${item.title}</h3>
+        ${tagsHtml ? `<div class="gallery-tags">${tagsHtml}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
 
-    function applyFilter(){
-      const term = q.value.trim().toLowerCase();
-      let visible = 0;
-      items.forEach(li => {
-        const text = (li.getAttribute('data-text') || '').toLowerCase();
-        const show = !term || text.includes(term);
-        li.style.display = show ? '' : 'none';
-        if(show) visible++;
+// Empty state HTML
+function createEmptyState() {
+  return `
+    <div class="empty-state">
+      <div class="empty-icon">📷</div>
+      <div class="empty-title">No gallery items found</div>
+      <div class="empty-text">Try adjusting your search or check back later</div>
+    </div>
+  `;
+}
+
+// Initialize gallery
+function initGallery() {
+  const grid = document.getElementById('galleryGrid');
+  const searchInput = document.getElementById('searchInput');
+  const searchCount = document.getElementById('searchCount');
+  
+  // Render all items initially
+  function renderGallery(searchTerm = '') {
+    let filteredData = galleryData;
+    
+    if (searchTerm) {
+      filteredData = galleryData.filter(item => {
+        const searchData = `${item.title} ${item.tags ? item.tags.join(' ') : ''}`.toLowerCase();
+        return searchData.includes(searchTerm.toLowerCase());
       });
-      renderCount(visible);
     }
+    
+    if (filteredData.length === 0) {
+      grid.innerHTML = createEmptyState();
+      searchCount.textContent = '0 items';
+    } else {
+      grid.innerHTML = filteredData.map(createGalleryCard).join('');
+      searchCount.textContent = `${filteredData.length} of ${galleryData.length}`;
+    }
+  }
+  
+  // Initial render
+  renderGallery();
+  
+  // Search functionality
+  searchInput.addEventListener('input', (e) => {
+    renderGallery(e.target.value);
+  });
+}
 
-    renderCount(total);
-    q.addEventListener('input', applyFilter);
-  })();
+// Run when DOM is loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGallery);
+} else {
+  initGallery();
+}
 </script>
+
+<!-- Jekyll data integration (commented out for static demo) -->
+{% comment %}
+{% assign all_galleries = site.pages | where_exp: "item", "item.url contains '/gallery/'" %}
+{% assign galleries = all_galleries | where_exp: "item", "item.title" | sort: 'date' | reverse %}
+
+<script>
+const galleryData = [
+  {% for gallery in galleries %}
+  {
+    title: "{{ gallery.title | escape }}",
+    date: "{{ gallery.date | date: '%Y-%m-%d' }}",
+    thumb: "{{ gallery.thumb | default: gallery.image | relative_url }}",
+    url: "{{ gallery.url | relative_url }}",
+    tags: {{ gallery.tags | jsonify }}
+  }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+];
+</script>
+{% endcomment %}
