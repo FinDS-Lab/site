@@ -258,3 +258,21 @@ footer[aria-label="Site footer"]{
   #btnTop{ background:rgba(15,23,42,.85); border:1px solid #334155; }
   #btnTop svg{ color:#e2e8f0; }
 }
+
+/* Banner responsive text fix */
+.banner-head .breadcrumbs{ font-size: clamp(10px, 2.6vw, 12px); }
+.banner-head .banner-title { 
+  font-size: clamp(18px, 5vw, 24px); 
+  line-height: 1.2;
+  word-break: keep-all;
+}
+.banner-head .banner-sub {
+  font-size: clamp(11px, 3.4vw, 15px);
+  line-height: 1.4;
+  opacity: .95;
+}
+
+@media (max-width: 420px){
+  /* 아주 작은 화면에서 살짝 여백 조정 */
+  .banner-head { padding-right: 0; }
+}
