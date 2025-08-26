@@ -232,3 +232,10 @@ footer[aria-label="Site footer"]{
   #btnTop{ background:rgba(15,23,42,.85); border:1px solid #334155; }
   #btnTop svg{ color:#e2e8f0; }
 }
+
+/* FORCE LIGHT PANELS */
+#news-panel, #notice-panel {
+  background:#fff !important;
+  color:#0f172a !important;
+  border:1px solid #e5e7eb !important;
+}
