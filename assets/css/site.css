@@ -1,8 +1,5 @@
 /* =========================================================
-   site.css  — FINDS Lab Global Styles (FULL)
-   - Colors, Base, Header/Nav(dropdown), Buttons, Cards, etc.
-   - Hover intent 지연은 header.html JS가 data-open만 토글,
-     애니메이션/모션은 전부 CSS에서 처리
+   site.css  — FINDS Lab Global Styles (FULL, unified panels)
    ========================================================= */
 
 /* ========== CSS Variables ========== */
@@ -70,16 +67,12 @@ html { scrollbar-gutter: stable both-edges; }
   box-shadow:0 12px 40px rgba(0,0,0,.08);
   min-width:13.5rem; padding:.5rem 0;
 
-  /* 숨김 상태 */
   visibility:hidden; opacity:0; transform: translateY(6px) scale(.98);
   pointer-events:none;
   transition: visibility .18s ease, opacity .18s ease, transform .18s ease;
 }
 
-/* 보여지는 상태 트리거 (세 경로 지원)
-   1) data-open="true" (JS 지연 토글)
-   2) :hover
-   3) :focus-within (키보드 접근성) */
+/* 보여지는 상태(세 경로 지원: data-open, :hover, :focus-within) */
 .menu-group[data-open="true"] .js-submenu,
 .menu-group:hover .js-submenu,
 .menu-group:focus-within .js-submenu{
@@ -95,7 +88,7 @@ html { scrollbar-gutter: stable both-edges; }
   box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
-/* ✅ 골드 하이라이트 (텍스트색이 아니라 '영역'을 금색으로) */
+/* ✅ 골드 하이라이트 */
 .nav-link:hover,
 .submenu-item:hover,
 #mobileNav a:hover{
@@ -104,21 +97,19 @@ html { scrollbar-gutter: stable both-edges; }
   box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
 }
 
-/* 모바일 메뉴 내 링크(배경 유틸과 병행될 때도 자연스럽게) */
+/* 모바일 메뉴 링크 */
 #mobileNav a{
   border-radius:.6rem;
   transition:background-color .2s ease, color .2s ease;
 }
-
-/* 모바일 네비 상태 토글 (JS가 .hidden 토글) */
 #mobileNav.hidden{ display:none; }
 
-/* 접근성/성능 옵션 */
+/* 접근성/성능 */
 @media (prefers-reduced-motion: reduce){
   .js-submenu{ transition:none; transform:none; }
 }
 
-/* ========== Buttons / Badges / Cards ========== */
+/* ========== Buttons / Badges / Cards (PANELS UNIFIED) ========== */
 .btn-primary{
   background:var(--accent); color:var(--fg-on-accent);
   border-radius:.75rem; padding:.6rem .95rem; font-weight:900;
@@ -133,24 +124,32 @@ html { scrollbar-gutter: stable both-edges; }
 }
 .btn-ghost:hover{ transform:translateY(-1px); opacity:.95; }
 
-.card{
-  background:#fff; border:1px solid #e5e7eb; border-radius:1rem;
-  padding:1.25rem; transition:.2s;
+/* ✅ News(.card), Notice(.home-panel) 공통 스타일 */
+.card,
+.home-panel{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:1rem;
+  padding:1.25rem;
+  transition:.2s;
 }
-.card:hover{ transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,.08); }
-
-.tag-gold{
-  background:var(--gold); color:#111827;
-  border-radius:9999px; padding:.25rem .55rem; font-size:.7rem; font-weight:900;
+.card:hover,
+.home-panel:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,.08);
 }
 
 /* 텍스트 강조 언더라인 */
 .warm-underline{
-  text-decoration:underline;
-  text-decoration-thickness:2px;
-  text-underline-offset:4px;
-  text-decoration-color:var(--accent);
+  position:relative;
+  text-decoration:none;
 }
+.warm-underline::after{
+  content:''; position:absolute; left:0; right:0; bottom:-2px; height:2px;
+  background:var(--gold); opacity:.6; transform:scaleX(0);
+  transform-origin:left; transition:transform .2s;
+}
+.warm-underline:hover::after{ transform:scaleX(1); }
 
 /* 링크 언더라인 슬라이드(footer 등에서 사용) */
 .link-underline{
@@ -212,13 +211,21 @@ footer[aria-label="Site footer"]{
 }
 #btnTop.is-visible{ opacity:1; transform:translateY(0); }
 
-/* 다크 프리셋(선택) */
+/* ========== Dark Mode (opt-in tweaks only; PANELS STAY LIGHT) ========== */
 @media (prefers-color-scheme: dark){
   body{ background:#0b0f19; color:#e2e8f0; }
   .sticky-blur{ background:rgba(11,15,25,.85); border-color:#1f2937; }
   .submenu-item, .nav-link{ color:#e2e8f0; }
   .js-submenu{ background:#0f172a; border-color:#1f2937; box-shadow:0 12px 40px rgba(0,0,0,.5); }
-  .card{ background:#0f172a; border-color:#1f2937; }
+
+  /* ★ 패널은 항상 밝게 유지 (News/Notice 모두) */
+  .card,
+  .home-panel{
+    background:#ffffff !important;
+    border-color:#e5e7eb !important;
+    color:#0f172a !important;
+  }
+
   footer[aria-label="Site footer"]{ background:#0b0f19; border-color:#1f2937; }
   .link-underline{ color:#cbd5e1; }
   .link-underline:hover{ color:var(--gold); }
