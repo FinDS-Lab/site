@@ -1,0 +1,64 @@
+---
+layout: default
+title: About — Introduction | FINDS Lab
+permalink: /about-introduction.html
+---
+
+<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    /* 페이지 전용(작게) — 텍스트만 깔끔히 보이게 */
+    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+    .breadcrumbs a{color:#e5e7eb}
+    .breadcrumbs a:hover{text-decoration:underline}
+    .breadcrumbs .sep{opacity:.85}
+    .lead{font-size:15px;line-height:1.9;color:#334155}
+    .badge{display:inline-flex;align-items:center;font-weight:900;font-size:12px;padding:.25rem .55rem;border-radius:.6rem;background:#d6b14d;color:#111827}
+  </style>
+
+  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="FINDS Lab banner"
+         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-x-0 bottom-3 px-4">
+      <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <span>About</span>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Introduction</span>
+        </nav>
+        <h1 class="text-xl md:text-2xl font-extrabold">Introduction</h1>
+        <p class="text-xs md:text-[13px] opacity-95">FINDS Lab overview in Korean & English</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Content (KR / EN) ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6 grid md:grid-cols-2 gap-6">
+  <!-- Korean -->
+  <article class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+    <span class="badge">소개 (KOR)</span>
+    <h2 class="mt-2 text-lg md:text-xl font-extrabold">동덕여자대학교 경영융합학부 금융데이터사이언스 연구실(FINDS Lab.)에 오신 것을 환영합니다.</h2>
+    <p class="lead mt-3">
+      오늘날 비즈니스와 금융 환경은 데이터 중심으로 급격히 변화하고 있습니다. 이제 경쟁력을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라, 데이터를 얼마나 효과적으로 분석하고 활용하느냐에 달려 있습니다.
+    </p>
+    <p class="lead mt-3">
+      저희 연구실은 금융데이터사이언스, 비즈니스 애널리틱스, 데이터 기반 의사결정을 주요 연구 분야로 삼고 있습니다. 데이터 사이언스 기법을 토대로 금융 데이터를 분석하는 한편, 비즈니스 애널리틱스를 통해 다양한 산업과 조직에서 새로운 발견(finds)을 찾아내고 의미 있는 인사이트를 발굴하고자 합니다. 이를 통해 복잡한 의사결정 문제를 보다 직관적이고 실질적인 방식으로 해결하는 것을 목표로 합니다.
+    </p>
+  </article>
+
+  <!-- English -->
+  <article class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+    <span class="badge">Introduction (ENG)</span>
+    <h2 class="mt-2 text-lg md:text-xl font-extrabold">Welcome to the FINDS Lab (Financial Data Science Laboratory) at the School of Business Convergence, Dongduk Women’s University.</h2>
+    <p class="lead mt-3">
+      Today, both business and finance are undergoing rapid transformation driven by data. Competitive advantage is no longer determined by capital or resources alone, but by the ability to analyze data effectively and put it into practice.
+    </p>
+    <p class="lead mt-3">
+      Our lab focuses on Financial Data Science, Business Analytics, and Data-Inspired Decision Making. We apply data science methods to analyze financial data, while also using business analytics to uncover new finds — valuable discoveries across various industries and organizations. Through this work, we aim to generate meaningful insights and provide solutions to complex decision-making problems in ways that are both intuitive and practical.
+    </p>
+  </article>
+</section>
