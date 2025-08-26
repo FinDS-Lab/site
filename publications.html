@@ -4,204 +4,968 @@ title: publications
 permalink: /publications.html
 ---
 
-<!-- ===== Breadcrumbs ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <nav aria-label="Breadcrumb" class="text-[12px] text-slate-200">
-    <ol class="flex items-center gap-2">
-      <li><a href="{{ '/' | relative_url }}" class="hover:underline">Home</a></li>
-      <li aria-hidden="true">›</li>
-      <li aria-current="page" class="text-white/90 font-semibold">Publications</li>
-    </ol>
-  </nav>
-</section>
+<!-- ===== Styles ===== -->
+<style>
+  /* Breadcrumbs */
+  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+  .breadcrumbs a{color:#e5e7eb}
+  .breadcrumbs a:hover{text-decoration:underline}
+  .breadcrumbs .sep{opacity:.8}
+
+  :root{
+    --journal-gold: rgb(214, 177, 77);
+    --conference-red: rgb(172, 14, 14);
+    --purple: 124,58,237;
+  }
+  
+  /* Toolbar */
+  .toolbar{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    padding:16px;
+    margin-top:20px;
+  }
+  
+  /* Search Container */
+  .search-container{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  
+  .search{
+    flex:1;
+    min-width:0;
+  }
+  
+  .search input{
+    width:100%;
+    border:1px solid #e5e7eb;
+    border-radius:.6rem;
+    padding:.6rem .8rem;
+    font-size:14px;
+    box-sizing:border-box;
+  }
+  
+  /* Count Badge */
+  .count{
+    font-size:13px;
+    color:#6b7280;
+    font-weight:600;
+    background:#fff;
+    padding:.4rem .8rem;
+    border:1px solid #e5e7eb;
+    border-radius:.5rem;
+    white-space:nowrap;
+  }
+  
+  /* Filter Section */
+  .filter-section{
+    margin-top:8px;
+  }
+  
+  .filter-label{
+    font-size:12px;
+    font-weight:700;
+    color:#6b7280;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    margin-bottom:8px;
+    display:block;
+  }
+  
+  /* Chips Container */
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  
+  /* Filter Chips */
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    padding:.5rem 1rem;
+    border-radius:999px;
+    border:1px solid transparent;
+    background:#fff;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    transition:all 0.2s;
+    white-space:nowrap;
+  }
+  
+  .chip:hover{
+    transform:translateY(-1px);
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .chip.is-on{
+    box-shadow:inset 0 0 0 2px #111827;
+  }
+  
+  .chip:focus-visible{
+    outline:2px solid #111827;
+    outline-offset:2px;
+  }
+  
+  /* Type-specific chip colors */
+  .chip-journal.is-on{
+    background:var(--journal-gold);
+    color:#111;
+  }
+  
+  .chip-conference.is-on{
+    background:var(--conference-red);
+    color:#fff;
+  }
+
+  /* Publications Grid */
+  .year-section{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  
+  .year-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 16px;
+    background:#f8fafc;
+    border-bottom:1px solid #e5e7eb;
+  }
+  
+  .year-title{
+    font-size:18px;
+    font-weight:900;
+    color:#111827;
+  }
+  
+  .year-toggle{
+    padding:.4rem .8rem;
+    border:1px solid #e5e7eb;
+    border-radius:.6rem;
+    background:#fff;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    transition:all 0.2s;
+  }
+  
+  .year-toggle:hover{
+    background:#f8fafc;
+  }
+  
+  .year-content{
+    padding:16px;
+  }
+  
+  .paper-list{
+    display:grid;
+    gap:14px;
+  }
+
+  /* Paper Card */
+  .paper-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    overflow:hidden;
+  }
+  
+  .paper-row{
+    display:grid;
+    grid-template-columns:56px 1fr;
+  }
+  
+  .paper-left{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:13px;
+    cursor:pointer;
+    transition:all 0.2s;
+    color:#fff;
+  }
+  
+  .paper-left.journal{
+    background:var(--journal-gold);
+  }
+  
+  .paper-left.conference{
+    background:var(--conference-red);
+  }
+  
+  .paper-left:hover{
+    opacity:0.85;
+  }
+  
+  .paper-left.empty{
+    background:#f1f5f9;
+    color:#e5e7eb;
+    cursor:default;
+  }
+  
+  .paper-left.empty:hover{
+    opacity:1;
+  }
+  
+  .paper-body{
+    padding:14px 16px;
+  }
+  
+  .paper-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  
+  /* Date Badge */
+  .paper-date{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:4px 10px;
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:999px;
+    font-size:11px;
+    font-weight:700;
+    color:#374151;
+  }
+  
+  .paper-date .year{
+    color:#111827;
+  }
+  
+  .paper-date .accepted{
+    color:#6b7280;
+    font-weight:600;
+  }
+  
+  .paper-title{
+    font-weight:900;
+    font-size:15px;
+    color:#111827;
+    margin-top:8px;
+  }
+  
+  .paper-meta{
+    margin-top:6px;
+    color:#374151;
+    font-size:13px;
+  }
+  
+  .paper-venue{
+    margin-top:4px;
+    color:#6b7280;
+    font-size:12px;
+  }
+  
+  /* Abstract Section */
+  .paper-abstract{
+    margin-top:10px;
+    padding:10px;
+    background:#f8fafc;
+    border-radius:.6rem;
+    font-size:13px;
+    color:#374151;
+    line-height:1.6;
+    display:none;
+  }
+  
+  .paper-abstract.show{
+    display:block;
+  }
+  
+  .abstract-label{
+    font-weight:700;
+    color:#111827;
+    margin-bottom:4px;
+  }
+  
+  .paper-foot{
+    margin-top:10px;
+    display:flex;
+    gap:8px;
+  }
+
+  /* Index Badges - Gold scale for journals */
+  .idx{
+    display:inline-flex;
+    align-items:center;
+    padding:.3rem .6rem;
+    border-radius:9999px;
+    font-weight:800;
+    font-size:11px;
+    white-space:nowrap;
+  }
+  
+  /* Top tier - full gold */
+  .idx-scie, .idx-ssci, .idx-ahci{
+    background:rgba(214, 177, 77, 0.95);
+    color:#111;
+  }
+  
+  /* Second tier - lighter gold */
+  .idx-scopus{
+    background:rgba(214, 177, 77, 0.65);
+    color:#111;
+  }
+  
+  .idx-other-intl{
+    background:rgba(214, 177, 77, 0.45);
+    color:#111;
+  }
+  
+  /* Korean journals - even lighter */
+  .idx-kci-exc{
+    background:rgba(214, 177, 77, 0.35);
+    color:#111;
+  }
+  
+  .idx-kci{
+    background:rgba(214, 177, 77, 0.25);
+    color:#111;
+  }
+  
+  .idx-other-domestic{
+    background:rgba(214, 177, 77, 0.15);
+    color:#111;
+  }
+  
+  /* Conferences - red scale */
+  .idx-intl-conf{
+    background:rgba(172, 14, 14, 0.85);
+    color:#fff;
+  }
+  
+  .idx-domestic-conf{
+    background:rgba(172, 14, 14, 0.45);
+    color:#fff;
+  }
+  
+  /* Preprint/Working - white/very light */
+  .idx-preprint, .idx-working{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    color:#6b7280;
+  }
+
+  /* Buttons */
+  .btn{
+    padding:.4rem .8rem;
+    border:1px solid #e5e7eb;
+    border-radius:.6rem;
+    background:#fff;
+    font-weight:700;
+    font-size:12px;
+    cursor:pointer;
+    transition:all 0.2s;
+  }
+  
+  .btn:hover{
+    background:#f8fafc;
+  }
+
+  /* Modal */
+  .modal-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:99999;
+  }
+  
+  .modal{
+    background:#fff;
+    border-radius:1rem;
+    max-width:720px;
+    width:100%;
+    max-height:80vh;
+    overflow:auto;
+  }
+  
+  .modal header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 20px;
+    border-bottom:1px solid #e5e7eb;
+    background:#f8fafc;
+  }
+  
+  .modal-title{
+    font-size:18px;
+    font-weight:900;
+    color:#111827;
+  }
+  
+  .cite-block{
+    border:1px solid #e5e7eb;
+    border-radius:.75rem;
+    padding:12px 14px;
+    background:#f8fafc;
+  }
+  
+  .cite-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+  }
+  
+  .cite-label{
+    font-weight:800;
+    font-size:13px;
+    color:#111827;
+  }
+  
+  .cite-text{
+    font-size:13px;
+    color:#374151;
+    line-height:1.5;
+  }
+  
+  .copy-btn{
+    border:1px solid #e5e7eb;
+    border-radius:.5rem;
+    padding:.3rem .6rem;
+    font-size:11px;
+    font-weight:800;
+    background:#fff;
+    cursor:pointer;
+  }
+  
+  .copy-btn:hover{
+    background:#f8fafc;
+  }
+  
+  /* Empty State */
+  .empty-state{
+    padding:48px 20px;
+    text-align:center;
+    color:#6b7280;
+    font-size:14px;
+    font-weight:600;
+    border:1px dashed #e5e7eb;
+    border-radius:1rem;
+    background:#fff;
+    margin-top:20px;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    .search-container{
+      flex-direction:column;
+      align-items:stretch;
+    }
+    
+    .search{
+      width:100%;
+    }
+    
+    .count{
+      text-align:center;
+      width:100%;
+    }
+    
+    .paper-row{
+      grid-template-columns:48px 1fr;
+    }
+    
+    .paper-left{
+      font-size:11px;
+    }
+    
+    .paper-title{
+      font-size:14px;
+    }
+    
+    .chip{
+      font-size:11px;
+      padding:.4rem .8rem;
+    }
+  }
+</style>
 
 <!-- ===== Page Title / Banner ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-2">
+<section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <img src="{{ '/assets/img/banners/publications-hero.jpg' | relative_url }}" alt="Publications banner"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
+        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <span aria-current="page" class="font-semibold">Publications</span>
+        </nav>
         <h1 class="text-2xl md:text-3xl font-extrabold">Publications</h1>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Styles ===== -->
-<style>
-  :root{
-    --accent-r: 172; --accent-g: 14; --accent-b: 14;  /* red */
-    --gold-r: 214; --gold-g: 177; --gold-b: 77;      /* gold */
-    --purple: 124,58,237;
-  }
-  .toolbar{display:flex;flex-direction:column;gap:12px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
-  .toolbar .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.55rem .8rem;font-size:14px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
-  .chip.is-on{box-shadow:inset 0 0 0 1.5px #111827}
-
-  .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-  .paper-row{display:grid;grid-template-columns:56px 1fr}
-  .paper-left{display:flex;align-items:center;justify-content:center;background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.95);color:#fff;font-weight:900;font-size:13px}
-  .paper-left.empty{background:#f1f5f9;color:#e5e7eb}
-  .paper-body{padding:14px 16px}
-  .paper-title{font-weight:900;font-size:15px;color:#111827}
-  .paper-meta{margin-top:4px;color:#374151;font-size:13px}
-  .paper-venue{margin-top:2px;color:#6b7280;font-size:12px}
-  .paper-foot{margin-top:10px;display:flex;gap:8px}
-
-  .idx{display:inline-flex;align-items:center;padding:.26rem .55rem;border-radius:9999px;font-weight:800;font-size:11px;white-space:nowrap}
-  .idx-sc-group{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.85);color:#fff}
-  .idx-scopus{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.65);color:#fff}
-  .idx-intl-etc{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.45);color:#111}
-  .idx-kci-exc{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.30)}
-  .idx-kci{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.20)}
-  .idx-domestic-etc{background:rgba(var(--accent-r),var(--accent-g),var(--accent-b),.12)}
-  .idx-preprint{background:rgba(var(--purple),.18)}
-  .idx-working{background:rgba(var(--purple),.10)}
-
-  .btn{padding:.4rem .7rem;border:1px solid #e5e7eb;border-radius:.6rem;font-weight:700;font-size:12px}
-  .btn:hover{background:#f8fafc}
-
-  .year-head{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-bottom:1px solid #e5e7eb}
-  .year-toggle{cursor:pointer}
-
-  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:18px;z-index:99999}
-  .modal{background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:80vh;overflow:auto}
-  .modal header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #e5e7eb}
-  .cite-block{border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px}
-  .copy-mini{border:1px solid #e5e7eb;border-radius:6px;padding:.25rem .5rem;font-size:11px;font-weight:800}
-  .copy-mini:hover{background:#f8fafc}
-</style>
-
 <!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="search">
-      <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+    <!-- Search Bar -->
+    <div class="search-container">
+      <div class="search">
+        <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+      </div>
+      <div class="count" id="count"></div>
     </div>
-    <div class="chips" id="idxChips"></div>
+    
+    <!-- Type Filter -->
+    <div class="filter-section">
+      <label class="filter-label">Publication Type</label>
+      <div class="chips" id="typeChips"></div>
+    </div>
+    
+    <!-- Journal Indexing Filter -->
+    <div class="filter-section">
+      <label class="filter-label">Journal Indexing</label>
+      <div class="chips" id="journalChips"></div>
+    </div>
+    
+    <!-- Conference Filter -->
+    <div class="filter-section">
+      <label class="filter-label">Conference</label>
+      <div class="chips" id="conferenceChips"></div>
+    </div>
   </div>
 </section>
 
 <!-- ===== Publications ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6 space-y-6" id="pubWrap"></section>
+<section class="max-w-7xl mx-auto px-4 mt-6" id="pubWrap"></section>
 
 <!-- ===== Cite Modal ===== -->
 <div id="citeModal" class="modal-backdrop">
   <div class="modal">
     <header>
-      <h3 class="text-lg font-extrabold">Cite</h3>
-      <button id="btnCloseCite" class="copy-mini">Close</button>
+      <h3 class="modal-title">Citation Formats</h3>
+      <button id="btnCloseCite" class="copy-btn">Close</button>
     </header>
     <div class="p-4 space-y-3" id="citeBody"></div>
   </div>
 </div>
 
 <script>
-  /* ===== Data ===== */
-  const PUBS = [/* 여기에 Publications 배열 붙여넣기 */];
+  /* ===== Author Database ===== */
+  const AUTHORS = {
+    1: { en: "Insu Choi", ko: "최인수" },
+    2: { en: "Jane Doe", ko: "도제인" },
+    3: { en: "Robert Johnson", ko: "로버트 존슨" },
+    4: { en: "Alice Park", ko: "박앨리스" },
+    5: { en: "Bob Lee", ko: "이밥" },
+    6: { en: "Charlie Kim", ko: "김찰리" },
+    7: { en: "David Chen", ko: "첸데이비드" },
+    8: { en: "Emily Wang", ko: "왕에밀리" },
+    9: { en: "Frank Liu", ko: "류프랭크" },
+    10: { en: "Grace Kim", ko: "김그레이스" },
+    11: { en: "Henry Park", ko: "박헨리" }
+  };
 
-  const IDX_GROUPS = [
-    "SCIE","SSCI","A&HCI","Scopus","Other International",
-    "KCI Excellent Accredited","KCI Accredited","Other Domestic",
-    "Preprint","Working Paper"
+  /* ===== Sample Data ===== */
+  const PUBS = [
+    {
+      year: 2024,
+      code_label: "J1",
+      indexing_group: "SCIE",
+      type: "journal",
+      title: "Deep Reinforcement Learning for Automated Trading in Financial Markets",
+      authors: [1, 2, 3], // Using author IDs
+      venue: "IEEE Transactions on Neural Networks and Learning Systems",
+      accepted_date: "2024-03-15",
+      abstract: "This paper presents a novel deep reinforcement learning framework for automated trading in financial markets. We propose a multi-agent system that learns optimal trading strategies through interaction with historical market data. Our approach combines deep Q-networks with advanced portfolio optimization techniques to achieve superior risk-adjusted returns. Extensive experiments on real-world stock market data demonstrate the effectiveness of our method."
+    },
+    {
+      year: 2024,
+      code_label: "C1",
+      indexing_group: "International Conference",
+      type: "conference",
+      title: "Graph Neural Networks for Portfolio Optimization",
+      authors: [4, 5, 6],
+      venue: "International Conference on Machine Learning (ICML)",
+      accepted_date: "2024-02-20",
+      abstract: "Portfolio optimization is a fundamental problem in financial engineering. In this work, we introduce a graph neural network approach that models the complex relationships between financial assets. Our method captures both temporal and cross-sectional dependencies in asset returns, leading to more robust portfolio construction strategies."
+    },
+    {
+      year: 2023,
+      code_label: "J2",
+      indexing_group: "SSCI",
+      type: "journal",
+      title: "Behavioral Finance and Machine Learning: A Systematic Review",
+      authors: [7, 8, 9],
+      venue: "Journal of Financial Economics",
+      accepted_date: "2023-11-10",
+      abstract: "We conduct a comprehensive systematic review of the intersection between behavioral finance and machine learning. This survey covers recent advances in using ML techniques to model investor behavior, sentiment analysis, and market anomalies. We identify key research gaps and propose future research directions."
+    },
+    {
+      year: 2023,
+      code_label: "J3",
+      indexing_group: "Scopus",
+      type: "journal",
+      title: "Quantum Computing Applications in Risk Management",
+      authors: [10, 11],
+      venue: "Quantitative Finance",
+      accepted_date: "2023-09-05",
+      abstract: "Quantum computing offers unprecedented computational capabilities for solving complex optimization problems in finance. This paper explores the application of quantum algorithms to portfolio risk management, including VaR calculation and stress testing."
+    },
+    {
+      year: 2023,
+      code_label: "P1",
+      indexing_group: "Preprint",
+      type: "other",
+      title: "Large Language Models for Financial Text Analysis",
+      authors: [1, 11],
+      venue: "arXiv preprint arXiv:2309.12345",
+      abstract: "We investigate the use of large language models for analyzing financial documents and extracting market insights. Our experiments show that fine-tuned LLMs can achieve state-of-the-art performance on various financial NLP tasks."
+    },
+    {
+      year: 2022,
+      code_label: "J4",
+      indexing_group: "KCI Excellent",
+      type: "journal",
+      title: "Korean Stock Market Prediction Using LSTM Networks",
+      authors: [1, 4, 6],
+      venue: "Korean Journal of Financial Studies",
+      accepted_date: "2022-12-01",
+      abstract: "본 연구는 LSTM 네트워크를 활용한 한국 주식시장 예측 모델을 제안한다. 다양한 기술적 지표와 거시경제 변수를 입력으로 사용하여 KOSPI 지수의 단기 예측 성능을 향상시켰다."
+    }
   ];
-  let onIdx = new Set(IDX_GROUPS); let q="";
 
-  /* ===== Helpers ===== */
-  function idxClass(g){
-    if(["SCIE","SSCI","A&HCI"].includes(g)) return "idx idx-sc-group";
-    if(g==="Scopus") return "idx idx-scopus";
-    if(g==="Other International") return "idx idx-intl-etc";
-    if(g==="KCI Excellent Accredited") return "idx idx-kci-exc";
-    if(g==="KCI Accredited") return "idx idx-kci";
-    if(g==="Other Domestic") return "idx idx-domestic-etc";
-    if(g==="Preprint") return "idx idx-preprint";
-    if(g==="Working Paper") return "idx idx-working";
-    return "idx";
+  /* ===== Filter Categories ===== */
+  const FILTER_GROUPS = {
+    type: [
+      { value: "journal", label: "Journal" },
+      { value: "conference", label: "Conference" }
+    ],
+    journal: [
+      { value: "SCIE", label: "SCIE" },
+      { value: "SSCI", label: "SSCI" },
+      { value: "A&HCI", label: "A&HCI" },
+      { value: "Scopus", label: "Scopus" },
+      { value: "Other International", label: "Other International" },
+      { value: "KCI Excellent", label: "KCI Excellent" },
+      { value: "KCI Accredited", label: "KCI Accredited" },
+      { value: "Other Domestic", label: "Other Domestic" },
+      { value: "Preprint", label: "Preprint" },
+      { value: "Working Paper", label: "Working Paper" }
+    ],
+    conference: [
+      { value: "International Conference", label: "International Conference" },
+      { value: "Domestic Conference", label: "Domestic Conference" }
+    ]
+  };
+
+  /* ===== Filter States ===== */
+  let q = "";
+  const onFilters = {
+    type: new Set(),
+    journal: new Set(),
+    conference: new Set()
+  };
+
+  /* ===== DOM Elements ===== */
+  const searchInput = document.getElementById('pubSearch');
+  const countEl = document.getElementById('count');
+  const pubWrap = document.getElementById('pubWrap');
+  const modal = document.getElementById('citeModal');
+  const citeBody = document.getElementById('citeBody');
+  const closeBtn = document.getElementById('btnCloseCite');
+
+  /* ===== Helper Functions ===== */
+  function getAuthorName(authorId, isDomestic) {
+    const author = AUTHORS[authorId];
+    if (!author) return `Author ${authorId}`;
+    
+    // If domestic publication, prefer Korean name
+    if (isDomestic && author.ko) return author.ko;
+    // If international publication, prefer English name
+    if (!isDomestic && author.en) return author.en;
+    // Return whatever is available
+    return author.en || author.ko || `Author ${authorId}`;
   }
-  function buildChips(){
-    const chips=document.getElementById('idxChips');
-    chips.innerHTML=IDX_GROUPS.map(g=>{
-      const on=onIdx.has(g)?'is-on':''; return `<button class="chip ${on}" data-idx="${g}">${g}</button>`;
+
+  function isDomesticPublication(indexing) {
+    return indexing.includes("KCI") || indexing.includes("Domestic");
+  }
+
+  /* ===== Build Filter Chips ===== */
+  function buildChips() {
+    // Type filters
+    const typeChips = document.getElementById('typeChips');
+    typeChips.innerHTML = FILTER_GROUPS.type.map(item => {
+      const active = onFilters.type.has(item.value);
+      return `
+        <button class="chip chip-${item.value} ${active ? 'is-on' : ''}" 
+                data-filter-type="type"
+                data-filter-value="${item.value}">
+          ${item.label}
+        </button>
+      `;
     }).join('');
-    chips.querySelectorAll('[data-idx]').forEach(btn=>{
-      btn.onclick=()=>{const g=btn.dataset.idx; onIdx.has(g)?onIdx.delete(g):onIdx.add(g); btn.classList.toggle('is-on'); render();};
+
+    // Journal filters (including all indexing types)
+    const journalChips = document.getElementById('journalChips');
+    journalChips.innerHTML = FILTER_GROUPS.journal.map(item => {
+      const active = onFilters.journal.has(item.value);
+      return `
+        <button class="chip ${active ? 'is-on' : ''}" 
+                data-filter-type="journal"
+                data-filter-value="${item.value}">
+          ${item.label}
+        </button>
+      `;
+    }).join('');
+
+    // Conference filters
+    const conferenceChips = document.getElementById('conferenceChips');
+    conferenceChips.innerHTML = FILTER_GROUPS.conference.map(item => {
+      const active = onFilters.conference.has(item.value);
+      return `
+        <button class="chip ${active ? 'is-on' : ''}" 
+                data-filter-type="conference"
+                data-filter-value="${item.value}">
+          ${item.label}
+        </button>
+      `;
+    }).join('');
+
+    // Add click handlers
+    document.querySelectorAll('[data-filter-type]').forEach(btn => {
+      btn.onclick = () => {
+        const filterType = btn.dataset.filterType;
+        const filterValue = btn.dataset.filterValue;
+        
+        if (onFilters[filterType].has(filterValue)) {
+          onFilters[filterType].delete(filterValue);
+        } else {
+          onFilters[filterType].add(filterValue);
+        }
+        
+        buildChips();
+        render();
+      };
     });
   }
-  function matches(p){
-    if(!onIdx.has(p.indexing_group)) return false;
-    if(!q) return true;
-    const text=(p.title+" "+p.authors.join(" ")+" "+p.venue).toLowerCase();
+
+  /* ===== Index Badge Helper ===== */
+  function idxClass(group) {
+    const classMap = {
+      "SCIE": "idx-scie",
+      "SSCI": "idx-ssci",
+      "A&HCI": "idx-ahci",
+      "Scopus": "idx-scopus",
+      "Other International": "idx-other-intl",
+      "International Conference": "idx-intl-conf",
+      "Domestic Conference": "idx-domestic-conf",
+      "KCI Excellent": "idx-kci-exc",
+      "KCI Accredited": "idx-kci",
+      "Other Domestic": "idx-other-domestic",
+      "Preprint": "idx-preprint",
+      "Working Paper": "idx-working"
+    };
+    return `idx ${classMap[group] || ''}`;
+  }
+
+  /* ===== Filter Matching ===== */
+  function matches(pub) {
+    // Check type filter
+    if (onFilters.type.size > 0 && !onFilters.type.has(pub.type)) {
+      return false;
+    }
+
+    // Check specific indexing filters
+    const allIndexFilters = [
+      ...onFilters.journal,
+      ...onFilters.conference
+    ];
+    
+    if (allIndexFilters.length > 0 && !allIndexFilters.includes(pub.indexing_group)) {
+      return false;
+    }
+
+    // Check search query
+    if (!q) return true;
+    
+    // Get author names for search
+    const isDomestic = isDomesticPublication(pub.indexing_group);
+    const authorNames = pub.authors.map(id => getAuthorName(id, isDomestic)).join(" ");
+    
+    const text = (pub.title + " " + authorNames + " " + pub.venue).toLowerCase();
     return text.includes(q.toLowerCase());
   }
 
-  /* ===== Render ===== */
-  function leftTab(code){return code?`<div class="paper-left"><span>${code}</span></div>`:`<div class="paper-left empty"><span>&nbsp;</span></div>`}
-  function idxBadge(p){return `<span class="${idxClass(p.indexing_group)}">${p.indexing_group}</span>`;}
-  function card(p){
-    return `<li class="paper-card">
-      <div class="paper-row">
-        ${leftTab(p.code_label)}
-        <div class="paper-body">
-          <div class="flex items-center justify-between">
-            ${idxBadge(p)}
-            <span class="text-[12px] text-slate-500">${p.year}${p.accepted_date?` · Accepted: ${p.accepted_date}`:''}</span>
+  /* ===== Toggle Abstract ===== */
+  function toggleAbstract(pubId) {
+    const abstractDiv = document.getElementById(`abstract-${pubId}`);
+    if (abstractDiv) {
+      abstractDiv.classList.toggle('show');
+    }
+  }
+
+  /* ===== Card Component ===== */
+  function createCard(pub, index) {
+    const codeLabel = pub.code_label || "";
+    const isDomestic = isDomesticPublication(pub.indexing_group);
+    const authorNames = pub.authors.map(id => {
+      const name = getAuthorName(id, isDomestic);
+      // Mark corresponding author with *
+      return id === 1 ? `${name}*` : name;
+    }).join(", ");
+    
+    return `
+      <li class="paper-card">
+        <div class="paper-row">
+          <div class="paper-left ${pub.type} ${codeLabel ? '' : 'empty'}" 
+               ${pub.abstract ? `onclick="toggleAbstract(${index})"` : ''}>
+            <span>${codeLabel || '&nbsp;'}</span>
           </div>
-          <h3 class="paper-title mt-2">${p.title}</h3>
-          <div class="paper-meta">${p.authors.join(", ")}</div>
-          <div class="paper-venue">${p.venue}</div>
-          <div class="paper-foot"><button class="btn" data-cite='${JSON.stringify(p)}'>Cite</button></div>
+          <div class="paper-body">
+            <div class="paper-header">
+              <span class="${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
+              <div class="paper-date">
+                <span class="year">${pub.year}</span>
+                ${pub.accepted_date ? `<span class="accepted">Accepted: ${pub.accepted_date}</span>` : ''}
+              </div>
+            </div>
+            <h3 class="paper-title">${pub.title}</h3>
+            <div class="paper-meta">${authorNames}</div>
+            <div class="paper-venue">${pub.venue}</div>
+            ${pub.abstract ? `
+              <div class="paper-abstract" id="abstract-${index}">
+                <div class="abstract-label">Abstract</div>
+                ${pub.abstract}
+              </div>
+            ` : ''}
+            <div class="paper-foot">
+              <button class="btn" onclick='openCite(${JSON.stringify(pub)})'>Cite</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </li>`;
+      </li>
+    `;
   }
-  function render(){
-    const wrap=document.getElementById('pubWrap');
-    const years=[...new Set(PUBS.map(p=>p.year))].sort((a,b)=>b-a);
-    wrap.innerHTML=years.map(y=>{
-      const items=PUBS.filter(p=>p.year===y&&matches(p));
-      if(!items.length) return '';
-      return `<div class="bg-white border border-slate-200 rounded-2xl overflow-hidden">
-        <div class="year-head"><button class="btn year-toggle" data-year="${y}">Collapse</button><h2 class="text-xl font-extrabold">${y}</h2></div>
-        <ul class="p-4 grid gap-4" id="year-${y}">${items.map(card).join('')}</ul></div>`;
+
+  /* ===== Render ===== */
+  function render() {
+    const filtered = PUBS.filter(matches);
+    const years = [...new Set(filtered.map(p => p.year))].sort((a, b) => b - a);
+    
+    if (filtered.length === 0) {
+      pubWrap.innerHTML = `
+        <div class="empty-state">
+          No publications found. Try adjusting your search or filters.
+        </div>
+      `;
+    } else {
+      pubWrap.innerHTML = years.map(year => {
+        const items = filtered.filter(p => p.year === year);
+        return `
+          <div class="year-section">
+            <div class="year-head">
+              <h2 class="year-title">${year}</h2>
+              <button class="year-toggle" data-year="${year}">Collapse</button>
+            </div>
+            <div class="year-content" id="year-${year}">
+              <ul class="paper-list">
+                ${items.map((item, idx) => createCard(item, `${year}-${idx}`)).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add toggle handlers
+      document.querySelectorAll('.year-toggle').forEach(btn => {
+        btn.onclick = () => {
+          const year = btn.dataset.year;
+          const content = document.getElementById('year-' + year);
+          const isHidden = content.style.display === 'none';
+          content.style.display = isHidden ? '' : 'none';
+          btn.textContent = isHidden ? 'Collapse' : 'Expand';
+        };
+      });
+    }
+    
+    countEl.textContent = `${filtered.length} of ${PUBS.length}`;
+  }
+
+  /* ===== Citation Modal ===== */
+  function toInitials(name) {
+    const clean = name.replace(/\*/g, '').trim();
+    const parts = clean.split(/\s+/);
+    const last = parts.pop();
+    const initials = parts.map(p => p[0]?.toUpperCase() + ".").join(" ");
+    return `${last}, ${initials}`;
+  }
+
+  function openCite(pub) {
+    // Get author names for citation (always use English for international formats)
+    const authorNames = pub.authors.map(id => getAuthorName(id, false));
+    
+    const formats = {
+      MLA: `${authorNames[0].replace(/\*/g, '')} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
+      APA: `${toInitials(authorNames[0])} et al. (${pub.year}). ${pub.title}. ${pub.venue}.`,
+      Chicago: `${authorNames[0].replace(/\*/g, '')} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
+      Harvard: `${toInitials(authorNames[0])} et al. (${pub.year}) ${pub.title}. ${pub.venue}.`,
+      Vancouver: `${authorNames.map(a => toInitials(a)).join(', ')}. ${pub.title}. ${pub.venue}. ${pub.year}.`
+    };
+
+    citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
+      const id = 'cite-' + Math.random().toString(36).slice(2, 9);
+      return `
+        <div class="cite-block">
+          <div class="cite-header">
+            <span class="cite-label">${label}</span>
+            <button class="copy-btn" onclick="copyText('${id}')">Copy</button>
+          </div>
+          <div class="cite-text" id="${id}">${text}</div>
+        </div>
+      `;
     }).join('');
-    document.querySelectorAll('.year-toggle').forEach(btn=>{
-      btn.onclick=()=>{const y=btn.dataset.year; const ul=document.getElementById('year-'+y); const hidden=ul.style.display==='none'; ul.style.display=hidden?'':'none'; btn.textContent=hidden?'Collapse':'Expand';};
-    });
-    document.querySelectorAll('[data-cite]').forEach(btn=>btn.onclick=()=>openCite(JSON.parse(btn.dataset.cite)));
+
+    modal.style.display = 'flex';
   }
 
-  /* ===== Cite Modal ===== */
-  const modal=document.getElementById('citeModal'); const body=document.getElementById('citeBody'); const close=document.getElementById('btnCloseCite');
-  close.onclick=()=>modal.style.display='none'; modal.onclick=e=>{if(e.target===modal) modal.style.display='none';};
-
-  function toInitials(name){const parts=name.replace(/\*/g,'').trim().split(/\s+/);const last=parts.pop();const initials=parts.map(p=>p[0]?.toUpperCase()+".").join(" ");return `${last}, ${initials}`;}
-  function toAuthorNameMLA(full){const parts=full.replace(/\*/g,'').trim().split(/\s+/);if(parts.length===1) return parts[0];const last=parts.pop();return `${last}, ${parts.join(' ')}`;}
-  function toAPAAuthors(auths){if(auths.length===1) return toInitials(auths[0]); if(auths.length===2) return `${toInitials(auths[0])}, & ${toInitials(auths[1])}`; return auths.map((a,i)=>i===auths.length-1?`& ${toInitials(a)}`:toInitials(a)).join(", ");}
-  function toMLAAuthors(auths){if(auths.length===1) return toAuthorNameMLA(auths[0]); if(auths.length===2) return `${toAuthorNameMLA(auths[0])}, and ${auths[1]}`; return `${toAuthorNameMLA(auths[0])}, et al.`;}
-  function toChicagoAuthors(auths){if(auths.length===1) return toAuthorNameMLA(auths[0]).replace(',',''); if(auths.length===2) return `${toAuthorNameMLA(auths[0])}, and ${auths[1]}`; return `${toAuthorNameMLA(auths[0])}, et al.`;}
-  function toHarvardAuthors(auths,year){if(auths.length===1) return `${toInitials(auths[0])} (${year})`; if(auths.length===2) return `${toInitials(auths[0])} and ${toInitials(auths[1])} (${year})`; return `${toInitials(auths[0])} et al. (${year})`;}
-  function toVancouverAuthors(auths){return auths.map(a=>{const parts=a.replace(/\*/g,'').trim().split(/\s+/);const last=parts.pop();const initials=parts.map(p=>p[0]).join('');return `${last} ${initials}`;}).join(', ');}
-
-  function openCite(p){
-    const MLA=`${toMLAAuthors(p.authors)} "${p.title}." ${p.venue} (${p.year}).`;
-    const APA=`${toAPAAuthors(p.authors)} (${p.year}). ${p.title}. ${p.venue}.`;
-    const Chicago=`${toChicagoAuthors(p.authors)} ${p.year}. "${p.title}." ${p.venue}.`;
-    const Harvard=`${toHarvardAuthors(p.authors,p.year)} ${p.title}. ${p.venue}.`;
-    const Vancouver=`${toVancouverAuthors(p.authors)}. ${p.title}. ${p.venue}. ${p.year}.`;
-    const blocks=[["MLA",MLA],["APA",APA],["Chicago",Chicago],["Harvard",Harvard],["Vancouver",Vancouver]].map(([label,text])=>{
-      const id='cite-'+Math.random().toString(36).slice(2,9);
-      return `<div class="cite-block"><div class="flex justify-between"><strong>${label}</strong><button class="copy-mini" data-copy="${id}">Copy</button></div><div id="${id}">${text}</div></div>`;
-    }).join('');
-    body.innerHTML=blocks;
-    body.querySelectorAll('[data-copy]').forEach(btn=>{btn.onclick=()=>{const id=btn.dataset.copy;const txt=document.getElementById(id).textContent;navigator.clipboard.writeText(txt);btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1000);};});
-    modal.style.display='flex';
+  function copyText(id) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text);
+    event.target.textContent = 'Copied!';
+    setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
 
-  document.getElementById('pubSearch').oninput=e=>{q=e.target.value; render();};
-  buildChips(); render();
+  /* ===== Event Listeners ===== */
+  searchInput.oninput = (e) => {
+    q = e.target.value;
+    render();
+  };
+
+  closeBtn.onclick = () => modal.style.display = 'none';
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.style.display = 'none';
+  };
+
+  /* ===== Initialize ===== */
+  buildChips();
+  render();
 </script>
