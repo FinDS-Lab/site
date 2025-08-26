@@ -53,7 +53,7 @@ title: home
               Updates
             </h2>
             <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/archives-notice.html' | relative_url }}">Notices</a>
+              <a class="btn-primary text-sm" href="{{ '/archives-notice.html' | relative_url }}">Notice</a>
               <a class="btn-primary text-sm" href="{{ '/archives-news.html'  | relative_url }}">News</a>
             </div>
           </div>
@@ -97,7 +97,7 @@ title: home
   </div>
 </section>
 
-<!-- ===== News & Notices (archive-style rows) ===== -->
+<!-- ===== News & Notice (archive-style rows) ===== -->
 <!-- 동일 포맷을 위해 board-row 스타일(archives와 동일)을 간단히 포함 -->
 <style>
   .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
@@ -167,10 +167,10 @@ title: home
     </ul>
   </div>
 
-  <!-- Notices: 최신 3개 (archive-style) -->
+  <!-- Notice: 최신 3개 (archive-style) -->
   <div id="notice-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
-      <h4 class="text-xl font-extrabold m-0">Notices</h4>
+      <h4 class="text-xl font-extrabold m-0">Notice</h4>
       <a class="warm-underline font-bold shrink-0" href="{{ '/archives-notice.html' | relative_url }}">More</a>
     </div>
 
