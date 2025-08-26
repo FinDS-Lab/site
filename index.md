@@ -37,7 +37,6 @@ title: home
             </h2>
             <div class="mt-4 flex gap-3">
               <a class="btn-primary text-sm" href="{{ '/publications.html' | relative_url }}">Publications</a>
-              <a class="btn-primary text-sm" href="{{ '/lectures.html'     | relative_url }}">Lectures</a>
               <a class="btn-primary text-sm" href="{{ '/projects.html'     | relative_url }}">Projects</a>
             </div>
           </div>
@@ -80,15 +79,18 @@ title: home
   </div>
 
   <div>
-    <p class="text-2xl font-extrabold tracking-tight" style="color:var(--accent)">Dongduk Women's University</p>
+    <p class="text-2xl font-extrabold tracking-tight" style="color:rgb(172,14,14)">Dongduk Women's University</p>
 
     <h3 class="text-3xl mt-1">
       <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
-      <span class="font-extrabold">(Fin</span><span class="font-light">ancial</span>
-      <span class="font-extrabold">D</span><span class="font-light">ata</span>
-      <span class="font-extrabold">S</span><span class="font-light">cience</span>
-      <span class="font-extrabold"> Laboratory)</span>
+      <span class="ml-1 inline-block align-baseline text-[18px] md:text-[20px]" style="color:rgb(0,0,0)">
+        (<span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
+        <span class="font-extrabold">D</span><span class="font-light">ata</span>
+        <span class="font-extrabold">S</span><span class="font-light">cience</span>
+        <span class="font-extrabold"> Laboratory</span>)
+      </span>
     </h3>
+
 
     <p class="mt-3 text-[15px] leading-7 text-slate-700">
       동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
