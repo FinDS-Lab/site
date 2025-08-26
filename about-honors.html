@@ -4,21 +4,229 @@ title: honors
 permalink: /about-honors.html
 ---
 
-<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<!-- ===== Styles ===== -->
+<style>
+/* Breadcrumbs */
+.breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+.breadcrumbs a{color:#e5e7eb}
+.breadcrumbs a:hover{text-decoration:underline}
+.breadcrumbs .sep{opacity:.8}
+
+:root{
+  --award-gold:#d4af37;
+  --award-silver:#c0c0c0;
+  --award-bronze:#cd7f32;
+  --primary-dark:#111827;
+}
+
+/* Year sections */
+.year-section{
+  margin-bottom:20px;
+}
+
+.year-header{
+  background:#111827;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:1rem 1rem 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  user-select:none;
+  transition:all .2s;
+}
+
+.year-header:hover{
+  background:#1f2937;
+}
+
+.year-header.collapsed{
+  border-radius:1rem;
+  margin-bottom:0;
+}
+
+.year-badge{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.year-toggle{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  opacity:.8;
+}
+
+.chevron{
+  width:20px;
+  height:20px;
+  transition:transform .2s;
+}
+
+.collapsed .chevron{
+  transform:rotate(-90deg);
+}
+
+/* Awards container */
+.awards-container{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-top:0;
+  border-radius:0 0 1rem 1rem;
+  overflow:hidden;
+  transition:all .3s;
+}
+
+.awards-container.hidden{
+  display:none;
+}
+
+/* Grid layout for awards */
+.awards-grid{
+  display:grid;
+  gap:14px;
+  padding:16px;
+  grid-template-columns:1fr;
+}
+
+/* Award card */
+.award-card{
+  border:1px solid #e5e7eb;
+  border-radius:.75rem;
+  overflow:hidden;
+  background:#fff;
+  transition:all .2s;
+}
+
+.award-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.award-inner{
+  position:relative;
+  padding-left:36px;
+}
+
+/* Award type indicator */
+.award-indicator{
+  position:absolute;
+  left:12px;
+  top:12px;
+  bottom:12px;
+  width:6px;
+  border-radius:6px;
+  background:var(--award-gold);
+}
+
+.award-indicator.silver{background:var(--award-silver)}
+.award-indicator.bronze{background:var(--award-bronze)}
+.award-indicator.honor{background:#6b7280}
+
+/* Award body */
+.award-body{
+  padding:14px 16px 14px 0;
+}
+
+/* Award badge */
+.award-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#111827;
+  color:#fff;
+  border-radius:999px;
+  padding:4px 12px;
+  font-size:11px;
+  font-weight:800;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.award-badge.gold{background:var(--award-gold);color:#111}
+.award-badge.silver{background:var(--award-silver);color:#111}
+.award-badge.bronze{background:var(--award-bronze);color:#fff}
+
+/* Award title */
+.award-title{
+  font-size:15px;
+  font-weight:800;
+  color:#111827;
+  margin-bottom:8px;
+  line-height:1.4;
+}
+
+/* Award meta */
+.award-meta{
+  font-size:13px;
+  color:#6b7280;
+  margin-bottom:10px;
+}
+
+/* Winners */
+.winners{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+
+.winner-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:12px;
+  font-weight:600;
+  color:#374151;
+}
+
+.winner-img{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  object-fit:cover;
+  border:1px solid #e5e7eb;
+}
+
+/* Empty state */
+.empty{
+  padding:48px;
+  text-align:center;
+  color:#6b7280;
+  font-weight:700;
+  border:2px dashed #e5e7eb;
+  border-radius:1rem;
+  background:#fafafa;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .year-badge{font-size:16px}
+  .award-title{font-size:14px}
+  .award-meta{font-size:12px}
+  .winner-pill{font-size:11px}
+  .award-body{padding:12px 14px 12px 0}
+}
+</style>
+
+<!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <style>
-    /* page-scoped helpers (banner) */
-    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-    .breadcrumbs a{color:#e5e7eb}
-    .breadcrumbs a:hover{text-decoration:underline}
-    .breadcrumbs .sep{opacity:.85}
-  </style>
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="FINDS Lab banner"
-         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" 
+         alt="Honors & Awards banner" 
+         class="w-full h-[200px] md:h-[260px] object-cover" 
+         width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
-    <div class="absolute inset-x-0 bottom-3 px-4">
+    <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
+        <!-- Breadcrumbs -->
         <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
@@ -26,154 +234,214 @@ permalink: /about-honors.html
           <span class="sep">›</span>
           <span aria-current="page" class="font-semibold">Honors & Awards</span>
         </nav>
-        <h1 class="text-xl md:text-2xl font-extrabold">Honors & Awards</h1>
+        <!-- Title -->
+        <h1 class="text-2xl md:text-3xl font-extrabold">Honors & Awards</h1>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Styles for timeline ===== -->
-<style>
-  /* ===== Awards timeline styles (lightweight, no external deps) ===== */
-  .awards-wrap{max-width:72rem;margin:1.25rem auto 2rem;padding:0 1rem}
-  .page-head{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
-  .page-head h1{font-weight:800;margin:0}
-  .page-desc{color:#475569;margin:.25rem 0 0}
-
-  details.award-year{
-    border:1px solid #e5e7eb;border-radius:1rem;background:#fff;margin:1rem 0;overflow:hidden
-  }
-  details.award-year[open]{border-color:#d4af37;box-shadow:0 1px 0 0 rgba(0,0,0,.02), 0 8px 24px rgba(0,0,0,.04)}
-  .year-bar{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:.875rem 1rem;background:#0b1020;color:#fff
-  }
-  .year-badge{font-weight:900;letter-spacing:.5px}
-  summary{list-style:none;cursor:pointer}
-  summary::-webkit-details-marker{display:none}
-  .year-count{font-size:.85rem;opacity:.9}
-
-  .tl{position:relative;padding:1rem}
-  .tl::before{
-    content:"";position:absolute;left:1.25rem;top:.5rem;bottom:.75rem;width:2px;background:#e5e7eb
-  }
-  .award{
-    position:relative;display:grid;grid-template-columns:2.5rem 1fr;gap:.75rem;padding:.75rem 0 .75rem 0
-  }
-  .award:first-child{padding-top:.25rem}
-  .award::before{
-    content:"";position:absolute;left:1.15rem;top:1.15rem;width:.7rem;height:.7rem;border:2px solid #0b1020;background:#fff;border-radius:9999px
-  }
-  .medal{display:inline-flex;align-items:center;gap:.5rem;background:#0b1020;color:#fff;border-radius:9999px;padding:.25rem .6rem;font-size:.8rem}
-  .medal i{font-style:normal}
-  .who{display:flex;flex-wrap:wrap;gap:.4rem;margin:.35rem 0 0}
-  .pill{
-    display:inline-flex;align-items:center;gap:.4rem;border:1px solid #e5e7eb;border-radius:9999px;padding:.2rem .55rem;font-size:.85rem;background:#fff
-  }
-  .pill img{width:20px;height:20px;object-fit:cover;border-radius:9999px;border:1px solid #e5e7eb;background:#fff}
-  .what{font-weight:700;margin:.2rem 0 0}
-  .meta{color:#475569;font-size:.9rem;margin:.1rem 0 0}
-  .sep{height:1px;background:#f1f5f9;margin:.25rem 0 0}
-
-  .muted{color:#64748b}
-  @media (max-width: 768px){
-    .tl::before{left:1rem}
-    .award{grid-template-columns:2rem 1fr}
-    .award::before{left:.9rem}
-  }
-</style>
-
-  <!-- ===== 2025 (기본 펼침) ===== -->
-  <details class="award-year" open>
-    <summary class="year-bar">
+<!-- ===== Content ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6 pb-8">
+  
+  <!-- 2025 Year Section (Open by default) -->
+  <div class="year-section">
+    <div class="year-header" onclick="toggleYear(this)">
       <span class="year-badge">2025</span>
-      <span class="year-count muted">올해의 수상</span>
-    </summary>
-    <div class="tl">
-      <!-- 1 -->
-      <div class="award">
-        <div></div>
-        <div>
-          <span class="medal"><i>🏆</i> 최우수상</span>
-          <div class="who">
-            <!-- 사진이 있으면 src에 넣고, 없으면 img 태그 제거해도 됩니다 -->
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김재훈</span>
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">심세진</span>
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">이혜승</span>
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">박소연</span>
-          </div>
-          <div class="what">관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)</div>
-          <div class="meta">주최 · 관세청</div>
-          <div class="sep"></div>
-        </div>
-      </div>
-
-      <!-- 2 -->
-      <div class="award">
-        <div></div>
-        <div>
-          <span class="medal"><i>🏆</i> 최우수상</span>
-          <div class="who">
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">심세진</span>
-          </div>
-          <div class="what">제4회 성장통 사례 경진대회</div>
-          <div class="meta">4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단</div>
-          <div class="sep"></div>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="award">
-        <div></div>
-        <div>
-          <span class="medal"><i>🏅</i> 석탑강의상</span>
-          <div class="who">
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김성범 교수님</span>
-          </div>
-          <div class="what">석탑강의상 (2024년 2학기)</div>
-          <div class="meta">고려대학교</div>
-          <div class="sep"></div>
-        </div>
+      <div class="year-toggle">
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
       </div>
     </div>
-  </details>
+    <div class="awards-container">
+      <div class="awards-grid">
+        
+        <!-- Award 1 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator"></div>
+            <div class="award-body">
+              <span class="award-badge gold">최우수상</span>
+              <div class="award-title">관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)</div>
+              <div class="award-meta">주최 · 관세청</div>
+              <div class="winners">
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  김재훈
+                </span>
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  심세진
+                </span>
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  이혜승
+                </span>
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  박소연
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <!-- ===== 2024 (접힘) ===== -->
-  <details class="award-year">
-    <summary class="year-bar">
+        <!-- Award 2 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator"></div>
+            <div class="award-body">
+              <span class="award-badge gold">최우수상</span>
+              <div class="award-title">제4회 성장통 사례 경진대회</div>
+              <div class="award-meta">4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단</div>
+              <div class="winners">
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  심세진
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Award 3 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator honor"></div>
+            <div class="award-body">
+              <span class="award-badge">석탑강의상</span>
+              <div class="award-title">석탑강의상 (2024년 2학기)</div>
+              <div class="award-meta">고려대학교</div>
+              <div class="winners">
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  김성범 교수님
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 2024 Year Section (Collapsed) -->
+  <div class="year-section">
+    <div class="year-header collapsed" onclick="toggleYear(this)">
       <span class="year-badge">2024</span>
-      <span class="year-count muted">클릭하여 펼치기</span>
-    </summary>
-    <div class="tl">
-      <!-- 예시 1 -->
-      <div class="award">
-        <div></div>
-        <div>
-          <span class="medal"><i>🏅</i> 석탑강의상</span>
-          <div class="who">
-            <span class="pill"><img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="">김성범 교수님</span>
-          </div>
-          <div class="what">석탑강의상 (2024년 1학기)</div>
-          <div class="meta">고려대학교</div>
-          <div class="sep"></div>
-        </div>
-      </div>
-
-      <!-- 예시 2 -->
-      <div class="award">
-        <div></div>
-        <div>
-          <span class="medal"><i>🏆</i> 대상(1등)</span>
-          <div class="who">
-            <span class="pill">김재훈</span>
-            <span class="pill">추창욱</span>
-            <span class="pill">차민성</span>
-          </div>
-          <div class="what">ITRC 창의-자율과제, Smart Media Service Research Center</div>
-          <div class="meta">고려대학교</div>
-          <div class="sep"></div>
-        </div>
+      <div class="year-toggle">
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
       </div>
     </div>
-  </details>
+    <div class="awards-container hidden">
+      <div class="awards-grid">
+        
+        <!-- Award 1 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator honor"></div>
+            <div class="award-body">
+              <span class="award-badge">석탑강의상</span>
+              <div class="award-title">석탑강의상 (2024년 1학기)</div>
+              <div class="award-meta">고려대학교</div>
+              <div class="winners">
+                <span class="winner-pill">
+                  <img src="{{ '/assets/img/members/sample.png' | relative_url }}" alt="" class="winner-img">
+                  김성범 교수님
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Award 2 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator"></div>
+            <div class="award-body">
+              <span class="award-badge gold">대상</span>
+              <div class="award-title">ITRC 창의-자율과제, Smart Media Service Research Center</div>
+              <div class="award-meta">고려대학교</div>
+              <div class="winners">
+                <span class="winner-pill">김재훈</span>
+                <span class="winner-pill">추창욱</span>
+                <span class="winner-pill">차민성</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Award 3 (추가 예시) -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator silver"></div>
+            <div class="award-body">
+              <span class="award-badge silver">우수상</span>
+              <div class="award-title">빅데이터 분석 경진대회</div>
+              <div class="award-meta">한국데이터산업진흥원</div>
+              <div class="winners">
+                <span class="winner-pill">이준호</span>
+                <span class="winner-pill">박지민</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 2023 Year Section (Collapsed) -->
+  <div class="year-section">
+    <div class="year-header collapsed" onclick="toggleYear(this)">
+      <span class="year-badge">2023</span>
+      <div class="year-toggle">
+        <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </div>
+    </div>
+    <div class="awards-container hidden">
+      <div class="awards-grid">
+        
+        <!-- Award 1 -->
+        <div class="award-card">
+          <div class="award-inner">
+            <div class="award-indicator bronze"></div>
+            <div class="award-body">
+              <span class="award-badge bronze">장려상</span>
+              <div class="award-title">AI 활용 아이디어 공모전</div>
+              <div class="award-meta">과학기술정보통신부</div>
+              <div class="winners">
+                <span class="winner-pill">정민수</span>
+                <span class="winner-pill">강예진</span>
+                <span class="winner-pill">최준영</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </section>
+
+<script>
+function toggleYear(header) {
+  const container = header.nextElementSibling;
+  const isHidden = container.classList.contains('hidden');
+  
+  if (isHidden) {
+    container.classList.remove('hidden');
+    header.classList.remove('collapsed');
+  } else {
+    container.classList.add('hidden');
+    header.classList.add('collapsed');
+  }
+}
+</script>
