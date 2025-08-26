@@ -1,32 +1,42 @@
+<!-- Header / Global Nav -->
 <div class="sticky-blur border-b border-slate-200">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-    <a href="{{ '/' | relative_url }}" class="flex items-center gap-3">
-      <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo" class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
+    <!-- Brand -->
+    <a href="{{ '/' | relative_url }}" class="flex items-center gap-3" aria-label="FINDS Lab Home">
+      <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo"
+           class="h-9 w-9 rounded-lg ring-1 ring-slate-200 object-contain bg-white" />
       <div class="leading-tight">
         <div class="text-sm font-extrabold tracking-tight" style="color:var(--accent)">Financial Data Science Lab.</div>
         <div class="text-[12px] font-semibold text-slate-600">Dongduk Women's University</div>
       </div>
     </a>
 
-    <nav class="hidden md:flex items-center gap-6">
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center gap-6" aria-label="Primary">
       <a class="nav-link" href="{{ '/' | relative_url }}"><b>Home</b></a>
 
+      <!-- About -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(Introduction)로 이동 -->
         <a class="nav-link" href="{{ '/about-introduction.html' | relative_url }}"><b>About FINDS</b></a>
-        <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-introduction.html'  | relative_url }}">Introduction</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-vision-area.html'   | relative_url }}">Research Area</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-awards.html'        | relative_url }}">Awards</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-location.html'      | relative_url }}">Location</a>
+        <div class="submenu-panel absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 shadow-xl js-submenu"
+             role="menu" aria-label="About FINDS submenu">
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-introduction.html'  | relative_url }}" role="menuitem">Introduction</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-vision-area.html'   | relative_url }}" role="menuitem">Research Area</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-honors.html'        | relative_url }}" role="menuitem">Honors</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-location.html'      | relative_url }}" role="menuitem">Location</a>
         </div>
       </div>
 
+      <!-- Members -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(Director)로 이동 -->
         <a class="nav-link" href="{{ '/members-director.html' | relative_url }}"><b>Members</b></a>
-        <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-director.html'   | relative_url }}">Director</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-current.html'    | relative_url }}">Current Students</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-alumni.html'     | relative_url }}">Alumni</a>
+        <div class="submenu-panel absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 shadow-xl js-submenu"
+             role="menu" aria-label="Members submenu">
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-director.html'   | relative_url }}" role="menuitem">Director</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-current.html'    | relative_url }}" role="menuitem">Current Students</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/members-alumni.html'     | relative_url }}" role="menuitem">Alumni</a>
         </div>
       </div>
 
@@ -34,20 +44,27 @@
       <a class="nav-link" href="{{ '/lectures.html'     | relative_url }}"><b>Lectures</b></a>
       <a class="nav-link" href="{{ '/projects.html'     | relative_url }}"><b>Projects</b></a>
 
+      <!-- Archives -->
       <div class="relative menu-group" data-menu>
+        <!-- 메인 탭 클릭 시 기본 서브페이지(News)로 이동 -->
         <a class="nav-link" href="{{ '/archives-news.html' | relative_url }}"><b>Archives</b></a>
-        <div class="absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 submenu-panel shadow-xl js-submenu">
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-news.html'    | relative_url }}">News</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-notice.html'     | relative_url }}">Notice</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-seminar.html' | relative_url }}">Seminar</a>
-          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-gallery.html' | relative_url }}">Gallery</a>
+        <div class="submenu-panel absolute top-full left-0 bg-white border border-slate-200 rounded-xl mt-1 py-2 shadow-xl js-submenu"
+             role="menu" aria-label="Archives submenu">
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-news.html'    | relative_url }}" role="menuitem">News</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/about-notice.html'     | relative_url }}" role="menuitem">Notice</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-seminar.html' | relative_url }}" role="menuitem">Seminar</a>
+          <a class="block submenu-item hover:bg-slate-50" href="{{ '/archives-gallery.html' | relative_url }}" role="menuitem">Gallery</a>
         </div>
       </div>
     </nav>
 
+    <!-- Mobile Toggle -->
     <div class="flex items-center gap-2">
-      <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white" aria-label="Open menu">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <button id="btnMobile" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 bg-white"
+              aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
       </button>
     </div>
   </div>
@@ -55,34 +72,53 @@
   <!-- Mobile Nav -->
   <div id="mobileNav" class="md:hidden max-w-7xl mx-auto px-4 pb-3 hidden">
     <div class="grid gap-2 bg-white border border-slate-200 rounded-xl p-3 max-h-[70vh] overflow-y-auto">
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/' | relative_url }}">Home</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link"
+         href="{{ '/' | relative_url }}">Home</a>
 
+      <!-- About (Accordion) -->
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
-        <div class="pl-3 grid text-[14px]">
+        <div class="flex items-center justify-between">
+          <a class="block font-extrabold mb-1 mobile-link"
+             href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-about">▾</button>
+        </div>
+        <div id="mob-about" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-vision-area.html'  | relative_url }}">Research Area</a>
-          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-awards.html'       | relative_url }}">Awards</a>
+          <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-honors.html'       | relative_url }}">Honors</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-location.html'     | relative_url }}">Location</a>
         </div>
       </div>
 
+      <!-- Members (Accordion) -->
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/members-director.html' | relative_url }}">Members</a>
-        <div class="pl-3 grid text-[14px]">
+        <div class="flex items-center justify-between">
+          <a class="block font-extrabold mb-1 mobile-link"
+             href="{{ '/members-director.html' | relative_url }}">Members</a>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-members">▾</button>
+        </div>
+        <div id="mob-members" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-director.html'   | relative_url }}">Director</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-current.html'    | relative_url }}">Current Students</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/members-alumni.html'     | relative_url }}">Alumni</a>
         </div>
       </div>
 
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/publications.html' | relative_url }}">Publications</a>
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/lectures.html'     | relative_url }}">Lectures</a>
-      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link" href="{{ '/projects.html'     | relative_url }}">Projects</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link"
+         href="{{ '/publications.html' | relative_url }}">Publications</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link"
+         href="{{ '/lectures.html'     | relative_url }}">Lectures</a>
+      <a class="px-3 py-2 rounded-md hover:bg-slate-50 font-extrabold mobile-link"
+         href="{{ '/projects.html'     | relative_url }}">Projects</a>
 
+      <!-- Archives (Accordion) -->
       <div class="px-3 py-2">
-        <a class="block font-extrabold mb-1 mobile-link" href="{{ '/archives-news.html' | relative_url }}">Archives</a>
-        <div class="pl-3 grid text-[14px]">
+        <div class="flex items-center justify-between">
+          <a class="block font-extrabold mb-1 mobile-link"
+             href="{{ '/archives-news.html' | relative_url }}">Archives</a>
+          <button class="mobile-acc-btn" aria-expanded="false" aria-controls="mob-archives">▾</button>
+        </div>
+        <div id="mob-archives" class="pl-3 grid text-[14px] mobile-acc-panel hidden">
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/archives-news.html'    | relative_url }}">News</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/about-notice.html'     | relative_url }}">Notice</a>
           <a class="py-1 hover:underline font-bold mobile-link" href="{{ '/archives-seminar.html' | relative_url }}">Seminar</a>
@@ -93,15 +129,79 @@
   </div>
 </div>
 
-<!-- Hover Color Styles -->
+<!-- Styles: Hover color + 인터랙션(드롭다운 트랜지션) -->
 <style>
   .nav-link, .submenu-item, .mobile-link {
     color: #1f2937; /* slate-800 */
-    transition: color 0.2s ease;
+    transition: color .2s ease;
   }
-  .nav-link:hover,
-  .submenu-item:hover,
-  .mobile-link:hover {
+  .nav-link:hover, .submenu-item:hover, .mobile-link:hover {
     color: rgb(214, 177, 77); /* gold */
   }
+
+  /* Submenu animation (desktop) */
+  .js-submenu {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    transition: opacity .18s ease, transform .18s ease;
+    min-width: 200px;
+  }
+  .menu-group[data-open="true"] .js-submenu {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Mobile accordion icon rotate */
+  .mobile-acc-btn[aria-expanded="true"] { transform: rotate(180deg); transition: transform .2s ease; }
+  .mobile-acc-btn { transition: transform .2s ease; }
 </style>
+
+<!-- Interaction: hover/blur로 서브메뉴 열림 + 모바일 토글/아코디언 -->
+<script>
+  // Desktop hover intent for dropdowns
+  (function () {
+    const groups = document.querySelectorAll('[data-menu]');
+    groups.forEach(g => {
+      let enterTO, leaveTO;
+      const open = () => {
+        clearTimeout(leaveTO);
+        enterTO = setTimeout(() => g.setAttribute('data-open', 'true'), 80);
+      };
+      const close = () => {
+        clearTimeout(enterTO);
+        leaveTO = setTimeout(() => g.removeAttribute('data-open'), 120);
+      };
+      g.addEventListener('mouseenter', open);
+      g.addEventListener('mouseleave', close);
+      // 키보드 접근성
+      g.addEventListener('focusin', open);
+      g.addEventListener('focusout', close);
+    });
+  })();
+
+  // Mobile main nav toggle
+  (function () {
+    const btn = document.getElementById('btnMobile');
+    const panel = document.getElementById('mobileNav');
+    if (!btn || !panel) return;
+
+    btn.addEventListener('click', () => {
+      const hidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(hidden));
+    });
+
+    // Mobile accordions
+    document.querySelectorAll('.mobile-acc-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const panelId = btn.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.classList.toggle('hidden');
+      });
+    });
+  })();
+</script>
