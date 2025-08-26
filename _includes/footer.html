@@ -1,11 +1,108 @@
-<footer class="mt-10 border-t border-slate-200 bg-white">
-  <div class="max-w-7xl mx-auto px-4 py-8">
-    <p class="text-center text-sm text-slate-500 font-semibold">
-      <a class="hover:underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> |
-      <a class="hover:underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
-    </p>
-    <p class="mt-4 text-center text-xs text-slate-400">
-      Copyright © <span id="year"></span> Financial Data Science Lab. All Rights Reserved.
-    </p>
+<footer class="mt-16 border-t border-slate-200 bg-white" aria-label="Site footer">
+  <div class="max-w-7xl mx-auto px-4 py-10">
+    <div class="flex flex-col items-center gap-3">
+      <p class="text-center text-sm text-slate-500 font-semibold">
+        <a class="link-underline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+        <span class="mx-2 text-slate-300">|</span>
+        <a class="link-underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
+      </p>
+
+      <p class="mt-1 text-center text-xs text-slate-400">
+        Copyright © <span id="year"></span> Financial Data Science Lab. All Rights Reserved.
+      </p>
+    </div>
   </div>
+
+  <!-- Back to Top -->
+  <button id="btnTop" class="fixed bottom-5 right-5 hidden rounded-full border border-slate-300 bg-white/90 backdrop-blur p-3 shadow-md hover:shadow-lg focus:outline-none"
+          aria-label="Back to top" title="Back to top">
+    <!-- Up icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
 </footer>
+
+<!-- Footer styles (header 톤과 맞춤) -->
+<style>
+  /* 링크 언더라인 슬라이드 */
+  .link-underline {
+    position: relative;
+    color: #334155; /* slate-700 */
+    transition: color .2s ease;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -2px;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent, rgb(214,177,77)), var(--accent, rgb(214,177,77)));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .2s ease;
+    border-radius: 1px;
+  }
+  .link-underline:hover { color: var(--accent, rgb(214,177,77)); }
+  .link-underline:hover::after { transform: scaleX(1); }
+
+  /* Back-to-Top 버튼 show/hide 애니메이션 */
+  #btnTop {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+    z-index: 40;
+  }
+  #btnTop.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 다크 대비 약간(선택) */
+  @media (prefers-color-scheme: dark) {
+    footer.bg-white { background-color: #0b0f19; }
+    footer .text-slate-500 { color: #cbd5e1; }
+    footer .text-slate-400 { color: #94a3b8; }
+    #btnTop { background: rgba(15, 23, 42, .85); border-color: #334155; }
+    #btnTop svg { color: #e2e8f0; }
+  }
+</style>
+
+<!-- Footer interactions -->
+<script>
+  (function () {
+    // 연도 자동 갱신
+    var y = document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Back-to-Top
+    var btn = document.getElementById('btnTop');
+    var showPoint = 240; // px
+    var ticking = false;
+
+    function onScroll() {
+      if (!btn) return;
+      if (window.scrollY > showPoint) {
+        btn.classList.add('is-visible');
+        btn.classList.remove('hidden');
+      } else {
+        btn.classList.remove('is-visible');
+        // 시각적 전환을 위해 hidden은 약간 지연 없이 유지
+        btn.classList.add('hidden');
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    if (btn) {
+      btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  })();
+</script>
