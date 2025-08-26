@@ -1,73 +1,100 @@
-/* ========== Header / Nav ========== */
-.sticky-blur{
-  position:sticky; top:0; z-index:50;
-  backdrop-filter:saturate(180%) blur(8px);
-  background:rgba(255,255,255,.85);
-  will-change: transform;
-}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <meta name="description" content="Financial Data Science Lab. (FINDS Lab.) — Dongduk Women’s University" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="{{ '/assets/img/favicon.ico' | relative_url }}"/>
 
-/* 공통 링크 */
-.nav-link{
-  color:#1f2937; /* slate-800 */
-  font-weight:800;
-  border-radius:.6rem;
-  padding:.4rem .6rem;
-  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
-}
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;900&family=Noto+Sans:wght@400;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-.submenu-panel{ font-size:13px; line-height:1.25rem; width:13.5rem; }
-.submenu-item{
-  color:#1f2937;
-  padding:.35rem .75rem;
-  font-weight:700;
-  border-radius:.55rem;
-  transition: background-color .2s ease, color .2s ease;
-}
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind 설정(선택): 폰트/컨테이너 기본값과 색상 훅
+    tailwind.config = {
+      theme: {
+        container: { center: true, screens: { xl: '72rem' } },
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans KR','Noto Sans','Roboto', 'ui-sans-serif','system-ui','Apple SD Gothic Neo','Apple Color Emoji','Segoe UI Emoji']
+          }
+        }
+      }
+    }
+  </script>
 
-/* 드롭다운: 기본 숨김(애니메이션은 CSS 담당) */
-.js-submenu{
-  position:absolute; top:100%; left:0; margin-top:.25rem;
-  background:#fff; border:1px solid #e5e7eb; border-radius:.75rem;
-  box-shadow:0 12px 40px rgba(0,0,0,.08);
-  min-width:13.5rem; padding:.5rem 0;
+  <!-- Site CSS -->
+  <link rel="preload" as="style" href="{{ '/assets/css/site.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 
-  visibility:hidden; opacity:0; transform: translateY(6px) scale(.98);
-  pointer-events:none;
-  transition: visibility .18s ease, opacity .18s ease, transform .18s ease;
-}
+  <!-- 전역 스타일: 헤더/푸터와 톤 일치 + 접근성 -->
+  <style>
+    :root {
+      /* 헤더/푸터에서 쓰는 포인트 컬러 */
+      --accent: rgb(214, 177, 77);
+      --header-height: 64px; /* sticky header 높이 가정 */
+    }
+    /* 스킵 링크 */
+    .skip-link {
+      position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip-link:focus {
+      left: 16px; top: 12px; width:auto; height:auto; z-index:50;
+      background:#fff; color:#111; padding:.5rem .75rem; border-radius:.5rem;
+      border:1px solid #e5e7eb; box-shadow:0 4px 12px rgba(0,0,0,.06);
+    }
+    /* sticky 헤더 고려한 오프셋 유틸리티 */
+    .content-offset { scroll-margin-top: var(--header-height); }
+    /* reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+  <!-- Skip to content -->
+  <a href="#main" class="skip-link">본문으로 건너뛰기</a>
 
-/* 보여지는 상태(세 가지 경로 지원: data-open, :hover, :focus-within) */
-.menu-group[data-open="true"] .js-submenu,
-.menu-group:hover .js-submenu,
-.menu-group:focus-within .js-submenu{
-  visibility:visible; opacity:1; transform: translateY(0) scale(1);
-  pointer-events:auto;
-}
+  {% include header.html %}
 
-/* 상위 탭 하이라이트: 그룹 활성/호버 시 */
-.menu-group[data-open="true"] > .nav-link,
-.menu-group:hover > .nav-link{
-  background:var(--gold);
-  color:var(--gold-fg);
-  box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
-}
+  <!-- 메인 컨테이너: 페이지마다 여백/넓이 기본 제공 (필요시 각 페이지에서 덮어쓰기 가능) -->
+  <main id="main" class="content-offset grow">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      {{ content }}
+    </div>
+  </main>
 
-/* ✅ 골드 하이라이트(기존 hover 룰 유지) */
-.nav-link:hover,
-.submenu-item:hover,
-#mobileNav a:hover{
-  background:var(--gold);
-  color:var(--gold-fg);
-  box-shadow:0 0 0 1px rgba(0,0,0,.04) inset;
-}
+  {% include footer.html %}
 
-/* 모바일 네비 링크 */
-#mobileNav a{
-  border-radius:.6rem;
-  transition: background-color .2s ease, color .2s ease;
-}
+  <!-- Site JS (defer) -->
+  <script defer src="{{ '/assets/js/site.js' | relative_url }}"></script>
 
-/* 접근성/성능 */
-@media (prefers-reduced-motion: reduce){
-  .js-submenu{ transition:none; transform:none; }
-}
+  <!-- 전역 보조 스크립트: sticky 헤더 높이 동기화(헤더가 바뀌어도 안전) -->
+  <script>
+    (function () {
+      // 헤더 높이 측정해서 --header-height 업데이트 (sticky spacing 정확도 ↑)
+      var header = document.querySelector('.sticky-blur');
+      if (header) {
+        var setH = function() {
+          var h = header.getBoundingClientRect().height;
+          document.documentElement.style.setProperty('--header-height', h + 'px');
+        };
+        setH();
+        window.addEventListener('resize', setH);
+      }
+      // 스무스 스크롤(사용자 선호가 reduce-motion이 아닐 때만)
+      var m = window.matchMedia('(prefers-reduced-motion: no-preference)');
+      if (m.matches && 'scrollBehavior' in document.documentElement.style) {
+        document.documentElement.style.scrollBehavior = 'smooth';
+      }
+    })();
+  </script>
+</body>
+</html>
