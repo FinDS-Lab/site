@@ -24,6 +24,55 @@ permalink: /projects.html
 .search{flex:1;min-width:0}
 .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
 
+/* Filter Section */
+.filter-section{
+  margin-top:8px;
+}
+
+.filter-label{
+  font-size:12px;
+  font-weight:700;
+  color:#6b7280;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:8px;
+  display:block;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* Filter Chips */
+.chip{
+  padding:.5rem 1rem;
+  border-radius:999px;
+  border:1px solid transparent;
+  background:#fff;
+  font-weight:700;
+  font-size:12px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-transform:uppercase;
+  letter-spacing:0.3px;
+}
+
+.chip:hover{
+  transform:translateY(-1px);
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.chip.is-on{
+  box-shadow:inset 0 0 0 2px #111827;
+}
+
+.chip:focus-visible{
+  outline:2px solid #111827;
+  outline-offset:2px;
+}
+
 /* Grid: 한 줄에 한 프로젝트 */
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
@@ -144,6 +193,7 @@ permalink: /projects.html
   .project-title-en{font-size:14px}
   .project-title-ko{font-size:12px}
   .keyword-badge{font-size:10px;padding:.2rem .5rem}
+  .chip{font-size:11px;padding:.4rem .8rem}
 }
 </style>
 
@@ -170,14 +220,21 @@ permalink: /projects.html
   </div>
 </section>
 
-<!-- ===== Toolbar (Search Only) ===== -->
+<!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
+    <!-- Search Bar -->
     <div class="search-container">
       <div class="search">
         <input id="q" type="text" placeholder="Search projects..." />
       </div>
       <div class="count" id="count"></div>
+    </div>
+    
+    <!-- Type Filter -->
+    <div class="filter-section">
+      <label class="filter-label">Funding Type</label>
+      <div class="chips" id="typeChips"></div>
     </div>
   </div>
 </section>
@@ -301,6 +358,14 @@ permalink: /projects.html
     }
   ];
 
+  /* ===== Filter Setup ===== */
+  const PROJECT_TYPES = [
+    { value: "public", label: "Government Funded", color: "var(--public-red)" },
+    { value: "private", label: "Industry Funded", color: "var(--private-gold)" }
+  ];
+  
+  const onTypes = new Set(); // Empty = no filter applied
+
   /* ===== Utils ===== */
   function parseStartDate(period){
     const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -328,30 +393,63 @@ permalink: /projects.html
     return type === 'private' ? 'var(--private-gold)' : 'var(--public-red)';
   }
 
-  function getCardBgColor(type){
-    // 카드 외곽 배경색 (연한 색상)
-    return type === 'private' ? 'rgb(214, 177, 77)' : 'rgb(172, 14, 14)';
-  }
-
   function byStartDesc(a,b){
     return parseStartDate(b.period) - parseStartDate(a.period);
   }
 
-  /* ===== Search ===== */
-  let q = "";
+  /* ===== DOM Elements ===== */
   const qInput = document.getElementById('q');
   const grid = document.getElementById('grid');
   const count = document.getElementById('count');
+  const typeChips = document.getElementById('typeChips');
+  
+  let q = "";
 
+  /* ===== Build Filter Chips ===== */
+  function buildChips(){
+    typeChips.innerHTML = PROJECT_TYPES.map(type => {
+      const active = onTypes.has(type.value);
+      const bg = active ? type.color : '#fff';
+      const fg = active ? '#fff' : '#111';
+      return `
+        <button class="chip ${active ? 'is-on' : ''}" 
+                data-type="${type.value}" 
+                style="background:${bg};color:${fg}">
+          ${type.label}
+        </button>
+      `;
+    }).join('');
+    
+    // Add click handlers
+    typeChips.querySelectorAll('[data-type]').forEach(btn => {
+      btn.onclick = () => {
+        const typeValue = btn.dataset.type;
+        if(onTypes.has(typeValue)) {
+          onTypes.delete(typeValue);
+        } else {
+          onTypes.add(typeValue);
+        }
+        buildChips();
+        render();
+      };
+    });
+  }
+
+  /* ===== Filter Functions ===== */
   function matchesQuery(project){
     if(!q) return true;
     const keywordsText = project.keywords.join(' ');
     const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${keywordsText}`.toLowerCase();
     return searchText.includes(q.toLowerCase());
   }
+  
+  function passTypes(project){
+    return onTypes.size ? onTypes.has(project.type) : true;
+  }
 
   function filterProjects(){
     return PROJECTS
+      .filter(passTypes)
       .filter(matchesQuery)
       .sort(byStartDesc);
   }
@@ -408,7 +506,7 @@ permalink: /projects.html
     if(data.length === 0){
       grid.innerHTML = `
         <div class="empty">
-          No projects found. Try adjusting your search query.
+          No projects found. Try adjusting your search query or filters.
         </div>
       `;
     } else {
@@ -424,7 +522,8 @@ permalink: /projects.html
     render();
   });
 
-  // Initial render
+  // Initial setup
+  buildChips();
   render();
 })();
 </script>
