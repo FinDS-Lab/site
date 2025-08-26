@@ -1,12 +1,13 @@
 /* =========================================================
-   site.css  — FINDS Lab Global Styles (FULL, unified panels)
+   site.css — FINDS Lab Global Styles (FULL, unified panels)
    ========================================================= */
 
 /* ========== CSS Variables ========== */
 :root{
-  --accent: rgb(172, 14, 14); /* 브랜드 포인트 */
-  --gold:   rgb(214, 177, 77);
-  --gold-fg:#111827;          /* 골드 배경 위 전경색 (옵션 B용, 현재 미사용) */
+  --accent:  rgb(172, 14, 14); /* 브랜드 포인트 */
+  --accent2: rgb(172, 14, 14); /* 보조 포인트(요청 반영, 현재는 동일값) */
+  --gold:    rgb(214, 177, 77);
+  --gold-fg: #111827;          /* 골드 배경 위 전경색 */
   --fg-on-accent:#ffffff;
   --bg:#ffffff;
   --bg-soft:#f8fafc;
@@ -26,6 +27,14 @@ img[width][height] { height:auto; }
 :focus-visible{ outline:none; box-shadow:var(--ring); }
 html { scrollbar-gutter: stable both-edges; }
 @media (max-width: 360px){ html, body { min-width: 360px; } }
+
+/* 작은 유틸들 */
+.line-1{ overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.tag-gold{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.25rem .5rem; border-radius:.5rem;
+  font-weight:900; font-size:12px; background:var(--gold); color:var(--gold-fg);
+}
 
 /* ========== Header / Nav ========== */
 /* 상단 고정 + 살짝 블러 */
@@ -81,15 +90,9 @@ html { scrollbar-gutter: stable both-edges; }
 }
 
 /* === 옵션 A: 텍스트만 골드(배경 그대로) === */
-/* 상위 탭 하이라이트(그룹 활성/호버 시) */
+/* 그룹 활성/호버 + 링크/서브아이템/모바일 링크 호버 */
 .menu-group[data-open="true"] > .nav-link,
-.menu-group:hover > .nav-link{
-  color: var(--gold);
-  background: transparent;
-  box-shadow: none;
-}
-
-/* 링크/서브아이템/모바일 링크 호버 시 텍스트만 골드 */
+.menu-group:hover > .nav-link,
 .nav-link:hover,
 .submenu-item:hover,
 #mobileNav a:hover{
@@ -97,8 +100,7 @@ html { scrollbar-gutter: stable both-edges; }
   background: transparent;
   box-shadow: none;
 }
-
-/* 키보드 포커스 시에도 일관된 피드백(텍스트 골드 + 포커스 링) */
+/* 키보드 포커스 */
 .nav-link:focus-visible,
 .submenu-item:focus-visible{
   color: var(--gold);
@@ -133,7 +135,7 @@ html { scrollbar-gutter: stable both-edges; }
 }
 .btn-ghost:hover{ transform:translateY(-1px); opacity:.95; }
 
-/* ✅ News(.card), Notice(.home-panel) 공통 스타일 */
+/* News(.card), Notice(.home-panel) 공통 스타일 */
 .card,
 .home-panel{
   background:#fff;
@@ -220,22 +222,21 @@ footer[aria-label="Site footer"]{
 }
 #btnTop.is-visible{ opacity:1; transform:translateY(0); }
 
-/* ========== Dark Mode (opt-in tweaks only; PANELS STAY LIGHT) ========== */
+/* ========== Dark Mode (opt-in tweaks; PANELS STAY LIGHT) ========== */
 @media (prefers-color-scheme: dark){
   body{ background:#0b0f19; color:#e2e8f0; }
   .sticky-blur{ background:rgba(11,15,25,.85); border-color:#1f2937; }
   .submenu-item, .nav-link{ color:#e2e8f0; }
   .js-submenu{ background:#0f172a; border-color:#1f2937; box-shadow:0 12px 40px rgba(0,0,0,.5); }
 
-  /* ★ 패널은 항상 밝게 유지 (News/Notice 모두) */
-  .card,
-  .home-panel{
+  /* 패널은 항상 밝게 유지 (News/Notice 모두) */
+  .card, .home-panel{
     background:#ffffff !important;
     border-color:#e5e7eb !important;
     color:#0f172a !important;
   }
 
-  /* === 옵션 A: 다크 모드에서도 텍스트만 골드 === */
+  /* 텍스트만 골드(다크에서도 동일) */
   .menu-group[data-open="true"] > .nav-link,
   .menu-group:hover > .nav-link,
   .nav-link:hover,
@@ -259,23 +260,43 @@ footer[aria-label="Site footer"]{
   #btnTop svg{ color:#e2e8f0; }
 }
 
-/* === Banner responsive text fix (no HTML changes) === */
-/* 배너 캡션 컨테이너 안의 글자 크기를 화면폭에 맞춰 clamp */
-.absolute.inset-x-0.bottom-4.px-4 .breadcrumbs{
-  font-size: clamp(10px, 2.6vw, 12px);
-  line-height: 1.25;
+/* ========== Banner responsive text fix (no HTML changes) ========== */
+/* 여러 배너에서 쓰는 공통 캡션 컨테이너: 아주 작은 화면에서 안정적으로 줄이기 */
+.relative.rounded-2xl .absolute.inset-x-0.bottom-4.px-4,
+.relative.rounded-2xl .absolute.inset-x-0.bottom-3.px-4{
+  bottom:.75rem; /* 여백 살짝 위로 */
 }
-.absolute.inset-x-0.bottom-4.px-4 h1{
-  font-size: clamp(18px, 5vw, 24px); /* 모바일에서 자동 축소 */
-  line-height: 1.2;
+.relative.rounded-2xl .absolute.inset-x-0.bottom-4.px-4 > .max-w-7xl,
+.relative.rounded-2xl .absolute.inset-x-0.bottom-3.px-4 > .max-w-7xl{
+  display:grid; row-gap:.25rem;
+}
+.absolute.inset-x-0.bottom-4.px-4 .breadcrumbs,
+.absolute.inset-x-0.bottom-3.px-4 .breadcrumbs{
+  display:flex; flex-wrap:wrap;
+  font-size: clamp(10px, 2.6vw, 12px);
+  line-height:1.25;
   word-break: keep-all;
 }
-.absolute.inset-x-0.bottom-4.px-4 p{
+.absolute.inset-x-0.bottom-4.px-4 h1,
+.absolute.inset-x-0.bottom-4.px-4 h2,
+.absolute.inset-x-0.bottom-3.px-4 h1,
+.absolute.inset-x-0.bottom-3.px-4 h2{
+  margin:0;
+  font-size: clamp(18px, 5vw, 24px);
+  line-height:1.2;
+  word-break: keep-all;
+}
+.absolute.inset-x-0.bottom-4.px-4 p,
+.absolute.inset-x-0.bottom-3.px-4 p{
+  margin:0;
   font-size: clamp(11px, 3.4vw, 15px);
-  line-height: 1.4;
+  line-height:1.4;
+  word-break: keep-all;
+  text-wrap: balance;
 }
 
-/* 아주 작은 화면에서 살짝 여백 보정 */
+/* 아주 작은 화면에서 패딩 보정 */
 @media (max-width: 420px){
-  .absolute.inset-x-0.bottom-4.px-4{ padding-right: 0; }
+  .absolute.inset-x-0.bottom-4.px-4,
+  .absolute.inset-x-0.bottom-3.px-4{ padding-right:0; }
 }
