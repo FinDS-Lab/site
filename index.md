@@ -53,8 +53,8 @@ title: home
               Updates
             </h2>
             <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/archives-notice.html'  | relative_url }}">Notice</a>
-              <a class="btn-primary text-sm" href="{{ '/archives-news.html' | relative_url }}">News</a>
+              <a class="btn-primary text-sm" href="{{ '/archives-notice.html' | relative_url }}">Notice</a>
+              <a class="btn-primary text-sm" href="{{ '/archives-news.html'  | relative_url }}">News</a>
             </div>
           </div>
         </div>
@@ -91,49 +91,130 @@ title: home
       </span>
     </h3>
 
-
     <p class="mt-3 text-[15px] leading-7 text-slate-700">
       동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
     </p>
   </div>
 </section>
 
-<!-- News & Notice -->
+<!-- ===== News & Notice (archive-style rows) ===== -->
+<!-- 동일 포맷을 위해 board-row 스타일(archives와 동일)을 간단히 포함 -->
+<style>
+  .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
+  .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
+  .date-ym{font-weight:800;font-size:12px;color:#6b7280}
+  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
+  @media (max-width:640px){
+    .board-row{grid-template-columns:64px 1fr;gap:10px}
+    .board-row .btn-cell{grid-column:1/-1;justify-self:end}
+  }
+  .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
+  .btn-more:hover{background:#f8fafc}
+  .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
+</style>
+
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- News: 최신 3개 -->
-  <div id="news-panel" class="card">
-    <div class="flex items-center justify-between">
-      <h4 class="text-xl font-extrabold">News</h4>
-      <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
+  <!-- News: 최신 3개 (archive-style) -->
+  <div id="news-panel" class="home-panel min-w-0">
+    <div class="flex items-center justify-between gap-3">
+      <h4 class="text-xl font-extrabold m-0">News</h4>
+      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-news.html' | relative_url }}">More</a>
     </div>
 
-    {% assign all = site.pages | concat: site.posts %}
-    {% assign all_sorted = all | sort: 'date' | reverse %}
-    {% assign shown = 0 %}
-    <ul class="mt-4 space-y-2">
-      {% for post in all_sorted %}
-        {% if post.url and post.date and post.url contains '/news/' and shown < 3 %}
-          <li class="text-[14px] leading-6">
-            <a class="font-bold hover:underline line-1" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <span class="ml-2 text-slate-500 text-[12px]">· {{ post.date | date: "%Y.%m.%d" }}</span>
+    {% comment %} /news/ 경로 + date가 있는 항목만, 최신 3개 {% endcomment %}
+    {% assign all_items = site.pages | concat: site.posts %}
+    {% assign news_items = "" | split: "" %}
+    {% for item in all_items %}
+      {% if item.url and item.url contains '/news/' and item.date %}
+        {% assign news_items = news_items | push: item %}
+      {% endif %}
+    {% endfor %}
+    {% assign news_items = news_items | sort: 'date' | reverse %}
+
+    <ul class="mt-4" role="list">
+      {% if news_items.size == 0 %}
+        <li class="p-6 text-center text-slate-500 font-semibold border-t border-slate-200 rounded-xl">게시글이 없습니다.</li>
+      {% else %}
+        {% for post in news_items limit:3 %}
+          {% assign y = post.date | date: "%Y" %}
+          {% assign m = post.date | date: "%m" %}
+          {% assign d = post.date | date: "%d" %}
+          <li class="board-row" role="listitem">
+            <div class="date-box">
+              <div class="date-d">{{ d }}</div>
+              <span class="date-ym">{{ y }}.{{ m }}</span>
+            </div>
+            <div>
+              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
+                {{ post.title }}
+              </a>
+              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
+                {% if post.excerpt %}
+                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
+                {% else %}
+                  {{ post.content | strip_html | strip | truncate: 160 }}
+                {% endif %}
+              </div>
+              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            </div>
+            <div class="btn-cell hidden sm:block">
+              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
+            </div>
           </li>
-          {% assign shown = shown | plus: 1 %}
-        {% endif %}
-      {% endfor %}
-      {% if shown == 0 %}
-        <li class="text-sm text-slate-500">게시글이 없습니다.</li>
+        {% endfor %}
       {% endif %}
     </ul>
   </div>
 
-  <!-- Notice -->
+  <!-- Notice: 최신 3개 (archive-style) -->
   <div id="notice-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">Notice</h4>
       <a class="warm-underline font-bold shrink-0" href="{{ '/archives-notice.html' | relative_url }}">More</a>
     </div>
-    <ul id="notice-feed" class="mt-4 space-y-2">
-      <li class="text-sm text-slate-500">불러오는 중…</li>
+
+    {% comment %} /notice/ 경로 + date가 있는 항목만, 최신 3개 {% endcomment %}
+    {% assign notice_items = "" | split: "" %}
+    {% for item in all_items %}
+      {% if item.url and item.url contains '/notice/' and item.date %}
+        {% assign notice_items = notice_items | push: item %}
+      {% endif %}
+    {% endfor %}
+    {% assign notice_items = notice_items | sort: 'date' | reverse %}
+
+    <ul class="mt-4" role="list">
+      {% if notice_items.size == 0 %}
+        <li class="p-6 text-center text-slate-500 font-semibold border-t border-slate-200 rounded-xl">게시글이 없습니다.</li>
+      {% else %}
+        {% for post in notice_items limit:3 %}
+          {% assign y = post.date | date: "%Y" %}
+          {% assign m = post.date | date: "%m" %}
+          {% assign d = post.date | date: "%d" %}
+          <li class="board-row" role="listitem">
+            <div class="date-box">
+              <div class="date-d">{{ d }}</div>
+              <span class="date-ym">{{ y }}.{{ m }}</span>
+            </div>
+            <div>
+              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
+                {{ post.title }}
+              </a>
+              <div class="txt line-clamp-2 mt-1 text-[13px] text-slate-600">
+                {% if post.excerpt %}
+                  {{ post.excerpt | strip_html | strip | truncate: 160 }}
+                {% else %}
+                  {{ post.content | strip_html | strip | truncate: 160 }}
+                {% endif %}
+              </div>
+              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            </div>
+            <div class="btn-cell hidden sm:block">
+              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
+            </div>
+          </li>
+        {% endfor %}
+      {% endif %}
     </ul>
   </div>
 </section>
@@ -167,38 +248,5 @@ title: home
     document.addEventListener('visibilitychange', () => {
       if (document.hidden){ clearInterval(timer); } else { auto(); }
     });
-  })();
-
-  // Notice 간단 로더
-  (async function(){
-    const target = document.getElementById('notice-feed');
-    if (!target) return;
-
-    try{
-      const res = await fetch('{{ "/archives-notice.html" | relative_url }}', { cache:'no-store' });
-      if(!res.ok) throw new Error(res.status);
-      const html = await res.text();
-      const doc  = new DOMParser().parseFromString(html, 'text/html');
-
-      const anchors = Array.from(doc.querySelectorAll('main a, article a, .board-row .sbj a, #content a'))
-        .filter(a => a.getAttribute('href') && a.textContent.trim())
-        .slice(0,3);
-
-      target.innerHTML = '';
-      if (anchors.length === 0){
-        target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
-        return;
-      }
-
-      anchors.forEach(a => {
-        const li = document.createElement('li');
-        li.className = 'text-[14px] leading-6';
-        li.innerHTML = `<a class="font-bold hover:underline line-1" href="${a.getAttribute('href')}">${a.textContent.trim()}</a>`;
-        target.appendChild(li);
-      });
-    }catch(e){
-      console.error(e);
-      target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
-    }
   })();
 </script>
