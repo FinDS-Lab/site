@@ -119,21 +119,21 @@ permalink: /members-director.html
   <aside class="bg-white border border-slate-200 rounded-2xl shadow-md p-4 md:sticky md:top-24 self-start">
     <h3 class="text-lg font-extrabold">Profile</h3>
 
-    <!-- 이동된 인물 블록 (사진 + 이름/직함) -->
-    <div class="flex flex-col items-start gap-2">
-      <picture>
-        <img
-          src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
-          class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg"
-          alt="Portrait of Insu Choi"
-          width="224" height="224"
-          loading="eager" decoding="async" />
-      </picture>
-
-      <div class="pt-1">
-        <h1 class="mt-2 text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-      </div>
+  <!-- 이동된 인물 블록 (사진 = aside 가로폭 100%, 4:5 비율 고정) -->
+  <div class="flex flex-col gap-3">
+    <div class="rounded-xl ring-4 ring-white bg-white shadow-lg overflow-hidden">
+      <img
+        src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
+        alt="Portrait of Insu Choi"
+        class="block w-full object-cover"
+        style="aspect-ratio: 4 / 5;"
+        width="800" height="1000"
+        loading="eager" decoding="async"
+        sizes="(max-width: 768px) 100vw, 320px" />
     </div>
+  
+    <h1 class="text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
+  </div>
 
     <!-- 기본 프로필 정보 -->
     <div class="mt-5 grid gap-3 text-[14px] text-slate-700">
@@ -418,6 +418,7 @@ permalink: /members-director.html
 
   </main>
 </section>
+
 
 
 
