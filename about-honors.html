@@ -36,8 +36,16 @@ permalink: /about-honors.html
   transition:all .2s;
 }
 
+.year-header.current-year{
+  background:#111827;
+}
+
+.year-header.past-year{
+  background:#374151;
+}
+
 .year-header:hover{
-  background:#1f2937;
+  opacity:0.9;
 }
 
 .year-header.collapsed{
@@ -126,6 +134,17 @@ permalink: /about-honors.html
 /* Award body */
 .award-body{
   padding:14px 16px 14px 0;
+  position:relative;
+}
+
+/* Award date */
+.award-date{
+  position:absolute;
+  top:14px;
+  right:16px;
+  font-size:12px;
+  color:#9ca3af;
+  font-weight:600;
 }
 
 /* Award badge with icon */
@@ -176,7 +195,7 @@ permalink: /about-honors.html
   align-items:center;
   gap:6px;
   background:#f8fafc;
-  border:1px solid #e5e7eb;
+  border:2px solid #e5e7eb;
   border-radius:999px;
   padding:4px 10px;
   font-size:12px;
@@ -184,12 +203,16 @@ permalink: /about-honors.html
   color:#374151;
 }
 
-.winner-img{
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  object-fit:cover;
-  border:1px solid #e5e7eb;
+.winner-pill.phd{
+  border-color:var(--award-gold);
+}
+
+.winner-pill.ms{
+  border-color:var(--honor-red);
+}
+
+.winner-pill.prof{
+  border-color:var(--award-gold);
 }
 
 /* Empty state */
@@ -253,11 +276,12 @@ const honorsData = {
       title: '최우수상',
       event: '관세청 공공데이터 활용 경진대회 (제품 및 서비스 개발 부문)',
       organization: '관세청',
+      date: 'Jan 15',
       winners: [
-        {name: '김재훈', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
-        {name: '심세진', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
-        {name: '이혜승', img: '{{ "/assets/img/members/sample.png" | relative_url }}'},
-        {name: '박소연', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+        {name: '김재훈', level: 'phd'},
+        {name: '심세진', level: 'ms'},
+        {name: '이혜승', level: 'ms'},
+        {name: '박소연', level: 'ms'}
       ]
     },
     {
@@ -266,8 +290,9 @@ const honorsData = {
       title: '최우수상',
       event: '제4회 성장통 사례 경진대회',
       organization: '4단계 BK21 빅데이터 애널리틱스 기반 문제정의형 인재양성 사업단',
+      date: 'Jan 10',
       winners: [
-        {name: '심세진', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+        {name: '심세진', level: 'ms'}
       ]
     },
     {
@@ -276,8 +301,9 @@ const honorsData = {
       title: '석탑강의상',
       event: '석탑강의상 (2024년 2학기)',
       organization: '고려대학교',
+      date: 'Jan 5',
       winners: [
-        {name: '김성범 교수님', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+        {name: '김성범 교수님', level: 'prof'}
       ]
     }
   ],
@@ -288,8 +314,9 @@ const honorsData = {
       title: '석탑강의상',
       event: '석탑강의상 (2024년 1학기)',
       organization: '고려대학교',
+      date: 'Jul 20',
       winners: [
-        {name: '김성범 교수님', img: '{{ "/assets/img/members/sample.png" | relative_url }}'}
+        {name: '김성범 교수님', level: 'prof'}
       ]
     },
     {
@@ -298,10 +325,11 @@ const honorsData = {
       title: '대상',
       event: 'ITRC 창의-자율과제, Smart Media Service Research Center',
       organization: '고려대학교',
+      date: 'Dec 15',
       winners: [
-        {name: '김재훈'},
-        {name: '추창욱'},
-        {name: '차민성'}
+        {name: '김재훈', level: 'phd'},
+        {name: '추창욱', level: 'ms'},
+        {name: '차민성', level: 'ms'}
       ]
     },
     {
@@ -310,9 +338,10 @@ const honorsData = {
       title: '우수상',
       event: '빅데이터 분석 경진대회',
       organization: '한국데이터산업진흥원',
+      date: 'Nov 30',
       winners: [
-        {name: '이준호'},
-        {name: '박지민'}
+        {name: '이준호', level: 'ms'},
+        {name: '박지민', level: 'ms'}
       ]
     }
   ],
@@ -323,10 +352,11 @@ const honorsData = {
       title: '장려상',
       event: 'AI 활용 아이디어 공모전',
       organization: '과학기술정보통신부',
+      date: 'Oct 20',
       winners: [
-        {name: '정민수'},
-        {name: '강예진'},
-        {name: '최준영'}
+        {name: '정민수', level: 'ms'},
+        {name: '강예진', level: 'ms'},
+        {name: '최준영', level: 'ms'}
       ]
     },
     {
@@ -335,9 +365,10 @@ const honorsData = {
       title: '우수논문상',
       event: '한국데이터마이닝학회 추계학술대회',
       organization: '한국데이터마이닝학회',
+      date: 'Sep 15',
       winners: [
-        {name: '박서연'},
-        {name: '김도현'}
+        {name: '박서연', level: 'phd'},
+        {name: '김도현', level: 'ms'}
       ]
     }
   ],
@@ -348,9 +379,10 @@ const honorsData = {
       title: '금상',
       event: '전국 대학생 프로그래밍 경진대회',
       organization: '정보과학회',
+      date: 'Nov 10',
       winners: [
-        {name: '이성민'},
-        {name: '정우진'}
+        {name: '이성민', level: 'ms'},
+        {name: '정우진', level: 'ms'}
       ]
     }
   ],
@@ -361,8 +393,9 @@ const honorsData = {
       title: '학술상',
       event: '인공지능학회 학술상',
       organization: '한국인공지능학회',
+      date: 'May 25',
       winners: [
-        {name: '김성범 교수님'}
+        {name: '김성범 교수님', level: 'prof'}
       ]
     }
   ]
@@ -380,16 +413,7 @@ function getRecentYears() {
 // 수상 카드 생성
 function createAwardCard(item) {
   const winnersHtml = item.winners.map(w => {
-    if (w.img) {
-      return `
-        <span class="winner-pill">
-          <img src="${w.img}" alt="" class="winner-img">
-          ${w.name}
-        </span>
-      `;
-    } else {
-      return `<span class="winner-pill">${w.name}</span>`;
-    }
+    return `<span class="winner-pill ${w.level}">${w.name}</span>`;
   }).join('');
 
   return `
@@ -397,12 +421,13 @@ function createAwardCard(item) {
       <div class="award-inner">
         <div class="award-indicator ${item.type}"></div>
         <div class="award-body">
+          <span class="award-date">${item.date}</span>
           <span class="award-badge">
             <span class="award-icon">${item.icon}</span>
             ${item.title}
           </span>
           <div class="award-title">${item.event}</div>
-          <div class="award-meta">주최 · ${item.organization}</div>
+          <div class="award-meta">${item.organization}</div>
           <div class="winners">${winnersHtml}</div>
         </div>
       </div>
@@ -414,10 +439,11 @@ function createAwardCard(item) {
 function createYearSection(year, isExpanded) {
   const data = honorsData[year] || [];
   const awardsHtml = data.map(item => createAwardCard(item)).join('');
+  const isCurrentYear = year === currentYear;
   
   return `
     <div class="year-section">
-      <div class="year-header ${isExpanded ? '' : 'collapsed'}" onclick="toggleYear(this)">
+      <div class="year-header ${isExpanded ? '' : 'collapsed'} ${isCurrentYear ? 'current-year' : 'past-year'}" onclick="toggleYear(this)">
         <span class="year-badge">${year}</span>
         <div class="year-toggle">
           <svg class="chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
