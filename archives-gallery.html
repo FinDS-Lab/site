@@ -6,64 +6,41 @@ permalink: /archives-gallery.html
 
 <!-- ===== Gallery Styles ===== -->
 <style>
-  /* Banner 안의 breadcrumbs */
+  /* Breadcrumbs (banner) */
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
   .breadcrumbs .sep{opacity:.85}
 
   /* Toolbar */
-  .g-toolbar{display:flex;flex-direction:column;gap:12px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:14px;margin-top:18px}
-  .g-toolbar .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
-  .g-search input{width:100%;max-width:380px;border:1px solid #e5e7eb;border-radius:.6rem;padding:.55rem .8rem;font-size:14px}
-  .g-count{font-size:12px;color:#475569;font-weight:800}
+  .gal-toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:12px 14px;margin-top:18px}
+  .gal-search{flex:1 1 260px}
+  .gal-search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.55rem .8rem;font-size:14px}
+  .gal-count{font-size:12px;font-weight:800;color:#64748b}
 
   /* Grid */
-  .g-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
-  @media (max-width:1024px){ .g-grid{grid-template-columns:repeat(2,1fr)} }
-  @media (max-width:640px){  .g-grid{grid-template-columns:1fr} }
+  .gal-grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
+  @media (min-width:640px){ .gal-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (min-width:1024px){ .gal-grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
 
   /* Card */
-  .g-card{
-    position:relative;overflow:hidden;border-radius:1rem;
-    border:1px solid #e5e7eb;background:#fff;min-height:240px;
-    transition:transform .2s ease, box-shadow .2s ease;
-  }
-  .g-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.10)}
-  .g-cover{
-    position:absolute;inset:0;background:#0b1020 center/cover no-repeat;
-    filter:saturate(105%);
-  }
-  .g-grad{
-    position:absolute;inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,.00) 30%, rgba(0,0,0,.65) 100%);
-  }
-  .g-meta{
-    position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;
-    color:#fff;
-  }
-  .g-title{font-size:15px;line-height:1.35;font-weight:900;margin:0 0 6px}
-  .g-date{font-size:12px;opacity:.95}
-  .g-link{position:absolute;inset:0;display:block}
+  .gal-card{display:block;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;background:#fff;transition:transform .2s ease, box-shadow .2s ease}
+  .gal-card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.08)}
+  .gal-thumb{height:180px;background-size:cover;background-position:center}
+  .gal-info{padding:12px 14px}
+  .gal-title{font-weight:900;font-size:15px;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .gal-date{margin-top:4px;font-size:12px;color:#6b7280}
+  .gal-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+  .gal-tag{font-size:11px;font-weight:800;border:1px solid #e5e7eb;border-radius:999px;background:#fff;color:#111827;padding:.15rem .5rem}
 
-  /* Empty */
-  .g-empty{padding:28px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff;margin-top:16px}
-
-  /* Load more */
-  .g-more-wrap{display:flex;justify-content:center;margin-top:16px}
-  .g-more{
-    display:inline-flex;align-items:center;justify-content:center;
-    padding:.55rem 1rem;border-radius:.75rem;font-weight:900;font-size:14px;
-    background:var(--accent);color:#fff;border:1px solid rgba(0,0,0,.05);
-    transition:transform .2s ease, opacity .2s ease;
-  }
-  .g-more:hover{transform:translateY(-1px);opacity:.95}
+  /* Empty state */
+  .gal-empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/gallery-hero.jpg' | relative_url }}" alt="Gallery banner"
+    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="Gallery banner"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
@@ -78,7 +55,7 @@ permalink: /archives-gallery.html
         </nav>
         <!-- Title -->
         <h1 class="text-2xl md:text-3xl font-extrabold">Lab Gallery</h1>
-        <p class="text-sm md:text-[15px] opacity-95">Photos from projects, events, and lab life.</p>
+        <p class="text-sm md:text-[15px] opacity-95">Albums and photo stories from FINDS Lab.</p>
       </div>
     </div>
   </div>
@@ -86,139 +63,112 @@ permalink: /archives-gallery.html
 
 <!-- ===== Toolbar ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="g-toolbar">
-    <div class="row">
-      <div class="g-search">
-        <input id="gq" type="text" placeholder="Search by title or tags…" aria-label="Search gallery">
-      </div>
-      <div class="g-count">
-        <span id="gshown">0</span>/<span id="gtotal">0</span> entries
-        <span id="gstatus" style="display:none;">(filtered)</span>
-      </div>
+  <div class="gal-toolbar">
+    <div class="gal-search">
+      <input id="gal-q" type="text" placeholder="Search by title or tag…">
     </div>
+    <div class="gal-count" id="gal-count"></div>
   </div>
 </section>
 
-<!-- ===== Gallery Grid ===== -->
-<section class="max-w-7xl mx-auto px-4">
-  <div class="g-grid" id="ggrid">
-    {%- comment -%}
-    /gallery/ 경로(페이지/포스트)에서 date가 있는 항목만 수집 (최신순)
-    front matter 예시:
-    ---
-    layout: default
-    title: "프로젝트 킥오프 미팅"
-    date: 2025-08-13
-    permalink: /gallery/2025-08-13-kickoff.html
-    image: /assets/gallery/kickoff.jpg     # 카드 대표 이미지(필수 권장)
-    tags: [project, kickoff, nexen]        # 검색용(선택)
-    ---
-    {%- endcomment -%}
-    {%- assign all_items = site.pages | concat: site.posts -%}
-    {%- assign gallery = "" | split: "" -%}
-    {%- for item in all_items -%}
-      {%- if item.url and item.url contains '/gallery/' and item.date -%}
-        {%- assign gallery = gallery | push: item -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- assign gallery = gallery | sort: 'date' | reverse -%}
+<!-- ===== Gallery List ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  {% comment %}
+    /gallery/ 경로의 페이지 또는 포스트 수집 (폴더형 index.md 포함)
+    정렬: 최신 날짜 우선
+  {% endcomment %}
+  {% assign all_items = site.pages | concat: site.posts %}
+  {% assign galleries = "" | split: "" %}
+  {% for item in all_items %}
+    {% if item.url and item.title and item.url contains '/gallery/' and item.url != '/archives-gallery.html' %}
+      {% assign galleries = galleries | push: item %}
+    {% endif %}
+  {% endfor %}
+  {% assign galleries = galleries | sort: 'date' | reverse %}
 
-    {%- if gallery.size == 0 -%}
-      <div class="g-empty">갤러리 항목이 없습니다.</div>
-    {%- else -%}
-      {%- for post in gallery -%}
-        {%- assign ymd = post.date | date: "%Y.%m.%d" -%}
-        {%- assign thumb = post.thumb | default: post.image | default: '/assets/img/placeholders/gallery.jpg' -%}
-        {%- assign tags_text = post.tags | join: ' ' -%}
-        <article
-          class="g-card"
-          data-title="{{ post.title | downcase }}"
-          data-tags="{{ tags_text | downcase }}"
-          data-date="{{ post.date | date: '%s' }}">
-          <a class="g-link" href="{{ post.url | relative_url }}" aria-label="{{ post.title }}"></a>
-          <div class="g-cover" style="background-image:url('{{ thumb | relative_url }}')"></div>
-          <div class="g-grad"></div>
-          <div class="g-meta">
-            <h3 class="g-title line-2">{{ post.title }}</h3>
-            <div class="g-date">{{ ymd }}</div>
-          </div>
-        </article>
-      {%- endfor -%}
-    {%- endif -%}
-  </div>
+  {% if galleries.size == 0 %}
+    <div class="gal-empty">게시글이 없습니다.</div>
+  {% else %}
+    <ul id="gal-grid" class="gal-grid" role="list">
+      {% for post in galleries %}
+        {%- assign raw_thumb = post.thumb | default: post.image | default: post.cover -%}
+        {%- if raw_thumb -%}
+          {%- if raw_thumb contains '://' or raw_thumb startswith '/' -%}
+            {%- assign thumb_url = raw_thumb | relative_url -%}
+          {%- else -%}
+            {%- comment -%}
+              폴더형(index.md)일 경우: post.url 이 끝에 / 로 끝나므로 파일명 그대로 이어붙이면 됨.
+              파일형(.md)일 경우: 상대경로 thumb를 그대로 쓰는 것을 권장.
+            {%- endcomment -%}
+            {%- assign thumb_url = post.url | append: raw_thumb | relative_url -%}
+          {%- endif -%}
+        {%- else -%}
+          {%- assign thumb_url = '/assets/img/placeholders/gallery.jpg' | relative_url -%}
+        {%- endif -%}
 
-  <!-- Load more -->
-  <div class="g-more-wrap" id="gmoreWrap" style="display:none;">
-    <button id="gmore" class="g-more">Load more</button>
-  </div>
+        {%- assign date_txt = '' -%}
+        {%- if post.date -%}
+          {%- assign date_txt = post.date | date: "%Y.%m.%d" -%}
+        {%- endif -%}
+
+        {%- assign tag_text = '' -%}
+        {%- if post.tags and post.tags.size > 0 -%}
+          {%- assign tag_text = post.tags | join: ' ' -%}
+        {%- endif -%}
+
+        <li
+          class="gal-item"
+          role="listitem"
+          data-text="{{ post.title | escape }} {{ tag_text | escape }}"
+        >
+          <a class="gal-card" href="{{ post.url | relative_url }}">
+            <div class="gal-thumb" style="background-image:url('{{ thumb_url }}')"></div>
+            <div class="gal-info">
+              <h3 class="gal-title">{{ post.title }}</h3>
+              {% if date_txt != '' %}<p class="gal-date">{{ date_txt }}</p>{% endif %}
+              {% if post.tags and post.tags.size > 0 %}
+                <div class="gal-tags">
+                  {% for t in post.tags %}
+                    <span class="gal-tag">#{{ t }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 </section>
 
-<!-- ===== Page-only JS ===== -->
+<!-- ===== Page JS (client-side search) ===== -->
 <script>
-(function(){
-  const grid   = document.getElementById('ggrid');
-  if(!grid) return;
+  (function(){
+    const q = document.getElementById('gal-q');
+    const grid = document.getElementById('gal-grid');
+    const cnt = document.getElementById('gal-count');
+    if(!q || !grid) return;
 
-  const cards  = Array.from(grid.querySelectorAll('.g-card'));
-  const qInput = document.getElementById('gq');
-  const shown  = document.getElementById('gshown');
-  const total  = document.getElementById('gtotal');
-  const status = document.getElementById('gstatus');
-  const moreWrap = document.getElementById('gmoreWrap');
-  const moreBtn  = document.getElementById('gmore');
+    const items = Array.from(grid.querySelectorAll('.gal-item'));
+    const total = items.length;
 
-  // 초기값
-  const PAGE = 12;      // 첫 로드 개수
-  const STEP = 12;      // 추가 로드 개수
-  let limit  = PAGE;
-  let query  = '';
-
-  total.textContent = cards.length;
-
-  function match(card){
-    if(!query) return true;
-    const t = (card.dataset.title + ' ' + (card.dataset.tags || '')).toLowerCase();
-    return t.includes(query.toLowerCase());
-  }
-
-  function render(){
-    let vis = 0, matched = 0;
-    cards.forEach(card => {
-      const ok = match(card);
-      card.style.display = 'none';
-      if(ok){
-        matched++;
-        if(vis < limit){
-          card.style.display = '';
-          vis++;
-        }
-      }
-    });
-
-    shown.textContent = vis;
-    status.style.display = query ? '' : 'none';
-    // Load more 표시
-    if(matched > limit){
-      moreWrap.style.display = '';
-    }else{
-      moreWrap.style.display = 'none';
+    function renderCount(n){
+      cnt.textContent = `Showing ${n} of ${total}`;
     }
-  }
 
-  if(qInput){
-    qInput.addEventListener('input', () => {
-      query = qInput.value.trim();
-      limit = PAGE;     // 검색할 때는 처음부터
-      render();
-    });
-  }
-  if(moreBtn){
-    moreBtn.addEventListener('click', () => {
-      limit += STEP;
-      render();
-    });
-  }
+    function applyFilter(){
+      const term = q.value.trim().toLowerCase();
+      let visible = 0;
+      items.forEach(li => {
+        const text = (li.getAttribute('data-text') || '').toLowerCase();
+        const show = !term || text.includes(term);
+        li.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      renderCount(visible);
+    }
 
-  render();
-})();
+    renderCount(total);
+    q.addEventListener('input', applyFilter);
+  })();
 </script>
