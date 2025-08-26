@@ -1,90 +1,62 @@
-// Mobile menu toggle
-const btnMobile = document.getElementById('btnMobile');
-const mobileNav = document.getElementById('mobileNav');
-btnMobile?.addEventListener('click', ()=> mobileNav.classList.toggle('hidden'));
-
-// Desktop menus: keep submenu open while moving cursor
-const MENU_DELAY = 70; // ms
-document.querySelectorAll('.menu-group[data-menu]').forEach((grp)=>{
-  const panel = grp.querySelector('.js-submenu');
-  if(!panel) return;
-  let t;
-  const open  = ()=>{ clearTimeout(t); grp.classList.add('open'); };
-  const close = ()=>{ t = setTimeout(()=> grp.classList.remove('open'), MENU_DELAY); };
-  grp.addEventListener('mouseenter', open);
-  grp.addEventListener('mouseleave', close);
-  grp.addEventListener('focusin', open);
-  grp.addEventListener('focusout', close);
-});
-
-// Footer year
-document.getElementById('year') && (document.getElementById('year').textContent = new Date().getFullYear());
-
-// Carousel
-const track = document.getElementById('carouselTrack');
-const dots  = Array.from(document.querySelectorAll('[data-dot]'));
-if (track && dots.length){
-  let idx = 0;
-  const total = track.children.length;
-  let timer;
-
-  const go = (i) => {
-    idx = (i + total) % total;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-    dots.forEach((d, j) => d.classList.toggle('active', j === idx));
-  };
-  const auto = () => { timer = setInterval(() => go(idx + 1), 5000); };
-
-  dots.forEach((d) => d.addEventListener('click', () => {
-    clearInterval(timer);
-    go(+d.dataset.dot);
-    auto();
-  }));
-
-  go(0); auto();
-}
-
-// Embed loaders (News / Notice)
-async function importList(srcUrl, listSelectors, targetId, limit = 3){
-  const target = document.getElementById(targetId);
-  if (!target) return;
-
-  if (location.protocol === 'file:') {
-    target.innerHTML = '<li class="text-sm text-amber-600">로컬 파일로 열면 임베드가 차단됩니다. 로컬 서버에서 접속해 주세요.</li>';
-    return;
+// assets/js/site.js
+(function () {
+  function ready(fn){ 
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
+    else fn();
   }
 
-  try {
-    const res = await fetch(srcUrl, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const html = await res.text();
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+  ready(function(){
+    // === Desktop hover intent (약간 늦게 열리고/닫히게) ===
+    document.querySelectorAll('[data-menu]').forEach(function(g){
+      var enterTO, leaveTO;
+      function open(){ clearTimeout(leaveTO); enterTO = setTimeout(function(){ g.setAttribute('data-open','true'); }, 80); }
+      function close(){ clearTimeout(enterTO); leaveTO = setTimeout(function(){ g.removeAttribute('data-open'); }, 120); }
+      g.addEventListener('mouseenter', open);
+      g.addEventListener('mouseleave', close);
+      g.addEventListener('focusin', open);
+      g.addEventListener('focusout', close);
+    });
 
-    let items = [];
-    for (const sel of listSelectors) {
-      items = Array.from(doc.querySelectorAll(sel));
-      if (items.length) break;
+    // === Mobile: hamburger toggle ===
+    var btn   = document.getElementById('btnMobile');
+    var panel = document.getElementById('mobileNav');
+    if (btn && panel){
+      btn.addEventListener('click', function(){
+        var willOpen = panel.classList.contains('hidden'); // 현재 숨김이면 열 예정
+        panel.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(willOpen));
+        document.body.classList.toggle('no-scroll', willOpen);
+      });
+
+      // ESC로 닫기
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && !panel.classList.contains('hidden')){
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded', 'false');
+          document.body.classList.remove('no-scroll');
+        }
+      });
+
+      // 패널 내부 링크 클릭 시 자동 닫기(원하면 사용)
+      panel.addEventListener('click', function(e){
+        var a = e.target.closest('a');
+        if (a){ 
+          panel.classList.add('hidden');
+          btn.setAttribute('aria-expanded','false');
+          document.body.classList.remove('no-scroll');
+        }
+      });
     }
 
-    target.innerHTML = '';
-    if (items.length === 0) {
-      target.innerHTML = '<li class="text-sm text-slate-500">게시글이 없습니다.</li>';
-      return;
-    }
-
-    items.slice(0, limit).forEach((li) => target.appendChild(li.cloneNode(true)));
-  } catch (err) {
-    console.error('임베드 오류:', err);
-    target.innerHTML = '<li class="text-sm text-slate-500">불러오기 실패</li>';
-  }
-}
-
-// Load lists
-importList('{{ "/archives-news.html"   | relative_url }}',
-  ['#news-list > li', '#news ul > li', 'ul#news > li', 'main ul > li'],
-  'news-feed', 3
-);
-importList('{{ "/about-notice.html"    | relative_url }}',
-  ['#notice-list > li', '#notices ul > li', 'ul#notice > li', 'main ul > li'],
-  'notice-feed', 3
-);
+    // === Mobile: accordions ===
+    document.querySelectorAll('.mobile-acc-btn').forEach(function(accBtn){
+      accBtn.addEventListener('click', function(){
+        var panelId = accBtn.getAttribute('aria-controls');
+        var accPanel = document.getElementById(panelId);
+        var expanded = accBtn.getAttribute('aria-expanded') === 'true';
+        accBtn.setAttribute('aria-expanded', String(!expanded));
+        if (accPanel) accPanel.classList.toggle('hidden');
+      });
+    });
+  });
+})();
