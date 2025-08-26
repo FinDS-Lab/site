@@ -1,0 +1,79 @@
+---
+layout: default
+title: "Invited Talk: LLMs in Financial Data Science"
+date: 2025-07-10
+permalink: /seminar/2025-07-10-kaist-llm.html
+author: "FINDS Lab"
+host: "UNIST 산업공학과"         # 초청기관
+venue: "UNIST"      # 장소
+excerpt: "대형언어모델(LLM)을 활용한 금융 데이터 사이언스 응용 사례와 실무 적용 전략을 소개합니다."
+---
+
+<section class="max-w-3xl mx-auto px-4 mt-8">
+  <article class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+    <header>
+      <p class="text-sm font-bold text-slate-500">
+        {{ page.date | date: "%Y.%m.%d" }}
+      </p>
+      <h1 class="mt-1 text-2xl font-extrabold text-slate-900">
+        {{ page.title }}
+      </h1>
+      <p class="text-sm text-slate-500 mt-1">
+        작성자: {{ page.author | default: "FINDS Lab." }}
+      </p>
+
+      <!-- 메타 배지: 초청기관 / 장소 -->
+      <div class="flex flex-wrap items-center gap-2 mt-3">
+        {% if page.host %}
+          <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-slate-200 text-[12px] font-extrabold text-slate-700 bg-white">
+            <span class="text-slate-500 font-black">초청</span>{{ page.host }}
+          </span>
+        {% endif %}
+        {% if page.venue %}
+          <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full border border-slate-200 text-[12px] font-extrabold text-slate-700 bg-white">
+            <span class="text-slate-500 font-black">장소</span>{{ page.venue }}
+          </span>
+        {% endif %}
+      </div>
+    </header>
+
+    <div class="prose prose-slate mt-5">
+      <p class="leading-7">
+        본 세미나에서는 <b>대형언어모델(LLM)</b>을 금융 데이터 파이프라인에 통합하여
+        리서치 효율을 높이고, 정보 비대칭을 줄이며, 의사결정을 지원하는 방법을 사례 중심으로 소개합니다.
+        데이터 수집·전처리 자동화, 텍스트 기반 리스크 시그널 도출, 보고서 요약 및 생성 자동화 등
+        실무 적용 전략을 다룹니다.
+      </p>
+
+      <h2>요약</h2>
+      <ul>
+        <li><b>주제:</b> LLMs in Financial Data Science — 응용 사례와 실무 전략</li>
+        <li><b>초청:</b> {{ page.host | default: "—" }}</li>
+        <li><b>장소:</b> {{ page.venue | default: "—" }}</li>
+        <li><b>일시:</b> {{ page.date | date: "%Y년 %m월 %d일" }} (시간은 추후 공지)</li>
+        <li><b>발표자:</b> FINDS Lab.</li>
+      </ul>
+
+      <h2>개요</h2>
+      <p>
+        - 금융 도메인에서의 LLM 활용 패턴: 데이터 수집, 정규화, 시그널 추출, 리포팅<br>
+        - 모델 선택/튜닝 전략 및 프롬프트 엔지니어링 핵심 포인트<br>
+        - 개인정보/내부정보 보호와 거버넌스 체크리스트<br>
+        - PoC → 프로덕션 전환 시 고려사항(비용/지연/감사 가능성)
+      </p>
+
+      <h2>자료</h2>
+      <ul>
+        <li>슬라이드(PDF): <a class="underline" href="{{ '/assets/slides/2025-07-10-kaist-llm.pdf' | relative_url }}">다운로드</a> (업로드 후 경로 유지)</li>
+        <li>문의: <a class="underline" href="{{ '/about-location.html' | relative_url }}">FINDS Lab. 연락처</a></li>
+      </ul>
+    </div>
+
+    <footer class="mt-8 pt-5 border-t border-slate-200 flex justify-between text-sm text-slate-600">
+      <a class="hover:underline font-bold" href="{{ '/archives-seminar.html' | relative_url }}">
+        ← 목록으로
+      </a>
+      <span>FINDS Lab</span>
+    </footer>
+  </article>
+</section>
