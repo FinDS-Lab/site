@@ -99,7 +99,7 @@ title: home
 <!-- News & Notice -->
 <section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
   <!-- News: 최신 3개 -->
-  <div class="card">
+  <div id="news-panel" class="card">
     <div class="flex items-center justify-between">
       <h4 class="text-xl font-extrabold">News</h4>
       <a class="warm-underline font-bold" href="{{ '/archives-news.html' | relative_url }}">More</a>
@@ -125,7 +125,7 @@ title: home
   </div>
 
   <!-- Notice -->
-  <div class="home-panel min-w-0">
+  <div id="notice-panel" class="home-panel min-w-0">
     <div class="flex items-center justify-between gap-3">
       <h4 class="text-xl font-extrabold m-0">Notice</h4>
       <a class="warm-underline font-bold shrink-0" href="{{ '/about-notice.html' | relative_url }}">More</a>
