@@ -32,7 +32,7 @@ permalink: /members-director.html
   </div>
 </section>
 
-<!-- ===== Hero (아래) ===== -->
+<!-- ===== Hero (아래) — 오버레이 제거, 배너 이미지만 유지 ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-4">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <picture>
@@ -59,28 +59,6 @@ permalink: /members-director.html
         decoding="async"
         fetchpriority="high" />
     </picture>
-
-    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-transparent"></div>
-    <div class="absolute left-4 right-4 md:left-6 bottom-4">
-      <div class="flex items-end gap-4">
-        <picture>
-          <source srcset="{{ '/assets/img/people/director-224.webp' | relative_url }}" type="image/webp" />
-          <source srcset="{{ '/assets/img/people/director-224.jpg'  | relative_url }}" type="image/jpeg" />
-          <img
-            src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
-            class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg"
-            alt="Insu Choi portrait"
-            width="224" height="224"
-            loading="eager" decoding="async" />
-        </picture>
-
-        <div class="text-white drop-shadow">
-          <span class="inline-block px-2 py-1 rounded-full font-extrabold text-xs" style="background:#ac0e0e;">Director</span>
-          <h1 class="mt-2 text-2xl md:text-3xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
-          <p class="hero-sub text-sm md:text-[15px] opacity-95">Assistant Professor, Dept. of Business Administration, Dongduk Woman's University</p>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -99,8 +77,8 @@ permalink: /members-director.html
   .tl{
     display:grid;
     grid-auto-rows:auto;
-    align-items:stretch;          /* 레일이 행 높이에 맞춰 늘어나도록 */
-    row-gap:.65rem;               /* ★ 줄 간격 넓힘(기존 .4rem → .65rem) */
+    align-items:stretch;
+    row-gap:.65rem;
     position:relative;
   }
   .tl .rail{
@@ -108,9 +86,9 @@ permalink: /members-director.html
     width:var(--rail);
     align-self:stretch;
     height:100%;
-    min-height:3.4rem;            /* 최소 높이 살짝 증가 */
+    min-height:3.4rem;
   }
-  .tl .rail::before{              /* 금색 선 (뒤) */
+  .tl .rail::before{
     content:"";
     position:absolute;
     left:50%; top:0; bottom:0;
@@ -119,10 +97,10 @@ permalink: /members-director.html
     border-radius:2px;
     z-index:0;
   }
-  .tl .rail::after{               /* 빨간 점 (앞) */
+  .tl .rail::after{
     content:"";
     position:absolute;
-    left:50%; top:1.05rem;        /* 점 위치 미세 보정 */
+    left:50%; top:1.05rem;
     width:var(--dot); height:var(--dot);
     background:var(--accent);
     border-radius:50%;
@@ -131,45 +109,36 @@ permalink: /members-director.html
     z-index:1;
   }
 
-  /* 3줄 강제 템플릿 + 행간/여백 넓힘 */
   .row1,.row2,.row3{display:block;}
   .year{font-size:var(--year-size); font-weight:900; color:var(--accent); line-height:1.2;}
-  .row2{line-height:1.65;}                    /* ★ 본문 줄간 넓힘 */
-  .row2 .line + .line{margin-top:.28rem;}     /* ★ 각 줄 간 간격 */
-  .row3{margin-top:.3rem; line-height:1.6;}   /* ★ 기타 내용 간격/행간 */
+  .row2{line-height:1.65;}
+  .row2 .line + .line{margin-top:.28rem;}
+  .row3{margin-top:.3rem; line-height:1.6;}
   .desc{color:#475569; font-size:.95rem;}
   .title{font-weight:900; color:#0f172a;}
   .muted{color:#475569;}
 
-  /* 아이템 사이 간격(섹션 내) */
-  .timeline > li + li{margin-top:1.75rem;}    /* ★ 항목 간격 넓힘 */
+  .timeline > li + li{margin-top:1.75rem;}
 
-  /* Education: 레일 + 로고 + 본문 */
-  .tl.edu{grid-template-columns:var(--rail) 44px 1fr; column-gap:.85rem;} /* 본문 여백 소폭 증가 */
+  .tl.edu{grid-template-columns:var(--rail) 44px 1fr; column-gap:.85rem;}
   .logo{
     width:44px; height:44px; object-fit:contain; border-radius:.5rem;
     background:#fff; box-shadow:0 0 0 1px #e5e7eb;
   }
 
-  /* Employment / Affiliation: 레일 + 본문 */
   .tl.simple{grid-template-columns:var(--rail) 1fr; column-gap:.85rem;}
 
-  /* 섹션 제목과 리스트 시작 간격(모든 타임라인 섹션 공통) */
   .section-tl h2{margin-bottom:.25rem;}
-  .section-tl .timeline{margin-top:1.6rem;}   /* ★ 제목→리스트 시작 간격 넓힘 */
+  .section-tl .timeline{margin-top:1.6rem;}
 
-  /* 수상 bullet */
   .bullets-honor{list-style:disc; margin:.3rem 0 0 1.25rem; padding:0;}
   .bullets-honor li{font-size:.95rem; color:#111827; line-height:1.6;}
 
-  /* Research Interests */
   .bullets{list-style:none; margin:0; padding:0;}
   .bullets li{position:relative; padding-left:1rem; font-size:.95rem; color:#475569; line-height:1.6;}
   .bullets li::before{content:"•"; position:absolute; left:0; top:0; color:#334155; font-weight:900;}
 
-  /* 이미지 CLS 최소화 & 기타 */
   img[width][height]{height:auto}
-  .hero-sub{margin-top:.35rem;}
 </style>
 
 <!-- ===== Body (좌측 프로필 + 우측 본문 카드들) ===== -->
@@ -177,7 +146,28 @@ permalink: /members-director.html
   <!-- Profile aside -->
   <aside class="bg-white border border-slate-200 rounded-2xl shadow-md p-4 md:sticky md:top-24 self-start">
     <h3 class="text-lg font-extrabold">Profile</h3>
-    <div class="mt-3 grid gap-3 text-[14px] text-slate-700">
+
+    <!-- 이동된 인물 블록 (사진 + 이름/직함) -->
+    <div class="mt-3 flex items-end gap-4">
+      <picture>
+        <source srcset="{{ '/assets/img/people/director-224.webp' | relative_url }}" type="image/webp" />
+        <source srcset="{{ '/assets/img/people/director-224.jpg'  | relative_url }}" type="image/jpeg" />
+        <img
+          src="{{ '/assets/img/people/director-224.jpg' | relative_url }}"
+          class="h-24 w-24 md:h-28 md:w-28 rounded-xl ring-4 ring-white object-cover bg-white shadow-lg"
+          alt="Portrait of Insu Choi"
+          width="224" height="224"
+          loading="eager" decoding="async" />
+      </picture>
+      <div>
+        <span class="inline-block px-2 py-1 rounded-full font-extrabold text-xs" style="background:#ac0e0e; color:#fff;">Director</span>
+        <h1 class="mt-2 text-xl md:text-2xl font-extrabold leading-tight">Insu Choi, Ph.D.</h1>
+        <p class="text-sm md:text-[15px] text-slate-600">Assistant Professor, Dept. of Business Administration, Dongduk Women’s University</p>
+      </div>
+    </div>
+
+    <!-- 기본 프로필 정보 -->
+    <div class="mt-5 grid gap-3 text-[14px] text-slate-700">
       <div class="flex gap-2 items-start">
         <img src="{{ '/assets/img/icons/role.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" decoding="async">
         <div><b class="block">Position</b>Assistant Professor · Director, FINDS Lab</div>
@@ -199,6 +189,7 @@ permalink: /members-director.html
         <div><b class="block">E-mail</b><a href="mailto:insu.choi@dwu.ac.kr" class="hover:underline">insu.choi@dwu.ac.kr</a></div>
       </div>
     </div>
+
     <div class="mt-5 flex flex-wrap gap-2">
       <a class="inline-flex items-center justify-center font-black text-sm rounded-xl px-4 py-2 text-white"
          style="background:#ac0e0e" href="{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}" target="_blank" rel="noopener">Download CV</a>
