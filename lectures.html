@@ -7,29 +7,14 @@ permalink: /lectures.html
 <!-- ===== Styles ===== -->
 <style>
   /* Breadcrumbs */
-  .breadcrumbs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    align-items: center;
-    font-size: 12px
-  }
+  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+  .breadcrumbs a{color:#e5e7eb}
+  .breadcrumbs a:hover{text-decoration:underline}
+  .breadcrumbs .sep{opacity:.8}
 
-  .breadcrumbs a {
-    color: #e5e7eb
-  }
-
-  .breadcrumbs a:hover {
-    text-decoration: underline
-  }
-
-  .breadcrumbs .sep {
-    opacity: .8
-  }
-
-  :root {
-    --lect-red:#b91c1c;  /* Lecturer */
-    --ta-gold:#d4b14d;   /* TA */
+  :root{
+    --lect-red:#b91c1c;   /* Lecturer */
+    --ta-gold:#d4b14d;    /* TA */
     --school-dongduk:#e60039;
     --school-kyunghee:#880022;
     --school-korea:#a50034;
@@ -38,169 +23,53 @@ permalink: /lectures.html
   }
 
   /* Toolbar */
-  .toolbar {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    padding: 16px;
-    margin-top: 20px
-  }
+  .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
+  .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:.4rem .8rem;border-radius:999px;border:1px solid #e5e7eb;background:#fff;font-weight:700;font-size:12px;cursor:pointer}
+  .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
 
-  .search input {
-    width: 100%;
-    border: 1px solid #e5e7eb;
-    border-radius: .6rem;
-    padding: .6rem .8rem;
-    font-size: 14px
-  }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px
-  }
-
-  /* Chips: 기본은 테두리/강조 없음, 활성 시만 진한 보더 */
-  .chip {
-    padding: .4rem .8rem;
-    border-radius: 999px;
-    border: 1px solid transparent; /* 기본 테두리 제거 */
-    background: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer
-  }
-
-  .chip.is-on {
-    box-shadow: inset 0 0 0 2px #111827
-  }
-
-  .chip:focus-visible {
-    outline: 2px solid #111827;
-    outline-offset: 2px
-  }
-
-  /* 접근성 */
-
-  /* Grid: 한 줄에 한 강의 */
-  .grid {
-    display: grid;
-    gap: 14px;
-    margin-top: 14px;
-    grid-template-columns: 1fr
-  }
+  /* Grid */
+  .grid{display:grid;gap:14px;margin-top:14px}
+  @media(min-width:768px){.grid{grid-template-columns:1fr 1fr}}
 
   /* Card */
-  .card {
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    overflow: hidden
+  .card{
+    border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;
+    /* 배경은 동적으로 school color 지정 (inline style) */
   }
-
-  .inner {
-    position: relative;
-    background: #fff;
-    border-radius: .9rem;
-    margin: 10px; /* 학교색 여백 */
-    overflow: hidden;
-    border: 1px solid #e5e7eb;
+  .inner{
+    background:#fff;border-radius:.9rem;margin:10px; /* 컬러 여백 */
+    overflow:hidden;border:1px solid #e5e7eb;
   }
+  .card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
+  .inner{background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb}
+  .role-bar{height:6px;background:#ddd} /* 실제 색은 inline style로 지정 */
 
-  /* 왼쪽 '살짝 파인' 역할색 포인트 */
-  .role-notch {
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    bottom: 12px;
-    width: 8px;
-    border-radius: 8px;
-    background: #ddd; /* 실제 색은 inline style로 지정 */
-  }
+  .body{padding:14px 16px}
+  .meta{display:flex;flex-wrap:wrap;gap:6px}
+  .meta + .meta{margin-top:6px}
+  .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
+  /* 카드 내부의 Role 배지는 흰색(텍스트 진한 회색)로 */
+  /* 내부 배지는 흰색 */
+  .badge-role-lect{background:#fff;color:#111;border:1px solid #f0d2d2}
+  .badge-role-ta{background:#fff;color:#111;border:1px solid #eadba8}
+  .badge-period{background:#f8fafc;border:1px solid #e5e7eb}
+  /* 학교 배지는 흰색 배경 유지 */
+  .badge-school{background:#fff;color:#111;border:1px solid #e5e7eb}
 
-  .body {
-    padding: 14px 16px 14px 44px
-  } /* notch 공간 확보 */
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px
-  }
-
-  .meta + .meta {
-    margin-top: 6px
-  }
-
-  .badge {
-    padding: .25rem .6rem;
-    border-radius: 999px;
-    font-weight: 800;
-    font-size: 11px;
-    white-space: nowrap
-  }
-
-  /* 내부 배지는 흰색/연보더 */
-  .badge-role-lect {
-    background: #fff;
-    color: #111;
-    border: 1px solid #f0d2d2
-  }
-
-  .badge-role-ta {
-    background: #fff;
-    color: #111;
-    border: 1px solid #eadba8
-  }
-
-  .badge-period {
-    background: #f8fafc;
-    border: 1px solid #e5e7eb
-  }
-
-  .badge-school {
-    background: #fff;
-    color: #111;
-    border: 1px solid #e5e7eb
-  }
-
-  .course-en {
-    font-size: 15px;
-    font-weight: 900;
-    color: #111827;
-    margin-top: 10px
-  }
-
-  .course-ko {
-    font-size: 13px;
-    color: #374151;
-    margin-top: 2px
-  }
+  .course-en{font-size:15px;font-weight:900;color:#111827;margin-top:10px}
+  .course-ko{font-size:13px;color:#374151;margin-top:2px}
 
   /* Empty state */
-  .empty {
-    padding: 32px;
-    text-align: center;
-    color: #6b7280;
-    font-weight: 700;
-    border: 1px dashed #e5e7eb;
-    border-radius: 1rem;
-    background: #fff
-  }
+  .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img
-      src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}"
-      alt="Lectures banner"
-      class="w-full h-[200px] md:h-[260px] object-cover"
-      width="1600"
-      height="320"
-    >
+    <img src="{{ '/assets/img/banners/lectures-hero.jpg' | relative_url }}" alt="Lectures banner"
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -211,7 +80,8 @@ permalink: /lectures.html
           <span aria-current="page" class="font-semibold">Lectures</span>
         </nav>
         <!-- Title -->
-        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures</h1>
+        <h1 class="text-2xl md:text-3xl font-extrabold">Lectures & Teaching</h1>
+        <p class="text-sm md:text-[15px] opacity-95">Courses taught and instructional roles.</p>
       </div>
     </div>
   </div>
@@ -245,235 +115,226 @@ permalink: /lectures.html
 </section>
 
 <script>
-  (() => {
-    /* ===== Raw Data ===== */
-    const RAW = [
-      {
-        role: "Lecturer",
-        period: "2025-03-01 – 2026-02-28",
-        school: "Korea University Sejong Campus",
-        courses: [
-          { en: "Algorithmic Trading (DIGB441)", ko: "알고리즘 투자전략 (DIGB441)" }
-        ]
-      },
-      {
-        role: "Lecturer",
-        period: "2025-03-01 – 2026-02-28",
-        school: "Gangnam University",
-        courses: [
-          { en: "Introduction to Financial Engineering (EG14209)", ko: "금융공학입문 (EG14209)" }
-        ]
-      },
-      {
-        role: "Lecturer",
-        period: "2024-03-01 – 2024-08-31",
-        school: "Kyung Hee University",
-        courses: [
-          { en: "Financial Engineering (IE329)", ko: "금융공학 (IE329)" },
-          { en: "Engineering Economics (IE201)", ko: "경제성공학 (IE201)" }
-        ]
-      },
-      {
-        role: "Teaching Assistant",
-        period: "2024-09-02 – 2024-12-31",
-        school: "KAIST",
-        courses: [
-          { en: "Special Topics in Data Science I (DS801)", ko: "데이터사이언스 특수논제 I (DS801)" }
-        ]
-      },
-      {
-        role: "Teaching Assistant",
-        period: "2023-02-27 – 2023-06-30",
-        school: "KAIST",
-        courses: [
-          { en: "Financial Artificial Intelligence (IE471)", ko: "금융인공지능 (IE471)" }
-        ]
-      },
-    ];
+(() => {
+/* ===== Raw Data ===== */
+const RAW = [
+  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
+    school:"Korea University Sejong Campus",
+    courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]},
+  { role:"Lecturer", period:"2025-03-01 – 2026-02-28",
+    school:"Gangnam University",
+    courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]},
+  { role:"Lecturer", period:"2024-03-01 – 2024-08-31",
+    school:"Kyung Hee University",
+    courses:[
+      {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
+      {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]},
+  { role:"Teaching Assistant", period:"2024-09-02 – 2024-12-31",
+    school:"KAIST",
+    courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스 특수논제 I (DS801)"}]},
+  { role:"Teaching Assistant", period:"2023-02-27 – 2023-06-30",
+    school:"KAIST",
+    courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]},
+];
 
-    /* ===== Expand courses into ITEMS ===== */
-    const ITEMS = [];
-    RAW.forEach(r => r.courses.forEach(c => ITEMS.push({ ...r, courses: [c] })));
+/* ===== Expand courses into ITEMS ===== */
+const ITEMS = [];
+RAW.forEach(r=>{ r.courses.forEach(c=>ITEMS.push({...r, courses:[c]})); });
+RAW.forEach(r => r.courses.forEach(c => ITEMS.push({...r, courses:[c]})));
 
-    /* ===== Utils ===== */
-    function parseStartDate(period) {
-      const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
-      return m ? new Date(${m[1]}-${m[2]}-${m[3]}T00:00:00) : new Date(0);
-    }
+/* ===== Utils ===== */
+/* ===== Utils (ensure defined before used) ===== */
+function parseStartDate(period){
+  const m=period.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m?new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`):new Date(0);
+  const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
+}
+function seasonLabelFrom(date){
+  const y=date.getFullYear(); const m=date.getMonth()+1;
+  const s=(m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
+  const y = date.getFullYear(), m = date.getMonth() + 1;
+  const s = (m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
+  return `${y} ${s}`;
+}
+function seasonToDate(s){
+  const [yy, ss] = s.split(' ');
+  const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+  return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
+}
+function byStartDesc(a,b){return parseStartDate(b.period)-parseStartDate(a.period);}
 
-    function seasonLabelFrom(date) {
-      const y = date.getFullYear(), m = date.getMonth() + 1;
-      const s = (m <= 2) ? "Winter" : (m <= 6) ? "Spring" : (m <= 8) ? "Summer" : "Fall";
-      return ${y} ${s};
-    }
+/* ===== Filters ===== */
+const ROLES=["Lecturer","Teaching Assistant"];
+const SCHOOLS=["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
+const SCHOOL_COLORS={
+/* ===== Filters (lists & active sets) ===== */
+const ROLES = ["Lecturer","Teaching Assistant"];
+const SCHOOLS = ["Dongduk Women’s University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
+const SCHOOL_COLORS = {
+  "Dongduk Women’s University":"var(--school-dongduk)",
+  "Kyung Hee University":"var(--school-kyunghee)",
+  "Korea University Sejong Campus":"var(--school-korea)",
+  "Gangnam University":"var(--school-gangnam)",
+  "KAIST":"var(--school-kaist)"
+};
+let q="";
+const onRoles=new Set(ROLES);
+const onSchools=new Set(SCHOOLS);
+let q = "";
+const onRoles = new Set(ROLES);
+const onSchools = new Set(SCHOOLS);
 
-    function seasonToDate(s) {
-      const [yy, ss] = s.split(' ');
-      const month = (ss === "Winter") ? 1 : (ss === "Spring") ? 3 : (ss === "Summer") ? 7 : 9;
-      return new Date(${yy}-${String(month).padStart(2, '0')}-01T00:00:00);
-    }
+/* Build semesters from data */
+/* ===== Semesters (build AFTER utils) ===== */
+const ALL_SEMS = Array.from(new Set(
+  ITEMS.map(i=>seasonLabelFrom(parseStartDate(i.period)))
+)).sort((a,b)=>{
+  const toDate = s => {
+    const [yy, ss] = s.split(' ');
+    const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+    return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
+  };
+  return toDate(b)-toDate(a);
+});
+const onSems=new Set(ALL_SEMS);
+  ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period)))
+)).sort((a,b)=> seasonToDate(b) - seasonToDate(a));
+const onSems = new Set(ALL_SEMS);
 
-    function byStartDesc(a, b) {
-      return parseStartDate(b.period) - parseStartDate(a.period);
-    }
+/* ===== DOM ===== */
+const grid=document.getElementById('grid');
+const count=document.getElementById('count');
+const qInput=document.getElementById('q');
+const roleChips=document.getElementById('roleChips');
+const schoolChips=document.getElementById('schoolChips');
+const semChips=document.getElementById('semChips');
+const grid = document.getElementById('grid');
+const count = document.getElementById('count');
+const qInput = document.getElementById('q');
+const roleChips = document.getElementById('roleChips');
+const schoolChips = document.getElementById('schoolChips');
+const semChips = document.getElementById('semChips');
 
-    /* ===== Filters: 초기엔 전부 미선택(=필터 미적용) ===== */
-    const ROLES = ["Lecturer", "Teaching Assistant"];
-    const SCHOOLS = [
-      "Dongduk Women’s University",
-      "Kyung Hee University",
-      "Korea University Sejong Campus",
-      "Gangnam University",
-      "KAIST"
-    ];
+/* ===== Chips ===== */
+function buildChips(){
+  /* Role/University는 기존 배너색 유지 */
+  roleChips.innerHTML=ROLES.map(r=>`<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}" style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`).join('');
+  schoolChips.innerHTML=SCHOOLS.map(s=>`<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}" style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`).join('');
+  /* Semester 칩은 기본(흰색) */
+  semChips.innerHTML=ALL_SEMS.map(s=>`<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`).join('');
+  // Role/University는 배너 색 유지
+  roleChips.innerHTML = ROLES.map(r =>
+    `<button class="chip ${onRoles.has(r)?'is-on':''}" data-role="${r}"
+      style="background:${r==='Lecturer'?'var(--lect-red)':'var(--ta-gold)'};color:${r==='Lecturer'?'#fff':'#111'}">${r}</button>`
+  ).join('');
+  schoolChips.innerHTML = SCHOOLS.map(s =>
+    `<button class="chip ${onSchools.has(s)?'is-on':''}" data-school="${s}"
+      style="background:${onSchools.has(s)?SCHOOL_COLORS[s]:'#fff'};color:${onSchools.has(s)?'#fff':'#111'}">${s}</button>`
+  ).join('');
+  // Semester 칩은 기본(흰색)
+  semChips.innerHTML = ALL_SEMS.map(s =>
+    `<button class="chip ${onSems.has(s)?'is-on':''}" data-sem="${s}">${s}</button>`
+  ).join('');
 
-    const SCHOOL_COLORS = {
-      "Dongduk Women’s University": "var(--school-dongduk)",
-      "Kyung Hee University": "var(--school-kyunghee)",
-      "Korea University Sejong Campus": "var(--school-korea)",
-      "Gangnam University": "var(--school-gangnam)",
-      "KAIST": "var(--school-kaist)"
-    };
+  roleChips.querySelectorAll('[data-role]').forEach(btn=>btn.onclick=()=>{
+    const r=btn.dataset.role; onRoles.has(r)?onRoles.delete(r):onRoles.add(r); buildChips(); render();
+  // 핸들러 재바인딩
+  roleChips.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => {
+    const r = btn.dataset.role;
+    onRoles.has(r) ? onRoles.delete(r) : onRoles.add(r);
+    buildChips(); render();
+  });
+  schoolChips.querySelectorAll('[data-school]').forEach(btn=>btn.onclick=()=>{
+    const s=btn.dataset.school; onSchools.has(s)?onSchools.delete(s):onSchools.add(s); buildChips(); render();
+  schoolChips.querySelectorAll('[data-school]').forEach(btn => btn.onclick = () => {
+    const s = btn.dataset.school;
+    onSchools.has(s) ? onSchools.delete(s) : onSchools.add(s);
+    buildChips(); render();
+  });
+  semChips.querySelectorAll('[data-sem]').forEach(btn=>btn.onclick=()=>{
+    const s=btn.dataset.sem; onSems.has(s)?onSems.delete(s):onSems.add(s); buildChips(); render();
+  semChips.querySelectorAll('[data-sem]').forEach(btn => btn.onclick = () => {
+    const s = btn.dataset.sem;
+    onSems.has(s) ? onSems.delete(s) : onSems.add(s);
+    buildChips(); render();
+  });
+}
 
-    let q = "";
-    const onRoles = new Set();   // 비어있으면 Role 필터 미적용
-    const onSchools = new Set(); // 비어있으면 University 필터 미적용
+/* ===== Filtering ===== */
+function matchesQuery(i){
+  if(!q) return true;
+  const t=(i.role+" "+i.school+" "+i.courses.map(c=>c.en+" "+c.ko)).toLowerCase();
+  const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
+  const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
+  return t.includes(q.toLowerCase());
+}
+function filterItems(){
+  return ITEMS
+    .filter(i=>onRoles.has(i.role))
+    .filter(i=>onSchools.has(i.school))
+    .filter(i=>onSems.has(seasonLabelFrom(parseStartDate(i.period))))
+    .filter(i => onRoles.has(i.role))
+    .filter(i => onSchools.has(i.school))
+    .filter(i => onSems.has(seasonLabelFrom(parseStartDate(i.period))))
+    .filter(matchesQuery)
+    .sort(byStartDesc);
+}
 
-    const ALL_SEMS = Array.from(
-      new Set(ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period))))
-    ).sort((a, b) => seasonToDate(b) - seasonToDate(a));
+/* ===== Card ===== */
+function card(item){
+  const season=seasonLabelFrom(parseStartDate(item.period));
+  const roleBarColor=item.role==="Lecturer"?"var(--lect-red)":"var(--ta-gold)";
+  const schoolColor=SCHOOL_COLORS[item.school]||"#ccc";
+  const roleBadgeClass=item.role==="Lecturer"?"badge-role-lect":"badge-role-ta";
+  const season = seasonLabelFrom(parseStartDate(item.period));
+  const roleBarColor = item.role==="Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
+  const schoolColor = SCHOOL_COLORS[item.school] || "#ccc";
+  const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
 
-    const onSems = new Set(); // 비어있으면 Semester 필터 미적용
-
-    /* ===== DOM ===== */
-    const grid = document.getElementById('grid');
-    const count = document.getElementById('count');
-    const qInput = document.getElementById('q');
-    const roleChips = document.getElementById('roleChips');
-    const schoolChips = document.getElementById('schoolChips');
-    const semChips = document.getElementById('semChips');
-
-    /* ===== Chips (활성된 칩만 is-on) ===== */
-    function buildChips() {
-      // Role 칩: 활성 시 배경색, 미선택 시 흰색
-      roleChips.innerHTML = ROLES.map(r => {
-        const active = onRoles.has(r);
-        const bg = active ? (r === 'Lecturer' ? 'var(--lect-red)' : 'var(--ta-gold)') : '#fff';
-        const fg = active ? (r === 'Lecturer' ? '#fff' : '#111') : '#111';
-        return <button class="chip ${active ? 'is-on' : ''}" data-role="${r}" style="background:${bg};color:${fg}">${r}</button>;
-      }).join('');
-
-      // University 칩: 활성 시 학교색, 미선택 시 흰색
-      schoolChips.innerHTML = SCHOOLS.map(s => {
-        const active = onSchools.has(s);
-        const bg = active ? SCHOOL_COLORS[s] : '#fff';
-        const fg = active ? '#fff' : '#111';
-        return <button class="chip ${active ? 'is-on' : ''}" data-school="${s}" style="background:${bg};color:${fg}">${s}</button>;
-      }).join('');
-
-      // Semester 칩: 배경 흰색, 활성 시 검은 테두리만
-      semChips.innerHTML = ALL_SEMS.map(s => {
-        const active = onSems.has(s);
-        return <button class="chip ${active ? 'is-on' : ''}" data-sem="${s}">${s}</button>;
-      }).join('');
-
-      // 핸들러
-      roleChips.querySelectorAll('[data-role]').forEach(btn => btn.onclick = () => {
-        const r = btn.dataset.role;
-        onRoles.has(r) ? onRoles.delete(r) : onRoles.add(r);
-        buildChips();
-        render();
-      });
-
-      schoolChips.querySelectorAll('[data-school]').forEach(btn => btn.onclick = () => {
-        const s = btn.dataset.school;
-        onSchools.has(s) ? onSchools.delete(s) : onSchools.add(s);
-        buildChips();
-        render();
-      });
-
-      semChips.querySelectorAll('[data-sem]').forEach(btn => btn.onclick = () => {
-        const s = btn.dataset.sem;
-        onSems.has(s) ? onSems.delete(s) : onSems.add(s);
-        buildChips();
-        render();
-      });
-    }
-
-    /* ===== Filtering ===== */
-    function matchesQuery(i) {
-      if (!q) return true;
-      const courseText = i.courses.map(c => ${c.en} ${c.ko}).join(' ');
-      const t = ${i.role} ${i.school} ${courseText}.toLowerCase();
-      return t.includes(q.toLowerCase());
-    }
-
-    function passRoles(i) {
-      return onRoles.size ? onRoles.has(i.role) : true;
-    }
-
-    function passSchools(i) {
-      return onSchools.size ? onSchools.has(i.school) : true;
-    }
-
-    function passSems(i) {
-      const sem = seasonLabelFrom(parseStartDate(i.period));
-      return onSems.size ? onSems.has(sem) : true;
-    }
-
-    function filterItems() {
-      return ITEMS
-        .filter(passRoles)
-        .filter(passSchools)
-        .filter(passSems)
-        .filter(matchesQuery)
-        .sort(byStartDesc);
-    }
-
-    /* ===== Card ===== */
-    function card(item) {
-      const season = seasonLabelFrom(parseStartDate(item.period));
-      const notchColor = item.role === "Lecturer" ? "var(--lect-red)" : "var(--ta-gold)";
-      const schoolColor = SCHOOL_COLORS[item.school] || "#ccc";
-      const roleBadgeClass = item.role === "Lecturer" ? "badge-role-lect" : "badge-role-ta";
-
-      return <article class="card" style="background:${schoolColor}">
-        <div class="inner">
-          <div class="role-notch" style="background:${notchColor}"></div>
-          <div class="body">
-            <!-- 1: Role -->
-            <div class="meta">
-              <span class="badge ${roleBadgeClass}">${item.role}</span>
-            </div>
-            <!-- 2: School / Semester -->
-            <div class="meta">
-              <span class="badge badge-school">${item.school}</span>
-              <span class="badge badge-period">${season}</span>
-            </div>
-            <!-- 3: 과목명 (EN 크게 / KO 작게) -->
-            <div class="course-en">${item.courses[0].en}</div>
-            <div class="course-ko">${item.courses[0].ko}</div>
-          </div>
+  return `
+  <article class="card" style="background:${schoolColor}">
+    <div class="inner">
+      <div class="role-bar" style="background:${roleBarColor}"></div>
+      <div class="body">
+        <!-- 1st line: Role (badge는 흰색) -->
+        <!-- 줄1: Role -->
+        <div class="meta">
+          <span class="badge ${roleBadgeClass}">${item.role}</span>
         </div>
-      </article>;
-    }
+        <!-- 2nd line: School (흰 배경) / Semester -->
+        <!-- 줄2: School / Semester -->
+        <div class="meta">
+          <span class="badge badge-school">${item.school}</span>
+          <span class="badge badge-period">${season}</span>
+        </div>
 
-    /* ===== Render ===== */
-    function render() {
-      const data = filterItems();
-      grid.innerHTML = data.length
-        ? data.map(card).join('')
-        : <div class="empty">No lectures found. Try changing filters.</div>;
-      count.textContent = Showing ${data.length} of ${ITEMS.length};
-    }
+        <!-- Course title big / Korean small -->
+        <!-- 과목명 크고/작게 -->
+        <div class="course-en">${item.courses[0].en}</div>
+        <div class="course-ko">${item.courses[0].ko}</div>
+      </div>
+    </div>
+  </article>`;
+}
 
-    /* ===== Init ===== */
-    qInput.oninput = e => {
-      q = e.target.value;
-      render();
-    };
+/* ===== Render ===== */
+function render(){
+  const data=filterItems();
+  grid.innerHTML=data.map(card).join('');
+  count.textContent=\`Showing \${data.length} of \${ITEMS.length}\`;
+  const data = filterItems();
+  if(data.length === 0){
+    grid.innerHTML = `<div class="empty">No lectures found. Try changing filters.</div>`;
+  }else{
+    grid.innerHTML = data.map(card).join('');
+  }
+  count.textContent = `Showing ${data.length} of ${ITEMS.length}`;
+}
 
-    buildChips();
-    render();
-  })(); /* IIFE */
+/* ===== Init ===== */
+qInput.oninput=e=>{q=e.target.value;render();};
+qInput.oninput = e => { q = e.target.value; render(); };
+buildChips(); render();
+})(); /* IIFE */
 </script>
