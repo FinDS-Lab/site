@@ -140,13 +140,13 @@ excerpt: "산업공학도의 커리어 선택(취업·진학·유학)과 공학�
   .back-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
+    gap: 6px;
+    padding: 8px 16px;
     background: white;
     border: 2px solid #e5e7eb;
     border-radius: 999px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     color: #374151;
     transition: all 0.2s;
     text-decoration: none;
@@ -156,6 +156,28 @@ excerpt: "산업공학도의 커리어 선택(취업·진학·유학)과 공학�
     border-color: var(--gold);
     transform: translateX(-4px);
     color: var(--gold);
+  }
+  
+  /* 모바일에서 텍스트 줄이기 */
+  @media (max-width: 480px) {
+    .back-button {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    
+    .back-button .button-text {
+      display: none;
+    }
+    
+    .back-button .button-text-short {
+      display: inline;
+    }
+  }
+  
+  @media (min-width: 481px) {
+    .back-button .button-text-short {
+      display: none;
+    }
   }
 </style>
 
@@ -251,17 +273,18 @@ excerpt: "산업공학도의 커리어 선택(취업·진학·유학)과 공학�
         <li>Q&A 세션을 통한 맞춤형 진로 상담</li>
       </ul>
     </div>
-
+  </article>
 
   <!-- Footer -->
   <footer class="mt-8 flex justify-between items-center">
     <a href="{{ '/archives-seminar.html' | relative_url }}" class="back-button">
       <span>←</span>
-      <span>세미나 목록으로</span>
+      <span class="button-text">세미나 목록으로</span>
+      <span class="button-text-short">목록</span>
     </a>
     
-    <div class="text-sm text-slate-500 font-semibold">
-      FINDS Lab. © 2025
-    </div>
+    <img src="{{ '/assets/img/logo-finds.png' | relative_url }}" 
+         alt="FINDS Lab Logo" 
+         class="h-6 w-auto">
   </footer>
 </section>
