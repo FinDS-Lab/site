@@ -25,6 +25,7 @@ permalink: /archives-notice.html
     position: relative;
     overflow: hidden;
     min-height: 200px;
+    cursor: pointer;
   }
 
   @keyframes gradientShift {
@@ -33,50 +34,43 @@ permalink: /archives-notice.html
     100% { background-position: 0% 50%; }
   }
 
-  /* 네트워크 패턴 SVG - 오른쪽 위에서 시작 */
-  .network-pattern {
+  /* 동적으로 생성될 네트워크 패턴 */
+  .network-burst {
     position: absolute;
-    top: -50px;
-    right: -50px;
-    width: 70%;
-    height: 150%;
-    opacity: 0.12;
+    width: 200px;
+    height: 200px;
     pointer-events: none;
+    opacity: 0;
+    animation: burstAnimation 2s ease-out forwards;
   }
 
-  .network-svg {
+  @keyframes burstAnimation {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(0deg);
+    }
+    30% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2) rotate(180deg);
+    }
+  }
+
+  .network-burst svg {
     width: 100%;
     height: 100%;
   }
 
-  /* 네트워크 애니메이션 */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
-  }
-
-  .network-dot {
-    fill: rgba(255, 255, 255, 0.6);
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .network-dot:nth-child(2n) {
-    animation: pulse 4s ease-in-out infinite;
-  }
-
-  .network-dot:nth-child(3n) {
-    animation-delay: 2s;
-  }
-
-  .network-line {
-    stroke: rgba(255, 255, 255, 0.25);
+  .burst-line {
+    stroke: rgba(255, 255, 255, 0.7);
     stroke-width: 1.5;
     fill: none;
+  }
+
+  .burst-dot {
+    fill: rgba(255, 255, 255, 0.9);
   }
 
   /* 텍스트 컨테이너 - 왼쪽 하단 배치 */
@@ -103,6 +97,7 @@ permalink: /archives-notice.html
   .breadcrumbs a {
     color: rgba(255,255,255,0.9);
     transition: color 0.2s;
+    text-decoration: none;
   }
   .breadcrumbs a:hover {
     color: #fff;
@@ -111,8 +106,9 @@ permalink: /archives-notice.html
   .breadcrumbs .sep {
     color: rgba(255,255,255,0.7);
   }
-  .breadcrumbs span:last-child {
+  .breadcrumbs span:not(.sep):not(a) {
     color: #fff;
+    font-weight: 700;
   }
 
   /* 제목 */
@@ -229,8 +225,8 @@ permalink: /archives-notice.html
       min-height: 160px;
     }
     .network-pattern {
-      width: 80%;
-      right: -80px;
+      width: 70%;
+      right: -60px;
     }
   }
 
@@ -253,9 +249,8 @@ permalink: /archives-notice.html
     }
     .breadcrumbs { font-size: 12px; }
     .network-pattern {
-      width: 90%;
-      right: -100px;
-      opacity: 0.08;
+      width: 80%;
+      right: -80px;
     }
   }
 
@@ -276,58 +271,14 @@ permalink: /archives-notice.html
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="banner-section rounded-2xl shadow-lg">
-    <!-- 네트워크 패턴 배경 - 오른쪽 위에서 시작 -->
-    <div class="network-pattern">
-      <svg class="network-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-        <!-- 오른쪽 위에서 퍼져나가는 네트워크 -->
-        <!-- 메인 노드들과 연결선 -->
-        <line x1="700" y1="50" x2="600" y2="120" class="network-line"/>
-        <line x1="700" y1="50" x2="650" y2="180" class="network-line"/>
-        <line x1="600" y1="120" x2="500" y2="200" class="network-line"/>
-        <line x1="650" y1="180" x2="550" y2="250" class="network-line"/>
-        <line x1="500" y1="200" x2="400" y2="280" class="network-line"/>
-        <line x1="550" y1="250" x2="450" y2="350" class="network-line"/>
-        <line x1="600" y1="120" x2="650" y2="180" class="network-line"/>
-        <line x1="500" y1="200" x2="550" y2="250" class="network-line"/>
-        <line x1="700" y1="50" x2="750" y2="150" class="network-line"/>
-        <line x1="750" y1="150" x2="650" y2="180" class="network-line"/>
-        <line x1="400" y1="280" x2="300" y2="380" class="network-line"/>
-        <line x1="450" y1="350" x2="350" y2="450" class="network-line"/>
-        <line x1="300" y1="380" x2="350" y2="450" class="network-line"/>
-        
-        <!-- 추가 연결선 -->
-        <line x1="750" y1="150" x2="680" y2="280" class="network-line"/>
-        <line x1="680" y1="280" x2="550" y2="250" class="network-line"/>
-        <line x1="400" y1="280" x2="450" y2="350" class="network-line"/>
-        
-        <!-- 노드들 (다양한 크기) -->
-        <circle cx="700" cy="50" r="5" class="network-dot"/>
-        <circle cx="600" cy="120" r="4" class="network-dot"/>
-        <circle cx="650" cy="180" r="6" class="network-dot"/>
-        <circle cx="500" cy="200" r="4" class="network-dot"/>
-        <circle cx="550" cy="250" r="5" class="network-dot"/>
-        <circle cx="400" cy="280" r="4" class="network-dot"/>
-        <circle cx="450" cy="350" r="3" class="network-dot"/>
-        <circle cx="750" cy="150" r="4" class="network-dot"/>
-        <circle cx="680" cy="280" r="3" class="network-dot"/>
-        <circle cx="300" cy="380" r="4" class="network-dot"/>
-        <circle cx="350" cy="450" r="3" class="network-dot"/>
-        
-        <!-- 작은 보조 노드들 -->
-        <circle cx="720" cy="100" r="2" class="network-dot" opacity="0.5"/>
-        <circle cx="580" cy="160" r="2" class="network-dot" opacity="0.5"/>
-        <circle cx="480" cy="320" r="2" class="network-dot" opacity="0.5"/>
-      </svg>
-    </div>
-    
+  <div class="banner-section rounded-2xl shadow-lg" onclick="createNetworkBurst(event, this)">
     <!-- 콘텐츠 - 왼쪽 하단 -->
     <div class="banner-content">
       <div>
         <nav aria-label="Breadcrumb" class="breadcrumbs">
-          <a href="{{ '/' | relative_url }}">Home</a>
+          <a href="{{ '/' | relative_url }}" onclick="event.stopPropagation()">Home</a>
           <span class="sep">›</span>
-          <span>Archives</span>
+          <a href="{{ '/archives-news.html' | relative_url }}" onclick="event.stopPropagation()">Archives</a>
           <span class="sep">›</span>
           <span aria-current="page">Notice</span>
         </nav>
@@ -336,6 +287,203 @@ permalink: /archives-notice.html
     </div>
   </div>
 </section>
+
+<!-- JavaScript for random network patterns -->
+<script>
+function createNetworkBurst(event, element) {
+  // 클릭 위치 계산
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left - 100; // 중앙 정렬을 위해 100px 빼기
+  const y = event.clientY - rect.top - 100;
+  
+  // 랜덤 네트워크 패턴 생성
+  const networkDiv = document.createElement('div');
+  networkDiv.className = 'network-burst';
+  networkDiv.style.left = x + 'px';
+  networkDiv.style.top = y + 'px';
+  
+  // 랜덤 네트워크 SVG 생성
+  const patterns = [
+    generateStarNetwork(),
+    generateMeshNetwork(),
+    generateTreeNetwork(),
+    generateCircularNetwork(),
+    generateRandomNetwork()
+  ];
+  
+  const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+  networkDiv.innerHTML = randomPattern;
+  
+  // DOM에 추가
+  element.appendChild(networkDiv);
+  
+  // 애니메이션 끝나면 제거
+  setTimeout(function() {
+    element.removeChild(networkDiv);
+  }, 2000);
+}
+
+// 별 모양 네트워크
+function generateStarNetwork() {
+  const centerX = 100;
+  const centerY = 100;
+  const nodeCount = 6 + Math.floor(Math.random() * 4);
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i * 2 * Math.PI) / nodeCount;
+    const radius = 50 + Math.random() * 30;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    
+    svg += `<line x1="${centerX}" y1="${centerY}" x2="${x}" y2="${y}" class="burst-line"/>`;
+    svg += `<circle cx="${x}" cy="${y}" r="${3 + Math.random() * 3}" class="burst-dot"/>`;
+  }
+  svg += `<circle cx="${centerX}" cy="${centerY}" r="5" class="burst-dot"/>`;
+  svg += '</svg>';
+  return svg;
+}
+
+// 메쉬 네트워크
+function generateMeshNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const nodes = [];
+  const nodeCount = 5 + Math.floor(Math.random() * 3);
+  
+  // 노드 위치 생성
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: 30 + Math.random() * 140,
+      y: 30 + Math.random() * 140,
+      r: 3 + Math.random() * 3
+    });
+  }
+  
+  // 가까운 노드들끼리 연결
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dist = Math.sqrt(
+        Math.pow(nodes[i].x - nodes[j].x, 2) + 
+        Math.pow(nodes[i].y - nodes[j].y, 2)
+      );
+      if (dist < 80) {
+        svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${1 - dist/80}"/>`;
+      }
+    }
+  }
+  
+  // 노드 그리기
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" class="burst-dot"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+
+// 트리 네트워크
+function generateTreeNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const levels = 3;
+  
+  function drawBranch(x, y, angle, length, level) {
+    if (level === 0) return '';
+    
+    const branches = 2 + Math.floor(Math.random() * 2);
+    let result = '';
+    
+    for (let i = 0; i < branches; i++) {
+      const newAngle = angle + (Math.random() - 0.5) * Math.PI / 2;
+      const newX = x + length * Math.cos(newAngle);
+      const newY = y + length * Math.sin(newAngle);
+      
+      result += `<line x1="${x}" y1="${y}" x2="${newX}" y2="${newY}" class="burst-line" opacity="${level/levels}"/>`;
+      result += `<circle cx="${newX}" cy="${newY}" r="${2 + level}" class="burst-dot"/>`;
+      result += drawBranch(newX, newY, newAngle, length * 0.7, level - 1);
+    }
+    
+    return result;
+  }
+  
+  svg += drawBranch(100, 100, -Math.PI/2, 40, levels);
+  svg += `<circle cx="100" cy="100" r="5" class="burst-dot"/>`;
+  svg += '</svg>';
+  return svg;
+}
+
+// 원형 네트워크
+function generateCircularNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const centerX = 100;
+  const centerY = 100;
+  const nodeCount = 8 + Math.floor(Math.random() * 4);
+  const radius = 60;
+  const nodes = [];
+  
+  // 원 둘레에 노드 배치
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i * 2 * Math.PI) / nodeCount;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    nodes.push({x, y});
+  }
+  
+  // 노드 간 연결
+  for (let i = 0; i < nodes.length; i++) {
+    const next = (i + 1) % nodes.length;
+    const skip = (i + 2) % nodes.length;
+    
+    svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[next].x}" y2="${nodes[next].y}" class="burst-line"/>`;
+    
+    if (Math.random() > 0.5) {
+      svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[skip].x}" y2="${nodes[skip].y}" class="burst-line" opacity="0.5"/>`;
+    }
+  }
+  
+  // 노드 그리기
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${3 + Math.random() * 2}" class="burst-dot"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+
+// 완전 랜덤 네트워크
+function generateRandomNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const nodes = [];
+  const nodeCount = 4 + Math.floor(Math.random() * 4);
+  
+  // 랜덤 노드 생성
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: 40 + Math.random() * 120,
+      y: 40 + Math.random() * 120,
+      r: 3 + Math.random() * 4
+    });
+  }
+  
+  // 랜덤 연결
+  const connections = nodeCount + Math.floor(Math.random() * nodeCount);
+  for (let i = 0; i < connections; i++) {
+    const from = Math.floor(Math.random() * nodeCount);
+    const to = Math.floor(Math.random() * nodeCount);
+    
+    if (from !== to) {
+      svg += `<line x1="${nodes[from].x}" y1="${nodes[from].y}" x2="${nodes[to].x}" y2="${nodes[to].y}" class="burst-line" opacity="${0.3 + Math.random() * 0.7}"/>`;
+    }
+  }
+  
+  // 노드 그리기
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" class="burst-dot" opacity="${0.7 + Math.random() * 0.3}"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+</script>
 
 <!-- ===== Notice List (oldest → newest) ===== -->
 <section class="max-w-7xl mx-auto px-4">
