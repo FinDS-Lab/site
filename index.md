@@ -1,240 +1,666 @@
----
-layout: default
-title: home
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FINDS Lab - Financial Data Science Laboratory</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-<!-- ======================= Home Hero / Intro / News ======================= -->
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-light: rgb(234, 207, 127);
+    --red: rgb(172, 14, 14);
+    --red-dark: rgb(127, 10, 10);
+  }
 
-<!-- Hero -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="carousel" id="carousel" aria-roledescription="carousel">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- Slide 1 -->
-      <div class="carousel-slide">
-        <img class="bg" src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager" />
-        <div class="carousel-caption">
-          <div class="max-w-xl px-6">
-            <span class="tag-gold">FINDS Lab.</span>
-            <h1 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-              Towards Data-Inspired Financial Management
-            </h1>
-            <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/about-introduction.html' | relative_url }}">Introduction</a>
-              <a class="btn-primary text-sm" href="{{ '/about-honors.html' | relative_url }}">Honors</a>
-            </div>
-          </div>
-        </div>
-      </div>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #ffffff;
+    color: #111827;
+  }
 
-      <!-- Slide 2 -->
-      <div class="carousel-slide">
-        <img class="bg" src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy" />
-        <div class="carousel-caption">
-          <div class="max-w-xl px-6">
-            <span class="tag-gold">FINDS Lab.</span>
-            <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-              Accomplishments
-            </h2>
-            <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/publications.html' | relative_url }}">Publications</a>
-              <a class="btn-primary text-sm" href="{{ '/projects.html'     | relative_url }}">Projects</a>
-            </div>
-          </div>
-        </div>
-      </div>
+  /* Hero Carousel */
+  .hero-section {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background: #000;
+  }
 
-      <!-- Slide 3 -->
-      <div class="carousel-slide">
-        <img class="bg" src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy" />
-        <div class="carousel-caption">
-          <div class="max-w-xl px-6">
-            <span class="tag-gold">FINDS Lab.</span>
-            <h2 class="mt-3 text-[20px] md:text-[30px] lg:text-[40px] font-extrabold leading-tight ko-tight">
-              Updates
-            </h2>
-            <div class="mt-4 flex gap-3">
-              <a class="btn-primary text-sm" href="{{ '/archives-notice.html' | relative_url }}">Notice</a>
-              <a class="btn-primary text-sm" href="{{ '/archives-news.html'  | relative_url }}">News</a>
-            </div>
+  @media (max-width: 768px) {
+    .hero-section {
+      height: 400px;
+    }
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+  }
+
+  .carousel-content {
+    max-width: 600px;
+    color: white;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .tag-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: #000;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-hero {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-hero.primary {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
+    border: 2px solid transparent;
+  }
+
+  .btn-hero.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+  }
+
+  .btn-hero.secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn-hero.secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Carousel Dots */
+  .carousel-dots {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--gold);
+  }
+
+  /* Introduction Section */
+  .intro-section {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  @media (max-width: 768px) {
+    .intro-section {
+      grid-template-columns: 1fr;
+      margin: 40px auto;
+      text-align: center;
+    }
+  }
+
+  .logo-container {
+    position: relative;
+  }
+
+  .logo-box {
+    width: 180px;
+    height: 180px;
+    background: white;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (max-width: 768px) {
+    .logo-box {
+      margin: 0 auto;
+    }
+  }
+
+  .logo-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .logo-box:hover::before {
+    opacity: 1;
+  }
+
+  .logo-box img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+  }
+
+  .intro-content h2 {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .intro-content h3 {
+    font-size: 32px;
+    margin-bottom: 4px;
+  }
+
+  .intro-content .lab-name {
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  .intro-content .lab-full {
+    font-size: 18px;
+    color: #374151;
+    margin-left: 8px;
+  }
+
+  .intro-content .description {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4b5563;
+  }
+
+  /* News & Notice Section */
+  .updates-section {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .updates-section {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .update-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+  }
+
+  .update-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+
+  .update-header {
+    padding: 24px 28px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border-bottom: 2px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .update-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .update-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .update-more {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: gap 0.2s;
+  }
+
+  .update-more:hover {
+    gap: 8px;
+  }
+
+  .update-list {
+    padding: 8px;
+  }
+
+  .update-item {
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .update-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.3s;
+  }
+
+  .update-item:hover {
+    background: #fef9f3;
+  }
+
+  .update-item:hover::before {
+    height: 60%;
+  }
+
+  .update-date {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .date-day {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--red);
+  }
+
+  .date-month {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+  }
+
+  .update-item-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.5;
+    text-decoration: none;
+    display: block;
+  }
+
+  .update-item-title:hover {
+    color: var(--red);
+  }
+
+  .update-meta {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: rgba(214,177,77,0.1);
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .empty-message {
+    padding: 40px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .hero-buttons {
+      flex-direction: column;
+    }
+    
+    .btn-hero {
+      width: 100%;
+      text-align: center;
+    }
+    
+    .update-header {
+      padding: 20px;
+    }
+    
+    .update-item {
+      padding: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="carousel-track" id="carouselTrack">
+    <!-- Slide 1 -->
+    <div class="carousel-slide">
+      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 1">
+      <div class="carousel-overlay">
+        <div class="carousel-content">
+          <span class="tag-badge">FINDS Lab.</span>
+          <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
+          <div class="hero-buttons">
+            <a href="#" class="btn-hero primary">Introduction</a>
+            <a href="#" class="btn-hero secondary">Honors</a>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Dots -->
-    <div class="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
-      <button class="dot" data-dot="0" aria-label="slide 1"></button>
-      <button class="dot" data-dot="1" aria-label="slide 2"></button>
-      <button class="dot" data-dot="2" aria-label="slide 3"></button>
+    
+    <!-- Slide 2 -->
+    <div class="carousel-slide">
+      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 2">
+      <div class="carousel-overlay">
+        <div class="carousel-content">
+          <span class="tag-badge">FINDS Lab.</span>
+          <h1 class="hero-title">Research<br>Accomplishments</h1>
+          <div class="hero-buttons">
+            <a href="#" class="btn-hero primary">Publications</a>
+            <a href="#" class="btn-hero secondary">Projects</a>
+          </div>
+        </div>
+      </div>
     </div>
+    
+    <!-- Slide 3 -->
+    <div class="carousel-slide">
+      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 3">
+      <div class="carousel-overlay">
+        <div class="carousel-content">
+          <span class="tag-badge">FINDS Lab.</span>
+          <h1 class="hero-title">Latest<br>Updates</h1>
+          <div class="hero-buttons">
+            <a href="#" class="btn-hero primary">Notice</a>
+            <a href="#" class="btn-hero secondary">News</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="carousel-dots">
+    <button class="dot active" data-dot="0"></button>
+    <button class="dot" data-dot="1"></button>
+    <button class="dot" data-dot="2"></button>
   </div>
 </section>
 
-<!-- Intro -->
-<section class="max-w-7xl mx-auto px-4 mt-10 grid lg:grid-cols-[auto,1fr] gap-4 items-center">
-  <div>
-    <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}"
-         alt="FINDS Lab Logo"
-         class="w-40 h-40 object-contain rounded-xl ring-1 ring-slate-200 bg-white p-3" />
+<!-- Introduction Section -->
+<section class="intro-section">
+  <div class="logo-container">
+    <div class="logo-box">
+      <img src="/api/placeholder/140/140" alt="FINDS Lab Logo">
+    </div>
   </div>
-
-  <div>
-    <p class="text-2xl font-extrabold tracking-tight" style="color:rgb(172,14,14)">Dongduk Women's University</p>
-
-    <h3 class="text-3xl mt-1">
-      <span class="font-extrabold" style="color:rgb(214,177,77)">FINDS Lab.</span>
-      <span class="ml-1 inline-block align-baseline text-[18px] md:text-[20px]" style="color:rgb(0,0,0)">
-        (<span class="font-extrabold">Fin</span><span class="font-light">ancial</span>
-        <span class="font-extrabold">D</span><span class="font-light">ata</span>
-        <span class="font-extrabold">S</span><span class="font-light">cience</span>
-        <span class="font-extrabold"> Laboratory</span>)
+  
+  <div class="intro-content">
+    <h2>Dongduk Women's University</h2>
+    <h3>
+      <span class="lab-name">FINDS Lab.</span>
+      <span class="lab-full">
+        (<b>Fin</b>ancial <b>D</b>ata <b>S</b>cience <b>Laboratory</b>)
       </span>
     </h3>
-
-    <p class="mt-3 text-[15px] leading-7 text-slate-700">
+    <p class="description">
       동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
     </p>
   </div>
 </section>
 
-<!-- ===== News & Notice (archive-style rows) ===== -->
-<!-- 동일 포맷을 위해 board-row 스타일(archives와 동일)을 간단히 포함 -->
-<style>
-  .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
-  .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
-  .date-ym{font-weight:800;font-size:12px;color:#6b7280}
-  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
-  @media (max-width:640px){
-    .board-row{grid-template-columns:64px 1fr;gap:10px}
-    .board-row .btn-cell{grid-column:1/-1;justify-self:end}
-  }
-  .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
-  .btn-more:hover{background:#f8fafc}
-  .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
-</style>
-
-<section class="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-  <!-- News: 최신 3개 (제목만) -->
-  <div id="news-panel" class="home-panel min-w-0">
-    <div class="flex items-center justify-between gap-3">
-      <h4 class="text-xl font-extrabold m-0">News</h4>
-      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-news.html' | relative_url }}">More</a>
+<!-- News & Notice Section -->
+<section class="updates-section">
+  <!-- News Card -->
+  <div class="update-card">
+    <div class="update-header">
+      <div class="update-title">
+        <div class="update-icon">📰</div>
+        <span>News</span>
+      </div>
+      <a href="{{ '/archives-news.html' | relative_url }}" class="update-more">More →</a>
     </div>
-
-    {% comment %} /news/ 경로 + date가 있는 항목만, 최신 3개 {% endcomment %}
-    {% assign all_items = site.pages | concat: site.posts %}
-    {% assign news_items = "" | split: "" %}
-    {% for item in all_items %}
-      {% if item.url and item.url contains '/news/' and item.date %}
-        {% assign news_items = news_items | push: item %}
-      {% endif %}
-    {% endfor %}
-    {% assign news_items = news_items | sort: 'date' | reverse %}
-
-    <ul class="mt-4" role="list">
+    <div class="update-list">
+      {% assign all_items = site.pages | concat: site.posts %}
+      {% assign news_items = "" | split: "" %}
+      {% for item in all_items %}
+        {% if item.url and item.url contains '/news/' and item.date %}
+          {% assign news_items = news_items | push: item %}
+        {% endif %}
+      {% endfor %}
+      {% assign news_items = news_items | sort: 'date' | reverse %}
+      
       {% if news_items.size == 0 %}
-        <li class="p-6 text-center text-slate-500 font-semibold border-t border-slate-200 rounded-xl">게시글이 없습니다.</li>
+        <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
         {% for post in news_items limit:3 %}
-          {% assign y = post.date | date: "%Y" %}
-          {% assign m = post.date | date: "%m" %}
-          {% assign d = post.date | date: "%d" %}
-          <li class="board-row" role="listitem">
-            <div class="date-box">
-              <div class="date-d">{{ d }}</div>
-              <span class="date-ym">{{ y }}.{{ m }}</span>
+          <div class="update-item">
+            <div class="update-date">
+              <span class="date-day">{{ post.date | date: "%d" }}</span>
+              <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <div>
-              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
-                {{ post.title }}
-              </a>
-              <!-- 제목만 표시 (요약/본문 제거) -->
-              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            <a href="{{ post.url | relative_url }}" class="update-item-title">
+              {{ post.title }}
+            </a>
+            {% if post.category %}
+            <div class="update-meta">
+              <span class="meta-tag">{{ post.category }}</span>
             </div>
-            <div class="btn-cell hidden sm:block">
-              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
-            </div>
-          </li>
+            {% endif %}
+          </div>
         {% endfor %}
       {% endif %}
-    </ul>
-  </div>
-
-  <!-- Notice: 최신 3개 (제목만) -->
-  <div id="notice-panel" class="home-panel min-w-0">
-    <div class="flex items-center justify-between gap-3">
-      <h4 class="text-xl font-extrabold m-0">Notice</h4>
-      <a class="warm-underline font-bold shrink-0" href="{{ '/archives-notice.html' | relative_url }}">More</a>
     </div>
-
-    {% comment %} /notice/ 경로 + date가 있는 항목만, 최신 3개 {% endcomment %}
-    {% assign notice_items = "" | split: "" %}
-    {% for item in all_items %}
-      {% if item.url and item.url contains '/notice/' and item.date %}
-        {% assign notice_items = notice_items | push: item %}
-      {% endif %}
-    {% endfor %}
-    {% assign notice_items = notice_items | sort: 'date' | reverse %}
-
-    <ul class="mt-4" role="list">
+  </div>
+  
+  <!-- Notice Card -->
+  <div class="update-card">
+    <div class="update-header">
+      <div class="update-title">
+        <div class="update-icon">📌</div>
+        <span>Notice</span>
+      </div>
+      <a href="{{ '/archives-notice.html' | relative_url }}" class="update-more">More →</a>
+    </div>
+    <div class="update-list">
+      {% assign notice_items = "" | split: "" %}
+      {% for item in all_items %}
+        {% if item.url and item.url contains '/notice/' and item.date %}
+          {% assign notice_items = notice_items | push: item %}
+        {% endif %}
+      {% endfor %}
+      {% assign notice_items = notice_items | sort: 'date' | reverse %}
+      
       {% if notice_items.size == 0 %}
-        <li class="p-6 text-center text-slate-500 font-semibold border-t border-slate-200 rounded-xl">게시글이 없습니다.</li>
+        <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
         {% for post in notice_items limit:3 %}
-          {% assign y = post.date | date: "%Y" %}
-          {% assign m = post.date | date: "%m" %}
-          {% assign d = post.date | date: "%d" %}
-          <li class="board-row" role="listitem">
-            <div class="date-box">
-              <div class="date-d">{{ d }}</div>
-              <span class="date-ym">{{ y }}.{{ m }}</span>
+          <div class="update-item">
+            <div class="update-date">
+              <span class="date-day">{{ post.date | date: "%d" }}</span>
+              <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <div>
-              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
-                {{ post.title }}
-              </a>
-              <!-- 제목만 표시 (요약/본문 제거) -->
-              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
+            <a href="{{ post.url | relative_url }}" class="update-item-title">
+              {{ post.title }}
+            </a>
+            {% if post.category %}
+            <div class="update-meta">
+              <span class="meta-tag">{{ post.category }}</span>
             </div>
-            <div class="btn-cell hidden sm:block">
-              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
-            </div>
-          </li>
+            {% endif %}
+          </div>
         {% endfor %}
       {% endif %}
-    </ul>
+    </div>
   </div>
 </section>
 
-<!-- ====== Page-only JS (헤더/푸터와 분리) ====== -->
 <script>
-  // 캐러셀
-  (function(){
+  // Carousel functionality
+  (function() {
     const track = document.getElementById('carouselTrack');
-    const dots  = Array.from(document.querySelectorAll('[data-dot]'));
-    if (!track || !dots.length) return;
-
-    let idx = 0;
-    const total = track.children.length;
-    let timer;
-
-    function go(i){
-      idx = (i + total) % total;
-      track.style.transform = `translateX(-${idx * 100}%)`;
-      dots.forEach((d, j) => d.classList.toggle('active', j === idx));
+    const dots = document.querySelectorAll('.dot');
+    let currentIndex = 0;
+    let interval;
+    
+    function goToSlide(index) {
+      currentIndex = index;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
     }
-
-    function auto(){ timer = setInterval(() => go(idx + 1), 5000); }
-
-    dots.forEach((d) => d.addEventListener('click', () => {
-      clearInterval(timer); go(+d.dataset.dot); auto();
-    }));
-
-    go(0); auto();
-
+    
+    function nextSlide() {
+      goToSlide((currentIndex + 1) % dots.length);
+    }
+    
+    function startAutoplay() {
+      interval = setInterval(nextSlide, 5000);
+    }
+    
+    function stopAutoplay() {
+      clearInterval(interval);
+    }
+    
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        stopAutoplay();
+        goToSlide(index);
+        startAutoplay();
+      });
+    });
+    
+    startAutoplay();
+    
+    // Pause on visibility change
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden){ clearInterval(timer); } else { auto(); }
+      if (document.hidden) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
     });
   })();
 </script>
+
+</body>
+</html>
