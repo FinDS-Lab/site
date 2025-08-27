@@ -1,0 +1,262 @@
+---
+layout: default
+title: "금융 데이터 과학 기반 의사결정: 실증적 분석과 정량적 접근을 중심으로"
+date: 2025-09-05
+permalink: /seminar/2025-09-05-unist-financial-tech.html
+author: "최인수"
+host: "UNIST 산업공학과 - 2025학년도 1학기 <IE특론IV> 강의 </IE특론IV>
+venue: "UNIST 제1공학관 104동 E104호"
+excerpt: "데이터 사이언스를 접목한 금융 데이터사이언스과 연구 방법론을 소개합니다."
+---
+
+<style>
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-light: rgb(234, 207, 127);
+    --red: rgb(172, 14, 14);
+  }
+  
+  .seminar-hero {
+    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
+    border: 1px solid rgba(214,177,77,0.2);
+  }
+  
+  .meta-badge {
+    background: white;
+    border: 2px solid var(--gold);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  
+  .meta-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214,177,77,0.2);
+  }
+  
+  .section-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  
+  .section-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+  
+  .section-title {
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 640px) {
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .info-content {
+    flex: 1;
+  }
+  
+  .info-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+  }
+  
+  .info-value {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 2px;
+  }
+  
+  .content-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .content-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    color: #374151;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .content-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 16px;
+  }
+  
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    color: #374151;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  
+  .back-button:hover {
+    border-color: var(--gold);
+    transform: translateX(-4px);
+    color: var(--gold);
+  }
+</style>
+
+<section class="max-w-4xl mx-auto px-4 mt-8 pb-12">
+  <!-- Hero Section -->
+  <div class="seminar-hero rounded-2xl p-8 mb-8">
+    <div class="flex items-center gap-3 mb-4">
+      <span style="font-size:32px;">🎤</span>
+      <div>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Invited Talk</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">
+          금융 의사결정 지원을 위한 데이터 기반 연구 사례
+        </h1>
+      </div>
+    </div>
+    
+    <p class="text-slate-600 leading-relaxed mt-4 mb-6">
+      {{ page.excerpt }}
+    </p>
+    
+    <div class="flex flex-wrap gap-3">
+      <div class="meta-badge">
+        <span>📍</span>
+        <span>{{ page.venue }}</span>
+      </div>
+      <div class="meta-badge">
+        <span>🏢</span>
+        <span>{{ page.host }}</span>
+      </div>
+      <div class="meta-badge">
+        <span>📅</span>
+        <span>{{ page.date | date: "%Y.%m.%d" }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <article class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <!-- Event Details -->
+    <div class="section-card" style="border-radius:16px 16px 0 0; margin-bottom:0; border-bottom:2px solid #f3f4f6;">
+      <h2 class="section-title">
+        <span>📋</span>
+        <span>세부 정보</span>
+      </h2>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <div class="info-label">일시</div>
+            <div class="info-value">{{ page.date | date: "%Y년 %m월 %d일" }} 18:00</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">🏛️</div>
+          <div class="info-content">
+            <div class="info-label">초청기관</div>
+            <div class="info-value">{{ page.host }}</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <div class="info-label">장소</div>
+            <div class="info-value">{{ page.venue }}</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">👤</div>
+          <div class="info-content">
+            <div class="info-label">발표자</div>
+            <div class="info-value">{{ page.author }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="section-card" style="border-radius:0;">
+      <h2 class="section-title">💡 주요 내용</h2>
+      <ul class="content-list">
+        <li>금융 데이터 기반 기업 클러스터링과 포트폴리오 설계 기법</li>
+        <li>금융 네트워크 구조 분석을 통한 시장 상호연계성 이해</li>
+        <li>위험 전이 분석과 투자 전략 수립 방안</li>
+        <li>설명 가능한 AI와 기계학습을 활용한 금융 의사결정 지원</li>
+        <li>데이터 기반 금융 서비스 시스템 개발과 향후 연구 방향성</li>
+      </ul>
+    </div>
+
+  <!-- Footer -->
+  <footer class="mt-8 flex justify-between items-center">
+    <a href="{{ '/archives-seminar.html' | relative_url }}" class="back-button">
+      <span>←</span>
+      <span>세미나 목록으로</span>
+    </a>
+    
+    <div class="text-sm text-slate-500 font-semibold">
+      FINDS Lab. © 2025
+    </div>
+  </footer>
+</section>
