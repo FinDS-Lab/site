@@ -15,11 +15,19 @@ title: home
   .hero-section {
     position: relative;
     width: 100%;
+    max-width: 1200px;
     height: 500px;
+    margin: 1.5rem auto;
+    padding: 0 24px;
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     background: #000;
-    margin-top: 1.5rem;
     border-radius: 1.5rem;
+    position: relative;
   }
 
   @media (max-width: 768px) {
@@ -41,6 +49,7 @@ title: home
     position: relative;
     flex-shrink: 0;
     background: #000;
+    overflow: hidden;
   }
 
   .carousel-slide img {
@@ -381,12 +390,8 @@ title: home
     font-weight: 800;
     color: #1f2937;
     line-height: 1.5;
-    text-decoration: none;
     display: block;
-  }
-
-  .update-item-title:hover {
-    color: var(--red);
+    cursor: default;
   }
 
   .update-meta {
@@ -437,58 +442,60 @@ title: home
 </style>
 
 <!-- Hero Section -->
-<section class="hero-section max-w-7xl mx-auto px-4">
-  <div class="carousel-track" id="carouselTrack">
-    <!-- Slide 1 -->
-    <div class="carousel-slide">
-      <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
-      <div class="carousel-overlay">
-        <div class="carousel-content">
-          <span class="tag-badge">FINDS Lab.</span>
-          <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
-          <div class="hero-buttons">
-            <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
-            <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
+<section class="hero-section">
+  <div class="carousel-container">
+    <div class="carousel-track" id="carouselTrack">
+      <!-- Slide 1 -->
+      <div class="carousel-slide">
+        <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
+        <div class="carousel-overlay">
+          <div class="carousel-content">
+            <span class="tag-badge">FINDS Lab.</span>
+            <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
+            <div class="hero-buttons">
+              <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
+              <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Slide 2 -->
+      <div class="carousel-slide">
+        <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
+        <div class="carousel-overlay">
+          <div class="carousel-content">
+            <span class="tag-badge">FINDS Lab.</span>
+            <h1 class="hero-title">Research<br>Accomplishments</h1>
+            <div class="hero-buttons">
+              <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
+              <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Slide 3 -->
+      <div class="carousel-slide">
+        <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
+        <div class="carousel-overlay">
+          <div class="carousel-content">
+            <span class="tag-badge">FINDS Lab.</span>
+            <h1 class="hero-title">Latest<br>Updates</h1>
+            <div class="hero-buttons">
+              <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
+              <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- Slide 2 -->
-    <div class="carousel-slide">
-      <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
-      <div class="carousel-overlay">
-        <div class="carousel-content">
-          <span class="tag-badge">FINDS Lab.</span>
-          <h1 class="hero-title">Research<br>Accomplishments</h1>
-          <div class="hero-buttons">
-            <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
-            <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
-          </div>
-        </div>
-      </div>
+    <div class="carousel-dots">
+      <button class="dot active" data-dot="0"></button>
+      <button class="dot" data-dot="1"></button>
+      <button class="dot" data-dot="2"></button>
     </div>
-    
-    <!-- Slide 3 -->
-    <div class="carousel-slide">
-      <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
-      <div class="carousel-overlay">
-        <div class="carousel-content">
-          <span class="tag-badge">FINDS Lab.</span>
-          <h1 class="hero-title">Latest<br>Updates</h1>
-          <div class="hero-buttons">
-            <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
-            <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="carousel-dots">
-    <button class="dot active" data-dot="0"></button>
-    <button class="dot" data-dot="1"></button>
-    <button class="dot" data-dot="2"></button>
   </div>
 </section>
 
@@ -544,9 +551,9 @@ title: home
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <a href="{{ post.url | relative_url }}" class="update-item-title">
+            <span class="update-item-title">
               {{ post.title }}
-            </a>
+            </span>
             {% if post.category %}
             <div class="update-meta">
               <span class="meta-tag">{{ post.category }}</span>
