@@ -189,15 +189,10 @@ permalink: /publications.html
   </div>
 </div>
 
-<script>
-  /* ===== Authors ===== */
-  const AUTHORS = {
-    1:{en:"Insu Choi",ko:"최인수"},2:{en:"Jane Doe",ko:"도제인"},3:{en:"Robert Johnson",ko:"로버트 존슨"},
-    4:{en:"Alice Park",ko:"박앨리스"},5:{en:"Bob Lee",ko:"이밥"},6:{en:"Charlie Kim",ko:"김찰리"},
-    7:{en:"David Chen",ko:"첸데이비드"},8:{en:"Emily Wang",ko:"왕에밀리"},9:{en:"Frank Liu",ko:"류프랭크"},
-    10:{en:"Grace Kim",ko:"김그레이스"},11:{en:"Henry Park",ko:"박헨리"}
-  };
+<!-- ===== Load global AUTHORS from include ===== -->
+{% include authors-data.html %}
 
+<script>
   /* ===== Data (Accepted → Published, Abstract 제거) ===== */
   const PUBS = [
     {year:2024,code_label:"J1",indexing_group:"SCIE",type:"journal",
@@ -260,7 +255,7 @@ permalink: /publications.html
 
   /* ===== Helpers ===== */
   function getAuthorName(authorId, useDomestic){
-    const a=AUTHORS[authorId];
+    const a=AUTHORS?.[authorId];
     if(!a) return `Author ${authorId}`;
     if(useDomestic && a.ko) return a.ko;
     if(!useDomestic && a.en) return a.en;
@@ -457,9 +452,9 @@ permalink: /publications.html
   }
 
   /* ===== Events ===== */
-  searchInput.oninput=(e)=>{ q=e.target.value; render(); };
-  closeBtn.onclick=()=>modal.style.display='none';
-  modal.onclick=(e)=>{ if(e.target===modal) modal.style.display='none'; };
+  document.getElementById('pubSearch').oninput=(e)=>{ q=e.target.value; render(); };
+  document.getElementById('btnCloseCite').onclick=()=>modal.style.display='none';
+  document.getElementById('citeModal').onclick=(e)=>{ if(e.target===document.getElementById('citeModal')) document.getElementById('citeModal').style.display='none'; };
 
   /* ===== Init ===== */
   buildChips(); render();
