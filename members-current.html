@@ -13,8 +13,12 @@ permalink: /members-current.html
     .breadcrumbs .sep{opacity:.8}
   </style>
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/members-hero.jpg' | relative_url }}" alt="Members banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+    <img src="{{ '/assets/img/banners/members-hero.jpg' | relative_url }}"
+         alt="Members banner"
+         class="w-full h-[200px] md:h-[260px] object-cover"
+         width="1600" height="320"
+         loading="lazy" decoding="async"
+         onerror="this.onerror=null; this.style.display='none';">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -36,7 +40,7 @@ permalink: /members-current.html
   :root{
     --phd-gold: rgb(214, 177, 77);
     --ms-red: rgb(172, 14, 14);
-    --combined-gold: rgb(234, 207, 127); /* 옅은 금색 */
+    --combined-gold: rgb(234, 207, 127);
     --primary-dark: #111827;
   }
 
@@ -48,473 +52,100 @@ permalink: /members-current.html
     margin-top:2rem;
     margin-bottom:2rem;
   }
-  
   .stat-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:0.75rem;
-    padding:16px;
-    text-align:center;
-    transition:all 0.2s;
+    background:#fff;border:1px solid #e5e7eb;border-radius:0.75rem;padding:16px;text-align:center;transition:all 0.2s;
   }
-  
-  .stat-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  }
-  
-  .stat-number{
-    font-size:28px;
-    font-weight:900;
-    color:#111827;
-  }
-  
-  .stat-label{
-    font-size:12px;
-    color:#6b7280;
-    margin-top:4px;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-  }
-  
-  .stat-card.phd-stat{
-    border-top:3px solid var(--phd-gold);
-  }
-  
-  .stat-card.ms-stat{
-    border-top:3px solid var(--ms-red);
-  }
-  
-  .stat-card.combined-stat{
-    border-top:3px solid var(--combined-gold);
-  }
-  
-  .stat-card.total-stat{
-    border-top:3px solid var(--primary-dark);
-  }
+  .stat-card:hover{ transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+  .stat-number{ font-size:28px;font-weight:900;color:#111827; }
+  .stat-label{ font-size:12px;color:#6b7280;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px; }
+  .stat-card.phd-stat{ border-top:3px solid var(--phd-gold); }
+  .stat-card.ms-stat{ border-top:3px solid var(--ms-red); }
+  .stat-card.combined-stat{ border-top:3px solid var(--combined-gold); }
+  .stat-card.total-stat{ border-top:3px solid var(--primary-dark); }
 
   /* Section Headers */
-  .section-header{
-    margin-top:2rem;
-    margin-bottom:1.5rem;
-    padding-bottom:0.75rem;
-    border-bottom:2px solid #e5e7eb;
-  }
-  
-  .section-title{
-    font-size:22px;
-    font-weight:900;
-    color:#111827;
-    display:inline-flex;
-    align-items:center;
-    gap:0.75rem;
-  }
-  
-  .degree-badge-header{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:4px 12px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-  }
-  
-  .degree-badge-header.phd{
-    background:var(--phd-gold);
-    color:#111827;
-  }
-  
-  .degree-badge-header.ms{
-    background:var(--ms-red);
-    color:#fff;
-  }
-  
-  .degree-badge-header.combined{
-    background:var(--combined-gold);
-    color:#111827;
-  }
+  .section-header{ margin-top:2rem;margin-bottom:1.5rem;padding-bottom:0.75rem;border-bottom:2px solid #e5e7eb; }
+  .section-title{ font-size:22px;font-weight:900;color:#111827;display:inline-flex;align-items:center;gap:0.75rem; }
+  .degree-badge-header{ display:inline-flex;align-items:center;justify-content:center;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px; }
+  .degree-badge-header.phd{ background:var(--phd-gold);color:#111827; }
+  .degree-badge-header.ms{ background:var(--ms-red);color:#fff; }
+  .degree-badge-header.combined{ background:var(--combined-gold);color:#111827; }
 
   /* Grid Layout */
-  .members-grid{
-    display:grid;
-    gap:20px;
-    grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
-  }
-  
-  @media (max-width: 768px) {
-    .members-grid{
-      grid-template-columns:1fr;
-      gap:16px;
-    }
-  }
+  .members-grid{ display:grid;gap:20px;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); }
+  @media (max-width: 768px) { .members-grid{ grid-template-columns:1fr; gap:16px; } }
 
   /* Member Cards */
-  .member-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:1rem;
-    overflow:hidden;
-    transition:all 0.2s;
-  }
-  
-  .member-card:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 24px rgba(0,0,0,0.08);
-  }
-  
-  /* Card Color Banner */
-  .card-banner{
-    height:6px;
-  }
-  
-  .card-banner.phd{
-    background:var(--phd-gold);
-  }
-  
-  .card-banner.ms{
-    background:var(--ms-red);
-  }
-  
-  .card-banner.combined{
-    background:var(--combined-gold);
-  }
-  
-  /* Card Content */
-  .card-content{
-    padding:20px;
-  }
-  
-  .member-info{
-    display:flex;
-    gap:16px;
-  }
-  
+  .member-card{ background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;transition:all 0.2s; }
+  .member-card:hover{ transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.08); }
+
+  .card-banner{ height:6px; }
+  .card-banner.phd{ background:var(--phd-gold); }
+  .card-banner.ms{ background:var(--ms-red); }
+  .card-banner.combined{ background:var(--combined-gold); }
+
+  .card-content{ padding:20px; }
+  .member-info{ display:flex;gap:16px; }
+
   /* Avatar */
   .member-avatar{
-    flex-shrink:0;
-    width:90px;
-    height:112px;
-    border-radius:0.75rem;
-    object-fit:cover;
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
+    flex-shrink:0;width:90px;height:112px;border-radius:0.75rem;object-fit:cover;background:#f8fafc;border:1px solid #e5e7eb;
   }
-  
-  @media (max-width: 480px) {
-    .member-avatar{
-      width:75px;
-      height:94px;
-    }
-  }
-  
-  /* Member Details */
-  .member-details{
-    flex:1;
-    min-width:0;
-  }
-  
-  .member-name{
-    font-size:18px;
-    font-weight:900;
-    color:#111827;
-    margin-bottom:4px;
-  }
-  
-  .member-role{
-    display:inline-flex;
-    align-items:center;
-    padding:3px 10px;
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:999px;
-    font-size:11px;
-    font-weight:700;
-    text-transform:uppercase;
-    margin-bottom:8px;
-  }
-  
-  .member-role.combined{
-    background:var(--combined-gold);
-    border-color:var(--combined-gold);
-    color:#111827;
-  }
-  
-  .member-period{
-    font-size:12px;
-    color:#6b7280;
-    margin-bottom:12px;
-  }
-  
-  .member-field{
-    font-size:13px;
-    color:#374151;
-    margin-bottom:6px;
-  }
-  
-  .member-field strong{
-    font-weight:700;
-    color:#111827;
-  }
-  
-  .member-email{
-    color:#3b82f6;
-    text-decoration:none;
-    word-break:break-all;
-  }
-  
-  .member-email:hover{
-    text-decoration:underline;
-  }
-  
-  /* More Details Button */
-  .btn-details{
-    margin-top:12px;
-    padding:8px 16px;
-    background:#111827;
-    color:#fff;
-    border:none;
-    border-radius:0.5rem;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-    transition:all 0.2s;
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-  }
-  
-  .btn-details:hover{
-    background:#1f2937;
-    transform:translateX(2px);
-  }
-  
-  .btn-details.phd:hover{
-    background:var(--phd-gold);
-    color:#111827;
-  }
-  
-  .btn-details.ms:hover{
-    background:var(--ms-red);
-  }
-  
-  .btn-details.combined:hover{
-    background:var(--combined-gold);
-    color:#111827;
-  }
+  @media (max-width: 480px) { .member-avatar{ width:75px;height:94px; } }
 
-  /* Modal Overlay */
-  .modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.5);
-    z-index:9998;
-    display:none;
-    opacity:0;
-    transition:opacity 0.3s;
+  /* Member Details */
+  .member-details{ flex:1;min-width:0; }
+  .member-name{ font-size:18px;font-weight:900;color:#111827;margin-bottom:4px; }
+  .member-role{ display:inline-flex;align-items:center;padding:3px 10px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:8px; }
+  .member-role.combined{ background:var(--combined-gold);border-color:var(--combined-gold);color:#111827; }
+  .member-period{ font-size:12px;color:#6b7280;margin-bottom:12px; }
+  .member-field{ font-size:13px;color:#374151;margin-bottom:6px; }
+  .member-field strong{ font-weight:700;color:#111827; }
+  .member-email{ color:#3b82f6;text-decoration:none;word-break:break-all; }
+  .member-email:hover{ text-decoration:underline; }
+
+  .btn-details{
+    margin-top:12px;padding:8px 16px;background:#111827;color:#fff;border:none;border-radius:0.5rem;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:4px;
   }
-  
-  .modal-overlay.show{
-    display:block;
-    opacity:1;
-  }
-  
-  /* Modal Panel */
+  .btn-details:hover{ background:#1f2937;transform:translateX(2px); }
+  .btn-details.phd:hover{ background:var(--phd-gold);color:#111827; }
+  .btn-details.ms:hover{ background:var(--ms-red); }
+  .btn-details.combined:hover{ background:var(--combined-gold);color:#111827; }
+
+  /* Modal */
+  .modal-overlay{ position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;display:none;opacity:0;transition:opacity 0.3s; }
+  .modal-overlay.show{ display:block;opacity:1; }
   .modal-panel{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%) scale(0.95);
-    width:90%;
-    max-width:600px;
-    max-height:85vh;
-    background:#fff;
-    border-radius:1rem;
-    z-index:9999;
-    display:none;
-    opacity:0;
-    transition:all 0.3s;
-    overflow:hidden;
+    position:fixed;top:50%;left:50%;transform:translate(-50%, -50%) scale(0.95);
+    width:90%;max-width:600px;max-height:85vh;background:#fff;border-radius:1rem;z-index:9999;display:none;opacity:0;transition:all 0.3s;overflow:hidden;
   }
-  
-  .modal-panel.show{
-    display:flex;
-    flex-direction:column;
-    opacity:1;
-    transform:translate(-50%, -50%) scale(1);
-  }
-  
-  /* Modal Header */
-  .modal-header{
-    padding:20px;
-    border-bottom:1px solid #e5e7eb;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  
-  .modal-title{
-    font-size:18px;
-    font-weight:900;
-    color:#111827;
-  }
-  
-  .modal-close{
-    width:32px;
-    height:32px;
-    border-radius:0.5rem;
-    border:none;
-    background:#f3f4f6;
-    color:#111827;
-    font-size:20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.2s;
-  }
-  
-  .modal-close:hover{
-    background:#e5e7eb;
-  }
-  
-  /* Modal Degree Banner */
-  .modal-degree{
-    padding:12px 20px;
-    font-size:13px;
-    font-weight:800;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-  }
-  
-  .modal-degree.phd{
-    background:var(--phd-gold);
-    color:#111827;
-  }
-  
-  .modal-degree.ms{
-    background:var(--ms-red);
-    color:#fff;
-  }
-  
-  .modal-degree.combined{
-    background:var(--combined-gold);
-    color:#111827;
-  }
-  
-  /* Modal Body */
-  .modal-body{
-    padding:20px;
-    overflow-y:auto;
-    flex:1;
-  }
-  
-  .modal-section{
-    margin-bottom:24px;
-  }
-  
-  .modal-section:last-child{
-    margin-bottom:0;
-  }
-  
-  .modal-section-title{
-    font-size:15px;
-    font-weight:900;
-    color:#111827;
-    margin-bottom:12px;
-    padding-bottom:6px;
-    border-bottom:2px solid #f3f4f6;
-  }
-  
-  /* Education Items */
-  .edu-item{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:0.75rem;
-    padding:14px;
-    margin-bottom:10px;
-  }
-  
-  .edu-degree{
-    display:inline-flex;
-    padding:2px 8px;
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:999px;
-    font-size:11px;
-    font-weight:800;
-    margin-bottom:8px;
-  }
-  
-  .edu-degree.phd{
-    border-color:var(--phd-gold);
-    color:var(--phd-gold);
-  }
-  
-  .edu-degree.ms{
-    border-color:var(--ms-red);
-    color:var(--ms-red);
-  }
-  
-  .edu-degree.bs{
-    border-color:#6b7280;
-    color:#6b7280;
-  }
-  
-  .edu-school{
-    font-weight:800;
-    color:#111827;
-    font-size:14px;
-  }
-  
-  .edu-year{
-    font-size:12px;
-    color:#6b7280;
-    float:right;
-  }
-  
-  .edu-dept{
-    font-size:13px;
-    color:#374151;
-    margin-top:4px;
-  }
-  
-  /* Publications & Honors Lists */
-  .modal-list{
-    margin-left:20px;
-    color:#374151;
-    font-size:13px;
-    line-height:1.7;
-  }
-  
-  .modal-list li{
-    margin-bottom:8px;
-  }
-  
-  /* Mobile Optimization */
+  .modal-panel.show{ display:flex;flex-direction:column;opacity:1;transform:translate(-50%, -50%) scale(1); }
+  .modal-header{ padding:20px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center; }
+  .modal-title{ font-size:18px;font-weight:900;color:#111827; }
+  .modal-close{ width:32px;height:32px;border-radius:0.5rem;border:none;background:#f3f4f6;color:#111827;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s; }
+  .modal-close:hover{ background:#e5e7eb; }
+  .modal-degree{ padding:12px 20px;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px; }
+  .modal-degree.phd{ background:var(--phd-gold);color:#111827; }
+  .modal-degree.ms{ background:var(--ms-red);color:#fff; }
+  .modal-degree.combined{ background:var(--combined-gold);color:#111827; }
+  .modal-body{ padding:20px;overflow-y:auto;flex:1; }
+  .modal-section{ margin-bottom:24px; }
+  .modal-section:last-child{ margin-bottom:0; }
+  .modal-section-title{ font-size:15px;font-weight:900;color:#111827;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #f3f4f6; }
+  .edu-item{ background:#f8fafc;border:1px solid #e5e7eb;border-radius:0.75rem;padding:14px;margin-bottom:10px; }
+  .edu-degree{ display:inline-flex;padding:2px 8px;background:#fff;border:1px solid #e5e7eb;border-radius:999px;font-size:11px;font-weight:800;margin-bottom:8px; }
+  .edu-degree.phd{ border-color:var(--phd-gold);color:var(--phd-gold); }
+  .edu-degree.ms{ border-color:var(--ms-red);color:var(--ms-red); }
+  .edu-degree.bs{ border-color:#6b7280;color:#6b7280; }
+  .edu-school{ font-weight:800;color:#111827;font-size:14px; }
+  .edu-year{ font-size:12px;color:#6b7280;float:right; }
+  .edu-dept{ font-size:13px;color:#374151;margin-top:4px; }
+
   @media (max-width: 640px) {
-    .modal-panel{
-      width:100%;
-      height:100%;
-      max-width:100%;
-      max-height:100%;
-      border-radius:0;
-    }
-    
-    .member-info{
-      flex-direction:column;
-      text-align:center;
-    }
-    
-    .member-avatar{
-      margin:0 auto;
-    }
-    
-    .member-name{
-      font-size:16px;
-    }
+    .modal-panel{ width:100%;height:100%;max-width:100%;max-height:100%;border-radius:0; }
+    .member-info{ flex-direction:column;text-align:center; }
+    .member-avatar{ margin:0 auto; }
+    .member-name{ font-size:16px; }
   }
 </style>
 
@@ -548,26 +179,25 @@ permalink: /members-current.html
       Doctoral Students
     </h2>
   </div>
-  
+
   <div class="members-grid">
     <!-- PhD Student 1 -->
     <div class="member-card">
       <div class="card-banner phd"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/eok-cho.jpg' | relative_url }}" 
-               alt="Eok Cho" 
+          <img src="{{ '/assets/img/members/eok-cho.jpg' | relative_url }}"
+               alt="Eok Cho"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">Eok Cho (조 억)</h3>
             <span class="member-role">Ph.D. Candidate</span>
             <div class="member-period">Sep 2019 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Reinforcement Learning, Game AI</div>
             <div class="member-field">
-              <strong>Research:</strong> Reinforcement Learning, Game AI
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:eok.cho@example.edu" class="member-email">eok.cho@example.edu</a>
             </div>
             <button type="button" class="btn-details phd" onclick="openModal('eok-cho', 'phd'); return false;">
@@ -586,26 +216,25 @@ permalink: /members-current.html
       Combined Program Students
     </h2>
   </div>
-  
+
   <div class="members-grid">
     <!-- Combined Student 1 -->
     <div class="member-card">
       <div class="card-banner combined"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/jane-choi.jpg' | relative_url }}" 
-               alt="Jane Choi" 
+          <img src="{{ '/assets/img/members/jane-choi.jpg' | relative_url }}"
+               alt="Jane Choi"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">Jane Choi (최 제인)</h3>
             <span class="member-role combined">Ph.D-M.S. Combined</span>
             <div class="member-period">Mar 2023 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Deep Learning for Finance, Portfolio Optimization</div>
             <div class="member-field">
-              <strong>Research:</strong> Deep Learning for Finance, Portfolio Optimization
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:j.choi@example.edu" class="member-email">j.choi@example.edu</a>
             </div>
             <button type="button" class="btn-details combined" onclick="openModal('jane-choi', 'combined'); return false;">
@@ -621,19 +250,18 @@ permalink: /members-current.html
       <div class="card-banner combined"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/david-han.jpg' | relative_url }}" 
-               alt="David Han" 
+          <img src="{{ '/assets/img/members/david-han.jpg' | relative_url }}"
+               alt="David Han"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">David Han (한 데이비드)</h3>
             <span class="member-role combined">Ph.D-M.S. Combined</span>
             <div class="member-period">Sep 2022 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Algorithmic Trading, Market Microstructure</div>
             <div class="member-field">
-              <strong>Research:</strong> Algorithmic Trading, Market Microstructure
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:d.han@example.edu" class="member-email">d.han@example.edu</a>
             </div>
             <button type="button" class="btn-details combined" onclick="openModal('david-han', 'combined'); return false;">
@@ -652,26 +280,25 @@ permalink: /members-current.html
       Master Students
     </h2>
   </div>
-  
+
   <div class="members-grid">
     <!-- MS Student 1 -->
     <div class="member-card">
       <div class="card-banner ms"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/lorem-lee.jpg' | relative_url }}" 
-               alt="Lorem Lee" 
+          <img src="{{ '/assets/img/members/lorem-lee.jpg' | relative_url }}"
+               alt="Lorem Lee"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">Lorem Lee (이 로렘)</h3>
             <span class="member-role">Master Student</span>
             <div class="member-period">Mar 2024 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Financial NLP, Evaluation</div>
             <div class="member-field">
-              <strong>Research:</strong> Financial NLP, Evaluation
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:l.lee@example.edu" class="member-email">l.lee@example.edu</a>
             </div>
             <button type="button" class="btn-details ms" onclick="openModal('lorem-lee', 'ms'); return false;">
@@ -687,19 +314,18 @@ permalink: /members-current.html
       <div class="card-banner ms"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/ipsum-park.jpg' | relative_url }}" 
-               alt="Ipsum Park" 
+          <img src="{{ '/assets/img/members/ipsum-park.jpg' | relative_url }}"
+               alt="Ipsum Park"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">Ipsum Park (박 입섬)</h3>
             <span class="member-role">Master Student</span>
             <div class="member-period">Mar 2024 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Time-series, Asset Pricing</div>
             <div class="member-field">
-              <strong>Research:</strong> Time-series, Asset Pricing
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:i.park@example.edu" class="member-email">i.park@example.edu</a>
             </div>
             <button type="button" class="btn-details ms" onclick="openModal('ipsum-park', 'ms'); return false;">
@@ -715,19 +341,18 @@ permalink: /members-current.html
       <div class="card-banner ms"></div>
       <div class="card-content">
         <div class="member-info">
-          <img src="{{ '/assets/img/members/dolor-kim.jpg' | relative_url }}" 
-               alt="Dolor Kim" 
+          <img src="{{ '/assets/img/members/dolor-kim.jpg' | relative_url }}"
+               alt="Dolor Kim"
                class="member-avatar"
-               onerror="this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+               loading="lazy" decoding="async"
+               onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           <div class="member-details">
             <h3 class="member-name">Dolor Kim (김 돌로르)</h3>
             <span class="member-role">Master Student</span>
             <div class="member-period">Sep 2023 - Present</div>
+            <div class="member-field"><strong>Research:</strong> Data-Driven Trading</div>
             <div class="member-field">
-              <strong>Research:</strong> Data-Driven Trading
-            </div>
-            <div class="member-field">
-              <strong>Email:</strong> 
+              <strong>Email:</strong>
               <a href="mailto:d.kim@example.edu" class="member-email">d.kim@example.edu</a>
             </div>
             <button type="button" class="btn-details ms" onclick="openModal('dolor-kim', 'ms'); return false;">
@@ -743,10 +368,10 @@ permalink: /members-current.html
 
 <!-- ===== Modal ===== -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
-<div class="modal-panel" id="modalPanel">
+<div class="modal-panel" id="modalPanel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-header">
     <h3 class="modal-title" id="modalTitle">Member Profile</h3>
-    <button type="button" class="modal-close" onclick="closeModal()">✕</button>
+    <button type="button" class="modal-close" aria-label="Close" onclick="closeModal()">✕</button>
   </div>
   <div class="modal-degree" id="modalDegree">Student</div>
   <div class="modal-body" id="modalBody">
@@ -762,8 +387,8 @@ const memberData = {
     name: 'Eok Cho (조 억)',
     role: 'Ph.D. Candidate',
     education: [
-      {degree: 'Ph.D.', school: 'Dongduk Women\'s University', year: 'In Progress', dept: 'Business Analytics'},
-      {degree: 'B.S.', school: 'Dongduk Women\'s University', year: '2018', dept: 'Mathematics'}
+      {degree: 'Ph.D.', school: 'Dongduk Women\\'s University', year: 'In Progress', dept: 'Business Analytics'},
+      {degree: 'B.S.', school: 'Dongduk Women\\'s University', year: '2018', dept: 'Mathematics'}
     ],
     publications: [
       'Lorem Ipsum; Dolor Sit (2025). "Multilingual Challenges in Automated Evaluators". AAAI Workshop on Preparing Good Data for Generative AI.',
@@ -778,7 +403,7 @@ const memberData = {
     name: 'Lorem Lee (이 로렘)',
     role: 'Master Student',
     education: [
-      {degree: 'M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2026', dept: 'Financial Data Science'},
+      {degree: 'M.S.', school: 'Dongduk Women\\'s University', year: 'Expected 2026', dept: 'Financial Data Science'},
       {degree: 'B.S.', school: 'Korea University', year: '2024', dept: 'Computer Science'}
     ],
     publications: [
@@ -792,7 +417,7 @@ const memberData = {
     name: 'Ipsum Park (박 입섬)',
     role: 'Master Student',
     education: [
-      {degree: 'M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2026', dept: 'Business Analytics'},
+      {degree: 'M.S.', school: 'Dongduk Women\\'s University', year: 'Expected 2026', dept: 'Business Analytics'},
       {degree: 'B.S.', school: 'KAIST', year: '2023', dept: 'Industrial Engineering'}
     ],
     publications: [
@@ -806,7 +431,7 @@ const memberData = {
     name: 'Dolor Kim (김 돌로르)',
     role: 'Master Student',
     education: [
-      {degree: 'M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2025', dept: 'Financial Data Science'},
+      {degree: 'M.S.', school: 'Dongduk Women\\'s University', year: 'Expected 2025', dept: 'Financial Data Science'},
       {degree: 'B.S.', school: 'Seoul National University', year: '2023', dept: 'Statistics'}
     ],
     publications: [
@@ -820,14 +445,14 @@ const memberData = {
     name: 'Jane Choi (최 제인)',
     role: 'Ph.D-M.S. Combined',
     education: [
-      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2028', dept: 'Business Analytics'},
+      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\\'s University', year: 'Expected 2028', dept: 'Business Analytics'},
       {degree: 'B.S.', school: 'Yonsei University', year: '2023', dept: 'Applied Mathematics'}
     ],
     publications: [
       'Choi, J. & Kim, S. (2024). "Neural Network Approaches to Portfolio Management". KDD Workshop on AI in Finance.'
     ],
     honors: [
-      'Graduate Fellowship, Dongduk Women\'s University, 2023-2028',
+      'Graduate Fellowship, Dongduk Women\\'s University, 2023-2028',
       'Summa Cum Laude, Yonsei University, 2023'
     ]
   },
@@ -835,7 +460,7 @@ const memberData = {
     name: 'David Han (한 데이비드)',
     role: 'Ph.D-M.S. Combined',
     education: [
-      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\'s University', year: 'Expected 2027', dept: 'Financial Data Science'},
+      {degree: 'Ph.D-M.S.', school: 'Dongduk Women\\'s University', year: 'Expected 2027', dept: 'Financial Data Science'},
       {degree: 'B.S.', school: 'Seoul National University', year: '2022', dept: 'Computer Science & Economics (Double Major)'}
     ],
     publications: [
@@ -844,19 +469,18 @@ const memberData = {
     ],
     honors: [
       'Best Paper Award, ICML Workshop on Finance, 2023',
-      'Dean\'s List, Seoul National University, 2020-2022'
+      'Dean\\'s List, Seoul National University, 2020-2022'
     ]
   }
 };
 
 // Calculate and update statistics
 function updateStatistics() {
-  let phdCount = 1;  // Eok Cho
-  let msCount = 3;   // Lorem Lee, Ipsum Park, Dolor Kim
-  let combinedCount = 2; // Jane Choi, David Han
+  let phdCount = 1;
+  let msCount = 3;
+  let combinedCount = 2;
   let totalCount = phdCount + msCount + combinedCount;
-  
-  // Animate numbers
+
   animateNumber('phdCount', phdCount);
   animateNumber('msCount', msCount);
   animateNumber('combinedCount', combinedCount);
@@ -866,9 +490,9 @@ function updateStatistics() {
 // Animate number counting effect
 function animateNumber(elementId, finalValue) {
   let current = 0;
-  const increment = Math.ceil(finalValue / 20);
+  const increment = Math.max(1, Math.ceil(finalValue / 20));
   const element = document.getElementById(elementId);
-  
+
   const timer = setInterval(() => {
     current += increment;
     if (current >= finalValue) {
@@ -882,59 +506,55 @@ function animateNumber(elementId, finalValue) {
 // Modal functions
 function openModal(memberId, degreeType) {
   const member = memberData[memberId];
-  if (!member) return;
-  
+  if (!member) return false;
+
   // Set modal content
   document.getElementById('modalTitle').textContent = member.name;
-  document.getElementById('modalDegree').textContent = member.role;
-  document.getElementById('modalDegree').className = 'modal-degree ' + degreeType;
-  
+  const degreeEl = document.getElementById('modalDegree');
+  degreeEl.textContent = member.role;
+  degreeEl.className = 'modal-degree ' + degreeType;
+
   // Build modal body content
   let bodyContent = '';
-  
+
   // Education section
   if (member.education && member.education.length > 0) {
     bodyContent += '<div class="modal-section"><h4 class="modal-section-title">Education</h4>';
     member.education.forEach(edu => {
-      const degreeClass = edu.degree.toLowerCase().replace('.', '').replace('-', '');
+      const degreeClass = edu.degree.toLowerCase().replaceAll('.', '').replaceAll('-', '');
       bodyContent += `
         <div class="edu-item">
           <span class="edu-degree ${degreeClass}">${edu.degree}</span>
           <span class="edu-year">${edu.year}</span>
           <div class="edu-school">${edu.school}</div>
           <div class="edu-dept">${edu.dept}</div>
-        </div>
-      `;
+        </div>`;
     });
     bodyContent += '</div>';
   }
-  
+
   // Publications section
   if (member.publications && member.publications.length > 0) {
     bodyContent += '<div class="modal-section"><h4 class="modal-section-title">Publications</h4><ol class="modal-list">';
-    member.publications.forEach(pub => {
-      bodyContent += `<li>${pub}</li>`;
-    });
+    member.publications.forEach(pub => { bodyContent += `<li>${pub}</li>`; });
     bodyContent += '</ol></div>';
   }
-  
+
   // Honors section
   if (member.honors && member.honors.length > 0) {
     bodyContent += '<div class="modal-section"><h4 class="modal-section-title">Honors & Awards</h4><ol class="modal-list">';
-    member.honors.forEach(honor => {
-      bodyContent += `<li>${honor}</li>`;
-    });
+    member.honors.forEach(h => { bodyContent += `<li>${h}</li>`; });
     bodyContent += '</ol></div>';
   }
-  
+
   document.getElementById('modalBody').innerHTML = bodyContent;
-  
+
   // Show modal
   document.getElementById('modalOverlay').classList.add('show');
   document.getElementById('modalPanel').classList.add('show');
   document.body.style.overflow = 'hidden';
-  
-  return false; // Prevent default action
+
+  return false;
 }
 
 function closeModal() {
@@ -946,9 +566,7 @@ function closeModal() {
 
 // ESC key to close modal
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeModal();
-  }
+  if (e.key === 'Escape') closeModal();
 });
 
 // Initialize statistics on page load
