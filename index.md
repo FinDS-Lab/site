@@ -705,7 +705,7 @@ title: home
           <div class="carousel-overlay">
             <div class="carousel-content">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Research<br>Accomplishments</h1>
+              <h1 class="hero-title">Accomplishments</h1>
               <div class="hero-buttons">
                 <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
                 <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
@@ -720,7 +720,7 @@ title: home
           <div class="carousel-overlay">
             <div class="carousel-content">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Latest<br>Updates</h1>
+              <h1 class="hero-title">Updates</h1>
               <div class="hero-buttons">
                 <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
                 <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
