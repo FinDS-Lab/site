@@ -302,8 +302,8 @@ permalink: /members-director.html
                  onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
           </div>
           
-          <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem;">Insu Choi, Ph.D.</h1>
-          <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수 교수</p>
+          <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
+          <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
           
           <div class="profile-info">
             <div class="profile-item">
@@ -438,7 +438,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Education -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Education</div>
         <div class="card-body">
           <ul class="timeline edu">
@@ -504,7 +504,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Employment -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Employment</div>
         <div class="card-body">
           <ul class="timeline">
@@ -543,7 +543,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Professional Affiliations -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Professional Affiliations</div>
         <div class="card-body">
           <ul class="timeline">
@@ -576,17 +576,17 @@ permalink: /members-director.html
       </div>
 
       <!-- Collaboration Network -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Collaboration Network</div>
         <div class="card-body">
           <div class="network-controls">
             <span class="slider-label">Min. Papers:</span>
             <div class="slider-container">
               <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="0" step="1">
+              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
               <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
             </div>
-            <span class="slider-value" id="sliderValue">0</span>
+            <span class="slider-value" id="sliderValue">1+</span>
           </div>
           
           <canvas id="networkCanvas"></canvas>
@@ -598,7 +598,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Publication Statistics -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Publication Statistics</div>
         <div class="card-body">
           <div class="pub-stats">
@@ -635,7 +635,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Mentoring Program -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Mentoring Program</div>
         <div class="card-body">
           <!-- 2024 -->
@@ -824,7 +824,7 @@ permalink: /members-director.html
   }
 
   // Network Visualization
-  let currentThreshold = 0;
+  let currentThreshold = 1; // 초기값을 1로 변경
   let collaborations = {};
   let maxCollaborations = 0;
   
