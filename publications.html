@@ -15,491 +15,118 @@ permalink: /publications.html
   :root{
     --journal-gold: rgb(214, 177, 77);
     --conference-red: rgb(172, 14, 14);
-    --purple: 124,58,237;
+    --joint-orange: 217,119,6; /* joint conf 색상 */
   }
-  
+
   /* Toolbar */
   .toolbar{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:1rem;
-    padding:16px;
-    margin-top:20px;
+    display:flex;flex-direction:column;gap:14px;
+    background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px;
   }
-  
+
   /* Search Container */
-  .search-container{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  
-  .search{
-    flex:1;
-    min-width:0;
-  }
-  
-  .search input{
-    width:100%;
-    border:1px solid #e5e7eb;
-    border-radius:.6rem;
-    padding:.6rem .8rem;
-    font-size:14px;
-    box-sizing:border-box;
-  }
-  
-  /* Count Badge */
-  .count{
-    font-size:13px;
-    color:#6b7280;
-    font-weight:600;
-    background:#fff;
-    padding:.4rem .8rem;
-    border:1px solid #e5e7eb;
-    border-radius:.5rem;
-    white-space:nowrap;
-  }
-  
-  /* Filter Section */
-  .filter-section{
-    margin-top:8px;
-  }
-  
-  .filter-label{
-    font-size:12px;
-    font-weight:700;
-    color:#6b7280;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-    margin-bottom:8px;
-    display:block;
-  }
-  
-  /* Chips Container */
-  .chips{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  
-  /* Filter Chips */
+  .search-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .search{flex:1;min-width:0;}
+  .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box;}
+  .count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap;}
+
+  .filter-section{margin-top:8px;}
+  .filter-label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
   .chip{
-    display:inline-flex;
-    align-items:center;
-    padding:.5rem 1rem;
-    border-radius:999px;
-    border:1px solid transparent;
-    background:#fff;
-    font-weight:700;
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-    white-space:nowrap;
+    display:inline-flex;align-items:center;padding:.5rem 1rem;border-radius:999px;border:1px solid transparent;background:#fff;
+    font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap;
   }
-  
-  .chip:hover{
-    transform:translateY(-1px);
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  }
-  
-  .chip.is-on{
-    box-shadow:inset 0 0 0 2px #111827;
-  }
-  
-  .chip:focus-visible{
-    outline:2px solid #111827;
-    outline-offset:2px;
-  }
-  
-  /* Type-specific chip colors */
-  .chip-journal.is-on{
-    background:var(--journal-gold);
-    color:#111;
-  }
-  
-  .chip-conference.is-on{
-    background:var(--conference-red);
-    color:#fff;
-  }
+  .chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1);}
+  .chip.is-on{box-shadow:inset 0 0 0 2px #111827;}
+  .chip:focus-visible{outline:2px solid #111827;outline-offset:2px;}
+  .chip-journal.is-on{background:var(--journal-gold);color:#111;}
+  .chip-conference.is-on{background:var(--conference-red);color:#fff;}
 
   /* Publications Grid */
-  .year-section{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:1rem;
-    overflow:hidden;
-    margin-bottom:16px;
-  }
-  
-  .year-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:12px 16px;
-    background:#f8fafc;
-    border-bottom:1px solid #e5e7eb;
-  }
-  
-  .year-title{
-    font-size:18px;
-    font-weight:900;
-    color:#111827;
-  }
-  
-  .year-toggle{
-    padding:.4rem .8rem;
-    border:1px solid #e5e7eb;
-    border-radius:.6rem;
-    background:#fff;
-    font-weight:700;
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-  }
-  
-  .year-toggle:hover{
-    background:#f8fafc;
-  }
-  
-  .year-content{
-    padding:16px;
-  }
-  
-  .paper-list{
-    display:grid;
-    gap:14px;
-  }
+  .year-section{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;margin-bottom:16px;}
+  .year-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#f8fafc;border-bottom:1px solid #e5e7eb;}
+  .year-title{font-size:18px;font-weight:900;color:#111827;}
+  .year-toggle{padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.6rem;background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;}
+  .year-toggle:hover{background:#f8fafc;}
+  .year-content{padding:16px;}
+  .paper-list{display:grid;gap:14px;}
 
   /* Paper Card */
-  .paper-card{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:1rem;
-    overflow:hidden;
-  }
-  
-  .paper-row{
-    display:grid;
-    grid-template-columns:56px 1fr;
-  }
-  
+  .paper-card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;}
+  .paper-row{display:grid;grid-template-columns:56px 1fr;}
   .paper-left{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-    font-size:13px;
-    cursor:pointer;
-    transition:all 0.2s;
-    color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;
+    color:#fff;user-select:none;
   }
-  
-  .paper-left.journal{
-    background:var(--journal-gold);
-  }
-  
-  .paper-left.conference{
-    background:var(--conference-red);
-  }
-  
-  .paper-left:hover{
-    opacity:0.85;
-  }
-  
-  .paper-left.empty{
-    background:#f1f5f9;
-    color:#e5e7eb;
-    cursor:default;
-  }
-  
-  .paper-left.empty:hover{
-    opacity:1;
-  }
-  
-  .paper-body{
-    padding:14px 16px;
-  }
-  
-  .paper-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:8px;
-  }
-  
-  /* Date Badge */
-  .paper-date{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:4px 10px;
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:999px;
-    font-size:11px;
-    font-weight:700;
-    color:#374151;
-  }
-  
-  .paper-date .year{
-    color:#111827;
-  }
-  
-  .paper-date .accepted{
-    color:#6b7280;
-    font-weight:600;
-  }
-  
-  .paper-title{
-    font-weight:900;
-    font-size:15px;
-    color:#111827;
-    margin-top:8px;
-  }
-  
-  .paper-meta{
-    margin-top:6px;
-    color:#374151;
-    font-size:13px;
-  }
-  
-  .paper-venue{
-    margin-top:4px;
-    color:#6b7280;
-    font-size:12px;
-  }
-  
-  /* Abstract Section */
-  .paper-abstract{
-    margin-top:10px;
-    padding:10px;
-    background:#f8fafc;
-    border-radius:.6rem;
-    font-size:13px;
-    color:#374151;
-    line-height:1.6;
-    display:none;
-  }
-  
-  .paper-abstract.show{
-    display:block;
-  }
-  
-  .abstract-label{
-    font-weight:700;
-    color:#111827;
-    margin-bottom:4px;
-  }
-  
-  .paper-foot{
-    margin-top:10px;
-    display:flex;
-    gap:8px;
-  }
+  .paper-left.journal{background:var(--journal-gold);color:#111;}
+  .paper-left.conference{background:var(--conference-red);}
+  /* joint conference (신규) */
+  .paper-left.joint{background:rgba(var(--joint-orange), .95);}
+  /* preprint 배너 회색 */
+  .paper-left.preprint{background:#e5e7eb;color:#6b7280;}
 
-  /* Index Badges - Gold scale for journals */
-  .idx{
-    display:inline-flex;
-    align-items:center;
-    padding:.3rem .6rem;
-    border-radius:9999px;
-    font-weight:800;
-    font-size:11px;
-    white-space:nowrap;
+  .paper-left.empty{background:#f1f5f9;color:#e5e7eb;}
+  .paper-body{padding:14px 16px;}
+
+  .paper-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+  .paper-date{
+    display:inline-flex;align-items:center;gap:8px;padding:4px 10px;background:#f8fafc;border:1px solid #e5e7eb;
+    border-radius:999px;font-size:11px;font-weight:700;color:#374151;
   }
-  
-  /* Top tier - full gold */
-  .idx-scie, .idx-ssci, .idx-ahci{
-    background:rgba(214, 177, 77, 0.95);
-    color:#111;
-  }
-  
-  /* Second tier - lighter gold */
-  .idx-scopus{
-    background:rgba(214, 177, 77, 0.65);
-    color:#111;
-  }
-  
-  .idx-other-intl{
-    background:rgba(214, 177, 77, 0.45);
-    color:#111;
-  }
-  
-  /* Korean journals - even lighter */
-  .idx-kci-exc{
-    background:rgba(214, 177, 77, 0.35);
-    color:#111;
-  }
-  
-  .idx-kci{
-    background:rgba(214, 177, 77, 0.25);
-    color:#111;
-  }
-  
-  .idx-other-domestic{
-    background:rgba(214, 177, 77, 0.15);
-    color:#111;
-  }
-  
-  /* Conferences - red scale */
-  .idx-intl-conf{
-    background:rgba(172, 14, 14, 0.85);
-    color:#fff;
-  }
-  
-  .idx-domestic-conf{
-    background:rgba(172, 14, 14, 0.45);
-    color:#fff;
-  }
-  
-  /* Preprint/Working - white/very light */
-  .idx-preprint, .idx-working{
-    background:#fff;
-    border:1px solid #e5e7eb;
-    color:#6b7280;
-  }
+  .paper-date .year{color:#111827;}
+  .paper-date .pub{color:#6b7280;font-weight:600;}
+
+  .paper-title{font-weight:900;font-size:15px;color:#111827;margin-top:8px;}
+  .paper-meta{margin-top:6px;color:#374151;font-size:13px;}
+  .paper-venue{margin-top:4px;color:#6b7280;font-size:12px;}
+
+  .paper-foot{margin-top:10px;display:flex;gap:8px;}
+
+  /* Index Badges */
+  .idx{display:inline-flex;align-items:center;padding:.3rem .6rem;border-radius:9999px;font-weight:800;font-size:11px;white-space:nowrap;}
+  .idx-scie,.idx-ssci,.idx-ahci{background:rgba(214,177,77,.95);color:#111;}
+  .idx-scopus{background:rgba(214,177,77,.65);color:#111;}
+  .idx-other-intl{background:rgba(214,177,77,.45);color:#111;}
+  .idx-kci-exc{background:rgba(214,177,77,.35);color:#111;}
+  .idx-kci{background:rgba(214,177,77,.25);color:#111;}
+  .idx-other-domestic{background:rgba(214,177,77,.15);color:#111;}
+  .idx-intl-conf{background:rgba(172,14,14,.85);color:#fff;}
+  .idx-domestic-conf{background:rgba(172,14,14,.45);color:#fff;}
+  /* 신규: International - Domestic Joint Conference */
+  .idx-joint-conf{background:rgba(var(--joint-orange), .85);color:#fff;}
+  /* Preprint/Working */
+  .idx-preprint,.idx-working{background:#fff;border:1px solid #e5e7eb;color:#6b7280;}
 
   /* Buttons */
-  .btn{
-    padding:.4rem .8rem;
-    border:1px solid #e5e7eb;
-    border-radius:.6rem;
-    background:#fff;
-    font-weight:700;
-    font-size:12px;
-    cursor:pointer;
-    transition:all 0.2s;
-  }
-  
-  .btn:hover{
-    background:#f8fafc;
-  }
+  .btn{padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.6rem;background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;}
+  .btn:hover{background:#f8fafc;}
 
   /* Modal */
-  .modal-backdrop{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.5);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:99999;
-  }
-  
-  .modal{
-    background:#fff;
-    border-radius:1rem;
-    max-width:720px;
-    width:100%;
-    max-height:80vh;
-    overflow:auto;
-  }
-  
-  .modal header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:16px 20px;
-    border-bottom:1px solid #e5e7eb;
-    background:#f8fafc;
-  }
-  
-  .modal-title{
-    font-size:18px;
-    font-weight:900;
-    color:#111827;
-  }
-  
-  .cite-block{
-    border:1px solid #e5e7eb;
-    border-radius:.75rem;
-    padding:12px 14px;
-    background:#f8fafc;
-  }
-  
-  .cite-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:8px;
-  }
-  
-  .cite-label{
-    font-weight:800;
-    font-size:13px;
-    color:#111827;
-  }
-  
-  .cite-text{
-    font-size:13px;
-    color:#374151;
-    line-height:1.5;
-  }
-  
-  .copy-btn{
-    border:1px solid #e5e7eb;
-    border-radius:.5rem;
-    padding:.3rem .6rem;
-    font-size:11px;
-    font-weight:800;
-    background:#fff;
-    cursor:pointer;
-  }
-  
-  .copy-btn:hover{
-    background:#f8fafc;
-  }
-  
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:20px;z-index:99999;}
+  .modal{background:#fff;border-radius:1rem;max-width:720px;width:100%;max-height:80vh;overflow:auto;}
+  .modal header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e5e7eb;background:#f8fafc;}
+  .modal-title{font-size:18px;font-weight:900;color:#111827;}
+  .cite-block{border:1px solid #e5e7eb;border-radius:.75rem;padding:12px 14px;background:#f8fafc;}
+  .cite-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .cite-label{font-weight:800;font-size:13px;color:#111827;}
+  .cite-text{font-size:13px;color:#374151;line-height:1.5;}
+  .copy-btn{border:1px solid #e5e7eb;border-radius:.5rem;padding:.3rem .6rem;font-size:11px;font-weight:800;background:#fff;cursor:pointer;}
+  .copy-btn:hover{background:#f8fafc;}
+
   /* Empty State */
   .empty-state{
-    padding:48px 20px;
-    text-align:center;
-    color:#6b7280;
-    font-size:14px;
-    font-weight:600;
-    border:1px dashed #e5e7eb;
-    border-radius:1rem;
-    background:#fff;
-    margin-top:20px;
+    padding:48px 20px;text-align:center;color:#6b7280;font-size:14px;font-weight:600;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff;margin-top:20px;
   }
 
-  /* Mobile responsive */
-  @media (max-width: 640px) {
-    .search-container{
-      flex-direction:column;
-      align-items:stretch;
-    }
-    
-    .search{
-      width:100%;
-    }
-    
-    .count{
-      text-align:center;
-      width:100%;
-    }
-    
-    .paper-row{
-      grid-template-columns:48px 1fr;
-    }
-    
-    .paper-left{
-      font-size:11px;
-    }
-    
-    .paper-title{
-      font-size:14px;
-    }
-    
-    .chip{
-      font-size:11px;
-      padding:.4rem .8rem;
-    }
+  /* Mobile */
+  @media (max-width:640px){
+    .search-container{flex-direction:column;align-items:stretch;}
+    .search{width:100%;}
+    .count{text-align:center;width:100%;}
+    .paper-row{grid-template-columns:48px 1fr;}
+    .paper-title{font-size:14px;}
+    .chip{font-size:11px;padding:.4rem .8rem;}
   }
 </style>
 
@@ -507,7 +134,8 @@ permalink: /publications.html
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <img src="{{ '/assets/img/banners/publications-hero.jpg' | relative_url }}" alt="Publications banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
+         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320"
+         loading="lazy" decoding="async" onerror="this.onerror=null; this.style.display='none';">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
@@ -525,27 +153,23 @@ permalink: /publications.html
 <!-- ===== Toolbar (Search + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <!-- Search Bar -->
     <div class="search-container">
       <div class="search">
         <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
       </div>
       <div class="count" id="count"></div>
     </div>
-    
-    <!-- Type Filter -->
+
     <div class="filter-section">
       <label class="filter-label">Publication Type</label>
       <div class="chips" id="typeChips"></div>
     </div>
-    
-    <!-- Journal Indexing Filter -->
+
     <div class="filter-section">
       <label class="filter-label">Journal Indexing</label>
       <div class="chips" id="journalChips"></div>
     </div>
-    
-    <!-- Conference Filter -->
+
     <div class="filter-section">
       <label class="filter-label">Conference</label>
       <div class="chips" id="conferenceChips"></div>
@@ -583,7 +207,7 @@ permalink: /publications.html
     11: { en: "Henry Park", ko: "박헨리" }
   };
 
-  /* ===== Sample Data ===== */
+  /* ===== Sample Data (Accepted → Published, ISO 문자열 유지) ===== */
   const PUBS = [
     {
       year: 2024,
@@ -591,10 +215,9 @@ permalink: /publications.html
       indexing_group: "SCIE",
       type: "journal",
       title: "Deep Reinforcement Learning for Automated Trading in Financial Markets",
-      authors: [1, 2, 3], // Using author IDs
+      authors: [1, 2, 3],
       venue: "IEEE Transactions on Neural Networks and Learning Systems",
-      accepted_date: "2024-03-15",
-      abstract: "This paper presents a novel deep reinforcement learning framework for automated trading in financial markets. We propose a multi-agent system that learns optimal trading strategies through interaction with historical market data. Our approach combines deep Q-networks with advanced portfolio optimization techniques to achieve superior risk-adjusted returns. Extensive experiments on real-world stock market data demonstrate the effectiveness of our method."
+      published_date: "2024-03-15"
     },
     {
       year: 2024,
@@ -604,8 +227,17 @@ permalink: /publications.html
       title: "Graph Neural Networks for Portfolio Optimization",
       authors: [4, 5, 6],
       venue: "International Conference on Machine Learning (ICML)",
-      accepted_date: "2024-02-20",
-      abstract: "Portfolio optimization is a fundamental problem in financial engineering. In this work, we introduce a graph neural network approach that models the complex relationships between financial assets. Our method captures both temporal and cross-sectional dependencies in asset returns, leading to more robust portfolio construction strategies."
+      published_date: "2024-02-20"
+    },
+    {
+      year: 2024,
+      code_label: "CJ1",
+      indexing_group: "International - Domestic Joint Conference",
+      type: "conference",
+      title: "Bridging Markets: Joint Evidence from Domestic and International Trading Venues",
+      authors: [1, 7, 10],
+      venue: "Joint Finance & Data Science Symposium",
+      published_date: "2024-06-10"
     },
     {
       year: 2023,
@@ -615,8 +247,7 @@ permalink: /publications.html
       title: "Behavioral Finance and Machine Learning: A Systematic Review",
       authors: [7, 8, 9],
       venue: "Journal of Financial Economics",
-      accepted_date: "2023-11-10",
-      abstract: "We conduct a comprehensive systematic review of the intersection between behavioral finance and machine learning. This survey covers recent advances in using ML techniques to model investor behavior, sentiment analysis, and market anomalies. We identify key research gaps and propose future research directions."
+      published_date: "2023-11-10"
     },
     {
       year: 2023,
@@ -626,8 +257,7 @@ permalink: /publications.html
       title: "Quantum Computing Applications in Risk Management",
       authors: [10, 11],
       venue: "Quantitative Finance",
-      accepted_date: "2023-09-05",
-      abstract: "Quantum computing offers unprecedented computational capabilities for solving complex optimization problems in finance. This paper explores the application of quantum algorithms to portfolio risk management, including VaR calculation and stress testing."
+      published_date: "2023-09-05"
     },
     {
       year: 2023,
@@ -637,7 +267,7 @@ permalink: /publications.html
       title: "Large Language Models for Financial Text Analysis",
       authors: [1, 11],
       venue: "arXiv preprint arXiv:2309.12345",
-      abstract: "We investigate the use of large language models for analyzing financial documents and extracting market insights. Our experiments show that fine-tuned LLMs can achieve state-of-the-art performance on various financial NLP tasks."
+      published_date: "2023-09-20"
     },
     {
       year: 2022,
@@ -647,12 +277,11 @@ permalink: /publications.html
       title: "Korean Stock Market Prediction Using LSTM Networks",
       authors: [1, 4, 6],
       venue: "Korean Journal of Financial Studies",
-      accepted_date: "2022-12-01",
-      abstract: "본 연구는 LSTM 네트워크를 활용한 한국 주식시장 예측 모델을 제안한다. 다양한 기술적 지표와 거시경제 변수를 입력으로 사용하여 KOSPI 지수의 단기 예측 성능을 향상시켰다."
+      published_date: "2022-12-01"
     }
   ];
 
-  /* ===== Filter Categories ===== */
+  /* ===== Filter Categories (신규 항목 포함) ===== */
   const FILTER_GROUPS = {
     type: [
       { value: "journal", label: "Journal" },
@@ -672,11 +301,12 @@ permalink: /publications.html
     ],
     conference: [
       { value: "International Conference", label: "International Conference" },
-      { value: "Domestic Conference", label: "Domestic Conference" }
+      { value: "Domestic Conference", label: "Domestic Conference" },
+      { value: "International - Domestic Joint Conference", label: "International – Domestic Joint Conference" } /* 신규 */
     ]
   };
 
-  /* ===== Filter States ===== */
+  /* ===== Filter State ===== */
   let q = "";
   const onFilters = {
     type: new Set(),
@@ -684,7 +314,7 @@ permalink: /publications.html
     conference: new Set()
   };
 
-  /* ===== DOM Elements ===== */
+  /* ===== DOM ===== */
   const searchInput = document.getElementById('pubSearch');
   const countEl = document.getElementById('count');
   const pubWrap = document.getElementById('pubWrap');
@@ -692,16 +322,12 @@ permalink: /publications.html
   const citeBody = document.getElementById('citeBody');
   const closeBtn = document.getElementById('btnCloseCite');
 
-  /* ===== Helper Functions ===== */
+  /* ===== Helpers ===== */
   function getAuthorName(authorId, isDomestic) {
     const author = AUTHORS[authorId];
     if (!author) return `Author ${authorId}`;
-    
-    // If domestic publication, prefer Korean name
     if (isDomestic && author.ko) return author.ko;
-    // If international publication, prefer English name
     if (!isDomestic && author.en) return author.en;
-    // Return whatever is available
     return author.en || author.ko || `Author ${authorId}`;
   }
 
@@ -709,14 +335,20 @@ permalink: /publications.html
     return indexing.includes("KCI") || indexing.includes("Domestic");
   }
 
+  function formatMDY(iso) {
+    // "2024-03-15" -> "March 15, 2024"
+    if (!iso) return "";
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", { year:"numeric", month:"long", day:"numeric" });
+  }
+
   /* ===== Build Filter Chips ===== */
   function buildChips() {
-    // Type filters
     const typeChips = document.getElementById('typeChips');
     typeChips.innerHTML = FILTER_GROUPS.type.map(item => {
       const active = onFilters.type.has(item.value);
       return `
-        <button class="chip chip-${item.value} ${active ? 'is-on' : ''}" 
+        <button class="chip chip-${item.value} ${active ? 'is-on' : ''}"
                 data-filter-type="type"
                 data-filter-value="${item.value}">
           ${item.label}
@@ -724,12 +356,11 @@ permalink: /publications.html
       `;
     }).join('');
 
-    // Journal filters (including all indexing types)
     const journalChips = document.getElementById('journalChips');
     journalChips.innerHTML = FILTER_GROUPS.journal.map(item => {
       const active = onFilters.journal.has(item.value);
       return `
-        <button class="chip ${active ? 'is-on' : ''}" 
+        <button class="chip ${active ? 'is-on' : ''}"
                 data-filter-type="journal"
                 data-filter-value="${item.value}">
           ${item.label}
@@ -737,12 +368,11 @@ permalink: /publications.html
       `;
     }).join('');
 
-    // Conference filters
     const conferenceChips = document.getElementById('conferenceChips');
     conferenceChips.innerHTML = FILTER_GROUPS.conference.map(item => {
       const active = onFilters.conference.has(item.value);
       return `
-        <button class="chip ${active ? 'is-on' : ''}" 
+        <button class="chip ${active ? 'is-on' : ''}"
                 data-filter-type="conference"
                 data-filter-value="${item.value}">
           ${item.label}
@@ -750,27 +380,21 @@ permalink: /publications.html
       `;
     }).join('');
 
-    // Add click handlers
     document.querySelectorAll('[data-filter-type]').forEach(btn => {
       btn.onclick = () => {
         const filterType = btn.dataset.filterType;
         const filterValue = btn.dataset.filterValue;
-        
-        if (onFilters[filterType].has(filterValue)) {
-          onFilters[filterType].delete(filterValue);
-        } else {
-          onFilters[filterType].add(filterValue);
-        }
-        
+        if (onFilters[filterType].has(filterValue)) onFilters[filterType].delete(filterValue);
+        else onFilters[filterType].add(filterValue);
         buildChips();
         render();
       };
     });
   }
 
-  /* ===== Index Badge Helper ===== */
+  /* ===== Index Badge Class ===== */
   function idxClass(group) {
-    const classMap = {
+    const map = {
       "SCIE": "idx-scie",
       "SSCI": "idx-ssci",
       "A&HCI": "idx-ahci",
@@ -778,85 +402,62 @@ permalink: /publications.html
       "Other International": "idx-other-intl",
       "International Conference": "idx-intl-conf",
       "Domestic Conference": "idx-domestic-conf",
+      "International - Domestic Joint Conference": "idx-joint-conf",
       "KCI Excellent": "idx-kci-exc",
       "KCI Accredited": "idx-kci",
       "Other Domestic": "idx-other-domestic",
       "Preprint": "idx-preprint",
       "Working Paper": "idx-working"
     };
-    return `idx ${classMap[group] || ''}`;
+    return `idx ${map[group] || ''}`;
   }
 
-  /* ===== Filter Matching ===== */
+  /* ===== Filter Match ===== */
   function matches(pub) {
-    // Check type filter
-    if (onFilters.type.size > 0 && !onFilters.type.has(pub.type)) {
-      return false;
-    }
+    if (onFilters.type.size > 0 && !onFilters.type.has(pub.type)) return false;
 
-    // Check specific indexing filters
-    const allIndexFilters = [
-      ...onFilters.journal,
-      ...onFilters.conference
-    ];
-    
-    if (allIndexFilters.length > 0 && !allIndexFilters.includes(pub.indexing_group)) {
-      return false;
-    }
+    const allIndexFilters = [...onFilters.journal, ...onFilters.conference];
+    if (allIndexFilters.length > 0 && !allIndexFilters.includes(pub.indexing_group)) return false;
 
-    // Check search query
     if (!q) return true;
-    
-    // Get author names for search
-    const isDomestic = isDomesticPublication(pub.indexing_group);
-    const authorNames = pub.authors.map(id => getAuthorName(id, isDomestic)).join(" ");
-    
+    const isDom = isDomesticPublication(pub.indexing_group);
+    const authorNames = pub.authors.map(id => getAuthorName(id, isDom)).join(" ");
     const text = (pub.title + " " + authorNames + " " + pub.venue).toLowerCase();
     return text.includes(q.toLowerCase());
   }
 
-  /* ===== Toggle Abstract ===== */
-  function toggleAbstract(pubId) {
-    const abstractDiv = document.getElementById(`abstract-${pubId}`);
-    if (abstractDiv) {
-      abstractDiv.classList.toggle('show');
-    }
-  }
-
-  /* ===== Card Component ===== */
-  function createCard(pub, index) {
-    const codeLabel = pub.code_label || "";
-    const isDomestic = isDomesticPublication(pub.indexing_group);
-    const authorNames = pub.authors.map(id => {
-      const name = getAuthorName(id, isDomestic);
-      // Mark corresponding author with *
-      return id === 1 ? `${name}*` : name;
+  /* ===== Card Component (Abstract 제거, 배너 색 로직 포함) ===== */
+  function createCard(pub, idxKey) {
+    const code = pub.code_label || "";
+    const isDom = isDomesticPublication(pub.indexing_group);
+    const authors = pub.authors.map(id => {
+      const name = getAuthorName(id, isDom);
+      return id === 1 ? `${name}*` : name; // 교신저자 * 표시 유지
     }).join(", ");
-    
+
+    // 배너 클래스: preprint 회색, joint 별도, 나머지는 type 기반
+    let leftClass = '';
+    if (pub.indexing_group === "Preprint") leftClass = 'preprint';
+    else if (pub.indexing_group === "International - Domestic Joint Conference") leftClass = 'joint';
+    else leftClass = pub.type; // 'journal' | 'conference' | 'other'
+
     return `
       <li class="paper-card">
         <div class="paper-row">
-          <div class="paper-left ${pub.type} ${codeLabel ? '' : 'empty'}" 
-               ${pub.abstract ? `onclick="toggleAbstract(${index})"` : ''}>
-            <span>${codeLabel || '&nbsp;'}</span>
+          <div class="paper-left ${leftClass} ${code ? '' : 'empty'}">
+            <span>${code || '&nbsp;'}</span>
           </div>
           <div class="paper-body">
             <div class="paper-header">
               <span class="${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
               <div class="paper-date">
                 <span class="year">${pub.year}</span>
-                ${pub.accepted_date ? `<span class="accepted">Accepted: ${pub.accepted_date}</span>` : ''}
+                ${pub.published_date ? `<span class="pub">Published: ${formatMDY(pub.published_date)}</span>` : ''}
               </div>
             </div>
             <h3 class="paper-title">${pub.title}</h3>
-            <div class="paper-meta">${authorNames}</div>
+            <div class="paper-meta">${authors}</div>
             <div class="paper-venue">${pub.venue}</div>
-            ${pub.abstract ? `
-              <div class="paper-abstract" id="abstract-${index}">
-                <div class="abstract-label">Abstract</div>
-                ${pub.abstract}
-              </div>
-            ` : ''}
             <div class="paper-foot">
               <button class="btn" onclick='openCite(${JSON.stringify(pub)})'>Cite</button>
             </div>
@@ -869,8 +470,8 @@ permalink: /publications.html
   /* ===== Render ===== */
   function render() {
     const filtered = PUBS.filter(matches);
-    const years = [...new Set(filtered.map(p => p.year))].sort((a, b) => b - a);
-    
+    const years = [...new Set(filtered.map(p => p.year))].sort((a,b) => b-a);
+
     if (filtered.length === 0) {
       pubWrap.innerHTML = `
         <div class="empty-state">
@@ -888,51 +489,47 @@ permalink: /publications.html
             </div>
             <div class="year-content" id="year-${year}">
               <ul class="paper-list">
-                ${items.map((item, idx) => createCard(item, `${year}-${idx}`)).join('')}
+                ${items.map((item, i) => createCard(item, `${year}-${i}`)).join('')}
               </ul>
             </div>
           </div>
         `;
       }).join('');
-      
-      // Add toggle handlers
+
       document.querySelectorAll('.year-toggle').forEach(btn => {
         btn.onclick = () => {
           const year = btn.dataset.year;
           const content = document.getElementById('year-' + year);
-          const isHidden = content.style.display === 'none';
-          content.style.display = isHidden ? '' : 'none';
-          btn.textContent = isHidden ? 'Collapse' : 'Expand';
+          const hidden = content.style.display === 'none';
+          content.style.display = hidden ? '' : 'none';
+          btn.textContent = hidden ? 'Collapse' : 'Expand';
         };
       });
     }
-    
     countEl.textContent = `${filtered.length} of ${PUBS.length}`;
   }
 
-  /* ===== Citation Modal ===== */
+  /* ===== Cite Modal ===== */
   function toInitials(name) {
     const clean = name.replace(/\*/g, '').trim();
     const parts = clean.split(/\s+/);
     const last = parts.pop();
-    const initials = parts.map(p => p[0]?.toUpperCase() + ".").join(" ");
+    const initials = parts.map(p => (p?.[0] || '').toUpperCase() + ".").join(" ");
     return `${last}, ${initials}`;
   }
 
   function openCite(pub) {
-    // Get author names for citation (always use English for international formats)
-    const authorNames = pub.authors.map(id => getAuthorName(id, false));
-    
+    const authorNames = pub.authors.map(id => getAuthorName(id, false)); // 영문 기준
     const formats = {
-      MLA: `${authorNames[0].replace(/\*/g, '')} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
+      MLA: `${authorNames[0].replace(/\*/g,'')} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
       APA: `${toInitials(authorNames[0])} et al. (${pub.year}). ${pub.title}. ${pub.venue}.`,
-      Chicago: `${authorNames[0].replace(/\*/g, '')} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
+      Chicago: `${authorNames[0].replace(/\*/g,'')} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
       Harvard: `${toInitials(authorNames[0])} et al. (${pub.year}) ${pub.title}. ${pub.venue}.`,
       Vancouver: `${authorNames.map(a => toInitials(a)).join(', ')}. ${pub.title}. ${pub.venue}. ${pub.year}.`
     };
 
     citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
-      const id = 'cite-' + Math.random().toString(36).slice(2, 9);
+      const id = 'cite-' + Math.random().toString(36).slice(2,9);
       return `
         <div class="cite-block">
           <div class="cite-header">
@@ -954,18 +551,12 @@ permalink: /publications.html
     setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
 
-  /* ===== Event Listeners ===== */
-  searchInput.oninput = (e) => {
-    q = e.target.value;
-    render();
-  };
+  /* ===== Events ===== */
+  document.getElementById('pubSearch').oninput = (e) => { q = e.target.value; render(); };
+  document.getElementById('btnCloseCite').onclick = () => modal.style.display = 'none';
+  modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
 
-  closeBtn.onclick = () => modal.style.display = 'none';
-  modal.onclick = (e) => {
-    if (e.target === modal) modal.style.display = 'none';
-  };
-
-  /* ===== Initialize ===== */
+  /* ===== Init ===== */
   buildChips();
   render();
 </script>
