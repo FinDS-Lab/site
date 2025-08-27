@@ -4,87 +4,337 @@ title: research areas
 permalink: /about-vision-area.html
 ---
 
-<!-- ===== Page Title / Breadcrumb Banner ===== -->
+<!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Dragonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <style>
-    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-    .breadcrumbs a{color:#e5e7eb}
-    .breadcrumbs a:hover{text-decoration:underline}
-    .breadcrumbs .sep{opacity:.85}
+    :root {
+      --gold: rgb(214, 177, 77);
+      --gold-mid: rgb(234, 197, 97);
+      --gold-dark: rgb(194, 157, 57);
+    }
+
+    /* Banner */
+    .banner-section {
+      background: linear-gradient(
+        135deg,
+        var(--gold) 0%,
+        var(--gold-mid) 25%,
+        var(--gold-dark) 50%,
+        var(--gold) 75%,
+        var(--gold-mid) 100%
+      );
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Burst container */
+    .network-burst {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      opacity: 0;
+      animation: burstAnimation 2s ease-out forwards;
+    }
+    @keyframes burstAnimation {
+      0%   { opacity: 0; transform: scale(.3) rotate(0deg); }
+      30%  { opacity: .85; }
+      100% { opacity: 0; transform: scale(2) rotate(180deg); }
+    }
+    .network-burst svg { width: 100%; height: 100%; }
+    .burst-line { stroke: rgba(255,255,255,.8); stroke-width: 1.5; fill: none; }
+    .burst-dot  { fill: rgba(255,255,255,.95); }
+
+    /* Banner content (left-bottom) */
+    .banner-content {
+      position: relative;
+      z-index: 10;
+      padding: 32px 24px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      min-height: 200px;
+    }
+    .breadcrumbs-banner {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      font-size: 13px; font-weight: 600; margin-bottom: 8px;
+    }
+    .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
+    .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
+    .breadcrumbs-banner .sep { color: rgba(255,255,255,.8); }
+    .breadcrumbs-banner span:not(.sep):not(a) { color: #fff; font-weight: 800; }
+
+    .banner-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,.12);
+      letter-spacing: -.02em;
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner-content { padding: 24px 18px; min-height: 160px; }
+      .banner-section { min-height: 160px; }
+      .banner-title { font-size: 1.9rem; }
+      .breadcrumbs-banner { font-size: 12px; }
+    }
+    @media (max-width: 480px) {
+      .banner-content { padding: 20px 16px; min-height: 130px; }
+      .banner-section { min-height: 130px; }
+      .banner-title { font-size: 1.6rem; }
+      .breadcrumbs-banner { font-size: 11px; }
+    }
   </style>
-  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="Research banner"
-         class="w-full h-[180px] md:h-[220px] object-cover" width="1600" height="320">
-    <div class="absolute inset-0 bg-black/45"></div>
-    <div class="absolute inset-x-0 bottom-4 px-4">
-      <div class="max-w-7xl mx-auto text-white">
-        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
+
+  <div class="banner-section" onclick="createNetworkBurst(event, this)">
+    <div class="banner-content">
+      <div>
+        <nav aria-label="Breadcrumb" class="breadcrumbs-banner" onclick="event.stopPropagation()">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
-          <span>Research</span>
+          <a href="{{ '/about-vision-area.html' | relative_url }}">Research</a>
           <span class="sep">›</span>
-          <span aria-current="page" class="font-semibold">Areas</span>
+          <span aria-current="page">Areas</span>
         </nav>
-        <h1 class="text-2xl md:text-3xl font-extrabold">Research Areas</h1>
+        <h1 class="banner-title">Research Areas</h1>
       </div>
     </div>
   </div>
 </section>
 
+<script>
+/* Interactive gold burst (cards suits) */
+function createNetworkBurst(event, element) {
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left - 100;
+  const y = event.clientY - rect.top  - 100;
+
+  const networkDiv = document.createElement('div');
+  networkDiv.className = 'network-burst';
+  networkDiv.style.left = x + 'px';
+  networkDiv.style.top  = y + 'px';
+
+  const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
+  const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+  networkDiv.innerHTML = randomPattern();
+
+  element.appendChild(networkDiv);
+  setTimeout(()=> element.removeChild(networkDiv), 2000);
+}
+
+/* Heart */
+function generateHeartNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+  svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
+  const nodes = [
+    {x:70,y:35},{x:130,y:35},
+    {x:40,y:70},{x:160,y:70},
+    {x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}
+  ];
+  const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+  connections.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`);
+  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Club */
+function generateClubNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const circles = [{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
+  circles.forEach(c=> svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`);
+  svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+  const nodes=[];
+  circles.forEach(c=>{
+    for(let i=0;i<6;i++){ const a=i*2*Math.PI/6; nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)}); }
+  });
+  nodes.push({x:100,y:100},{x:100,y:140});
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.hypot(dx,dy);
+      if(d<40){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-d/40)*0.4}"/>`; }
+    }
+  }
+  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Spade */
+function generateSpadeNetwork() {
+  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+  svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
+  svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
+  svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+  const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
+  const conn=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+  conn.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`);
+  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0||i===7)?4:3}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Diamond */
+function generateDiamondNetwork() {
+  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const diamond='M100,40 L140,100 L100,160 L60,100 Z';
+  svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
+  svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
+  svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
+  svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
+  svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
+  const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
+  for(let i=0;i<4;i++){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`; }
+  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${i<4?4:(i===4?5:2.5)}" class="burst-dot" opacity="${i===4?1:.85}"/>`);
+  for(let i=0;i<4;i++){ const a=i*Math.PI/2; const x=100+30*Math.cos(a), y=100+30*Math.sin(a); svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`; }
+  svg += '</svg>'; return svg;
+}
+</script>
+
 <!-- ===== Page Styles (local) ===== -->
 <style>
-  .topic-card{
-    display:grid; gap:1rem; background:#fff;
-    border:1px solid #e5e7eb; border-radius:1rem; padding:1rem;
-    box-shadow:0 6px 18px rgba(0,0,0,.04);
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-20: rgba(214,177,77,.2);
+    --gold-light: rgb(234, 207, 127);
+    --red: rgb(172, 14, 14);
+    --red-dark: rgb(127, 10, 10);
+    --ink: #111827;
+    --slate: #374151;
   }
+
+  .topic-card{
+    display:grid; gap:1.5rem; background:#fff;
+    border:1px solid #e5e7eb; border-radius:1rem; padding:1.5rem;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .topic-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    transform: scaleX(0);
+    transition: transform .3s;
+  }
+  .topic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,.1);
+  }
+  .topic-card:hover::before {
+    transform: scaleX(1);
+  }
+  
   @media (min-width: 768px){
-    .topic-card{ grid-template-columns: 1.2fr 1fr; align-items:center; padding:1.25rem; }
+    .topic-card{ grid-template-columns: 1.2fr 1fr; align-items:center; padding:1.75rem; }
     .topic-card.rev{ grid-template-columns: 1fr 1.2fr; }
   }
+  
   .topic-img{
-    border-radius: .9rem; overflow:hidden; ring:1px solid #e5e7eb;
+    border-radius: 1rem; overflow:hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    transition: all .3s;
   }
-  .topic-img img{ width:100%; height:100%; object-fit:cover; aspect-ratio: 16/10; }
+  .topic-img img{ 
+    width:100%; height:100%; object-fit:cover; aspect-ratio: 16/10;
+    transition: transform .5s;
+  }
+  .topic-card:hover .topic-img img {
+    transform: scale(1.05);
+  }
+  
   .badge{
-    display:inline-flex; align-items:center; font-weight:900; font-size:12px;
-    padding:.25rem .55rem; border-radius:.6rem; background:#d6b14d; color:#111827;
+    display:inline-flex; align-items:center; font-weight:900; font-size:11px;
+    padding:.35rem .75rem; border-radius:.6rem; background:var(--gold); color:#fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
+  
+  .research-title {
+    margin-top: .75rem;
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  
   .bullets{ list-style:none; margin:0; padding:0; }
-  .bullets li{ padding-left:1rem; position:relative; margin:.5rem 0; }
-  .bullets li::before{ content:"•"; position:absolute; left:0; top:0; font-weight:900; color:#334155; }
+  .bullets li{ 
+    padding-left:1.25rem; position:relative; margin:.75rem 0;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+  }
+  .bullets li:last-child { border-bottom: none; padding-bottom: 0; }
+  .bullets li::before{ 
+    content:"◆"; position:absolute; left:0; top:0; 
+    font-weight:900; color:var(--gold);
+  }
+  
   /* 긴 영문 타이틀 줄바꿈 보호 + 모바일 대응 */
-  .en-title{ word-break:keep-all; overflow-wrap:anywhere; }
+  .en-title{ 
+    word-break:keep-all; 
+    overflow-wrap:anywhere;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .kr-desc {
+    display: block;
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 768px) {
+    .research-title { font-size: 1.5rem; }
+    .en-title { font-size: 14px; }
+    .kr-desc { font-size: 12px; }
+  }
 </style>
 
 <!-- ===== Research Area Sections ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6 space-y-6">
+<section class="max-w-7xl mx-auto px-4 mt-8 pb-8 space-y-8">
 
   <!-- 1) Financial Data Science -->
   <article class="topic-card rev">
-    <div class="topic-img order-2 md:order-1">
+    <div class="order-2 md:order-1">
       <span class="badge">Financial Data Science</span>
-      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Financial Data Science</h2>
+      <h2 class="research-title">Financial Data Science</h2>
 
-      <ul class="bullets mt-3 space-y-2">
+      <ul class="bullets mt-4 space-y-2">
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">AI in Quantitative Finance &amp; Asset Management</span>
-          <span class="block text-[13px] text-slate-600">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</span>
+          <span class="block en-title">AI in Quantitative Finance &amp; Asset Management</span>
+          <span class="kr-desc">인공지능 기반 포트폴리오 최적화, 자산 배분, 알고리즘 트레이딩</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Asset Pricing, Market Making, and Order Flow Analysis</span>
-          <span class="block text-[13px] text-slate-600">자산 가격결정, 시장조성, 주문흐름 분석</span>
+          <span class="block en-title">Financial Time-Series Modeling &amp; Forecasting</span>
+          <span class="kr-desc">변동성 예측, 국면 전환 모형, 선후행 관계 분석, 수익률 예측</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Time-Series for Finance: Volatility, Regime Switching, Lead-Lag, Return Forecasting</span>
-          <span class="block text-[13px] text-slate-600">금융 시계열 분석: 변동성 예측, 국면 전환 모형, 선후행 관계 탐지, 수익률 예측</span>
+          <span class="block en-title">Household Finance &amp; Behavioral Decision Modeling</span>
+          <span class="kr-desc">가계 금융, 투자자 행동 분석, 행동재무학적 의사결정 모형화</span>
         </li>
       </ul>
     </div>
 
-    <div class="topic-img">
+    <div class="topic-img order-1 md:order-2">
       <picture>
-        <!-- 교체 권장: /assets/img/research/fds-1200.webp / fds-1200.jpg -->
         <source srcset="{{ '/assets/img/research/fds-1200.webp' | relative_url }}" type="image/webp">
         <img
           src="{{ '/assets/img/research/fds-1200.jpg' | relative_url }}"
@@ -95,11 +345,10 @@ permalink: /about-vision-area.html
     </div>
   </article>
 
-  <!-- 2) Business Analytics (reverse layout on desktop) -->
-  <article class="topic-card rev">
-    <div class="topic-img order-2 md:order-1">
+  <!-- 2) Business Analytics -->
+  <article class="topic-card">
+    <div class="topic-img">
       <picture>
-        <!-- 교체 권장: /assets/img/research/ba-1200.webp / ba-1200.jpg -->
         <source srcset="{{ '/assets/img/research/ba-1200.webp' | relative_url }}" type="image/webp">
         <img
           src="{{ '/assets/img/research/ba-1200.jpg' | relative_url }}"
@@ -109,22 +358,22 @@ permalink: /about-vision-area.html
       </picture>
     </div>
 
-    <div class="pl-1 order-1 md:order-2">
+    <div>
       <span class="badge">Business Analytics</span>
-      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Business Analytics</h2>
+      <h2 class="research-title">Business Analytics</h2>
 
-      <ul class="bullets mt-3 space-y-2">
+      <ul class="bullets mt-4 space-y-2">
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Financial Modeling &amp; Data-Driven Asset Allocation</span>
-          <span class="block text-[13px] text-slate-600">금융 모델링 및 데이터 기반 자산배분</span>
+          <span class="block en-title">Cross-Industry Analytics: Risk, Customers, Performance, Markets</span>
+          <span class="kr-desc">산업별 위험 관리, 고객 분석, 성과 평가, 시장 인사이트 도출</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Decision-Focused Learning for Complex Investment Problems</span>
-          <span class="block text-[13px] text-slate-600">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</span>
+          <span class="block en-title">Data Visualization &amp; Interpretability in Business Analytics</span>
+          <span class="kr-desc">복잡한 데이터를 직관적으로 전달하는 데이터 시각화 및 해석 가능성 강화</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Business Analytics across Industries: Risk, Customers, Performance, Market Insights</span>
-          <span class="block text-[13px] text-slate-600">다양한 산업 분야 애널리틱스: 리스크 분석, 고객 프로파일링, 성과 평가, 시장 인사이트</span>
+          <span class="block en-title">Business Insights from AI Methods: Time-Series Models, Graph-Based Models, and NLP</span>
+          <span class="kr-desc">시계열 모형, 그래프 기반 분석, 자연어 처리(NLP) 등 AI 기법을 활용한 비즈니스 인사이트</span>
         </li>
       </ul>
     </div>
@@ -132,29 +381,28 @@ permalink: /about-vision-area.html
 
   <!-- 3) Data-Inspired Decision Making -->
   <article class="topic-card rev">
-    <div class="topic-img order-2 md:order-1">
+    <div class="order-2 md:order-1">
       <span class="badge">Data-Inspired Decision Making</span>
-      <h2 class="mt-2 text-xl md:text-2xl font-extrabold">Data-Inspired Decision Making</h2>
+      <h2 class="research-title">Data-Inspired Decision Making</h2>
 
-      <ul class="bullets mt-3 space-y-2">
+      <ul class="bullets mt-4 space-y-2">
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">AI-Powered Decision Systems using Graph Representations &amp; Reinforcement Learning</span>
-          <span class="block text-[13px] text-slate-600">그래프 표현과 강화학습을 활용한 AI 기반 의사결정 시스템</span>
+          <span class="block en-title">Graph-Based Decision Systems &amp; Optimization</span>
+          <span class="kr-desc">그래프 구조와 최적화를 활용한 이해 가능한 의사결정 시스템</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Risk-Aware, User-Friendly Tools for Smarter Financial Decisions</span>
-          <span class="block text-[13px] text-slate-600">리스크를 인지하고 사용자 친화적인 스마트 금융 의사결정 도구</span>
+          <span class="block en-title">Risk-Aware &amp; User-Friendly Decision Tools</span>
+          <span class="kr-desc">금융·경영 위험을 반영하고 사용자 친화적인 스마트 의사결정 도구</span>
         </li>
         <li>
-          <span class="block en-title font-extrabold text-[15px] text-slate-900">Household Finance &amp; Investor Behavior Modeling</span>
-          <span class="block text-[13px] text-slate-600">가계금융 및 투자자 행동 모델링</span>
+          <span class="block en-title">Decision Analytics for Complex Business Problems</span>
+          <span class="kr-desc">복잡한 경영 및 투자 의사결정 문제 해결을 위한 최적화 및 분석 방법론</span>
         </li>
       </ul>
     </div>
 
-    <div class="topic-img">
+    <div class="topic-img order-1 md:order-2">
       <picture>
-        <!-- 교체 권장: /assets/img/research/dim-1200.webp / dim-1200.jpg -->
         <source srcset="{{ '/assets/img/research/dim-1200.webp' | relative_url }}" type="image/webp">
         <img
           src="{{ '/assets/img/research/dim-1200.jpg' | relative_url }}"
