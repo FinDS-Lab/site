@@ -32,7 +32,20 @@ title: home
 
   @media (max-width: 768px) {
     .hero-section {
-      height: 400px;
+      height: 350px;
+      padding: 0 16px;
+      margin: 1rem auto;
+    }
+    
+    .carousel-container {
+      border-radius: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-section {
+      height: 280px;
+      padding: 0 12px;
     }
   }
 
@@ -68,6 +81,12 @@ title: home
     padding: 0 5%;
   }
 
+  @media (max-width: 768px) {
+    .carousel-overlay {
+      padding: 0 20px;
+    }
+  }
+
   .carousel-content {
     max-width: 600px;
     color: white;
@@ -97,11 +116,27 @@ title: home
     margin-bottom: 16px;
   }
 
+  @media (max-width: 480px) {
+    .tag-badge {
+      font-size: 12px;
+      padding: 4px 12px;
+      margin-bottom: 12px;
+    }
+  }
+
   .hero-title {
-    font-size: clamp(28px, 5vw, 48px);
+    font-size: clamp(24px, 5vw, 48px);
     font-weight: 900;
     line-height: 1.2;
     margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 22px;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
   }
 
   .hero-buttons {
@@ -118,6 +153,13 @@ title: home
     text-decoration: none;
     transition: all 0.3s;
     display: inline-block;
+  }
+
+  @media (max-width: 480px) {
+    .btn-hero {
+      padding: 10px 18px;
+      font-size: 13px;
+    }
   }
 
   .btn-hero.primary {
@@ -143,6 +185,19 @@ title: home
     border-color: rgba(255, 255, 255, 0.5);
   }
 
+  /* Touch-friendly hover states for mobile */
+  @media (hover: none) {
+    .btn-hero.primary:active {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+    }
+    
+    .btn-hero.secondary:active {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
   /* Carousel Dots */
   .carousel-dots {
     position: absolute;
@@ -152,6 +207,13 @@ title: home
     display: flex;
     gap: 8px;
     z-index: 10;
+    padding: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .carousel-dots {
+      bottom: 16px;
+    }
   }
 
   .dot {
@@ -162,6 +224,18 @@ title: home
     border: none;
     cursor: pointer;
     transition: all 0.3s;
+    padding: 0;
+    /* Touch target size for mobile */
+    position: relative;
+  }
+
+  .dot::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
   }
 
   .dot.active {
@@ -184,8 +258,18 @@ title: home
   @media (max-width: 768px) {
     .intro-section {
       grid-template-columns: 1fr;
-      margin: 40px auto;
+      margin: 60px auto;
       text-align: center;
+      padding: 0 20px;
+      gap: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .intro-section {
+      margin: 40px auto;
+      padding: 0 16px;
+      gap: 24px;
     }
   }
 
@@ -205,6 +289,14 @@ title: home
   @media (max-width: 768px) {
     .logo-box {
       margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-box {
+      width: 150px;
+      height: 150px;
+      border-radius: 20px;
     }
   }
 
@@ -229,6 +321,13 @@ title: home
     z-index: 1;
   }
 
+  @media (max-width: 480px) {
+    .logo-box img {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
   .intro-content h2 {
     color: var(--red);
     font-size: 24px;
@@ -236,9 +335,21 @@ title: home
     margin-bottom: 8px;
   }
 
+  @media (max-width: 480px) {
+    .intro-content h2 {
+      font-size: 20px;
+    }
+  }
+
   .intro-content h3 {
     font-size: 32px;
     margin-bottom: 4px;
+  }
+
+  @media (max-width: 480px) {
+    .intro-content h3 {
+      font-size: 24px;
+    }
   }
 
   .intro-content .lab-name {
@@ -252,11 +363,32 @@ title: home
     margin-left: 8px;
   }
 
+  @media (max-width: 768px) {
+    .intro-content .lab-full {
+      display: block;
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .intro-content .lab-full {
+      font-size: 15px;
+    }
+  }
+
   .intro-content .description {
     margin-top: 16px;
     font-size: 16px;
     line-height: 1.8;
     color: #4b5563;
+  }
+
+  @media (max-width: 480px) {
+    .intro-content .description {
+      font-size: 14px;
+      line-height: 1.7;
+    }
   }
 
   /* News & Notice Section */
@@ -272,7 +404,17 @@ title: home
   @media (max-width: 768px) {
     .updates-section {
       grid-template-columns: 1fr;
-      gap: 40px;
+      gap: 24px;
+      margin-bottom: 60px;
+      padding: 0 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .updates-section {
+      padding: 0 16px;
+      gap: 20px;
+      margin-bottom: 40px;
     }
   }
 
@@ -284,9 +426,22 @@ title: home
     transition: all 0.3s;
   }
 
+  @media (max-width: 480px) {
+    .update-card {
+      border-radius: 16px;
+    }
+  }
+
   .update-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  }
+
+  /* Disable hover transform on mobile */
+  @media (hover: none) {
+    .update-card:hover {
+      transform: none;
+    }
   }
 
   .update-header {
@@ -298,6 +453,12 @@ title: home
     align-items: center;
   }
 
+  @media (max-width: 480px) {
+    .update-header {
+      padding: 18px 20px;
+    }
+  }
+
   .update-title {
     font-size: 20px;
     font-weight: 900;
@@ -305,6 +466,12 @@ title: home
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .update-title {
+      font-size: 18px;
+    }
   }
 
   .update-icon {
@@ -318,6 +485,14 @@ title: home
     font-size: 18px;
   }
 
+  @media (max-width: 480px) {
+    .update-icon {
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+    }
+  }
+
   .update-more {
     color: var(--red);
     font-weight: 700;
@@ -327,6 +502,9 @@ title: home
     align-items: center;
     gap: 4px;
     transition: gap 0.2s;
+    /* Touch target */
+    padding: 4px 8px;
+    margin: -4px -8px;
   }
 
   .update-more:hover {
@@ -337,6 +515,12 @@ title: home
     padding: 8px;
   }
 
+  @media (max-width: 480px) {
+    .update-list {
+      padding: 4px;
+    }
+  }
+
   .update-item {
     padding: 20px;
     border-radius: 12px;
@@ -344,6 +528,15 @@ title: home
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    /* Touch target */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (max-width: 480px) {
+    .update-item {
+      padding: 16px;
+      border-radius: 10px;
+    }
   }
 
   .update-item::before {
@@ -366,6 +559,13 @@ title: home
     height: 60%;
   }
 
+  /* Active state for mobile */
+  @media (hover: none) {
+    .update-item:active {
+      background: #fef9f3;
+    }
+  }
+
   .update-date {
     display: flex;
     align-items: baseline;
@@ -377,6 +577,12 @@ title: home
     font-size: 24px;
     font-weight: 900;
     color: var(--red);
+  }
+
+  @media (max-width: 480px) {
+    .date-day {
+      font-size: 20px;
+    }
   }
 
   .date-month {
@@ -391,7 +597,19 @@ title: home
     color: #1f2937;
     line-height: 1.5;
     display: block;
-    cursor: default;
+    cursor: pointer;
+    /* Text truncation for mobile */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  @media (max-width: 480px) {
+    .update-item-title {
+      font-size: 14px;
+      line-height: 1.4;
+    }
   }
 
   .update-meta {
@@ -413,6 +631,13 @@ title: home
     font-weight: 600;
   }
 
+  @media (max-width: 480px) {
+    .meta-tag {
+      font-size: 11px;
+      padding: 2px 6px;
+    }
+  }
+
   .empty-message {
     padding: 40px;
     text-align: center;
@@ -420,23 +645,32 @@ title: home
     font-size: 14px;
   }
 
-  /* Mobile optimizations */
+  @media (max-width: 480px) {
+    .empty-message {
+      padding: 30px 20px;
+      font-size: 13px;
+    }
+  }
+
+  /* Performance optimization */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Additional mobile-specific styles */
   @media (max-width: 640px) {
     .hero-buttons {
-      flex-direction: column;
+      width: 100%;
     }
     
     .btn-hero {
-      width: 100%;
+      flex: 1;
       text-align: center;
-    }
-    
-    .update-header {
-      padding: 20px;
-    }
-    
-    .update-item {
-      padding: 16px;
+      min-width: 0;
     }
   }
 </style>
@@ -492,9 +726,9 @@ title: home
     </div>
     
     <div class="carousel-dots">
-      <button class="dot active" data-dot="0"></button>
-      <button class="dot" data-dot="1"></button>
-      <button class="dot" data-dot="2"></button>
+      <button class="dot active" data-dot="0" aria-label="Slide 1"></button>
+      <button class="dot" data-dot="1" aria-label="Slide 2"></button>
+      <button class="dot" data-dot="2" aria-label="Slide 3"></button>
     </div>
   </div>
 </section>
@@ -546,7 +780,7 @@ title: home
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
         {% for post in news_items limit:3 %}
-          <div class="update-item">
+          <div class="update-item" onclick="window.location.href='{{ post.url | relative_url }}'">
             <div class="update-date">
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
@@ -587,14 +821,14 @@ title: home
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
         {% for post in notice_items limit:3 %}
-          <div class="update-item">
+          <div class="update-item" onclick="window.location.href='{{ post.url | relative_url }}'">
             <div class="update-date">
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <a href="{{ post.url | relative_url }}" class="update-item-title">
+            <span class="update-item-title">
               {{ post.title }}
-            </a>
+            </span>
             {% if post.category %}
             <div class="update-meta">
               <span class="meta-tag">{{ post.category }}</span>
@@ -616,6 +850,8 @@ title: home
     let currentIndex = 0;
     let interval;
     let isTransitioning = false;
+    let touchStartX = 0;
+    let touchEndX = 0;
     
     // Preload all images
     function preloadImages() {
@@ -648,6 +884,11 @@ title: home
       goToSlide((currentIndex + 1) % dots.length);
     }
     
+    function prevSlide() {
+      if (isTransitioning) return;
+      goToSlide((currentIndex - 1 + dots.length) % dots.length);
+    }
+    
     function startAutoplay() {
       interval = setInterval(nextSlide, 5000);
     }
@@ -656,9 +897,35 @@ title: home
       clearInterval(interval);
     }
     
+    // Touch/swipe support for mobile
+    function handleTouchStart(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+    
+    function handleTouchEnd(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }
+    
+    function handleSwipe() {
+      const swipeThreshold = 50;
+      const diff = touchStartX - touchEndX;
+      
+      if (Math.abs(diff) > swipeThreshold) {
+        stopAutoplay();
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+        startAutoplay();
+      }
+    }
+    
     // Initialize
     preloadImages();
     
+    // Event listeners
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         stopAutoplay();
@@ -666,6 +933,10 @@ title: home
         startAutoplay();
       });
     });
+    
+    // Touch events for mobile
+    track.addEventListener('touchstart', handleTouchStart, { passive: true });
+    track.addEventListener('touchend', handleTouchEnd, { passive: true });
     
     // Wait for images to load before starting autoplay
     window.addEventListener('load', () => {
@@ -682,8 +953,10 @@ title: home
       }
     });
     
-    // Pause on hover
-    track.addEventListener('mouseenter', stopAutoplay);
-    track.addEventListener('mouseleave', startAutoplay);
+    // Pause on hover (desktop only)
+    if (window.matchMedia('(hover: hover)').matches) {
+      track.addEventListener('mouseenter', stopAutoplay);
+      track.addEventListener('mouseleave', startAutoplay);
+    }
   })();
 </script>
