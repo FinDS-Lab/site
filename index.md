@@ -19,6 +19,7 @@ title: home
     overflow: hidden;
     background: #000;
     margin-top: 1.5rem;
+    border-radius: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -31,18 +32,22 @@ title: home
     display: flex;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
+    will-change: transform;
   }
 
   .carousel-slide {
     min-width: 100%;
     height: 100%;
     position: relative;
+    flex-shrink: 0;
+    background: #000;
   }
 
   .carousel-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
 
   .carousel-overlay {
@@ -600,18 +605,39 @@ title: home
   (function() {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
+    const slides = document.querySelectorAll('.carousel-slide img');
     let currentIndex = 0;
     let interval;
+    let isTransitioning = false;
     
-    function goToSlide(index) {
-      currentIndex = index;
-      track.style.transform = `translateX(-${index * 100}%)`;
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
+    // Preload all images
+    function preloadImages() {
+      slides.forEach((img) => {
+        if (img.complete) return;
+        const tempImg = new Image();
+        tempImg.src = img.src;
       });
     }
     
+    function goToSlide(index) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      
+      currentIndex = index;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      
+      // Reset transition flag after animation completes
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 600);
+    }
+    
     function nextSlide() {
+      if (isTransitioning) return;
       goToSlide((currentIndex + 1) % dots.length);
     }
     
@@ -623,6 +649,9 @@ title: home
       clearInterval(interval);
     }
     
+    // Initialize
+    preloadImages();
+    
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         stopAutoplay();
@@ -631,7 +660,11 @@ title: home
       });
     });
     
-    startAutoplay();
+    // Wait for images to load before starting autoplay
+    window.addEventListener('load', () => {
+      goToSlide(0);
+      startAutoplay();
+    });
     
     // Pause on visibility change
     document.addEventListener('visibilitychange', () => {
@@ -641,5 +674,9 @@ title: home
         startAutoplay();
       }
     });
+    
+    // Pause on hover
+    track.addEventListener('mouseenter', stopAutoplay);
+    track.addEventListener('mouseleave', startAutoplay);
   })();
 </script>
