@@ -4,7 +4,7 @@ title: "FINDS Lab. Logo"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
 tags: [logo]
-thumb: logo1.jpg   # 폴더 내 대표 이미지 파일명
+thumb: logo1.png   # 폴더 내 대표 이미지 파일명
 ---
 
 <!-- ===== Album Banner (first image as cover) ===== -->
