@@ -250,32 +250,215 @@ function generateDiamondNetwork() {
   .concept-title { font-size: 18px; font-weight: 900; color: #111827; margin-bottom: 8px; }
   .concept-subtitle { font-size: 13px; color: #9ca3af; font-weight: 600; }
 
-  /* Vision Lucide Grid */
-  .vision-lucide { margin-top: 3rem; display: grid; gap: 16px; grid-template-columns: 1fr; }
-  @media (min-width: 768px){ .vision-lucide { grid-template-columns: repeat(2,1fr); } }
+  /* Vision Container */
+  .vision-container { margin-top: 3rem; }
+  
+  /* Main Vision Card - Emphasized */
+  .vision-main {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+    background-size: 200% 200%;
+    animation: visionGlow 8s ease infinite;
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(214,177,77,.25);
+  }
+  
+  @keyframes visionGlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  .vision-main:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 45px rgba(214,177,77,.35);
+  }
+  
+  .vision-main::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,.2), transparent 50%);
+    pointer-events: none;
+  }
+  
+  .vision-main-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+  
+  .vision-main-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,.95);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--gold-dark);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .vision-main-title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+  
+  .vision-main-text {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.95);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .vision-main-text b {
+    color: #fff;
+    font-weight: 800;
+    background: rgba(255,255,255,.15);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  
+  .vision-toggle-icon {
+    display: inline-block;
+    margin-left: 12px;
+    transition: transform 0.4s;
+    vertical-align: middle;
+    font-size: 20px;
+  }
+  
+  .vision-main.expanded .vision-toggle-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Sub Vision Items - Hidden by default */
+  .vision-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .vision-grid.show {
+    max-height: 1500px;
+    opacity: 1;
+  }
+  
+  @media (min-width: 768px) {
+    .vision-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  
   .vision-item {
-    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
-    border: 1px solid var(--gold-20);
+    background: #fff;
+    border: 2px solid var(--gold-20);
     border-radius: 16px;
-    padding: var(--card-pad);
-    position: relative; overflow: hidden;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .vision-item::after{
-    content: ''; position: absolute; inset: -1px; border-radius: 18px; pointer-events:none;
-    background:
-      radial-gradient(280px 110px at 0% 0%, rgba(214,177,77,.15), transparent 60%),
-      radial-gradient(220px 120px at 100% 100%, rgba(172,14,14,.08), transparent 60%);
-    mix-blend-mode: multiply;
+  
+  .vision-grid.show .vision-item {
+    transform: translateY(0);
   }
-  .vision-kicker { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:800; color: var(--ink); background:#fff; border:1px solid var(--gold-20); margin-bottom:10px; }
-  .vision-kicker::before{ content:'✦'; color: var(--gold); }
-  .vision-h { font-size: 16px; font-weight: 900; color: var(--red); letter-spacing:.2px; margin-bottom:8px; }
-  .vision-p { font-size: 15.5px; line-height: 1.85; color: var(--slate); font-weight: 600; }
+  
+  .vision-grid.show .vision-item:nth-child(1) { transition-delay: 0.1s; }
+  .vision-grid.show .vision-item:nth-child(2) { transition-delay: 0.2s; }
+  .vision-grid.show .vision-item:nth-child(3) { transition-delay: 0.3s; }
+  
+  .vision-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,.1);
+    border-color: var(--gold);
+  }
+  
+  .vision-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+  
+  .vision-item:hover::before {
+    transform: scaleX(1);
+  }
+  
+  .vision-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--gold-dark);
+    background: var(--gold-20);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .vision-kicker::before {
+    content: '◆';
+    color: var(--gold);
+  }
+  
+  .vision-h {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  
+  .vision-p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--slate);
+  }
+  
+  .vision-p b {
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+  
+  .vision-p i {
+    font-style: italic;
+    color: var(--red);
+  }
 
   .section-title { font-weight: 900; text-align: center; font-size: 1.5rem; }
+  
   @media (max-width: 768px) {
     .intro-text { font-size: 15px; line-height: 1.9; }
-    .vision-p { font-size: 15px; }
+    .vision-main { padding: 2rem; }
+    .vision-main-title { font-size: 1.6rem; }
+    .vision-main-text { font-size: 15px; }
+    .vision-item { padding: 1.5rem; }
+    .vision-h { font-size: 14px; }
+    .vision-p { font-size: 13px; }
   }
 </style>
 
@@ -325,42 +508,62 @@ function generateDiamondNetwork() {
     </div>
   </div>
 
-  <!-- Lucide Vision (all start with "We") -->
-  <div class="vision-lucide">
-    <article class="vision-item">
-      <span class="vision-kicker">Our Vision</span>
-      <h3 class="vision-h">We envision a future…</h3>
-      <p class="vision-p">
-        We envision a future where <b>Lucide financial intelligence</b> diminishes knowledge asymmetry,
-        transforming opaque data streams into <b>clear, accessible, and strategically valuable insights</b> for decision-makers.
-      </p>
-    </article>
+  <!-- Vision Section with Expandable Cards -->
+  <div class="vision-container">
+    <!-- Main Vision Card (Click to Expand) -->
+    <div class="vision-main" onclick="toggleVisionGrid()" id="visionMain">
+      <div class="vision-main-content">
+        <span class="vision-main-label">✨ OUR VISION</span>
+        <h2 class="vision-main-title">
+          We envision a future of Lucide Intelligence
+          <span class="vision-toggle-icon">▼</span>
+        </h2>
+        <p class="vision-main-text">
+          We envision a future where <b>Lucide financial intelligence</b> diminishes knowledge asymmetry,
+          transforming opaque data streams into <b>clear, accessible, and strategically valuable insights</b> for decision-makers.
+        </p>
+      </div>
+    </div>
 
-    <article class="vision-item">
-      <span class="vision-kicker">Innovative Research</span>
-      <h3 class="vision-h">We pursue rigorous and pioneering work.</h3>
-      <p class="vision-p">
-        We pursue rigorous and pioneering methodologies in financial data science and quantitative asset allocation,
-        building <b>transparent and interpretable frameworks</b> that advance the state of knowledge while ensuring <b>practical fidelity</b>.
-      </p>
-    </article>
+    <!-- Expandable Sub-Vision Cards -->
+    <div class="vision-grid" id="visionGrid">
+      <article class="vision-item">
+        <span class="vision-kicker">Research</span>
+        <h3 class="vision-h">We pursue rigorous and pioneering work</h3>
+        <p class="vision-p">
+          We pursue rigorous methodologies in financial data science and quantitative asset allocation,
+          building <b>transparent frameworks</b> that advance knowledge while ensuring <b>practical fidelity</b>.
+        </p>
+      </article>
 
-    <article class="vision-item">
-      <span class="vision-kicker">Practical Impact</span>
-      <h3 class="vision-h">We transform theory into usable tools.</h3>
-      <p class="vision-p">
-        We transform theory into <b>intuitive, user-centric solutions</b>, enabling practitioners and institutions to navigate uncertainty with clarity
-        and to <b>bridge the gap</b> between sophisticated analytics and real-world application.
-      </p>
-    </article>
+      <article class="vision-item">
+        <span class="vision-kicker">Impact</span>
+        <h3 class="vision-h">We transform theory into usable tools</h3>
+        <p class="vision-p">
+          We transform theory into <b>intuitive solutions</b>, enabling practitioners to navigate uncertainty
+          and <b>bridge the gap</b> between sophisticated analytics and real-world application.
+        </p>
+      </article>
 
-    <article class="vision-item">
-      <span class="vision-kicker">Lucide Insight</span>
-      <h3 class="vision-h">We are guided by lucidité.</h3>
-      <p class="vision-p">
-        We are guided by the spirit of <i>lucidité</i>—<b>clarity, discernment, and transparency</b>—as we illuminate complexity,
-        making finance not only more understandable but also more <b>equitable and transformative</b> on a global scale.
-      </p>
-    </article>
+      <article class="vision-item">
+        <span class="vision-kicker">Philosophy</span>
+        <h3 class="vision-h">We are guided by lucidité</h3>
+        <p class="vision-p">
+          We are guided by <i>lucidité</i>—<b>clarity, discernment, and transparency</b>—as we illuminate complexity,
+          making finance more <b>equitable and transformative</b> on a global scale.
+        </p>
+      </article>
+    </div>
   </div>
 </section>
+
+<script>
+// Toggle Vision Grid
+function toggleVisionGrid() {
+  const grid = document.getElementById('visionGrid');
+  const mainCard = document.getElementById('visionMain');
+  
+  grid.classList.toggle('show');
+  mainCard.classList.toggle('expanded');
+}
+</script>
