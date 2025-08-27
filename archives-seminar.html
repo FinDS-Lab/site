@@ -30,7 +30,6 @@ permalink: /archives-seminar.html
     padding:16px 20px;
     border-bottom:1px solid #f3f4f6;
     transition:all 0.2s;
-    cursor:pointer;
   }
   
   .board-row:last-child{
@@ -86,10 +85,12 @@ permalink: /archives-seminar.html
     font-size:16px;
     color:#111827;
     line-height:1.4;
+    text-decoration:none;
+    display:block;
     transition:color 0.2s;
   }
   
-  .board-row:hover .seminar-title{
+  .seminar-title:hover{
     color:#d6b14d;
   }
   
@@ -146,6 +147,7 @@ permalink: /archives-seminar.html
     font-size:12px;
     color:#475569;
     background:#fff;
+    text-decoration:none;
     transition:all 0.2s;
     white-space:nowrap;
   }
@@ -156,204 +158,6 @@ permalink: /archives-seminar.html
     color:#111827;
   }
 
-  /* Modal Overlay */
-  .modal-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.6);
-    z-index:9998;
-    display:none;
-    opacity:0;
-    transition:opacity 0.3s;
-  }
-  
-  .modal-overlay.show{
-    display:block;
-    opacity:1;
-  }
-  
-  /* Modal Panel */
-  .modal-panel{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%) scale(0.95);
-    width:90%;
-    max-width:800px;
-    max-height:85vh;
-    background:#fff;
-    border-radius:1rem;
-    z-index:9999;
-    display:none;
-    opacity:0;
-    transition:all 0.3s;
-    overflow:hidden;
-  }
-  
-  .modal-panel.show{
-    display:flex;
-    flex-direction:column;
-    opacity:1;
-    transform:translate(-50%, -50%) scale(1);
-  }
-  
-  /* Modal Header */
-  .modal-header{
-    padding:20px 24px;
-    border-bottom:1px solid #e5e7eb;
-    background:linear-gradient(135deg, #d6b14d 0%, #eacf7d 100%);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  
-  .modal-title{
-    font-size:18px;
-    font-weight:900;
-    color:#111827;
-    line-height:1.3;
-  }
-  
-  .modal-close{
-    width:36px;
-    height:36px;
-    border-radius:0.5rem;
-    border:none;
-    background:rgba(255,255,255,0.9);
-    color:#111827;
-    font-size:20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.2s;
-  }
-  
-  .modal-close:hover{
-    background:#fff;
-    transform:scale(1.05);
-  }
-  
-  /* Modal Meta */
-  .modal-meta{
-    padding:16px 24px;
-    background:#f8fafc;
-    border-bottom:1px solid #e5e7eb;
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    align-items:center;
-  }
-  
-  .modal-meta-item{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:13px;
-  }
-  
-  .modal-meta-label{
-    font-weight:700;
-    color:#6b7280;
-  }
-  
-  .modal-meta-value{
-    color:#111827;
-    font-weight:600;
-  }
-  
-  /* Modal Body */
-  .modal-body{
-    padding:24px;
-    overflow-y:auto;
-    flex:1;
-  }
-  
-  .modal-content{
-    font-size:15px;
-    line-height:1.8;
-    color:#374151;
-  }
-  
-  .modal-content h2{
-    font-size:20px;
-    font-weight:900;
-    color:#111827;
-    margin-top:24px;
-    margin-bottom:12px;
-    padding-bottom:8px;
-    border-bottom:2px solid #f3f4f6;
-  }
-  
-  .modal-content h3{
-    font-size:17px;
-    font-weight:800;
-    color:#1f2937;
-    margin-top:20px;
-    margin-bottom:10px;
-  }
-  
-  .modal-content p{
-    margin-bottom:16px;
-  }
-  
-  .modal-content ul, .modal-content ol{
-    margin:16px 0;
-    padding-left:24px;
-  }
-  
-  .modal-content li{
-    margin-bottom:8px;
-  }
-  
-  .modal-content blockquote{
-    border-left:4px solid #d6b14d;
-    padding-left:16px;
-    margin:16px 0;
-    color:#64748b;
-    font-style:italic;
-  }
-  
-  .modal-content code{
-    background:#f3f4f6;
-    padding:2px 6px;
-    border-radius:4px;
-    font-family:monospace;
-    font-size:14px;
-  }
-  
-  .modal-content pre{
-    background:#1e293b;
-    color:#e2e8f0;
-    padding:16px;
-    border-radius:8px;
-    overflow-x:auto;
-    margin:16px 0;
-  }
-  
-  .modal-content pre code{
-    background:none;
-    padding:0;
-    color:inherit;
-  }
-  
-  .modal-content img{
-    max-width:100%;
-    height:auto;
-    border-radius:8px;
-    margin:16px 0;
-  }
-  
-  .modal-content a{
-    color:#3b82f6;
-    text-decoration:underline;
-    text-underline-offset:2px;
-  }
-  
-  .modal-content a:hover{
-    color:#2563eb;
-  }
-  
   /* Empty State */
   .empty-state{
     padding:60px 20px;
@@ -383,6 +187,7 @@ permalink: /archives-seminar.html
       grid-template-columns:1fr;
       gap:12px;
       padding:16px;
+      position:relative;
     }
     
     .date-box{
@@ -426,38 +231,6 @@ permalink: /archives-seminar.html
     .btn-more{
       display:none;
     }
-    
-    .modal-panel{
-      width:100%;
-      height:100%;
-      max-width:100%;
-      max-height:100%;
-      border-radius:0;
-    }
-    
-    .modal-header{
-      padding:16px 20px;
-    }
-    
-    .modal-title{
-      font-size:16px;
-    }
-    
-    .modal-meta{
-      padding:12px 20px;
-    }
-    
-    .modal-meta-item{
-      font-size:12px;
-    }
-    
-    .modal-body{
-      padding:20px;
-    }
-    
-    .modal-content{
-      font-size:14px;
-    }
   }
   
   @media (max-width: 480px) {
@@ -497,7 +270,8 @@ permalink: /archives-seminar.html
   <div class="seminar-container">
     <ul id="seminar-list" role="list">
       {% comment %}
-      Collect all seminar posts
+      Collect all seminar posts from /seminar/ folder
+      Sort by date (oldest to newest)
       {% endcomment %}
       {% assign all_items = site.pages | concat: site.posts %}
       {% assign seminars = "" | split: "" %}
@@ -511,8 +285,8 @@ permalink: /archives-seminar.html
       {% if seminars.size == 0 %}
         <li class="empty-state">
           <div class="empty-icon">📅</div>
-          <div class="empty-title">No seminars yet</div>
-          <div class="empty-text">Seminar posts will appear here once added</div>
+          <div class="empty-title">세미나 게시글이 없습니다</div>
+          <div class="empty-text">새로운 세미나가 등록되면 여기에 표시됩니다</div>
         </li>
       {% else %}
         {% for post in seminars %}
@@ -521,28 +295,28 @@ permalink: /archives-seminar.html
           {% assign d = post.date | date: "%d" %}
           {% assign month_name = post.date | date: "%b" %}
           
-          <li class="board-row" role="listitem" 
-              onclick="openSeminar('{{ post.title | escape }}', '{{ post.date | date: "%B %d, %Y" }}', '{{ post.host | escape }}', '{{ post.venue | escape }}', '{{ post.content | strip_html | escape | replace: "'", "\\'" | replace: '"', '\"' | newline_to_br }}', '{{ post.url | relative_url }}')">
-            
+          <li class="board-row" role="listitem">
             <div class="date-box">
               <div class="date-d">{{ d }}</div>
               <div class="date-ym">{{ month_name | upcase }} {{ y }}</div>
             </div>
             
             <div class="seminar-content">
-              <div class="seminar-title">{{ post.title }}</div>
+              <a href="{{ post.url | relative_url }}" class="seminar-title">
+                {{ post.title }}
+              </a>
               
               {% if post.host or post.venue %}
               <div class="meta">
                 {% if post.host %}
                   <span class="meta-pill">
-                    <span class="meta-key">Host</span>
+                    <span class="meta-key">초청</span>
                     <span class="meta-value">{{ post.host }}</span>
                   </span>
                 {% endif %}
                 {% if post.venue %}
                   <span class="meta-pill">
-                    <span class="meta-key">Venue</span>
+                    <span class="meta-key">장소</span>
                     <span class="meta-value">{{ post.venue }}</span>
                   </span>
                 {% endif %}
@@ -556,12 +330,17 @@ permalink: /archives-seminar.html
                   {{ post.content | strip_html | strip | truncate: 160 }}
                 {% endif %}
               </div>
+              
+              <!-- Mobile date display -->
+              <div class="sm:hidden mt-2 text-[12px] text-slate-500">
+                {{ y }}.{{ m }}.{{ d }}
+              </div>
             </div>
             
             <div class="btn-cell hidden sm:block">
-              <button class="btn-more" onclick="event.stopPropagation(); openSeminar('{{ post.title | escape }}', '{{ post.date | date: "%B %d, %Y" }}', '{{ post.host | escape }}', '{{ post.venue | escape }}', '{{ post.content | strip_html | escape | replace: "'", "\\'" | replace: '"', '\"' | newline_to_br }}', '{{ post.url | relative_url }}')">
-                View Details
-              </button>
+              <a href="{{ post.url | relative_url }}" class="btn-more">
+                Read More
+              </a>
             </div>
           </li>
         {% endfor %}
@@ -569,157 +348,3 @@ permalink: /archives-seminar.html
     </ul>
   </div>
 </section>
-
-<!-- ===== Modal ===== -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeSeminar()"></div>
-<div class="modal-panel" id="modalPanel">
-  <div class="modal-header">
-    <h3 class="modal-title" id="modalTitle">Seminar</h3>
-    <button type="button" class="modal-close" onclick="closeSeminar()">✕</button>
-  </div>
-  <div class="modal-meta" id="modalMeta">
-    <!-- Meta info will be inserted here -->
-  </div>
-  <div class="modal-body">
-    <div class="modal-content" id="modalContent">
-      <!-- Content will be inserted here -->
-    </div>
-  </div>
-</div>
-
-<!-- ===== Scripts ===== -->
-<script>
-// Sample seminar data for demonstration
-const sampleSeminars = [
-  {
-    title: "Deep Learning Applications in Quantitative Finance",
-    date: "March 15, 2025",
-    host: "KAIST Financial Engineering Center",
-    venue: "KAIST Seoul Campus, Room 301",
-    content: `
-      <h2>Overview</h2>
-      <p>This seminar explores cutting-edge applications of deep learning in quantitative finance, focusing on portfolio optimization, risk management, and algorithmic trading strategies.</p>
-      
-      <h2>Key Topics</h2>
-      <ul>
-        <li>Neural network architectures for financial time series prediction</li>
-        <li>Reinforcement learning for dynamic portfolio optimization</li>
-        <li>Natural language processing for market sentiment analysis</li>
-        <li>Graph neural networks for financial network analysis</li>
-      </ul>
-      
-      <h2>Speaker Bio</h2>
-      <p>Dr. Jane Smith is a leading researcher in financial AI with over 15 years of experience in quantitative finance. She has published extensively on machine learning applications in financial markets.</p>
-      
-      <h2>Registration</h2>
-      <p>Please register at <a href="#">https://seminar.kaist.ac.kr</a> by March 10, 2025.</p>
-    `
-  },
-  {
-    title: "Blockchain Technology in Financial Services",
-    date: "February 28, 2025",
-    host: "Seoul National University",
-    venue: "SNU Business School, Auditorium",
-    content: `
-      <h2>Abstract</h2>
-      <p>Blockchain technology is revolutionizing financial services by providing transparent, secure, and efficient solutions for various financial operations.</p>
-      
-      <h2>Agenda</h2>
-      <ol>
-        <li>Introduction to blockchain and distributed ledger technology</li>
-        <li>Smart contracts and their applications in finance</li>
-        <li>Central bank digital currencies (CBDCs)</li>
-        <li>DeFi protocols and their impact on traditional finance</li>
-      </ol>
-      
-      <h2>Q&A Session</h2>
-      <p>A 30-minute Q&A session will follow the main presentation.</p>
-    `
-  }
-];
-
-function openSeminar(title, date, host, venue, content, url) {
-  // Set modal title
-  document.getElementById('modalTitle').innerHTML = title;
-  
-  // Build meta information
-  let metaHtml = '';
-  if (date) {
-    metaHtml += `
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Date:</span>
-        <span class="modal-meta-value">${date}</span>
-      </div>
-    `;
-  }
-  if (host) {
-    metaHtml += `
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Host:</span>
-        <span class="modal-meta-value">${host}</span>
-      </div>
-    `;
-  }
-  if (venue) {
-    metaHtml += `
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Venue:</span>
-        <span class="modal-meta-value">${venue}</span>
-      </div>
-    `;
-  }
-  if (url) {
-    metaHtml += `
-      <div class="modal-meta-item">
-        <span class="modal-meta-label">Link:</span>
-        <a href="${url}" target="_blank" style="color:#3b82f6;text-decoration:underline;">View Full Post</a>
-      </div>
-    `;
-  }
-  
-  document.getElementById('modalMeta').innerHTML = metaHtml;
-  
-  // Set content - for demo, use sample content if available
-  let displayContent = content;
-  
-  // If content is too short (likely excerpt), try to use sample data
-  if (content && content.length < 500) {
-    const sample = sampleSeminars.find(s => s.title === title);
-    if (sample) {
-      displayContent = sample.content;
-    } else {
-      // Format the short content nicely
-      displayContent = `
-        <div style="font-size:16px;line-height:1.8;color:#374151;">
-          ${content}
-        </div>
-        <div style="margin-top:24px;padding-top:20px;border-top:1px solid #e5e7eb;">
-          <p style="color:#6b7280;font-size:14px;">
-            Full seminar details and materials will be available soon.
-          </p>
-        </div>
-      `;
-    }
-  }
-  
-  document.getElementById('modalContent').innerHTML = displayContent;
-  
-  // Show modal
-  document.getElementById('modalOverlay').classList.add('show');
-  document.getElementById('modalPanel').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeSeminar() {
-  document.getElementById('modalOverlay').classList.remove('show');
-  document.getElementById('modalPanel').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-// ESC key to close
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeSeminar();
-  }
-});
-</script>
