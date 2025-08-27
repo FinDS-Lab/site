@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "Open Day (2025-09-01)"
+title: "FINDS Lab. Logo"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
-tags: [album]
-thumb: image1.jpg   # 폴더 내 대표 이미지 파일명
+tags: [logo]
+thumb: logo1.jpg   # 폴더 내 대표 이미지 파일명
 ---
 
 <!-- ===== Album Banner (first image as cover) ===== -->
