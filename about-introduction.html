@@ -35,9 +35,12 @@ permalink: /about-introduction.html
 <style>
   :root {
     --gold: rgb(214, 177, 77);
+    --gold-20: rgba(214,177,77,.2);
     --gold-light: rgb(234, 207, 127);
     --red: rgb(172, 14, 14);
     --red-dark: rgb(127, 10, 10);
+    --ink: #111827;
+    --slate: #374151;
   }
 
   /* Main Content Section */
@@ -66,10 +69,7 @@ permalink: /about-introduction.html
     word-break: keep-all;
     line-break: strict;
   }
-
-  .intro-text:last-child {
-    margin-bottom: 0;
-  }
+  .intro-text:last-child { margin-bottom: 0; }
 
   /* Highlighted Keywords */
   .highlight {
@@ -78,11 +78,7 @@ permalink: /about-introduction.html
     color: var(--red);
     padding: 0 2px;
   }
-
-  .highlight-gold {
-    color: var(--gold);
-    font-weight: 900;
-  }
+  .highlight-gold { color: var(--gold); font-weight: 900; }
 
   /* Concept Cards */
   .concept-card {
@@ -95,107 +91,92 @@ permalink: /about-introduction.html
     position: relative;
     overflow: hidden;
   }
-
   .concept-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 4px;
     background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
     transform: scaleX(0);
     transition: transform 0.3s;
   }
-
-  .concept-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  }
-
-  .concept-card:hover::before {
-    transform: scaleX(1);
-  }
+  .concept-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+  .concept-card:hover::before { transform: scaleX(1); }
 
   .concept-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 16px;
+    width: 60px; height: 60px; margin: 0 auto 16px;
     background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
+    border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px;
   }
+  .concept-title { font-size: 18px; font-weight: 900; color: #111827; margin-bottom: 8px; }
+  .concept-subtitle { font-size: 13px; color: #9ca3af; font-weight: 600; }
 
-  .concept-title {
-    font-size: 18px;
-    font-weight: 900;
-    color: #111827;
-    margin-bottom: 8px;
+  /* ===== Vision Section (UPGRADED) ===== */
+  .vision-wrap {
+    margin-top: 4rem;
   }
-
-  .concept-subtitle {
-    font-size: 13px;
-    color: #9ca3af;
-    font-weight: 600;
-  }
-
-  /* Vision Statement */
-  .vision-section {
+  .vision-card {
+    position: relative;
     background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
-    border-radius: 1.5rem;
-    padding: 3rem;
-    text-align: center;
-    border: 1px solid rgba(214,177,77,0.2);
+    border-radius: 20px;
+    padding: 2.25rem;
+    border: 1px solid var(--gold-20);
+    overflow: hidden;
   }
-
-  .vision-title {
+  /* gold glow corners */
+  .vision-card::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 22px;
+    pointer-events: none;
+    background:
+      radial-gradient(300px 120px at 0% 0%, rgba(214,177,77,.18), transparent 60%),
+      radial-gradient(300px 120px at 100% 100%, rgba(172,14,14,.08), transparent 60%);
+    mix-blend-mode: multiply;
+  }
+  .vision-head {
+    display:flex; align-items:center; gap:.75rem; margin-bottom: .75rem;
+  }
+  .vision-badge {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:42px; height:42px; border-radius:12px;
+    background: conic-gradient(from 180deg at 50% 50%, rgba(214,177,77,.18), rgba(172,14,14,.1));
+    border:1px solid var(--gold-20);
     font-size: 20px;
-    font-weight: 900;
-    color: var(--red);
-    margin-bottom: 16px;
   }
-
+  .vision-title {
+    font-size: 20px; font-weight: 900; color: var(--red);
+    letter-spacing: .3px;
+  }
   .vision-text {
-    font-size: 18px;
-    line-height: 1.8;
-    color: #374151;
-    font-weight: 500;
+    font-size: 18px; line-height: 1.8; color: var(--slate); font-weight: 600;
+    margin-top: .25rem;
+  }
+  .vision-divider {
+    height:1px; background: linear-gradient(90deg, rgba(214,177,77,.35), rgba(172,14,14,.15));
+    margin: 18px 0 16px;
   }
 
+  /* Keywords row → Lucide 톤 */
   .vision-keywords {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 24px;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top: 6px;
   }
-
-  .vision-keyword {
-    padding: 8px 20px;
-    background: white;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #374151;
-    border: 2px solid var(--gold);
+  .vision-chip {
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 8px 14px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing:.2px;
+    color: var(--ink); background: #fff; border: 2px solid var(--gold);
+    box-shadow: 0 2px 10px rgba(214,177,77,.12);
+    transition: transform .15s ease, box-shadow .15s ease;
   }
+  .vision-chip::before { content:'✦'; font-size:12px; color: var(--gold); }
+  .vision-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(214,177,77,.18); }
 
+  /* narrow screens */
   @media (max-width: 768px) {
-    .intro-text {
-      font-size: 15px;
-      line-height: 1.9;
-    }
-    
-    .vision-section {
-      padding: 2rem 1.5rem;
-    }
-    
-    .vision-text {
-      font-size: 16px;
-    }
+    .intro-text { font-size: 15px; line-height: 1.9; }
+    .vision-card { padding: 1.5rem; }
+    .vision-text { font-size: 16px; }
   }
 </style>
 
@@ -250,17 +231,27 @@ permalink: /about-introduction.html
     </div>
   </div>
 
-  <!-- Vision Statement -->
-  <div class="vision-section mt-16">
-    <h3 class="vision-title">Our Vision</h3>
-    <p class="vision-text">
-      Transforming complex financial data into <b>intuitive insights</b> and 
-      <b>practical solutions</b> for better decision-making
-    </p>
-    <div class="vision-keywords">
-      <span class="vision-keyword">Innovative Research</span>
-      <span class="vision-keyword">Practical Impact</span>
-      <span class="vision-keyword">Global Excellence</span>
+  <!-- ===== Vision (Lucide ver.) ===== -->
+  <div class="vision-wrap">
+    <div class="vision-card">
+      <div class="vision-head">
+        <div class="vision-badge">✨</div>
+        <h3 class="vision-title">Our Vision</h3>
+      </div>
+
+      <!-- 본문: 모두 We 로 시작 + Lucide 톤 -->
+      <p class="vision-text">
+        We envision a future where <b>Lucide financial intelligence</b> diminishes knowledge asymmetry,
+        transforming opaque data streams into <b>clear, accessible, and strategically valuable insights</b> for decision-makers.
+      </p>
+
+      <div class="vision-divider"></div>
+
+      <div class="vision-keywords">
+        <span class="vision-chip">Innovative Research</span>
+        <span class="vision-chip">Practical Impact</span>
+        <span class="vision-chip">Lucide Insight</span>
+      </div>
     </div>
   </div>
 </section>
