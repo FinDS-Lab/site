@@ -4,14 +4,15 @@ title: "Open Day (2025-09-01)"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
 tags: [album]
-# thumb: cover.jpg   # 옵션: 폴더 내 대표 이미지 파일명(또는 절대경로/URL)
+thumb: image1.jpg   # 폴더 내 대표 이미지 파일명
 ---
 
 <!-- ===== Album Banner (first image as cover) ===== -->
 {% comment %}
-현재 페이지 폴더 내 이미지 수집
+현재 페이지 폴더 내 이미지 수집 (물리 경로 기준: page.dir)
+예시 파일: image1.jpg, image2.jpg, image3.jpg, image4.jpg
 {% endcomment %}
-{% assign here = page.url %}
+{% assign here = page.dir %}
 {% assign files = site.static_files | where_exp: "f", "f.path contains here" %}
 
 {% assign imgs = "" | split: "" %}
@@ -24,8 +25,8 @@ tags: [album]
 {% assign imgs = imgs | sort: "path" %}
 
 {% comment %}
-대표 커버 이미지 결정
-1) front matter thumb(파일명/절대경로/URL)
+대표 커버 이미지 결정 우선순위
+1) front matter thumb (파일명/절대경로/URL)
 2) 폴더 내 첫 이미지
 3) 플레이스홀더
 {% endcomment %}
