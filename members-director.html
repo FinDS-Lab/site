@@ -42,15 +42,22 @@ permalink: /members-director.html
     --red-dark:#7f0a0a;
   }
 
-  /* Card Design with rounded corners */
-  .card{
+  /* Card Design with rounded corners - 우선순위 최대화 */
+  div.card, .card {
     background:#fff !important;
     border:1px solid #e5e7eb !important;
     border-radius:16px !important;
+    -webkit-border-radius:16px !important;
+    -moz-border-radius:16px !important;
     overflow:hidden !important;
-    box-shadow:0 1px 3px rgba(0,0,0,0.04);
+    box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
     transition:all 0.2s;
     margin-bottom: 1.5rem;
+  }
+  
+  /* Tailwind 클래스 오버라이드 */
+  .rounded-lg, .rounded-xl, .rounded-2xl {
+    border-radius:16px !important;
   }
   
   .card:hover{
