@@ -40,22 +40,23 @@ permalink: /members-alumni.html
     --primary-dark: #111827;
   }
 
-  /* Table Style */
-  .alumni-table{
+  /* Desktop Table Styles */
+  .alumni-table-desktop{
     width:100%;
     background:#fff;
     border:1px solid #e5e7eb;
     border-radius:1rem;
     overflow:hidden;
     margin-bottom:2rem;
+    display:table;
   }
   
-  .alumni-table thead{
+  .alumni-table-desktop thead{
     background:#f8fafc;
     border-bottom:2px solid #e5e7eb;
   }
   
-  .alumni-table th{
+  .alumni-table-desktop th{
     padding:12px 16px;
     text-align:left;
     font-size:12px;
@@ -65,22 +66,131 @@ permalink: /members-alumni.html
     letter-spacing:0.5px;
   }
   
-  .alumni-table tbody tr{
+  .alumni-table-desktop tbody tr{
     border-bottom:1px solid #f3f4f6;
   }
   
-  .alumni-table tbody tr:last-child{
+  .alumni-table-desktop tbody tr:last-child{
     border-bottom:none;
   }
   
-  .alumni-table td{
+  .alumni-table-desktop td{
     padding:14px 16px;
     font-size:14px;
     color:#374151;
     vertical-align:top;
   }
   
-  /* Expandable Row */
+  /* Mobile Card Layout */
+  .alumni-cards-mobile{
+    display:none;
+  }
+  
+  .alumni-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    overflow:hidden;
+    margin-bottom:12px;
+  }
+  
+  .alumni-card-header{
+    padding:12px 14px;
+    background:#f8fafc;
+    border-bottom:1px solid #e5e7eb;
+    cursor:pointer;
+    user-select:none;
+  }
+  
+  .alumni-card-header:active{
+    background:#f1f5f9;
+  }
+  
+  .alumni-card-name{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  
+  .alumni-card-name-text{
+    font-weight:800;
+    color:#111827;
+    font-size:14px;
+  }
+  
+  .alumni-card-arrow{
+    font-size:10px;
+    color:#6b7280;
+    transition:transform 0.2s;
+  }
+  
+  .alumni-card-header.expanded .alumni-card-arrow{
+    transform:rotate(90deg);
+  }
+  
+  .alumni-card-badges{
+    display:flex;
+    gap:4px;
+    margin-top:4px;
+  }
+  
+  .alumni-card-body{
+    padding:14px;
+    display:none;
+  }
+  
+  .alumni-card-body.show{
+    display:block;
+  }
+  
+  .alumni-card-section{
+    margin-bottom:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid #f3f4f6;
+  }
+  
+  .alumni-card-section:last-child{
+    margin-bottom:0;
+    padding-bottom:0;
+    border-bottom:none;
+  }
+  
+  .alumni-card-label{
+    font-size:10px;
+    font-weight:700;
+    text-transform:uppercase;
+    color:#6b7280;
+    letter-spacing:0.3px;
+    margin-bottom:4px;
+  }
+  
+  .alumni-card-value{
+    font-size:13px;
+    color:#111827;
+    line-height:1.4;
+  }
+  
+  .alumni-card-period{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:4px;
+  }
+  
+  .alumni-card-thesis-link{
+    color:#3b82f6;
+    text-decoration:none;
+    font-size:12px;
+    line-height:1.4;
+    display:block;
+    margin-top:2px;
+  }
+  
+  .alumni-card-thesis-link:active{
+    color:#2563eb;
+  }
+
+  /* Shared Styles */
   .alumni-row{
     transition:all 0.2s;
   }
@@ -110,7 +220,6 @@ permalink: /members-alumni.html
     border-radius:0.5rem;
   }
   
-  /* Name with click indicator */
   .alumni-name-cell{
     cursor:pointer;
     user-select:none;
@@ -135,7 +244,7 @@ permalink: /members-alumni.html
     transform:rotate(90deg);
   }
   
-  .degree-badges{
+  .degree-badges, .degree-badges-mobile{
     display:flex;
     gap:4px;
     margin-top:4px;
@@ -160,7 +269,6 @@ permalink: /members-alumni.html
     color:#fff;
   }
   
-  /* Period */
   .alumni-periods{
     display:flex;
     flex-direction:column;
@@ -200,7 +308,6 @@ permalink: /members-alumni.html
     font-weight:600;
   }
   
-  /* Current position */
   .position-title{
     font-weight:700;
     color:#111827;
@@ -213,7 +320,6 @@ permalink: /members-alumni.html
     margin-top:2px;
   }
   
-  /* Thesis Links */
   .thesis-link{
     color:#3b82f6;
     text-decoration:none;
@@ -235,7 +341,6 @@ permalink: /members-alumni.html
     display:block;
   }
   
-  /* Education in details */
   .education-section{
     margin-top:16px;
   }
@@ -296,6 +401,12 @@ permalink: /members-alumni.html
     border-radius:0.75rem;
     padding:16px;
     text-align:center;
+    transition:all 0.2s;
+  }
+  
+  .stat-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
   }
   
   .stat-number{
@@ -314,17 +425,43 @@ permalink: /members-alumni.html
   
   /* Mobile responsive */
   @media (max-width: 768px) {
-    .alumni-table th:nth-child(2),
-    .alumni-table td:nth-child(2) {
+    .alumni-table-desktop{
       display:none;
     }
     
-    .thesis-link{
+    .alumni-cards-mobile{
+      display:block;
+    }
+    
+    .stats-container{
+      grid-template-columns:repeat(2, 1fr);
+      gap:12px;
+    }
+    
+    .stat-card{
+      padding:12px;
+    }
+    
+    .stat-number{
+      font-size:24px;
+    }
+    
+    .stat-label{
+      font-size:11px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .alumni-card-name-text{
+      font-size:13px;
+    }
+    
+    .alumni-card-value{
       font-size:12px;
     }
     
-    .position-title{
-      font-size:12px;
+    .alumni-card-thesis-link{
+      font-size:11px;
     }
   }
 </style>
@@ -352,8 +489,8 @@ permalink: /members-alumni.html
     </div>
   </div>
   
-  <!-- Alumni Table -->
-  <table class="alumni-table">
+  <!-- Desktop Table -->
+  <table class="alumni-table-desktop">
     <thead>
       <tr>
         <th style="width:30%">Name</th>
@@ -366,6 +503,11 @@ permalink: /members-alumni.html
       <!-- Content will be dynamically generated -->
     </tbody>
   </table>
+  
+  <!-- Mobile Cards -->
+  <div class="alumni-cards-mobile" id="alumniCardsMobile">
+    <!-- Content will be dynamically generated -->
+  </div>
 
 </section>
 
@@ -481,7 +623,7 @@ const alumniData = [
   }
 ];
 
-// Toggle function for expandable rows
+// Toggle function for desktop expandable rows
 function toggleAlumni(element, index) {
   const detailsRow = document.getElementById(`details-${index}`);
   const arrow = element.querySelector('.name-arrow');
@@ -504,8 +646,30 @@ function toggleAlumni(element, index) {
   }
 }
 
-// Generate table content
-function generateTable() {
+// Toggle function for mobile cards
+function toggleCard(index) {
+  const header = document.getElementById(`card-header-${index}`);
+  const body = document.getElementById(`card-body-${index}`);
+  
+  if (body.classList.contains('show')) {
+    body.classList.remove('show');
+    header.classList.remove('expanded');
+  } else {
+    // Close all other cards
+    document.querySelectorAll('.alumni-card-body').forEach(b => {
+      b.classList.remove('show');
+    });
+    document.querySelectorAll('.alumni-card-header').forEach(h => {
+      h.classList.remove('expanded');
+    });
+    
+    body.classList.add('show');
+    header.classList.add('expanded');
+  }
+}
+
+// Generate desktop table content
+function generateDesktopTable() {
   const tbody = document.getElementById('alumniTableBody');
   let html = '';
   
@@ -573,24 +737,103 @@ function generateTable() {
   tbody.innerHTML = html;
 }
 
-// Calculate statistics
+// Generate mobile cards content
+function generateMobileCards() {
+  const container = document.getElementById('alumniCardsMobile');
+  let html = '';
+  
+  alumniData.forEach((alum, index) => {
+    html += `
+      <div class="alumni-card">
+        <div class="alumni-card-header" id="card-header-${index}" onclick="toggleCard(${index})">
+          <div class="alumni-card-name">
+            <span class="alumni-card-name-text">
+              ${alum.name} (${alum.nameKo})
+            </span>
+            <span class="alumni-card-arrow">▶</span>
+          </div>
+          <div class="alumni-card-badges">
+            ${alum.degrees.map(d => `<span class="degree-tag ${d}">${d.toUpperCase()}</span>`).join('')}
+          </div>
+        </div>
+        <div class="alumni-card-body" id="card-body-${index}">
+          <!-- Period -->
+          <div class="alumni-card-section">
+            <div class="alumni-card-label">Period</div>
+            ${alum.degrees.map(d => `
+              <div class="alumni-card-period">
+                <span class="period-degree ${d}">${d.toUpperCase()}</span>
+                <span class="period-range">${alum.periods[d]}</span>
+              </div>
+            `).join('')}
+          </div>
+          
+          <!-- Current Position -->
+          <div class="alumni-card-section">
+            <div class="alumni-card-label">Current Position</div>
+            <div class="alumni-card-value">
+              <div style="font-weight:700">${alum.position}</div>
+              <div style="color:#6b7280;font-size:12px;margin-top:2px">${alum.company}</div>
+            </div>
+          </div>
+          
+          <!-- Thesis -->
+          <div class="alumni-card-section">
+            <div class="alumni-card-label">Thesis/Dissertation</div>
+            <div class="alumni-card-value">
+              ${alum.thesis.phd ? `
+                <div style="margin-bottom:8px">
+                  <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:2px">Ph.D.</div>
+                  <a href="${alum.thesis.phd.url}" target="_blank" class="alumni-card-thesis-link">
+                    ${alum.thesis.phd.title}
+                  </a>
+                </div>
+              ` : ''}
+              ${alum.thesis.ms ? `
+                <div>
+                  <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:2px">M.S.</div>
+                  <a href="${alum.thesis.ms.url}" target="_blank" class="alumni-card-thesis-link">
+                    ${alum.thesis.ms.title}
+                  </a>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+          
+          <!-- Education -->
+          <div class="alumni-card-section">
+            <div class="alumni-card-label">Education</div>
+            <div class="alumni-card-value">
+              ${alum.education.map(edu => `
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                  <span class="edu-degree ${edu.degree}">${edu.degree.toUpperCase()}</span>
+                  <span style="font-size:11px">${edu.school} (${edu.year})</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+// Calculate statistics with animation
 function calculateStats() {
   let phdCount = 0;
   let msCount = 0;
   let earliestYear = 9999;
   
-  // Count each degree separately
   alumniData.forEach(alum => {
-    // Count PhD degrees
     if (alum.degrees.includes('phd')) {
       phdCount++;
     }
-    // Count MS degrees (including those who also have PhD)
     if (alum.degrees.includes('ms')) {
       msCount++;
     }
     
-    // Find earliest year
     Object.values(alum.periods).forEach(period => {
       const year = parseInt(period.split('.')[0]);
       if (year < earliestYear) {
@@ -599,15 +842,33 @@ function calculateStats() {
     });
   });
   
-  const totalCount = alumniData.length;  // Total unique people
+  const totalCount = alumniData.length;
   
-  document.getElementById('phdCount').textContent = phdCount;
-  document.getElementById('msCount').textContent = msCount;
-  document.getElementById('totalCount').textContent = totalCount;
+  // Animate numbers
+  animateNumber('phdCount', phdCount);
+  animateNumber('msCount', msCount);
+  animateNumber('totalCount', totalCount);
   document.getElementById('sinceYear').textContent = earliestYear;
 }
 
+// Number animation
+function animateNumber(elementId, finalValue) {
+  let current = 0;
+  const increment = Math.ceil(finalValue / 20);
+  const element = document.getElementById(elementId);
+  
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= finalValue) {
+      current = finalValue;
+      clearInterval(timer);
+    }
+    element.textContent = current;
+  }, 50);
+}
+
 // Initialize
-generateTable();
+generateDesktopTable();
+generateMobileCards();
 calculateStats();
 </script>
