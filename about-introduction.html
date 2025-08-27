@@ -41,23 +41,26 @@ permalink: /about-introduction.html
     --red-dark: rgb(127, 10, 10);
     --ink: #111827;
     --slate: #374151;
+    --card-pad: 2rem; /* 통일된 카드 패딩 */
   }
 
-  /* Main Content Section */
+  /* Main Content Section (KOR intro block) — 다른 블록과 크기/여백 통일 */
   .content-section {
-    background: white;
+    background: #fff;
     border-radius: 1rem;
-    padding: 3rem;
+    padding: var(--card-pad);
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.05);
     max-width: 900px;
     margin: 0 auto;
   }
 
+  @media (min-width: 1024px){
+    .content-section { padding: 2.25rem; }
+  }
+
   @media (max-width: 768px) {
-    .content-section {
-      padding: 2rem 1.5rem;
-    }
+    .content-section { padding: 1.5rem; }
   }
 
   /* Text Styles */
@@ -65,26 +68,21 @@ permalink: /about-introduction.html
     font-size: 17px;
     line-height: 2;
     color: #374151;
-    margin-bottom: 24px;
+    margin-bottom: 20px; /* 다른 카드와 균형 맞춤 */
     word-break: keep-all;
     line-break: strict;
   }
   .intro-text:last-child { margin-bottom: 0; }
 
   /* Highlighted Keywords */
-  .highlight {
-    position: relative;
-    font-weight: 800;
-    color: var(--red);
-    padding: 0 2px;
-  }
+  .highlight { position: relative; font-weight: 800; color: var(--red); padding: 0 2px; }
   .highlight-gold { color: var(--gold); font-weight: 900; }
 
   /* Concept Cards */
   .concept-card {
-    background: white;
+    background: #fff;
     border-radius: 1rem;
-    padding: 2rem 1.5rem;
+    padding: var(--card-pad);
     text-align: center;
     border: 1px solid #f3f4f6;
     transition: all 0.3s;
@@ -111,92 +109,75 @@ permalink: /about-introduction.html
   .concept-title { font-size: 18px; font-weight: 900; color: #111827; margin-bottom: 8px; }
   .concept-subtitle { font-size: 13px; color: #9ca3af; font-weight: 600; }
 
-  /* ===== Vision Section (UPGRADED) ===== */
-  .vision-wrap {
-    margin-top: 4rem;
+  /* ===== Vision (Lucide) Grid ===== */
+  .vision-lucide {
+    margin-top: 3rem;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
   }
-  .vision-card {
-    position: relative;
-    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
-    border-radius: 20px;
-    padding: 2.25rem;
-    border: 1px solid var(--gold-20);
-    overflow: hidden;
-  }
-  /* gold glow corners */
-  .vision-card::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: 22px;
-    pointer-events: none;
-    background:
-      radial-gradient(300px 120px at 0% 0%, rgba(214,177,77,.18), transparent 60%),
-      radial-gradient(300px 120px at 100% 100%, rgba(172,14,14,.08), transparent 60%);
-    mix-blend-mode: multiply;
-  }
-  .vision-head {
-    display:flex; align-items:center; gap:.75rem; margin-bottom: .75rem;
-  }
-  .vision-badge {
-    display:inline-flex; align-items:center; justify-content:center;
-    width:42px; height:42px; border-radius:12px;
-    background: conic-gradient(from 180deg at 50% 50%, rgba(214,177,77,.18), rgba(172,14,14,.1));
-    border:1px solid var(--gold-20);
-    font-size: 20px;
-  }
-  .vision-title {
-    font-size: 20px; font-weight: 900; color: var(--red);
-    letter-spacing: .3px;
-  }
-  .vision-text {
-    font-size: 18px; line-height: 1.8; color: var(--slate); font-weight: 600;
-    margin-top: .25rem;
-  }
-  .vision-divider {
-    height:1px; background: linear-gradient(90deg, rgba(214,177,77,.35), rgba(172,14,14,.15));
-    margin: 18px 0 16px;
+  @media (min-width: 768px){
+    .vision-lucide { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* Keywords row → Lucide 톤 */
-  .vision-keywords {
-    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top: 6px;
+  .vision-item {
+    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
+    border: 1px solid var(--gold-20);
+    border-radius: 16px;
+    padding: var(--card-pad);
+    position: relative;
+    overflow: hidden;
   }
-  .vision-chip {
+  .vision-item::after{
+    content: '';
+    position: absolute; inset: -1px; border-radius: 18px; pointer-events:none;
+    background:
+      radial-gradient(280px 110px at 0% 0%, rgba(214,177,77,.15), transparent 60%),
+      radial-gradient(220px 120px at 100% 100%, rgba(172,14,14,.08), transparent 60%);
+    mix-blend-mode: multiply;
+  }
+  .vision-kicker{
     display:inline-flex; align-items:center; gap:8px;
-    padding: 8px 14px; border-radius: 999px; font-weight: 800; font-size: 13px; letter-spacing:.2px;
-    color: var(--ink); background: #fff; border: 2px solid var(--gold);
-    box-shadow: 0 2px 10px rgba(214,177,77,.12);
-    transition: transform .15s ease, box-shadow .15s ease;
+    padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 800;
+    color: var(--ink); background:#fff; border:1px solid var(--gold-20); margin-bottom:10px;
   }
-  .vision-chip::before { content:'✦'; font-size:12px; color: var(--gold); }
-  .vision-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(214,177,77,.18); }
+  .vision-kicker::before{ content:'✦'; color: var(--gold); }
+  .vision-h{
+    font-size: 16px; font-weight: 900; color: var(--red); letter-spacing:.2px; margin-bottom:8px;
+  }
+  .vision-p{
+    font-size: 15.5px; line-height: 1.85; color: var(--slate); font-weight: 600;
+  }
+
+  /* Legacy “Our Focus Areas” heading alignment fix */
+  .section-title {
+    font-weight: 900;
+    text-align: center;
+    font-size: 1.5rem;
+  }
 
   /* narrow screens */
   @media (max-width: 768px) {
     .intro-text { font-size: 15px; line-height: 1.9; }
-    .vision-card { padding: 1.5rem; }
-    .vision-text { font-size: 16px; }
+    .vision-p { font-size: 15px; }
   }
 </style>
 
 <!-- ===== Main Content ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-8 pb-8">
-  <!-- Main Content -->
+  <!-- Korean Intro (크기/패딩 다른 카드와 통일) -->
   <div class="content-section">
     <p class="intro-text">
       <span class="highlight">동덕여자대학교 경영융합학부</span> 
       <span class="highlight-gold">금융데이터사이언스 연구실(FINDS Lab.)</span>에 
       오신 것을 환영합니다.
     </p>
-    
     <p class="intro-text">
       오늘날 비즈니스와 금융 환경은 <span class="highlight">데이터</span> 중심으로 
       급격히 변화하고 있습니다. 이제 경쟁력을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라, 
       데이터를 얼마나 <span class="highlight">효과적으로 분석하고 활용</span>하는지가 
       중요해지고 있습니다.
     </p>
-    
     <p class="intro-text">
       저희 연구실은 <span class="highlight">금융데이터사이언스</span>, 
       <span class="highlight">비즈니스 애널리틱스</span>, 
@@ -207,22 +188,19 @@ permalink: /about-introduction.html
   </div>
 
   <!-- Key Concepts -->
-  <div class="mt-16">
-    <h2 class="text-2xl font-900 text-center mb-10">Our Focus Areas</h2>
-    
+  <div class="mt-12">
+    <h2 class="section-title mb-10">Our Focus Areas</h2>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="concept-card">
         <div class="concept-icon">📊</div>
         <div class="concept-title">Financial Data Science</div>
         <div class="concept-subtitle">금융 데이터 사이언스</div>
       </div>
-      
       <div class="concept-card">
         <div class="concept-icon">📈</div>
         <div class="concept-title">Business Analytics</div>
         <div class="concept-subtitle">비즈니스 애널리틱스</div>
       </div>
-      
       <div class="concept-card">
         <div class="concept-icon">🎯</div>
         <div class="concept-title">Data-Inspired Decisions</div>
@@ -231,27 +209,46 @@ permalink: /about-introduction.html
     </div>
   </div>
 
-  <!-- ===== Vision (Lucide ver.) ===== -->
-  <div class="vision-wrap">
-    <div class="vision-card">
-      <div class="vision-head">
-        <div class="vision-badge">✨</div>
-        <h3 class="vision-title">Our Vision</h3>
-      </div>
-
-      <!-- 본문: 모두 We 로 시작 + Lucide 톤 -->
-      <p class="vision-text">
+  <!-- ===== Lucide Vision Section (4-block, all “We …”) ===== -->
+  <div class="vision-lucide">
+    <!-- Our Vision -->
+    <article class="vision-item">
+      <span class="vision-kicker">Our Vision</span>
+      <h3 class="vision-h">We envision a future…</h3>
+      <p class="vision-p">
         We envision a future where <b>Lucide financial intelligence</b> diminishes knowledge asymmetry,
         transforming opaque data streams into <b>clear, accessible, and strategically valuable insights</b> for decision-makers.
       </p>
+    </article>
 
-      <div class="vision-divider"></div>
+    <!-- Innovative Research -->
+    <article class="vision-item">
+      <span class="vision-kicker">Innovative Research</span>
+      <h3 class="vision-h">We pursue rigorous and pioneering work.</h3>
+      <p class="vision-p">
+        We pursue rigorous and pioneering methodologies in financial data science and quantitative asset allocation,
+        building <b>transparent and interpretable frameworks</b> that advance the state of knowledge while ensuring <b>practical fidelity</b>.
+      </p>
+    </article>
 
-      <div class="vision-keywords">
-        <span class="vision-chip">Innovative Research</span>
-        <span class="vision-chip">Practical Impact</span>
-        <span class="vision-chip">Lucide Insight</span>
-      </div>
-    </div>
+    <!-- Practical Impact -->
+    <article class="vision-item">
+      <span class="vision-kicker">Practical Impact</span>
+      <h3 class="vision-h">We transform theory into usable tools.</h3>
+      <p class="vision-p">
+        We transform theory into <b>intuitive, user-centric solutions</b>, enabling practitioners and institutions to navigate uncertainty with clarity
+        and to <b>bridge the gap</b> between sophisticated analytics and real-world application.
+      </p>
+    </article>
+
+    <!-- Lucide Insight -->
+    <article class="vision-item">
+      <span class="vision-kicker">Lucide Insight</span>
+      <h3 class="vision-h">We are guided by lucidité.</h3>
+      <p class="vision-p">
+        We are guided by the spirit of <i>lucidité</i>—<b>clarity, discernment, and transparency</b>—as we illuminate complexity,
+        making finance not only more understandable but also more <b>equitable and transformative</b> on a global scale.
+      </p>
+    </article>
   </div>
 </section>
