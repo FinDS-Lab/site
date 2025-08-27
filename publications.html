@@ -136,6 +136,17 @@ permalink: /publications.html
   /* Empty */
   .empty-state{padding:48px 20px;text-align:center;color:#6b7280;font-size:14px;font-weight:600;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff;margin-top:20px;}
 
+  /* ===== Readability for custom superscripts ===== */
+  .paper-meta sup{
+    font-size:10px;
+    margin-left:3px;
+    color:#6b7280;
+    font-weight:800;
+    letter-spacing:.2px;
+    vertical-align:super;
+    line-height:1;
+  }
+
   /* Mobile */
   @media (max-width:640px){
     .search-container{flex-direction:column;align-items:stretch;}
@@ -193,35 +204,44 @@ permalink: /publications.html
 {% include authors-data.html %}
 
 <script>
-  /* ===== Data (Accepted → Published, Abstract 제거) ===== */
+  /* ===== Data (Accepted → Published, Abstract 제거)
+     author_marks: 저자 배열과 동일한 길이의 문자열 배열.
+     예) ["*", "1", "2", "A"] 처럼 자유롭게 표기 가능. 비우면 표시 안 함. ===== */
   const PUBS = [
     {year:2024,code_label:"J1",indexing_group:"SCIE",type:"journal",
      title:"Deep Reinforcement Learning for Automated Trading in Financial Markets",
-     authors:[1,2,3],venue:"IEEE Transactions on Neural Networks and Learning Systems",
+     authors:[1,2,3], author_marks:["*", "1", "2"],
+     venue:"IEEE Transactions on Neural Networks and Learning Systems",
      published_date:"2024-03-15"},
     {year:2024,code_label:"C1",indexing_group:"International Conference",type:"conference",
      title:"Graph Neural Networks for Portfolio Optimization",
-     authors:[4,5,6],venue:"International Conference on Machine Learning (ICML)",
+     authors:[4,5,6], author_marks:["A","B","C"],
+     venue:"International Conference on Machine Learning (ICML)",
      published_date:"2024-02-20"},
     {year:2024,code_label:"CJ1",indexing_group:"International - Domestic Joint Conference",type:"conference",
      title:"Bridging Markets: Joint Evidence from Domestic and International Trading Venues",
-     authors:[1,7,10],venue:"Joint Finance & Data Science Symposium",
+     authors:[1,7,10], author_marks:["†","1","2"],
+     venue:"Joint Finance & Data Science Symposium",
      published_date:"2024-06-10"},
     {year:2023,code_label:"J2",indexing_group:"SSCI",type:"journal",
      title:"Behavioral Finance and Machine Learning: A Systematic Review",
-     authors:[7,8,9],venue:"Journal of Financial Economics",
+     authors:[7,8,9], author_marks:["*","",""],
+     venue:"Journal of Financial Economics",
      published_date:"2023-11-10"},
     {year:2023,code_label:"J3",indexing_group:"Scopus",type:"journal",
      title:"Quantum Computing Applications in Risk Management",
-     authors:[10,11],venue:"Quantitative Finance",
+     authors:[10,11], author_marks:["1","2"],
+     venue:"Quantitative Finance",
      published_date:"2023-09-05"},
     {year:2023,code_label:"P1",indexing_group:"Preprint",type:"other",
      title:"Large Language Models for Financial Text Analysis",
-     authors:[1,11],venue:"arXiv preprint arXiv:2309.12345",
+     authors:[1,11], author_marks:["*","1"],
+     venue:"arXiv preprint arXiv:2309.12345",
      published_date:"2023-09-20"},
     {year:2022,code_label:"J4",indexing_group:"KCI Excellent",type:"journal",
      title:"Korean Stock Market Prediction Using LSTM Networks",
-     authors:[1,4,6],venue:"Korean Journal of Financial Studies",
+     authors:[1,4,6], author_marks:["*","1","2"],
+     venue:"Korean Journal of Financial Studies",
      published_date:"2022-12-01"}
   ];
 
@@ -251,7 +271,6 @@ permalink: /publications.html
   const pubWrap=document.getElementById('pubWrap');
   const modal=document.getElementById('citeModal');
   const citeBody=document.getElementById('citeBody');
-  const closeBtn=document.getElementById('btnCloseCite');
 
   /* ===== Helpers ===== */
   function getAuthorName(authorId, useDomestic){
@@ -328,7 +347,7 @@ permalink: /publications.html
     return text.includes(q.toLowerCase());
   }
 
-  /* ===== Card ===== */
+  /* ===== Create Card ===== */
   function createCard(pub, key){
     const code=pub.code_label||"";
     let leftClass='';
@@ -339,9 +358,13 @@ permalink: /publications.html
     // Joint Conference는 영문명 강제
     const forceEnglish = (pub.indexing_group === "International - Domestic Joint Conference");
     const isDom = forceEnglish ? false : isDomesticPublication(pub.indexing_group);
-    const authors = pub.authors.map(id=>{
-      const n=getAuthorName(id,isDom);
-      return id===1 ? `${n}*` : n;
+
+    // ----- Author rendering with custom superscripts -----
+    const authors = pub.authors.map((id, idx) => {
+      const name = getAuthorName(id, isDom);
+      const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
+      const sup = mark ? `<sup>${String(mark)}</sup>` : "";
+      return `${name}${sup}`;
     }).join(", ");
 
     const dateBadges = `
@@ -422,11 +445,12 @@ permalink: /publications.html
     return `${last}, ${initials}`;
   }
   function openCite(pub){
-    const authorNames=pub.authors.map(id=>getAuthorName(id,false)); // 영문 기준
+    // 인용 포맷에는 위첨자/마크 제외 (영문 기준 이름 사용)
+    const authorNames=pub.authors.map(id=>getAuthorName(id,false));
     const formats={
-      MLA: `${authorNames[0].replace(/\*/g,'')} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
+      MLA: `${authorNames[0]} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
       APA: `${toInitials(authorNames[0])} et al. (${pub.year}). ${pub.title}. ${pub.venue}.`,
-      Chicago: `${authorNames[0].replace(/\*/g,'')} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
+      Chicago: `${authorNames[0]} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
       Harvard: `${toInitials(authorNames[0])} et al. (${pub.year}) ${pub.title}. ${pub.venue}.`,
       Vancouver: `${authorNames.map(a=>toInitials(a)).join(', ')}. ${pub.title}. ${pub.venue}. ${pub.year}.`
     };
@@ -442,7 +466,7 @@ permalink: /publications.html
         </div>
       `;
     }).join('');
-    modal.style.display='flex';
+    document.getElementById('citeModal').style.display='flex';
   }
   function copyText(id){
     const t=document.getElementById(id).textContent;
@@ -453,7 +477,7 @@ permalink: /publications.html
 
   /* ===== Events ===== */
   document.getElementById('pubSearch').oninput=(e)=>{ q=e.target.value; render(); };
-  document.getElementById('btnCloseCite').onclick=()=>modal.style.display='none';
+  document.getElementById('btnCloseCite').onclick=()=>document.getElementById('citeModal').style.display='none';
   document.getElementById('citeModal').onclick=(e)=>{ if(e.target===document.getElementById('citeModal')) document.getElementById('citeModal').style.display='none'; };
 
   /* ===== Init ===== */
