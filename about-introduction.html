@@ -1,83 +1,484 @@
----
-layout: default
-title: introduction
-permalink: /about-introduction.html
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Introduction - FINDS Lab</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-<!-- ===== Page Title / Breadcrumb Banner ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <style>
-    /* Page-scoped helpers */
-    .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-    .breadcrumbs a{color:#e5e7eb}
-    .breadcrumbs a:hover{text-decoration:underline}
-    .breadcrumbs .sep{opacity:.85}
-    .lead{font-size:15px;line-height:1.9;color:#334155}
-    .hl{font-weight:900;color:#000}              /* ✅ bold + black only */
-    .ko-wrap{word-break:keep-all;line-break:strict} /* ✅ Korean breaks by word */
-    @media (max-width:480px){
-      .lead{font-size:14px;line-height:1.85}
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-light: rgb(234, 207, 127);
+    --red: rgb(172, 14, 14);
+    --red-dark: rgb(127, 10, 10);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    min-height: 100vh;
+  }
+
+  /* Hero Banner */
+  .hero-banner {
+    position: relative;
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 24px;
+  }
+
+  .banner-container {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+
+  .banner-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .banner-image {
+      height: 160px;
     }
-  </style>
+  }
 
-  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="FINDS Lab banner"
-         class="w-full h-[160px] md:h-[200px] object-cover" width="1600" height="320">
-    <div class="absolute inset-0 bg-black/45"></div>
-    <div class="absolute inset-x-0 bottom-3 px-4">
-      <div class="max-w-7xl mx-auto text-white">
-        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <span class="sep">›</span>
-          <span>About</span>
-          <span class="sep">›</span>
-          <span aria-current="page" class="font-semibold">Introduction</span>
-        </nav>
-        <h1 class="text-xl md:text-2xl font-extrabold">Introduction</h1>
+  .banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+  }
+
+  .banner-content {
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    right: 24px;
+    color: white;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+
+  .breadcrumbs a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .breadcrumbs a:hover {
+    opacity: 0.7;
+  }
+
+  .page-title {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 24px;
+    }
+  }
+
+  /* Main Content */
+  .content-wrapper {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 24px;
+  }
+
+  /* Split Layout */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: 968px) {
+    .intro-grid {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+  }
+
+  /* Language Section Card */
+  .lang-section {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .lang-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+
+  @media (max-width: 768px) {
+    .lang-section {
+      padding: 28px;
+    }
+  }
+
+  /* Language Label */
+  .lang-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: #000;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+  }
+
+  /* Text Styles */
+  .intro-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: #374151;
+    margin-bottom: 20px;
+  }
+
+  .intro-text:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .intro-text {
+      font-size: 15px;
+      line-height: 1.85;
+    }
+  }
+
+  /* Highlighted Keywords */
+  .highlight {
+    position: relative;
+    font-weight: 800;
+    color: var(--red);
+    padding: 0 2px;
+  }
+
+  .highlight-gold {
+    color: var(--gold);
+    font-weight: 900;
+  }
+
+  .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .lang-section:hover .highlight::after {
+    opacity: 0.3;
+  }
+
+  /* Key Concepts Section */
+  .concepts-section {
+    margin-top: 80px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 40px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
+    border-radius: 2px;
+  }
+
+  /* Concept Cards */
+  .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .concepts-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  .concept-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    border: 1px solid #f3f4f6;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .concept-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+
+  .concept-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .concept-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .concept-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 8px;
+  }
+
+  .concept-subtitle {
+    font-size: 13px;
+    color: #9ca3af;
+    font-weight: 600;
+  }
+
+  /* Vision Statement */
+  .vision-section {
+    margin-top: 80px;
+    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
+    border-radius: 24px;
+    padding: 48px;
+    text-align: center;
+    border: 1px solid rgba(214,177,77,0.2);
+  }
+
+  @media (max-width: 768px) {
+    .vision-section {
+      padding: 32px 24px;
+    }
+  }
+
+  .vision-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+
+  .vision-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .vision-text {
+      font-size: 16px;
+    }
+  }
+
+  .vision-keywords {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24ностей;
+  }
+
+  .vision-keyword {
+    padding: 8px 20px;
+    background: white;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    border: 2px solid var(--gold);
+  }
+
+  /* Korean text optimization */
+  .ko-text {
+    word-break: keep-all;
+    line-break: strict;
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero Banner -->
+<div class="hero-banner">
+  <div class="banner-container">
+    <img src="/api/placeholder/1200/200" alt="FINDS Lab Introduction" class="banner-image">
+    <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <nav class="breadcrumbs">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span>About</span>
+        <span>›</span>
+        <span style="font-weight: 600">Introduction</span>
+      </nav>
+      <h1 class="page-title">Introduction</h1>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="content-wrapper">
+  <!-- Language Split Layout -->
+  <div class="intro-grid">
+    <!-- English Section -->
+    <div class="lang-section">
+      <span class="lang-label">🌐 ENGLISH</span>
+      
+      <p class="intro-text">
+        Welcome to the <span class="highlight">FINDS Lab</span> 
+        <span class="highlight-gold">(Financial Data Science Laboratory)</span> at the
+        School of Business Convergence, <span class="highlight">Dongduk Women's University</span>.
+      </p>
+      
+      <p class="intro-text">
+        Today, both business and finance are undergoing rapid transformation driven by 
+        <span class="highlight">data</span>. Competitive advantage is no longer determined 
+        by capital or resources alone, but by the ability to <span class="highlight">analyze data 
+        effectively</span> and put it into practice.
+      </p>
+      
+      <p class="intro-text">
+        Our lab focuses on <span class="highlight">Financial Data Science</span>, 
+        <span class="highlight">Business Analytics</span>, and 
+        <span class="highlight">Data-Inspired Decision Making</span>. We apply data science 
+        methods to analyze financial data, while also using business analytics to uncover new 
+        <span class="highlight-gold">finds</span> — valuable discoveries across various industries 
+        and organizations.
+      </p>
+    </div>
+
+    <!-- Korean Section -->
+    <div class="lang-section">
+      <span class="lang-label">🇰🇷 한국어</span>
+      
+      <p class="intro-text ko-text">
+        <span class="highlight">동덕여자대학교 경영융합학부</span> 
+        <span class="highlight-gold">금융데이터사이언스 연구실(FINDS Lab.)</span>에 
+        오신 것을 환영합니다.
+      </p>
+      
+      <p class="intro-text ko-text">
+        오늘날 비즈니스와 금융 환경은 <span class="highlight">데이터</span> 중심으로 
+        급격히 변화하고 있습니다. 이제 경쟁력을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라, 
+        데이터를 얼마나 <span class="highlight">효과적으로 분석하고 활용</span>하는지가 
+        중요해지고 있습니다.
+      </p>
+      
+      <p class="intro-text ko-text">
+        저희 연구실은 <span class="highlight">금융데이터사이언스</span>, 
+        <span class="highlight">비즈니스 애널리틱스</span>, 
+        <span class="highlight">데이터 기반 의사결정</span>을 주요 연구 분야로 삼고 있습니다. 
+        다양한 산업과 조직에서 새로운 <span class="highlight-gold">발견(finds)</span>을 
+        찾아내고 의미 있는 인사이트를 발굴하고자 합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- Key Concepts -->
+  <div class="concepts-section">
+    <h2 class="section-title">Our Focus Areas</h2>
+    
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <div class="concept-icon">📊</div>
+        <div class="concept-title">Financial Data Science</div>
+        <div class="concept-subtitle">금융 데이터 사이언스</div>
+      </div>
+      
+      <div class="concept-card">
+        <div class="concept-icon">📈</div>
+        <div class="concept-title">Business Analytics</div>
+        <div class="concept-subtitle">비즈니스 애널리틱스</div>
+      </div>
+      
+      <div class="concept-card">
+        <div class="concept-icon">🎯</div>
+        <div class="concept-title">Data-Inspired Decisions</div>
+        <div class="concept-subtitle">데이터 기반 의사결정</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ===== Single-Block Content: EN first, then KR ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <article class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
-    <!-- EN -->
-    <p class="lead">
-      Welcome to the <b class="hl">FINDS Lab (Financial Data Science Laboratory)</b> at the
-      <b class="hl">School of Business Convergence, Dongduk Women’s University</b>.
+  <!-- Vision Statement -->
+  <div class="vision-section">
+    <h3 class="vision-title">Our Vision</h3>
+    <p class="vision-text">
+      Transforming complex financial data into <b>intuitive insights</b> and 
+      <b>practical solutions</b> for better decision-making
     </p>
-    <p class="lead">
-      Today, both business and finance are undergoing rapid transformation driven by <b class="hl">data</b>.
-      <b class="hl">Competitive advantage</b> is no longer determined by capital or resources alone,
-      but by the ability to analyze data effectively and put it into practice.
-    </p>
-    <p class="lead">
-      Our lab focuses on <b class="hl">Financial Data Science</b>, <b class="hl">Business Analytics</b>, and
-      <b class="hl">Data-Inspired Decision Making</b>. We apply data science methods to analyze financial data,
-      while also using business analytics to uncover new <b class="hl">finds</b> — valuable discoveries across
-      various industries and organizations. Through this work, we aim to generate <b class="hl">meaningful insights</b>
-      and provide solutions to complex decision-making problems in ways that are both <b class="hl">intuitive</b> and
-      <b class="hl">practical</b>.
-    </p>
+    <div class="vision-keywords">
+      <span class="vision-keyword">Innovative Research</span>
+      <span class="vision-keyword">Practical Impact</span>
+      <span class="vision-keyword">Global Excellence</span>
+    </div>
+  </div>
+</div>
 
-    <hr class="my-6 border-slate-200">
-
-    <!-- KR (word-break by word) -->
-    <p class="lead ko-wrap">
-      <b class="hl">동덕여자대학교 경영융합학부 금융데이터사이언스 연구실(FINDS Lab.)</b>에 오신 것을 환영합니다.
-    </p>
-    <p class="lead ko-wrap">
-      오늘날 비즈니스와 금융 환경은 <b class="hl">데이터</b> 중심으로 급격히 변화하고 있습니다.
-      이제 <b class="hl">경쟁력</b>을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라,
-      데이터를 얼마나 효과적으로 분석하고 활용하는지가 중요해지고 있습니다.
-    </p>
-    <p class="lead ko-wrap">
-      이러한 흐름에서, 저희 연구실은 <b class="hl">금융데이터사이언스</b>, <b class="hl">비즈니스 애널리틱스</b>,
-      <b class="hl">데이터 기반 의사결정</b>을 주요 연구 분야로 삼고 있습니다.
-      데이터 사이언스 기법을 토대로 금융 데이터를 분석하는 한편, 비즈니스 애널리틱스를 통해 다양한 산업과 조직에서 새로운
-      <b class="hl">발견(finds)</b>을 찾아내고 <b class="hl">의미 있는 인사이트</b>를 발굴하고자 합니다.
-      이를 통해 복잡한 의사결정 문제를 보다 <b class="hl">직관적</b>이고 <b class="hl">정량적인</b> 방식으로 해결하는 것을 목표로 합니다.
-    </p>
-  </article>
-</section>
+</body>
+</html>
