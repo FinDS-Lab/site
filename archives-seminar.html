@@ -6,11 +6,120 @@ permalink: /archives-seminar.html
 
 <!-- ===== Styles ===== -->
 <style>
-  /* Breadcrumbs */
-  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-  .breadcrumbs a{color:#e5e7eb}
-  .breadcrumbs a:hover{text-decoration:underline}
-  .breadcrumbs .sep{opacity:.85}
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-light: rgba(214, 177, 77, 0.1);
+    --gold-dark: rgb(194, 157, 57);
+  }
+
+  /* Banner 스타일 */
+  .banner-section {
+    background: linear-gradient(135deg, 
+      rgb(214, 177, 77) 0%, 
+      rgb(234, 197, 97) 25%, 
+      rgb(194, 157, 57) 50%, 
+      rgb(214, 177, 77) 75%, 
+      rgb(234, 197, 97) 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    cursor: pointer;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* 동적으로 생성될 네트워크 패턴 */
+  .network-burst {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+    opacity: 0;
+    animation: burstAnimation 2s ease-out forwards;
+  }
+
+  @keyframes burstAnimation {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(0deg);
+    }
+    30% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(2) rotate(180deg);
+    }
+  }
+
+  .network-burst svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .burst-line {
+    stroke: rgba(255, 255, 255, 0.7);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .burst-dot {
+    fill: rgba(255, 255, 255, 0.9);
+  }
+
+  /* 텍스트 컨테이너 - 왼쪽 하단 배치 */
+  .banner-content {
+    position: relative;
+    z-index: 10;
+    padding: 32px 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    min-height: 200px;
+  }
+
+  /* Breadcrumbs (banner 안) */
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .breadcrumbs a {
+    color: rgba(255,255,255,0.9);
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+  .breadcrumbs a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .breadcrumbs .sep {
+    color: rgba(255,255,255,0.7);
+  }
+  .breadcrumbs span:not(.sep):not(a) {
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* 제목 */
+  .banner-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
 
   /* Main Container */
   .seminar-container{
@@ -55,7 +164,7 @@ permalink: /archives-seminar.html
   }
   
   .board-row:hover .date-box{
-    border-color:#d6b14d;
+    border-color:var(--gold);
     background:linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
   }
   
@@ -91,7 +200,7 @@ permalink: /archives-seminar.html
   }
   
   .seminar-title:hover{
-    color:#d6b14d;
+    color:var(--gold);
   }
   
   /* Meta Pills Enhanced */
@@ -154,7 +263,7 @@ permalink: /archives-seminar.html
   
   .btn-more:hover{
     background:#f8fafc;
-    border-color:#d6b14d;
+    border-color:var(--gold);
     color:#111827;
   }
 
@@ -181,7 +290,18 @@ permalink: /archives-seminar.html
     color:#6b7280;
   }
 
-  /* Mobile Responsive */
+  /* 반응형 */
+  @media (max-width: 768px) {
+    .banner-title { font-size: 2rem; }
+    .banner-content { 
+      padding: 28px 20px;
+      min-height: 160px;
+    }
+    .banner-section {
+      min-height: 160px;
+    }
+  }
+
   @media (max-width: 640px) {
     .board-row{
       grid-template-columns:1fr;
@@ -231,6 +351,16 @@ permalink: /archives-seminar.html
     .btn-more{
       display:none;
     }
+
+    .banner-title { font-size: 1.75rem; }
+    .banner-content { 
+      padding: 24px 16px;
+      min-height: 140px;
+    }
+    .banner-section {
+      min-height: 140px;
+    }
+    .breadcrumbs { font-size: 12px; }
   }
   
   @media (max-width: 480px) {
@@ -241,29 +371,225 @@ permalink: /archives-seminar.html
     .excerpt{
       -webkit-line-clamp:3;
     }
+
+    .banner-content { 
+      padding: 20px 16px;
+      min-height: 120px;
+    }
+    .banner-section {
+      min-height: 120px;
+    }
+    .banner-title { font-size: 1.5rem; }
+    .breadcrumbs { font-size: 11px; }
   }
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/seminar-hero.jpg' | relative_url }}" alt="Seminar banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
-    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-black/30"></div>
-    <div class="absolute inset-x-0 bottom-4 px-4">
-      <div class="max-w-7xl mx-auto text-white">
-        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
-          <a href="{{ '/' | relative_url }}">Home</a>
+  <div class="banner-section rounded-2xl shadow-lg" onclick="createNetworkBurst(event, this)">
+    <!-- 콘텐츠 - 왼쪽 하단 -->
+    <div class="banner-content">
+      <div>
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <a href="{{ '/' | relative_url }}" onclick="event.stopPropagation()">Home</a>
           <span class="sep">›</span>
-          <span>Archives</span>
+          <a href="{{ '/archives-news.html' | relative_url }}" onclick="event.stopPropagation()">Archives</a>
           <span class="sep">›</span>
-          <span aria-current="page" class="font-semibold">Seminar</span>
+          <span aria-current="page">Seminar</span>
         </nav>
-        <h1 class="text-2xl md:text-3xl font-extrabold">Seminar</h1>
+        <h1 class="banner-title">Seminar</h1>
       </div>
     </div>
   </div>
 </section>
+
+<!-- JavaScript for random network patterns -->
+<script>
+function createNetworkBurst(event, element) {
+  // 클릭 위치 계산
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left - 100;
+  const y = event.clientY - rect.top - 100;
+  
+  // 랜덤 네트워크 패턴 생성
+  const networkDiv = document.createElement('div');
+  networkDiv.className = 'network-burst';
+  networkDiv.style.left = x + 'px';
+  networkDiv.style.top = y + 'px';
+  
+  // 랜덤 네트워크 SVG 생성
+  const patterns = [
+    generateStarNetwork(),
+    generateMeshNetwork(),
+    generateTreeNetwork(),
+    generateCircularNetwork(),
+    generateRandomNetwork()
+  ];
+  
+  const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+  networkDiv.innerHTML = randomPattern;
+  
+  // DOM에 추가
+  element.appendChild(networkDiv);
+  
+  // 애니메이션 끝나면 제거
+  setTimeout(function() {
+    element.removeChild(networkDiv);
+  }, 2000);
+}
+
+// 별 모양 네트워크
+function generateStarNetwork() {
+  const centerX = 100;
+  const centerY = 100;
+  const nodeCount = 6 + Math.floor(Math.random() * 4);
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i * 2 * Math.PI) / nodeCount;
+    const radius = 50 + Math.random() * 30;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    
+    svg += `<line x1="${centerX}" y1="${centerY}" x2="${x}" y2="${y}" class="burst-line"/>`;
+    svg += `<circle cx="${x}" cy="${y}" r="${3 + Math.random() * 3}" class="burst-dot"/>`;
+  }
+  svg += `<circle cx="${centerX}" cy="${centerY}" r="5" class="burst-dot"/>`;
+  svg += '</svg>';
+  return svg;
+}
+
+// 메쉬 네트워크
+function generateMeshNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const nodes = [];
+  const nodeCount = 5 + Math.floor(Math.random() * 3);
+  
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: 30 + Math.random() * 140,
+      y: 30 + Math.random() * 140,
+      r: 3 + Math.random() * 3
+    });
+  }
+  
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dist = Math.sqrt(
+        Math.pow(nodes[i].x - nodes[j].x, 2) + 
+        Math.pow(nodes[i].y - nodes[j].y, 2)
+      );
+      if (dist < 80) {
+        svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${1 - dist/80}"/>`;
+      }
+    }
+  }
+  
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" class="burst-dot"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+
+// 트리 네트워크
+function generateTreeNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const levels = 3;
+  
+  function drawBranch(x, y, angle, length, level) {
+    if (level === 0) return '';
+    
+    const branches = 2 + Math.floor(Math.random() * 2);
+    let result = '';
+    
+    for (let i = 0; i < branches; i++) {
+      const newAngle = angle + (Math.random() - 0.5) * Math.PI / 2;
+      const newX = x + length * Math.cos(newAngle);
+      const newY = y + length * Math.sin(newAngle);
+      
+      result += `<line x1="${x}" y1="${y}" x2="${newX}" y2="${newY}" class="burst-line" opacity="${level/levels}"/>`;
+      result += `<circle cx="${newX}" cy="${newY}" r="${2 + level}" class="burst-dot"/>`;
+      result += drawBranch(newX, newY, newAngle, length * 0.7, level - 1);
+    }
+    
+    return result;
+  }
+  
+  svg += drawBranch(100, 100, -Math.PI/2, 40, levels);
+  svg += `<circle cx="100" cy="100" r="5" class="burst-dot"/>`;
+  svg += '</svg>';
+  return svg;
+}
+
+// 원형 네트워크
+function generateCircularNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const centerX = 100;
+  const centerY = 100;
+  const nodeCount = 8 + Math.floor(Math.random() * 4);
+  const radius = 60;
+  const nodes = [];
+  
+  for (let i = 0; i < nodeCount; i++) {
+    const angle = (i * 2 * Math.PI) / nodeCount;
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+    nodes.push({x, y});
+  }
+  
+  for (let i = 0; i < nodes.length; i++) {
+    const next = (i + 1) % nodes.length;
+    const skip = (i + 2) % nodes.length;
+    
+    svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[next].x}" y2="${nodes[next].y}" class="burst-line"/>`;
+    
+    if (Math.random() > 0.5) {
+      svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[skip].x}" y2="${nodes[skip].y}" class="burst-line" opacity="0.5"/>`;
+    }
+  }
+  
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${3 + Math.random() * 2}" class="burst-dot"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+
+// 완전 랜덤 네트워크
+function generateRandomNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg">';
+  const nodes = [];
+  const nodeCount = 4 + Math.floor(Math.random() * 4);
+  
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: 40 + Math.random() * 120,
+      y: 40 + Math.random() * 120,
+      r: 3 + Math.random() * 4
+    });
+  }
+  
+  const connections = nodeCount + Math.floor(Math.random() * nodeCount);
+  for (let i = 0; i < connections; i++) {
+    const from = Math.floor(Math.random() * nodeCount);
+    const to = Math.floor(Math.random() * nodeCount);
+    
+    if (from !== to) {
+      svg += `<line x1="${nodes[from].x}" y1="${nodes[from].y}" x2="${nodes[to].x}" y2="${nodes[to].y}" class="burst-line" opacity="${0.3 + Math.random() * 0.7}"/>`;
+    }
+  }
+  
+  nodes.forEach(node => {
+    svg += `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" class="burst-dot" opacity="${0.7 + Math.random() * 0.3}"/>`;
+  });
+  
+  svg += '</svg>';
+  return svg;
+}
+</script>
 
 <!-- ===== Seminar List ===== -->
 <section class="max-w-7xl mx-auto px-4">
