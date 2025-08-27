@@ -1,27 +1,14 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FINDS Lab - Financial Data Science Laboratory</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+---
+layout: default
+title: home
+---
 
+<style>
   :root {
     --gold: rgb(214, 177, 77);
     --gold-light: rgb(234, 207, 127);
     --red: rgb(172, 14, 14);
     --red-dark: rgb(127, 10, 10);
-  }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #ffffff;
-    color: #111827;
   }
 
   /* Hero Carousel */
@@ -31,6 +18,7 @@
     height: 500px;
     overflow: hidden;
     background: #000;
+    margin-top: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -185,10 +173,6 @@
       margin: 40px auto;
       text-align: center;
     }
-  }
-
-  .logo-container {
-    position: relative;
   }
 
   .logo-box {
@@ -446,22 +430,20 @@
     }
   }
 </style>
-</head>
-<body>
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section class="hero-section max-w-7xl mx-auto px-4">
   <div class="carousel-track" id="carouselTrack">
     <!-- Slide 1 -->
     <div class="carousel-slide">
-      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 1">
+      <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
       <div class="carousel-overlay">
         <div class="carousel-content">
           <span class="tag-badge">FINDS Lab.</span>
           <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
           <div class="hero-buttons">
-            <a href="#" class="btn-hero primary">Introduction</a>
-            <a href="#" class="btn-hero secondary">Honors</a>
+            <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
+            <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
           </div>
         </div>
       </div>
@@ -469,14 +451,14 @@
     
     <!-- Slide 2 -->
     <div class="carousel-slide">
-      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 2">
+      <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
       <div class="carousel-overlay">
         <div class="carousel-content">
           <span class="tag-badge">FINDS Lab.</span>
           <h1 class="hero-title">Research<br>Accomplishments</h1>
           <div class="hero-buttons">
-            <a href="#" class="btn-hero primary">Publications</a>
-            <a href="#" class="btn-hero secondary">Projects</a>
+            <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
+            <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
           </div>
         </div>
       </div>
@@ -484,14 +466,14 @@
     
     <!-- Slide 3 -->
     <div class="carousel-slide">
-      <img src="/api/placeholder/1600/500" alt="FINDS Lab Hero 3">
+      <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
       <div class="carousel-overlay">
         <div class="carousel-content">
           <span class="tag-badge">FINDS Lab.</span>
           <h1 class="hero-title">Latest<br>Updates</h1>
           <div class="hero-buttons">
-            <a href="#" class="btn-hero primary">Notice</a>
-            <a href="#" class="btn-hero secondary">News</a>
+            <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
+            <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
           </div>
         </div>
       </div>
@@ -509,7 +491,7 @@
 <section class="intro-section">
   <div class="logo-container">
     <div class="logo-box">
-      <img src="/api/placeholder/140/140" alt="FINDS Lab Logo">
+      <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo">
     </div>
   </div>
   
@@ -661,6 +643,3 @@
     });
   })();
 </script>
-
-</body>
-</html>
