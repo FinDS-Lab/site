@@ -31,25 +31,13 @@ permalink: /members-director.html
   </div>
 </section>
 
-<!-- ===== Page-level Styles ===== -->
+<!-- ===== Styles ===== -->
 <style>
   :root{
     --accent:#ac0e0e;
     --gold:#d6b14d;
     --gold-light:#eacf7d;
     --gold-fg:#111827;
-  }
-
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: system-ui, -apple-system, sans-serif;
-    background: #f8f9fa;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
   }
 
   /* Card Design */
@@ -92,7 +80,7 @@ permalink: /members-director.html
   .profile-content{flex:1;}
   .profile-label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
   .profile-value{font-size:14px;color:#111827;font-weight:500;}
-  .profile-value a{color:#2563eb;text-decoration:none;}
+  .profile-value a{color:#3b82f6;text-decoration:none;}
   .profile-value a:hover{text-decoration:underline;}
 
   /* Action Buttons */
@@ -187,18 +175,29 @@ permalink: /members-director.html
   .mentee-tooltip-line{padding:2px 0;}
   .mentee-chip:hover .mentee-tooltip{opacity:1;}
 
-  /* Network Filter Buttons */
-  .network-filter{padding:8px 16px;background:#fff;border:2px solid #e5e7eb;border-radius:999px;font-size:13px;font-weight:700;color:#6b7280;cursor:pointer;transition:all .2s;}
-  .network-filter:hover{background:#f8f9fa;transform:translateY(-1px);}
-  .network-filter.active{background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);color:#111827;border-color:var(--gold);}
+  /* Network Slider */
+  .network-controls{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;}
+  .slider-label{font-size:13px;font-weight:700;color:#6b7280;white-space:nowrap;}
+  .slider-container{flex:1;display:flex;align-items:center;gap:12px;}
+  .network-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;background:#e5e7eb;border-radius:3px;outline:none;}
+  .network-slider::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:20px;height:20px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);transition:all .2s;
+  }
+  .network-slider::-moz-range-thumb{
+    width:20px;height:20px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);border:none;
+  }
+  .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
 
   /* Network Canvas */
   #networkCanvas{width:100%;height:400px;border-radius:.75rem;background:#f8fafc;margin-top:1rem;}
+  #networkInfo{margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;font-size:13px;text-align:center;color:#6b7280;}
 </style>
 
 <!-- ===== Main Content ===== -->
-<div class="container" style="margin-top: 2rem;">
-  <div class="main-grid">
+<section class="max-w-7xl mx-auto px-4 pb-8">
+  <div class="main-grid" style="margin-top:2rem;">
     <!-- Profile Sidebar -->
     <aside>
       <div class="card">
@@ -246,8 +245,8 @@ permalink: /members-director.html
           </div>
           
           <div class="button-group">
-            <button class="action-btn">Download CV</button>
-            <button class="action-btn">Google Scholar</button>
+            <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
+            <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
           </div>
         </div>
       </div>
@@ -489,19 +488,20 @@ permalink: /members-director.html
       <div class="card">
         <div class="card-head">Collaboration Network</div>
         <div class="card-body">
-          <!-- Filter Controls -->
-          <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
-            <button class="network-filter active" data-filter="all" onclick="filterNetwork('all')">
-              All Collaborators
-            </button>
-            <div id="dynamicFilterButtons"></div>
+          <div class="network-controls">
+            <span class="slider-label">Min. Papers:</span>
+            <div class="slider-container">
+              <span style="font-size:12px;color:#9ca3af;">0</span>
+              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="0" step="1">
+              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
+            </div>
+            <span class="slider-value" id="sliderValue">0</span>
           </div>
           
           <canvas id="networkCanvas"></canvas>
           
-          <!-- Dynamic Info Display -->
-          <div id="networkInfo" style="margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;font-size:13px;text-align:center;">
-            <span style="color:#6b7280;">Loading collaboration data...</span>
+          <div id="networkInfo">
+            Loading collaboration data...
           </div>
         </div>
       </div>
@@ -667,7 +667,7 @@ permalink: /members-director.html
 
     </main>
   </div>
-</div>
+</section>
 
 <!-- Load AUTHORS from include -->
 {% include authors-data.html %}
@@ -732,75 +732,65 @@ permalink: /members-director.html
     document.getElementById(`mentoring-${year}`).classList.toggle('show');
   }
 
-  // Network Visualization with dynamic filter buttons
-  let currentFilter = 'all';
+  // Network Visualization with dynamic slider
+  let currentThreshold = 0;
   let collaborations = {};
   let maxCollaborations = 0;
-
-  function createDynamicFilterButtons() {
-    collaborations = countCollaborations();
-    const collabValues = Object.values(collaborations);
+  
+  // Initialize collaborations and set up slider
+  collaborations = countCollaborations();
+  const collabValues = Object.values(collaborations);
+  if (collabValues.length > 0) {
     maxCollaborations = Math.max(...collabValues);
-    
-    const buttonsContainer = document.getElementById('dynamicFilterButtons');
-    let buttonsHTML = '';
-    
-    // Create dynamic filter buttons based on max collaborations
-    for (let i = 1; i <= Math.min(maxCollaborations, 5); i++) {
-      buttonsHTML += `<button class="network-filter" data-filter="${i}" onclick="filterNetwork(${i})">${i}+ Papers</button>`;
-    }
-    
-    buttonsContainer.innerHTML = buttonsHTML;
+  } else {
+    maxCollaborations = 5; // Default if no collaborations
   }
-
-  function filterNetwork(filter) {
-    currentFilter = String(filter);
-
-    // Update button states
-    document.querySelectorAll('.network-filter').forEach(btn => {
-      btn.classList.toggle('active', String(btn.dataset.filter) === String(currentFilter));
-    });
-
-    // Update info text
-    const infoEl = document.getElementById('networkInfo');
-    if (currentFilter === 'all') {
-      const total = Object.keys(collaborations).length;
-      infoEl.innerHTML = `<span style="color:#6b7280;">Showing all ${total} collaborators</span>`;
-    } else {
-      const threshold = parseInt(currentFilter, 10);
-      const visible = Object.values(collaborations).filter(freq => freq >= threshold).length;
-      infoEl.innerHTML = `<span style="color:#111827;"><b>${visible}</b> collaborators with <b>${threshold}+</b> papers</span>`;
-    }
+  
+  // Update slider max value and label
+  const slider = document.getElementById('networkSlider');
+  const maxLabel = document.getElementById('maxSliderLabel');
+  const sliderValue = document.getElementById('sliderValue');
+  const infoEl = document.getElementById('networkInfo');
+  
+  if (slider) {
+    slider.max = maxCollaborations;
+    maxLabel.textContent = maxCollaborations + '+';
     
-    // Redraw network
-    if (window.drawNetwork) {
-      window.drawNetwork();
+    slider.addEventListener('input', function() {
+      currentThreshold = parseInt(this.value);
+      sliderValue.textContent = currentThreshold > 0 ? currentThreshold + '+' : '0';
+      updateNetworkInfo();
+      if (window.drawNetwork) drawNetwork();
+    });
+  }
+  
+  function updateNetworkInfo() {
+    if (currentThreshold === 0) {
+      const total = Object.keys(collaborations).length;
+      infoEl.innerHTML = `Showing all <b>${total}</b> collaborators`;
+    } else {
+      const visible = Object.values(collaborations).filter(freq => freq >= currentThreshold).length;
+      infoEl.innerHTML = `Showing <b>${visible}</b> collaborators with <b>${currentThreshold}+</b> papers`;
     }
   }
   
-  // Initialize network visualization
-  (function() {
-    // First create dynamic buttons
-    createDynamicFilterButtons();
-    
-    const canvas = document.getElementById('networkCanvas');
-    if (!canvas) return;
-    
+  function getNodeColor(frequency, isVisible) {
+    if (!isVisible) return '#f3f4f6';
+    const ratio = frequency / maxCollaborations;
+    if (ratio >= 0.75) return 'rgb(214, 177, 77)';    // Gold for top 25%
+    if (ratio >= 0.5) return 'rgb(234, 207, 127)';    // Light gold for 50-75%
+    if (ratio >= 0.25) return '#cbd5e1';              // Light gray for 25-50%
+    return '#e5e7eb';                                  // Very light for bottom 25%
+  }
+  
+  // Canvas setup and drawing
+  const canvas = document.getElementById('networkCanvas');
+  if (canvas) {
     const ctx = canvas.getContext('2d');
     canvas.width = canvas.offsetWidth * 2;
     canvas.height = 800;
     canvas.style.width = canvas.offsetWidth + 'px';
     canvas.style.height = '400px';
-    
-    function getNodeColor(frequency, isVisible) {
-      if (!isVisible) return '#f3f4f6';
-      // Dynamic color based on frequency relative to max
-      const ratio = frequency / maxCollaborations;
-      if (ratio >= 0.75) return 'rgb(214, 177, 77)';    // Gold for top 25%
-      if (ratio >= 0.5) return 'rgb(234, 207, 127)';    // Light gold for 50-75%
-      if (ratio >= 0.25) return '#cbd5e1';              // Light gray for 25-50%
-      return '#e5e7eb';                                  // Very light for bottom 25%
-    }
     
     const nodes = [];
     const centerX = canvas.width / 2;
@@ -809,7 +799,7 @@ permalink: /members-director.html
     // Central node (Insu Choi)
     nodes.push({
       id: 1,
-      name: AUTHORS[1]?.en || 'Insu Choi',
+      name: AUTHORS?.[1]?.en || 'Insu Choi',
       x: centerX,
       y: centerY,
       radius: 30,
@@ -826,24 +816,22 @@ permalink: /members-director.html
       
       nodes.push({
         id: parseInt(authorId, 10),
-        name: AUTHORS[authorId]?.en || `Author ${authorId}`,
+        name: AUTHORS?.[authorId]?.en || `Author ${authorId}`,
         x: centerX + Math.cos(angle) * distance,
         y: centerY + Math.sin(angle) * distance,
-        radius: 10 + (frequency / maxCollaborations) * 15, // Dynamic sizing
+        radius: 10 + (frequency / maxCollaborations) * 15,
         baseColor: getNodeColor(frequency, true),
         frequency: frequency
       });
     });
     
-    window.drawNetwork = function drawNetwork() {
+    function drawNetwork() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const filterValue = currentFilter === 'all' ? 0 : parseInt(currentFilter, 10);
       
       // Draw edges
       nodes.forEach(node => {
         if (!node.isCenter) {
-          const isVisible = node.frequency >= filterValue;
+          const isVisible = node.frequency >= currentThreshold;
           ctx.beginPath();
           ctx.moveTo(nodes[0].x, nodes[0].y);
           ctx.lineTo(node.x, node.y);
@@ -874,7 +862,7 @@ permalink: /members-director.html
           ctx.textAlign = 'center';
           ctx.fillText(node.name, node.x, node.y + node.radius + 25);
         } else {
-          const isVisible = node.frequency >= filterValue;
+          const isVisible = node.frequency >= currentThreshold;
           ctx.beginPath();
           ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
           if (isVisible) { 
@@ -894,7 +882,7 @@ permalink: /members-director.html
           ctx.globalAlpha = isVisible ? 1 : 0.3;
           ctx.fillText(node.name, node.x, node.y + node.radius + 25);
           
-          // Add collaboration count below name
+          // Add collaboration count
           if (isVisible) {
             ctx.font = '12px sans-serif';
             ctx.fillStyle = '#6b7280';
@@ -905,12 +893,12 @@ permalink: /members-director.html
       });
       
       requestAnimationFrame(drawNetwork);
-    };
+    }
     
-    // Initial filter to show all
-    filterNetwork('all');
+    window.drawNetwork = drawNetwork;
     
-    // Start drawing
+    // Initial setup
+    updateNetworkInfo();
     drawNetwork();
-  })();
+  }
 </script>
