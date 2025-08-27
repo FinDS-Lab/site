@@ -1,0 +1,285 @@
+---
+layout: default
+title: "금융 관련 프로젝트 기획 사례 소개"
+date: 2025-09-05
+permalink: /seminar/2025-09-05-financial-tech.html
+author: "최인수"
+host: "고려대학교 기술경영전문대학원 - 2025학년도 1학기 <재무관리기술> 강좌"
+venue: "고려대학교 서울캠퍼스 창의관 203호"
+excerpt: "데이터 사이언스를 활용한 재무관리 및 금융 의사결정 기술을 소개하고 응용 사례 공유"
+---
+
+<style>
+  :root {
+    --gold: rgb(214, 177, 77);
+    --gold-light: rgb(234, 207, 127);
+    --red: rgb(172, 14, 14);
+  }
+  
+  .seminar-hero {
+    background: linear-gradient(135deg, #fef9f3 0%, #fff5f5 100%);
+    border: 1px solid rgba(214,177,77,0.2);
+  }
+  
+  .meta-badge {
+    background: white;
+    border: 2px solid var(--gold);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+  
+  .meta-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(214,177,77,0.2);
+  }
+  
+  .section-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    transition: all 0.2s;
+  }
+  
+  .section-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+  }
+  
+  .section-title {
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 640px) {
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .info-content {
+    flex: 1;
+  }
+  
+  .info-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+  }
+  
+  .info-value {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 2px;
+  }
+  
+  .content-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .content-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    color: #374151;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  .content-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 16px;
+  }
+  
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    color: #374151;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  
+  .back-button:hover {
+    border-color: var(--gold);
+    transform: translateX(-4px);
+    color: var(--gold);
+  }
+  
+  /* 모바일에서 텍스트 줄이기 */
+  @media (max-width: 480px) {
+    .back-button {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    
+    .back-button .button-text {
+      display: none;
+    }
+    
+    .back-button .button-text-short {
+      display: inline;
+    }
+  }
+  
+  @media (min-width: 481px) {
+    .back-button .button-text-short {
+      display: none;
+    }
+  }
+</style>
+
+<section class="max-w-4xl mx-auto px-4 mt-8 pb-12">
+  <!-- Hero Section -->
+  <div class="seminar-hero rounded-2xl p-8 mb-8">
+    <div class="flex items-center gap-3 mb-4">
+      <span style="font-size:32px;">🎤</span>
+      <div>
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Invited Talk</p>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">
+          근래 본 적 없는 산업공학도의 진로 이야기
+        </h1>
+      </div>
+    </div>
+    
+    <p class="text-slate-600 leading-relaxed mt-4 mb-6">
+      {{ page.excerpt }}
+    </p>
+    
+    <div class="flex flex-wrap gap-3">
+      <div class="meta-badge">
+        <span>📍</span>
+        <span>{{ page.venue }}</span>
+      </div>
+      <div class="meta-badge">
+        <span>🏢</span>
+        <span>{{ page.host }}</span>
+      </div>
+      <div class="meta-badge">
+        <span>📅</span>
+        <span>{{ page.date | date: "%Y.%m.%d" }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <article class="bg-white rounded-2xl shadow-lg overflow-hidden">
+    <!-- Event Details -->
+    <div class="section-card" style="border-radius:16px 16px 0 0; margin-bottom:0; border-bottom:2px solid #f3f4f6;">
+      <h2 class="section-title">
+        <span>📋</span>
+        <span>세부 정보</span>
+      </h2>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">📅</div>
+          <div class="info-content">
+            <div class="info-label">일시</div>
+            <div class="info-value">{{ page.date | date: "%Y년 %m월 %d일" }} 18:00</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">🏛️</div>
+          <div class="info-content">
+            <div class="info-label">초청기관</div>
+            <div class="info-value">{{ page.host }}</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-content">
+            <div class="info-label">장소</div>
+            <div class="info-value">{{ page.venue }}</div>
+          </div>
+        </div>
+        
+        <div class="info-item">
+          <div class="info-icon">👤</div>
+          <div class="info-content">
+            <div class="info-label">발표자</div>
+            <div class="info-value">{{ page.author }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="section-card" style="border-radius:0;">
+      <h2 class="section-title">💡 주요 내용</h2>
+      <ul class="content-list">
+        <li>데이터 사이언스를 활용한 금융 의사결정 지원 기술 소개</li>
+        <li>금융 네트워크 분석 및 자산 상호연관성 탐구</li>
+        <li>리스크 다이내믹스 분석과 투자전략 최적화 방안</li>
+        <li>설명가능한 AI와 머신러닝 기반 금융 응용 사례</li>
+        <li>재무관리 기술 발전 방향과 실무 적용 논의</li>
+      </ul>
+    </div>
+
+  <!-- Footer -->
+  <footer class="mt-8 flex justify-between items-center">
+    <a href="{{ '/archives-seminar.html' | relative_url }}" class="back-button">
+      <span>←</span>
+      <span class="button-text">세미나 목록으로</span>
+      <span class="button-text-short">목록</span>
+    </a>
+    
+    <img src="{{ '/assets/img/logo-finds.png' | relative_url }}" 
+         alt="FINDS Lab Logo" 
+         class="h-6 w-auto">
+  </footer>
+</section>
