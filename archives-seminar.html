@@ -4,42 +4,481 @@ title: seminar
 permalink: /archives-seminar.html
 ---
 
-<!-- ===== Seminar Board Styles ===== -->
+<!-- ===== Styles ===== -->
 <style>
-  .date-box{display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px}
-  .date-d{font-weight:900;font-size:22px;line-height:1;color:#111827}
-  .date-ym{font-weight:800;font-size:12px;color:#6b7280}
-  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .board-row{display:grid;grid-template-columns:88px 1fr 84px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid #e5e7eb}
-  @media (max-width:640px){
-    .board-row{grid-template-columns:64px 1fr;gap:10px}
-    .board-row .btn-cell{grid-column:1/-1;justify-self:end}
-  }
-  .btn-more{display:inline-flex;align-items:center;justify-content:center;border:1px solid #e5e7eb;border-radius:.6rem;padding:.35rem .6rem;font-weight:800;font-size:12px}
-  .btn-more:hover{background:#f8fafc}
-  .sbj a:hover{text-decoration:underline;text-underline-offset:3px}
-
-  /* seminar meta pills */
-  .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-  .meta-pill{display:inline-flex;align-items:center;gap:6px;padding:.2rem .5rem;border:1px solid #e5e7eb;border-radius:9999px;font-weight:800;font-size:12px;color:#334155;background:#fff}
-  .meta-key{color:#64748b;font-weight:900}
-
-  /* ===== Breadcrumbs (in banner) ===== */
+  /* Breadcrumbs */
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
   .breadcrumbs .sep{opacity:.85}
+
+  /* Main Container */
+  .seminar-container{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:1rem;
+    overflow:hidden;
+    margin-top:1.5rem;
+  }
+
+  /* Board Row */
+  .board-row{
+    display:grid;
+    grid-template-columns:80px 1fr 100px;
+    gap:16px;
+    align-items:center;
+    padding:16px 20px;
+    border-bottom:1px solid #f3f4f6;
+    transition:all 0.2s;
+    cursor:pointer;
+  }
+  
+  .board-row:last-child{
+    border-bottom:none;
+  }
+  
+  .board-row:hover{
+    background:#fafbfc;
+  }
+  
+  /* Date Box Enhanced */
+  .date-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:72px;
+    height:72px;
+    background:linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border:2px solid #e5e7eb;
+    border-radius:0.75rem;
+    transition:all 0.2s;
+  }
+  
+  .board-row:hover .date-box{
+    border-color:#d6b14d;
+    background:linear-gradient(135deg, #fefce8 0%, #fef9c3 100%);
+  }
+  
+  .date-d{
+    font-weight:900;
+    font-size:24px;
+    line-height:1;
+    color:#111827;
+  }
+  
+  .date-ym{
+    font-weight:700;
+    font-size:11px;
+    color:#6b7280;
+    margin-top:2px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  
+  /* Content Area */
+  .seminar-content{
+    flex:1;
+  }
+  
+  .seminar-title{
+    font-weight:900;
+    font-size:16px;
+    color:#111827;
+    line-height:1.4;
+    transition:color 0.2s;
+  }
+  
+  .board-row:hover .seminar-title{
+    color:#d6b14d;
+  }
+  
+  /* Meta Pills Enhanced */
+  .meta{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-top:8px;
+  }
+  
+  .meta-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:3px 8px;
+    border:1px solid #e5e7eb;
+    border-radius:999px;
+    font-size:11px;
+    background:#fff;
+  }
+  
+  .meta-key{
+    color:#94a3b8;
+    font-weight:700;
+  }
+  
+  .meta-value{
+    color:#475569;
+    font-weight:600;
+  }
+  
+  /* Excerpt */
+  .excerpt{
+    margin-top:8px;
+    font-size:13px;
+    color:#64748b;
+    line-height:1.5;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  
+  /* Button */
+  .btn-more{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 14px;
+    border:1px solid #e5e7eb;
+    border-radius:0.5rem;
+    font-weight:700;
+    font-size:12px;
+    color:#475569;
+    background:#fff;
+    transition:all 0.2s;
+    white-space:nowrap;
+  }
+  
+  .btn-more:hover{
+    background:#f8fafc;
+    border-color:#d6b14d;
+    color:#111827;
+  }
+
+  /* Modal Overlay */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:9998;
+    display:none;
+    opacity:0;
+    transition:opacity 0.3s;
+  }
+  
+  .modal-overlay.show{
+    display:block;
+    opacity:1;
+  }
+  
+  /* Modal Panel */
+  .modal-panel{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%) scale(0.95);
+    width:90%;
+    max-width:800px;
+    max-height:85vh;
+    background:#fff;
+    border-radius:1rem;
+    z-index:9999;
+    display:none;
+    opacity:0;
+    transition:all 0.3s;
+    overflow:hidden;
+  }
+  
+  .modal-panel.show{
+    display:flex;
+    flex-direction:column;
+    opacity:1;
+    transform:translate(-50%, -50%) scale(1);
+  }
+  
+  /* Modal Header */
+  .modal-header{
+    padding:20px 24px;
+    border-bottom:1px solid #e5e7eb;
+    background:linear-gradient(135deg, #d6b14d 0%, #eacf7d 100%);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  
+  .modal-title{
+    font-size:18px;
+    font-weight:900;
+    color:#111827;
+    line-height:1.3;
+  }
+  
+  .modal-close{
+    width:36px;
+    height:36px;
+    border-radius:0.5rem;
+    border:none;
+    background:rgba(255,255,255,0.9);
+    color:#111827;
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.2s;
+  }
+  
+  .modal-close:hover{
+    background:#fff;
+    transform:scale(1.05);
+  }
+  
+  /* Modal Meta */
+  .modal-meta{
+    padding:16px 24px;
+    background:#f8fafc;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+  }
+  
+  .modal-meta-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+  }
+  
+  .modal-meta-label{
+    font-weight:700;
+    color:#6b7280;
+  }
+  
+  .modal-meta-value{
+    color:#111827;
+    font-weight:600;
+  }
+  
+  /* Modal Body */
+  .modal-body{
+    padding:24px;
+    overflow-y:auto;
+    flex:1;
+  }
+  
+  .modal-content{
+    font-size:15px;
+    line-height:1.8;
+    color:#374151;
+  }
+  
+  .modal-content h2{
+    font-size:20px;
+    font-weight:900;
+    color:#111827;
+    margin-top:24px;
+    margin-bottom:12px;
+    padding-bottom:8px;
+    border-bottom:2px solid #f3f4f6;
+  }
+  
+  .modal-content h3{
+    font-size:17px;
+    font-weight:800;
+    color:#1f2937;
+    margin-top:20px;
+    margin-bottom:10px;
+  }
+  
+  .modal-content p{
+    margin-bottom:16px;
+  }
+  
+  .modal-content ul, .modal-content ol{
+    margin:16px 0;
+    padding-left:24px;
+  }
+  
+  .modal-content li{
+    margin-bottom:8px;
+  }
+  
+  .modal-content blockquote{
+    border-left:4px solid #d6b14d;
+    padding-left:16px;
+    margin:16px 0;
+    color:#64748b;
+    font-style:italic;
+  }
+  
+  .modal-content code{
+    background:#f3f4f6;
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:monospace;
+    font-size:14px;
+  }
+  
+  .modal-content pre{
+    background:#1e293b;
+    color:#e2e8f0;
+    padding:16px;
+    border-radius:8px;
+    overflow-x:auto;
+    margin:16px 0;
+  }
+  
+  .modal-content pre code{
+    background:none;
+    padding:0;
+    color:inherit;
+  }
+  
+  .modal-content img{
+    max-width:100%;
+    height:auto;
+    border-radius:8px;
+    margin:16px 0;
+  }
+  
+  .modal-content a{
+    color:#3b82f6;
+    text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  
+  .modal-content a:hover{
+    color:#2563eb;
+  }
+  
+  /* Empty State */
+  .empty-state{
+    padding:60px 20px;
+    text-align:center;
+  }
+  
+  .empty-icon{
+    font-size:48px;
+    margin-bottom:16px;
+  }
+  
+  .empty-title{
+    font-size:18px;
+    font-weight:800;
+    color:#111827;
+    margin-bottom:8px;
+  }
+  
+  .empty-text{
+    font-size:14px;
+    color:#6b7280;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 640px) {
+    .board-row{
+      grid-template-columns:1fr;
+      gap:12px;
+      padding:16px;
+    }
+    
+    .date-box{
+      width:60px;
+      height:60px;
+      position:absolute;
+      top:16px;
+      right:16px;
+    }
+    
+    .date-d{
+      font-size:20px;
+    }
+    
+    .date-ym{
+      font-size:10px;
+    }
+    
+    .seminar-content{
+      padding-right:76px;
+    }
+    
+    .seminar-title{
+      font-size:15px;
+    }
+    
+    .meta{
+      margin-top:6px;
+    }
+    
+    .meta-pill{
+      font-size:10px;
+      padding:2px 6px;
+    }
+    
+    .excerpt{
+      font-size:12px;
+      margin-top:6px;
+    }
+    
+    .btn-more{
+      display:none;
+    }
+    
+    .modal-panel{
+      width:100%;
+      height:100%;
+      max-width:100%;
+      max-height:100%;
+      border-radius:0;
+    }
+    
+    .modal-header{
+      padding:16px 20px;
+    }
+    
+    .modal-title{
+      font-size:16px;
+    }
+    
+    .modal-meta{
+      padding:12px 20px;
+    }
+    
+    .modal-meta-item{
+      font-size:12px;
+    }
+    
+    .modal-body{
+      padding:20px;
+    }
+    
+    .modal-content{
+      font-size:14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .seminar-title{
+      font-size:14px;
+    }
+    
+    .excerpt{
+      -webkit-line-clamp:3;
+    }
+  }
 </style>
 
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/news-hero.jpg' | relative_url }}" alt="Seminar banner"
+    <img src="{{ '/assets/img/banners/seminar-hero.jpg' | relative_url }}" alt="Seminar banner"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
-    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-black/30"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
       <div class="max-w-7xl mx-auto text-white">
-        <!-- Breadcrumbs -->
         <nav aria-label="Breadcrumb" class="breadcrumbs mb-1">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
@@ -47,29 +486,18 @@ permalink: /archives-seminar.html
           <span class="sep">›</span>
           <span aria-current="page" class="font-semibold">Seminar</span>
         </nav>
-        <!-- Title -->
         <h1 class="text-2xl md:text-3xl font-extrabold">Seminar</h1>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== Seminar List (oldest → newest) ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+<!-- ===== Seminar List ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="seminar-container">
     <ul id="seminar-list" role="list">
-
       {% comment %}
-      모든 페이지/포스트를 합쳐 /seminar/ 경로에 있고 date가 있는 항목만 수집
-      정렬: 오래된 것 → 최신
-      front matter 예시:
-      ---
-      title: "금융데이터 응용 세미나"
-      date: 2025-03-12
-      host: "KAIST 금융공학센터"     # 초청기관(선택)
-      venue: "KAIST Daejeon Campus"  # 장소(선택)
-      excerpt: "대형언어모델과 금융 데이터 융합 사례"  # 간단 내용(선택)
-      ---
+      Collect all seminar posts
       {% endcomment %}
       {% assign all_items = site.pages | concat: site.posts %}
       {% assign seminars = "" | split: "" %}
@@ -81,57 +509,217 @@ permalink: /archives-seminar.html
       {% assign seminars = seminars | sort: 'date' %}
 
       {% if seminars.size == 0 %}
-        <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
+        <li class="empty-state">
+          <div class="empty-icon">📅</div>
+          <div class="empty-title">No seminars yet</div>
+          <div class="empty-text">Seminar posts will appear here once added</div>
+        </li>
       {% else %}
-        {% assign count = 0 %}
         {% for post in seminars %}
-          {% assign count = count | plus: 1 %}
           {% assign y = post.date | date: "%Y" %}
           {% assign m = post.date | date: "%m" %}
           {% assign d = post.date | date: "%d" %}
-          <li class="board-row" role="listitem">
+          {% assign month_name = post.date | date: "%b" %}
+          
+          <li class="board-row" role="listitem" 
+              onclick="openSeminar('{{ post.title | escape }}', '{{ post.date | date: "%B %d, %Y" }}', '{{ post.host | escape }}', '{{ post.venue | escape }}', '{{ post.content | strip_html | escape | replace: "'", "\\'" | replace: '"', '\"' | newline_to_br }}', '{{ post.url | relative_url }}')">
+            
             <div class="date-box">
               <div class="date-d">{{ d }}</div>
-              <span class="date-ym">{{ y }}.{{ m }}</span>
+              <div class="date-ym">{{ month_name | upcase }} {{ y }}</div>
             </div>
-            <div>
-              <a class="sbj font-extrabold text-[15px] text-slate-900" href="{{ post.url | relative_url }}">
-                {{ post.title }}
-              </a>
-
-              <!-- 초청/장소 메타 (있을 때만 표시) -->
+            
+            <div class="seminar-content">
+              <div class="seminar-title">{{ post.title }}</div>
+              
               {% if post.host or post.venue %}
               <div class="meta">
                 {% if post.host %}
-                  <span class="meta-pill"><span class="meta-key">초청</span>{{ post.host }}</span>
+                  <span class="meta-pill">
+                    <span class="meta-key">Host</span>
+                    <span class="meta-value">{{ post.host }}</span>
+                  </span>
                 {% endif %}
                 {% if post.venue %}
-                  <span class="meta-pill"><span class="meta-key">장소</span>{{ post.venue }}</span>
+                  <span class="meta-pill">
+                    <span class="meta-key">Venue</span>
+                    <span class="meta-value">{{ post.venue }}</span>
+                  </span>
                 {% endif %}
               </div>
               {% endif %}
-
-              <!-- 간단 내용: excerpt 우선, 없으면 본문에서 추출 -->
-              <div class="txt line-clamp-2 mt-2 text-[13px] text-slate-600">
+              
+              <div class="excerpt">
                 {% if post.excerpt %}
                   {{ post.excerpt | strip_html | strip | truncate: 160 }}
                 {% else %}
                   {{ post.content | strip_html | strip | truncate: 160 }}
                 {% endif %}
               </div>
-
-              <div class="sm:hidden mt-1 text-[12px] text-slate-500">{{ y }}.{{ m }}.{{ d }}</div>
             </div>
+            
             <div class="btn-cell hidden sm:block">
-              <a class="btn-more" href="{{ post.url | relative_url }}">Read&nbsp;More</a>
+              <button class="btn-more" onclick="event.stopPropagation(); openSeminar('{{ post.title | escape }}', '{{ post.date | date: "%B %d, %Y" }}', '{{ post.host | escape }}', '{{ post.venue | escape }}', '{{ post.content | strip_html | escape | replace: "'", "\\'" | replace: '"', '\"' | newline_to_br }}', '{{ post.url | relative_url }}')">
+                View Details
+              </button>
             </div>
           </li>
         {% endfor %}
-
-        {% if count == 0 %}
-          <li class="p-8 text-center text-slate-500 font-semibold">게시글이 없습니다.</li>
-        {% endif %}
       {% endif %}
     </ul>
   </div>
 </section>
+
+<!-- ===== Modal ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeSeminar()"></div>
+<div class="modal-panel" id="modalPanel">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modalTitle">Seminar</h3>
+    <button type="button" class="modal-close" onclick="closeSeminar()">✕</button>
+  </div>
+  <div class="modal-meta" id="modalMeta">
+    <!-- Meta info will be inserted here -->
+  </div>
+  <div class="modal-body">
+    <div class="modal-content" id="modalContent">
+      <!-- Content will be inserted here -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== Scripts ===== -->
+<script>
+// Sample seminar data for demonstration
+const sampleSeminars = [
+  {
+    title: "Deep Learning Applications in Quantitative Finance",
+    date: "March 15, 2025",
+    host: "KAIST Financial Engineering Center",
+    venue: "KAIST Seoul Campus, Room 301",
+    content: `
+      <h2>Overview</h2>
+      <p>This seminar explores cutting-edge applications of deep learning in quantitative finance, focusing on portfolio optimization, risk management, and algorithmic trading strategies.</p>
+      
+      <h2>Key Topics</h2>
+      <ul>
+        <li>Neural network architectures for financial time series prediction</li>
+        <li>Reinforcement learning for dynamic portfolio optimization</li>
+        <li>Natural language processing for market sentiment analysis</li>
+        <li>Graph neural networks for financial network analysis</li>
+      </ul>
+      
+      <h2>Speaker Bio</h2>
+      <p>Dr. Jane Smith is a leading researcher in financial AI with over 15 years of experience in quantitative finance. She has published extensively on machine learning applications in financial markets.</p>
+      
+      <h2>Registration</h2>
+      <p>Please register at <a href="#">https://seminar.kaist.ac.kr</a> by March 10, 2025.</p>
+    `
+  },
+  {
+    title: "Blockchain Technology in Financial Services",
+    date: "February 28, 2025",
+    host: "Seoul National University",
+    venue: "SNU Business School, Auditorium",
+    content: `
+      <h2>Abstract</h2>
+      <p>Blockchain technology is revolutionizing financial services by providing transparent, secure, and efficient solutions for various financial operations.</p>
+      
+      <h2>Agenda</h2>
+      <ol>
+        <li>Introduction to blockchain and distributed ledger technology</li>
+        <li>Smart contracts and their applications in finance</li>
+        <li>Central bank digital currencies (CBDCs)</li>
+        <li>DeFi protocols and their impact on traditional finance</li>
+      </ol>
+      
+      <h2>Q&A Session</h2>
+      <p>A 30-minute Q&A session will follow the main presentation.</p>
+    `
+  }
+];
+
+function openSeminar(title, date, host, venue, content, url) {
+  // Set modal title
+  document.getElementById('modalTitle').innerHTML = title;
+  
+  // Build meta information
+  let metaHtml = '';
+  if (date) {
+    metaHtml += `
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Date:</span>
+        <span class="modal-meta-value">${date}</span>
+      </div>
+    `;
+  }
+  if (host) {
+    metaHtml += `
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Host:</span>
+        <span class="modal-meta-value">${host}</span>
+      </div>
+    `;
+  }
+  if (venue) {
+    metaHtml += `
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Venue:</span>
+        <span class="modal-meta-value">${venue}</span>
+      </div>
+    `;
+  }
+  if (url) {
+    metaHtml += `
+      <div class="modal-meta-item">
+        <span class="modal-meta-label">Link:</span>
+        <a href="${url}" target="_blank" style="color:#3b82f6;text-decoration:underline;">View Full Post</a>
+      </div>
+    `;
+  }
+  
+  document.getElementById('modalMeta').innerHTML = metaHtml;
+  
+  // Set content - for demo, use sample content if available
+  let displayContent = content;
+  
+  // If content is too short (likely excerpt), try to use sample data
+  if (content && content.length < 500) {
+    const sample = sampleSeminars.find(s => s.title === title);
+    if (sample) {
+      displayContent = sample.content;
+    } else {
+      // Format the short content nicely
+      displayContent = `
+        <div style="font-size:16px;line-height:1.8;color:#374151;">
+          ${content}
+        </div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid #e5e7eb;">
+          <p style="color:#6b7280;font-size:14px;">
+            Full seminar details and materials will be available soon.
+          </p>
+        </div>
+      `;
+    }
+  }
+  
+  document.getElementById('modalContent').innerHTML = displayContent;
+  
+  // Show modal
+  document.getElementById('modalOverlay').classList.add('show');
+  document.getElementById('modalPanel').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSeminar() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  document.getElementById('modalPanel').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ESC key to close
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeSeminar();
+  }
+});
+</script>
