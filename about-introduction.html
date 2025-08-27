@@ -40,42 +40,31 @@ permalink: /about-introduction.html
     --red-dark: rgb(127, 10, 10);
   }
 
-  /* Language Section Card */
-  .lang-section {
+  /* Main Content Section */
+  .content-section {
     background: white;
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 3rem;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.05);
-    transition: transform 0.3s, box-shadow 0.3s;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .lang-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-  }
-
-  /* Language Label */
-  .lang-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    color: #000;
-    border-radius: 999px;
-    font-weight: 900;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    margin-bottom: 24px;
+  @media (max-width: 768px) {
+    .content-section {
+      padding: 2rem 1.5rem;
+    }
   }
 
   /* Text Styles */
   .intro-text {
-    font-size: 16px;
-    line-height: 1.9;
+    font-size: 17px;
+    line-height: 2;
     color: #374151;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    word-break: keep-all;
+    line-break: strict;
   }
 
   .intro-text:last-child {
@@ -194,20 +183,10 @@ permalink: /about-introduction.html
     border: 2px solid var(--gold);
   }
 
-  /* Korean text optimization */
-  .ko-text {
-    word-break: keep-all;
-    line-break: strict;
-  }
-
   @media (max-width: 768px) {
-    .lang-section {
-      padding: 1.5rem;
-    }
-    
     .intro-text {
       font-size: 15px;
-      line-height: 1.85;
+      line-height: 1.9;
     }
     
     .vision-section {
@@ -221,61 +200,29 @@ permalink: /about-introduction.html
 </style>
 
 <!-- ===== Main Content ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-8">
-  <!-- Language Split Layout -->
-  <div class="grid lg:grid-cols-2 gap-8">
-    <!-- English Section -->
-    <div class="lang-section">
-      <span class="lang-label">🌐 ENGLISH</span>
-      
-      <p class="intro-text">
-        Welcome to the <span class="highlight">FINDS Lab</span> 
-        <span class="highlight-gold">(Financial Data Science Laboratory)</span> at the
-        School of Business Convergence, <span class="highlight">Dongduk Women's University</span>.
-      </p>
-      
-      <p class="intro-text">
-        Today, both business and finance are undergoing rapid transformation driven by 
-        <span class="highlight">data</span>. Competitive advantage is no longer determined 
-        by capital or resources alone, but by the ability to <span class="highlight">analyze data 
-        effectively</span> and put it into practice.
-      </p>
-      
-      <p class="intro-text">
-        Our lab focuses on <span class="highlight">Financial Data Science</span>, 
-        <span class="highlight">Business Analytics</span>, and 
-        <span class="highlight">Data-Inspired Decision Making</span>. We apply data science 
-        methods to analyze financial data, while also using business analytics to uncover new 
-        <span class="highlight-gold">finds</span> — valuable discoveries across various industries 
-        and organizations.
-      </p>
-    </div>
-
-    <!-- Korean Section -->
-    <div class="lang-section">
-      <span class="lang-label">🇰🇷 한국어</span>
-      
-      <p class="intro-text ko-text">
-        <span class="highlight">동덕여자대학교 경영융합학부</span> 
-        <span class="highlight-gold">금융데이터사이언스 연구실(FINDS Lab.)</span>에 
-        오신 것을 환영합니다.
-      </p>
-      
-      <p class="intro-text ko-text">
-        오늘날 비즈니스와 금융 환경은 <span class="highlight">데이터</span> 중심으로 
-        급격히 변화하고 있습니다. 이제 경쟁력을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라, 
-        데이터를 얼마나 <span class="highlight">효과적으로 분석하고 활용</span>하는지가 
-        중요해지고 있습니다.
-      </p>
-      
-      <p class="intro-text ko-text">
-        저희 연구실은 <span class="highlight">금융데이터사이언스</span>, 
-        <span class="highlight">비즈니스 애널리틱스</span>, 
-        <span class="highlight">데이터 기반 의사결정</span>을 주요 연구 분야로 삼고 있습니다. 
-        다양한 산업과 조직에서 새로운 <span class="highlight-gold">발견(finds)</span>을 
-        찾아내고 의미 있는 인사이트를 발굴하고자 합니다.
-      </p>
-    </div>
+<section class="max-w-7xl mx-auto px-4 mt-8 pb-8">
+  <!-- Main Content -->
+  <div class="content-section">
+    <p class="intro-text">
+      <span class="highlight">동덕여자대학교 경영융합학부</span> 
+      <span class="highlight-gold">금융데이터사이언스 연구실(FINDS Lab.)</span>에 
+      오신 것을 환영합니다.
+    </p>
+    
+    <p class="intro-text">
+      오늘날 비즈니스와 금융 환경은 <span class="highlight">데이터</span> 중심으로 
+      급격히 변화하고 있습니다. 이제 경쟁력을 좌우하는 핵심 요소는 단순한 자본이나 자원이 아니라, 
+      데이터를 얼마나 <span class="highlight">효과적으로 분석하고 활용</span>하는지가 
+      중요해지고 있습니다.
+    </p>
+    
+    <p class="intro-text">
+      저희 연구실은 <span class="highlight">금융데이터사이언스</span>, 
+      <span class="highlight">비즈니스 애널리틱스</span>, 
+      <span class="highlight">데이터 기반 의사결정</span>을 주요 연구 분야로 삼고 있습니다. 
+      다양한 산업과 조직에서 새로운 <span class="highlight-gold">발견(finds)</span>을 
+      찾아내고 의미 있는 인사이트를 발굴하고자 합니다.
+    </p>
   </div>
 
   <!-- Key Concepts -->
