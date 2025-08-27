@@ -24,76 +24,27 @@
     min-height: 100vh;
   }
 
-  /* Hero Banner */
-  .hero-banner {
-    position: relative;
-    max-width: 1200px;
-    margin: 24px auto;
-    padding: 0 24px;
-  }
-
-  .banner-container {
-    position: relative;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  }
-
-  .banner-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-
-  @media (max-width: 768px) {
-    .banner-image {
-      height: 160px;
-    }
-  }
-
-  .banner-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
-  }
-
-  .banner-content {
-    position: absolute;
-    bottom: 20px;
-    left: 24px;
-    right: 24px;
-    color: white;
-  }
-
+  /* Breadcrumb styles */
   .breadcrumbs {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     align-items: center;
     font-size: 12px;
-    margin-bottom: 8px;
-    opacity: 0.9;
   }
-
+  
   .breadcrumbs a {
-    color: white;
+    color: #e5e7eb;
     text-decoration: none;
-    transition: opacity 0.2s;
   }
-
+  
   .breadcrumbs a:hover {
-    opacity: 0.7;
+    text-decoration: underline;
   }
-
-  .page-title {
-    font-size: 32px;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-  }
-
-  @media (max-width: 768px) {
-    .page-title {
-      font-size: 24px;
-    }
+  
+  .breadcrumbs .sep {
+    opacity: 0.85;
+    color: #e5e7eb;
   }
 
   /* Main Content */
