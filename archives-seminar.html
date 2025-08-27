@@ -271,7 +271,7 @@ permalink: /archives-seminar.html
     <ul id="seminar-list" role="list">
       {% comment %}
       Collect all seminar posts from /seminar/ folder
-      Sort by date (oldest to newest)
+      Sort by date (newest to oldest) - REVERSED
       {% endcomment %}
       {% assign all_items = site.pages | concat: site.posts %}
       {% assign seminars = "" | split: "" %}
@@ -280,7 +280,7 @@ permalink: /archives-seminar.html
           {% assign seminars = seminars | push: item %}
         {% endif %}
       {% endfor %}
-      {% assign seminars = seminars | sort: 'date' %}
+      {% assign seminars = seminars | sort: 'date' | reverse %}
 
       {% if seminars.size == 0 %}
         <li class="empty-state">
