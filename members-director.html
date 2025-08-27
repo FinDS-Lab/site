@@ -33,8 +33,9 @@ permalink: /members-director.html
 
 <!-- ===== Styles ===== -->
 <style>
-  :root{
-    --accent: rgb(214, 177, 77); /* Gold - header와 일치 */
+  /* director 페이지 전용 변수 - site.css 오버라이드 */
+  .director-page {
+    --accent: rgb(214, 177, 77) !important; /* Gold로 강제 변경 */
     --gold:#d6b14d;
     --gold-light:#eacf7d;
     --gold-fg:#111827;
@@ -42,8 +43,8 @@ permalink: /members-director.html
     --red-dark:#7f0a0a;
   }
 
-  /* Card Design with rounded corners - 우선순위 최대화 */
-  div.card, .card {
+  /* director 전용 카드 - site.css의 .card 오버라이드 */
+  .director-card {
     background:#fff !important;
     border:1px solid #e5e7eb !important;
     border-radius:16px !important;
@@ -53,11 +54,13 @@ permalink: /members-director.html
     box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
     transition:all 0.2s;
     margin-bottom: 1.5rem;
+    /* site.css의 패딩 오버라이드 */
+    padding: 0 !important;
   }
   
-  /* Tailwind 클래스 오버라이드 */
-  .rounded-lg, .rounded-xl, .rounded-2xl {
-    border-radius:16px !important;
+  .director-card:hover {
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08) !important;
   }
   
   .card:hover{
@@ -287,11 +290,11 @@ permalink: /members-director.html
 </style>
 
 <!-- ===== Main Content ===== -->
-<section class="max-w-7xl mx-auto px-4 pb-8">
+<section class="director-page max-w-7xl mx-auto px-4 pb-8">
   <div class="main-grid" style="margin-top:2rem;">
     <!-- Profile Sidebar -->
     <aside>
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Profile</div>
         <div class="card-body">
           <div class="profile-photo">
@@ -346,7 +349,7 @@ permalink: /members-director.html
     <!-- Main Content -->
     <main>
       <!-- Introduction -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Introduction</div>
         <div class="card-body">
           <p style="line-height:1.8; color:#374151;">
@@ -362,7 +365,7 @@ permalink: /members-director.html
       </div>
 
       <!-- Research Interests -->
-      <div class="card">
+      <div class="director-card">
         <div class="card-head">Research Interests</div>
         <div class="card-body">
           <div class="ri-item">
