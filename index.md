@@ -54,15 +54,19 @@ title: home
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     will-change: transform;
+    /* 슬라이드 간 간격 제거 */
   }
 
   .carousel-slide {
     min-width: 100%;
+    width: 100%;
     height: 100%;
     position: relative;
+    flex: 0 0 100%;
     flex-shrink: 0;
     background: #000;
     overflow: hidden;
+    /* 각 슬라이드가 정확히 100% 너비를 차지하도록 설정 */
   }
 
   .carousel-slide img {
@@ -678,47 +682,49 @@ title: home
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="carousel-container">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- Slide 1 -->
-      <div class="carousel-slide">
-        <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
-        <div class="carousel-overlay">
-          <div class="carousel-content">
-            <span class="tag-badge">FINDS Lab.</span>
-            <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
-            <div class="hero-buttons">
-              <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
-              <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
+    <div class="carousel-wrapper" style="position:relative;width:100%;height:100%;overflow:hidden;">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
+          <div class="carousel-overlay">
+            <div class="carousel-content">
+              <span class="tag-badge">FINDS Lab.</span>
+              <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
+              <div class="hero-buttons">
+                <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
+                <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Slide 2 -->
-      <div class="carousel-slide">
-        <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
-        <div class="carousel-overlay">
-          <div class="carousel-content">
-            <span class="tag-badge">FINDS Lab.</span>
-            <h1 class="hero-title">Research<br>Accomplishments</h1>
-            <div class="hero-buttons">
-              <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
-              <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
+        
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
+          <div class="carousel-overlay">
+            <div class="carousel-content">
+              <span class="tag-badge">FINDS Lab.</span>
+              <h1 class="hero-title">Research<br>Accomplishments</h1>
+              <div class="hero-buttons">
+                <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
+                <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Slide 3 -->
-      <div class="carousel-slide">
-        <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
-        <div class="carousel-overlay">
-          <div class="carousel-content">
-            <span class="tag-badge">FINDS Lab.</span>
-            <h1 class="hero-title">Latest<br>Updates</h1>
-            <div class="hero-buttons">
-              <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
-              <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
+        
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
+          <div class="carousel-overlay">
+            <div class="carousel-content">
+              <span class="tag-badge">FINDS Lab.</span>
+              <h1 class="hero-title">Latest<br>Updates</h1>
+              <div class="hero-buttons">
+                <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
+                <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
+              </div>
             </div>
           </div>
         </div>
@@ -846,16 +852,27 @@ title: home
   (function() {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
-    const slides = document.querySelectorAll('.carousel-slide img');
+    const slides = document.querySelectorAll('.carousel-slide');
     let currentIndex = 0;
     let interval;
     let isTransitioning = false;
     let touchStartX = 0;
     let touchEndX = 0;
     
+    // Ensure proper slide sizing on load
+    function setSlideWidths() {
+      const containerWidth = track.parentElement.offsetWidth;
+      slides.forEach(slide => {
+        slide.style.width = containerWidth + 'px';
+        slide.style.minWidth = containerWidth + 'px';
+        slide.style.maxWidth = containerWidth + 'px';
+      });
+    }
+    
     // Preload all images
     function preloadImages() {
-      slides.forEach((img) => {
+      const images = document.querySelectorAll('.carousel-slide img');
+      images.forEach((img) => {
         if (img.complete) return;
         const tempImg = new Image();
         tempImg.src = img.src;
@@ -867,7 +884,9 @@ title: home
       isTransitioning = true;
       
       currentIndex = index;
-      track.style.transform = `translateX(-${index * 100}%)`;
+      // Use percentage for more reliable positioning
+      const translateValue = -(index * 100);
+      track.style.transform = `translateX(${translateValue}%)`;
       
       dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
@@ -881,20 +900,24 @@ title: home
     
     function nextSlide() {
       if (isTransitioning) return;
-      goToSlide((currentIndex + 1) % dots.length);
+      goToSlide((currentIndex + 1) % slides.length);
     }
     
     function prevSlide() {
       if (isTransitioning) return;
-      goToSlide((currentIndex - 1 + dots.length) % dots.length);
+      goToSlide((currentIndex - 1 + slides.length) % slides.length);
     }
     
     function startAutoplay() {
+      stopAutoplay(); // Clear any existing interval
       interval = setInterval(nextSlide, 5000);
     }
     
     function stopAutoplay() {
-      clearInterval(interval);
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
     }
     
     // Touch/swipe support for mobile
@@ -923,7 +946,18 @@ title: home
     }
     
     // Initialize
+    setSlideWidths();
     preloadImages();
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setSlideWidths();
+        goToSlide(currentIndex); // Re-position after resize
+      }, 250);
+    });
     
     // Event listeners
     dots.forEach((dot, index) => {
@@ -940,6 +974,7 @@ title: home
     
     // Wait for images to load before starting autoplay
     window.addEventListener('load', () => {
+      setSlideWidths();
       goToSlide(0);
       startAutoplay();
     });
