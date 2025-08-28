@@ -847,6 +847,36 @@ function generateDiamondNetwork() {
     return a.en || a.ko || `Author ${authorId}`;
   }
   
+  function determineLanguageMode(pub){
+    // International conferences and international journals -> English
+    if(pub.indexing_group === "International Conference" || 
+       pub.indexing_group === "International - Domestic Joint Conference") {
+      return 'english';
+    }
+    
+    // International journals (SCIE, SSCI, ESCI, A&HCI, Scopus, Other International) -> English
+    if(pub.type === "journal" && 
+       !pub.indexing_group.includes("KCI") && 
+       !pub.indexing_group.includes("Domestic")) {
+      return 'english';
+    }
+    
+    // Domestic conferences and KCI journals -> Korean
+    if(pub.indexing_group === "Domestic Conference" ||
+       pub.indexing_group.includes("KCI")) {
+      return 'korean';
+    }
+    
+    // Book, Report, Preprint, Working Paper -> follow language field
+    if(pub.type === "book" || pub.type === "report" || 
+       pub.indexing_group === "Preprint" || pub.indexing_group === "Working Paper") {
+      return (pub.language === 'Korean') ? 'korean' : 'english';
+    }
+    
+    // Default
+    return (pub.language === 'Korean') ? 'korean' : 'english';
+  }
+  
   function isDomesticPublication(indexing){
     if(indexing === "International - Domestic Joint Conference") return false;
     return indexing.includes("KCI") || indexing.includes("Domestic");
@@ -913,9 +943,9 @@ function generateDiamondNetwork() {
     if(idxFilters.length>0 && !idxFilters.includes(pub.indexing_group)) return false;
     if(!q) return true;
 
-    const forceEnglish = (pub.indexing_group === "International - Domestic Joint Conference");
-    const isDom = forceEnglish ? false : isDomesticPublication(pub.indexing_group);
-    const names = (pub.authors||[]).map(id=>getAuthorName(id,isDom)).join(" ");
+    const langMode = determineLanguageMode(pub);
+    const useKorean = (langMode === 'korean');
+    const names = (pub.authors||[]).map(id=>getAuthorName(id,useKorean)).join(" ");
     const text=((pub.title||"")+" "+names+" "+(pub.venue||"")).toLowerCase();
     return text.includes(q.toLowerCase());
   }
@@ -936,13 +966,17 @@ function generateDiamondNetwork() {
       leftClass=pub.type;
     }
 
+    // Determine language mode based on publication type
+    const langMode = determineLanguageMode(pub);
+    const useKorean = (langMode === 'korean');
+    
+    // For KCI journals, even if title is English, use Korean for authors/venue
     const lang = pub.language || 'English';
-    const isKorean = lang === 'Korean';
-    const displayTitle = (isKorean && pub.title_ko) ? pub.title_ko : pub.title;
-    const displayVenue = (isKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
+    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : pub.title;
+    const displayVenue = (useKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
 
     const authors = (pub.authors||[]).map((id, idx) => {
-      const name = getAuthorName(id, isKorean);
+      const name = getAuthorName(id, useKorean);
       const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
       const sup = mark ? `<sup>${String(mark)}</sup>` : "";
       return `${name}${sup}`;
