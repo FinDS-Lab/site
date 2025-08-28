@@ -313,98 +313,82 @@ function generateDiamondNetwork() {
   const RAW = [
     {
       role:"Lecturer",
-      periods:["2025-03-01 – 2026-02-28"],
+      periods:["2025 Spring"],
+      school:"Dongduk Women's University",
+      courses:[{en:"Business Decision Making and Data Analysis (경영-2201)", ko:"경영의사결정과자료분석 (경영-2201)"}]
+    },
+    {
+      role:"Lecturer",
+      periods:["2025 Spring"],
       school:"Dongduk Women's University",
       courses:[
-        {en:"Business Decision Making and Data Analysis (경영-2201)", ko:"경영의사결정과자료분석 (경영-2201)"},
-        {en:"Python Programming Fundamentals (경영-2233)", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233)", sections:2}
+        {en:"Python Programming Fundamentals (경영-2233) - Section 1", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233) - 1분반"},
+        {en:"Python Programming Fundamentals (경영-2233) - Section 2", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233) - 2분반"}
       ]
     },
     {
       role:"Lecturer",
-      periods:["2025-03-01 – 2026-02-28"],
+      periods:["2025 Spring"],
       school:"Korea University Sejong Campus",
       courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]
     },
     {
       role:"Lecturer",
-      periods:["2025-03-01 – 2026-02-28"],
+      periods:["2025 Spring"],
       school:"Gangnam University",
-      courses:[
-        {en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"},
-        {en:"Applied Statistics (EG20113)", ko:"응용통계 (EG20113)"}
-      ]
+      courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]
     },
     {
       role:"Lecturer",
-      periods:["2024-03-01 – 2024-08-31"],
+      periods:["2025 Spring"],
+      school:"Gangnam University",
+      courses:[{en:"Applied Statistics (EG20113)", ko:"응용통계 (EG20113)"}]
+    },
+    {
+      role:"Lecturer",
+      periods:["2024 Spring", "2024 Summer"],
       school:"Kyung Hee University",
-      courses:[
-        {en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"},
-        {en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}
-      ]
+      courses:[{en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"}]
+    },
+    {
+      role:"Lecturer",
+      periods:["2024 Spring"],
+      school:"Kyung Hee University",
+      courses:[{en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2024-09-02 – 2024-12-31", "2023-08-28 – 2023-12-31"],
+      periods:["2024 Fall", "2023 Fall"],
       school:"KAIST",
       courses:[{en:"Special Topics in Data Science I (DS801)", ko:"데이터사이언스의 특수논제 I (DS801)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2024-02-26 – 2024-06-30", "2023-02-27 – 2023-06-30", "2022-02-28 – 2022-06-30", "2021-03-01 – 2021-06-30"],
+      periods:["2024 Spring", "2023 Spring", "2022 Spring", "2021 Spring"],
       school:"KAIST",
       courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2022-08-30 – 2022-12-31"],
+      periods:["2022 Fall"],
       school:"KAIST",
       courses:[{en:"Special Topics in Knowledge Service Engineering I (KSE801)", ko:"지식서비스공학의 특수논제 I (KSE801)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2022-02-28 – 2022-06-30"],
+      periods:["2022 Spring"],
       school:"KAIST",
       courses:[{en:"Special Topics in Industrial Systems Engineering I (IE482)", ko:"산업공학특강 I (IE482)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2021-08-30 – 2021-12-31", "2020-08-31 – 2020-12-31"],
+      periods:["2021 Fall", "2020 Fall"],
       school:"KAIST",
       courses:[{en:"Convex Optimization (IE539)", ko:"컨벡스 최적화 (IE539)"}]
     },
     {
       role:"Teaching Assistant",
-      periods:["2021-03-01 – 2021-06-30", "2019-02-25 – 2019-06-30"],
-      school:"KAIST",
-      courses:[{en:"Decision Analysis and Risk Management (IE432)", ko:"의사결정분석 및 위험관리 (IE432)"}]
-    }
-  ];2021-06-30"],
-      school:"KAIST",
-      courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2022-08-30 – 2022-12-31"],
-      school:"KAIST",
-      courses:[{en:"Special Topics in Knowledge Service Engineering I (KSE801)", ko:"지식서비스공학의 특수논제 I (KSE801)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2022-02-28 – 2022-06-30"],
-      school:"KAIST",
-      courses:[{en:"Special Topics in Industrial Systems Engineering I (IE482)", ko:"산업공학특강 I (IE482)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2021-08-30 – 2021-12-31", "2020-08-31 – 2020-12-31"],
-      school:"KAIST",
-      courses:[{en:"Convex Optimization (IE539)", ko:"컨벡스 최적화 (IE539)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2021-03-01 – 2021-06-30", "2019-02-25 – 2019-06-30"],
+      periods:["2021 Spring", "2019 Spring"],
       school:"KAIST",
       courses:[{en:"Decision Analysis and Risk Management (IE432)", ko:"의사결정분석 및 위험관리 (IE432)"}]
     }
@@ -423,21 +407,16 @@ function generateDiamondNetwork() {
   });
 
   /* Utils */
-  function parseStartDate(period){
-    const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
-  }
-  function seasonLabelFrom(date){
-    const y = date.getFullYear(), m = date.getMonth()+1;
-    const s = (m<=2)?"Winter":(m<=6)?"Spring":(m<=8)?"Summer":"Fall";
-    return `${y} ${s}`;
-  }
   function seasonToDate(s){
     const [yy, ss] = s.split(' ');
     const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
     return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
   }
-  function byStartDesc(a,b){ return parseStartDate(b.period)-parseStartDate(a.period); }
+  function byStartDesc(a,b){ 
+    const dateA = seasonToDate(a.period);
+    const dateB = seasonToDate(b.period);
+    return dateB - dateA;
+  }
 
   /* Filters */
   const ROLES = ["Lecturer","Teaching Assistant"];
@@ -446,7 +425,7 @@ function generateDiamondNetwork() {
   let q = "";
   const onRoles = new Set();
   const onSchools = new Set();
-  const ALL_SEMS = Array.from(new Set(ITEMS.map(i => seasonLabelFrom(parseStartDate(i.period))))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
+  const ALL_SEMS = Array.from(new Set(ITEMS.map(i => i.period))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
   const onSems = new Set();
 
   /* DOM */
@@ -496,7 +475,8 @@ function generateDiamondNetwork() {
   function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
   function passSems(i){
     // Check if any of the periods match the selected semesters
-    return onSems.size ? i.periods.some(s => onSems.has(s)) : true;
+    const sems = i.periods;
+    return onSems.size ? sems.some(s => onSems.has(s)) : true;
   }
   function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passSems).filter(matchesQuery).sort(byStartDesc); }
 
@@ -508,12 +488,37 @@ function generateDiamondNetwork() {
     const leftLabel = item.role==="Lecturer" ? "L" : "TA";
     const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
     
+    // Check if course has section information
     const course = item.courses[0];
+    const hasSection = course.en.includes("Section") || course.ko.includes("분반");
     
-    // Handle sections if present
-    let sectionBadge = '';
-    if (course.sections && course.sections > 1) {
-      sectionBadge = `<span class="badge badge-section">${course.sections} sections</span>`;
+    let courseEnHtml, courseKoHtml;
+    
+    if (hasSection) {
+      // Extract section info
+      const enMatch = course.en.match(/^(.*?)(\s*-\s*Section\s*\d+)$/);
+      const koMatch = course.ko.match(/^(.*?)(\s*-\s*\d+분반)$/);
+      
+      if (enMatch) {
+        courseEnHtml = `<div class="course-with-section">
+          <span class="course-title">${enMatch[1]}</span>
+          <span class="badge badge-section">${enMatch[2].replace(' - ', '')}</span>
+        </div>`;
+      } else {
+        courseEnHtml = course.en;
+      }
+      
+      if (koMatch) {
+        courseKoHtml = `<div class="course-with-section">
+          <span class="course-title">${koMatch[1]}</span>
+          <span class="badge badge-section">${koMatch[2].replace(' - ', '')}</span>
+        </div>`;
+      } else {
+        courseKoHtml = course.ko;
+      }
+    } else {
+      courseEnHtml = course.en;
+      courseKoHtml = course.ko;
     }
 
     return `
@@ -526,7 +531,6 @@ function generateDiamondNetwork() {
           <!-- Role -->
           <div class="meta">
             <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
-            ${sectionBadge}
           </div>
           <!-- University / Semesters -->
           <div class="meta">
@@ -534,8 +538,8 @@ function generateDiamondNetwork() {
             ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
           </div>
           <!-- Course titles -->
-          <div class="course-en text-en">${course.en}</div>
-          <div class="course-ko text-ko">${course.ko}</div>
+          <div class="course-en text-en">${courseEnHtml}</div>
+          <div class="course-ko text-ko">${courseKoHtml}</div>
         </div>
       </div>
     </article>`;
