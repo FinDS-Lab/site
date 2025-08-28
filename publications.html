@@ -347,9 +347,21 @@ function generateDiamondNetwork() {
   .paper-header{
     display:flex;
     align-items:flex-start;
-    justify-content:space-between;
-    gap:12px;
+    gap:8px;
     margin-bottom:10px;
+  }
+  
+  .indexing-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+  }
+  
+  .indexing-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   
   .indexing-badge {
@@ -358,17 +370,10 @@ function generateDiamondNetwork() {
     overflow-wrap: anywhere;
   }
   
-  .badge-group{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-    gap:6px;
-    flex-shrink: 0;
-  }
-  
   .badge-lang{
     display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;
     font-weight:800;font-size:11px;letter-spacing:.2px;white-space:nowrap;
+    flex-shrink: 0;
   }
   
   .badge-lang.english{
@@ -453,6 +458,7 @@ function generateDiamondNetwork() {
     word-break: keep-all;
   }
   .idx-scie,.idx-ssci,.idx-ahci{background:rgba(214,177,77,.95);color:#111;}
+  .idx-esci{background:rgba(214,177,77,.80);color:#111;}  /* ESCI - between A&HCI and Scopus */
   .idx-scopus{background:rgba(214,177,77,.65);color:#111;}
   .idx-other-intl{background:rgba(214,177,77,.45);color:#111;}
   .idx-kci-exc{background:rgba(214,177,77,.35);color:#111;}
@@ -514,14 +520,11 @@ function generateDiamondNetwork() {
     .paper-header{
       flex-direction:column;
       align-items:flex-start;
-      gap:8px;
+      gap:6px;
     }
     
-    .badge-group{
-      align-self: flex-end;
-      flex-direction:row;
-      align-items:center;
-      gap:6px;
+    .indexing-row {
+      flex-wrap: wrap;
     }
     
     .badge-lang{height:24px;padding:0 8px;font-size:10px;}
@@ -690,6 +693,7 @@ function generateDiamondNetwork() {
       {value:"SCIE",label:"SCIE"},
       {value:"SSCI",label:"SSCI"},
       {value:"A&HCI",label:"A&HCI"},
+      {value:"ESCI",label:"ESCI"},
       {value:"Scopus",label:"Scopus"},
       {value:"Other International",label:"Other International"},
       {value:"KCI Excellent",label:"KCI Excellent"},
@@ -769,7 +773,7 @@ function generateDiamondNetwork() {
   /* ===== Badge helper ===== */
   function idxClass(group){
     const map={
-      "SCIE":"idx-scie","SSCI":"idx-ssci","A&HCI":"idx-ahci","Scopus":"idx-scopus","Other International":"idx-other-intl",
+      "SCIE":"idx-scie","SSCI":"idx-ssci","A&HCI":"idx-ahci","ESCI":"idx-esci","Scopus":"idx-scopus","Other International":"idx-other-intl",
       "International Conference":"idx-intl-conf","Domestic Conference":"idx-domestic-conf",
       "International - Domestic Joint Conference":"idx-joint-conf",
       "KCI Excellent":"idx-kci-exc","KCI Accredited":"idx-kci","Other Domestic":"idx-other-domestic",
@@ -828,15 +832,11 @@ function generateDiamondNetwork() {
     }).join(", ");
 
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
-    const dateBadges = `
-      <div class="badge-group">
-        ${langBadge}
-        ${pub.published_date ? `
-          <span class="badge-pub">
-            <span class="lbl">Published</span>
-            <span class="val">${formatMDY(pub.published_date)}</span>
-          </span>` : ``}
-      </div>`;
+    const pubDateBadge = pub.published_date ? `
+      <span class="badge-pub">
+        <span class="lbl">Published</span>
+        <span class="val">${formatMDY(pub.published_date)}</span>
+      </span>` : ``;
 
     let citationDetails = [];
     if(pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
@@ -852,8 +852,13 @@ function generateDiamondNetwork() {
           <div class="paper-left ${leftClass} ${code ? '' : 'empty'}"><span>${code || '&nbsp;'}</span></div>
           <div class="paper-body">
             <div class="paper-header">
-              <span class="indexing-badge ${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
-              ${dateBadges}
+              <div class="indexing-wrapper">
+                <div class="indexing-row">
+                  <span class="indexing-badge ${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
+                  ${langBadge}
+                </div>
+                ${pubDateBadge}
+              </div>
             </div>
             <h3 class="paper-title">${displayTitle||''}</h3>
             <div class="paper-meta">${authors}</div>
