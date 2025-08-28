@@ -1187,315 +1187,520 @@ permalink: /members-director.html
     document.getElementById(`mentoring-${year}`).classList.toggle('show');
   }
 
-  // ===== Clean and Elegant Collaboration Network =====
-  
-  // Load publications data from Jekyll
-  const PUBS = {{ site.data.pubs | jsonify }};
-  const DIRECTOR_ID = 1;
+<!-- Collaboration Network -->
+<div class="director-card">
+  <div class="card-head">Collaboration Network</div>
+  <div class="card-body">
+    <!-- Filter Controls -->
+    <div class="network-filter-controls">
+      <div class="filter-row">
+        <label class="filter-label">Publication Type:</label>
+        <div class="filter-chips">
+          <button class="filter-chip" data-type="journal" onclick="toggleNetworkFilter('type', 'journal', this)">Journal</button>
+          <button class="filter-chip" data-type="conference" onclick="toggleNetworkFilter('type', 'conference', this)">Conference</button>
+          <button class="filter-chip" data-type="book" onclick="toggleNetworkFilter('type', 'book', this)">Book</button>
+          <button class="filter-chip" data-type="report" onclick="toggleNetworkFilter('type', 'report', this)">Report</button>
+        </div>
+      </div>
+      
+      <div class="filter-row">
+        <label class="filter-label">Min. Papers:</label>
+        <div class="slider-container">
+          <span style="font-size:12px;color:#9ca3af;">0</span>
+          <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
+          <span style="font-size:12px;color:#9ca3af;">5+</span>
+          <span class="slider-value" id="sliderValue">1</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- D3.js Network Visualization -->
+    <div id="networkVisualization"></div>
+    
+    <div id="networkInfo">
+      Loading collaboration data...
+    </div>
+  </div>
+</div>
 
-  // Count collaborations
-  function countCollaborations() {
-    const counts = {};
-    PUBS.forEach(pub => {
-      if (!Array.isArray(pub.authors)) return;
-      if (!pub.authors.includes(DIRECTOR_ID)) return;
-      pub.authors.forEach(aid => {
-        if (aid !== DIRECTOR_ID) {
-          counts[aid] = (counts[aid] || 0) + 1;
+<!-- Add these styles to the existing <style> section -->
+<style>
+  /* Network Filter Controls */
+  .network-filter-controls {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .filter-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .filter-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7280;
+    min-width: 120px;
+  }
+
+  .filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    padding: 6px 14px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-chip:hover {
+    background: #f3f4f6;
+    transform: translateY(-1px);
+  }
+
+  .filter-chip.active {
+    background: var(--gold);
+    color: var(--gold-fg);
+    border-color: var(--gold);
+    box-shadow: 0 2px 8px rgba(214, 177, 77, 0.3);
+  }
+
+  .slider-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .slider-value {
+    position: absolute;
+    right: -50px;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--gold);
+    min-width: 40px;
+  }
+
+  /* D3 Network Styles */
+  #networkVisualization {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #f3f4f6;
+    border-radius: 12px;
+    background: #fafbfc;
+    margin-top: 1rem;
+  }
+
+  .d3-node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .d3-node.filtered-out {
+    opacity: 0.15;
+  }
+
+  .d3-node.director {
+    fill: var(--red);
+  }
+
+  .d3-node.highlighted {
+    stroke: #111827;
+    stroke-width: 3;
+  }
+
+  .d3-node-label {
+    pointer-events: none;
+    font-size: 11px;
+    font-weight: 600;
+    fill: #374151;
+    text-anchor: middle;
+    transition: all 0.3s ease;
+  }
+
+  .d3-node-label.filtered-out {
+    opacity: 0.15;
+  }
+
+  .d3-node-label.director {
+    font-size: 13px;
+    font-weight: 900;
+    fill: #111827;
+  }
+
+  .d3-node-label.highlighted {
+    font-weight: 800;
+    fill: #111827;
+  }
+
+  .d3-link {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-opacity: 0.4;
+    transition: all 0.3s ease;
+  }
+
+  .d3-link.filtered-out {
+    stroke-opacity: 0.05;
+  }
+
+  .d3-link.active {
+    stroke: var(--gold);
+    stroke-opacity: 0.8;
+  }
+
+  .d3-tooltip {
+    position: absolute;
+    padding: 8px 12px;
+    background: rgba(17, 24, 39, 0.95);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  #networkInfo {
+    margin-top: 16px;
+    padding: 14px;
+    background: linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(234,207,127,0.05) 100%);
+    border-radius: 12px;
+    font-size: 14px;
+    text-align: center;
+    color: #374151;
+    font-weight: 600;
+    border: 1px solid rgba(214,177,77,0.1);
+  }
+
+  @media (max-width: 640px) {
+    #networkVisualization { height: 350px; }
+    .filter-row { flex-direction: column; align-items: flex-start; }
+    .filter-label { min-width: auto; }
+    .slider-value { right: 0; position: static; }
+  }
+</style>
+
+<!-- Add D3.js library -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
+<!-- Replace the existing network script with this updated version -->
+<script>
+  // Network filter state
+  const networkFilters = {
+    type: new Set(),
+    minPapers: 1
+  };
+
+  // Toggle filter function
+  function toggleNetworkFilter(filterType, value, element) {
+    if (filterType === 'type') {
+      if (networkFilters.type.has(value)) {
+        networkFilters.type.delete(value);
+        element.classList.remove('active');
+      } else {
+        networkFilters.type.add(value);
+        element.classList.add('active');
+      }
+      updateCollaborationNetwork();
+    }
+  }
+
+  // Slider event
+  document.getElementById('networkSlider').addEventListener('input', function() {
+    networkFilters.minPapers = parseInt(this.value);
+    document.getElementById('sliderValue').textContent = this.value;
+    updateCollaborationNetwork();
+  });
+
+  // Initialize D3 collaboration network
+  function initCollaborationNetwork() {
+    const DIRECTOR_ID = 1;
+    const svg = d3.select("#networkVisualization");
+    svg.selectAll("*").remove();
+    
+    const width = svg.node().getBoundingClientRect().width;
+    const height = 500;
+    
+    svg.attr("viewBox", `0 0 ${width} ${height}`);
+    
+    // Filter publications based on current filters
+    const getFilteredPubs = () => {
+      return PUBS.filter(pub => {
+        // Apply type filters if any are selected
+        if (networkFilters.type.size > 0) {
+          let pubType = pub.type;
+          if (pub.indexing_group === "International - Domestic Joint Conference") {
+            pubType = "conference";
+          }
+          if (!networkFilters.type.has(pubType)) return false;
+        }
+        return true;
+      });
+    };
+    
+    // Build collaboration data
+    const buildCollaborationData = () => {
+      const filteredPubs = getFilteredPubs();
+      const allCollaborations = {};
+      const filteredCollaborations = {};
+      const allAuthors = new Set();
+      const filteredAuthors = new Set();
+      
+      // Count all collaborations with director
+      PUBS.forEach(pub => {
+        if (pub.authors && pub.authors.includes(DIRECTOR_ID)) {
+          pub.authors.forEach(authorId => {
+            if (authorId !== DIRECTOR_ID) {
+              allAuthors.add(authorId);
+              allCollaborations[authorId] = (allCollaborations[authorId] || 0) + 1;
+            }
+          });
         }
       });
-    });
-    return counts;
-  }
-
-  // Initialize variables
-  let currentThreshold = 1;
-  let collaborations = countCollaborations();
-  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
-  let hoveredNode = null;
-
-  // UI Elements
-  const slider = document.getElementById('networkSlider');
-  const maxLabel = document.getElementById('maxSliderLabel');
-  const sliderValue = document.getElementById('sliderValue');
-  const infoEl = document.getElementById('networkInfo');
-
-  // Setup slider
-  if (slider) {
-    slider.max = maxCollaborations;
-    maxLabel.textContent = maxCollaborations + '+';
-    slider.value = Math.min(1, maxCollaborations);
-    currentThreshold = parseInt(slider.value);
-
-    slider.addEventListener('input', function() {
-      currentThreshold = parseInt(this.value);
-      sliderValue.textContent = currentThreshold + '+';
-      updateNetworkInfo();
-      drawNetwork();
-    });
-  }
-
-  function updateNetworkInfo() {
-    const visible = Object.values(collaborations).filter(freq => freq >= currentThreshold).length;
-    const total = Object.keys(collaborations).length;
-    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${currentThreshold}+</b> papers`;
-  }
-
-  // Canvas setup
-  const canvas = document.getElementById('networkCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
-
-    // Size canvas
-    function sizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 500 * window.devicePixelRatio;
-      canvas.style.height = '500px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-
-    // Build network structure
-    function buildNetwork() {
-      nodes = [];
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-
-      // Director at center
-      nodes.push({
+      
+      // Count filtered collaborations
+      filteredPubs.forEach(pub => {
+        if (pub.authors && pub.authors.includes(DIRECTOR_ID)) {
+          pub.authors.forEach(authorId => {
+            if (authorId !== DIRECTOR_ID) {
+              filteredAuthors.add(authorId);
+              filteredCollaborations[authorId] = (filteredCollaborations[authorId] || 0) + 1;
+            }
+          });
+        }
+      });
+      
+      // Create nodes - only include collaborators who meet minimum paper threshold
+      const nodes = [{
         id: DIRECTOR_ID,
         name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-        x: centerX,
-        y: centerY,
-        radius: 35,
-        isCenter: true,
-        frequency: 999
-      });
-
-      // Get collaborators sorted by frequency
-      const coAuthors = Object.entries(collaborations)
-        .filter(([id, freq]) => freq >= currentThreshold)
-        .sort((a, b) => b[1] - a[1]);
-
-      // Arrange in concentric circles based on frequency
-      const rings = [];
-      const ringSizes = [8, 12, 16]; // max nodes per ring
-      let ringIndex = 0;
-      let nodesInRing = [];
-
-      coAuthors.forEach(([id, freq]) => {
-        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-          rings.push(nodesInRing);
-          nodesInRing = [];
-          ringIndex++;
-        }
-        nodesInRing.push({ id: parseInt(id), freq });
-      });
-      if (nodesInRing.length > 0) rings.push(nodesInRing);
-
-      // Place nodes in rings
-      rings.forEach((ring, rIdx) => {
-        const radius = 120 + rIdx * 80;
-        ring.forEach((item, nIdx) => {
-          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-          const freq = item.freq;
-          
+        isDirector: true,
+        totalPapers: PUBS.filter(p => p.authors && p.authors.includes(DIRECTOR_ID)).length,
+        filteredPapers: filteredPubs.filter(p => p.authors && p.authors.includes(DIRECTOR_ID)).length
+      }];
+      
+      // Add collaborator nodes
+      Array.from(allAuthors).forEach(authorId => {
+        const totalCount = allCollaborations[authorId] || 0;
+        const filteredCount = filteredCollaborations[authorId] || 0;
+        
+        // Include if meets minimum threshold (either in filtered or total)
+        if (totalCount >= networkFilters.minPapers) {
           nodes.push({
-            id: item.id,
-            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-            x: centerX + Math.cos(angle) * radius,
-            y: centerY + Math.sin(angle) * radius,
-            radius: 10 + (freq / maxCollaborations) * 15,
-            frequency: freq,
-            ring: rIdx
+            id: authorId,
+            name: AUTHORS[authorId]?.en || `Author ${authorId}`,
+            totalPapers: totalCount,
+            filteredPapers: filteredCount,
+            isFiltered: filteredCount >= networkFilters.minPapers
           });
-        });
-      });
-    }
-
-    // Draw the network
-    function drawNetwork() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Background
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-      
-      // Subtle radial gradient
-      const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
-      bgGrad.addColorStop(0, '#fefefe');
-      bgGrad.addColorStop(1, '#f9fafb');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw subtle grid dots for background
-      ctx.fillStyle = '#e5e7eb';
-      for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
-        for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
         }
-      }
-      
-      // Draw connections
-      nodes.slice(1).forEach(node => {
-        const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
-        const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
-        grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
-        grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
-        grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
-        
-        ctx.beginPath();
-        ctx.moveTo(nodes[0].x, nodes[0].y);
-        ctx.lineTo(node.x, node.y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
-        ctx.stroke();
       });
       
-      // Draw nodes
+      // Create links
+      const links = [];
       nodes.forEach(node => {
-        const isHovered = hoveredNode === node;
-        const scale = isHovered ? 1.1 : 1;
-        
-        // Shadow
-        ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
-        ctx.shadowBlur = isHovered ? 15 : 8;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 2;
-        
-        // Node circle
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
-        
-        if (node.isCenter) {
-          // Director node - red gradient
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
-          grad.addColorStop(0, '#ef4444');
-          grad.addColorStop(1, '#b91c1c');
-          ctx.fillStyle = grad;
-        } else {
-          // Collaborator nodes - gold gradient based on frequency
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
-          const ratio = node.frequency / maxCollaborations;
-          if (ratio > 0.66) {
-            grad.addColorStop(0, '#fbbf24');
-            grad.addColorStop(1, '#d97706');
-          } else if (ratio > 0.33) {
-            grad.addColorStop(0, '#fde047');
-            grad.addColorStop(1, '#facc15');
-          } else {
-            grad.addColorStop(0, '#fef3c7');
-            grad.addColorStop(1, '#fde68a');
-          }
-          ctx.fillStyle = grad;
-        }
-        ctx.fill();
-        
-        // Border
-        ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        
-        ctx.shadowColor = 'transparent';
-        
-        // Text labels
-        ctx.fillStyle = '#1f2937';
-        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // Name below node
-        ctx.fillText(node.name, node.x, node.y + node.radius + 14);
-        
-        // Paper count for collaborators
-        if (!node.isCenter) {
-          ctx.fillStyle = '#6b7280';
-          ctx.font = '9px Inter, sans-serif';
-          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + 26);
+        if (!node.isDirector) {
+          links.push({
+            source: DIRECTOR_ID,
+            target: node.id,
+            value: node.totalPapers,
+            filteredValue: node.filteredPapers,
+            isFiltered: node.isFiltered
+          });
         }
       });
       
-      // Hover tooltip
-      if (hoveredNode && !hoveredNode.isCenter) {
-        const tooltipWidth = 160;
-        const tooltipHeight = 45;
-        let tooltipX = hoveredNode.x - tooltipWidth / 2;
-        let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
-        
-        // Keep tooltip in bounds
-        tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
-        tooltipY = Math.max(10, tooltipY);
-        
-        // Tooltip background
-        ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
-        ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
-        ctx.fill();
-        ctx.stroke();
-        
-        // Tooltip text
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
-        
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = '10px Inter, sans-serif';
-        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`, 
-                     tooltipX + tooltipWidth / 2, tooltipY + 32);
-      }
-    }
-
-    // Mouse interaction
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      hoveredNode = null;
-      nodes.forEach(node => {
-        const dx = x - node.x;
-        const dy = y - node.y;
-        if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
-          hoveredNode = node;
-        }
-      });
-      
-      canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-      drawNetwork();
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      hoveredNode = null;
-      drawNetwork();
-    });
-
-    // Initialize
-    sizeCanvas();
-    buildNetwork();
-    updateNetworkInfo();
-    drawNetwork();
+      return { nodes, links };
+    };
     
-    // Handle resize
-    window.addEventListener('resize', () => {
-      sizeCanvas();
-      buildNetwork();
-      drawNetwork();
+    const { nodes, links } = buildCollaborationData();
+    
+    // Update info
+    const filteredCount = nodes.filter(n => !n.isDirector && n.isFiltered).length;
+    const totalCount = nodes.length - 1; // Exclude director
+    document.getElementById('networkInfo').innerHTML = 
+      `Showing <b>${filteredCount}</b> of <b>${totalCount}</b> collaborators` +
+      (networkFilters.type.size > 0 ? ` (filtered by: ${Array.from(networkFilters.type).join(', ')})` : '') +
+      ` with <b>${networkFilters.minPapers}+</b> papers`;
+    
+    if (nodes.length <= 1) {
+      svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height / 2)
+        .attr("text-anchor", "middle")
+        .style("fill", "#6b7280")
+        .style("font-size", "14px")
+        .text("No collaborations match the current filters");
+      return;
+    }
+    
+    // Create simulation
+    const simulation = d3.forceSimulation(nodes)
+      .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+      .force("charge", d3.forceManyBody().strength(-300))
+      .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(d => d.isDirector ? 30 : 20));
+    
+    // Add container group
+    const g = svg.append("g");
+    
+    // Add zoom
+    const zoom = d3.zoom()
+      .scaleExtent([0.5, 3])
+      .on("zoom", (event) => g.attr("transform", event.transform));
+    
+    svg.call(zoom);
+    
+    // Add links
+    const link = g.append("g")
+      .selectAll("line")
+      .data(links)
+      .enter().append("line")
+      .attr("class", d => `d3-link ${d.isFiltered ? '' : 'filtered-out'}`)
+      .attr("stroke-width", d => Math.sqrt(d.filteredValue || 1) * 2);
+    
+    // Add nodes
+    const node = g.append("g")
+      .selectAll("circle")
+      .data(nodes)
+      .enter().append("circle")
+      .attr("class", d => `d3-node ${d.isDirector ? 'director' : ''} ${d.isFiltered || d.isDirector ? '' : 'filtered-out'}`)
+      .attr("r", d => {
+        if (d.isDirector) return 25;
+        const papers = d.isFiltered ? d.filteredPapers : d.totalPapers;
+        return Math.max(8, Math.min(20, 8 + Math.sqrt(papers) * 3));
+      })
+      .attr("fill", d => {
+        if (d.isDirector) return "var(--red)";
+        if (!d.isFiltered) return "#e5e7eb";
+        const intensity = Math.min(d.filteredPapers / 10, 1);
+        return d3.interpolateOranges(0.3 + intensity * 0.5);
+      })
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
+    
+    // Add labels
+    const label = g.append("g")
+      .selectAll("text")
+      .data(nodes)
+      .enter().append("text")
+      .attr("class", d => `d3-node-label ${d.isDirector ? 'director' : ''} ${d.isFiltered || d.isDirector ? '' : 'filtered-out'}`)
+      .attr("dy", d => d.isDirector ? -30 : -12)
+      .text(d => d.name);
+    
+    // Add tooltip
+    const tooltip = d3.select("body").append("div")
+      .attr("class", "d3-tooltip");
+    
+    // Node interactions
+    node.on("mouseover", function(event, d) {
+      if (!d.isFiltered && !d.isDirector) return;
+      
+      // Highlight connected elements
+      link.classed("active", l => 
+        (l.source.id === d.id || l.target.id === d.id) && l.isFiltered
+      );
+      
+      node.classed("highlighted", n => {
+        if (d.isDirector) return n.isFiltered && !n.isDirector;
+        return n.id === d.id || n.isDirector;
+      });
+      
+      label.classed("highlighted", n => {
+        if (d.isDirector) return n.isFiltered && !n.isDirector;
+        return n.id === d.id || n.isDirector;
+      });
+      
+      // Show tooltip
+      const papers = d.isDirector ? 
+        `Total: ${d.totalPapers} | Filtered: ${d.filteredPapers}` :
+        `Papers with Director: ${d.filteredPapers || 0}`;
+      
+      tooltip.style("opacity", 1)
+        .html(`<strong>${d.name}</strong><br/>${papers}`)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 10) + "px");
+    })
+    .on("mouseout", function() {
+      node.classed("highlighted", false);
+      label.classed("highlighted", false);
+      link.classed("active", false);
+      tooltip.style("opacity", 0);
     });
+    
+    // Simulation tick
+    simulation.on("tick", () => {
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y);
+      
+      node
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y);
+      
+      label
+        .attr("x", d => d.x)
+        .attr("y", d => d.y);
+    });
+    
+    // Drag functions
+    function dragstarted(event, d) {
+      if (!event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+    
+    function dragged(event, d) {
+      d.fx = event.x;
+      d.fy = event.y;
+    }
+    
+    function dragended(event, d) {
+      if (!event.active) simulation.alphaTarget(0);
+      d.fx = null;
+      d.fy = null;
+    }
+    
+    // Cleanup on remove
+    return () => {
+      d3.select("body").selectAll(".d3-tooltip").remove();
+    };
   }
-</script>
+  
+  // Update network function
+  function updateCollaborationNetwork() {
+    initCollaborationNetwork();
+  }
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    // Load publications and authors data first
+    if (typeof PUBS !== 'undefined' && typeof AUTHORS !== 'undefined') {
+      setTimeout(initCollaborationNetwork, 100);
+    }
+  });
+
