@@ -916,11 +916,14 @@ permalink: /publications.html
 <!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="search-container">
-      <div class="search">
-        <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+    <div style="position: relative;">
+      <div class="search-container">
+        <div class="search">
+          <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+        </div>
+        <div class="count" id="count"></div>
       </div>
-      <div class="count" id="count"></div>
+      <button id="clearAllFilters" style="position: absolute; top: 0; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
     </div>
   </div>
 </section>
