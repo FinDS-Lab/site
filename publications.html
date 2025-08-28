@@ -391,6 +391,63 @@ function generateDiamondNetwork() {
   
   .badge-pub .lbl{color:#6b7280;font-weight:800;}
   .badge-pub .val{color:#111827;font-weight:800;}
+  
+  /* Awards styles */
+  .awards-container {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  
+  .award-trophy {
+    font-size: 18px;
+    cursor: help;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    transition: transform 0.2s;
+  }
+  
+  .award-trophy:hover {
+    transform: scale(1.2);
+  }
+  
+  .award-tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .award-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #111827;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 8px;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    right: 0;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: normal;
+    line-height: 1.3;
+  }
+  
+  .award-tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  
+  .award-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 10px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #111827 transparent;
+  }
 
   .paper-title{
     font-weight:900;font-size:15px;color:#111827;margin-bottom:8px;
@@ -529,10 +586,13 @@ function generateDiamondNetwork() {
     
     .badge-lang{height:24px;padding:0 8px;font-size:10px;}
     .badge-pub{height:24px;padding:0 8px;font-size:9px;gap:3px;}
+    
+    .award-trophy {
+      font-size: 16px;
+    }
   }
 
   @media (max-width:380px){
-    .badge-pub .lbl{display:none;}
     .badge-pub{gap:0;padding:0 6px;}
     .badge-lang{font-size:9px;padding:0 6px;}
     
@@ -549,6 +609,10 @@ function generateDiamondNetwork() {
     
     .authorship-ko {
       font-size: 10px;
+    }
+    
+    .award-trophy {
+      font-size: 14px;
     }
   }
 </style>
@@ -679,7 +743,37 @@ function generateDiamondNetwork() {
   }
 
   /* ===== Load data from _data/pubs.json ===== */
-  const PUBS = {{ site.data.pubs | jsonify | default: '[]' }};
+  const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
+  
+  /* ===== Auto-number code labels ===== */
+  function autoNumberCodeLabels(pubs) {
+    // Sort by year (descending) and published_date (ascending within year)
+    const sorted = [...pubs].sort((a, b) => {
+      if (b.year !== a.year) return b.year - a.year;
+      if (a.published_date && b.published_date) {
+        return new Date(a.published_date) - new Date(b.published_date);
+      }
+      return 0;
+    });
+    
+    // Count each type from bottom up
+    const counts = { J: 0, K: 0, C: 0, B: 0, R: 0 };
+    
+    // Process from oldest to newest (reverse order)
+    for (let i = sorted.length - 1; i >= 0; i--) {
+      const pub = sorted[i];
+      const prefix = pub.code_label ? pub.code_label.replace(/[0-9]/g, '') : '';
+      
+      if (prefix && counts[prefix] !== undefined) {
+        counts[prefix]++;
+        sorted[i].code_label = `${prefix}${counts[prefix]}`;
+      }
+    }
+    
+    return sorted;
+  }
+  
+  const PUBS = autoNumberCodeLabels(PUBS_RAW);
 
   /* ===== Filters ===== */
   const FILTER_GROUPS = {
@@ -834,9 +928,24 @@ function generateDiamondNetwork() {
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
     const pubDateBadge = pub.published_date ? `
       <span class="badge-pub">
-        <span class="lbl">Published</span>
-        <span class="val">${formatMDY(pub.published_date)}</span>
+        <span class="val">on ${formatMDY(pub.published_date)}</span>
       </span>` : ``;
+      
+    // Awards - create trophy icons based on awards count
+    let awardsHtml = '';
+    if (pub.awards && pub.awards > 0) {
+      const awardDetails = pub.award_details || [];
+      awardsHtml = '<div class="awards-container">';
+      for (let i = 0; i < pub.awards; i++) {
+        const tooltip = awardDetails[i] || `Award ${i + 1}`;
+        awardsHtml += `
+          <div class="award-tooltip">
+            <span class="award-trophy">🏆</span>
+            <span class="tooltiptext">${tooltip}</span>
+          </div>`;
+      }
+      awardsHtml += '</div>';
+    }
 
     let citationDetails = [];
     if(pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
@@ -856,6 +965,7 @@ function generateDiamondNetwork() {
                 <div class="indexing-row">
                   <span class="indexing-badge ${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
                   ${langBadge}
+                  ${awardsHtml}
                 </div>
                 ${pubDateBadge}
               </div>
