@@ -11,6 +11,11 @@ permalink: /about-introduction.html
       --gold: rgb(214, 177, 77);
       --gold-mid: rgb(234, 197, 97);
       --gold-dark: rgb(194, 157, 57);
+
+      /* 통일된 배너/콘텐츠 높이 변수 (크기 맞춤 핵심) */
+      --banner-h-lg: 200px;
+      --banner-h-md: 160px;
+      --banner-h-sm: 130px;
     }
 
     /* Banner */
@@ -27,7 +32,7 @@ permalink: /about-introduction.html
       animation: gradientShift 15s ease infinite;
       position: relative;
       overflow: hidden;
-      min-height: 200px;
+      min-height: var(--banner-h-lg); /* 통일된 높이 적용 */
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
       cursor: pointer;
@@ -64,7 +69,7 @@ permalink: /about-introduction.html
       display: flex;
       align-items: flex-end;
       justify-content: flex-start;
-      min-height: 200px;
+      min-height: var(--banner-h-lg); /* 통일된 높이 적용 */
     }
     .breadcrumbs-banner {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -76,7 +81,7 @@ permalink: /about-introduction.html
     .breadcrumbs-banner span:not(.sep):not(a) { color: #fff; font-weight: 800; }
 
     .banner-title {
-      font-size: 2.25rem;
+      font-size: 2rem; /* 균형 맞춤: 기존 2.25rem → 2rem */
       font-weight: 900;
       color: #fff;
       text-shadow: 0 2px 4px rgba(0,0,0,.12);
@@ -86,14 +91,14 @@ permalink: /about-introduction.html
 
     /* Responsive */
     @media (max-width: 768px) {
-      .banner-content { padding: 24px 18px; min-height: 160px; }
-      .banner-section { min-height: 160px; }
+      .banner-content { padding: 24px 18px; min-height: var(--banner-h-md); }
+      .banner-section { min-height: var(--banner-h-md); }
       .banner-title { font-size: 1.9rem; }
       .breadcrumbs-banner { font-size: 12px; }
     }
     @media (max-width: 480px) {
-      .banner-content { padding: 20px 16px; min-height: 130px; }
-      .banner-section { min-height: 130px; }
+      .banner-content { padding: 20px 16px; min-height: var(--banner-h-sm); }
+      .banner-section { min-height: var(--banner-h-sm); }
       .banner-title { font-size: 1.6rem; }
       .breadcrumbs-banner { font-size: 11px; }
     }
@@ -211,6 +216,11 @@ function generateDiamondNetwork() {
     --ink: #111827;
     --slate: #374151;
     --card-pad: 2rem;
+
+    /* 동일 높이 변수 재사용 */
+    --banner-h-lg: 200px;
+    --banner-h-md: 160px;
+    --banner-h-sm: 130px;
   }
 
   /* Main Content Section */
@@ -222,9 +232,11 @@ function generateDiamondNetwork() {
     border: 1px solid rgba(0,0,0,0.05);
     max-width: 900px;
     margin: 0 auto;
+    min-height: var(--banner-h-lg); /* 배너와 동일한 최소 높이 */
   }
   @media (min-width: 1024px){ .content-section { padding: 2.25rem; } }
-  @media (max-width: 768px){ .content-section { padding: 1.5rem; } }
+  @media (max-width: 768px){ .content-section { padding: 1.5rem; min-height: var(--banner-h-md); } }
+  @media (max-width: 480px){ .content-section { min-height: var(--banner-h-sm); } }
 
   /* Text Styles */
   .intro-text { font-size: 17px; line-height: 2; color: #374151; margin-bottom: 20px; word-break: keep-all; }
@@ -515,12 +527,13 @@ function generateDiamondNetwork() {
       <div class="vision-main-content">
         <span class="vision-main-label">✨ OUR VISION</span>
         <h2 class="vision-main-title">
-          We envision a future of Lucide Intelligence
+          We envision a future of Better Financial Intelligence
           <span class="vision-toggle-icon">▼</span>
         </h2>
         <p class="vision-main-text">
-          We envision a future where <b>Lucide financial intelligence</b> diminishes knowledge asymmetry,
-          transforming opaque data streams into <b>clear, accessible, and strategically valuable insights</b> for decision-makers.
+          We envision a future where <b>financial intelligence</b> diminishes knowledge asymmetry,
+          turning complex data streams into <b>clear, accessible, and strategically valuable insights</b> — 
+          a future built upon meaningful <span class="highlight-gold"><b>finds</b></span> that guide decision-makers.
         </p>
       </div>
     </div>
