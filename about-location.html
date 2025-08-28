@@ -4,29 +4,201 @@ title: location
 permalink: /about-location.html
 ---
 
-<!-- ===== Page Title / Banner ===== -->
+<!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/location-hero.jpg' | relative_url }}" alt="Location banner"
-         class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320" loading="eager" fetchpriority="high">
-    <div class="absolute inset-0 bg-black/45"></div>
-    <div class="absolute inset-x-0 bottom-4 px-4">
-      <div class="max-w-7xl mx-auto text-white">
-        <!-- Breadcrumbs -->
-        <nav aria-label="Breadcrumb" class="breadcrumbs mb-1 flex gap-2 text-xs">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <span>›</span>
-          <a href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
-          <span>›</span>
-          <span aria-current="page" class="font-semibold">Location</span>
-        </nav>
+  <style>
+    :root {
+      --gold: rgb(214, 177, 77);
+      --gold-mid: rgb(234, 197, 97);
+      --gold-dark: rgb(194, 157, 57);
+    }
 
-        <!-- Title -->
-        <h1 class="text-2xl md:text-3xl font-extrabold">Location</h1>
+    /* Banner */
+    .banner-section {
+      background: linear-gradient(
+        135deg,
+        var(--gold) 0%,
+        var(--gold-mid) 25%,
+        var(--gold-dark) 50%,
+        var(--gold) 75%,
+        var(--gold-mid) 100%
+      );
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      cursor: pointer;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Burst container */
+    .network-burst {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      opacity: 0;
+      animation: burstAnimation 2s ease-out forwards;
+    }
+    @keyframes burstAnimation {
+      0%   { opacity: 0; transform: scale(.3) rotate(0deg); }
+      30%  { opacity: .85; }
+      100% { opacity: 0; transform: scale(2) rotate(180deg); }
+    }
+    .network-burst svg { width: 100%; height: 100%; }
+    .burst-line { stroke: rgba(255,255,255,.8); stroke-width: 1.5; fill: none; }
+    .burst-dot  { fill: rgba(255,255,255,.95); }
+
+    /* Banner content (left-bottom) */
+    .banner-content {
+      position: relative;
+      z-index: 10;
+      padding: 32px 24px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      min-height: 200px;
+    }
+    .breadcrumbs-banner {
+      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+      font-size: 13px; font-weight: 600; margin-bottom: 8px;
+    }
+    .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
+    .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
+    .breadcrumbs-banner .sep { color: rgba(255,255,255,.8); }
+    .breadcrumbs-banner span:not(.sep):not(a) { color: #fff; font-weight: 800; }
+
+    .banner-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0,0,0,.12);
+      letter-spacing: -.02em;
+      margin: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .banner-content { padding: 24px 18px; min-height: 160px; }
+      .banner-section { min-height: 160px; }
+      .banner-title { font-size: 1.9rem; }
+      .breadcrumbs-banner { font-size: 12px; }
+    }
+    @media (max-width: 480px) {
+      .banner-content { padding: 20px 16px; min-height: 130px; }
+      .banner-section { min-height: 130px; }
+      .banner-title { font-size: 1.6rem; }
+      .breadcrumbs-banner { font-size: 11px; }
+    }
+  </style>
+
+  <div class="banner-section" onclick="createNetworkBurst(event, this)">
+    <div class="banner-content">
+      <div>
+        <nav aria-label="Breadcrumb" class="breadcrumbs-banner" onclick="event.stopPropagation()">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <span class="sep">›</span>
+          <a href="{{ '/about-introduction.html' | relative_url }}">About FINDS</a>
+          <span class="sep">›</span>
+          <span aria-current="page">Location</span>
+        </nav>
+        <h1 class="banner-title">Location</h1>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+/* Interactive gold burst (cards suits) */
+function createNetworkBurst(event, element) {
+  const rect = element.getBoundingClientRect();
+  const x = event.clientX - rect.left - 100;
+  const y = event.clientY - rect.top  - 100;
+
+  const networkDiv = document.createElement('div');
+  networkDiv.className = 'network-burst';
+  networkDiv.style.left = x + 'px';
+  networkDiv.style.top  = y + 'px';
+
+  const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
+  const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+  networkDiv.innerHTML = randomPattern();
+
+  element.appendChild(networkDiv);
+  setTimeout(()=> element.removeChild(networkDiv), 2000);
+}
+
+/* Heart */
+function generateHeartNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+  svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
+  const nodes = [
+    {x:70,y:35},{x:130,y:35},
+    {x:40,y:70},{x:160,y:70},
+    {x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}
+  ];
+  const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+  connections.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`);
+  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Club */
+function generateClubNetwork() {
+  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const circles = [{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
+  circles.forEach(c=> svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`);
+  svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+  const nodes=[];
+  circles.forEach(c=>{
+    for(let i=0;i<6;i++){ const a=i*2*Math.PI/6; nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)}); }
+  });
+  nodes.push({x:100,y:100},{x:100,y:140});
+  for(let i=0;i<nodes.length;i++){
+    for(let j=i+1;j<nodes.length;j++){
+      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.hypot(dx,dy);
+      if(d<40){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-d/40)*0.4}"/>`; }
+    }
+  }
+  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Spade */
+function generateSpadeNetwork() {
+  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+  svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
+  svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
+  svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+  const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
+  const conn=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+  conn.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`);
+  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0||i===7)?4:3}" class="burst-dot"/>`);
+  svg += '</svg>'; return svg;
+}
+/* Diamond */
+function generateDiamondNetwork() {
+  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+  const diamond='M100,40 L140,100 L100,160 L60,100 Z';
+  svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
+  svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
+  svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
+  svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
+  svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
+  const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
+  for(let i=0;i<4;i++){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`; }
+  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${i<4?4:(i===4?5:2.5)}" class="burst-dot" opacity="${i===4?1:.85}"/>`);
+  for(let i=0;i<4;i++){ const a=i*Math.PI/2; const x=100+30*Math.cos(a), y=100+30*Math.sin(a); svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`; }
+  svg += '</svg>'; return svg;
+}
+</script>
 
 <!-- ===== Map + Info ===== -->
 <main class="max-w-7xl mx-auto px-4 mt-6 grid lg:grid-cols-3 gap-6">
@@ -36,12 +208,133 @@ permalink: /about-location.html
       /* Page-local styles: map & cards reuse site tokens */
       #kakao-map{width:100%;height:380px;border-radius:12px;border:1px solid #e5e7eb}
       @media (min-width:768px){#kakao-map{height:460px}}
-      .map-error{margin-top:10px;padding:10px;border-radius:8px;background:#fef2f2;color:#991b1b;font-weight:700;border:1px solid #fecaca}
-      .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
-      .info-row{display:flex;gap:12px}
-      .copy-btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;font-weight:800;font-size:13px}
-      .copy-btn:hover{background:#f8fafc}
+      .map-error{margin-top:10px;padding:12px;border-radius:8px;background:#fef2f2;color:#991b1b;font-weight:600;border:1px solid #fecaca;font-size:14px}
+      .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06);transition:box-shadow 0.2s ease}
+      .card:hover{box-shadow:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)}
+      .info-row{display:flex;gap:12px;align-items:flex-start}
+      
+      /* 개선된 버튼 스타일 */
+      .copy-btn{
+        display:inline-flex;
+        align-items:center;
+        gap:4px;
+        height:28px;
+        padding:0 10px;
+        border-radius:8px;
+        border:1px solid #d1d5db;
+        background:#ffffff;
+        font-weight:500;
+        font-size:12px;
+        color:#374151;
+        cursor:pointer;
+        transition:all 0.15s ease;
+        white-space:nowrap
+      }
+      .copy-btn:hover{
+        background:#f8fafc;
+        border-color:#9ca3af;
+        transform:translateY(-1px);
+        box-shadow:0 2px 4px rgba(0,0,0,.1)
+      }
+      .copy-btn:active{
+        transform:translateY(0);
+        box-shadow:0 1px 2px rgba(0,0,0,.1)
+      }
+      .copy-btn.copied{
+        background:#10b981;
+        border-color:#10b981;
+        color:white
+      }
+      
+      /* 지도 컨트롤 버튼들 */
+      .map-controls{
+        margin-top:12px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px
+      }
+      .control-btn{
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        height:32px;
+        padding:0 12px;
+        border-radius:8px;
+        border:1px solid #e5e7eb;
+        background:#fff;
+        font-weight:600;
+        font-size:13px;
+        color:#374151;
+        text-decoration:none;
+        transition:all 0.15s ease
+      }
+      .control-btn:hover{
+        background:#f8fafc;
+        border-color:#9ca3af;
+        transform:translateY(-1px);
+        box-shadow:0 2px 4px rgba(0,0,0,.1)
+      }
+      
+      /* 카드 헤더 개선 */
+      .card-header{
+        background:linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 85%, #000) 100%);
+        color:white;
+        text-align:center;
+        font-weight:800;
+        border-radius:12px;
+        margin:-20px -20px 16px -20px;
+        padding:14px 16px;
+        box-shadow:0 2px 4px rgba(0,0,0,.1)
+      }
+      .card-header.secondary{
+        background:linear-gradient(135deg, var(--accent2) 0%, color-mix(in srgb, var(--accent2) 85%, #000) 100%)
+      }
+      .card-header .subtitle{
+        opacity:0.9;
+        font-weight:500;
+        font-size:13px;
+        margin-top:2px
+      }
+      
+      /* 주소 텍스트 개선 */
+      .address-section{
+        background:#f8fafc;
+        border-radius:8px;
+        padding:12px;
+        margin-top:8px;
+        border:1px solid #e2e8f0
+      }
+      .address-korean{
+        font-weight:600;
+        color:#1f2937;
+        font-size:14px;
+        line-height:1.4;
+        margin-bottom:6px
+      }
+      .address-english{
+        color:#6b7280;
+        font-size:12px;
+        line-height:1.4;
+        margin-bottom:8px
+      }
+      
+      /* 아이콘 스타일링 */
+      .location-icon{
+        margin-top:2px;
+        flex-shrink:0;
+        opacity:0.8
+      }
+      
       .breadcrumbs a{text-decoration:underline;text-underline-offset:2px}
+      
+      /* 반응형 개선 */
+      @media (max-width: 640px) {
+        .card{padding:16px}
+        .card-header{margin:-16px -16px 16px -16px;padding:12px}
+        .map-controls{flex-direction:column;align-items:stretch}
+        .control-btn{justify-content:center}
+      }
     </style>
 
     <!-- aria-label 수정: 인문관 -->
@@ -49,9 +342,16 @@ permalink: /about-location.html
     <div id="mapError" class="map-error" style="display:none;"></div>
 
     <!-- 하단 툴바 -->
-    <div class="mt-3 flex items-center justify-end gap-2">
-      <button id="btnRecenter" class="copy-btn" title="지도 다시 맞추기">Re-center</button>
-      <a id="btnDirections" href="#" target="_blank" rel="noopener noreferrer" class="copy-btn" title="카카오맵 길찾기">Directions</a>
+    <div class="map-controls">
+      <div class="text-xs text-slate-500">📍 클릭하여 자세한 위치를 확인하세요</div>
+      <div class="flex gap-2">
+        <button id="btnRecenter" class="control-btn" title="지도 다시 맞추기">
+          🎯 Re-center
+        </button>
+        <a id="btnDirections" href="#" target="_blank" rel="noopener noreferrer" class="control-btn" title="카카오맵 길찾기">
+          🧭 Directions
+        </a>
+      </div>
     </div>
   </div>
 
@@ -59,49 +359,57 @@ permalink: /about-location.html
   <aside class="space-y-6">
     <!-- FINDS Lab -->
     <section class="card">
-      <div class="bg-[var(--accent)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
-        금융데이터사이언스 연구실 <span class="opacity-90">(FINDS Lab.)</span>
+      <div class="card-header">
+        <div class="text-base font-extrabold">금융데이터사이언스 연구실</div>
+        <div class="subtitle">FINDS Laboratory</div>
       </div>
-      <!-- 건물/호수 변경: 인문관 706호 -->
-      <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 706호</h3>
-      <div class="mt-4 space-y-3">
-        <div class="info-row">
-          <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" width="18" height="18" loading="lazy">
-          <div>
-            <!-- 영어 표기 변경: Humanities Hall -->
-            <div class="text-[12px] text-slate-600">
-              (02748) Room 706, <strong>Humanities Hall</strong>, Dongduk Women’s University<br>
-              60 Hwarang-ro 13-gil (23-1 Hawolgok-dong), Seongbuk-gu, Seoul, Republic of Korea
+      <h3 class="text-lg font-bold text-slate-900 mb-3">동덕여자대학교 인문관 706호</h3>
+      
+      <div class="info-row">
+        <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" class="location-icon">
+        <div class="flex-1">
+          <div class="address-section">
+            <div class="address-korean">
+              (02748) 서울특별시 성북구 화랑로13길 60<br>
+              동덕여자대학교 <strong>인문관 706호</strong>
             </div>
-            <div class="mt-1">
-              <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
+            <div class="address-english">
+              Room 706, <strong>Humanities Hall</strong><br>
+              Dongduk Women's University<br>
+              60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
             </div>
+            <button class="copy-btn" data-copy-addr title="주소 복사">
+              📋 Copy address
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Professor’s Office -->
+    <!-- Professor's Office -->
     <section class="card">
-      <div class="bg-[var(--accent2)] text-white text-center font-extrabold rounded-t-lg -m-4 -mb-2 py-3">
-        최인수 교수 연구실 <span class="opacity-90">(Prf. Insu Choi's Office)</span>
+      <div class="card-header secondary">
+        <div class="text-base font-extrabold">최인수 교수 연구실</div>
+        <div class="subtitle">Prof. Insu Choi's Office</div>
       </div>
-      <!-- 건물/호수 변경: 인문관 706호 -->
-      <h3 class="mt-4 text-lg font-extrabold text-slate-900">동덕여자대학교 인문관 706호</h3>
-      <div class="mt-4 space-y-3">
-        <div class="info-row">
-          <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" width="18" height="18" loading="lazy">
-          <div>
-            <div class="text-[15px] font-semibold text-slate-900">
-              (02748) 서울특별시 성북구 화랑로13길 60 (하월곡동 23-1) 동덕여자대학교 <strong>인문관 706호</strong>
+      <h3 class="text-lg font-bold text-slate-900 mb-3">동덕여자대학교 인문관 706호</h3>
+      
+      <div class="info-row">
+        <img src="{{ '/assets/icons/marker.png' | relative_url }}" alt="" width="18" height="18" loading="lazy" class="location-icon">
+        <div class="flex-1">
+          <div class="address-section">
+            <div class="address-korean">
+              (02748) 서울특별시 성북구 화랑로13길 60<br>
+              동덕여자대학교 <strong>인문관 706호</strong>
             </div>
-            <div class="text-[12px] text-slate-600">
-              (02748) Room 706, <strong>Humanities Hall</strong>, Dongduk Women’s University<br>
-              60 Hwarang-ro 13-gil (23-1 Hawolgok-dong), Seongbuk-gu, Seoul, Republic of Korea
+            <div class="address-english">
+              Room 706, <strong>Humanities Hall</strong><br>
+              Dongduk Women's University<br>
+              60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
             </div>
-            <div class="mt-1">
-              <button class="copy-btn" data-copy-addr title="주소 복사">Copy address</button>
-            </div>
+            <button class="copy-btn" data-copy-addr title="주소 복사">
+              📋 Copy address
+            </button>
           </div>
         </div>
       </div>
@@ -152,9 +460,9 @@ permalink: /about-location.html
 
     function openInfo(latLng, name) {
       const html = `
-        <div style="padding:8px 10px;font-weight:700;font-size:13px;">
+        <div style="padding:10px 12px;font-weight:700;font-size:14px;line-height:1.3;">
           ${name}<br>
-          <span style="font-weight:500;color:#4b5563;">FINDS Lab. · DWU</span>
+          <span style="font-weight:500;color:#4b5563;font-size:12px;">FINDS Lab. · DWU</span>
         </div>`;
       if (!infoWindow) {
         infoWindow = new kakao.maps.InfoWindow({ content: html, removable: false });
@@ -176,8 +484,13 @@ permalink: /about-location.html
         btn.addEventListener('click', async ()=>{
           try{
             await navigator.clipboard.writeText(ADDRESS_TEXT);
-            btn.textContent = 'Copied!';
-            setTimeout(()=>{ btn.textContent = 'Copy address'; }, 1200);
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Copied!';
+            btn.classList.add('copied');
+            setTimeout(()=>{ 
+              btn.textContent = originalText;
+              btn.classList.remove('copied');
+            }, 2000);
           }catch(err){
             alert('복사에 실패했습니다. 잠시 후 다시 시도해주세요.');
           }
