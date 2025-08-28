@@ -36,10 +36,7 @@ title: home
       padding: 0 16px;
       margin: 1rem auto;
     }
-    
-    .carousel-container {
-      border-radius: 1rem;
-    }
+    .carousel-container { border-radius: 1rem; }
   }
 
   @media (max-width: 480px) {
@@ -84,9 +81,7 @@ title: home
   }
 
   @media (max-width: 768px) {
-    .carousel-overlay {
-      padding: 0 20px;
-    }
+    .carousel-overlay { padding: 0 20px; }
   }
 
   .carousel-content {
@@ -141,35 +136,42 @@ title: home
     flex-wrap: wrap;
   }
 
-  /* ===== Buttons (mobile-safe sizing for long words like "Publications") ===== */
+  /* Buttons */
   .btn-hero {
     padding: clamp(10px, 2.4vw, 12px) clamp(16px, 4vw, 24px);
     border-radius: 8px;
     font-weight: 700;
-    font-size: clamp(12px, 2.9vw, 14px); /* auto-shrink on small screens */
-    line-height: 1.1;                    /* slightly tighter to save height */
+    font-size: clamp(12px, 2.9vw, 14px);
+    line-height: 1.1;
     text-decoration: none;
     transition: all 0.3s;
     display: inline-block;
-    white-space: nowrap;                  /* keep on one line by default */
+    white-space: nowrap;
   }
 
-  /* Fallback: if JS detects overflow, we'll add .compact to shrink a bit more */
-  .btn-hero.compact {
-    font-size: 11.5px;
-    padding: 8px 12px;
+  /* Publications 버튼만 모바일에서 '폭 넓힘' (한 줄 유지, 오버플로 방지) */
+  @media (max-width: 540px) {
+    .carousel-slide .hero-buttons { align-items: stretch; }
+    .carousel-slide .btn-hero[href$="/publications.html"] {
+      flex: 1 1 100%;        /* 한 줄 전체 폭 사용 */
+      max-width: 100%;       /* 컨테이너 폭에 맞춤 */
+      font-size: 12.5px;     /* 살짝 축소 */
+      padding: 11px 20px;    /* 터치 영역 확보 */
+    }
   }
-
-  @media (max-width: 480px) {
-    .btn-hero {
-      font-size: clamp(11.5px, 3.2vw, 13px);
+  @media (max-width: 380px) {
+    .carousel-slide .btn-hero[href$="/publications.html"] {
+      font-size: 11.5px;     /* 초소형 디바이스에서 추가 축소 */
       padding: 10px 16px;
     }
-    .hero-buttons { gap: 8px; }
   }
 
-  @media (max-width: 380px) {
-    .btn-hero { font-size: 11.5px; padding: 8px 12px; }
+  /* JS가 overflow 감지 시 붙이는 보정 클래스 */
+  .btn-hero.compact { font-size: 11.5px; padding: 8px 12px; }
+
+  @media (max-width: 480px) {
+    .btn-hero { font-size: clamp(11.5px, 3.2vw, 13px); padding: 10px 16px; }
+    .hero-buttons { gap: 8px; }
   }
 
   @media (max-width: 340px) {
@@ -181,11 +183,7 @@ title: home
     color: white;
     border: 2px solid transparent;
   }
-
-  .btn-hero.primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
-  }
+  .btn-hero.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); }
 
   .btn-hero.secondary {
     background: rgba(255, 255, 255, 0.1);
@@ -193,23 +191,11 @@ title: home
     border: 2px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
   }
+  .btn-hero.secondary:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); }
 
-  .btn-hero.secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
-  }
-
-  /* Touch-friendly hover states for mobile */
   @media (hover: none) {
-    .btn-hero.primary:active {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
-    }
-    
-    .btn-hero.secondary:active {
-      background: rgba(255, 255, 255, 0.2);
-      border-color: rgba(255, 255, 255, 0.5);
-    }
+    .btn-hero.primary:active { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); }
+    .btn-hero.secondary:active { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); }
   }
 
   /* Carousel Dots */
@@ -223,34 +209,15 @@ title: home
     z-index: 10;
     padding: 8px;
   }
-
-  @media (max-width: 480px) {
-    .carousel-dots { bottom: 16px; }
-  }
+  @media (max-width: 480px) { .carousel-dots { bottom: 16px; } }
 
   .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 8px; height: 8px; border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s;
-    padding: 0;
-    position: relative;
+    border: none; cursor: pointer; transition: all 0.3s; padding: 0; position: relative;
   }
-
-  .dot::before {
-    content: '';
-    position: absolute;
-    top: -8px; left: -8px; right: -8px; bottom: -8px;
-  }
-
-  .dot.active {
-    width: 24px;
-    border-radius: 4px;
-    background: var(--gold);
-  }
+  .dot::before { content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; }
+  .dot.active { width: 24px; border-radius: 4px; background: var(--gold); }
 
   /* Introduction Section */
   .intro-section {
@@ -282,47 +249,24 @@ title: home
   }
 
   .logo-box {
-    width: 180px;
-    height: 180px;
-    background: white;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    position: relative;
-    overflow: hidden;
+    width: 180px; height: 180px; background: white; border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden;
   }
-
   @media (max-width: 768px) { .logo-box { margin: 0 auto; } }
-  @media (max-width: 480px) {
-    .logo-box { width: 150px; height: 150px; border-radius: 20px; }
-  }
+  @media (max-width: 480px) { .logo-box { width: 150px; height: 150px; border-radius: 20px; } }
 
   .logo-box::before {
-    content: '';
-    position: absolute;
-    inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
+    opacity: 0; transition: opacity 0.3s;
   }
   .logo-box:hover::before { opacity: 1; }
 
-  .logo-box img {
-    width: 140px; height: 140px; object-fit: contain; position: relative; z-index: 1;
-  }
+  .logo-box img { width: 140px; height: 140px; object-fit: contain; position: relative; z-index: 1; }
+  @media (max-width: 480px) { .logo-box img { width: 110px; height: 110px; } }
 
-  @media (max-width: 480px) {
-    .logo-box img { width: 110px; height: 110px; }
-  }
-
-  .intro-content h2 {
-    color: var(--red);
-    font-size: 24px;
-    font-weight: 900;
-    margin-bottom: 8px;
-  }
+  .intro-content h2 { color: var(--red); font-size: 24px; font-weight: 900; margin-bottom: 8px; }
   @media (max-width: 480px) { .intro-content h2 { font-size: 20px; } }
 
   .intro-content h3 { font-size: 32px; margin-bottom: 4px; }
@@ -330,20 +274,12 @@ title: home
 
   .intro-content .lab-name { color: var(--gold); font-weight: 900; }
 
-  .intro-content .lab-full {
-    font-size: 18px; color: #374151; margin-left: 8px;
-  }
-  @media (max-width: 768px) {
-    .intro-content .lab-full { display: block; margin-left: 0; margin-top: 8px; }
-  }
+  .intro-content .lab-full { font-size: 18px; color: #374151; margin-left: 8px; }
+  @media (max-width: 768px) { .intro-content .lab-full { display: block; margin-left: 0; margin-top: 8px; } }
   @media (max-width: 480px) { .intro-content .lab-full { font-size: 15px; } }
 
-  .intro-content .description {
-    margin-top: 16px; font-size: 16px; line-height: 1.8; color: #4b5563;
-  }
-  @media (max-width: 480px) {
-    .intro-content .description { font-size: 14px; line-height: 1.7; }
-  }
+  .intro-content .description { margin-top: 16px; font-size: 16px; line-height: 1.8; color: #4b5563; }
+  @media (max-width: 480px) { .intro-content .description { font-size: 14px; line-height: 1.7; } }
 
   /* News & Notice Section */
   .updates-section {
@@ -379,37 +315,22 @@ title: home
     box-shadow: 0 10px 40px rgba(0,0,0,0.05);
     transition: all 0.3s;
   }
-
   @media (max-width: 480px) { .update-card { border-radius: 16px; } }
 
-  .update-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-  }
-
-  /* Disable hover transform on mobile */
-  @media (hover: none) {
-    .update-card:hover { transform: none; }
-  }
+  .update-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+  @media (hover: none) { .update-card:hover { transform: none; } }
 
   .update-header {
     padding: 24px 28px;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     border-bottom: 2px solid #f3f4f6;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
   }
-
   @media (max-width: 480px) { .update-header { padding: 18px 20px; } }
 
   .update-title {
-    font-size: 20px;
-    font-weight: 900;
-    color: #111827;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 20px; font-weight: 900; color: #111827;
+    display: flex; align-items: center; gap: 10px;
   }
   @media (max-width: 480px) { .update-title { font-size: 18px; } }
 
@@ -457,9 +378,7 @@ title: home
   }
   @media (max-width: 480px) { .update-item-title { font-size: 14px; line-height: 1.4; } }
 
-  .update-meta {
-    margin-top: 6px; font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 12px;
-  }
+  .update-meta { margin-top: 6px; font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 12px; }
 
   .meta-tag {
     display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
@@ -470,15 +389,13 @@ title: home
   .empty-message { padding: 40px; text-align: center; color: #9ca3af; font-size: 14px; }
   @media (max-width: 480px) { .empty-message { padding: 30px 20px; font-size: 13px; } }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
 
-  /* Extra mobile layout help */
   @media (max-width: 640px) {
     .hero-buttons { width: 100%; }
-    .btn-hero { flex: 1; text-align: center; min-width: 0; } /* makes buttons share the row */
+    .btn-hero { flex: 1; text-align: center; min-width: 0; }
   }
 </style>
 
@@ -533,7 +450,7 @@ title: home
         </div>
       </div>
     </div>
-    
+
     <div class="carousel-dots">
       <button class="dot active" data-dot="0" aria-label="Slide 1"></button>
       <button class="dot" data-dot="1" aria-label="Slide 2"></button>
@@ -663,7 +580,6 @@ title: home
     let touchStartX = 0;
     let touchEndX = 0;
 
-    // Ensure proper slide sizing on load
     function setSlideWidths() {
       const containerWidth = track.parentElement.offsetWidth;
       slides.forEach(slide => {
@@ -673,7 +589,6 @@ title: home
       });
     }
 
-    // Preload all images
     function preloadImages() {
       const images = document.querySelectorAll('.carousel-slide img');
       images.forEach((img) => {
@@ -688,12 +603,9 @@ title: home
       isTransitioning = true;
 
       currentIndex = index;
-      const translateValue = -(index * 100);
-      track.style.transform = `translateX(${translateValue}%)`;
+      track.style.transform = `translateX(${-(index * 100)}%)`;
 
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
 
       setTimeout(() => { isTransitioning = false; }, 600);
     }
@@ -702,28 +614,16 @@ title: home
       if (isTransitioning) return;
       goToSlide((currentIndex + 1) % slides.length);
     }
-
     function prevSlide() {
       if (isTransitioning) return;
       goToSlide((currentIndex - 1 + slides.length) % slides.length);
     }
 
-    function startAutoplay() {
-      stopAutoplay();
-      interval = setInterval(nextSlide, 5000);
-    }
+    function startAutoplay() { stopAutoplay(); interval = setInterval(nextSlide, 5000); }
+    function stopAutoplay()  { if (interval) { clearInterval(interval); interval = null; } }
 
-    function stopAutoplay() {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
-      }
-    }
-
-    // Touch/swipe support for mobile
     function handleTouchStart(e) { touchStartX = e.changedTouches[0].screenX; }
     function handleTouchEnd(e)   { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }
-
     function handleSwipe() {
       const swipeThreshold = 50;
       const diff = touchStartX - touchEndX;
@@ -734,14 +634,11 @@ title: home
       }
     }
 
-    // === Fit buttons so long words (e.g., "Publications") never overflow ===
+    // Fit buttons (fallback compact mode if needed)
     function fitHeroButtons() {
       heroButtons.forEach(btn => {
         btn.classList.remove('compact');
-        // If text still overflows its box, apply a compact style
-        if (btn.scrollWidth > btn.clientWidth) {
-          btn.classList.add('compact');
-        }
+        if (btn.scrollWidth > btn.clientWidth) btn.classList.add('compact');
       });
     }
 
@@ -750,7 +647,6 @@ title: home
     preloadImages();
     fitHeroButtons();
 
-    // Handle window resize
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
@@ -761,7 +657,6 @@ title: home
       }, 200);
     });
 
-    // Event listeners
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         stopAutoplay();
@@ -770,11 +665,9 @@ title: home
       });
     });
 
-    // Touch events for mobile
     track.addEventListener('touchstart', handleTouchStart, { passive: true });
     track.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-    // Wait for images to load before starting autoplay
     window.addEventListener('load', () => {
       setSlideWidths();
       goToSlide(0);
@@ -782,12 +675,10 @@ title: home
       startAutoplay();
     });
 
-    // Pause on visibility change
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) stopAutoplay(); else startAutoplay();
     });
 
-    // Pause on hover (desktop only)
     if (window.matchMedia('(hover: hover)').matches) {
       track.addEventListener('mouseenter', stopAutoplay);
       track.addEventListener('mouseleave', startAutoplay);
