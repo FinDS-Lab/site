@@ -4,16 +4,20 @@ title: "FINDS Lab. Logo"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
 tags: [logo]
-thumb: logo1.png   # 폴더 내 대표 이미지 파일명
+thumb: logo1.png   # 폴더 내 대표 이미지 파일명 (상대 경로)
 ---
 
-<!-- ===== Album Banner (first image as cover) ===== -->
+<!-- ========= Album Banner & Image Grid (robust static_files scan) ========= -->
+
 {% comment %}
-현재 페이지 폴더 내 이미지 수집 (물리 경로 기준: page.dir)
-예시 파일: image1.jpg, image2.jpg, image3.jpg, image4.jpg
+- 이 페이지(index.md)와 같은 폴더 안의 이미지를 수집해 그리드로 표시합니다.
+- thumb는 상대파일명 또는 절대경로(/...)/URL 모두 지원.
+- site.static_files 조회 시 page.dir 기준으로 하위 파일만 모읍니다.
 {% endcomment %}
-{% assign here = page.dir %}
+
+{% assign here = page.dir | append: "/" %}
 {% assign files = site.static_files | where_exp: "f", "f.path contains here" %}
+
 {% assign imgs = "" | split: "" %}
 {% for f in files %}
   {% assign ext = f.extname | downcase %}
@@ -35,10 +39,10 @@ thumb: logo1.png   # 폴더 내 대표 이미지 파일명
   {% if page.thumb contains "://" or first_char == "/" %}
     {% assign cover_url = page.thumb | relative_url %}
   {% else %}
-    {% assign base = page.url %}
-    {% assign last = base | slice: -1, 1 %}
-    {% if last != "/" %}{% assign base = base | append: "/" %}{% endif %}
-    {% assign cover_url = base | append: page.thumb | relative_url %}
+    {%- comment -%}
+    thumb이 파일명일 경우: 현재 페이지 디렉토리(page.dir) 기준으로 붙여 사용
+    {%- endcomment -%}
+    {% assign cover_url = page.dir | append: "/" | append: page.thumb | replace: "//","/" | relative_url %}
   {% endif %}
 {% elsif imgs.size > 0 %}
   {% assign cover_url = imgs[0].path | relative_url %}
@@ -46,6 +50,15 @@ thumb: logo1.png   # 폴더 내 대표 이미지 파일명
   {% assign cover_url = "/assets/img/banners/gallery-hero.jpg" | relative_url %}
 {% endif %}
 
+<!-- ===== Styles (소규모, 페이지 전용) ===== -->
+<style>
+  .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
+  .breadcrumbs a{color:#e5e7eb}
+  .breadcrumbs a:hover{text-decoration:underline}
+  .breadcrumbs .sep{opacity:.8}
+</style>
+
+<!-- ===== Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
     <img src="{{ cover_url }}" alt="{{ page.title }} cover"
@@ -64,14 +77,16 @@ thumb: logo1.png   # 폴더 내 대표 이미지 파일명
           <span aria-current="page" class="font-semibold">{{ page.title }}</span>
         </nav>
         <h1 class="text-2xl md:text-3xl font-extrabold">{{ page.title }}</h1>
-        {% if page.date %}<p class="text-sm md:text-[15px] opacity-95">{{ page.date | date: "%Y.%m.%d" }}</p>{% endif %}
+        {% if page.date %}
+          <p class="text-sm md:text-[15px] opacity-95">{{ page.date | date: "%Y.%m.%d" }}</p>
+        {% endif %}
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===== Image Grid ===== -->
-<section class="max-w-7xl mx-auto px-4 mt-6">
+<section class="max-w-7xl mx-auto px-4 mt-6 pb-8">
   {% if imgs.size == 0 %}
     <div class="p-8 text-center text-slate-500 font-semibold bg-white border border-slate-200 rounded-2xl">
       폴더에 표시할 이미지가 없습니다. (jpg/jpeg/png/webp/gif)
