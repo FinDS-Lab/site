@@ -385,12 +385,11 @@ function generateDiamondNetwork() {
   }
   
   .badge-pub{
-    display:inline-flex;align-items:center;height:26px;gap:4px;padding:0 10px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:999px;
-    font-size:10px;font-weight:700;color:#374151;white-space:nowrap;
+    display:inline-flex;align-items:center;height:26px;padding:0 8px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:999px;
+    font-size:10px;font-weight:700;color:#6b7280;white-space:nowrap;
   }
   
-  .badge-pub .lbl{color:#6b7280;font-weight:800;}
-  .badge-pub .val{color:#111827;font-weight:800;}
+  .badge-pub .val{color:#374151;font-weight:700;}
   
   /* Awards styles */
   .awards-container {
@@ -452,21 +451,24 @@ function generateDiamondNetwork() {
   .paper-title{
     font-weight:900;font-size:15px;color:#111827;margin-bottom:8px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     line-height: 1.4;
   }
   
   .paper-meta{
     margin-bottom:6px;color:#374151;font-size:13px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     line-height: 1.4;
   }
   
   .paper-venue{
     margin-bottom:6px;color:#6b7280;font-size:12px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     line-height: 1.4;
   }
   
@@ -580,21 +582,36 @@ function generateDiamondNetwork() {
       gap:6px;
     }
     
-    .indexing-row {
-      flex-wrap: wrap;
+    .indexing-wrapper {
+      width: 100%;
     }
     
-    .badge-lang{height:24px;padding:0 8px;font-size:10px;}
-    .badge-pub{height:24px;padding:0 8px;font-size:9px;gap:3px;}
+    .indexing-row {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .indexing-badge {
+      font-size: 10px;
+      padding: .25rem .5rem;
+    }
+    
+    .badge-lang{height:22px;padding:0 6px;font-size:9px;}
+    .badge-pub{height:22px;padding:0 6px;font-size:9px;}
     
     .award-trophy {
       font-size: 16px;
     }
+    
+    .awards-container {
+      margin-left: 0;
+    }
   }
 
   @media (max-width:380px){
-    .badge-pub{gap:0;padding:0 6px;}
-    .badge-lang{font-size:9px;padding:0 6px;}
+    .badge-pub{padding:0 5px;font-size:8px;}
+    .badge-lang{font-size:8px;padding:0 5px;}
     
     .authorship-mark {
       min-width: 24px;
@@ -613,6 +630,11 @@ function generateDiamondNetwork() {
     
     .award-trophy {
       font-size: 14px;
+    }
+    
+    .indexing-badge {
+      font-size: 9px;
+      padding: .2rem .4rem;
     }
   }
 </style>
@@ -747,11 +769,12 @@ function generateDiamondNetwork() {
   
   /* ===== Auto-number code labels ===== */
   function autoNumberCodeLabels(pubs) {
-    // Sort by year (descending) and published_date (ascending within year)
+    // Sort by year (descending) and published_date (descending within year)
     const sorted = [...pubs].sort((a, b) => {
       if (b.year !== a.year) return b.year - a.year;
+      // Within same year, sort by published_date descending (newest first)
       if (a.published_date && b.published_date) {
-        return new Date(a.published_date) - new Date(b.published_date);
+        return new Date(b.published_date) - new Date(a.published_date);
       }
       return 0;
     });
@@ -928,7 +951,7 @@ function generateDiamondNetwork() {
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
     const pubDateBadge = pub.published_date ? `
       <span class="badge-pub">
-        <span class="val">on ${formatMDY(pub.published_date)}</span>
+        <span class="val">${formatMDY(pub.published_date)}</span>
       </span>` : ``;
       
     // Awards - create trophy icons based on awards count
