@@ -297,7 +297,7 @@ function generateDiamondNetwork() {
         margin-top:2px
       }
       
-      /* 주소 텍스트 개선 */
+      /* 주소 텍스트 개선 - 단어 단위 줄바꿈 적용 */
       .address-section{
         background:#f8fafc;
         border-radius:8px;
@@ -310,13 +310,19 @@ function generateDiamondNetwork() {
         color:#1f2937;
         font-size:14px;
         line-height:1.4;
-        margin-bottom:6px
+        margin-bottom:6px;
+        word-break:keep-all;
+        word-wrap:break-word;
+        overflow-wrap:break-word
       }
       .address-english{
         color:#6b7280;
         font-size:12px;
         line-height:1.4;
-        margin-bottom:8px
+        margin-bottom:8px;
+        word-break:keep-all;
+        word-wrap:break-word;
+        overflow-wrap:break-word
       }
       
       /* 아이콘 스타일링 */
@@ -368,28 +374,23 @@ function generateDiamondNetwork() {
     <section class="card">
       <div class="card-header">
         <div class="text-base font-extrabold">금융데이터사이언스 연구실</div>
-        <div class="subtitle">FINDS Laboratory</div>
+        <div class="subtitle">FINDS Lab.</div>
       </div>
       <h3 class="text-lg font-bold text-slate-900 mb-3">동덕여자대학교 인문관 706호</h3>
       
-      <div class="info-row">
-        <span class="location-icon">📍</span>
-        <div class="flex-1">
-          <div class="address-section">
-            <div class="address-korean">
-              (02748) 서울특별시 성북구 화랑로13길 60<br>
-              동덕여자대학교 <strong>인문관 706호</strong>
-            </div>
-            <div class="address-english">
-              Room 706, <strong>Humanities Hall</strong><br>
-              Dongduk Women's University<br>
-              60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
-            </div>
-            <button class="copy-btn" data-copy-addr title="주소 복사">
-              📋 Copy address
-            </button>
-          </div>
+      <div class="address-section">
+        <div class="address-korean">
+          📍 (02748) 서울특별시 성북구 화랑로13길 60<br>
+          동덕여자대학교 <strong>인문관 706호</strong>
         </div>
+        <div class="address-english">
+          Room 706, <strong>Humanities Hall</strong><br>
+          Dongduk Women's University<br>
+          60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
+        </div>
+        <button class="copy-btn" data-copy-addr title="주소 복사">
+          📋 Copy address
+        </button>
       </div>
     </section>
 
@@ -401,24 +402,19 @@ function generateDiamondNetwork() {
       </div>
       <h3 class="text-lg font-bold text-slate-900 mb-3">동덕여자대학교 인문관 706호</h3>
       
-      <div class="info-row">
-        <span class="location-icon">📍</span>
-        <div class="flex-1">
-          <div class="address-section">
-            <div class="address-korean">
-              (02748) 서울특별시 성북구 화랑로13길 60<br>
-              동덕여자대학교 <strong>인문관 706호</strong>
-            </div>
-            <div class="address-english">
-              Room 706, <strong>Humanities Hall</strong><br>
-              Dongduk Women's University<br>
-              60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
-            </div>
-            <button class="copy-btn" data-copy-addr title="주소 복사">
-              📋 Copy address
-            </button>
-          </div>
+      <div class="address-section">
+        <div class="address-korean">
+          📍 (02748) 서울특별시 성북구 화랑로13길 60<br>
+          동덕여자대학교 <strong>인문관 706호</strong>
         </div>
+        <div class="address-english">
+          Room 706, <strong>Humanities Hall</strong><br>
+          Dongduk Women's University<br>
+          60 Hwarang-ro 13-gil, Seongbuk-gu, Seoul
+        </div>
+        <button class="copy-btn" data-copy-addr title="주소 복사">
+          📋 Copy address
+        </button>
       </div>
     </section>
   </aside>
