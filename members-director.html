@@ -242,29 +242,103 @@ permalink: /members-director.html
   }
 
   /* Publication Stats */
-  .pub-stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;}
+  .pub-stats{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+  }
   .pub-stat{
-    flex:1;
-    min-width:80px;
     background:#f8fafc;
     border:1px solid #e5e7eb;
-    border-radius:8px;
-    padding:8px;
+    border-radius:10px;
+    padding:12px;
     text-align:center;
     transition:all .2s;
     position:relative;
+    word-break:keep-all;
+    overflow-wrap:anywhere;
   }
-  .pub-stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;}
+  .pub-stat::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:3px;
+    border-radius:10px 10px 0 0;
+  }
   .pub-stat.scie::before{background:rgba(214,177,77,0.95)}
   .pub-stat.scopus::before{background:rgba(214,177,77,0.65)}
   .pub-stat.other-intl::before{background:rgba(214,177,77,0.45)}
   .pub-stat.kci::before{background:rgba(214,177,77,0.25)}
   .pub-stat.intl-conf::before{background:rgba(172,14,14,0.85)}
   .pub-stat.domestic-conf::before{background:rgba(172,14,14,0.45)}
-  .pub-stat.citation::before{background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%)}
-  .pub-stat:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-  .pub-stat-number{font-size:20px;font-weight:900;color:#111827;}
-  .pub-stat-label{font-size:10px;color:#6b7280;margin-top:2px;text-transform:uppercase;letter-spacing:.2px;font-weight:700;}
+  .pub-stat.citation{
+    grid-column:1/-1;
+    background:linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(172,14,14,0.05) 100%);
+    border:1px solid rgba(214,177,77,0.2);
+  }
+  .pub-stat.citation::before{
+    background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
+  }
+  .pub-stat:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+  }
+  .pub-stat-number{
+    font-size:24px;
+    font-weight:900;
+    color:#111827;
+    word-break:keep-all;
+  }
+  .pub-stat-label{
+    font-size:11px;
+    color:#6b7280;
+    margin-top:4px;
+    text-transform:uppercase;
+    letter-spacing:.3px;
+    font-weight:700;
+    word-break:keep-all;
+    overflow-wrap:anywhere;
+  }
+  
+  /* Tablet */
+  @media (max-width: 768px) {
+    .pub-stats{
+      grid-template-columns:repeat(2, 1fr);
+      gap:8px;
+    }
+    .pub-stat{
+      padding:10px;
+    }
+    .pub-stat-number{
+      font-size:20px;
+    }
+    .pub-stat-label{
+      font-size:10px;
+    }
+  }
+  
+  /* Mobile */
+  @media (max-width: 480px) {
+    .pub-stats{
+      grid-template-columns:repeat(2, 1fr);
+      gap:6px;
+    }
+    .pub-stat{
+      padding:8px;
+    }
+    .pub-stat-number{
+      font-size:18px;
+    }
+    .pub-stat-label{
+      font-size:9px;
+      letter-spacing:0;
+    }
+    .pub-stat.citation{
+      grid-column:1/-1;
+    }
+  }
 
   /* Research Interests */
   .ri-item{
@@ -811,27 +885,27 @@ permalink: /members-director.html
         <div class="card-head">Publication Statistics</div>
         <div class="card-body">
           <div class="pub-stats">
-            <div class="pub-stat scie">
+            <div class="pub-stat journal-scie">
               <div class="pub-stat-number">12</div>
-              <div class="pub-stat-label">SCIE/SSCI</div>
+              <div class="pub-stat-label">SCIE/SSCI/A&HCI</div>
             </div>
-            <div class="pub-stat scopus">
+            <div class="pub-stat journal-scopus">
               <div class="pub-stat-number">8</div>
               <div class="pub-stat-label">Scopus</div>
             </div>
-            <div class="pub-stat other-intl">
+            <div class="pub-stat journal-other">
               <div class="pub-stat-number">5</div>
               <div class="pub-stat-label">Other Int'l</div>
             </div>
-            <div class="pub-stat kci">
+            <div class="pub-stat journal-kci">
               <div class="pub-stat-number">15</div>
               <div class="pub-stat-label">KCI</div>
             </div>
-            <div class="pub-stat intl-conf">
+            <div class="pub-stat conf-intl">
               <div class="pub-stat-number">23</div>
               <div class="pub-stat-label">Int'l Conf</div>
             </div>
-            <div class="pub-stat domestic-conf">
+            <div class="pub-stat conf-domestic">
               <div class="pub-stat-number">18</div>
               <div class="pub-stat-label">Dom. Conf</div>
             </div>
