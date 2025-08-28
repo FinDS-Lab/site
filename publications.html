@@ -1391,15 +1391,23 @@ permalink: /publications.html
     if (filtered.length === 0) {
       pubWrap.innerHTML = `<div class="empty-state">No publications found. Try adjusting your search or filters.</div>`;
     } else {
+      // Get current year
+      const currentYear = new Date().getFullYear();
+      // Find the most recent year that has publications (could be current year or earlier)
+      const mostRecentYear = years[0]; // years are already sorted descending
+      
       pubWrap.innerHTML = years.map(y => {
         const items = filtered.filter(p => p.year === y);
+        // Only expand the most recent year, collapse all others
+        const shouldCollapse = y !== mostRecentYear;
+        
         return `
           <div class="year-section">
             <div class="year-head">
               <h2 class="year-title">${y}</h2>
-              <button class="year-toggle" data-year="${y}">Collapse</button>
+              <button class="year-toggle" data-year="${y}">${shouldCollapse ? 'Expand' : 'Collapse'}</button>
             </div>
-            <div class="year-content" id="year-${y}">
+            <div class="year-content" id="year-${y}" ${shouldCollapse ? 'style="display: none;"' : ''}>
               <ul class="paper-list">
                 ${items.map((it, i) => createCard(it, `${y}-${i}`)).join('')}
               </ul>
@@ -1498,3 +1506,24 @@ permalink: /publications.html
     event.target.textContent = 'Copied!';
     setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
+
+  /* ===== Events ===== */
+  document.getElementById('pubSearch').oninput = (e) => {
+    q = e.target.value;
+    render();
+  };
+
+  document.getElementById('btnCloseCite').onclick = () => {
+    document.getElementById('citeModal').style.display = 'none';
+  };
+
+  document.getElementById('citeModal').onclick = (e) => {
+    if (e.target === document.getElementById('citeModal')) {
+      document.getElementById('citeModal').style.display = 'none';
+    }
+  };
+
+  /* ===== Init ===== */
+  buildChips();
+  render();
+</script>
