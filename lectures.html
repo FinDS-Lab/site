@@ -319,12 +319,9 @@ function generateDiamondNetwork() {
     },
     {
       role:"Lecturer",
-      periods:["2025 Spring"],
+      periods:["2025 Spring-1", "2025 Spring-2"],
       school:"Dongduk Women's University",
-      courses:[
-        {en:"Python Programming Fundamentals (경영-2233) - Section 1", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233) - 1분반"},
-        {en:"Python Programming Fundamentals (경영-2233) - Section 2", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233) - 2분반"}
-      ]
+      courses:[{en:"Python Programming Fundamentals (경영-2233)", ko:"파이썬을 활용한 프로그래밍 기초 (경영-2233)"}]
     },
     {
       role:"Lecturer",
@@ -401,14 +398,16 @@ function generateDiamondNetwork() {
       ITEMS.push({
         ...r, 
         courses:[c],
-        period: r.periods[0] // Use first period for sorting
+        period: r.periods[0].replace(/-\d+$/, '') // Use first period (without section) for sorting
       });
     });
   });
 
   /* Utils */
   function seasonToDate(s){
-    const [yy, ss] = s.split(' ');
+    // Handle section notation (e.g., "2025 Spring-1")
+    const baseS = s.replace(/-\d+$/, '');
+    const [yy, ss] = baseS.split(' ');
     const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
     return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
   }
@@ -425,7 +424,9 @@ function generateDiamondNetwork() {
   let q = "";
   const onRoles = new Set();
   const onSchools = new Set();
-  const ALL_SEMS = Array.from(new Set(ITEMS.map(i => i.period))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
+  // Extract ALL unique base semesters from all periods
+  const allPeriodsFlat = RAW.flatMap(r => r.periods);
+  const ALL_SEMS = Array.from(new Set(allPeriodsFlat.map(p => p.replace(/-\d+$/, '')))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
   const onSems = new Set();
 
   /* DOM */
@@ -474,8 +475,8 @@ function generateDiamondNetwork() {
   function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
   function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
   function passSems(i){
-    // Check if any of the periods match the selected semesters
-    const sems = i.periods;
+    // Check if any of the periods match the selected semesters (ignoring section numbers)
+    const sems = i.periods.map(p => p.replace(/-\d+$/, ''));
     return onSems.size ? sems.some(s => onSems.has(s)) : true;
   }
   function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passSems).filter(matchesQuery).sort(byStartDesc); }
@@ -488,38 +489,7 @@ function generateDiamondNetwork() {
     const leftLabel = item.role==="Lecturer" ? "L" : "TA";
     const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
     
-    // Check if course has section information
     const course = item.courses[0];
-    const hasSection = course.en.includes("Section") || course.ko.includes("분반");
-    
-    let courseEnHtml, courseKoHtml;
-    
-    if (hasSection) {
-      // Extract section info
-      const enMatch = course.en.match(/^(.*?)(\s*-\s*Section\s*\d+)$/);
-      const koMatch = course.ko.match(/^(.*?)(\s*-\s*\d+분반)$/);
-      
-      if (enMatch) {
-        courseEnHtml = `<div class="course-with-section">
-          <span class="course-title">${enMatch[1]}</span>
-          <span class="badge badge-section">${enMatch[2].replace(' - ', '')}</span>
-        </div>`;
-      } else {
-        courseEnHtml = course.en;
-      }
-      
-      if (koMatch) {
-        courseKoHtml = `<div class="course-with-section">
-          <span class="course-title">${koMatch[1]}</span>
-          <span class="badge badge-section">${koMatch[2].replace(' - ', '')}</span>
-        </div>`;
-      } else {
-        courseKoHtml = course.ko;
-      }
-    } else {
-      courseEnHtml = course.en;
-      courseKoHtml = course.ko;
-    }
 
     return `
     <article class="card">
@@ -528,18 +498,18 @@ function generateDiamondNetwork() {
           <span>${leftLabel}</span>
         </div>
         <div class="card-body">
-          <!-- Role -->
+          <!-- Role + School -->
           <div class="meta">
             <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
-          </div>
-          <!-- University / Semesters -->
-          <div class="meta">
             <span class="badge badge-school text-en">${item.school}</span>
+          </div>
+          <!-- Semesters -->
+          <div class="meta">
             ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
           </div>
           <!-- Course titles -->
-          <div class="course-en text-en">${courseEnHtml}</div>
-          <div class="course-ko text-ko">${courseKoHtml}</div>
+          <div class="course-en text-en">${course.en}</div>
+          <div class="course-ko text-ko">${course.ko}</div>
         </div>
       </div>
     </article>`;
