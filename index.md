@@ -149,19 +149,19 @@ title: home
     white-space: nowrap;
   }
 
-  /* ✅ 모바일: 세로 스택 + 살짝 좁게(동일 폭) */
+  /* ✅ 모바일: 세로 스택 + 동일 폭 (모든 슬라이드 통일) */
   @media (max-width: 540px) {
-    .carousel-slide .hero-buttons {
+    .hero-buttons {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: 8px;
       width: 88%;          /* 살짝 좁힘 */
       max-width: 360px;    /* 너무 넓지 않게 상한 */
-      margin: 0;           /* 좌측 정렬 유지 (원하면 margin:0 auto로 중앙정렬) */
+      margin: 0;           /* 좌측 정렬 유지 */
     }
-    .carousel-slide .btn-hero {
-      width: 100%;         /* Notice/News 등 동일 폭 */
+    .btn-hero {
+      width: 100%;         /* 모든 버튼 동일 폭 */
       max-width: 100%;
       font-size: 12.5px;
       padding: 11px 20px;
@@ -170,7 +170,7 @@ title: home
   }
 
   @media (max-width: 380px) {
-    .carousel-slide .btn-hero {
+    .btn-hero {
       font-size: 11.5px;
       padding: 10px 16px;
     }
