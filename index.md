@@ -54,7 +54,6 @@ title: home
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     will-change: transform;
-    /* 슬라이드 간 간격 제거 */
   }
 
   .carousel-slide {
@@ -66,7 +65,6 @@ title: home
     flex-shrink: 0;
     background: #000;
     overflow: hidden;
-    /* 각 슬라이드가 정확히 100% 너비를 차지하도록 설정 */
   }
 
   .carousel-slide img {
@@ -98,14 +96,8 @@ title: home
   }
 
   @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .tag-badge {
@@ -149,21 +141,39 @@ title: home
     flex-wrap: wrap;
   }
 
+  /* ===== Buttons (mobile-safe sizing for long words like "Publications") ===== */
   .btn-hero {
-    padding: 12px 24px;
+    padding: clamp(10px, 2.4vw, 12px) clamp(16px, 4vw, 24px);
     border-radius: 8px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: clamp(12px, 2.9vw, 14px); /* auto-shrink on small screens */
+    line-height: 1.1;                    /* slightly tighter to save height */
     text-decoration: none;
     transition: all 0.3s;
     display: inline-block;
+    white-space: nowrap;                  /* keep on one line by default */
+  }
+
+  /* Fallback: if JS detects overflow, we'll add .compact to shrink a bit more */
+  .btn-hero.compact {
+    font-size: 11.5px;
+    padding: 8px 12px;
   }
 
   @media (max-width: 480px) {
     .btn-hero {
-      padding: 10px 18px;
-      font-size: 13px;
+      font-size: clamp(11.5px, 3.2vw, 13px);
+      padding: 10px 16px;
     }
+    .hero-buttons { gap: 8px; }
+  }
+
+  @media (max-width: 380px) {
+    .btn-hero { font-size: 11.5px; padding: 8px 12px; }
+  }
+
+  @media (max-width: 340px) {
+    .btn-hero { font-size: 11px; padding: 7px 10px; }
   }
 
   .btn-hero.primary {
@@ -215,9 +225,7 @@ title: home
   }
 
   @media (max-width: 480px) {
-    .carousel-dots {
-      bottom: 16px;
-    }
+    .carousel-dots { bottom: 16px; }
   }
 
   .dot {
@@ -229,17 +237,13 @@ title: home
     cursor: pointer;
     transition: all 0.3s;
     padding: 0;
-    /* Touch target size for mobile */
     position: relative;
   }
 
   .dot::before {
     content: '';
     position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
+    top: -8px; left: -8px; right: -8px; bottom: -8px;
   }
 
   .dot.active {
@@ -290,18 +294,9 @@ title: home
     overflow: hidden;
   }
 
-  @media (max-width: 768px) {
-    .logo-box {
-      margin: 0 auto;
-    }
-  }
-
+  @media (max-width: 768px) { .logo-box { margin: 0 auto; } }
   @media (max-width: 480px) {
-    .logo-box {
-      width: 150px;
-      height: 150px;
-      border-radius: 20px;
-    }
+    .logo-box { width: 150px; height: 150px; border-radius: 20px; }
   }
 
   .logo-box::before {
@@ -312,24 +307,14 @@ title: home
     opacity: 0;
     transition: opacity 0.3s;
   }
-
-  .logo-box:hover::before {
-    opacity: 1;
-  }
+  .logo-box:hover::before { opacity: 1; }
 
   .logo-box img {
-    width: 140px;
-    height: 140px;
-    object-fit: contain;
-    position: relative;
-    z-index: 1;
+    width: 140px; height: 140px; object-fit: contain; position: relative; z-index: 1;
   }
 
   @media (max-width: 480px) {
-    .logo-box img {
-      width: 110px;
-      height: 110px;
-    }
+    .logo-box img { width: 110px; height: 110px; }
   }
 
   .intro-content h2 {
@@ -338,61 +323,26 @@ title: home
     font-weight: 900;
     margin-bottom: 8px;
   }
+  @media (max-width: 480px) { .intro-content h2 { font-size: 20px; } }
 
-  @media (max-width: 480px) {
-    .intro-content h2 {
-      font-size: 20px;
-    }
-  }
+  .intro-content h3 { font-size: 32px; margin-bottom: 4px; }
+  @media (max-width: 480px) { .intro-content h3 { font-size: 24px; } }
 
-  .intro-content h3 {
-    font-size: 32px;
-    margin-bottom: 4px;
-  }
-
-  @media (max-width: 480px) {
-    .intro-content h3 {
-      font-size: 24px;
-    }
-  }
-
-  .intro-content .lab-name {
-    color: var(--gold);
-    font-weight: 900;
-  }
+  .intro-content .lab-name { color: var(--gold); font-weight: 900; }
 
   .intro-content .lab-full {
-    font-size: 18px;
-    color: #374151;
-    margin-left: 8px;
+    font-size: 18px; color: #374151; margin-left: 8px;
   }
-
   @media (max-width: 768px) {
-    .intro-content .lab-full {
-      display: block;
-      margin-left: 0;
-      margin-top: 8px;
-    }
+    .intro-content .lab-full { display: block; margin-left: 0; margin-top: 8px; }
   }
-
-  @media (max-width: 480px) {
-    .intro-content .lab-full {
-      font-size: 15px;
-    }
-  }
+  @media (max-width: 480px) { .intro-content .lab-full { font-size: 15px; } }
 
   .intro-content .description {
-    margin-top: 16px;
-    font-size: 16px;
-    line-height: 1.8;
-    color: #4b5563;
+    margin-top: 16px; font-size: 16px; line-height: 1.8; color: #4b5563;
   }
-
   @media (max-width: 480px) {
-    .intro-content .description {
-      font-size: 14px;
-      line-height: 1.7;
-    }
+    .intro-content .description { font-size: 14px; line-height: 1.7; }
   }
 
   /* News & Notice Section */
@@ -430,11 +380,7 @@ title: home
     transition: all 0.3s;
   }
 
-  @media (max-width: 480px) {
-    .update-card {
-      border-radius: 16px;
-    }
-  }
+  @media (max-width: 480px) { .update-card { border-radius: 16px; } }
 
   .update-card:hover {
     transform: translateY(-5px);
@@ -443,9 +389,7 @@ title: home
 
   /* Disable hover transform on mobile */
   @media (hover: none) {
-    .update-card:hover {
-      transform: none;
-    }
+    .update-card:hover { transform: none; }
   }
 
   .update-header {
@@ -457,11 +401,7 @@ title: home
     align-items: center;
   }
 
-  @media (max-width: 480px) {
-    .update-header {
-      padding: 18px 20px;
-    }
-  }
+  @media (max-width: 480px) { .update-header { padding: 18px 20px; } }
 
   .update-title {
     font-size: 20px;
@@ -471,211 +411,74 @@ title: home
     align-items: center;
     gap: 10px;
   }
-
-  @media (max-width: 480px) {
-    .update-title {
-      font-size: 18px;
-    }
-  }
+  @media (max-width: 480px) { .update-title { font-size: 18px; } }
 
   .update-icon {
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
-
-  @media (max-width: 480px) {
-    .update-icon {
-      width: 28px;
-      height: 28px;
-      font-size: 16px;
-    }
-  }
+  @media (max-width: 480px) { .update-icon { width: 28px; height: 28px; font-size: 16px; } }
 
   .update-more {
-    color: var(--red);
-    font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: gap 0.2s;
-    /* Touch target */
-    padding: 4px 8px;
-    margin: -4px -8px;
+    color: var(--red); font-weight: 700; font-size: 14px; text-decoration: none;
+    display: flex; align-items: center; gap: 4px; transition: gap 0.2s;
+    padding: 4px 8px; margin: -4px -8px;
   }
+  .update-more:hover { gap: 8px; }
 
-  .update-more:hover {
-    gap: 8px;
-  }
-
-  .update-list {
-    padding: 8px;
-  }
-
-  @media (max-width: 480px) {
-    .update-list {
-      padding: 4px;
-    }
-  }
+  .update-list { padding: 8px; }
+  @media (max-width: 480px) { .update-list { padding: 4px; } }
 
   .update-item {
-    padding: 20px;
-    border-radius: 12px;
-    transition: all 0.2s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    /* Touch target */
+    padding: 20px; border-radius: 12px; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
     -webkit-tap-highlight-color: transparent;
   }
-
-  @media (max-width: 480px) {
-    .update-item {
-      padding: 16px;
-      border-radius: 10px;
-    }
-  }
+  @media (max-width: 480px) { .update-item { padding: 16px; border-radius: 10px; } }
 
   .update-item::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 0;
-    background: var(--gold);
-    transition: height 0.3s;
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 0; background: var(--gold); transition: height 0.3s;
   }
+  .update-item:hover { background: #fef9f3; }
+  .update-item:hover::before { height: 60%; }
+  @media (hover: none) { .update-item:active { background: #fef9f3; } }
 
-  .update-item:hover {
-    background: #fef9f3;
-  }
+  .update-date { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
 
-  .update-item:hover::before {
-    height: 60%;
-  }
+  .date-day { font-size: 24px; font-weight: 900; color: var(--red); }
+  @media (max-width: 480px) { .date-day { font-size: 20px; } }
 
-  /* Active state for mobile */
-  @media (hover: none) {
-    .update-item:active {
-      background: #fef9f3;
-    }
-  }
-
-  .update-date {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .date-day {
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--red);
-  }
-
-  @media (max-width: 480px) {
-    .date-day {
-      font-size: 20px;
-    }
-  }
-
-  .date-month {
-    font-size: 12px;
-    font-weight: 700;
-    color: #9ca3af;
-  }
+  .date-month { font-size: 12px; font-weight: 700; color: #9ca3af; }
 
   .update-item-title {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1f2937;
-    line-height: 1.5;
-    display: block;
-    cursor: pointer;
-    /* Text truncation for mobile */
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    font-size: 15px; font-weight: 800; color: #1f2937; line-height: 1.5; display: block; cursor: pointer;
+    overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   }
-
-  @media (max-width: 480px) {
-    .update-item-title {
-      font-size: 14px;
-      line-height: 1.4;
-    }
-  }
+  @media (max-width: 480px) { .update-item-title { font-size: 14px; line-height: 1.4; } }
 
   .update-meta {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #9ca3af;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    margin-top: 6px; font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 12px;
   }
 
   .meta-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    background: rgba(214,177,77,0.1);
-    border-radius: 999px;
-    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
+    background: rgba(214,177,77,0.1); border-radius: 999px; font-weight: 600;
   }
+  @media (max-width: 480px) { .meta-tag { font-size: 11px; padding: 2px 6px; } }
 
-  @media (max-width: 480px) {
-    .meta-tag {
-      font-size: 11px;
-      padding: 2px 6px;
-    }
-  }
+  .empty-message { padding: 40px; text-align: center; color: #9ca3af; font-size: 14px; }
+  @media (max-width: 480px) { .empty-message { padding: 30px 20px; font-size: 13px; } }
 
-  .empty-message {
-    padding: 40px;
-    text-align: center;
-    color: #9ca3af;
-    font-size: 14px;
-  }
-
-  @media (max-width: 480px) {
-    .empty-message {
-      padding: 30px 20px;
-      font-size: 13px;
-    }
-  }
-
-  /* Performance optimization */
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
 
-  /* Additional mobile-specific styles */
+  /* Extra mobile layout help */
   @media (max-width: 640px) {
-    .hero-buttons {
-      width: 100%;
-    }
-    
-    .btn-hero {
-      flex: 1;
-      text-align: center;
-      min-width: 0;
-    }
+    .hero-buttons { width: 100%; }
+    .btn-hero { flex: 1; text-align: center; min-width: 0; } /* makes buttons share the row */
   }
 </style>
 
@@ -848,17 +651,18 @@ title: home
 </section>
 
 <script>
-  // Carousel functionality
+  // Carousel functionality + mobile button fitting
   (function() {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.dot');
     const slides = document.querySelectorAll('.carousel-slide');
+    const heroButtons = document.querySelectorAll('.btn-hero');
     let currentIndex = 0;
     let interval;
     let isTransitioning = false;
     let touchStartX = 0;
     let touchEndX = 0;
-    
+
     // Ensure proper slide sizing on load
     function setSlideWidths() {
       const containerWidth = track.parentElement.offsetWidth;
@@ -868,7 +672,7 @@ title: home
         slide.style.maxWidth = containerWidth + 'px';
       });
     }
-    
+
     // Preload all images
     function preloadImages() {
       const images = document.querySelectorAll('.carousel-slide img');
@@ -878,87 +682,85 @@ title: home
         tempImg.src = img.src;
       });
     }
-    
+
     function goToSlide(index) {
       if (isTransitioning) return;
       isTransitioning = true;
-      
+
       currentIndex = index;
-      // Use percentage for more reliable positioning
       const translateValue = -(index * 100);
       track.style.transform = `translateX(${translateValue}%)`;
-      
+
       dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
       });
-      
-      // Reset transition flag after animation completes
-      setTimeout(() => {
-        isTransitioning = false;
-      }, 600);
+
+      setTimeout(() => { isTransitioning = false; }, 600);
     }
-    
+
     function nextSlide() {
       if (isTransitioning) return;
       goToSlide((currentIndex + 1) % slides.length);
     }
-    
+
     function prevSlide() {
       if (isTransitioning) return;
       goToSlide((currentIndex - 1 + slides.length) % slides.length);
     }
-    
+
     function startAutoplay() {
-      stopAutoplay(); // Clear any existing interval
+      stopAutoplay();
       interval = setInterval(nextSlide, 5000);
     }
-    
+
     function stopAutoplay() {
       if (interval) {
         clearInterval(interval);
         interval = null;
       }
     }
-    
+
     // Touch/swipe support for mobile
-    function handleTouchStart(e) {
-      touchStartX = e.changedTouches[0].screenX;
-    }
-    
-    function handleTouchEnd(e) {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }
-    
+    function handleTouchStart(e) { touchStartX = e.changedTouches[0].screenX; }
+    function handleTouchEnd(e)   { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }
+
     function handleSwipe() {
       const swipeThreshold = 50;
       const diff = touchStartX - touchEndX;
-      
       if (Math.abs(diff) > swipeThreshold) {
         stopAutoplay();
-        if (diff > 0) {
-          nextSlide();
-        } else {
-          prevSlide();
-        }
+        if (diff > 0) nextSlide(); else prevSlide();
         startAutoplay();
       }
     }
-    
+
+    // === Fit buttons so long words (e.g., "Publications") never overflow ===
+    function fitHeroButtons() {
+      heroButtons.forEach(btn => {
+        btn.classList.remove('compact');
+        // If text still overflows its box, apply a compact style
+        if (btn.scrollWidth > btn.clientWidth) {
+          btn.classList.add('compact');
+        }
+      });
+    }
+
     // Initialize
     setSlideWidths();
     preloadImages();
-    
+    fitHeroButtons();
+
     // Handle window resize
     let resizeTimeout;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
         setSlideWidths();
-        goToSlide(currentIndex); // Re-position after resize
-      }, 250);
+        goToSlide(currentIndex);
+        fitHeroButtons();
+      }, 200);
     });
-    
+
     // Event listeners
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
@@ -967,27 +769,24 @@ title: home
         startAutoplay();
       });
     });
-    
+
     // Touch events for mobile
     track.addEventListener('touchstart', handleTouchStart, { passive: true });
     track.addEventListener('touchend', handleTouchEnd, { passive: true });
-    
+
     // Wait for images to load before starting autoplay
     window.addEventListener('load', () => {
       setSlideWidths();
       goToSlide(0);
+      fitHeroButtons();
       startAutoplay();
     });
-    
+
     // Pause on visibility change
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopAutoplay();
-      } else {
-        startAutoplay();
-      }
+      if (document.hidden) stopAutoplay(); else startAutoplay();
     });
-    
+
     // Pause on hover (desktop only)
     if (window.matchMedia('(hover: hover)').matches) {
       track.addEventListener('mouseenter', stopAutoplay);
