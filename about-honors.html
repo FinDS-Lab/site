@@ -423,7 +423,7 @@ function generateDiamondNetwork() {
   font-size: 16px;
 }
 
-/* Award title - 한글 줄바꿈 개선 */
+/* Award title - 한글/영어 단어 단위 줄바꿈 */
 .award-title{
   font-size: 16px;
   font-weight: 800;
@@ -431,17 +431,19 @@ function generateDiamondNetwork() {
   margin-bottom: 10px;
   line-height: 1.4;
   word-break: keep-all;
-  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
-/* Award meta - 한글 줄바꿈 개선 */
+/* Award meta - 한글/영어 단어 단위 줄바꿈 */
 .award-meta{
   font-size: 14px;
   color: #6b7280;
   margin-bottom: 12px;
   font-weight: 500;
   word-break: keep-all;
-  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Winners */
@@ -486,8 +488,8 @@ function generateDiamondNetwork() {
 
 .winner-pill.prof{
   border-color: var(--award-gold);
-  background: linear-gradient(135deg, #f0fdf4, #f7fee7);
-  color: #166534;
+  background: linear-gradient(135deg, #fef7e6, #fff7ed);
+  color: #92400e;
 }
 
 /* Empty state */
@@ -576,7 +578,7 @@ const honorsData = {
       organization: '고려대학교',
       date: 'Jan 5',
       winners: [
-        {name: '김성범 교수님', level: 'prof'}
+        {name: '김성범', level: 'prof'}
       ]
     }
   ],
@@ -589,7 +591,7 @@ const honorsData = {
       organization: '고려대학교',
       date: 'Jul 20',
       winners: [
-        {name: '김성범 교수님', level: 'prof'}
+        {name: '김성범', level: 'prof'}
       ]
     },
     {
@@ -668,7 +670,7 @@ const honorsData = {
       organization: '한국인공지능학회',
       date: 'May 25',
       winners: [
-        {name: '김성범 교수님', level: 'prof'}
+        {name: '김성범', level: 'prof'}
       ]
     }
   ]
