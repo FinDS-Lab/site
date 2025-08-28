@@ -4,63 +4,46 @@ title: "FINDS Lab. Logo"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
 tags: [logo]
-thumb: logo1.png   # 폴더 내 대표 이미지 파일명 (상대 경로)
+thumb: logo1.png
+images:
+  - logo1.png
+  - logo2.png
+  - logo3.png
+  - logo4.png
+  - logo5.png
 ---
 
-<!-- ========= Album Banner & Image Grid (robust static_files scan) ========= -->
-
-{% comment %}
-- 이 페이지(index.md)와 같은 폴더 안의 이미지를 수집해 그리드로 표시합니다.
-- thumb는 상대파일명 또는 절대경로(/...)/URL 모두 지원.
-- site.static_files 조회 시 page.dir 기준으로 하위 파일만 모읍니다.
-{% endcomment %}
-
-{% assign here = page.dir | append: "/" %}
-{% assign files = site.static_files | where_exp: "f", "f.path contains here" %}
-
-{% assign imgs = "" | split: "" %}
-{% for f in files %}
-  {% assign ext = f.extname | downcase %}
-  {% if ext == ".jpg" or ext == ".jpeg" or ext == ".png" or ext == ".webp" or ext == ".gif" %}
-    {% assign imgs = imgs | push: f %}
-  {% endif %}
-{% endfor %}
-{% assign imgs = imgs | sort: "path" %}
-
-{% comment %}
-대표 커버 이미지 결정 우선순위
-1) front matter thumb (파일명/절대경로/URL)
-2) 폴더 내 첫 이미지
-3) 플레이스홀더
-{% endcomment %}
-{% assign cover_url = nil %}
-{% if page.thumb %}
-  {% assign first_char = page.thumb | slice: 0 %}
-  {% if page.thumb contains "://" or first_char == "/" %}
-    {% assign cover_url = page.thumb | relative_url %}
-  {% else %}
-    {%- comment -%}
-    thumb이 파일명일 경우: 현재 페이지 디렉토리(page.dir) 기준으로 붙여 사용
-    {%- endcomment -%}
-    {% assign cover_url = page.dir | append: "/" | append: page.thumb | replace: "//","/" | relative_url %}
-  {% endif %}
-{% elsif imgs.size > 0 %}
-  {% assign cover_url = imgs[0].path | relative_url %}
-{% else %}
-  {% assign cover_url = "/assets/img/banners/gallery-hero.jpg" | relative_url %}
-{% endif %}
-
-<!-- ===== Styles (소규모, 페이지 전용) ===== -->
+<!-- ===== Styles ===== -->
 <style>
   .breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
   .breadcrumbs a{color:#e5e7eb}
   .breadcrumbs a:hover{text-decoration:underline}
   .breadcrumbs .sep{opacity:.8}
+  
+  .image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+  @media(max-width:640px){.image-grid{grid-template-columns:1fr}}
+  
+  .image-card{
+    background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;
+    transition:all .2s;cursor:pointer;
+  }
+  .image-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+  
+  .image-wrapper{
+    aspect-ratio:16/9;background:#f3f4f6;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;position:relative;
+  }
+  .image-wrapper img{
+    width:100%;height:100%;object-fit:contain;
+  }
+  .image-info{padding:12px 16px;border-top:1px solid #f3f4f6}
+  .image-name{font-size:14px;font-weight:700;color:#374151}
 </style>
 
 <!-- ===== Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
+    {% assign cover_url = page.dir | append: page.thumb | replace: "//","/" | relative_url %}
     <img src="{{ cover_url }}" alt="{{ page.title }} cover"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/40"></div>
@@ -87,26 +70,50 @@ thumb: logo1.png   # 폴더 내 대표 이미지 파일명 (상대 경로)
 
 <!-- ===== Image Grid ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6 pb-8">
-  {% if imgs.size == 0 %}
-    <div class="p-8 text-center text-slate-500 font-semibold bg-white border border-slate-200 rounded-2xl">
-      폴더에 표시할 이미지가 없습니다. (jpg/jpeg/png/webp/gif)
+  {% if page.images and page.images.size > 0 %}
+    <div class="image-grid">
+      {% for img in page.images %}
+        {% assign img_url = page.dir | append: img | replace: "//","/" | relative_url %}
+        <a href="{{ img_url }}" target="_blank" rel="noopener" class="image-card">
+          <div class="image-wrapper">
+            <img src="{{ img_url }}" alt="{{ img }}" loading="lazy">
+          </div>
+          <div class="image-info">
+            <div class="image-name">{{ img }}</div>
+          </div>
+        </a>
+      {% endfor %}
     </div>
   {% else %}
-    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      {% for it in imgs %}
-        <li class="group">
-          <a class="block rounded-xl overflow-hidden ring-1 ring-slate-200 hover:shadow-xl transition"
-             href="{{ it.path | relative_url }}" target="_blank" rel="noopener">
-            <div class="h-44 bg-center bg-cover"
-                 style="background-image:url('{{ it.path | relative_url }}')"></div>
-            <div class="p-4 bg-white">
-              <h3 class="font-extrabold text-[14px] line-clamp-1">
-                {{ it.name }}
-              </h3>
+    <!-- Fallback: site.static_files 방식 -->
+    {% assign here = page.dir %}
+    {% assign files = site.static_files | where_exp: "f", "f.path contains here" %}
+    
+    {% assign imgs = "" | split: "" %}
+    {% for f in files %}
+      {% assign ext = f.extname | downcase %}
+      {% if ext == ".jpg" or ext == ".jpeg" or ext == ".png" or ext == ".webp" or ext == ".gif" %}
+        {% assign imgs = imgs | push: f %}
+      {% endif %}
+    {% endfor %}
+    
+    {% if imgs.size > 0 %}
+      <div class="image-grid">
+        {% for it in imgs %}
+          <a href="{{ it.path | relative_url }}" target="_blank" rel="noopener" class="image-card">
+            <div class="image-wrapper">
+              <img src="{{ it.path | relative_url }}" alt="{{ it.name }}" loading="lazy">
+            </div>
+            <div class="image-info">
+              <div class="image-name">{{ it.name }}</div>
             </div>
           </a>
-        </li>
-      {% endfor %}
-    </ul>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="p-8 text-center text-slate-500 font-semibold bg-white border border-slate-200 rounded-2xl">
+        갤러리 이미지를 표시하려면 front matter의 images 배열에 파일명을 추가하세요.
+      </div>
+    {% endif %}
   {% endif %}
 </section>
