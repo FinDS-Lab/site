@@ -9,7 +9,6 @@ venue: "UNIST 제1공학관 104동 E104호"
 excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스를 접목한 금융 데이터사이언스 연구 방법론을 소개"
 ---
 
-
 <style>
   :root {
     --gold: rgb(214, 177, 77);
@@ -158,6 +157,28 @@ excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스�
     transform: translateX(-4px);
     color: var(--gold);
   }
+  
+  /* 모바일에서 텍스트 줄이기 */
+  @media (max-width: 480px) {
+    .back-button {
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+    
+    .back-button .button-text {
+      display: none;
+    }
+    
+    .back-button .button-text-short {
+      display: inline;
+    }
+  }
+  
+  @media (min-width: 481px) {
+    .back-button .button-text-short {
+      display: none;
+    }
+  }
 </style>
 
 <section class="max-w-4xl mx-auto px-4 mt-8 pb-12">
@@ -168,7 +189,7 @@ excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스�
       <div>
         <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Invited Talk</p>
         <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900">
-          금융 의사결정 지원을 위한 데이터 기반 연구 사례
+          금융 데이터 과학 기반 의사결정: 실증적 분석과 정량적 접근을 중심으로
         </h1>
       </div>
     </div>
@@ -207,7 +228,7 @@ excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스�
           <div class="info-icon">📅</div>
           <div class="info-content">
             <div class="info-label">일시</div>
-            <div class="info-value">{{ page.date | date: "%Y년 %m월 %d일" }} 18:00</div>
+            <div class="info-value">{{ page.date | date: "%Y년 %m월 %d일" }} 16:00</div>
           </div>
         </div>
         
@@ -237,9 +258,13 @@ excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스�
       </div>
     </div>
 
-    <!-- Content -->
+    <!-- Content Overview -->
     <div class="section-card" style="border-radius:0;">
-      <h2 class="section-title">💡 주요 내용</h2>
+      <h2 class="section-title">
+        <span>💡</span>
+        <span>주요 내용</span>
+      </h2>
+      
       <ul class="content-list">
         <li>금융 데이터 기반 기업 클러스터링과 포트폴리오 설계 기법</li>
         <li>금융 네트워크 구조 분석을 통한 시장 상호연계성 이해</li>
@@ -248,16 +273,18 @@ excerpt: "다수 프로젝트 경험을 바탕으로 한 데이터 사이언스�
         <li>데이터 기반 금융 서비스 시스템 개발과 향후 연구 방향성</li>
       </ul>
     </div>
+  </article>
 
   <!-- Footer -->
   <footer class="mt-8 flex justify-between items-center">
     <a href="{{ '/archives-seminar.html' | relative_url }}" class="back-button">
       <span>←</span>
-      <span>세미나 목록으로</span>
+      <span class="button-text">세미나 목록으로</span>
+      <span class="button-text-short">목록</span>
     </a>
     
-    <div class="text-sm text-slate-500 font-semibold">
-      FINDS Lab. © 2025
-    </div>
+    <img src="{{ '/assets/img/logo-finds.png' | relative_url }}" 
+         alt="FINDS Lab Logo" 
+         class="h-6 w-auto">
   </footer>
 </section>
