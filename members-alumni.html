@@ -753,6 +753,14 @@ function generateDiamondNetwork() {
       <div class="stat-label">M.S. Alumni</div>
     </div>
     <div class="stat-card">
+      <div class="stat-number" id="gradCount">0</div>
+      <div class="stat-label">Total Graduate Alumni</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="undergradCount">0</div>
+      <div class="stat-label">Undergraduate Researcher Alumni</div>
+    </div>
+    <div class="stat-card">
       <div class="stat-number" id="totalCount">0</div>
       <div class="stat-label">Total Alumni</div>
     </div>
@@ -796,7 +804,7 @@ function generateDiamondNetwork() {
     <div class="section-icon undergraduate">📚</div>
     <div class="section-text">
       <div class="section-main-title">학부연구생</div>
-      <div class="section-subtitle">Bachelor Alumni</div>
+      <div class="section-subtitle">Undergraduate Alumni</div>
     </div>
   </div>
   
@@ -1129,21 +1137,22 @@ function generateCards(data, containerId, section) {
 function calculateStats() {
   let phdCount = 0;
   let msCount = 0;
-  
-  [...graduateAlumniData, ...undergradAlumniData].forEach(alum => {
-    if (alum.degrees.includes('phd')) {
-      phdCount++;
-    }
-    if (alum.degrees.includes('ms')) {
-      msCount++;
-    }
+
+  // Count degrees across *graduate* alumni only for PhD/MS tallies
+  graduateAlumniData.forEach(alum => {
+    if (alum.degrees.includes('phd')) phdCount++;
+    if (alum.degrees.includes('ms')) msCount++;
   });
-  
-  const totalCount = graduateAlumniData.length + undergradAlumniData.length;
-  
+
+  const gradCount = graduateAlumniData.length;          // Total Graduate Alumni
+  const undergradCount = undergradAlumniData.length;    // Undergraduate Researcher Alumni
+  const totalCount = gradCount + undergradCount;        // Total Alumni
+
   // Animate numbers
   animateNumber('phdCount', phdCount);
   animateNumber('msCount', msCount);
+  animateNumber('gradCount', gradCount);
+  animateNumber('undergradCount', undergradCount);
   animateNumber('totalCount', totalCount);
   document.getElementById('sinceYear').textContent = 2025;
 }
@@ -1151,7 +1160,7 @@ function calculateStats() {
 // Number animation
 function animateNumber(elementId, finalValue) {
   let current = 0;
-  const increment = Math.ceil(finalValue / 20);
+  const increment = Math.max(1, Math.ceil(finalValue / 20));
   const element = document.getElementById(elementId);
   
   const timer = setInterval(() => {
