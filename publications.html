@@ -592,6 +592,9 @@ permalink: /publications.html
     color: #6b7280;
     font-weight: 700;
     white-space: nowrap;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
   }
 
   .badge-pub .val {
@@ -1081,9 +1084,15 @@ permalink: /publications.html
       if (b.year !== a.year) return b.year - a.year;
       // Within same year, sort by published_date descending (newest first)
       if (a.published_date && b.published_date) {
-        return new Date(b.published_date) - new Date(a.published_date);
+        const dateComp = new Date(b.published_date) - new Date(a.published_date);
+        if (dateComp !== 0) return dateComp;
       }
-      return 0;
+      // If dates are the same or one is missing, sort by code_label number (descending)
+      const getNum = (label) => {
+        const match = (label || '').match(/\d+/);
+        return match ? parseInt(match[0]) : 0;
+      };
+      return getNum(b.code_label) - getNum(a.code_label);
     });
   }
 
@@ -1181,20 +1190,14 @@ permalink: /publications.html
     return d.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
   }
 
-  // EN: "Published on Aug 29, 2025" / KR: "발행일 2025.08.29"
+  // Consistent format: "Published on Jan 3, 2023"
   function formatPubDateWithLabel(iso, useKorean) {
     if (!iso) return "";
     const d = new Date(iso + "T00:00:00");
     
-    if (useKorean) {
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-      return `발행일 ${yyyy}.${mm}.${dd}`;
-    } else {
-      const en = d.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
-      return `Published on ${en}`;
-    }
+    // Always use "Published on" format with short month
+    const en = d.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
+    return `Published on ${en}`;
   }
 
   /* ===== Build Filter Chips ===== */
@@ -1495,24 +1498,3 @@ permalink: /publications.html
     event.target.textContent = 'Copied!';
     setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
-
-  /* ===== Events ===== */
-  document.getElementById('pubSearch').oninput = (e) => {
-    q = e.target.value;
-    render();
-  };
-
-  document.getElementById('btnCloseCite').onclick = () => {
-    document.getElementById('citeModal').style.display = 'none';
-  };
-
-  document.getElementById('citeModal').onclick = (e) => {
-    if (e.target === document.getElementById('citeModal')) {
-      document.getElementById('citeModal').style.display = 'none';
-    }
-  };
-
-  /* ===== Init ===== */
-  buildChips();
-  render();
-</script>
