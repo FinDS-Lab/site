@@ -1,4 +1,4 @@
-<footer class="mt-16 border-t border-slate-200 bg-white" aria-label="Site footer">
+<footer class="mt-16 border-t border-slate-200 bg-white" aria-label="Site footer" id="siteFooter">
   <div class="max-w-7xl mx-auto px-4 py-10">
     <div class="flex flex-col items-center gap-3">
       <p class="text-center text-sm text-slate-500 font-semibold">
@@ -8,7 +8,7 @@
       </p>
 
       <p class="mt-1 text-center text-xs text-slate-400">
-        Copyright © <span id="year"></span> Financial Data Science Lab. All Rights Reserved.
+        Copyright © <span id="year"></span> FINDS Lab. All Rights Reserved.
       </p>
     </div>
   </div>
@@ -23,12 +23,17 @@
   </button>
 </footer>
 
-<!-- Footer styles (header 톤과 맞춤) -->
+<!-- Footer styles -->
 <style>
-  /* 링크 언더라인 슬라이드 */
+  /* 동적 링크 컬러(보색)를 담는 변수 */
+  #siteFooter {
+    --link-color: #334155; /* 초기/폴백: slate-700 */
+  }
+
+  /* 링크 언더라인 슬라이드 + 동적 색 */
   .link-underline {
     position: relative;
-    color: #334155; /* slate-700 */
+    color: var(--link-color);
     transition: color .2s ease;
   }
   .link-underline::after {
@@ -36,13 +41,13 @@
     position: absolute;
     left: 0; bottom: -2px;
     width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--accent, rgb(214,177,77)), var(--accent, rgb(214,177,77)));
+    background: linear-gradient(90deg, var(--link-color), var(--link-color));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform .2s ease;
     border-radius: 1px;
   }
-  .link-underline:hover { color: var(--accent, rgb(214,177,77)); }
+  .link-underline:hover { color: var(--link-color); }
   .link-underline:hover::after { transform: scaleX(1); }
 
   /* Back-to-Top 버튼 show/hide 애니메이션 */
@@ -86,7 +91,6 @@
         btn.classList.remove('hidden');
       } else {
         btn.classList.remove('is-visible');
-        // 시각적 전환을 위해 hidden은 약간 지연 없이 유지
         btn.classList.add('hidden');
       }
       ticking = false;
@@ -104,5 +108,103 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
+
+    // ===== 링크 컬러를 footer 배경의 보색으로 자동 설정 =====
+    var footer = document.getElementById('siteFooter');
+
+    function parseCssColor(str) {
+      // rgb/rgba
+      var rgbMatch = str && str.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
+      if (rgbMatch) {
+        return {
+          r: Math.min(255, parseInt(rgbMatch[1], 10)),
+          g: Math.min(255, parseInt(rgbMatch[2], 10)),
+          b: Math.min(255, parseInt(rgbMatch[3], 10))
+        };
+      }
+      // #rrggbb or #rgb
+      if (str && str[0] === '#') {
+        var hex = str.slice(1);
+        if (hex.length === 3) {
+          var r = parseInt(hex[0] + hex[0], 16);
+          var g = parseInt(hex[1] + hex[1], 16);
+          var b = parseInt(hex[2] + hex[2], 16);
+          return { r, g, b };
+        } else if (hex.length === 6) {
+          return {
+            r: parseInt(hex.slice(0, 2), 16),
+            g: parseInt(hex.slice(2, 4), 16),
+            b: parseInt(hex.slice(4, 6), 16),
+          };
+        }
+      }
+      return null;
+    }
+
+    function rgbToHsl(r, g, b) {
+      r /= 255; g /= 255; b /= 255;
+      var max = Math.max(r, g, b), min = Math.min(r, g, b);
+      var h, s, l = (max + min) / 2;
+
+      if (max === min) {
+        h = s = 0;
+      } else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      return { h: h * 360, s: s * 100, l: l * 100 };
+    }
+
+    function hslToCss(h, s, l) {
+      return 'hsl(' + Math.round(h) + ' ' + Math.round(s) + '% ' + Math.round(l) + '%)';
+    }
+
+    function computeComplementary(colorStr) {
+      var rgb = parseCssColor(colorStr);
+      if (!rgb) return null;
+      var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+
+      // 보색: hue + 180
+      var compH = (hsl.h + 180) % 360;
+
+      // 대비 확보: 너무 연하거나 어두우면 L/S를 조정
+      var compS = Math.min(90, Math.max(50, hsl.s));
+      var compL = hsl.l;
+      if (compL > 70) compL = 45;
+      if (compL < 25) compL = 60;
+
+      return hslToCss(compH, compS, compL);
+    }
+
+    function applyComplementaryLinkColor() {
+      if (!footer) return;
+      // 실제 렌더된 배경색 취득 (다크모드 CSS 적용 반영)
+      var bg = getComputedStyle(footer).backgroundColor;
+      var comp = computeComplementary(bg);
+      if (comp) {
+        footer.style.setProperty('--link-color', comp);
+      }
+    }
+
+    // 초기 적용
+    applyComplementaryLinkColor();
+
+    // 다크모드 전환 시 재계산
+    var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+    if (mql && typeof mql.addEventListener === 'function') {
+      mql.addEventListener('change', applyComplementaryLinkColor);
+    } else if (mql && typeof mql.addListener === 'function') {
+      // Safari 구버전 호환
+      mql.addListener(applyComplementaryLinkColor);
+    }
+
+    // 폰트/레이아웃 변경 등으로 footer 배경이 변할 수 있는 경우를 대비해 resize 시 재계산(저비용)
+    window.addEventListener('resize', applyComplementaryLinkColor, { passive: true });
   })();
 </script>
