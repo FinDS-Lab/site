@@ -40,10 +40,12 @@ permalink: /projects.html
 /* Grid: 한 줄에 한 프로젝트 */
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
-/* Card */
+/* Card (outer tint = type color) */
 .card{border-radius:1rem;overflow:hidden}
-.card.ongoing-public{background:rgba(172, 14, 14, 0.15)}
-.card.ongoing-private{background:rgba(214, 177, 77, 0.15)}
+.card.card--public{background:rgba(172, 14, 14, 0.15)}
+.card.card--private{background:rgba(214, 177, 77, 0.18)}
+
+/* Inner white body */
 .inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
 .card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
 
@@ -57,18 +59,29 @@ permalink: /projects.html
 .badges-status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
 .badges-keywords{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 
-/* 배지 (키워드/타입/상태 공통) */
-.badge{display:inline-block;padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
+/* 배지 (키워드/타입/상태 공통) — 전반적 폰트 축소 */
+.badge{display:inline-block;padding:.22rem .55rem;border-radius:999px;font-weight:800;font-size:10px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
 
-/* 프로젝트 제목 */
-.project-title-en{font-size:15px;font-weight:900;color:#111827;margin-top:8px}
-.project-title-ko{font-size:13px;color:#6b7280;margin-top:4px;word-break:keep-all} /* 한국어 단어 단위 줄바꿈 */
+/* 프로젝트 제목 — 전반적 폰트 살짝 축소 */
+.project-title-en{font-size:14px;font-weight:900;color:#111827;margin-top:8px}
+.project-title-ko{font-size:12px;color:#6b7280;margin-top:4px;word-break:keep-all} /* 한국어 단어 단위 줄바꿈 */
 
-/* 메타 정보 - 글씨 크기 축소 */
-.meta-info{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6}
-.meta-item{display:flex;align-items:flex-start;font-size:11px;color:#6b7280}
-.meta-label{font-weight:700;color:#374151;min-width:120px;font-size:11px}
-.meta-value{flex:1;color:#111827;font-size:11px}
+/* 메타 정보 — 라벨/값 간 간격 늘리고 전체 폰트 축소 */
+.meta-info{
+  display:grid;
+  grid-template-columns:minmax(110px, 150px) 1fr;
+  column-gap:12px;          /* 라벨과 값 사이 여백 */
+  row-gap:8px;              /* 항목 간 세로 여백 */
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid #f3f4f6
+}
+.meta-item{
+  display:contents;         /* 각 항목을 grid row로 배치 */
+  font-size:10.5px;
+}
+.meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5}
+.meta-value{color:#111827;font-size:10.5px;line-height:1.5}
 .meta-value .ko{word-break:keep-all} /* 한국어 단어 단위 줄바꿈 */
 
 /* 금액 강조 */
@@ -85,11 +98,17 @@ permalink: /projects.html
   .search-container{flex-direction:column;align-items:stretch}
   .search{width:100%}
   .count{text-align:center;width:100%}
-  .meta-label{min-width:95px;font-size:10px}
-  .meta-value{font-size:10px}
-  .project-title-en{font-size:14px}
-  .project-title-ko{font-size:12px}
-  .badge{font-size:10px;padding:.2rem .5rem}
+
+  .meta-info{
+    grid-template-columns:minmax(95px, 130px) 1fr;
+    column-gap:10px;
+    row-gap:8px;
+  }
+  .meta-label{font-size:9.5px}
+  .meta-value{font-size:9.5px}
+  .project-title-en{font-size:13px}
+  .project-title-ko{font-size:11px}
+  .badge{font-size:9.5px;padding:.2rem .5rem}
   .chip{font-size:11px;padding:.4rem .8rem}
 }
 </style>
@@ -152,17 +171,17 @@ permalink: /projects.html
   /* ===== Raw Data ===== */
   const PROJECTS = [
     {
-      titleEn: "AI-Driven Portfolio Optimization System for Institutional Investors",
-      titleKo: "기관투자자를 위한 AI 기반 포트폴리오 최적화 시스템",
-      period: "2024-09-01 – 2025-08-31",
-      fundingAgency: "National Research Foundation",
-      amount: "₩150,000,000",
-      keywords: ["AI", "PORTFOLIO", "OPTIMIZATION"],
+      titleEn: "Portfolio Risk Assessment and Investment Transparency with Explainable AI",
+      titleKo: "설명 가능한 인공지능 기법을 활용한 투자 성향 결정 요인 분석",
+      period: "2025-05-27 – 2025-09-12",
+      fundingAgency: "Korea Institute of Public Finance",
+      amount: "₩1,000,000",
+      keywords: ["xAI", "Household Finance", "Investment Propensity"],
       type: "public", // Government-Funded
       roles: {
-        principalInvestigator: "Prof. Minseo Park",
-        leadResearcher: "Jihyun Lee",
-        researchers: ["Sujin Kim", "Yuna Choi"]
+        principalInvestigator: "Insu Choi",
+        leadResearcher: "Insu Choi",
+        researchers: ["Insu Choi"]
       }
     },
     {
@@ -177,146 +196,6 @@ permalink: /projects.html
         principalInvestigator: "Prof. Doyun Han",
         leadResearcher: "Seungmin Park",
         researchers: ["Jiwon Kang"]
-      }
-    },
-    {
-      titleEn: "Machine Learning Framework for Early Disease Detection",
-      titleKo: "조기 질병 진단을 위한 머신러닝 프레임워크",
-      period: "2023-06-01 – 2024-11-30",
-      fundingAgency: "Korea Health Industry Development Institute",
-      amount: "₩180,000,000",
-      keywords: ["ML", "HEALTHCARE", "DIAGNOSIS"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Ara Song",
-        leadResearcher: "Hyejin Park",
-        researchers: ["Minji Lee", "Hyeri Kim"]
-      }
-    },
-    {
-      titleEn: "Blockchain-based Secure Trading Platform Development",
-      titleKo: "블록체인 기반 안전 거래 플랫폼 개발",
-      period: "2023-01-01 – 2023-12-31",
-      fundingAgency: "Ministry of Science and ICT",
-      amount: "₩250,000,000",
-      keywords: ["BLOCKCHAIN", "SECURITY", "TRADING"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Joonho Kim",
-        leadResearcher: "Seoyeon Yoo",
-        researchers: ["Yerin Park"]
-      }
-    },
-    {
-      titleEn: "Adaptive Learning System Using Natural Language Processing",
-      titleKo: "자연어 처리를 활용한 적응형 학습 시스템",
-      period: "2024-04-01 – 2025-03-31",
-      fundingAgency: "Korea Foundation for the Advancement of Science",
-      amount: "₩120,000,000",
-      keywords: ["NLP", "EDUCATION", "ADAPTIVE"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Jaeun Choi",
-        leadResearcher: "Yejin Lee",
-        researchers: ["Seyoung Park", "Bora Kim"]
-      }
-    },
-    {
-      titleEn: "Real-time Market Sentiment Analysis Platform",
-      titleKo: "실시간 시장 심리 분석 플랫폼",
-      period: "2023-09-01 – 2024-08-31",
-      fundingAgency: "Samsung Electronics",
-      amount: "₩300,000,000",
-      keywords: ["SENTIMENT", "REAL-TIME", "ANALYTICS"],
-      type: "private", // Industry-Funded
-      roles: {
-        principalInvestigator: "Prof. Hwan Kim",
-        leadResearcher: "Seongwoo Park",
-        researchers: ["Yubin Jeon"]
-      }
-    },
-    {
-      titleEn: "Deep Learning Models for Financial Fraud Detection",
-      titleKo: "금융 사기 탐지를 위한 딥러닝 모델",
-      period: "2024-01-01 – 2024-12-31",
-      fundingAgency: "Financial Services Commission",
-      amount: "₩175,000,000",
-      keywords: ["DEEP LEARNING", "FRAUD", "FINTECH"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Harin Lee",
-        leadResearcher: "Dongho Chae",
-        researchers: ["Jina Hong", "Jaehee Noh"]
-      }
-    },
-    {
-      titleEn: "Predictive Analytics for Personalized Medicine",
-      titleKo: "맞춤형 의료를 위한 예측 분석",
-      period: "2023-07-01 – 2024-06-30",
-      fundingAgency: "Seoul National University Hospital",
-      amount: "₩220,000,000",
-      keywords: ["PREDICTIVE", "MEDICINE", "ANALYTICS"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Dahyeon Kang",
-        leadResearcher: "Youngeun Park",
-        researchers: ["Haerin Shin"]
-      }
-    },
-    {
-      titleEn: "Autonomous Trading Algorithm Research",
-      titleKo: "자율 거래 알고리즘 연구",
-      period: "2024-06-01 – 2025-05-31",
-      fundingAgency: "LG CNS",
-      amount: "₩280,000,000",
-      keywords: ["ALGO TRADING", "AUTONOMOUS", "RESEARCH"],
-      type: "private",
-      roles: {
-        principalInvestigator: "Prof. Jisoo Park",
-        leadResearcher: "Hyeonwoo Lee",
-        researchers: ["Yerin Kim", "Soyeon Kang"]
-      }
-    },
-    {
-      titleEn: "Educational Data Mining for Student Performance Prediction",
-      titleKo: "학생 성과 예측을 위한 교육 데이터 마이닝",
-      period: "2023-03-01 – 2024-02-29",
-      fundingAgency: "Ministry of Education",
-      amount: "₩95,000,000",
-      keywords: ["DATA MINING", "EDUCATION", "PREDICTION"],
-      type: "public",
-      roles: {
-        principalInvestigator: "Prof. Minkyung Seo",
-        leadResearcher: "Garam Choi",
-        researchers: ["Somin Lee"]
-      }
-    },
-    {
-      titleEn: "High-Frequency Trading Strategy Optimization",
-      titleKo: "고빈도 거래 전략 최적화",
-      period: "2024-07-01 – 2025-06-30",
-      fundingAgency: "Hyundai Securities",
-      amount: "₩350,000,000",
-      keywords: ["HFT", "OPTIMIZATION", "STRATEGY"],
-      type: "private",
-      roles: {
-        principalInvestigator: "Prof. Jungho Park",
-        leadResearcher: "Gyuri Kim",
-        researchers: ["Seoyeon Lee", "Jiwon Park"]
-      }
-    },
-    {
-      titleEn: "Smart Contract Security Auditing Framework",
-      titleKo: "스마트 컨트랙트 보안 감사 프레임워크",
-      period: "2024-02-01 – 2024-12-31",
-      fundingAgency: "SK Telecom",
-      amount: "₩195,000,000",
-      keywords: ["SMART CONTRACT", "SECURITY", "AUDIT"],
-      type: "private",
-      roles: {
-        principalInvestigator: "Prof. Hyungjin Lee",
-        leadResearcher: "Yoonseo Kang",
-        researchers: ["Eunji Park"]
       }
     }
   ];
@@ -448,13 +327,12 @@ permalink: /projects.html
     const lead= r.leadResearcher ? esc(r.leadResearcher) : '—';
     const res = (r.researchers && r.researchers.length) ? r.researchers.map(esc).join(', ') : '—';
 
-    // Border emphasis by status
-    const borderColor = (status === 'ongoing') ? '#111827' : '#e5e7eb';
+    const outerClass = project.type === 'private' ? 'card--private' : 'card--public';
     const notchColor  = fundingColor;
 
     return `
-      <article class="card">
-        <div class="inner" style="border-color:${borderColor}">
+      <article class="card ${outerClass}">
+        <div class="inner">
           <div class="type-notch" style="background:${notchColor}"></div>
           <div class="body">
             <!-- Status Badges (funding + status) -->
@@ -472,7 +350,7 @@ permalink: /projects.html
             <div class="project-title-en">${esc(project.titleEn)}</div>
             <div class="project-title-ko"><span class="ko">${esc(project.titleKo)}</span></div>
 
-            <!-- Meta -->
+            <!-- Meta (grid with extra spacing between label and value) -->
             <div class="meta-info">
               <div class="meta-item">
                 <span class="meta-label">Period</span>
@@ -517,7 +395,9 @@ permalink: /projects.html
   }
 
   /* ===== Init ===== */
+  const qInput = document.getElementById('q');
   qInput.addEventListener('input', (e) => { q = e.target.value; render(); });
+
   buildChips();
   render();
 })();
