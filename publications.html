@@ -293,6 +293,7 @@ permalink: /publications.html
     --joint-orange: 217,119,6;
     --book-pink: rgb(220, 38, 38);
     --report-pink: rgb(251, 113, 133);
+    --thesis-black: rgb(17, 24, 39);
   }
 
   /* Authorship Legend Section */
@@ -465,6 +466,7 @@ permalink: /publications.html
   .chip-conference.is-on { background: var(--conference-red); color: #fff; }
   .chip-book.is-on { background: var(--book-pink); color: #fff; }
   .chip-report.is-on { background: var(--report-pink); color: #fff; }
+  .chip-thesis.is-on { background: var(--thesis-black); color: #fff; }
 
   /* Year sections */
   .year-section {
@@ -533,6 +535,7 @@ permalink: /publications.html
   .paper-left.conference { background: var(--conference-red); }
   .paper-left.book { background: var(--book-pink); color: #fff; }
   .paper-left.report { background: var(--report-pink); color: #fff; }
+  .paper-left.thesis { background: var(--thesis-black); color: #fff; }
   .paper-left.preprint { background: #e5e7eb; color: #6b7280; }
   .paper-left.empty { background: #f1f5f9; color: #e5e7eb; }
 
@@ -749,6 +752,7 @@ permalink: /publications.html
   .idx-joint-conf { background: rgba(217,119,6,.85); color: #fff; }
   .idx-book { background: var(--book-pink); color: #fff; }
   .idx-report { background: var(--report-pink); color: #fff; }
+  .idx-thesis { background: var(--thesis-black); color: #fff; }
   .idx-preprint, .idx-working { background: #fff; border: 1px solid #e5e7eb; color: #6b7280; }
 
   /* Buttons */
@@ -916,14 +920,11 @@ permalink: /publications.html
 <!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div style="position: relative;">
-      <div class="search-container">
-        <div class="search">
-          <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
-        </div>
-        <div class="count" id="count"></div>
+    <div class="search-container">
+      <div class="search">
+        <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
       </div>
-      <button id="clearAllFilters" style="position: absolute; top: 0; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
+      <div class="count" id="count"></div>
     </div>
   </div>
 </section>
@@ -1003,8 +1004,9 @@ permalink: /publications.html
 <!-- ===== Filter Sections ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
-    <div class="filter-section">
+    <div class="filter-section" style="position: relative;">
       <label class="filter-label">Publication Type</label>
+      <button id="clearAllFilters" style="position: absolute; top: -8px; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
       <div class="chips" id="typeChips"></div>
     </div>
 
@@ -1041,11 +1043,20 @@ permalink: /publications.html
     const words = (str || '').split(' ');
     
     return words.map((word, index) => {
-      if (word === word.toUpperCase() && word.length > 1) return word;
+      // Skip if already uppercase abbreviation (like SCIE, KCI, etc.)
+      if (word === word.toUpperCase() && word.length > 1 && /^[A-Z]+$/.test(word)) return word;
+      
+      // Always capitalize first and last word
       if (index === 0 || index === words.length - 1) {
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
       }
-      if (lowercaseWords.includes(word.toLowerCase())) return word.toLowerCase();
+      
+      // Check if it's a lowercase word
+      if (lowercaseWords.includes(word.toLowerCase())) {
+        return word.toLowerCase();
+      }
+      
+      // Capitalize normally
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     }).join(' ');
   }
@@ -1107,7 +1118,8 @@ permalink: /publications.html
       {value: "journal", label: "Journal"},
       {value: "conference", label: "Conference"},
       {value: "book", label: "Book"},
-      {value: "report", label: "Report"}
+      {value: "report", label: "Report"},
+      {value: "thesis", label: "Thesis / Dissertation"}
     ],
     journal: [
       {value: "SCIE", label: "SCIE"},
@@ -1121,6 +1133,7 @@ permalink: /publications.html
       {value: "Other Domestic", label: "Other Domestic"},
       {value: "Book", label: "Book"},
       {value: "Report", label: "Report"},
+      {value: "Thesis / Dissertation", label: "Thesis / Dissertation"},
       {value: "Preprint", label: "Preprint"},
       {value: "Working Paper", label: "Working Paper"}
     ],
@@ -1260,6 +1273,7 @@ permalink: /publications.html
       "Other Domestic": "idx-other-domestic",
       "Book": "idx-book",
       "Report": "idx-report",
+      "Thesis / Dissertation": "idx-thesis",
       "Preprint": "idx-preprint",
       "Working Paper": "idx-working"
     };
@@ -1296,12 +1310,16 @@ permalink: /publications.html
     
     if (pub.indexing_group === "International - Domestic Joint Conference") {
       leftClass = 'conference';
+    } else if (pub.type === "thesis") {
+      leftClass = 'thesis';
     } else if (pub.type === "report") {
       leftClass = 'report';
     } else if (pub.type === "book") {
       leftClass = 'book';
     } else if (pub.indexing_group === "Preprint") {
       leftClass = 'preprint';
+    } else if (pub.indexing_group === "Thesis / Dissertation") {
+      leftClass = 'thesis';
     } else {
       leftClass = pub.type;
     }
@@ -1310,10 +1328,10 @@ permalink: /publications.html
     const langMode = determineLanguageMode(pub);
     const useKorean = (langMode === 'korean');
 
-    // For KCI journals, even if title is English, use Korean for authors/venue
+    // Apply Title Case to titles and venues
     const lang = pub.language || 'English';
-    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : pub.title;
-    const displayVenue = (useKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
+    const displayTitle = toTitleCase((useKorean && pub.title_ko) ? pub.title_ko : pub.title);
+    const displayVenue = toTitleCase((useKorean && pub.venue_ko) ? pub.venue_ko : pub.venue);
     
     const authors = (pub.authors || []).map((id, idx) => {
       const name = getAuthorName(id, useKorean);
@@ -1394,15 +1412,19 @@ permalink: /publications.html
     if (filtered.length === 0) {
       pubWrap.innerHTML = `<div class="empty-state">No publications found. Try adjusting your search or filters.</div>`;
     } else {
-      // Get current year
+      // Check if any filter is active (excluding search)
+      const hasActiveFilters = onFilters.type.size > 0 || 
+                              onFilters.journal.size > 0 || 
+                              onFilters.conference.size > 0;
+      
+      // Get current year for default expansion
       const currentYear = new Date().getFullYear();
-      // Find the most recent year that has publications (could be current year or earlier)
-      const mostRecentYear = years[0]; // years are already sorted descending
+      const mostRecentYear = years[0];
       
       pubWrap.innerHTML = years.map(y => {
         const items = filtered.filter(p => p.year === y);
-        // Only expand the most recent year, collapse all others
-        const shouldCollapse = y !== mostRecentYear;
+        // If filters are active, expand all; otherwise only expand most recent year
+        const shouldCollapse = hasActiveFilters ? false : (y !== mostRecentYear);
         
         return `
           <div class="year-section">
@@ -1529,4 +1551,15 @@ permalink: /publications.html
   /* ===== Init ===== */
   buildChips();
   render();
+  
+  // Clear all filters button
+  document.getElementById('clearAllFilters').onclick = () => {
+    onFilters.type.clear();
+    onFilters.journal.clear();
+    onFilters.conference.clear();
+    searchInput.value = '';
+    q = '';
+    buildChips();
+    render();
+  };
 </script>
