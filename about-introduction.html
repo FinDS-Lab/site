@@ -238,14 +238,14 @@ function generateDiamondNetwork() {
   @media (max-width: 768px){ .content-section { padding: 1.5rem; min-height: var(--banner-h-md); } }
   @media (max-width: 480px){ .content-section { min-height: var(--banner-h-sm); } }
 
-  /* Text Styles - 한글/영어 모두 단어 단위 줄바꿈 개선 */
+  /* Text Styles - 한글/영어 모두 단어 단위 줄바꿈 */
   .intro-text { 
     font-size: 17px; 
     line-height: 2; 
     color: #374151; 
     margin-bottom: 20px; 
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   .intro-text:last-child { margin-bottom: 0; }
 
@@ -255,13 +255,11 @@ function generateDiamondNetwork() {
     color: var(--red); 
     padding: 0 2px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
   }
   .highlight-gold { 
     color: var(--gold); 
     font-weight: 900;
     word-break: keep-all;
-    overflow-wrap: anywhere;
   }
 
   /* Concept Cards */
@@ -293,14 +291,14 @@ function generateDiamondNetwork() {
     color: #111827; 
     margin-bottom: 8px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   .concept-subtitle { 
     font-size: 13px; 
     color: #9ca3af; 
     font-weight: 600;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
 
   /* Vision Container */
@@ -367,7 +365,7 @@ function generateDiamondNetwork() {
     margin-bottom: 16px;
     text-shadow: 0 2px 8px rgba(0,0,0,.1);
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   
   .vision-main-text {
@@ -377,7 +375,7 @@ function generateDiamondNetwork() {
     max-width: 700px;
     margin: 0 auto;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   
   .vision-main-text b {
@@ -387,7 +385,6 @@ function generateDiamondNetwork() {
     padding: 2px 6px;
     border-radius: 4px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
   }
   
   .vision-toggle-icon {
@@ -493,7 +490,7 @@ function generateDiamondNetwork() {
     margin-bottom: 10px;
     line-height: 1.4;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   
   .vision-p {
@@ -501,14 +498,13 @@ function generateDiamondNetwork() {
     line-height: 1.75;
     color: var(--slate);
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    word-wrap: break-word;
   }
   
   .vision-p b {
     color: var(--gold-dark);
     font-weight: 700;
     word-break: keep-all;
-    overflow-wrap: anywhere;
   }
   
   .vision-p i {
@@ -635,7 +631,7 @@ function generateDiamondNetwork() {
 
       <article class="vision-item">
         <span class="vision-kicker">Philosophy</span>
-        <h3 class="vision-h">We are guided by l'avenir lucide</h3>
+        <h3 class="vision-h">We are guided by "l'avenir lucide" (the lucid future)</h3>
         <p class="vision-p">
           We are guided by the <b>lucid future</b>—<b>clarity, discernment, and transparency</b>—as we illuminate complexity,
           making finance more <b>equitable and transformative</b> on a global scale.
