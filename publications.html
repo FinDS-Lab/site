@@ -203,7 +203,93 @@ function generateDiamondNetwork() {
   :root{
     --journal-gold: rgb(214, 177, 77);
     --conference-red: rgb(172, 14, 14);
-    --joint-orange: 217,119,6; /* International–Domestic Joint Conf */
+    --joint-orange: 217,119,6;
+    --book-pink: rgb(220, 38, 38);
+    --report-pink: rgb(251, 113, 133);
+  }
+
+  /* Authorship Legend Section */
+  .authorship-legend {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .authorship-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+  }
+  
+  .authorship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  
+  .authorship-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+  
+  .authorship-item:hover {
+    background: #f3f4f6;
+    transform: translateX(2px);
+  }
+  
+  .authorship-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    font-weight: 900;
+    font-size: 12px;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  
+  .authorship-mark.asterisk {
+    font-size: 16px;
+    padding-bottom: 2px;
+  }
+  
+  .authorship-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  
+  .authorship-en {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+  }
+  
+  .authorship-ko {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    line-height: 1.3;
   }
 
   /* Toolbar */
@@ -229,6 +315,8 @@ function generateDiamondNetwork() {
   .chip:focus-visible{outline:2px solid #111827;outline-offset:2px;}
   .chip-journal.is-on{background:var(--journal-gold);color:#111;}
   .chip-conference.is-on{background:var(--conference-red);color:#fff;}
+  .chip-book.is-on{background:var(--book-pink);color:#fff;}
+  .chip-report.is-on{background:var(--report-pink);color:#fff;}
 
   /* Year sections */
   .year-section{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;margin-bottom:16px;}
@@ -247,13 +335,14 @@ function generateDiamondNetwork() {
   }
   .paper-left.journal{background:var(--journal-gold);color:#111;}
   .paper-left.conference{background:var(--conference-red);}
-  .paper-left.joint{background:rgba(var(--joint-orange), .95);} /* Joint Conf */
-  .paper-left.preprint{background:#e5e7eb;color:#6b7280;}     /* Preprint 회색 */
+  .paper-left.book{background:var(--book-pink);color:#fff;}
+  .paper-left.report{background:var(--report-pink);color:#fff;}
+  .paper-left.preprint{background:#e5e7eb;color:#6b7280;}
   .paper-left.empty{background:#f1f5f9;color:#e5e7eb;}
 
   .paper-body{padding:14px 16px;}
 
-  /* ===== Header & Badges (모바일 최적화) ===== */
+  /* Header & Badges */
   .paper-header{
     display:flex;
     align-items:flex-start;
@@ -276,9 +365,17 @@ function generateDiamondNetwork() {
     flex-shrink: 0;
   }
   
-  .badge-year{
-    display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;background:#111827;color:#fff;
+  .badge-lang{
+    display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;
     font-weight:800;font-size:11px;letter-spacing:.2px;white-space:nowrap;
+  }
+  
+  .badge-lang.english{
+    background:#002868;color:#fff;  /* USA flag blue */
+  }
+  
+  .badge-lang.korean{
+    background:#CD2E3A;color:#fff;  /* Korean Taegeukgi red */
   }
   
   .badge-pub{
@@ -304,10 +401,47 @@ function generateDiamondNetwork() {
   }
   
   .paper-venue{
-    margin-bottom:10px;color:#6b7280;font-size:12px;
+    margin-bottom:6px;color:#6b7280;font-size:12px;
     word-break: keep-all;
     overflow-wrap: anywhere;
     line-height: 1.4;
+  }
+  
+  .paper-details{
+    margin-bottom:10px;
+    font-size:11px;
+    color:#6b7280;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    line-height:1.4;
+  }
+  
+  .paper-detail-item{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+  
+  .paper-detail-item .label{
+    font-weight:700;
+    color:#9ca3af;
+  }
+  
+  .paper-detail-item .value{
+    font-weight:600;
+    color:#6b7280;
+  }
+  
+  .paper-detail-item.doi .value{
+    color:#2563eb;
+    text-decoration:none;
+    transition:all 0.2s;
+  }
+  
+  .paper-detail-item.doi .value:hover{
+    color:#1d4ed8;
+    text-decoration:underline;
   }
 
   .paper-foot{display:flex;gap:8px;}
@@ -325,7 +459,9 @@ function generateDiamondNetwork() {
   .idx-other-domestic{background:rgba(214,177,77,.15);color:#111;}
   .idx-intl-conf{background:rgba(172,14,14,.85);color:#fff;}
   .idx-domestic-conf{background:rgba(172,14,14,.45);color:#fff;}
-  .idx-joint-conf{background:rgba(var(--joint-orange), .85);color:#fff;}
+  .idx-joint-conf{background:rgba(217,119,6,.85);color:#fff;}
+  .idx-book{background:var(--book-pink);color:#fff;}
+  .idx-report{background:var(--report-pink);color:#fff;}
   .idx-preprint,.idx-working{background:#fff;border:1px solid #e5e7eb;color:#6b7280;}
 
   /* Buttons */
@@ -337,7 +473,7 @@ function generateDiamondNetwork() {
   .modal{background:#fff;border-radius:1rem;max-width:720px;width:100%;max-height:80vh;overflow:auto;}
   .modal header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #e5e7eb;background:#f8fafc;}
   .modal-title{font-size:18px;font-weight:900;color:#111827;}
-  .cite-block{border:1px solid #e5e7eb;border-radius:.75rem;padding:12px 14px;background:#f8fafc;}
+  .cite-block{border:1px solid #e5e7eb;border-radius:.75rem;padding:12px 14px;background:#f8fafc;margin-bottom:12px;}
   .cite-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
   .cite-label{font-weight:800;font-size:13px;color:#111827;}
   .cite-text{font-size:13px;color:#374151;line-height:1.5;}
@@ -347,17 +483,17 @@ function generateDiamondNetwork() {
   /* Empty */
   .empty-state{padding:48px 20px;text-align:center;color:#6b7280;font-size:14px;font-weight:600;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff;margin-top:20px;}
 
-  /* ===== Readability for custom superscripts ===== */
+  /* Readability for custom superscripts */
   .paper-meta sup{
-      font-size: 0.65em;       /* 더 작게 */
-      margin-left: 1px;        /* 이름과 거의 붙게 */
+      font-size: 0.65em;
+      margin-left: 1px;
       color:#6b7280;
       font-weight:600;
-      vertical-align: baseline; /* baseline에 맞춰서 괴리 없게 */
+      vertical-align: baseline;
       line-height:1;
   }
 
-  /* ===== Mobile Tweaks ===== */
+  /* Mobile Tweaks */
   @media (max-width:640px){
     .search-container{flex-direction:column;align-items:stretch;}
     .search{width:100%;}
@@ -365,6 +501,14 @@ function generateDiamondNetwork() {
     .paper-row{grid-template-columns:48px 1fr;}
     .paper-title{font-size:14px;}
     .chip{font-size:11px;padding:.4rem .8rem;}
+    
+    .authorship-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .authorship-item {
+      padding: 10px;
+    }
     
     .paper-header{
       flex-direction:column;
@@ -379,19 +523,33 @@ function generateDiamondNetwork() {
       gap:6px;
     }
     
-    .badge-year{height:24px;padding:0 8px;font-size:10px;}
+    .badge-lang{height:24px;padding:0 8px;font-size:10px;}
     .badge-pub{height:24px;padding:0 8px;font-size:9px;gap:3px;}
   }
 
-  /* 아주 좁은 화면에서 Published 라벨 감추기 (날짜만 노출) */
   @media (max-width:380px){
     .badge-pub .lbl{display:none;}
     .badge-pub{gap:0;padding:0 6px;}
-    .badge-year{font-size:9px;padding:0 6px;}
+    .badge-lang{font-size:9px;padding:0 6px;}
+    
+    .authorship-mark {
+      min-width: 24px;
+      height: 24px;
+      font-size: 10px;
+      margin-right: 8px;
+    }
+    
+    .authorship-en {
+      font-size: 11px;
+    }
+    
+    .authorship-ko {
+      font-size: 10px;
+    }
   }
 </style>
 
-<!-- ===== Toolbar (Search + Filters) ===== -->
+<!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
   <div class="toolbar">
     <div class="search-container">
@@ -400,7 +558,77 @@ function generateDiamondNetwork() {
       </div>
       <div class="count" id="count"></div>
     </div>
+  </div>
+</section>
 
+<!-- ===== Authorship Legend ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="authorship-legend">
+    <h3 class="authorship-title">Authorship Remarks</h3>
+    <div class="authorship-grid">
+      <div class="authorship-item">
+        <span class="authorship-mark">P</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Principal Investigator</span>
+          <span class="authorship-ko">연구 책임자</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">L</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Leading Researcher</span>
+          <span class="authorship-ko">책임 연구원</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">R</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Researcher</span>
+          <span class="authorship-ko">참여 연구원</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">A</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Advisor (Thesis / Dissertation)</span>
+          <span class="authorship-ko">지도교수 (학위논문)</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">1</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">First Author</span>
+          <span class="authorship-ko">제1저자</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">2</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Second Author / Co-author</span>
+          <span class="authorship-ko">제2저자 / 공동저자</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark">3</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Third Author</span>
+          <span class="authorship-ko">제3저자</span>
+        </div>
+      </div>
+      <div class="authorship-item">
+        <span class="authorship-mark asterisk">*</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Corresponding Author</span>
+          <span class="authorship-ko">교신저자</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Filter Sections ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="toolbar">
     <div class="filter-section">
       <label class="filter-label">Publication Type</label>
       <div class="chips" id="typeChips"></div>
@@ -428,118 +656,232 @@ function generateDiamondNetwork() {
       <h3 class="modal-title">Citation Formats</h3>
       <button id="btnCloseCite" class="copy-btn">Close</button>
     </header>
-    <div class="p-4 space-y-3" id="citeBody"></div>
+    <div class="p-4" id="citeBody"></div>
   </div>
 </div>
 
 <!-- ===== Load global AUTHORS from include ===== -->
-{% include authors-data.html %}
+<script>
+  const AUTHORS = {
+    1:{en:"Insu Choi",ko:"최인수"},
+    2:{en:"Woosung Koh",ko:"고우성"},
+    3:{en:"Minhyuk Lee",ko:"이민혁"},
+    4:{en:"Taekyu Lee",ko:"이태규"},
+    5:{en:"Seungpyo Park",ko:"박승표"},
+    6:{en:"Kyungsung Shin",ko:"신경성"},
+    7:{en:"Soyoung Lee",ko:"이소영"},
+    8:{en:"Woochangkim Kim",ko:"김우창"},
+    9:{en:"Jiho Kim",ko:"김지호"},
+    10:{en:"Minseok Kim",ko:"김민석"},
+    11:{en:"Woosang Lim",ko:"임우상"},
+    12:{en:"Doyoung Lee",ko:"이도영"},
+    13:{en:"Taechan Ahn",ko:"안태찬"},
+    14:{en:"Geonhee Kang",ko:"강건희"},
+    15:{en:"Yedam Jang",ko:"장예담"},
+    16:{en:"Jinwoo Choi",ko:"최진우"},
+    17:{en:"Wonmin Choi",ko:"최원민"},
+    18:{en:"Joonhyup Lee",ko:"이준협"},
+    19:{en:"Younghwan Cho",ko:"조영환"},
+    20:{en:"Hyunsoo Choi",ko:"최현수"},
+    21:{en:"Wonje Yun",ko:"윤원제"},
+    22:{en:"Sukyeon Park",ko:"박수견"},
+    23:{en:"Chaeyeon Lee",ko:"이채연"},
+    24:{en:"Ahwon Kim",ko:"김아원"},
+    25:{en:"Eunsoo Choi",ko:"최은수"},
+    26:{en:"Soohyeong Kim",ko:"김수형"},
+    27:{en:"Kyoungryeong Min",ko:"민경영"},
+    28:{en:"Joonwoo Bae",ko:"배준우"},
+    29:{en:"Kyoungwoon Jeong",ko:"정경운"},
+    30:{en:"Jiseon Shin",ko:"신지선"},
+    31:{en:"Dongin Lee",ko:"이동인"},
+    32:{en:"Jinho Yoon",ko:"윤진호"},
+    33:{en:"Seongpil Park",ko:"박성필"},
+    34:{en:"Woochang Kim",ko:"김우창"},
+    35:{en:"Jihee Kim",ko:"김지희"},
+    36:{en:"Chunghwan Lee",ko:"이충환"},
+    37:{en:"Meeyoung Cha",ko:"차미영"},
+    38:{en:"Hyungryul Bae",ko:"배형립"},
+    39:{en:"Hyoungjun Yoon",ko:"윤형준"},
+    40:{en:"Hyungyu Jeong",ko:"정현규"},
+    41:{en:"Yejin Kim",ko:"김예진"},
+    42:{en:"Seokhwan Choi",ko:"최석환"}
+  };
+</script>
 
 <script>
-  /* ===== Data (Accepted → Published, Abstract 제거)
-     author_marks: 저자 배열과 동일한 길이의 문자열 배열.
-     예) ["*", "1", "2", "A"] 처럼 자유롭게 표기 가능. 비우면 표시 안 함. ===== */
+  /* ===== Title Case Function ===== */
+  function toTitleCase(str) {
+    // Articles, conjunctions, and prepositions that should be lowercase (unless first/last)
+    const lowercaseWords = ['a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 
+                            'in', 'into', 'nor', 'of', 'on', 'or', 'the', 'to', 'via', 'with'];
+    
+    // Split by spaces and process each word
+    const words = str.split(' ');
+    
+    return words.map((word, index) => {
+      // Keep acronyms and already capitalized abbreviations as-is
+      if (word === word.toUpperCase() && word.length > 1) return word;
+      
+      // First and last words are always capitalized
+      if (index === 0 || index === words.length - 1) {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }
+      
+      // Check if it's a minor word that should be lowercase
+      if (lowercaseWords.includes(word.toLowerCase())) {
+        return word.toLowerCase();
+      }
+      
+      // Capitalize first letter, lowercase rest
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+  }
+
+  /* ===== Data (with title case applied) ===== */
   const PUBS = [
-    {year:2024,code_label:"J1",indexing_group:"SCIE",type:"journal",
-     title:"Deep Reinforcement Learning for Automated Trading in Financial Markets",
-     authors:[1,2,3], author_marks:["*", "1", "2"],
-     venue:"IEEE Transactions on Neural Networks and Learning Systems",
-     published_date:"2024-03-15"},
-    {year:2024,code_label:"C1",indexing_group:"International Conference",type:"conference",
-     title:"Graph Neural Networks for Portfolio Optimization",
-     authors:[4,5,6], author_marks:["A","B","C"],
-     venue:"International Conference on Machine Learning (ICML)",
-     published_date:"2024-02-20"},
-    {year:2024,code_label:"CJ1",indexing_group:"International - Domestic Joint Conference",type:"conference",
-     title:"Bridging Markets: Joint Evidence from Domestic and International Trading Venues",
-     authors:[1,7,10], author_marks:["†","1","2"],
-     venue:"Joint Finance & Data Science Symposium",
-     published_date:"2024-06-10"},
-    {year:2024,code_label:"J2",indexing_group:"SSCI",type:"journal",
-     title:"ESG Factors and Corporate Financial Performance: Evidence from Machine Learning",
-     authors:[3,1,8], author_marks:["*","†",""],
-     venue:"Journal of Corporate Finance",
-     published_date:"2024-08-12"},
-    {year:2024,code_label:"C2",indexing_group:"Domestic Conference",type:"conference",
-     title:"한국 주식시장에서의 감정분석 기반 투자전략 연구",
-     authors:[2,9,1], author_marks:["*","1","2"],
-     venue:"한국데이터마이닝학회 추계학술대회",
+    // 2025 International Journals
+    {year:2025,code_label:"J18",indexing_group:"SCIE",type:"journal", language:"English",
+     title:"Symmetry-Aware Graph Neural Approaches for Data-Efficient Return Prediction in International Financial Market Indices",
+     authors:[4,1,8], author_marks:["1","1,*","*"],
+     venue:"Symmetry",
+     published_date:"2025-08-22"},
+    {year:2025,code_label:"J17",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"Deciphering the Impact of COVID-19 on Korean Sector ETFs: Insights from an ARIMAX and Granger Causality",
+     authors:[1,4,5,6,7,8], author_marks:["1","1","1","1","1","*"],
+     venue:"Systems",
+     published_date:"2025-08-09"},
+    {year:2025,code_label:"J16",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"Predicting Mobile Payment Behavior Through Explainable Machine Learning and Application Usage Analysis",
+     authors:[3,1,8], author_marks:["1,*","1","2"],
+     venue:"Journal of Theoretical and Applied Electronic Commerce Research",
+     published_date:"2025-05-30"},
+    {year:2025,code_label:"J15",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"A Multifaceted Graph-Wise Network Analysis of Sector-Based Financial Instruments' Price-Based Discrepancies with Diverse Statistical Interdependencies",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"North American Journal of Economics and Finance",
+     published_date:"2025-01-01"},
+    
+    // 2024 International Journals
+    {year:2024,code_label:"J14",indexing_group:"SCIE",type:"journal", language:"English",
+     title:"Unlocking ETF Price Forecasting: Exploring the Interconnections with Statistical Dependence-Based Graphs and xAI Techniques",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"Knowledge-Based Systems",
+     published_date:"2024-12-01"},
+    {year:2024,code_label:"J13",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"A Temporal Information Transfer Network Approach Considering Federal Funds Rate for an Interpretable Asset Fluctuation Prediction Framework",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"International Review of Economics & Finance",
+     published_date:"2024-11-01"},
+    {year:2024,code_label:"J12",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"Practical Forecasting of Risk Boundaries for Industrial Metals and Critical Minerals via Statistical Machine Learning Techniques",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"International Review of Financial Analysis",
+     published_date:"2024-07-01"},
+    {year:2024,code_label:"J11",indexing_group:"SCIE",type:"journal", language:"English",
+     title:"An Explainable Prediction for Dietary-Related Diseases via Language Models",
+     authors:[1,9,8], author_marks:["1","*","*"],
+     venue:"Nutrients",
+     published_date:"2024-02-28"},
+    {year:2024,code_label:"J10",indexing_group:"SCIE",type:"journal", language:"English",
+     title:"Enhancing Exchange-Traded Fund Price Predictions: Insights from Information-Theoretic Networks and Node Embeddings",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"Entropy",
+     published_date:"2024-01-12"},
+    {year:2024,code_label:"J9",indexing_group:"SCIE",type:"journal", language:"English",
+     title:"Network-Based Exploratory Data Analysis and Explainable Three-Stage Deep Clustering for Financial Customer Profiling",
+     authors:[1,2,15,8], author_marks:["1","1","1","*"],
+     venue:"Engineering Applications of Artificial Intelligence",
+     published_date:"2024-02-01"},
+    
+    // 2024 International Conferences  
+    {year:2024,code_label:"C7",indexing_group:"International Conference",type:"conference", language:"English",
+     title:"Encoding Temporal Statistical-Space Priors via Augmented Representation Under Data Scarcity",
+     authors:[1,2,14,15,8], author_marks:["1","1","2","2","*"],
+     venue:"3rd International Workshop on Spatio-Temporal Reasoning and Learning (STRL 2024), IJCAI 2024",
+     published_date:"2024-08-05"},
+    {year:2024,code_label:"C6",indexing_group:"International Conference",type:"conference", language:"English",
+     title:"A Transparent Single Financial Asset Trading Framework via Reinforcement Learning",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"10th International Conference on E-Business and Applications (ICEBA 2024)",
+     published_date:"2024-02-28"},
+    {year:2024,code_label:"C5",indexing_group:"International Conference",type:"conference", language:"English",
+     title:"Curriculum Learning and Imitation Learning for Model-Free Control on Financial Time-Series",
+     authors:[2,1,15,14,8], author_marks:["1","1","1","2","*"],
+     venue:"AI for Time Series Analysis (AI4TS) Workshop, AAAI 2024",
+     published_date:"2024-02-26"},
+    {year:2024,code_label:"C4",indexing_group:"International Conference",type:"conference", language:"English",
+     title:"An Iridescent Insight of Statistical Interdependencies of Financial Markets",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"11th IEEE International Conference on Big Data and Smart Computing (IEEE BigComp 2024)",
+     published_date:"2024-02-19"},
+     
+    // 2024 International-Domestic Joint Conferences
+    {year:2024,code_label:"C3",indexing_group:"International - Domestic Joint Conference",type:"conference", language:"Korean",
+     title:"금융 시장 하방 위험의 예측을 위한 조건부 정보 전이 그래프의 활용",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"2024 한국경영정보학회 추계국제학술대회",
      published_date:"2024-11-15"},
-    {year:2023,code_label:"J3",indexing_group:"SSCI",type:"journal",
-     title:"Behavioral Finance and Machine Learning: A Systematic Review",
-     authors:[7,8,9], author_marks:["*","",""],
-     venue:"Journal of Financial Economics",
-     published_date:"2023-11-10"},
-    {year:2023,code_label:"J4",indexing_group:"Scopus",type:"journal",
-     title:"Quantum Computing Applications in Risk Management",
-     authors:[10,11], author_marks:["1","2"],
-     venue:"Quantitative Finance",
-     published_date:"2023-09-05"},
-    {year:2023,code_label:"C3",indexing_group:"International Conference",type:"conference",
-     title:"Transformer-based Financial Time Series Prediction with Attention Mechanisms",
-     authors:[5,1,4], author_marks:["*","†",""],
-     venue:"Neural Information Processing Systems (NeurIPS)",
-     published_date:"2023-12-08"},
-    {year:2023,code_label:"J5",indexing_group:"KCI Excellent",type:"journal",
-     title:"빅데이터를 활용한 한국 부동산시장 예측모형 개발",
-     authors:[6,2,7], author_marks:["*","1","2"],
-     venue:"한국금융공학회지",
-     published_date:"2023-07-20"},
-    {year:2023,code_label:"P1",indexing_group:"Preprint",type:"other",
-     title:"Large Language Models for Financial Text Analysis",
-     authors:[1,11], author_marks:["*","1"],
-     venue:"arXiv preprint arXiv:2309.12345",
-     published_date:"2023-09-20"},
-    {year:2022,code_label:"J6",indexing_group:"KCI Excellent",type:"journal",
-     title:"Korean Stock Market Prediction Using LSTM Networks",
-     authors:[1,4,6], author_marks:["*","1","2"],
-     venue:"Korean Journal of Financial Studies",
-     published_date:"2022-12-01"},
-    {year:2022,code_label:"C4",indexing_group:"International Conference",type:"conference",
-     title:"Multi-Agent Reinforcement Learning for Algorithmic Trading",
-     authors:[3,5,1], author_marks:["*","1","†"],
-     venue:"International Conference on Artificial Intelligence and Finance (ICAIF)",
-     published_date:"2022-10-26"},
-    {year:2022,code_label:"J7",indexing_group:"SCIE",type:"journal",
-     title:"Feature Engineering for High-Frequency Trading Using Deep Learning",
-     authors:[8,1,2], author_marks:["*","†",""],
-     venue:"Expert Systems with Applications",
-     published_date:"2022-05-18"},
-    {year:2021,code_label:"J8",indexing_group:"SSCI",type:"journal",
-     title:"Credit Risk Assessment Using Ensemble Machine Learning Methods",
-     authors:[1,9,3], author_marks:["*","1","2"],
-     venue:"Journal of Banking & Finance",
-     published_date:"2021-09-14"},
-    {year:2021,code_label:"C5",indexing_group:"Domestic Conference",type:"conference",
-     title:"딥러닝 기반 포트폴리오 최적화 시스템 개발",
-     authors:[4,1,6], author_marks:["*","†",""],
-     venue:"한국정보과학회 가을학술발표회",
-     published_date:"2021-11-18"},
-    {year:2021,code_label:"J9",indexing_group:"KCI Accredited",type:"journal",
-     title:"금융시장 이상탐지를 위한 오토인코더 기반 접근법",
-     authors:[7,5,1], author_marks:["*","1","†"],
-     venue:"한국경영과학회지",
-     published_date:"2021-06-30"},
-    {year:2020,code_label:"W1",indexing_group:"Working Paper",type:"other",
-     title:"COVID-19 Impact on Global Financial Markets: A Data-Driven Analysis",
-     authors:[1,2,8,9], author_marks:["*","1","2","3"],
-     venue:"FINDS Lab Working Paper Series",
-     published_date:"2020-12-15"},
-    {year:2020,code_label:"J10",indexing_group:"Other International",type:"journal",
-     title:"Blockchain Technology Applications in Financial Services",
-     authors:[6,3,1], author_marks:["*","1","†"],
-     venue:"International Journal of Financial Technology",
-     published_date:"2020-08-22"}
+    {year:2024,code_label:"C2",indexing_group:"International - Domestic Joint Conference",type:"conference", language:"Korean",
+     title:"금융 시계열 예측에서의 선형 및 비선형 통계적 상호 의존성 기반의 시공간 그래프 활용에 대한 연구",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"2024 한국지능정보시스템학회 추계국제학술대회",
+     published_date:"2024-11-01"},
+    
+    // 2023 Publications
+    {year:2023,code_label:"J8",indexing_group:"Other International",type:"journal", language:"English",
+     title:"Enhancing Financial Literacy in South Korea: Integrating AI and Data Visualization to Understand Financial Instruments' Interdependencies",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"Societal Impacts",
+     published_date:"2023-12-01"},
+    {year:2023,code_label:"J7",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"Estimating Historical Downside Risks of Global Financial Market Indices via Inflation Rate-Adjusted Dependence Graphs",
+     authors:[1,8], author_marks:["1","*"],
+     venue:"Research in International Business and Finance",
+     published_date:"2023-10-01"},
+    {year:2023,code_label:"J6",indexing_group:"SSCI",type:"journal", language:"English",
+     title:"Elucidating Directed Statistical Dependencies: Investigating Global Financial Market Indices' Influence on Korean Short Selling Activities",
+     authors:[1,3,9,8], author_marks:["1","1","2","*"],
+     venue:"Pacific-Basin Finance Journal",
+     published_date:"2023-06-01"},
+    {year:2023,code_label:"C1",indexing_group:"International Conference",type:"conference", language:"English",
+     title:"Hard Voting-Based Long-Short Portfolio Generation with Machine Learning Techniques and Technical Indicators",
+     authors:[1,16,17,8], author_marks:["1","1","1","*"],
+     venue:"24th International Symposium on Advanced Intelligent Systems (ISIS 2023)",
+     published_date:"2023-12-07"},
+    
+    // Books
+    {year:2020,code_label:"B2",indexing_group:"Book",type:"book", language:"Korean",
+     title:"나만의 학생 포트폴리오 만들기: 컨셉부터 대회까지",
+     authors:[1], author_marks:["1"],
+     venue:"위키독스",
+     published_date:"2020-06-14"},
+    {year:2019,code_label:"B1",indexing_group:"Book",type:"book", language:"Korean",
+     title:"UNLOCK 혁명: 데이터·AI, 세상을 바꾸다",
+     authors:[25,26,27,28,29,30,31,32,33,34,35,36,37,38,1,39,40,41], author_marks:["1","R","R","R","R","R","R","R","P","P","P","P","P","R","R","R","R","R"],
+     venue:"매경출판",
+     published_date:"2019-11-28"}
   ];
 
   /* ===== Filters ===== */
   const FILTER_GROUPS = {
-    type:[{value:"journal",label:"Journal"},{value:"conference",label:"Conference"}],
+    type:[
+      {value:"journal",label:"Journal"},
+      {value:"conference",label:"Conference"},
+      {value:"book",label:"Book"},
+      {value:"report",label:"Report"}
+    ],
     journal:[
-      {value:"SCIE",label:"SCIE"},{value:"SSCI",label:"SSCI"},{value:"A&HCI",label:"A&HCI"},
-      {value:"Scopus",label:"Scopus"},{value:"Other International",label:"Other International"},
-      {value:"KCI Excellent",label:"KCI Excellent"},{value:"KCI Accredited",label:"KCI Accredited"},
-      {value:"Other Domestic",label:"Other Domestic"},{value:"Preprint",label:"Preprint"},
+      {value:"SCIE",label:"SCIE"},
+      {value:"SSCI",label:"SSCI"},
+      {value:"A&HCI",label:"A&HCI"},
+      {value:"Scopus",label:"Scopus"},
+      {value:"Other International",label:"Other International"},
+      {value:"KCI Excellent",label:"KCI Excellent"},
+      {value:"KCI Accredited",label:"KCI Accredited"},
+      {value:"Other Domestic",label:"Other Domestic"},
+      {value:"Book",label:"Book"},
+      {value:"Report",label:"Report"},
+      {value:"Preprint",label:"Preprint"},
       {value:"Working Paper",label:"Working Paper"}
     ],
     conference:[
@@ -567,11 +909,12 @@ function generateDiamondNetwork() {
     if(!useDomestic && a.en) return a.en;
     return a.en || a.ko || `Author ${authorId}`;
   }
+  
   function isDomesticPublication(indexing){
-    // Joint Conference는 국제 표기 강제 (영문)
     if(indexing === "International - Domestic Joint Conference") return false;
     return indexing.includes("KCI") || indexing.includes("Domestic");
   }
+  
   function formatMDY(iso){
     if(!iso) return "";
     const d=new Date(iso+"T00:00:00");
@@ -614,6 +957,7 @@ function generateDiamondNetwork() {
       "International Conference":"idx-intl-conf","Domestic Conference":"idx-domestic-conf",
       "International - Domestic Joint Conference":"idx-joint-conf",
       "KCI Excellent":"idx-kci-exc","KCI Accredited":"idx-kci","Other Domestic":"idx-other-domestic",
+      "Book":"idx-book","Report":"idx-report",
       "Preprint":"idx-preprint","Working Paper":"idx-working"
     };
     return `idx ${map[group]||''}`;
@@ -621,12 +965,21 @@ function generateDiamondNetwork() {
 
   /* ===== Match ===== */
   function matches(pub){
-    if(onFilters.type.size>0 && !onFilters.type.has(pub.type)) return false;
+    // Check publication type filter
+    if(onFilters.type.size>0) {
+      // International - Domestic Joint Conference should count as conference
+      let pubType = pub.type;
+      if(pub.indexing_group === "International - Domestic Joint Conference") {
+        pubType = "conference";
+      }
+      if(!onFilters.type.has(pubType)) return false;
+    }
+    
+    // Check indexing filters
     const idxFilters=[...onFilters.journal,...onFilters.conference];
     if(idxFilters.length>0 && !idxFilters.includes(pub.indexing_group)) return false;
     if(!q) return true;
 
-    // 검색 시 Joint Conference는 영문명 강제
     const forceEnglish = (pub.indexing_group === "International - Domestic Joint Conference");
     const isDom = forceEnglish ? false : isDomesticPublication(pub.indexing_group);
     const names = pub.authors.map(id=>getAuthorName(id,isDom)).join(" ");
@@ -638,31 +991,61 @@ function generateDiamondNetwork() {
   function createCard(pub, key){
     const code=pub.code_label||"";
     let leftClass='';
-    if(pub.indexing_group==="Preprint") leftClass='preprint';
-    else if(pub.indexing_group==="International - Domestic Joint Conference") leftClass='joint';
-    else leftClass=pub.type;
+    
+    // Determine left class based on type and indexing
+    if(pub.indexing_group==="International - Domestic Joint Conference") {
+      leftClass='conference'; // Joint conference should use conference color
+    } else if(pub.type==="report") {
+      leftClass='report';
+    } else if(pub.type==="book") {
+      leftClass='book';
+    } else if(pub.indexing_group==="Preprint") {
+      leftClass='preprint';
+    } else {
+      leftClass=pub.type;
+    }
 
-    // Joint Conference는 영문명 강제
-    const forceEnglish = (pub.indexing_group === "International - Domestic Joint Conference");
-    const isDom = forceEnglish ? false : isDomesticPublication(pub.indexing_group);
+    // Determine language (use the language field)
+    const lang = pub.language || 'English';
+    const isKorean = lang === 'Korean';
+    
+    // Use Korean title if available and it's Korean publication
+    const displayTitle = (isKorean && pub.title_ko) ? pub.title_ko : pub.title;
+    
+    // Use Korean venue if available and it's Korean publication  
+    const displayVenue = (isKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
 
-    // ----- Author rendering with custom superscripts -----
+    // Author rendering with proper language based on publication language
     const authors = pub.authors.map((id, idx) => {
-      const name = getAuthorName(id, isDom);
+      const name = getAuthorName(id, isKorean); // Use Korean names for Korean publications
       const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
       const sup = mark ? `<sup>${String(mark)}</sup>` : "";
       return `${name}${sup}`;
     }).join(", ");
 
+    // Language badge instead of year
+    const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
+    
     const dateBadges = `
       <div class="badge-group">
-        <span class="badge-year">${pub.year}</span>
+        ${langBadge}
         ${pub.published_date ? `
           <span class="badge-pub">
             <span class="lbl">Published</span>
             <span class="val">${formatMDY(pub.published_date)}</span>
           </span>` : ``}
       </div>`;
+    
+    // Build citation details
+    let citationDetails = [];
+    if(pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
+    if(pub.issue) citationDetails.push(`<div class="paper-detail-item"><span class="label">No.</span><span class="value">${pub.issue}</span></div>`);
+    if(pub.pages) citationDetails.push(`<div class="paper-detail-item"><span class="label">pp.</span><span class="value">${pub.pages}</span></div>`);
+    if(pub.isbn) citationDetails.push(`<div class="paper-detail-item"><span class="label">ISBN</span><span class="value">${pub.isbn}</span></div>`);
+    if(pub.doi) citationDetails.push(`<div class="paper-detail-item doi"><span class="label">DOI</span><a href="https://doi.org/${pub.doi}" target="_blank" class="value">${pub.doi}</a></div>`);
+    
+    const detailsHtml = citationDetails.length > 0 ? 
+      `<div class="paper-details">${citationDetails.join('')}</div>` : '';
 
     return `
       <li class="paper-card">
@@ -673,9 +1056,10 @@ function generateDiamondNetwork() {
               <span class="indexing-badge ${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
               ${dateBadges}
             </div>
-            <h3 class="paper-title">${pub.title}</h3>
+            <h3 class="paper-title">${displayTitle}</h3>
             <div class="paper-meta">${authors}</div>
-            <div class="paper-venue">${pub.venue}</div>
+            <div class="paper-venue">${displayVenue}</div>
+            ${detailsHtml}
             <div class="paper-foot">
               <button class="btn" onclick='openCite(${JSON.stringify(pub)})'>Cite</button>
             </div>
@@ -732,14 +1116,28 @@ function generateDiamondNetwork() {
     return `${last}, ${initials}`;
   }
   function openCite(pub){
-    // 인용 포맷에는 위첨자/마크 제외 (영문 기준 이름 사용)
     const authorNames=pub.authors.map(id=>getAuthorName(id,false));
+    
+    // Build volume/issue/pages string
+    let pubDetails = '';
+    if(pub.volume) pubDetails += `, ${pub.volume}`;
+    if(pub.issue) pubDetails += `(${pub.issue})`;
+    if(pub.pages) pubDetails += `, ${pub.pages}`;
+    if(pub.doi) pubDetails += `. https://doi.org/${pub.doi}`;
+    
+    // For books, use ISBN instead
+    let bookDetails = '';
+    if(pub.isbn) bookDetails = `. ISBN: ${pub.isbn}`;
+    
+    const isBook = pub.type === 'book';
+    const details = isBook ? bookDetails : pubDetails;
+    
     const formats={
-      MLA: `${authorNames[0]} et al. "${pub.title}." ${pub.venue} (${pub.year}).`,
-      APA: `${toInitials(authorNames[0])} et al. (${pub.year}). ${pub.title}. ${pub.venue}.`,
-      Chicago: `${authorNames[0]} et al. ${pub.year}. "${pub.title}." ${pub.venue}.`,
-      Harvard: `${toInitials(authorNames[0])} et al. (${pub.year}) ${pub.title}. ${pub.venue}.`,
-      Vancouver: `${authorNames.map(a=>toInitials(a)).join(', ')}. ${pub.title}. ${pub.venue}. ${pub.year}.`
+      MLA: `${authorNames[0]} et al. "${pub.title}." ${pub.venue}${details} (${pub.year}).`,
+      APA: `${toInitials(authorNames[0])} et al. (${pub.year}). ${pub.title}. ${pub.venue}${details}.`,
+      Chicago: `${authorNames[0]} et al. ${pub.year}. "${pub.title}." ${pub.venue}${details}.`,
+      Harvard: `${toInitials(authorNames[0])} et al. (${pub.year}) ${pub.title}. ${pub.venue}${details}.`,
+      Vancouver: `${authorNames.map(a=>toInitials(a)).join(', ')}. ${pub.title}. ${pub.venue}. ${pub.year}${details}.`
     };
     citeBody.innerHTML=Object.entries(formats).map(([label,text])=>{
       const id='cite-'+Math.random().toString(36).slice(2,9);
