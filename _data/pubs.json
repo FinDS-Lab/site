@@ -1,7 +1,7 @@
 [
  {
    "year": 2025,
-   "code_label": "J18",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -13,11 +13,12 @@
    "volume": "17",
    "issue": "9",
    "pages": "1372",
-   "doi": "https://doi.org/10.3390/sym17091372"
+   "doi": "10.3390/sym17091372",
+   "awards": 0
  },
  {
    "year": 2025,
-   "code_label": "J17",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -28,11 +29,12 @@
    "published_date": "2025-08-09",
    "volume": "13",
    "pages": "678",
-   "doi": "https://doi.org/10.3390/systems13080678"
+   "doi": "10.3390/systems13080678",
+   "awards": 0
  },
  {
    "year": 2025,
-   "code_label": "J16",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -44,11 +46,12 @@
    "volume": "20",
    "issue": "2",
    "pages": "117",
-   "doi": "https://doi.org/10.3390/jtaer20020117"
+   "doi": "10.3390/jtaer20020117",
+   "awards": 0
  },
  {
    "year": 2025,
-   "code_label": "J15",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -59,11 +62,12 @@
    "published_date": "2025-01-01",
    "volume": "75",
    "pages": "102316",
-   "doi": "https://doi.org/10.1016/j.najef.2024.102316"
+   "doi": "10.1016/j.najef.2024.102316",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J14",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -74,11 +78,12 @@
    "published_date": "2024-12-01",
    "volume": "305",
    "pages": "112567",
-   "doi": "https://doi.org/10.1016/j.knosys.2024.112567"
+   "doi": "10.1016/j.knosys.2024.112567",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J13",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -89,11 +94,12 @@
    "published_date": "2024-11-01",
    "volume": "96",
    "pages": "103562",
-   "doi": "https://doi.org/10.1016/j.iref.2024.103562"
+   "doi": "10.1016/j.iref.2024.103562",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J12",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -104,11 +110,12 @@
    "published_date": "2024-07-01",
    "volume": "94",
    "pages": "103252",
-   "doi": "https://doi.org/10.1016/j.irfa.2024.103252"
+   "doi": "10.1016/j.irfa.2024.103252",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J11",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -120,11 +127,12 @@
    "volume": "16",
    "issue": "5",
    "pages": "686",
-   "doi": "https://doi.org/10.3390/nu16050686"
+   "doi": "10.3390/nu16050686",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J10",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -136,11 +144,12 @@
    "volume": "26",
    "issue": "1",
    "pages": "70",
-   "doi": "https://doi.org/10.3390/e26010070"
+   "doi": "10.3390/e26010070",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "J9",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -151,11 +160,12 @@
    "published_date": "2024-02-01",
    "volume": "128",
    "pages": "107378",
-   "doi": "https://doi.org/10.1016/j.engappai.2023.107378"
+   "doi": "10.1016/j.engappai.2023.107378",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C7",
+   "code_label": "C",
    "indexing_group": "International Conference",
    "type": "conference",
    "language": "English",
@@ -163,11 +173,12 @@
    "authors": [1, 4, 6, 7, 2],
    "author_marks": ["1", "1", "2", "2", "*"],
    "venue": "3rd International Workshop on Spatio-Temporal Reasoning and Learning (STRL 2024), IJCAI 2024",
-   "published_date": "2024-08-05"
+   "published_date": "2024-08-05",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C6",
+   "code_label": "C",
    "indexing_group": "International Conference",
    "type": "conference",
    "language": "English",
@@ -176,11 +187,12 @@
    "author_marks": ["1", "*"],
    "venue": "10th International Conference on E-Business and Applications (ICEBA 2024)",
    "published_date": "2024-02-28",
-   "doi": "https://doi.org/10.1007/978-981-97-3409-2_7"
+   "doi": "10.1007/978-981-97-3409-2_7",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C5",
+   "code_label": "C",
    "indexing_group": "International Conference",
    "type": "conference",
    "language": "English",
@@ -188,11 +200,12 @@
    "authors": [4, 1, 7, 6, 2],
    "author_marks": ["1", "1", "1", "2", "*"],
    "venue": "AI for Time Series Analysis (AI4TS) Workshop, AAAI 2024",
-   "published_date": "2024-02-26"
+   "published_date": "2024-02-26",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C4",
+   "code_label": "C",
    "indexing_group": "International Conference",
    "type": "conference",
    "language": "English",
@@ -201,11 +214,12 @@
    "author_marks": ["1", "*"],
    "venue": "11th IEEE International Conference on Big Data and Smart Computing (IEEE BigComp 2024)",
    "published_date": "2024-02-19",
-   "doi": "https://doi.org/10.1109/BigComp60711.2024.00068"
+   "doi": "10.1109/BigComp60711.2024.00068",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C3",
+   "code_label": "C",
    "indexing_group": "International - Domestic Joint Conference",
    "type": "conference",
    "language": "Korean",
@@ -213,11 +227,12 @@
    "authors": [1, 2],
    "author_marks": ["1", "*"],
    "venue": "2024 한국경영정보학회 추계국제학술대회",
-   "published_date": "2024-11-15"
+   "published_date": "2024-11-15",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "C2",
+   "code_label": "C",
    "indexing_group": "International - Domestic Joint Conference",
    "type": "conference",
    "language": "English",
@@ -225,11 +240,12 @@
    "authors": [1, 2],
    "author_marks": ["1", "*"],
    "venue": "2024 한국지능정보시스템학회 추계국제학술대회 및 APCIM 2024",
-   "published_date": "2024-11-01"
+   "published_date": "2024-11-01",
+   "awards": 0
  },
  {
    "year": 2023,
-   "code_label": "J8",
+   "code_label": "J",
    "indexing_group": "Other International",
    "type": "journal",
    "language": "English",
@@ -241,11 +257,12 @@
    "volume": "1",
    "issue": "1-2",
    "pages": "100024",
-   "doi": "https://doi.org/10.1016/j.socimp.2023.100024"
+   "doi": "10.1016/j.socimp.2023.100024",
+   "awards": 0
  },
  {
    "year": 2023,
-   "code_label": "J7",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -256,11 +273,12 @@
    "published_date": "2023-10-01",
    "volume": "66",
    "pages": "102077",
-   "doi": "https://doi.org/10.1016/j.ribaf.2023.102077"
+   "doi": "10.1016/j.ribaf.2023.102077",
+   "awards": 0
  },
  {
    "year": 2023,
-   "code_label": "J6",
+   "code_label": "J",
    "indexing_group": "SSCI",
    "type": "journal",
    "language": "English",
@@ -271,11 +289,12 @@
    "published_date": "2023-06-01",
    "volume": "79",
    "pages": "102018",
-   "doi": "https://doi.org/10.1016/j.pacfin.2023.102018"
+   "doi": "10.1016/j.pacfin.2023.102018",
+   "awards": 0
  },
  {
    "year": 2023,
-   "code_label": "C1",
+   "code_label": "C",
    "indexing_group": "International Conference",
    "type": "conference",
    "language": "English",
@@ -283,11 +302,12 @@
    "authors": [1, 22, 23, 2],
    "author_marks": ["1", "1", "1", "*"],
    "venue": "24th International Symposium on Advanced Intelligent Systems (ISIS 2023)",
-   "published_date": "2023-12-07"
+   "published_date": "2023-12-07",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "J5",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -297,11 +317,12 @@
    "venue": "Annals of Operations Research",
    "published_date": "2022-12-13",
    "pages": "1-36",
-   "doi": "https://doi.org/10.1007/s10479-022-05101-8"
+   "doi": "10.1007/s10479-022-05101-8",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "J4",
+   "code_label": "J",
    "indexing_group": "ESCI",
    "type": "journal",
    "language": "English",
@@ -313,11 +334,12 @@
    "volume": "21",
    "issue": "2",
    "pages": "244-266",
-   "doi": "https://doi.org/10.7232/iems.2022.21.2.244"
+   "doi": "10.7232/iems.2022.21.2.244",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "J3",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -328,11 +350,12 @@
    "published_date": "2022-03-09",
    "volume": "9",
    "pages": "765794",
-   "doi": "https://doi.org/10.3389/fnut.2022.765794"
+   "doi": "10.3389/fnut.2022.765794",
+   "awards": 0
  },
  {
    "year": 2021,
-   "code_label": "J2",
+   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
@@ -344,11 +367,12 @@
    "volume": "23",
    "issue": "6",
    "pages": "734",
-   "doi": "https://doi.org/10.3390/e23060734"
+   "doi": "10.3390/e23060734",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "K3",
+   "code_label": "K",
    "indexing_group": "KCI Excellent",
    "type": "journal",
    "language": "Korean",
@@ -360,11 +384,12 @@
    "volume": "48",
    "issue": "5",
    "pages": "509-518",
-   "doi": "https://doi.org/10.7232/JKIIE.2022.48.5.509"
+   "doi": "10.7232/JKIIE.2022.48.5.509",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "K2",
+   "code_label": "K",
    "indexing_group": "KCI Excellent",
    "type": "journal",
    "language": "Korean",
@@ -376,11 +401,12 @@
    "volume": "48",
    "issue": "4",
    "pages": "340-354",
-   "doi": "https://doi.org/10.7232/JKIIE.2022.48.4.340"
+   "doi": "10.7232/JKIIE.2022.48.4.340",
+   "awards": 0
  },
  {
    "year": 2020,
-   "code_label": "K1",
+   "code_label": "K",
    "indexing_group": "KCI Excellent",
    "type": "journal",
    "language": "Korean",
@@ -392,11 +418,12 @@
    "volume": "46",
    "issue": "3",
    "pages": "179-189",
-   "doi": "https://doi.org/10.7232/JKIIE.2020.46.3.179"
+   "doi": "10.7232/JKIIE.2020.46.3.179",
+   "awards": 0
  },
  {
    "year": 2020,
-   "code_label": "B2",
+   "code_label": "B",
    "indexing_group": "Book",
    "type": "book",
    "language": "Korean",
@@ -404,11 +431,12 @@
    "authors": [1],
    "author_marks": ["1"],
    "venue": "위키독스",
-   "published_date": "2020-06-14"
+   "published_date": "2020-06-14",
+   "awards": 0
  },
  {
    "year": 2019,
-   "code_label": "B1",
+   "code_label": "B",
    "indexing_group": "Book",
    "type": "book",
    "language": "Korean",
@@ -417,11 +445,12 @@
    "author_marks": ["1", "R", "R", "R", "R", "R", "R", "R", "P", "P", "P", "P", "P", "R", "R", "R", "R", "R"],
    "venue": "매경출판",
    "published_date": "2019-11-28",
-   "isbn": "9791164840625"
+   "isbn": "9791164840625",
+   "awards": 0
  },
  {
    "year": 2024,
-   "code_label": "R2",
+   "code_label": "R",
    "indexing_group": "Report",
    "type": "report",
    "language": "Korean",
@@ -429,11 +458,12 @@
    "authors": [2, 1],
    "author_marks": ["P", "L"],
    "venue": "한국은행",
-   "published_date": "2024-05-03"
+   "published_date": "2024-05-03",
+   "awards": 0
  },
  {
    "year": 2022,
-   "code_label": "R1",
+   "code_label": "R",
    "indexing_group": "Report",
    "type": "report",
    "language": "Korean",
@@ -441,6 +471,7 @@
    "authors": [124, 1, 75],
    "author_marks": ["P", "L", "R"],
    "venue": "지식재산단체총연합회",
-   "published_date": "2022-12-15"
+   "published_date": "2022-12-15",
+   "awards": 0
  }
 ]
