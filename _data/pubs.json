@@ -1166,6 +1166,20 @@
     "published_date": "2023-11-23",
     "awards": 0
   },
+ {
+    "year": 2023,
+    "code_label": "C",
+    "indexing_group": "International Conference",
+    "type": "conference",
+    "language": "English",
+    "title": "Comparing interconnected dynamics: An edge-based analysis of sector ETFs via non-directional dependencies.",
+    "authors": [8, 1],
+    "author_marks": ["1", "*"],
+    "venue": "IEEE INMIC 2023: 25th IEEE International Multi Topic Conference",
+    "published_date": "2023-11-17",
+    "doi": "10.1109/INMIC60434.2023.10466210",
+    "awards": 0
+  },
   {
     "year": 2023,
     "code_label": "C",
@@ -1915,6 +1929,19 @@
     "published_date": "2022-06-24",
     "awards": 1,
     "award_details": ["우수논문상"]
+  },
+   {
+    "year": 2022,
+    "code_label": "C",
+    "indexing_group": "International Conference",
+    "type": "conference",
+    "language": "English",
+    "title": "Predicting fluctuations of the KOSPI and KOSDAQ based on nonlinear network using return data of global market indices.",
+    "authors": [8, 1],
+    "author_marks": ["1", "*"],
+    "venue": "2022 Korean Economic Association International Conference",
+    "published_date": "2022-06-17",
+    "awards": 0
   },
   {
     "year": 2022,
