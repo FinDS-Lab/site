@@ -13,9 +13,11 @@ permalink: /projects.html
 .breadcrumbs .sep{opacity:.8}
 
 :root{
-  /* Project type colors */
+  /* Project type/status colors */
   --public-red: rgb(172, 14, 14);
   --private-gold: rgb(214, 177, 77);
+  --ongoing-black: #111827;
+  --completed-gray: #9ca3af;
 }
 
 /* Toolbar */
@@ -25,174 +27,66 @@ permalink: /projects.html
 .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
 
 /* Filter Section */
-.filter-section{
-  margin-top:8px;
-}
-
-.filter-label{
-  font-size:12px;
-  font-weight:700;
-  color:#6b7280;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  margin-bottom:8px;
-  display:block;
-}
-
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
+.filter-section{margin-top:8px}
+.filter-label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
 
 /* Filter Chips */
-.chip{
-  padding:.5rem 1rem;
-  border-radius:999px;
-  border:1px solid transparent;
-  background:#fff;
-  font-weight:700;
-  font-size:12px;
-  cursor:pointer;
-  transition:all 0.2s;
-  text-transform:uppercase;
-  letter-spacing:0.3px;
-}
-
-.chip:hover{
-  transform:translateY(-1px);
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-.chip.is-on{
-  box-shadow:inset 0 0 0 2px #111827;
-}
-
-.chip:focus-visible{
-  outline:2px solid #111827;
-  outline-offset:2px;
-}
+.chip{padding:.5rem 1rem;border-radius:999px;border:1px solid transparent;background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.3px}
+.chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.chip.is-on{box-shadow:inset 0 0 0 2px #111827}
+.chip:focus-visible{outline:2px solid #111827;outline-offset:2px}
 
 /* Grid: 한 줄에 한 프로젝트 */
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
 /* Card */
 .card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden}
-.inner{
-  position:relative;
-  background:#fff;border-radius:.9rem;margin:10px;
-  overflow:hidden;border:1px solid #e5e7eb;
-}
+.inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
+.card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
 
 /* 왼쪽 프로젝트 타입 색상 포인트 */
-.type-notch{
-  position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;
-  background:#ddd;
-}
+.type-notch{position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;background:#ddd}
 
+/* 본문 */
 .body{padding:14px 16px 14px 44px}
 
-/* 키워드 배지 컨테이너 */
-.keyword-badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-bottom:10px;
-}
+/* 배지 컨테이너 */
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 
-/* 키워드 배지 */
-.keyword-badge{
-  display:inline-block;
-  padding:.25rem .6rem;
-  border-radius:999px;
-  font-weight:800;
-  font-size:11px;
-  background:#f8fafc;
-  border:1px solid #e5e7eb;
-  text-transform:uppercase;
-}
+/* 배지 (키워드/타입/상태 공통) */
+.badge{display:inline-block;padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
 
 /* 프로젝트 제목 */
-.project-title-en{
-  font-size:15px;
-  font-weight:900;
-  color:#111827;
-  margin-top:8px;
-}
-
-.project-title-ko{
-  font-size:13px;
-  color:#6b7280;
-  margin-top:4px;
-}
+.project-title-en{font-size:15px;font-weight:900;color:#111827;margin-top:8px}
+.project-title-ko{font-size:13px;color:#6b7280;margin-top:4px;word-break:keep-all} /* 한국어 단어 단위 줄바꿈 */
 
 /* 메타 정보 */
-.meta-info{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #f3f4f6;
-}
-
-.meta-item{
-  display:flex;
-  align-items:center;
-  font-size:12px;
-  color:#6b7280;
-}
-
-.meta-label{
-  font-weight:700;
-  color:#374151;
-  min-width:90px;
-}
-
-.meta-value{
-  flex:1;
-  color:#111827;
-}
+.meta-info{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid #f3f4f6}
+.meta-item{display:flex;align-items:flex-start;font-size:12px;color:#6b7280}
+.meta-label{font-weight:700;color:#374151;min-width:140px}
+.meta-value{flex:1;color:#111827}
+.meta-value .ko{word-break:keep-all} /* 한국어 단어 단위 줄바꿈 */
 
 /* 금액 강조 */
-.amount{
-  font-weight:800;
-  color:#111827;
-}
+.amount{font-weight:800;color:#111827}
 
 /* Empty state */
-.empty{
-  padding:32px;
-  text-align:center;
-  color:#6b7280;
-  font-weight:700;
-  border:1px dashed #e5e7eb;
-  border-radius:1rem;
-  background:#fff;
-}
+.empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
 
 /* Count 표시 */
-.count{
-  font-size:13px;
-  color:#6b7280;
-  font-weight:600;
-  background:#fff;
-  padding:.4rem .8rem;
-  border:1px solid #e5e7eb;
-  border-radius:.5rem;
-  white-space:nowrap;
-}
+.count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap}
 
 /* Mobile responsive */
-@media (max-width: 640px) {
+@media (max-width:640px){
   .search-container{flex-direction:column;align-items:stretch}
   .search{width:100%}
   .count{text-align:center;width:100%}
-  .meta-label{min-width:70px;font-size:11px}
+  .meta-label{min-width:110px;font-size:11px}
   .meta-value{font-size:11px}
   .project-title-en{font-size:14px}
   .project-title-ko{font-size:12px}
-  .keyword-badge{font-size:10px;padding:.2rem .5rem}
+  .badge{font-size:10px;padding:.2rem .5rem}
   .chip{font-size:11px;padding:.4rem .8rem}
 }
 </style>
@@ -200,9 +94,9 @@ permalink: /projects.html
 <!-- ===== Page Title / Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    <img src="{{ '/assets/img/banners/projects-hero.jpg' | relative_url }}" 
-         alt="Projects banner" 
-         class="w-full h-[200px] md:h-[260px] object-cover" 
+    <img src="{{ '/assets/img/banners/projects-hero.jpg' | relative_url }}"
+         alt="Projects banner"
+         class="w-full h-[200px] md:h-[260px] object-cover"
          width="1600" height="320">
     <div class="absolute inset-0 bg-black/45"></div>
     <div class="absolute inset-x-0 bottom-4 px-4">
@@ -230,11 +124,17 @@ permalink: /projects.html
       </div>
       <div class="count" id="count"></div>
     </div>
-    
-    <!-- Type Filter -->
+
+    <!-- Funding Filter -->
     <div class="filter-section">
       <label class="filter-label">Funding Type</label>
-      <div class="chips" id="typeChips"></div>
+      <div class="chips" id="fundingChips"></div>
+    </div>
+
+    <!-- Status Filter -->
+    <div class="filter-section">
+      <label class="filter-label">Project Status</label>
+      <div class="chips" id="statusChips"></div>
     </div>
   </div>
 </section>
@@ -255,7 +155,12 @@ permalink: /projects.html
       fundingAgency: "National Research Foundation",
       amount: "₩150,000,000",
       keywords: ["AI", "PORTFOLIO", "OPTIMIZATION"],
-      type: "public" // 공공기관
+      type: "public", // Government-Funded
+      roles: {
+        principalInvestigator: "Prof. Minseo Park",
+        leadResearcher: "Jihyun Lee",
+        researchers: ["Sujin Kim", "Yuna Choi"]
+      }
     },
     {
       titleEn: "Development of Quantum Computing Applications in Financial Risk Management",
@@ -264,7 +169,12 @@ permalink: /projects.html
       fundingAgency: "Korea Institute of Science and Technology",
       amount: "₩200,000,000",
       keywords: ["QUANTUM", "FINANCE", "RISK"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Doyun Han",
+        leadResearcher: "Seungmin Park",
+        researchers: ["Jiwon Kang"]
+      }
     },
     {
       titleEn: "Machine Learning Framework for Early Disease Detection",
@@ -273,7 +183,12 @@ permalink: /projects.html
       fundingAgency: "Korea Health Industry Development Institute",
       amount: "₩180,000,000",
       keywords: ["ML", "HEALTHCARE", "DIAGNOSIS"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Ara Song",
+        leadResearcher: "Hyejin Park",
+        researchers: ["Minji Lee", "Hyeri Kim"]
+      }
     },
     {
       titleEn: "Blockchain-based Secure Trading Platform Development",
@@ -282,7 +197,12 @@ permalink: /projects.html
       fundingAgency: "Ministry of Science and ICT",
       amount: "₩250,000,000",
       keywords: ["BLOCKCHAIN", "SECURITY", "TRADING"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Joonho Kim",
+        leadResearcher: "Seoyeon Yoo",
+        researchers: ["Yerin Park"]
+      }
     },
     {
       titleEn: "Adaptive Learning System Using Natural Language Processing",
@@ -291,7 +211,12 @@ permalink: /projects.html
       fundingAgency: "Korea Foundation for the Advancement of Science",
       amount: "₩120,000,000",
       keywords: ["NLP", "EDUCATION", "ADAPTIVE"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Jaeun Choi",
+        leadResearcher: "Yejin Lee",
+        researchers: ["Seyoung Park", "Bora Kim"]
+      }
     },
     {
       titleEn: "Real-time Market Sentiment Analysis Platform",
@@ -300,7 +225,12 @@ permalink: /projects.html
       fundingAgency: "Samsung Electronics",
       amount: "₩300,000,000",
       keywords: ["SENTIMENT", "REAL-TIME", "ANALYTICS"],
-      type: "private" // 사기업
+      type: "private", // Industry-Funded
+      roles: {
+        principalInvestigator: "Prof. Hwan Kim",
+        leadResearcher: "Seongwoo Park",
+        researchers: ["Yubin Jeon"]
+      }
     },
     {
       titleEn: "Deep Learning Models for Financial Fraud Detection",
@@ -309,7 +239,12 @@ permalink: /projects.html
       fundingAgency: "Financial Services Commission",
       amount: "₩175,000,000",
       keywords: ["DEEP LEARNING", "FRAUD", "FINTECH"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Harin Lee",
+        leadResearcher: "Dongho Chae",
+        researchers: ["Jina Hong", "Jaehee Noh"]
+      }
     },
     {
       titleEn: "Predictive Analytics for Personalized Medicine",
@@ -318,7 +253,12 @@ permalink: /projects.html
       fundingAgency: "Seoul National University Hospital",
       amount: "₩220,000,000",
       keywords: ["PREDICTIVE", "MEDICINE", "ANALYTICS"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Dahyeon Kang",
+        leadResearcher: "Youngeun Park",
+        researchers: ["Haerin Shin"]
+      }
     },
     {
       titleEn: "Autonomous Trading Algorithm Research",
@@ -327,7 +267,12 @@ permalink: /projects.html
       fundingAgency: "LG CNS",
       amount: "₩280,000,000",
       keywords: ["ALGO TRADING", "AUTONOMOUS", "RESEARCH"],
-      type: "private"
+      type: "private",
+      roles: {
+        principalInvestigator: "Prof. Jisoo Park",
+        leadResearcher: "Hyeonwoo Lee",
+        researchers: ["Yerin Kim", "Soyeon Kang"]
+      }
     },
     {
       titleEn: "Educational Data Mining for Student Performance Prediction",
@@ -336,7 +281,12 @@ permalink: /projects.html
       fundingAgency: "Ministry of Education",
       amount: "₩95,000,000",
       keywords: ["DATA MINING", "EDUCATION", "PREDICTION"],
-      type: "public"
+      type: "public",
+      roles: {
+        principalInvestigator: "Prof. Minkyung Seo",
+        leadResearcher: "Garam Choi",
+        researchers: ["Somin Lee"]
+      }
     },
     {
       titleEn: "High-Frequency Trading Strategy Optimization",
@@ -345,7 +295,12 @@ permalink: /projects.html
       fundingAgency: "Hyundai Securities",
       amount: "₩350,000,000",
       keywords: ["HFT", "OPTIMIZATION", "STRATEGY"],
-      type: "private"
+      type: "private",
+      roles: {
+        principalInvestigator: "Prof. Jungho Park",
+        leadResearcher: "Gyuri Kim",
+        researchers: ["Seoyeon Lee", "Jiwon Park"]
+      }
     },
     {
       titleEn: "Smart Contract Security Auditing Framework",
@@ -354,143 +309,187 @@ permalink: /projects.html
       fundingAgency: "SK Telecom",
       amount: "₩195,000,000",
       keywords: ["SMART CONTRACT", "SECURITY", "AUDIT"],
-      type: "private"
+      type: "private",
+      roles: {
+        principalInvestigator: "Prof. Hyungjin Lee",
+        leadResearcher: "Yoonseo Kang",
+        researchers: ["Eunji Park"]
+      }
     }
   ];
 
-  /* ===== Filter Setup ===== */
-  const PROJECT_TYPES = [
-    { value: "public", label: "Government Funded", color: "var(--public-red)" },
-    { value: "private", label: "Industry Funded", color: "var(--private-gold)" }
+  /* ===== Filters ===== */
+  const FUNDING_TYPES = [
+    { value: "public", label: "Government-Funded", color: "var(--public-red)" },
+    { value: "private", label: "Industry-Funded", color: "var(--private-gold)" }
   ];
-  
-  const onTypes = new Set(); // Empty = no filter applied
+  const STATUSES = [
+    { value: "ongoing", label: "Ongoing", color: "var(--ongoing-black)" },
+    { value: "completed", label: "Completed", color: "var(--completed-gray)" }
+  ];
+
+  const onFunding = new Set(); // Empty = no filter
+  const onStatus  = new Set(); // Empty = no filter
 
   /* ===== Utils ===== */
   function parseStartDate(period){
     const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
   }
-
+  function parseEndDate(period){
+    const m = period.match(/–\s*(\d{4})-(\d{2})-(\d{2})$/);
+    return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T23:59:59`) : new Date(0);
+  }
+  function computeStatus(period){
+    const end = parseEndDate(period);
+    const today = new Date(); // client local
+    return (end.getTime() >= today.getTime()) ? "ongoing" : "completed";
+  }
   function formatPeriod(period){
-    // "2024-09-01 – 2025-08-31" -> "Sep 2024 - Aug 2025"
+    // "2024-09-01 – 2025-08-31" -> "Sep 2024 – Aug 2025"
     const parts = period.split(' – ');
     if(parts.length !== 2) return period;
-    
     const startDate = new Date(parts[0]);
-    const endDate = new Date(parts[1]);
-    
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+    const endDate   = new Date(parts[1]);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const startStr = `${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
-    const endStr = `${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
-    
-    return `${startStr} - ${endStr}`;
+    const endStr   = `${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
+    return `${startStr} – ${endStr}`;
   }
-
-  function getProjectColor(type){
+  function getFundingColor(type){
     return type === 'private' ? 'var(--private-gold)' : 'var(--public-red)';
   }
+  function byStartDesc(a,b){ return parseStartDate(b.period) - parseStartDate(a.period); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-  function byStartDesc(a,b){
-    return parseStartDate(b.period) - parseStartDate(a.period);
-  }
-
-  /* ===== DOM Elements ===== */
+  /* ===== DOM ===== */
   const qInput = document.getElementById('q');
-  const grid = document.getElementById('grid');
-  const count = document.getElementById('count');
-  const typeChips = document.getElementById('typeChips');
-  
+  const grid   = document.getElementById('grid');
+  const count  = document.getElementById('count');
+  const fundingChips = document.getElementById('fundingChips');
+  const statusChips  = document.getElementById('statusChips');
   let q = "";
 
   /* ===== Build Filter Chips ===== */
   function buildChips(){
-    typeChips.innerHTML = PROJECT_TYPES.map(type => {
-      const active = onTypes.has(type.value);
-      const bg = active ? type.color : '#fff';
-      const fg = active ? '#fff' : '#111';
+    fundingChips.innerHTML = FUNDING_TYPES.map(t => {
+      const active = onFunding.has(t.value);
       return `
-        <button class="chip ${active ? 'is-on' : ''}" 
-                data-type="${type.value}" 
-                style="background:${bg};color:${fg}">
-          ${type.label}
-        </button>
-      `;
+        <button class="chip ${active ? 'is-on':''}" data-funding="${t.value}"
+                style="${active ? `background:${t.color};color:#fff` : ''}">
+          ${t.label}
+        </button>`;
     }).join('');
-    
-    // Add click handlers
-    typeChips.querySelectorAll('[data-type]').forEach(btn => {
+
+    statusChips.innerHTML = STATUSES.map(s => {
+      const active = onStatus.has(s.value);
+      return `
+        <button class="chip ${active ? 'is-on':''}" data-status="${s.value}"
+                style="${active ? `background:${s.color};color:#fff` : ''}">
+          ${s.label}
+        </button>`;
+    }).join('');
+
+    fundingChips.querySelectorAll('[data-funding]').forEach(btn=>{
       btn.onclick = () => {
-        const typeValue = btn.dataset.type;
-        if(onTypes.has(typeValue)) {
-          onTypes.delete(typeValue);
-        } else {
-          onTypes.add(typeValue);
-        }
-        buildChips();
-        render();
+        const v = btn.dataset.funding;
+        onFunding.has(v) ? onFunding.delete(v) : onFunding.add(v);
+        buildChips(); render();
+      };
+    });
+    statusChips.querySelectorAll('[data-status]').forEach(btn=>{
+      btn.onclick = () => {
+        const v = btn.dataset.status;
+        onStatus.has(v) ? onStatus.delete(v) : onStatus.add(v);
+        buildChips(); render();
       };
     });
   }
 
-  /* ===== Filter Functions ===== */
+  /* ===== Filtering ===== */
   function matchesQuery(project){
     if(!q) return true;
-    const keywordsText = project.keywords.join(' ');
-    const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${keywordsText}`.toLowerCase();
+    const roles = project.roles || {};
+    const rolesText = [roles.principalInvestigator, roles.leadResearcher, ...(roles.researchers||[])].filter(Boolean).join(' ');
+    const keywordsText = (project.keywords||[]).join(' ');
+    const fundingText = project.type === 'private' ? 'industry funded' : 'government funded';
+    const statusText = computeStatus(project.period);
+    const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${rolesText} ${keywordsText} ${fundingText} ${statusText}`.toLowerCase();
     return searchText.includes(q.toLowerCase());
   }
-  
-  function passTypes(project){
-    return onTypes.size ? onTypes.has(project.type) : true;
+  function passFunding(project){
+    return onFunding.size ? onFunding.has(project.type) : true;
   }
-
+  function passStatus(project){
+    const s = computeStatus(project.period);
+    return onStatus.size ? onStatus.has(s) : true;
+  }
   function filterProjects(){
-    return PROJECTS
-      .filter(passTypes)
-      .filter(matchesQuery)
-      .sort(byStartDesc);
+    return PROJECTS.filter(passFunding).filter(passStatus).filter(matchesQuery).sort(byStartDesc);
   }
 
-  /* ===== Card Component ===== */
+  /* ===== Card ===== */
   function createCard(project){
-    const projectColor = getProjectColor(project.type);
-    const formattedPeriod = formatPeriod(project.period);
-    
-    // 키워드 배지들 생성
-    const keywordBadges = project.keywords.map(keyword => 
-      `<span class="keyword-badge">${keyword}</span>`
-    ).join('');
-    
+    const fundingColor = getFundingColor(project.type);
+    const periodFmt    = formatPeriod(project.period);
+    const status       = computeStatus(project.period); // "ongoing" | "completed"
+
+    // Badges: keywords + funding + status
+    const keywordBadges = (project.keywords||[]).map(k=>`<span class="badge">${esc(k)}</span>`).join('');
+    const fundingBadge  = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':'Government-Funded'}</span>`;
+    const statusBadge   = `<span class="badge" style="border-color:${status==='ongoing'?'#111827':'#9ca3af'};color:${status==='ongoing'?'#111827':'#6b7280'}">${status==='ongoing'?'Ongoing':'Completed'}</span>`;
+
+    // Roles
+    const r = project.roles || {};
+    const pi  = r.principalInvestigator ? esc(r.principalInvestigator) : '—';
+    const lead= r.leadResearcher ? esc(r.leadResearcher) : '—';
+    const res = (r.researchers && r.researchers.length) ? r.researchers.map(esc).join(', ') : '—';
+
+    // Border emphasis by status
+    const borderColor = (status === 'ongoing') ? '#111827' : '#e5e7eb';
+    const notchColor  = fundingColor;
+
     return `
       <article class="card">
-        <div class="inner">
-          <div class="type-notch" style="background:${projectColor}"></div>
+        <div class="inner" style="border-color:${borderColor}">
+          <div class="type-notch" style="background:${notchColor}"></div>
           <div class="body">
-            <!-- Keyword Badges -->
-            <div class="keyword-badges">
+            <!-- Badges -->
+            <div class="badges">
+              ${fundingBadge}
+              ${statusBadge}
               ${keywordBadges}
             </div>
-            
-            <!-- Project Title (EN/KO) -->
-            <div class="project-title-en">${project.titleEn}</div>
-            <div class="project-title-ko">${project.titleKo}</div>
-            
-            <!-- Meta Info -->
+
+            <!-- Titles -->
+            <div class="project-title-en">${esc(project.titleEn)}</div>
+            <div class="project-title-ko"><span class="ko">${esc(project.titleKo)}</span></div>
+
+            <!-- Meta -->
             <div class="meta-info">
               <div class="meta-item">
                 <span class="meta-label">Period</span>
-                <span class="meta-value">${formattedPeriod}</span>
+                <span class="meta-value">${esc(periodFmt)}</span>
               </div>
               <div class="meta-item">
-                <span class="meta-label">Funding</span>
-                <span class="meta-value">${project.fundingAgency}</span>
+                <span class="meta-label">Funding Agency</span>
+                <span class="meta-value">${esc(project.fundingAgency)}</span>
               </div>
               <div class="meta-item">
                 <span class="meta-label">Amount</span>
-                <span class="meta-value amount">${project.amount}</span>
+                <span class="meta-value amount">${esc(project.amount)}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Principal Investigator</span>
+                <span class="meta-value">${pi}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Lead Researcher</span>
+                <span class="meta-value">${lead}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">Researchers</span>
+                <span class="meta-value">${res}</span>
               </div>
             </div>
           </div>
@@ -502,27 +501,16 @@ permalink: /projects.html
   /* ===== Render ===== */
   function render(){
     const data = filterProjects();
-    
     if(data.length === 0){
-      grid.innerHTML = `
-        <div class="empty">
-          No projects found. Try adjusting your search query or filters.
-        </div>
-      `;
+      grid.innerHTML = `<div class="empty">No projects found. Try adjusting your search query or filters.</div>`;
     } else {
       grid.innerHTML = data.map(createCard).join('');
     }
-    
     count.textContent = `${data.length} of ${PROJECTS.length}`;
   }
 
-  /* ===== Initialize ===== */
-  qInput.addEventListener('input', (e) => {
-    q = e.target.value;
-    render();
-  });
-
-  // Initial setup
+  /* ===== Init ===== */
+  qInput.addEventListener('input', (e) => { q = e.target.value; render(); });
   buildChips();
   render();
 })();
