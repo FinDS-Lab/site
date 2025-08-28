@@ -1,14 +1,11 @@
 ---
 layout: default
-title: director
-permalink: /members-director.html
+title: publications
+permalink: /publications.html
 ---
 
----
-layout: default
-title: director
-permalink: /members-director.html
----
+<!-- ===== Load Authors Data First ===== -->
+{% include authors-data.html %}
 
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
@@ -111,1747 +108,1455 @@ permalink: /members-director.html
         <nav aria-label="Breadcrumb" class="breadcrumbs-banner" onclick="event.stopPropagation()">
           <a href="{{ '/' | relative_url }}">Home</a>
           <span class="sep">›</span>
-          <a href="{{ '/members-current.html' | relative_url }}">Members</a>
-          <span class="sep">›</span>
-          <span aria-current="page">Director</span>
+          <span aria-current="page">Publications</span>
         </nav>
-        <h1 class="banner-title">Director</h1>
+        <h1 class="banner-title">Publications</h1>
       </div>
     </div>
   </div>
 </section>
 
 <script>
-/* Interactive gold burst (cards suits) */
-function createNetworkBurst(event, element) {
-  const rect = element.getBoundingClientRect();
-  const x = event.clientX - rect.left - 100;
-  const y = event.clientY - rect.top  - 100;
-
-  const networkDiv = document.createElement('div');
-  networkDiv.className = 'network-burst';
-  networkDiv.style.left = x + 'px';
-  networkDiv.style.top  = y + 'px';
-
-  const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
-  const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-  networkDiv.innerHTML = randomPattern();
-
-  element.appendChild(networkDiv);
-  setTimeout(()=> element.removeChild(networkDiv), 2000);
-}
-
-/* Heart */
-function generateHeartNetwork() {
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-  const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
-  svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
-  const nodes = [
-    {x:70,y:35},{x:130,y:35},
-    {x:40,y:70},{x:160,y:70},
-    {x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}
-  ];
-  const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
-  connections.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`);
-  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`);
-  svg += '</svg>'; return svg;
-}
-/* Club */
-function generateClubNetwork() {
-  let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-  const circles = [{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
-  circles.forEach(c=> svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`);
-  svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
-  const nodes=[];
-  circles.forEach(c=>{
-    for(let i=0;i<6;i++){ const a=i*2*Math.PI/6; nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)}); }
-  });
-  nodes.push({x:100,y:100},{x:100,y:140});
-  for(let i=0;i<nodes.length;i++){
-    for(let j=i+1;j<nodes.length;j++){
-      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.hypot(dx,dy);
-      if(d<40){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-d/40)*0.4}"/>`; }
-    }
-  }
-  nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`);
-  svg += '</svg>'; return svg;
-}
-/* Spade */
-function generateSpadeNetwork() {
-  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-  const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
-  svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
-  svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
-  svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
-  const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
-  const conn=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
-  conn.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`);
-  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0||i===7)?4:3}" class="burst-dot"/>`);
-  svg += '</svg>'; return svg;
-}
-/* Diamond */
-function generateDiamondNetwork() {
-  let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-  const diamond='M100,40 L140,100 L100,160 L60,100 Z';
-  svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
-  svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
-  svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
-  svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
-  svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
-  const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
-  for(let i=0;i<4;i++){ svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`; }
-  nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${i<4?4:(i===4?5:2.5)}" class="burst-dot" opacity="${i===4?1:.85}"/>`);
-  for(let i=0;i<4;i++){ const a=i*Math.PI/2; const x=100+30*Math.cos(a), y=100+30*Math.sin(a); svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`; }
-  svg += '</svg>'; return svg;
-}
-</script>
-
-<!-- ===== Styles ===== -->
-<style>
-  /* Word break prevention for Korean/English */
-  * {
-    word-break: keep-all !important;
-    overflow-wrap: anywhere;
-  }
-  
-  /* director 페이지 전용 변수 - site.css 오버라이드 */
-  .director-page {
-    --accent: rgb(214, 177, 77) !important; /* Gold로 강제 변경 */
-    --gold:#d6b14d;
-    --gold-light:#eacf7d;
-    --gold-fg:#111827;
-    --red:#ac0e0e;
-    --red-dark:#7f0a0a;
-  }
-
-  /* director 전용 카드 - site.css의 .card 오버라이드 */
-  .director-card {
-    background:#fff !important;
-    border:1px solid #e5e7eb !important;
-    border-radius:16px !important;
-    -webkit-border-radius:16px !important;
-    -moz-border-radius:16px !important;
-    overflow:hidden !important;
-    box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
-    transition:all 0.2s;
-    margin-bottom: 1.5rem;
-    /* site.css의 패딩 오버라이드 */
-    padding: 0 !important;
-  }
-  
-  .director-card:hover {
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.08) !important;
-  }
-  
-  .card:hover{
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  }
-  
-  .card-head{
-    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    color:var(--gold-fg);
-    font-weight:900;
-    padding:1rem 1.25rem;
-    font-size:18px;
-    position:relative;
-    overflow:hidden;
-  }
-  
-  .card-head::after{
-    content:"";
-    position:absolute;
-    top:0;
-    right:-100px;
-    width:200px;
-    height:100%;
-    background:rgba(255,255,255,0.15);
-    transform:skewX(-25deg);
-  }
-  
-  .card-body{
-    padding:1.5rem;
-  }
-
-  /* Layout Grid */
-  .main-grid{
-    display:grid;
-    grid-template-columns:340px 1fr;
-    gap:1.5rem;
-  }
-  
-  @media (max-width: 968px) {
-    .main-grid{
-      grid-template-columns:1fr;
-      gap:1.5rem;
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .main-grid{gap:1rem;}
-    .card{margin-bottom:1rem;}
-    .card-body{padding:1.25rem;}
-    .card-head{padding:0.875rem 1rem;font-size:16px;}
-  }
-
-  /* Profile Sidebar */
-  .profile-photo{
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
-  }
-  
-  .profile-photo img{
-    width:100%;
-    height:auto;
-    display:block;
-  }
-  
-  .profile-info{margin-top:1.5rem;}
-  .profile-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
-  .profile-item:last-child{border-bottom:none;}
-  .profile-emoji{font-size:20px;line-height:1;margin-top:2px;}
-  .profile-content{flex:1;}
-  .profile-label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
-  .profile-value{font-size:14px;color:#111827;font-weight:500;}
-  .profile-value a{color:#3b82f6;text-decoration:none;}
-  .profile-value a:hover{text-decoration:underline;}
-
-  /* Action Buttons */
-  .button-group{display:flex;gap:8px;margin-top:1.5rem;}
-  .action-btn{
-    flex:1;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-    font-size:13px;
-    border-radius:8px;
-    padding:.65rem 1rem;
-    text-decoration:none;
-    transition:all .2s;
-    white-space:nowrap;
-    background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-    color:#fff;
-    border:none;
-    cursor:pointer;
-  }
-  
-  .action-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(172,14,14,0.3);
-  }
-
-  /* Publication Stats */
-  .pub-stats{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:10px;
-  }
-  .pub-stat{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:12px;
-    text-align:center;
-    transition:all .2s;
-    position:relative;
-    word-break:keep-all;
-    overflow-wrap:anywhere;
-  }
-  .pub-stat::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:3px;
-    border-radius:10px 10px 0 0;
-  }
-  
-  /* International categories - Gold colors */
-  .pub-stat.journal-scie::before{background:rgba(214,177,77,1)}
-  .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.75)}
-  .pub-stat.journal-other::before{background:rgba(214,177,77,0.5)}
-  
-  /* Domestic categories - Red colors */
-  .pub-stat.journal-kci::before{background:rgba(172,14,14,0.9)}
-  .pub-stat.conf-domestic::before{background:rgba(172,14,14,0.6)}
-  
-  /* International Conference - Gold */
-  .pub-stat.conf-intl::before{background:rgba(214,177,77,0.85)}
-  
-  /* Citations - Special gradient */
-  .pub-stat.citation{
-    grid-column:1/-1;
-    background:linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(172,14,14,0.05) 100%);
-    border:1px solid rgba(214,177,77,0.2);
-  }
-  .pub-stat.citation::before{
-    background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
-  }
-  
-  .pub-stat:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-  }
-  .pub-stat-number{
-    font-size:24px;
-    font-weight:900;
-    color:#111827;
-    word-break:keep-all;
-  }
-  .pub-stat-label{
-    font-size:11px;
-    color:#6b7280;
-    margin-top:4px;
-    text-transform:uppercase;
-    letter-spacing:.3px;
-    font-weight:700;
-    word-break:keep-all;
-    overflow-wrap:anywhere;
-  }
-  
-  /* Tablet */
-  @media (max-width: 768px) {
-    .pub-stats{
-      grid-template-columns:repeat(2, 1fr);
-      gap:8px;
-    }
-    .pub-stat{
-      padding:10px;
-    }
-    .pub-stat-number{
-      font-size:20px;
-    }
-    .pub-stat-label{
-      font-size:10px;
-    }
-  }
-  
-  /* Mobile */
-  @media (max-width: 480px) {
-    .pub-stats{
-      grid-template-columns:repeat(2, 1fr);
-      gap:6px;
-    }
-    .pub-stat{
-      padding:8px;
-    }
-    .pub-stat-number{
-      font-size:18px;
-    }
-    .pub-stat-label{
-      font-size:9px;
-      letter-spacing:0;
-    }
-    .pub-stat.citation{
-      grid-column:1/-1;
-    }
-  }
-
-  /* Research Interests */
-  .ri-item{
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    overflow:hidden;
-    margin-bottom:12px;
-    transition:all .3s;
-  }
-  .ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
-  .ri-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;cursor:pointer;user-select:none;transition:all .2s;}
-  .ri-header:hover{background:#fef9f3;}
-  .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
-  .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:8px;}
-  .ri-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;background:var(--gold);color:#fff;border-radius:50%;font-size:11px;transition:transform .3s;}
-  .ri-header.active .ri-icon{transform:rotate(90deg);}
-  .ri-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
-  .ri-content.show{max-height:500px;transition:max-height .3s ease-in;}
-  .ri-list{padding:16px;list-style:none;}
-  .ri-list li{margin-bottom:12px;padding-left:24px;position:relative;}
-  .ri-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--gold);border-radius:50%;}
-  .ri-list-title{font-weight:800;font-size:14px;color:#111827;margin-bottom:4px;}
-  .ri-list-desc{font-size:13px;color:#6b7280;}
-
-  /* Timeline */
-  .timeline{list-style:none;margin:0;padding:0;position:relative;}
-  .timeline::before{
-    content:"";position:absolute;left:14px;top:1rem;bottom:1rem;width:3px;
-    background:linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:2px;
-  }
-  .timeline > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
-  .timeline > li::before{
-    content:"";position:absolute;left:14px;top:1.05rem;width:16px;height:16px;
-    background:var(--red);border-radius:50%;transform:translateX(-50%);
-    box-shadow:0 0 0 3px rgba(172,14,14,.08);z-index:1;
-  }
-  .year{font-size:16px;font-weight:900;color:var(--red);}
-  .title{font-weight:900;color:#1f2937;margin-top:8px;}
-  .desc{color:#374151;font-size:14px;margin-top:4px;font-weight:500;}
-  .desc-ko{color:#9ca3af;font-size:12px;margin-top:2px;font-weight:400;}
-
-  /* Timeline with Logo */
-  .timeline.edu > li{display:grid;grid-template-columns:44px 1fr;column-gap:.85rem;padding-left:48px;}
-  .logo{width:44px;height:44px;object-fit:contain;border-radius:8px;background:#fff;box-shadow:0 0 0 1px #e5e7eb;}
-
-  /* Honors */
-  .honors-section{margin-top:12px;padding:10px 14px;background:#fef9f3;border-radius:8px;border:1px solid rgba(214,177,77,0.2);}
-  .honors-title{display:flex;align-items:center;gap:6px;font-weight:800;font-size:13px;color:#92400e;margin-bottom:6px;}
-  .honors-list{list-style:none;padding:0;margin:0;}
-  .honors-list li{font-size:13px;color:#78350f;padding:2px 0;}
-
-  /* Advisor Section */
-  .advisor-section{
-    margin-top:12px;
-    padding:12px 14px;
-    background:linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(99,102,241,0.05) 100%);
-    border-radius:8px;
-    border:1px solid rgba(59,130,246,0.15);
-  }
-  .advisor-title{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-weight:800;
-    font-size:13px;
-    color:#1e40af;
-    margin-bottom:8px;
-  }
-  .advisor-info{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-  }
-  .advisor-label{
-    font-weight:700;
-    color:#3730a3;
-  }
-  .advisor-name{
-    color:#1e40af;
-    text-decoration:none;
-    font-weight:600;
-    padding:3px 8px;
-    background:rgba(59,130,246,0.08);
-    border-radius:6px;
-    transition:all 0.2s;
-  }
-  .advisor-name:hover{
-    background:rgba(59,130,246,0.15);
-    transform:translateY(-1px);
-    box-shadow:0 2px 4px rgba(59,130,246,0.2);
-  }
-  .advisor-affiliation{
-    color:#64748b;
-    font-size:12px;
-    font-weight:500;
-  }
-  .multiple-advisors{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .advisor-item{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    position:relative;
-    padding-left:20px;
-  }
-  .advisor-item::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:50%;
-    transform:translateY(-50%);
-    width:4px;
-    height:4px;
-    background:#3b82f6;
-    border-radius:50%;
-  }
-  .advisor-role{
-    font-size:11px;
-    color:#6b7280;
-    font-weight:600;
-    background:#f3f4f6;
-    padding:2px 6px;
-    border-radius:4px;
-  }
-
-  /* Mentoring Program */
-  .mentoring-year{margin-bottom:16px;}
-  .mentoring-year-header{
-    display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
-    background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;
-    cursor:pointer;user-select:none;transition:all .2s;
-  }
-  .mentoring-year-header:hover{background:#f3f4f6;}
-  .mentoring-year-title{font-weight:900;font-size:15px;color:#111827;}
-  .mentoring-count{background:var(--gold);color:var(--gold-fg);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;}
-  .mentoring-toggle{font-size:12px;transition:transform .2s;}
-  .mentoring-year-header.expanded .mentoring-toggle{transform:rotate(90deg);}
-  .mentoring-content{display:none;margin-top:8px;padding:12px;background:#fafbfc;border:1px solid #e5e7eb;border-radius:12px;}
-  .mentoring-content.show{display:block;}
-  .mentee-list{display:flex;flex-wrap:wrap;gap:8px;}
-  .mentee-chip{
-    position:relative;display:inline-flex;align-items:center;padding:6px 12px;
-    background:#fff;border:1px solid #e5e7eb;border-radius:999px;
-    font-size:13px;font-weight:600;transition:all .2s;cursor:default;
-  }
-  .mentee-chip:hover{
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    transform:translateY(-2px);
-    border-color:var(--gold);
-  }
-  .mentee-badge{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;}
-  
-  /* Enhanced Tooltip Design */
-  .mentee-tooltip{
-    position:absolute;
-    bottom:calc(100% + 12px);
-    left:50%;
-    transform:translateX(-50%);
-    width:240px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(254,251,235,0.98) 100%);
-    border:1px solid rgba(214,177,77,0.3);
-    border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.15);
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index:100;
-  }
-  
-  /* Responsive tooltip positioning */
-  .mentee-chip:first-child .mentee-tooltip,
-  .mentee-chip:nth-child(2) .mentee-tooltip {
-    left:0;
-    transform:translateX(0);
-  }
-  
-  .mentee-chip:first-child:hover .mentee-tooltip,
-  .mentee-chip:nth-child(2):hover .mentee-tooltip {
-    transform:translateX(0) translateY(-4px);
-  }
-  
-  .mentee-chip:last-child .mentee-tooltip,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip {
-    left:auto;
-    right:0;
-    transform:translateX(0);
-  }
-  
-  .mentee-chip:last-child:hover .mentee-tooltip,
-  .mentee-chip:nth-last-child(2):hover .mentee-tooltip {
-    transform:translateX(0) translateY(-4px);
-  }
-  
-  /* Center positioned tooltips (default) */
-  .mentee-chip:hover .mentee-tooltip{
-    opacity:1;
-    visibility:visible;
-    transform:translateX(-50%) translateY(-4px);
-  }
-  
-  /* Adjust arrow for left-aligned tooltips */
-  .mentee-chip:first-child .mentee-tooltip::after,
-  .mentee-chip:nth-child(2) .mentee-tooltip::after,
-  .mentee-chip:first-child .mentee-tooltip::before,
-  .mentee-chip:nth-child(2) .mentee-tooltip::before {
-    left:30px;
-    transform:translateX(0);
-  }
-  
-  /* Adjust arrow for right-aligned tooltips */
-  .mentee-chip:last-child .mentee-tooltip::after,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip::after,
-  .mentee-chip:last-child .mentee-tooltip::before,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip::before {
-    left:auto;
-    right:30px;
-    transform:translateX(0);
-  }
-  
-  /* Mobile responsive */
-  @media (max-width: 640px) {
-    .mentee-tooltip {
-      width:200px;
-    }
-    
-    /* On mobile, all tooltips should be centered if possible */
-    .mentee-chip .mentee-tooltip {
-      position:fixed;
-      left:50% !important;
-      right:auto !important;
-      transform:translateX(-50%);
-      max-width:calc(100vw - 40px);
-    }
-    
-    .mentee-chip:hover .mentee-tooltip {
-      transform:translateX(-50%) translateY(-4px);
-    }
-    
-    .mentee-chip .mentee-tooltip::after,
-    .mentee-chip .mentee-tooltip::before {
-      left:50% !important;
-      right:auto !important;
-      transform:translateX(-50%);
-    }
-  }
-  
-  /* Tooltip Arrow */
-  .mentee-tooltip::after{
-    content:'';
-    position:absolute;
-    top:100%;
-    left:50%;
-    transform:translateX(-50%);
-    border:6px solid transparent;
-    border-top-color:rgba(254,251,235,0.98);
-  }
-  
-  .mentee-tooltip::before{
-    content:'';
-    position:absolute;
-    top:100%;
-    left:50%;
-    transform:translateX(-50%);
-    border:7px solid transparent;
-    border-top-color:rgba(214,177,77,0.3);
-  }
-  
-  /* Tooltip Header */
-  .tooltip-header{
-    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    padding:10px 14px;
-    border-radius:11px 11px 0 0;
-    border-bottom:1px solid rgba(214,177,77,0.2);
-  }
-  
-  .tooltip-title{
-    font-weight:800;
-    font-size:12px;
-    color:#fff;
-    text-align:center;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-    text-shadow:0 1px 2px rgba(0,0,0,0.1);
-  }
-  
-  /* Tooltip Content */
-  .tooltip-content{
-    padding:12px;
-  }
-  
-  .tooltip-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 0;
-    font-size:11px;
-    border-bottom:1px solid rgba(214,177,77,0.1);
-  }
-  
-  .tooltip-row:last-child{
-    border-bottom:none;
-  }
-  
-  .tooltip-icon{
-    width:20px;
-    text-align:center;
-    color:var(--gold);
-  }
-  
-  .tooltip-label{
-    flex:1;
-    color:#6b7280;
-    font-weight:600;
-  }
-  
-  .tooltip-value{
-    color:#111827;
-    font-weight:700;
-  }
-  
-  /* Year badges in tooltip */
-  .year-badges{
-    display:inline-flex;
-    gap:4px;
-    margin-left:4px;
-  }
-  .year-badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:2px 6px;
-    border-radius:999px;
-    background:var(--gold);
-    font-size:10px;
-    font-weight:800;
-    color:#fff;
-    line-height:1;
-  }
-  
-  /* Mentoring participation year badges (연도 배지 전용) */
-
-  /* Network Slider */
-  .network-controls{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;}
-  .slider-label{font-size:13px;font-weight:700;color:#6b7280;white-space:nowrap;}
-  .slider-container{flex:1;display:flex;align-items:center;gap:12px;}
-  .network-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;background:#e5e7eb;border-radius:3px;outline:none;}
-  .network-slider::-webkit-slider-thumb{
-    -webkit-appearance:none;appearance:none;width:20px;height:20px;
-    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);transition:all .2s;
-  }
-  .network-slider::-moz-range-thumb{
-    width:20px;height:20px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);border:none;
-  }
-  .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
-
-  /* Enhanced Network Canvas Styles */
-  #networkCanvas{
-    width:100%;
-    height:500px;
-    border-radius:16px;
-    background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
-    margin-top:1rem;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
-  }
-  #networkInfo{
-    margin-top:16px;
-    padding:14px;
-    background: linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(234,207,127,0.05) 100%);
-    border-radius:12px;
-    font-size:14px;
-    text-align:center;
-    color:#374151;
-    font-weight:600;
-    border: 1px solid rgba(214,177,77,0.1);
-  }
-</style>
-
-<!-- ===== Main Content ===== -->
-<section class="director-page max-w-7xl mx-auto px-4 pb-8">
-  <div class="main-grid" style="margin-top:2rem;">
-    <!-- Profile Sidebar -->
-    <aside>
-      <div class="director-card">
-        <div class="card-head">Profile</div>
-        <div class="card-body">
-          <div class="profile-photo">
-            <img src="{{ '/assets/img/members/director.jpg' | relative_url }}" alt="Insu Choi" 
-                 onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
-          </div>
-          
-          <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
-          <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
-          
-          <div class="profile-info">
-            <div class="profile-item">
-              <span class="profile-emoji">👨‍🏫</span>
-              <div class="profile-content">
-                <span class="profile-label">Position</span>
-                <span class="profile-value">Director, FINDS Lab</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">🏛️</span>
-              <div class="profile-content">
-                <span class="profile-label">Affiliation</span>
-                <span class="profile-value">Assistant Professor, DWU</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📍</span>
-              <div class="profile-content">
-                <span class="profile-label">Office</span>
-                <span class="profile-value">Sungin Hall · Room 702</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📧</span>
-              <div class="profile-content">
-                <span class="profile-label">E-mail</span>
-                <span class="profile-value">
-                  <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="button-group">
-            <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
-            <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main>
-      <!-- Introduction -->
-      <div class="director-card">
-        <div class="card-head">Introduction</div>
-        <div class="card-body">
-          <p style="line-height:1.8; color:#374151;">
-            My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>,
-            with a particular focus on <b>integrating data science and financial engineering</b> to address
-            <b>real-world financial challenges</b>.
-          </p>
-          <p style="line-height:1.8; color:#374151; margin-top:1rem;">
-            Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing
-            <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
-          </p>
-        </div>
-      </div>
-
-      <!-- Research Interests -->
-      <div class="director-card">
-        <div class="card-head">Research Interests</div>
-        <div class="card-body">
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Financial Data Science
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">AI in Quantitative Finance & Asset Management</div>
-                  <div class="ri-list-desc">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Asset Pricing & Market Making</div>
-                  <div class="ri-list-desc">자산 가격결정, 시장조성, 주문흐름 분석</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Time-Series for Finance</div>
-                  <div class="ri-list-desc">변동성 예측, 국면 전환 모형, 선후행 관계 탐지</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Business Analytics
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">Financial Modeling</div>
-                  <div class="ri-list-desc">금융 모델링 및 데이터 기반 자산배분</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Decision-Focused Learning</div>
-                  <div class="ri-list-desc">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Data-Inspired Decision Making
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">AI-Powered Decision Systems</div>
-                  <div class="ri-list-desc">그래프 표현과 강화학습 기반 의사결정</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Household Finance</div>
-                  <div class="ri-list-desc">가계금융 및 투자자 행동 모델링</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Collaboration Network -->
-      <div class="director-card">
-        <div class="card-head">Collaboration Network</div>
-        <div class="card-body">
-          <div class="network-controls">
-            <span class="slider-label">Min. Papers:</span>
-            <div class="slider-container">
-              <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
-              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
-            </div>
-            <span class="slider-value" id="sliderValue">1+</span>
-          </div>
-          
-          <canvas id="networkCanvas"></canvas>
-          
-          <div id="networkInfo">
-            Loading collaboration data...
-          </div>
-        </div>
-      </div>
-
-      <!-- Education -->
-      <div class="director-card">
-        <div class="card-head">Education</div>
-        <div class="card-body">
-          <ul class="timeline edu">
-            <li>
-              <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo"
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2025.02.</div>
-                <div class="title">Ph.D. in Engineering</div>
-                <div class="desc">Industrial and Systems Engineering, KAIST</div>
-                <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisor</span>
-                  </div>
-                  <div class="advisor-info">
-                    <span class="advisor-label">Prof.</span>
-                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                      Woo Chang Kim
-                    </a>
-                    <span class="advisor-affiliation">(KAIST)</span>
-                  </div>
-                </div>
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo"
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2021.02.</div>
-                <div class="title">Master of Science</div>
-                <div class="desc">Industrial and Systems Engineering, KAIST</div>
-                <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisor</span>
-                  </div>
-                  <div class="advisor-info">
-                    <span class="advisor-label">Prof.</span>
-                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                      Woo Chang Kim
-                    </a>
-                    <span class="advisor-affiliation">(KAIST)</span>
-                  </div>
-                </div>
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Best Master Thesis Award</b>, KIIE</li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo"
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2018.02.</div>
-                <div class="title">Bachelor of Engineering</div>
-                <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
-                <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisors</span>
-                  </div>
-                  <div class="multiple-advisors">
-                    <div class="advisor-item">
-                      <span class="advisor-role">Academic Advisor</span>
-                      <div class="advisor-info">
-                        <span class="advisor-label">Prof.</span>
-                        <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" class="advisor-name">
-                          Jang Ho Kim
-                        </a>
-                        <span class="advisor-affiliation">(Korea University)</span>
-                      </div>
-                    </div>
-                    <div class="advisor-item">
-                      <span class="advisor-role">Thesis Supervisor</span>
-                      <div class="advisor-info">
-                        <span class="advisor-label">Prof.</span>
-                        <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" class="advisor-name">
-                          Myeong-Ju Park
-                        </a>
-                        <span class="advisor-affiliation">(Seoul National University)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Valedictorian</b>, 1st out of 86 students</li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Employment -->
-      <div class="director-card">
-        <div class="card-head">Employment</div>
-        <div class="card-body">
-          <ul class="timeline">
-            <li>
-              <div class="year">2025.09. – Present</div>
-              <div class="title">Assistant Professor</div>
-              <div class="desc">Department of Business Administration, Dongduk Women's University</div>
-              <div class="desc-ko">조교수 / 동덕여자대학교 경영학과</div>
-            </li>
-            <li>
-              <div class="year">2025.03. – 2025.08.</div>
-              <div class="title">Lecturer</div>
-              <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
-              <div class="desc-ko">강사 / 강남대학교 전자반도체공학부</div>
-            </li>
-            <li>
-              <div class="year">2025.03. – 2025.08.</div>
-              <div class="title">Lecturer</div>
-              <div class="desc">Digital Business Major, Korea University</div>
-              <div class="desc-ko">강사 / 고려대학교 디지털비즈니스전공</div>
-            </li>
-            <li>
-              <div class="year">2024.03. – 2024.08.</div>
-              <div class="title">Lecturer</div>
-              <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
-              <div class="desc-ko">강사 / 경희대학교 산업경영공학과</div>
-            </li>
-            <li>
-              <div class="year">2020.03. – 2020.05.</div>
-              <div class="title">Intern</div>
-              <div class="desc">Performance Improvement Department, EY Hanyoung</div>
-              <div class="desc-ko">인턴 / EY한영 성과개선팀</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Professional Affiliations -->
-      <div class="director-card">
-        <div class="card-head">Professional Affiliations</div>
-        <div class="card-body">
-          <ul class="timeline">
-            <li>
-              <div class="year">2025.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Institute of Industrial Engineers (KIIE)</div>
-              <div class="desc-ko">대한산업공학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2023.09. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Securities Association (KSA)</div>
-              <div class="desc-ko">한국증권학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2023.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Academic Society of Business Administration (KASBA)</div>
-              <div class="desc-ko">한국경영학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2022.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korea Intelligent Information Systems Society (KIISS)</div>
-              <div class="desc-ko">한국지능정보시스템학회 종신회원</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Publication Statistics -->
-      <div class="director-card">
-        <div class="card-head">Publication Statistics</div>
-        <div class="card-body">
-          <div class="pub-stats">
-            <div class="pub-stat journal-scie">
-              <div class="pub-stat-number">12</div>
-              <div class="pub-stat-label">SCIE/SSCI/A&HCI</div>
-            </div>
-            <div class="pub-stat journal-scopus">
-              <div class="pub-stat-number">8</div>
-              <div class="pub-stat-label">Scopus</div>
-            </div>
-            <div class="pub-stat journal-other">
-              <div class="pub-stat-number">5</div>
-              <div class="pub-stat-label">Other Int'l</div>
-            </div>
-            <div class="pub-stat journal-kci">
-              <div class="pub-stat-number">15</div>
-              <div class="pub-stat-label">KCI</div>
-            </div>
-            <div class="pub-stat conf-intl">
-              <div class="pub-stat-number">23</div>
-              <div class="pub-stat-label">Int'l Conf</div>
-            </div>
-            <div class="pub-stat conf-domestic">
-              <div class="pub-stat-number">18</div>
-              <div class="pub-stat-label">Dom. Conf</div>
-            </div>
-            <div class="pub-stat citation">
-              <div class="pub-stat-number">245</div>
-              <div class="pub-stat-label">Citations</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mentoring Program -->
-      <div class="director-card">
-        <div class="card-head">Mentoring Program</div>
-        <div class="card-body">
-          <!-- 2024 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2024)">
-              <div class="mentoring-year-title">2024</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">5</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2024">
-              <div class="mentee-list">
-                <div class="mentee-chip">
-                  최혜지
-                  <span class="mentee-badge" style="background:#d946ef"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">경희대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업경영공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2016</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mentee-chip">
-                  이도영
-                  <span class="mentee-badge" style="background:#3b82f6"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">카이스트</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업및시스템공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2017</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mentee-chip">
-                  박성수
-                  <span class="mentee-badge" style="background:#10b981"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 서울대학교</div>
-                    <div class="mentee-tooltip-line">📚 산업공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2015</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div class="mentee-chip">
-                  김민지
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 연세대학교</div>
-                    <div class="mentee-tooltip-line">📚 경영학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2018</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2024</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div class="mentee-chip">
-                  정현우
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 성균관대학교</div>
-                    <div class="mentee-tooltip-line">📚 시스템경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2016</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                        <span class="year-badge">2024</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <!-- 2023 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2023)">
-              <div class="mentoring-year-title">2023</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">4</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2023">
-              <div class="mentee-list">
-                <div class="mentee-chip">
-                  장서연
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 이화여대</div>
-                    <div class="mentee-tooltip-line">📚 경영학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2014</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div class="mentee-chip">
-                  오태현
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 포항공대</div>
-                    <div class="mentee-tooltip-line">📚 산업경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2013</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div class="mentee-chip">
-                  윤지훈
-                  <span class="mentee-badge" style="background:#f59e0b"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 고려대학교</div>
-                    <div class="mentee-tooltip-line">📚 산업경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2015</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div class="mentee-chip">
-                  김민지
-                  <span class="mentee-badge" style="background:#ef4444"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 한양대학교</div>
-                    <div class="mentee-tooltip-line">📚 컴퓨터소프트웨어학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2014</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </main>
-  </div>
-</section>
-
-<!-- Load AUTHORS from include -->
-{% include authors-data.html %}
-
-<!-- Scripts -->
-<script>
-  // ===== Banner click-burst functions =====
+  /* Interactive gold burst (cards suits) */
   function createNetworkBurst(event, element) {
     const rect = element.getBoundingClientRect();
     const x = event.clientX - rect.left - 100;
     const y = event.clientY - rect.top - 100;
-
+    
     const networkDiv = document.createElement('div');
     networkDiv.className = 'network-burst';
     networkDiv.style.left = x + 'px';
     networkDiv.style.top = y + 'px';
-
-    const patterns = [generateHeartNetwork(), generateClubNetwork(), generateSpadeNetwork(), generateDiamondNetwork()];
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    networkDiv.innerHTML = randomPattern;
-
-    element.appendChild(networkDiv);
-    setTimeout(()=>{ element.removeChild(networkDiv); }, 2000);
-  }
-  
-  function generateHeartNetwork(){
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const heartPath='M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
-    svg+=`<path d="${heartPath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    const nodes=[{x:70,y:35},{x:130,y:35},{x:40,y:70},{x:160,y:70},{x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}];
-    const connections=[[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
-    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.5"/>`});
-    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${3+Math.random()*2}" class="burst-dot"/>`});
-    svg+='</svg>'; return svg;
-  }
-  
-  function generateClubNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const circles=[{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
-    circles.forEach(c=>{svg+=`<circle cx="${c.x}" cy="${c.y}" r="${c.r}" fill="none" class="burst-line" stroke-width="2"/>`});
-    svg+=`<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
-    const nodes=[]; circles.forEach(c=>{for(let i=0;i<6;i++){const a=(i*2*Math.PI)/6;nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)})}});
-    nodes.push({x:100,y:100},{x:100,y:140});
-    for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y; const dist=Math.sqrt(dx*dx+dy*dy); if(dist<40){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-dist/40)*0.4}"/>`}}}
-    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${2+Math.random()*2}" class="burst-dot"/>`});
-    svg+='</svg>'; return svg;
-  }
-  
-  function generateSpadeNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
-    svg+=`<path d="${spadePath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<path d="M100,105 L90,130 L110,130 Z" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
-    const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
-    const connections=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
-    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.4"/>`});
-    nodes.forEach((n,i)=>{const r=(i===0||i===7)?4:3; svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot"/>`});
-    svg+='</svg>'; return svg;
-  }
-  
-  function generateDiamondNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const diamondPath='M100,40 L140,100 L100,160 L60,100 Z';
-    svg+=`<path d="${diamondPath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity="0.5"/>`;
-    svg+=`<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity="0.5"/>`;
-    svg+=`<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity="0.3"/>`;
-    svg+=`<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity="0.3"/>`;
-    const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
-    for(let i=0;i<4;i++){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity="0.3"/>`}
-    nodes.forEach((n,i)=>{const r=i<4?4:(i===4?5:2.5); svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot" opacity="${i===4?1:.8}"/>`});
-    for(let i=0;i<4;i++){const ang=(i*Math.PI)/2; const x=100+30*Math.cos(ang); const y=100+30*Math.sin(ang); svg+=`<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity="0.6"/>`}
-    svg+='</svg>'; return svg;
-  }
-
-  // ===== Research Interests Toggle =====
-  function toggleRI(header) {
-    header.classList.toggle('active');
-    const content = header.nextElementSibling;
-    content.classList.toggle('show');
-  }
-
-  // ===== Mentoring Program Toggle =====
-  function toggleMentoring(header, year) {
-    header.classList.toggle('expanded');
-    document.getElementById(`mentoring-${year}`).classList.toggle('show');
-  }
-
-  // ===== Clean and Elegant Collaboration Network =====
-  
-  // Load publications data from Jekyll
-  const PUBS = {{ site.data.pubs | jsonify }};
-  const DIRECTOR_ID = 1;
-
-  // Count collaborations
-  function countCollaborations() {
-    const counts = {};
-    PUBS.forEach(pub => {
-      if (!Array.isArray(pub.authors)) return;
-      if (!pub.authors.includes(DIRECTOR_ID)) return;
-      pub.authors.forEach(aid => {
-        if (aid !== DIRECTOR_ID) {
-          counts[aid] = (counts[aid] || 0) + 1;
-        }
-      });
-    });
-    return counts;
-  }
-
-  // Initialize variables
-  let currentThreshold = 1;
-  let collaborations = countCollaborations();
-  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
-  let hoveredNode = null;
-  let networkInitialized = false;
-
-  // UI Elements
-  const slider = document.getElementById('networkSlider');
-  const maxLabel = document.getElementById('maxSliderLabel');
-  const sliderValue = document.getElementById('sliderValue');
-  const infoEl = document.getElementById('networkInfo');
-
-  // Setup slider
-  if (slider) {
-    slider.max = maxCollaborations;
-    maxLabel.textContent = maxCollaborations + '+';
-    slider.value = Math.min(1, maxCollaborations);
-    currentThreshold = parseInt(slider.value);
-
-    slider.addEventListener('input', function() {
-      currentThreshold = parseInt(this.value);
-      sliderValue.textContent = currentThreshold + '+';
-      updateNetworkInfo();
-      if (networkInitialized) {
-        buildNetwork();
-        drawNetwork();
-      }
-    });
-  }
-
-  function updateNetworkInfo() {
-    const visible = Object.entries(collaborations)
-      .filter(([id, freq]) => freq >= currentThreshold).length;
-    const total = Object.keys(collaborations).length;
-    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${currentThreshold}+</b> papers`;
-  }
-
-  // Canvas setup
-  const canvas = document.getElementById('networkCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
-
-    // Size canvas
-    function sizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 500 * window.devicePixelRatio;
-      canvas.style.height = '500px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
-
-    // Build network structure
-    function buildNetwork() {
-      nodes = [];
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-
-      // Director at center
-      nodes.push({
-        id: DIRECTOR_ID,
-        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-        x: centerX,
-        y: centerY,
-        radius: 35,
-        isCenter: true,
-        frequency: 999
-      });
-
-      // Get collaborators sorted by frequency and filtered by threshold
-      const coAuthors = Object.entries(collaborations)
-        .filter(([id, freq]) => freq >= currentThreshold)
-        .sort((a, b) => b[1] - a[1]);
-
-      // Arrange in concentric circles based on frequency
-      const rings = [];
-      const ringSizes = [8, 12, 16]; // max nodes per ring
-      let ringIndex = 0;
-      let nodesInRing = [];
-
-      coAuthors.forEach(([id, freq]) => {
-        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-          rings.push(nodesInRing);
-          nodesInRing = [];
-          ringIndex++;
-        }
-        nodesInRing.push({ id: parseInt(id), freq });
-      });
-      if (nodesInRing.length > 0) rings.push(nodesInRing);
-
-      // Place nodes in rings
-      rings.forEach((ring, rIdx) => {
-        const radius = 120 + rIdx * 80;
-        ring.forEach((item, nIdx) => {
-          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-          const freq = item.freq;
-          
-          nodes.push({
-            id: item.id,
-            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-            x: centerX + Math.cos(angle) * radius,
-            y: centerY + Math.sin(angle) * radius,
-            radius: 10 + (freq / maxCollaborations) * 15,
-            frequency: freq,
-            ring: rIdx
-          });
-        });
-      });
-    }
-
-    // Draw the network
-    function drawNetwork() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Background
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-      
-      // Subtle radial gradient
-      const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
-      bgGrad.addColorStop(0, '#fefefe');
-      bgGrad.addColorStop(1, '#f9fafb');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw subtle grid dots for background
-      ctx.fillStyle = '#e5e7eb';
-      for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
-        for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-      
-      // Draw connections
-      nodes.slice(1).forEach(node => {
-        const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
-        const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
-        grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
-        grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
-        grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
-        
-        ctx.beginPath();
-        ctx.moveTo(nodes[0].x, nodes[0].y);
-        ctx.lineTo(node.x, node.y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
-        ctx.stroke();
-      });
-      
-      // Draw nodes
-      nodes.forEach(node => {
-        const isHovered = hoveredNode === node;
-        const scale = isHovered ? 1.1 : 1;
-        
-        // Shadow
-        ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
-        ctx.shadowBlur = isHovered ? 15 : 8;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 2;
-        
-        // Node circle
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
-        
-        if (node.isCenter) {
-          // Director node - red gradient
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
-          grad.addColorStop(0, '#ef4444');
-          grad.addColorStop(1, '#b91c1c');
-          ctx.fillStyle = grad;
-        } else {
-          // Collaborator nodes - gold gradient based on frequency
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
-          const ratio = node.frequency / maxCollaborations;
-          if (ratio > 0.66) {
-            grad.addColorStop(0, '#fbbf24');
-            grad.addColorStop(1, '#d97706');
-          } else if (ratio > 0.33) {
-            grad.addColorStop(0, '#fde047');
-            grad.addColorStop(1, '#facc15');
-          } else {
-            grad.addColorStop(0, '#fef3c7');
-            grad.addColorStop(1, '#fde68a');
-          }
-          ctx.fillStyle = grad;
-        }
-        ctx.fill();
-        
-        // Border
-        ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        
-        ctx.shadowColor = 'transparent';
-        
-        // Text labels
-        ctx.fillStyle = '#1f2937';
-        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // Name below node
-        ctx.fillText(node.name, node.x, node.y + node.radius + 14);
-        
-        // Paper count for collaborators
-        if (!node.isCenter) {
-          ctx.fillStyle = '#6b7280';
-          ctx.font = '9px Inter, sans-serif';
-          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + 26);
-        }
-      });
-      
-      // Hover tooltip
-      if (hoveredNode && !hoveredNode.isCenter) {
-        const tooltipWidth = 160;
-        const tooltipHeight = 45;
-        let tooltipX = hoveredNode.x - tooltipWidth / 2;
-        let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
-        
-        // Keep tooltip in bounds
-        tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
-        tooltipY = Math.max(10, tooltipY);
-        
-        // Tooltip background
-        ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
-        ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
-        ctx.fill();
-        ctx.stroke();
-        
-        // Tooltip text
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
-        
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = '10px Inter, sans-serif';
-        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`, 
-                     tooltipX + tooltipWidth / 2, tooltipY + 32);
-      }
-    }
-
-    // Mouse interaction
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      hoveredNode = null;
-      nodes.forEach(node => {
-        const dx = x - node.x;
-        const dy = y - node.y;
-        if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
-          hoveredNode = node;
-        }
-      });
-      
-      canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-      drawNetwork();
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      hoveredNode = null;
-      drawNetwork();
-    });
-
-    // Initialize
-    sizeCanvas();
-    buildNetwork();
-    updateNetworkInfo();
-    drawNetwork();
-    networkInitialized = true;
     
-    // Handle resize
-    window.addEventListener('resize', () => {
-      sizeCanvas();
-      buildNetwork();
-      drawNetwork();
+    const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
+    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+    networkDiv.innerHTML = randomPattern();
+    
+    element.appendChild(networkDiv);
+    setTimeout(() => element.removeChild(networkDiv), 2000);
+  }
+
+  /* Heart */
+  function generateHeartNetwork() {
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+    svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
+    
+    const nodes = [
+      {x:70,y:35}, {x:130,y:35},
+      {x:40,y:70}, {x:160,y:70},
+      {x:100,y:140}, {x:60,y:50}, {x:140,y:50}, {x:80,y:90}, {x:120,y:90}
+    ];
+    const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+    
+    connections.forEach(([f,t]) => 
+      svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`
+    );
+    nodes.forEach(n => 
+      svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`
+    );
+    
+    svg += '</svg>';
+    return svg;
+  }
+
+  /* Club */
+  function generateClubNetwork() {
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const circles = [{x:100,y:60,r:25}, {x:75,y:85,r:25}, {x:125,y:85,r:25}];
+    
+    circles.forEach(c => 
+      svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`
+    );
+    svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+    
+    const nodes = [];
+    circles.forEach(c => {
+      for(let i = 0; i < 6; i++) {
+        const a = i * 2 * Math.PI / 6;
+        nodes.push({x: c.x + c.r * Math.cos(a), y: c.y + c.r * Math.sin(a)});
+      }
+    });
+    nodes.push({x:100,y:100}, {x:100,y:140});
+    
+    for(let i = 0; i < nodes.length; i++) {
+      for(let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d = Math.hypot(dx, dy);
+        if(d < 40) {
+          svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" 
+                  class="burst-line" opacity="${0.3 + (1 - d/40) * 0.4}"/>`;
+        }
+      }
+    }
+    
+    nodes.forEach(n => 
+      svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`
+    );
+    
+    svg += '</svg>';
+    return svg;
+  }
+
+  /* Spade */
+  function generateSpadeNetwork() {
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const spadePath = 'M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+    
+    svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
+    svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
+    svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+    
+    const nodes = [
+      {x:100,y:50}, {x:75,y:70}, {x:125,y:70},
+      {x:60,y:85}, {x:140,y:85}, {x:85,y:110}, {x:115,y:110},
+      {x:100,y:105}, {x:90,y:130}, {x:110,y:130}, {x:100,y:145}
+    ];
+    
+    const conn = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+    
+    conn.forEach(([f,t]) => 
+      svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`
+    );
+    
+    nodes.forEach((n,i) => 
+      svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0 || i===7) ? 4 : 3}" class="burst-dot"/>`
+    );
+    
+    svg += '</svg>';
+    return svg;
+  }
+
+  /* Diamond */
+  function generateDiamondNetwork() {
+    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const diamond = 'M100,40 L140,100 L100,160 L60,100 Z';
+    
+    svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
+    svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
+    svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
+    svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
+    svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
+    
+    const nodes = [
+      {x:100,y:40}, {x:140,y:100}, {x:100,y:160}, {x:60,y:100},
+      {x:100,y:100}, {x:80,y:70}, {x:120,y:70}, {x:80,y:130},
+      {x:120,y:130}, {x:120,y:100}, {x:80,y:100}
+    ];
+    
+    for(let i = 0; i < 4; i++) {
+      svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`;
+    }
+    
+    nodes.forEach((n,i) => 
+      svg += `<circle cx="${n.x}" cy="${n.y}" r="${i < 4 ? 4 : (i === 4 ? 5 : 2.5)}" class="burst-dot" opacity="${i === 4 ? 1 : .85}"/>`
+    );
+    
+    for(let i = 0; i < 4; i++) {
+      const a = i * Math.PI / 2;
+      const x = 100 + 30 * Math.cos(a);
+      const y = 100 + 30 * Math.sin(a);
+      svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`;
+    }
+    
+    svg += '</svg>';
+    return svg;
+  }
+</script>
+
+<!-- ===== Styles ===== -->
+<style>
+  :root {
+    --journal-gold: rgb(214, 177, 77);
+    --conference-red: rgb(172, 14, 14);
+    --joint-orange: 217,119,6;
+    --book-pink: rgb(220, 38, 38);
+    --report-pink: rgb(251, 113, 133);
+    --thesis-black: rgb(17, 24, 39);
+  }
+
+  /* Authorship Legend Section */
+  .authorship-legend {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+  .authorship-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111827;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f3f4f6;
+  }
+
+  .authorship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .authorship-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8fafc;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+  }
+
+  .authorship-item:hover {
+    background: #f3f4f6;
+    transform: translateX(2px);
+  }
+
+  .authorship-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    font-weight: 900;
+    font-size: 12px;
+    border-radius: 6px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .authorship-mark.asterisk {
+    font-size: 16px;
+    padding-bottom: 2px;
+  }
+
+  .authorship-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .authorship-en {
+    font-size: 12px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+  }
+
+  .authorship-ko {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    line-height: 1.3;
+  }
+
+  /* Toolbar */
+  .toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 16px;
+    margin-top: 20px;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .search { flex: 1; min-width: 0; }
+
+  .search input {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: .6rem;
+    padding: .6rem .8rem;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .count {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+    background: #fff;
+    padding: .4rem .8rem;
+    border: 1px solid #e5e7eb;
+    border-radius: .5rem;
+    white-space: nowrap;
+  }
+
+  .filter-section { margin-top: 8px; }
+
+  .filter-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    background: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+
+  .chip.is-on { box-shadow: inset 0 0 0 2px #111827; }
+  .chip:focus-visible { outline: 2px solid #111827; outline-offset: 2px; }
+  
+  .chip-journal.is-on { background: var(--journal-gold); color: #111; }
+  .chip-conference.is-on { background: var(--conference-red); color: #fff; }
+  .chip-book.is-on { background: var(--book-pink); color: #fff; }
+  .chip-report.is-on { background: var(--report-pink); color: #fff; }
+  .chip-thesis.is-on { background: var(--thesis-black); color: #fff; }
+
+  /* Year sections */
+  .year-section {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .year-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .year-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111827;
+  }
+
+  .year-toggle {
+    padding: .4rem .8rem;
+    border: 1px solid #e5e7eb;
+    border-radius: .6rem;
+    background: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .year-toggle:hover { background: #f8fafc; }
+
+  .year-content { padding: 16px; }
+  .paper-list { display: grid; gap: 14px; }
+
+  /* Paper Card */
+  .paper-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .paper-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+  }
+
+  .paper-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 13px;
+    color: #fff;
+    user-select: none;
+  }
+
+  .paper-left.journal { background: var(--journal-gold); color: #111; }
+  .paper-left.conference { background: var(--conference-red); }
+  .paper-left.book { background: var(--book-pink); color: #fff; }
+  .paper-left.report { background: var(--report-pink); color: #fff; }
+  .paper-left.thesis { background: var(--thesis-black); color: #fff; }
+  .paper-left.preprint { background: #e5e7eb; color: #6b7280; }
+  .paper-left.empty { background: #f1f5f9; color: #e5e7eb; }
+
+  .paper-body { padding: 14px 16px; }
+
+  /* Header & Badges */
+  .paper-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .indexing-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+  }
+
+  .indexing-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .indexing-badge {
+    flex-shrink: 0;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  .badge-lang {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .badge-lang.english { background: #002868; color: #fff; }
+  .badge-lang.korean { background: #CD2E3A; color: #fff; }
+
+  .badge-pub {
+    height: 22px;
+    padding: 0 .6rem;
+    font-size: 10px;
+    line-height: 22px;
+    border-radius: 999px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-weight: 700;
+    white-space: nowrap;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .badge-pub .val {
+    color: #374151;
+    font-weight: 700;
+  }
+
+  /* Awards styles */
+  .awards-container {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .award-trophy {
+    font-size: 18px;
+    cursor: help;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+    transition: transform 0.2s;
+  }
+
+  .award-trophy:hover { transform: scale(1.2); }
+
+  .award-tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .award-tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #111827;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 8px;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    right: 0;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: normal;
+    line-height: 1.3;
+  }
+
+  .award-tooltip:hover .tooltiptext { visibility: visible; }
+
+  .award-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    right: 10px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #111827 transparent;
+  }
+
+  .paper-title {
+    font-weight: 900;
+    font-size: 15px;
+    color: #111827;
+    margin-bottom: 8px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .paper-meta {
+    margin-bottom: 6px;
+    color: #374151;
+    font-size: 13px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .paper-venue {
+    margin-bottom: 6px;
+    color: #6b7280;
+    font-size: 12px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+  }
+
+  .paper-details {
+    margin-bottom: 10px;
+    font-size: 11px;
+    color: #6b7280;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  .paper-detail-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .paper-detail-item .label {
+    font-weight: 700;
+    color: #9ca3af;
+  }
+
+  .paper-detail-item .value {
+    font-weight: 600;
+    color: #6b7280;
+  }
+
+  .paper-detail-item.doi .value {
+    color: #2563eb;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .paper-detail-item.doi .value:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+  }
+
+  .paper-foot { display: flex; gap: 8px; }
+
+  /* Index Badges */
+  .idx {
+    display: inline-flex;
+    align-items: center;
+    padding: .3rem .6rem;
+    border-radius: 9999px;
+    font-weight: 800;
+    font-size: 11px;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+
+  .idx-scie, .idx-ssci, .idx-ahci { background: rgba(214,177,77,.95); color: #111; }
+  .idx-esci { background: rgba(214,177,77,.80); color: #111; }
+  .idx-scopus { background: rgba(214,177,77,.65); color: #111; }
+  .idx-other-intl { background: rgba(214,177,77,.45); color: #111; }
+  .idx-kci-exc { background: rgba(214,177,77,.35); color: #111; }
+  .idx-kci { background: rgba(214,177,77,.25); color: #111; }
+  .idx-other-domestic { background: rgba(214,177,77,.15); color: #111; }
+  .idx-intl-conf { background: rgba(172,14,14,.85); color: #fff; }
+  .idx-domestic-conf { background: rgba(172,14,14,.45); color: #111; }
+  .idx-joint-conf { background: rgba(217,119,6,.85); color: #fff; }
+  .idx-book { background: var(--book-pink); color: #fff; }
+  .idx-report { background: var(--report-pink); color: #fff; }
+  .idx-thesis { background: var(--thesis-black); color: #fff; }
+  .idx-preprint, .idx-working { background: #fff; border: 1px solid #e5e7eb; color: #6b7280; }
+
+  /* Buttons */
+  .btn {
+    padding: .4rem .8rem;
+    border: 1px solid #e5e7eb;
+    border-radius: .6rem;
+    background: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .btn:hover { background: #f8fafc; }
+
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 99999;
+  }
+
+  .modal {
+    background: #fff;
+    border-radius: 1rem;
+    max-width: 720px;
+    width: 100%;
+    max-height: 80vh;
+    overflow: auto;
+  }
+
+  .modal header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+  }
+
+  .modal-title {
+    font-size: 18px;
+    font-weight: 900;
+    color: #111827;
+  }
+
+  .cite-block {
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem;
+    padding: 12px 14px;
+    background: #f8fafc;
+    margin-bottom: 12px;
+  }
+
+  .cite-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .cite-label {
+    font-weight: 800;
+    font-size: 13px;
+    color: #111827;
+  }
+
+  .cite-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  .copy-btn {
+    border: 1px solid #e5e7eb;
+    border-radius: .5rem;
+    padding: .3rem .6rem;
+    font-size: 11px;
+    font-weight: 800;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .copy-btn:hover { background: #f8fafc; }
+
+  /* Empty */
+  .empty-state {
+    padding: 48px 20px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px dashed #e5e7eb;
+    border-radius: 1rem;
+    background: #fff;
+    margin-top: 20px;
+  }
+
+  /* Readability for custom superscripts */
+  .paper-meta sup {
+    font-size: 0.65em;
+    margin-left: 1px;
+    color: #6b7280;
+    font-weight: 600;
+    vertical-align: baseline;
+    line-height: 1;
+  }
+
+  /* Mobile Tweaks */
+  @media (max-width: 640px) {
+    .search-container { flex-direction: column; align-items: stretch; }
+    .search { width: 100%; }
+    .count { text-align: center; width: 100%; }
+    .paper-row { grid-template-columns: 48px 1fr; }
+    .paper-title { font-size: 14px; }
+    .chip { font-size: 11px; padding: .4rem .8rem; }
+    .authorship-grid { grid-template-columns: 1fr; }
+    .authorship-item { padding: 10px; }
+    
+    .paper-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    
+    .indexing-wrapper { width: 100%; }
+    
+    .indexing-row {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .indexing-badge { font-size: 10px; padding: .25rem .5rem; }
+    .badge-lang { height: 22px; padding: 0 6px; font-size: 9px; }
+    .badge-pub { height: 22px; padding: 0 6px; font-size: 9px; }
+    .award-trophy { font-size: 16px; }
+    .awards-container { margin-left: 0; }
+  }
+
+  @media (max-width: 380px) {
+    .badge-pub { padding: 0 5px; font-size: 8px; }
+    .badge-lang { font-size: 8px; padding: 0 5px; }
+    
+    .authorship-mark {
+      min-width: 24px;
+      height: 24px;
+      font-size: 10px;
+      margin-right: 8px;
+    }
+    
+    .authorship-en { font-size: 11px; }
+    .authorship-ko { font-size: 10px; }
+    .award-trophy { font-size: 14px; }
+    .indexing-badge { font-size: 9px; padding: .2rem .4rem; }
+  }
+</style>
+
+<!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="toolbar">
+    <div class="search-container">
+      <div class="search">
+        <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+      </div>
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Authorship Legend ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="authorship-legend">
+    <h3 class="authorship-title">Authorship Remarks</h3>
+    <div class="authorship-grid">
+      <div class="authorship-item">
+        <span class="authorship-mark">P</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Principal Investigator</span>
+          <span class="authorship-ko">연구 책임자</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">L</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Leading Researcher</span>
+          <span class="authorship-ko">책임 연구원</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">R</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Researcher</span>
+          <span class="authorship-ko">참여 연구원</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">A</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Advisor (Thesis / Dissertation)</span>
+          <span class="authorship-ko">지도교수 (학위논문)</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">1</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">First Author</span>
+          <span class="authorship-ko">제1저자</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">2</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Second Author / Co-author</span>
+          <span class="authorship-ko">제2저자 / 공동저자</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark">3</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Third Author</span>
+          <span class="authorship-ko">제3저자</span>
+        </div>
+      </div>
+      
+      <div class="authorship-item">
+        <span class="authorship-mark asterisk">*</span>
+        <div class="authorship-desc">
+          <span class="authorship-en">Corresponding Author</span>
+          <span class="authorship-ko">교신저자</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Filter Sections ===== -->
+<section class="max-w-7xl mx-auto px-4">
+  <div class="toolbar">
+    <div class="filter-section" style="position: relative;">
+      <label class="filter-label">Publication Type</label>
+      <button id="clearAllFilters" style="position: absolute; top: -8px; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
+      <div class="chips" id="typeChips"></div>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Journal Indexing</label>
+      <div class="chips" id="journalChips"></div>
+    </div>
+
+    <div class="filter-section">
+      <label class="filter-label">Conference</label>
+      <div class="chips" id="conferenceChips"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Publications ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6" id="pubWrap"></section>
+
+<!-- ===== Cite Modal ===== -->
+<div id="citeModal" class="modal-backdrop">
+  <div class="modal">
+    <header>
+      <h3 class="modal-title">Citation Formats</h3>
+      <button id="btnCloseCite" class="copy-btn">Close</button>
+    </header>
+    <div class="p-4" id="citeBody"></div>
+  </div>
+</div>
+
+<script>
+  /* ===== Title Case Function ===== */
+  function toTitleCase(str) {
+    if (!str) return str;
+    
+    // Don't apply title case if the string appears to already be properly formatted
+    // (has mix of upper and lower case in a reasonable pattern)
+    const hasLowerCase = /[a-z]/.test(str);
+    const hasUpperCase = /[A-Z]/.test(str);
+    
+    // If it's all caps or all lowercase, apply title case
+    const needsTitleCase = !hasLowerCase || !hasUpperCase;
+    
+    if (!needsTitleCase) {
+      // Already has mixed case, just return as-is
+      return str;
+    }
+    
+    // Only apply title case to all-caps or all-lowercase strings
+    const lowercaseWords = ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','or','the','to','via','with'];
+    const words = str.split(' ');
+    
+    return words.map((word, index) => {
+      // Preserve acronyms and numbers
+      if (/^[A-Z0-9]+$/.test(word) && word.length > 1) {
+        return word;
+      }
+      
+      // First and last word always capitalized
+      if (index === 0 || index === words.length - 1) {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      }
+      
+      // Lowercase articles, prepositions, conjunctions
+      if (lowercaseWords.includes(word.toLowerCase())) {
+        return word.toLowerCase();
+      }
+      
+      // Normal capitalization
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+  }
+
+  /* ===== Load data from _data/pubs.json ===== */
+  const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
+
+  /* ===== Auto-number code labels ===== */
+  function autoNumberCodeLabels(pubs) {
+    // First, sort all publications by published_date (oldest first)
+    const sorted = [...pubs].sort((a, b) => {
+      // If both have published_date, sort by date
+      if (a.published_date && b.published_date) {
+        return new Date(a.published_date) - new Date(b.published_date);
+      }
+      // If only one has date, prioritize the one with date
+      if (a.published_date && !b.published_date) return -1;
+      if (!a.published_date && b.published_date) return 1;
+      // If neither has date, sort by year
+      return a.year - b.year;
+    });
+
+    // Count each type from oldest to newest
+    const counts = { J: 0, K: 0, C: 0, B: 0, R: 0 };
+    
+    // Process from oldest to newest
+    for (let i = 0; i < sorted.length; i++) {
+      const pub = sorted[i];
+      const prefix = pub.code_label ? pub.code_label.replace(/[0-9]/g, '') : '';
+      
+      if (prefix && counts[prefix] !== undefined) {
+        counts[prefix]++;
+        sorted[i].code_label = `${prefix}${counts[prefix]}`;
+      }
+    }
+    
+    // Now sort by year descending for display (but keep the assigned numbers)
+    return sorted.sort((a, b) => {
+      if (b.year !== a.year) return b.year - a.year;
+      // Within same year, sort by published_date descending (newest first)
+      if (a.published_date && b.published_date) {
+        const dateComp = new Date(b.published_date) - new Date(a.published_date);
+        if (dateComp !== 0) return dateComp;
+      }
+      // If dates are the same or one is missing, sort by code_label number (descending)
+      const getNum = (label) => {
+        const match = (label || '').match(/\d+/);
+        return match ? parseInt(match[0]) : 0;
+      };
+      return getNum(b.code_label) - getNum(a.code_label);
     });
   }
+
+  const PUBS = autoNumberCodeLabels(PUBS_RAW);
+
+  /* ===== Filters ===== */
+  const FILTER_GROUPS = {
+    type: [
+      {value: "journal", label: "Journal"},
+      {value: "conference", label: "Conference"},
+      {value: "book", label: "Book"},
+      {value: "report", label: "Report"},
+      {value: "thesis", label: "Thesis / Dissertation"}
+    ],
+    journal: [
+      {value: "SCIE", label: "SCIE"},
+      {value: "SSCI", label: "SSCI"},
+      {value: "A&HCI", label: "A&HCI"},
+      {value: "ESCI", label: "ESCI"},
+      {value: "Scopus", label: "Scopus"},
+      {value: "Other International", label: "Other International"},
+      {value: "KCI Excellent", label: "KCI Excellent"},
+      {value: "KCI Accredited", label: "KCI Accredited"},
+      {value: "Other Domestic", label: "Other Domestic"},
+      {value: "Book", label: "Book"},
+      {value: "Report", label: "Report"},
+      {value: "Thesis / Dissertation", label: "Thesis / Dissertation"},
+      {value: "Preprint", label: "Preprint"},
+      {value: "Working Paper", label: "Working Paper"}
+    ],
+    conference: [
+      {value: "International Conference", label: "International Conference"},
+      {value: "Domestic Conference", label: "Domestic Conference"}
+    ]
+  };
+
+  /* ===== State ===== */
+  let q = "";
+  const onFilters = {type: new Set(), journal: new Set(), conference: new Set()};
+
+  /* ===== DOM ===== */
+  const searchInput = document.getElementById('pubSearch');
+  const countEl = document.getElementById('count');
+  const pubWrap = document.getElementById('pubWrap');
+  const modal = document.getElementById('citeModal');
+  const citeBody = document.getElementById('citeBody');
+
+  /* ===== Helpers ===== */
+  function getAuthorName(authorId, useDomestic) {
+    const a = AUTHORS?.[authorId];
+    if (!a) return `Author ${authorId}`;
+    if (useDomestic && a.ko) return a.ko;
+    if (!useDomestic && a.en) return a.en;
+    return a.en || a.ko || `Author ${authorId}`;
+  }
+
+  function determineLanguageMode(pub) {
+    // International conferences and international journals -> English
+    if (pub.indexing_group === "International Conference" || 
+        pub.indexing_group === "International - Domestic Joint Conference") {
+      return 'english';
+    }
+    
+    // International journals (SCIE, SSCI, ESCI, A&HCI, Scopus, Other International) -> English
+    if (pub.type === "journal" && 
+        !pub.indexing_group.includes("KCI") && 
+        !pub.indexing_group.includes("Domestic")) {
+      return 'english';
+    }
+    
+    // Domestic conferences and KCI journals -> Korean
+    if (pub.indexing_group === "Domestic Conference" || 
+        pub.indexing_group.includes("KCI")) {
+      return 'korean';
+    }
+    
+    // Book, Report, Preprint, Working Paper -> follow language field
+    if (pub.type === "book" || pub.type === "report" || 
+        pub.indexing_group === "Preprint" || 
+        pub.indexing_group === "Working Paper") {
+      return (pub.language === 'Korean') ? 'korean' : 'english';
+    }
+    
+    // Default
+    return (pub.language === 'Korean') ? 'korean' : 'english';
+  }
+
+  function isDomesticPublication(indexing) {
+    if (indexing === "International - Domestic Joint Conference") return false;
+    return indexing.includes("KCI") || indexing.includes("Domestic");
+  }
+
+  function formatMDY(iso) {
+    if (!iso) return "";
+    const d = new Date(iso + "T00:00:00");
+    return d.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
+  }
+
+  // Consistent format: "Published on Jan 3, 2023"
+  function formatPubDateWithLabel(iso, useKorean) {
+    if (!iso) return "";
+    const d = new Date(iso + "T00:00:00");
+    
+    // Always use "Published on" format with short month
+    const en = d.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
+    return `Published on ${en}`;
+  }
+
+  /* ===== Build Filter Chips ===== */
+  function buildChips() {
+    const typeChips = document.getElementById('typeChips');
+    typeChips.innerHTML = FILTER_GROUPS.type.map(it => {
+      const on = onFilters.type.has(it.value);
+      return `<button class="chip chip-${it.value} ${on ? 'is-on' : ''}" 
+              data-filter-type="type" data-filter-value="${it.value}">${it.label}</button>`;
+    }).join('');
+
+    const journalChips = document.getElementById('journalChips');
+    journalChips.innerHTML = FILTER_GROUPS.journal.map(it => {
+      const on = onFilters.journal.has(it.value);
+      return `<button class="chip ${on ? 'is-on' : ''}" 
+              data-filter-type="journal" data-filter-value="${it.value}">${it.label}</button>`;
+    }).join('');
+
+    const conferenceChips = document.getElementById('conferenceChips');
+    conferenceChips.innerHTML = FILTER_GROUPS.conference.map(it => {
+      const on = onFilters.conference.has(it.value);
+      return `<button class="chip ${on ? 'is-on' : ''}" 
+              data-filter-type="conference" data-filter-value="${it.value}">${it.label}</button>`;
+    }).join('');
+
+    document.querySelectorAll('[data-filter-type]').forEach(btn => {
+      btn.onclick = () => {
+        const t = btn.dataset.filterType;
+        const v = btn.dataset.filterValue;
+        
+        if (onFilters[t].has(v)) {
+          onFilters[t].delete(v);
+        } else {
+          onFilters[t].add(v);
+        }
+        
+        buildChips();
+        render();
+      }
+    });
+  }
+
+  /* ===== Badge helper ===== */
+  function idxClass(group) {
+    const map = {
+      "SCIE": "idx-scie",
+      "SSCI": "idx-ssci",
+      "A&HCI": "idx-ahci",
+      "ESCI": "idx-esci",
+      "Scopus": "idx-scopus",
+      "Other International": "idx-other-intl",
+      "International Conference": "idx-intl-conf",
+      "Domestic Conference": "idx-domestic-conf",
+      "International - Domestic Joint Conference": "idx-joint-conf",
+      "KCI Excellent": "idx-kci-exc",
+      "KCI Accredited": "idx-kci",
+      "Other Domestic": "idx-other-domestic",
+      "Book": "idx-book",
+      "Report": "idx-report",
+      "Thesis / Dissertation": "idx-thesis",
+      "Preprint": "idx-preprint",
+      "Working Paper": "idx-working"
+    };
+    return `idx ${map[group] || ''}`;
+  }
+
+  /* ===== Match ===== */
+  function matches(pub) {
+    if (onFilters.type.size > 0) {
+      let pubType = pub.type;
+      if (pub.indexing_group === "International - Domestic Joint Conference") {
+        pubType = "conference";
+      }
+      if (!onFilters.type.has(pubType)) return false;
+    }
+    
+    const idxFilters = [...onFilters.journal, ...onFilters.conference];
+    if (idxFilters.length > 0 && !idxFilters.includes(pub.indexing_group)) return false;
+    
+    if (!q) return true;
+    
+    const langMode = determineLanguageMode(pub);
+    const useKorean = (langMode === 'korean');
+    const names = (pub.authors || []).map(id => getAuthorName(id, useKorean)).join(" ");
+    const text = ((pub.title || "") + " " + names + " " + (pub.venue || "")).toLowerCase();
+    
+    return text.includes(q.toLowerCase());
+  }
+
+  /* ===== Create Card ===== */
+  function createCard(pub, key) {
+    const code = pub.code_label || "";
+    let leftClass = '';
+    
+    if (pub.indexing_group === "International - Domestic Joint Conference") {
+      leftClass = 'conference';
+    } else if (pub.type === "thesis") {
+      leftClass = 'thesis';
+    } else if (pub.type === "report") {
+      leftClass = 'report';
+    } else if (pub.type === "book") {
+      leftClass = 'book';
+    } else if (pub.indexing_group === "Preprint") {
+      leftClass = 'preprint';
+    } else if (pub.indexing_group === "Thesis / Dissertation") {
+      leftClass = 'thesis';
+    } else {
+      leftClass = pub.type;
+    }
+
+    // Determine language mode based on publication type
+    const langMode = determineLanguageMode(pub);
+    const useKorean = (langMode === 'korean');
+
+    // Use titles and venues as-is without Title Case conversion
+    const lang = pub.language || 'English';
+    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : pub.title;
+    const displayVenue = (useKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
+    
+    const authors = (pub.authors || []).map((id, idx) => {
+      const name = getAuthorName(id, useKorean);
+      const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
+      const sup = mark ? `<sup>${String(mark)}</sup>` : "";
+      return `${name}${sup}`;
+    }).join(", ");
+
+    const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
+    
+    const pubDateBadge = pub.published_date ? 
+      `<span class="badge-pub">
+        <span class="val">${formatPubDateWithLabel(pub.published_date, useKorean)}</span>
+      </span>` : ``;
+
+    // Awards - create trophy icons based on awards count
+    let awardsHtml = '';
+    if (pub.awards && pub.awards > 0) {
+      const awardDetails = pub.award_details || [];
+      awardsHtml = '<div class="awards-container">';
+      
+      for (let i = 0; i < pub.awards; i++) {
+        const tooltip = awardDetails[i] || `Award ${i + 1}`;
+        awardsHtml += `
+          <div class="award-tooltip">
+            <span class="award-trophy">🏆</span>
+            <span class="tooltiptext">${tooltip}</span>
+          </div>`;
+      }
+      awardsHtml += '</div>';
+    }
+
+    let citationDetails = [];
+    if (pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
+    if (pub.issue) citationDetails.push(`<div class="paper-detail-item"><span class="label">No.</span><span class="value">${pub.issue}</span></div>`);
+    if (pub.pages) citationDetails.push(`<div class="paper-detail-item"><span class="label">pp.</span><span class="value">${pub.pages}</span></div>`);
+    if (pub.isbn) citationDetails.push(`<div class="paper-detail-item"><span class="label">ISBN</span><span class="value">${pub.isbn}</span></div>`);
+    if (pub.doi) citationDetails.push(`<div class="paper-detail-item doi"><span class="label">DOI</span><a href="https://doi.org/${pub.doi}" target="_blank" class="value">${pub.doi}</a></div>`);
+    
+    const detailsHtml = citationDetails.length > 0 ? 
+      `<div class="paper-details">${citationDetails.join('')}</div>` : '';
+
+    return `
+      <li class="paper-card">
+        <div class="paper-row">
+          <div class="paper-left ${leftClass} ${code ? '' : 'empty'}">
+            <span>${code || '&nbsp;'}</span>
+          </div>
+          <div class="paper-body">
+            <div class="paper-header">
+              <div class="indexing-wrapper">
+                <div class="indexing-row">
+                  <span class="indexing-badge ${idxClass(pub.indexing_group)}">${pub.indexing_group}</span>
+                  ${langBadge}
+                  ${awardsHtml}
+                </div>
+                ${pubDateBadge}
+              </div>
+            </div>
+            <h3 class="paper-title">${displayTitle || ''}</h3>
+            <div class="paper-meta">${authors}</div>
+            <div class="paper-venue">${displayVenue || ''}</div>
+            ${detailsHtml}
+            <div class="paper-foot">
+              <button class="btn" onclick='openCite(${JSON.stringify(pub)})'>Cite</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    `;
+  }
+
+  /* ===== Render ===== */
+  function render() {
+    const filtered = (PUBS || []).filter(matches);
+    const years = [...new Set(filtered.map(p => p.year))].sort((a, b) => b - a);
+    
+    if (filtered.length === 0) {
+      pubWrap.innerHTML = `<div class="empty-state">No publications found. Try adjusting your search or filters.</div>`;
+    } else {
+      // Check if any filter is active (excluding search)
+      const hasActiveFilters = onFilters.type.size > 0 || 
+                              onFilters.journal.size > 0 || 
+                              onFilters.conference.size > 0;
+      
+      // Get current year for default expansion
+      const currentYear = new Date().getFullYear();
+      const mostRecentYear = years[0];
+      
+      pubWrap.innerHTML = years.map(y => {
+        const items = filtered.filter(p => p.year === y);
+        // If filters are active, expand all; otherwise only expand most recent year
+        const shouldCollapse = hasActiveFilters ? false : (y !== mostRecentYear);
+        
+        return `
+          <div class="year-section">
+            <div class="year-head">
+              <h2 class="year-title">${y}</h2>
+              <button class="year-toggle" data-year="${y}">${shouldCollapse ? 'Expand' : 'Collapse'}</button>
+            </div>
+            <div class="year-content" id="year-${y}" ${shouldCollapse ? 'style="display: none;"' : ''}>
+              <ul class="paper-list">
+                ${items.map((it, i) => createCard(it, `${y}-${i}`)).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.querySelectorAll('.year-toggle').forEach(btn => {
+        btn.onclick = () => {
+          const y = btn.dataset.year;
+          const el = document.getElementById('year-' + y);
+          const hide = el.style.display === 'none';
+          el.style.display = hide ? '' : 'none';
+          btn.textContent = hide ? 'Collapse' : 'Expand';
+        };
+      });
+    }
+    
+    countEl.textContent = `${filtered.length} of ${(PUBS || []).length}`;
+  }
+
+  /* ===== Cite Modal ===== */
+  function toInitials(name) {
+    const clean = (name || '').replace(/\*/g, '').trim();
+    const parts = clean.split(/\s+/);
+    const last = parts.pop() || '';
+    const initials = parts.map(p => (p?.[0] || '').toUpperCase() + ".").join(" ");
+    return `${last}, ${initials}`;
+  }
+
+  function openCite(pub) {
+    // Use fallback values for missing data
+    const title = pub.title || "Untitled";
+    const venue = pub.venue || "Unknown Venue";
+    const year = pub.year || new Date().getFullYear();
+    
+    const authorNames = (pub.authors || []).map(id => getAuthorName(id, false));
+    
+    // If no authors, use "Anonymous"
+    const primaryAuthor = authorNames.length > 0 ? authorNames[0] : "Anonymous";
+    const allAuthors = authorNames.length > 0 ? authorNames : ["Anonymous"];
+    
+    let pubDetails = '';
+    if (pub.volume) pubDetails += `, ${pub.volume}`;
+    if (pub.issue) pubDetails += `(${pub.issue})`;
+    if (pub.pages) pubDetails += `, ${pub.pages}`;
+    if (pub.doi) pubDetails += `. https://doi.org/${pub.doi}`;
+    
+    let bookDetails = '';
+    if (pub.isbn) bookDetails = `. ISBN: ${pub.isbn}`;
+    
+    const isBook = pub.type === 'book';
+    const details = isBook ? bookDetails : pubDetails;
+    
+    // Generate citation formats with fallback values
+    const formats = {
+      MLA: authorNames.length > 1 ? 
+        `${primaryAuthor} et al. "${title}." ${venue}${details} (${year}).` :
+        `${primaryAuthor}. "${title}." ${venue}${details} (${year}).`,
+      
+      APA: authorNames.length > 1 ?
+        `${toInitials(primaryAuthor)} et al. (${year}). ${title}. ${venue}${details}.` :
+        `${toInitials(primaryAuthor)}. (${year}). ${title}. ${venue}${details}.`,
+      
+      Chicago: authorNames.length > 1 ?
+        `${primaryAuthor} et al. ${year}. "${title}." ${venue}${details}.` :
+        `${primaryAuthor}. ${year}. "${title}." ${venue}${details}.`,
+      
+      Harvard: authorNames.length > 1 ?
+        `${toInitials(primaryAuthor)} et al. (${year}) ${title}. ${venue}${details}.` :
+        `${toInitials(primaryAuthor)} (${year}) ${title}. ${venue}${details}.`,
+      
+      Vancouver: `${allAuthors.map(a => toInitials(a)).join(', ')}. ${title}. ${venue}. ${year}${details}.`
+    };
+
+    citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
+      const id = 'cite-' + Math.random().toString(36).slice(2, 9);
+      return `
+        <div class="cite-block">
+          <div class="cite-header">
+            <span class="cite-label">${label}</span>
+            <button class="copy-btn" onclick="copyText('${id}')">Copy</button>
+          </div>
+          <div class="cite-text" id="${id}">${text}</div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('citeModal').style.display = 'flex';
+  }
+
+  function copyText(id) {
+    const t = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(t);
+    event.target.textContent = 'Copied!';
+    setTimeout(() => event.target.textContent = 'Copy', 1500);
+  }
+
+  /* ===== Events ===== */
+  document.getElementById('pubSearch').oninput = (e) => {
+    q = e.target.value;
+    render();
+  };
+
+  document.getElementById('btnCloseCite').onclick = () => {
+    document.getElementById('citeModal').style.display = 'none';
+  };
+
+  document.getElementById('citeModal').onclick = (e) => {
+    if (e.target === document.getElementById('citeModal')) {
+      document.getElementById('citeModal').style.display = 'none';
+    }
+  };
+
+  /* ===== Init ===== */
+  buildChips();
+  render();
+  
+  // Clear all filters button
+  document.getElementById('clearAllFilters').onclick = () => {
+    onFilters.type.clear();
+    onFilters.journal.clear();
+    onFilters.conference.clear();
+    searchInput.value = '';
+    q = '';
+    buildChips();
+    render();
+  };
 </script>
