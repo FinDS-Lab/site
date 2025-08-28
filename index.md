@@ -20,7 +20,6 @@ title: home
     margin: 1.5rem auto;
     padding: 0 24px;
   }
-
   .carousel-container {
     width: 100%;
     height: 100%;
@@ -29,30 +28,19 @@ title: home
     border-radius: 1.5rem;
     position: relative;
   }
-
   @media (max-width: 768px) {
-    .hero-section {
-      height: 350px;
-      padding: 0 16px;
-      margin: 1rem auto;
-    }
+    .hero-section { height: 350px; padding: 0 16px; margin: 1rem auto; }
     .carousel-container { border-radius: 1rem; }
   }
-
   @media (max-width: 480px) {
-    .hero-section {
-      height: 280px;
-      padding: 0 12px;
-    }
+    .hero-section { height: 280px; padding: 0 12px; }
   }
-
   .carousel-track {
     display: flex;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     will-change: transform;
   }
-
   .carousel-slide {
     min-width: 100%;
     width: 100%;
@@ -63,14 +51,12 @@ title: home
     background: #000;
     overflow: hidden;
   }
-
   .carousel-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
-
   .carousel-overlay {
     position: absolute;
     inset: 0;
@@ -79,40 +65,52 @@ title: home
     align-items: center;
     padding: 0 5%;
   }
-
-  @media (max-width: 768px) {
-    .carousel-overlay { padding: 0 20px; }
-  }
-
+  @media (max-width: 768px) { .carousel-overlay { padding: 0 20px; } }
   .carousel-content {
     max-width: 600px;
     color: white;
     animation: fadeInUp 0.8s ease-out;
   }
-
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .tag-badge {
-    display: inline-block;
+  /* ===== Unified Banner (replaces .tag-badge) ===== */
+  .banner-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
     color: #000;
-    padding: 6px 16px;
+    padding: 6px 14px;
     border-radius: 999px;
     font-weight: 900;
     font-size: 14px;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
+    letter-spacing: 0.2px;
+    line-height: 1;
+    box-shadow: 0 6px 18px rgba(214,177,77,0.25);
+    user-select: none;
   }
-
+  .banner .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+  }
   @media (max-width: 480px) {
-    .tag-badge {
-      font-size: 12px;
-      padding: 4px 12px;
-      margin-bottom: 12px;
-    }
+    .banner { font-size: 12px; padding: 5px 12px; }
+    .banner .icon { width: 16px; height: 16px; font-size: 12px; }
+    .banner-row { margin-bottom: 12px; }
   }
 
   .hero-title {
@@ -121,13 +119,8 @@ title: home
     line-height: 1.2;
     margin-bottom: 20px;
   }
-
   @media (max-width: 480px) {
-    .hero-title {
-      font-size: 22px;
-      margin-bottom: 16px;
-      line-height: 1.3;
-    }
+    .hero-title { font-size: 22px; margin-bottom: 16px; line-height: 1.3; }
   }
 
   .hero-buttons {
@@ -148,43 +141,32 @@ title: home
     display: inline-block;
     white-space: nowrap;
   }
-
-  /* Publications 버튼만 모바일에서 '폭 넓힘' (한 줄 유지, 오버플로 방지) */
   @media (max-width: 540px) {
     .carousel-slide .hero-buttons { align-items: stretch; }
     .carousel-slide .btn-hero[href$="/publications.html"] {
-      flex: 1 1 100%;        /* 한 줄 전체 폭 사용 */
-      max-width: 100%;       /* 컨테이너 폭에 맞춤 */
-      font-size: 12.5px;     /* 살짝 축소 */
-      padding: 11px 20px;    /* 터치 영역 확보 */
+      flex: 1 1 100%;
+      max-width: 100%;
+      font-size: 12.5px;
+      padding: 11px 20px;
     }
   }
   @media (max-width: 380px) {
-    .carousel-slide .btn-hero[href$="/publications.html"] {
-      font-size: 11.5px;     /* 초소형 디바이스에서 추가 축소 */
-      padding: 10px 16px;
-    }
+    .carousel-slide .btn-hero[href$="/publications.html"] { font-size: 11.5px; padding: 10px 16px; }
   }
-
-  /* JS가 overflow 감지 시 붙이는 보정 클래스 */
   .btn-hero.compact { font-size: 11.5px; padding: 8px 12px; }
-
   @media (max-width: 480px) {
     .btn-hero { font-size: clamp(11.5px, 3.2vw, 13px); padding: 10px 16px; }
     .hero-buttons { gap: 8px; }
   }
-
   @media (max-width: 340px) {
     .btn-hero { font-size: 11px; padding: 7px 10px; }
   }
-
   .btn-hero.primary {
     background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
     color: white;
     border: 2px solid transparent;
   }
   .btn-hero.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); }
-
   .btn-hero.secondary {
     background: rgba(255, 255, 255, 0.1);
     color: white;
@@ -192,7 +174,6 @@ title: home
     backdrop-filter: blur(10px);
   }
   .btn-hero.secondary:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); }
-
   @media (hover: none) {
     .btn-hero.primary:active { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); }
     .btn-hero.secondary:active { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.5); }
@@ -210,7 +191,6 @@ title: home
     padding: 8px;
   }
   @media (max-width: 480px) { .carousel-dots { bottom: 16px; } }
-
   .dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
@@ -229,25 +209,12 @@ title: home
     gap: 40px;
     align-items: center;
   }
-
   @media (max-width: 768px) {
-    .intro-section {
-      grid-template-columns: 1fr;
-      margin: 60px auto;
-      text-align: center;
-      padding: 0 20px;
-      gap: 30px;
-    }
+    .intro-section { grid-template-columns: 1fr; margin: 60px auto; text-align: center; padding: 0 20px; gap: 30px; }
   }
-
   @media (max-width: 480px) {
-    .intro-section {
-      margin: 40px auto;
-      padding: 0 16px;
-      gap: 24px;
-    }
+    .intro-section { margin: 40px auto; padding: 0 16px; gap: 24px; }
   }
-
   .logo-box {
     width: 180px; height: 180px; background: white; border-radius: 24px;
     display: flex; align-items: center; justify-content: center;
@@ -255,33 +222,27 @@ title: home
   }
   @media (max-width: 768px) { .logo-box { margin: 0 auto; } }
   @media (max-width: 480px) { .logo-box { width: 150px; height: 150px; border-radius: 20px; } }
-
   .logo-box::before {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
     opacity: 0; transition: opacity 0.3s;
   }
   .logo-box:hover::before { opacity: 1; }
-
   .logo-box img { width: 140px; height: 140px; object-fit: contain; position: relative; z-index: 1; }
   @media (max-width: 480px) { .logo-box img { width: 110px; height: 110px; } }
 
   .intro-content h2 { color: var(--red); font-size: 24px; font-weight: 900; margin-bottom: 8px; }
   @media (max-width: 480px) { .intro-content h2 { font-size: 20px; } }
-
   .intro-content h3 { font-size: 32px; margin-bottom: 4px; }
   @media (max-width: 480px) { .intro-content h3 { font-size: 24px; } }
-
   .intro-content .lab-name { color: var(--gold); font-weight: 900; }
-
   .intro-content .lab-full { font-size: 18px; color: #374151; margin-left: 8px; }
   @media (max-width: 768px) { .intro-content .lab-full { display: block; margin-left: 0; margin-top: 8px; } }
   @media (max-width: 480px) { .intro-content .lab-full { font-size: 15px; } }
-
   .intro-content .description { margin-top: 16px; font-size: 16px; line-height: 1.8; color: #4b5563; }
   @media (max-width: 480px) { .intro-content .description { font-size: 14px; line-height: 1.7; } }
 
-  /* News & Notice Section */
+  /* News & Notice */
   .updates-section {
     max-width: 1200px;
     margin: 0 auto 80px;
@@ -290,33 +251,17 @@ title: home
     grid-template-columns: repeat(2, 1fr);
     gap: 32px;
   }
-
   @media (max-width: 768px) {
-    .updates-section {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-bottom: 60px;
-      padding: 0 20px;
-    }
+    .updates-section { grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; padding: 0 20px; }
   }
-
   @media (max-width: 480px) {
-    .updates-section {
-      padding: 0 16px;
-      gap: 20px;
-      margin-bottom: 40px;
-    }
+    .updates-section { padding: 0 16px; gap: 20px; margin-bottom: 40px; }
   }
-
   .update-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-    transition: all 0.3s;
+    background: white; border-radius: 20px; overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05); transition: all 0.3s;
   }
   @media (max-width: 480px) { .update-card { border-radius: 16px; } }
-
   .update-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
   @media (hover: none) { .update-card:hover { transform: none; } }
 
@@ -327,20 +272,17 @@ title: home
     display: flex; justify-content: space-between; align-items: center;
   }
   @media (max-width: 480px) { .update-header { padding: 18px 20px; } }
-
   .update-title {
     font-size: 20px; font-weight: 900; color: #111827;
     display: flex; align-items: center; gap: 10px;
   }
   @media (max-width: 480px) { .update-title { font-size: 18px; } }
-
   .update-icon {
     width: 32px; height: 32px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
     border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;
   }
   @media (max-width: 480px) { .update-icon { width: 28px; height: 28px; font-size: 16px; } }
-
   .update-more {
     color: var(--red); font-weight: 700; font-size: 14px; text-decoration: none;
     display: flex; align-items: center; gap: 4px; transition: gap 0.2s;
@@ -350,13 +292,11 @@ title: home
 
   .update-list { padding: 8px; }
   @media (max-width: 480px) { .update-list { padding: 4px; } }
-
   .update-item {
     padding: 20px; border-radius: 12px; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
     -webkit-tap-highlight-color: transparent;
   }
   @media (max-width: 480px) { .update-item { padding: 16px; border-radius: 10px; } }
-
   .update-item::before {
     content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
     width: 4px; height: 0; background: var(--gold); transition: height 0.3s;
@@ -364,35 +304,24 @@ title: home
   .update-item:hover { background: #fef9f3; }
   .update-item:hover::before { height: 60%; }
   @media (hover: none) { .update-item:active { background: #fef9f3; } }
-
   .update-date { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
-
   .date-day { font-size: 24px; font-weight: 900; color: var(--red); }
   @media (max-width: 480px) { .date-day { font-size: 20px; } }
-
   .date-month { font-size: 12px; font-weight: 700; color: #9ca3af; }
-
   .update-item-title {
     font-size: 15px; font-weight: 800; color: #1f2937; line-height: 1.5; display: block; cursor: pointer;
     overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
   }
   @media (max-width: 480px) { .update-item-title { font-size: 14px; line-height: 1.4; } }
-
   .update-meta { margin-top: 6px; font-size: 12px; color: #9ca3af; display: flex; align-items: center; gap: 12px; }
-
   .meta-tag {
     display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
     background: rgba(214,177,77,0.1); border-radius: 999px; font-weight: 600;
   }
-  @media (max-width: 480px) { .meta-tag { font-size: 11px; padding: 2px 6px; } }
-
-  .empty-message { padding: 40px; text-align: center; color: #9ca3af; font-size: 14px; }
-  @media (max-width: 480px) { .empty-message { padding: 30px 20px; font-size: 13px; } }
 
   @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   }
-
   @media (max-width: 640px) {
     .hero-buttons { width: 100%; }
     .btn-hero { flex: 1; text-align: center; min-width: 0; }
@@ -409,7 +338,12 @@ title: home
           <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
           <div class="carousel-overlay">
             <div class="carousel-content">
-              <span class="tag-badge">FINDS Lab.</span>
+              <!-- Unified banner -->
+              <div class="banner-row">
+                <span class="banner" aria-label="FINDS Lab banner">
+                  <span class="icon">🏛️</span> FINDS Lab.
+                </span>
+              </div>
               <h1 class="hero-title">Towards Data-Inspired<br>Financial Management</h1>
               <div class="hero-buttons">
                 <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
@@ -418,13 +352,17 @@ title: home
             </div>
           </div>
         </div>
-        
+
         <!-- Slide 2 -->
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
           <div class="carousel-overlay">
             <div class="carousel-content">
-              <span class="tag-badge">FINDS Lab.</span>
+              <!-- Publications / Projects banners -->
+              <div class="banner-row" aria-label="Accomplishments banners">
+                <span class="banner"><span class="icon">📚</span> Publications</span>
+                <span class="banner"><span class="icon">🧩</span> Projects</span>
+              </div>
               <h1 class="hero-title">Accomplishments</h1>
               <div class="hero-buttons">
                 <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
@@ -433,13 +371,16 @@ title: home
             </div>
           </div>
         </div>
-        
+
         <!-- Slide 3 -->
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
           <div class="carousel-overlay">
             <div class="carousel-content">
-              <span class="tag-badge">FINDS Lab.</span>
+              <!-- Updates banner -->
+              <div class="banner-row">
+                <span class="banner"><span class="icon">🔔</span> Updates</span>
+              </div>
               <h1 class="hero-title">Updates</h1>
               <div class="hero-buttons">
                 <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
@@ -448,6 +389,7 @@ title: home
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -466,22 +408,17 @@ title: home
       <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo">
     </div>
   </div>
-  
   <div class="intro-content">
     <h2>Dongduk Women's University</h2>
     <h3>
       <span class="lab-name">FINDS Lab.</span>
-      <span class="lab-full">
-        (<b>Fin</b>ancial <b>D</b>ata <b>S</b>cience <b>Laboratory</b>)
-      </span>
+      <span class="lab-full">(<b>Fin</b>ancial <b>D</b>ata <b>S</b>cience <b>Laboratory</b>)</span>
     </h3>
-    <p class="description">
-      동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
-    </p>
+    <p class="description">동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.</p>
   </div>
 </section>
 
-<!-- News & Notice Section -->
+<!-- News & Notice Section (unchanged) -->
 <section class="updates-section">
   <!-- News Card -->
   <div class="update-card">
@@ -501,7 +438,6 @@ title: home
         {% endif %}
       {% endfor %}
       {% assign news_items = news_items | sort: 'date' | reverse %}
-      
       {% if news_items.size == 0 %}
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
@@ -511,9 +447,7 @@ title: home
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <span class="update-item-title">
-              {{ post.title }}
-            </span>
+            <span class="update-item-title">{{ post.title }}</span>
             {% if post.category %}
             <div class="update-meta">
               <span class="meta-tag">{{ post.category }}</span>
@@ -524,7 +458,7 @@ title: home
       {% endif %}
     </div>
   </div>
-  
+
   <!-- Notice Card -->
   <div class="update-card">
     <div class="update-header">
@@ -542,7 +476,6 @@ title: home
         {% endif %}
       {% endfor %}
       {% assign notice_items = notice_items | sort: 'date' | reverse %}
-      
       {% if notice_items.size == 0 %}
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
@@ -552,9 +485,7 @@ title: home
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <span class="update-item-title">
-              {{ post.title }}
-            </span>
+            <span class="update-item-title">{{ post.title }}</span>
             {% if post.category %}
             <div class="update-meta">
               <span class="meta-tag">{{ post.category }}</span>
@@ -588,7 +519,6 @@ title: home
         slide.style.maxWidth = containerWidth + 'px';
       });
     }
-
     function preloadImages() {
       const images = document.querySelectorAll('.carousel-slide img');
       images.forEach((img) => {
@@ -597,28 +527,16 @@ title: home
         tempImg.src = img.src;
       });
     }
-
     function goToSlide(index) {
       if (isTransitioning) return;
       isTransitioning = true;
-
       currentIndex = index;
       track.style.transform = `translateX(${-(index * 100)}%)`;
-
       dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-
       setTimeout(() => { isTransitioning = false; }, 600);
     }
-
-    function nextSlide() {
-      if (isTransitioning) return;
-      goToSlide((currentIndex + 1) % slides.length);
-    }
-    function prevSlide() {
-      if (isTransitioning) return;
-      goToSlide((currentIndex - 1 + slides.length) % slides.length);
-    }
-
+    function nextSlide() { if (!isTransitioning) goToSlide((currentIndex + 1) % slides.length); }
+    function prevSlide() { if (!isTransitioning) goToSlide((currentIndex - 1 + slides.length) % slides.length); }
     function startAutoplay() { stopAutoplay(); interval = setInterval(nextSlide, 5000); }
     function stopAutoplay()  { if (interval) { clearInterval(interval); interval = null; } }
 
