@@ -3,7 +3,6 @@ layout: default
 title: projects
 permalink: /projects.html
 ---
-
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <style>
@@ -11,9 +10,10 @@ permalink: /projects.html
       --gold: rgb(214, 177, 77);
       --gold-mid: rgb(234, 197, 97);
       --gold-dark: rgb(194, 157, 57);
-      --banner-h-lg: 200px;
-      --banner-h-md: 160px;
-      --banner-h-sm: 130px;
+      --public-red: rgb(172, 14, 14);
+      --private-gold: rgb(214, 177, 77);
+      --ongoing-black: #111827;
+      --completed-gray: #9ca3af;
     }
 
     /* Banner */
@@ -30,7 +30,7 @@ permalink: /projects.html
       animation: gradientShift 15s ease infinite;
       position: relative;
       overflow: hidden;
-      min-height: var(--banner-h-lg);
+      min-height: 200px;
       border-radius: 1rem;
       box-shadow: 0 10px 30px rgba(0,0,0,.08);
       cursor: pointer;
@@ -67,7 +67,7 @@ permalink: /projects.html
       display: flex;
       align-items: flex-end;
       justify-content: flex-start;
-      min-height: var(--banner-h-lg);
+      min-height: 200px;
     }
     .breadcrumbs-banner {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
@@ -89,14 +89,14 @@ permalink: /projects.html
 
     /* Responsive */
     @media (max-width: 768px) {
-      .banner-content { padding: 24px 18px; min-height: var(--banner-h-md); }
-      .banner-section { min-height: var(--banner-h-md); }
+      .banner-content { padding: 24px 18px; min-height: 160px; }
+      .banner-section { min-height: 160px; }
       .banner-title { font-size: 1.9rem; }
       .breadcrumbs-banner { font-size: 12px; }
     }
     @media (max-width: 480px) {
-      .banner-content { padding: 20px 16px; min-height: var(--banner-h-sm); }
-      .banner-section { min-height: var(--banner-h-sm); }
+      .banner-content { padding: 20px 16px; min-height: 130px; }
+      .banner-section { min-height: 130px; }
       .banner-title { font-size: 1.6rem; }
       .breadcrumbs-banner { font-size: 11px; }
     }
@@ -201,116 +201,99 @@ function generateDiamondNetwork() {
 }
 </script>
 
-<!-- ===== Styles (Projects list) ===== -->
+<!-- ===== Styles ===== -->
 <style>
-/* Breadcrumbs (kept for consistency if reused) */
-.breadcrumbs{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;font-size:12px}
-.breadcrumbs a{color:#e5e7eb}
-.breadcrumbs a:hover{text-decoration:underline}
-.breadcrumbs .sep{opacity:.8}
+  /* Toolbar */
+  .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
+  .search-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .search{flex:1;min-width:0}
+  .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
 
-:root{
-  /* Project type/status colors */
-  --public-red: rgb(172, 14, 14);
-  --private-gold: rgb(214, 177, 77);
-  --ongoing-black: #111827;
-  --completed-gray: #9ca3af;
-}
+  /* Filter Section */
+  .filter-section{margin-top:8px}
+  .filter-label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
 
-/* Toolbar */
-.toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
-.search-container{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.search{flex:1;min-width:0}
-.search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px;box-sizing:border-box}
+  /* Filter Chips */
+  .chip{padding:.5rem 1rem;border-radius:999px;border:1px solid transparent;background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.3px}
+  .chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .chip.is-on{box-shadow:inset 0 0 0 2px #111827}
+  .chip:focus-visible{outline:2px solid #111827;outline-offset:2px}
 
-/* Filter Section */
-.filter-section{margin-top:8px}
-.filter-label{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
+  /* Grid: 한 줄에 한 프로젝트 */
+  .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
-/* Filter Chips */
-.chip{padding:.5rem 1rem;border-radius:999px;border:1px solid transparent;background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.3px}
-.chip:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.chip.is-on{box-shadow:inset 0 0 0 2px #111827}
-.chip:focus-visible{outline:2px solid #111827;outline-offset:2px}
+  /* Card (outer tint = type color) */
+  .card{border-radius:1rem;overflow:hidden}
+  .card.card--public{background:rgba(172, 14, 14, 0.15)}
+  .card.card--private{background:rgba(214, 177, 77, 0.18)}
+  .card.card--completed{background:#ffffff}
 
-/* Grid: 한 줄에 한 프로젝트 */
-.grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
+  /* Inner white body */
+  .inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
+  .card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
 
-/* Card (outer tint = type color) */
-.card{border-radius:1rem;overflow:hidden}
-.card.card--public{background:rgba(172, 14, 14, 0.15)}
-.card.card--private{background:rgba(214, 177, 77, 0.18)}
+  /* 왼쪽 프로젝트 타입 색상 포인트 */
+  .type-notch{position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;background:#ddd}
 
-/* Inner white body */
-.inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
-.card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
+  /* 본문 */
+  .body{padding:14px 16px 14px 44px}
 
-/* 왼쪽 프로젝트 타입 색상 포인트 */
-.type-notch{position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;background:#ddd}
+  /* 배지 그룹 구분 */
+  .badges-status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .badges-keywords{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 
-/* 본문 */
-.body{padding:14px 16px 14px 44px}
+  /* 배지 (키워드/타입/상태 공통) — 전반적 폰트 축소 */
+  .badge{display:inline-block;padding:.22rem .55rem;border-radius:999px;font-weight:800;font-size:10px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
 
-/* 배지 그룹 구분 */
-.badges-status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
-.badges-keywords{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  /* 프로젝트 제목 — 전반적 폰트 살짝 축소 */
+  .project-title-en{font-size:14px;font-weight:900;color:#111827;margin-top:8px}
+  .project-title-ko{font-size:12px;color:#6b7280;margin-top:4px;word-break:keep-all}
 
-/* 배지 (키워드/타입/상태 공통) — 전반적 폰트 축소 */
-.badge{display:inline-block;padding:.22rem .55rem;border-radius:999px;font-weight:800;font-size:10px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
-
-/* 프로젝트 제목 — 전반적 폰트 살짝 축소 */
-.project-title-en{font-size:14px;font-weight:900;color:#111827;margin-top:8px}
-.project-title-ko{font-size:12px;color:#6b7280;margin-top:4px;word-break:keep-all}
-
-/* 메타 정보 — 라벨/값 간격 및 너비 ↑ (PI 더 넓게) */
-.meta-info{
-  display:grid;
-  grid-template-columns:minmax(150px, 220px) 1fr; /* 라벨 칼럼 넓힘 */
-  column-gap:16px;          /* 라벨과 값 사이 여백 더 넓게 */
-  row-gap:10px;             /* 항목 간 세로 여백 살짝 증가 */
-  margin-top:12px;
-  padding-top:12px;
-  border-top:1px solid #f3f4f6
-}
-.meta-item{
-  display:contents;
-  font-size:10.5px;
-}
-.meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5}
-.meta-value{color:#111827;font-size:10.5px;line-height:1.5}
-.meta-value .ko{word-break:keep-all}
-
-/* PI 전용: 라벨 더 넓게 */
-.meta-item.pi .meta-label{min-width:180px}
-
-/* 금액 강조 */
-.amount{font-weight:800;color:#111827}
-
-/* Empty state */
-.empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
-
-/* Count 표시 */
-.count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap}
-
-/* Mobile responsive - 더 작은 글씨 크기 & 라벨 폭 */
-@media (max-width:640px){
-  .search-container{flex-direction:column;align-items:stretch}
-  .search{width:100%}
-  .count{text-align:center;width:100%}
-
+  /* 메타 정보 — Principal Investigator 필드 너비 증가 */
   .meta-info{
-    grid-template-columns:minmax(120px, 160px) 1fr; /* 모바일에서도 라벨 넓힘 */
+    display:grid;
+    grid-template-columns:minmax(140px, 200px) 1fr;
     column-gap:12px;
     row-gap:8px;
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px solid #f3f4f6
   }
-  .meta-label{font-size:9.5px}
-  .meta-value{font-size:9.5px}
-  .project-title-en{font-size:13px}
-  .project-title-ko{font-size:11px}
-  .badge{font-size:9.5px;padding:.2rem .5rem}
-  .chip{font-size:11px;padding:.4rem .8rem}
-}
+  .meta-item{
+    display:contents;
+    font-size:10.5px;
+  }
+  .meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5}
+  .meta-value{color:#111827;font-size:10.5px;line-height:1.5}
+  .meta-value .ko{word-break:keep-all}
+
+  /* 금액 강조 */
+  .amount{font-weight:800;color:#111827}
+
+  /* Empty state */
+  .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
+
+  /* Count 표시 */
+  .count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap}
+
+  /* Mobile responsive */
+  @media (max-width:640px){
+    .search-container{flex-direction:column;align-items:stretch}
+    .search{width:100%}
+    .count{text-align:center;width:100%}
+    .meta-info{
+      grid-template-columns:minmax(120px, 160px) 1fr;
+      column-gap:10px;
+      row-gap:8px;
+    }
+    .meta-label{font-size:9.5px}
+    .meta-value{font-size:9.5px}
+    .project-title-en{font-size:13px}
+    .project-title-ko{font-size:11px}
+    .badge{font-size:9.5px;padding:.2rem .5rem}
+    .chip{font-size:11px;padding:.4rem .8rem}
+  }
 </style>
 
 <!-- ===== Toolbar (Search + Filters) ===== -->
@@ -382,70 +365,81 @@ function generateDiamondNetwork() {
     { value: "public", label: "Government-Funded", color: "var(--public-red)" },
     { value: "private", label: "Industry-Funded", color: "var(--private-gold)" }
   ];
+
   const STATUSES = [
     { value: "ongoing", label: "Ongoing", color: "var(--ongoing-black)" },
     { value: "completed", label: "Completed", color: "var(--completed-gray)" }
   ];
 
   const onFunding = new Set(); // Empty = no filter
-  const onStatus  = new Set(); // Empty = no filter
+  const onStatus = new Set(); // Empty = no filter
 
   /* ===== Utils ===== */
   function parseStartDate(period){
     const m = period.match(/^(\d{4})-(\d{2})-(\d{2})/);
     return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00`) : new Date(0);
   }
+
   function parseEndDate(period){
     const m = period.match(/–\s*(\d{4})-(\d{2})-(\d{2})$/);
     return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T23:59:59`) : new Date(0);
   }
+
   function computeStatus(period){
     const end = parseEndDate(period);
     const today = new Date(); // client local
     return (end.getTime() >= today.getTime()) ? "ongoing" : "completed";
   }
+
   function formatPeriod(period){
+    // "2024-09-01 – 2025-08-31" -> "Sep 2024 – Aug 2025"
     const parts = period.split(' – ');
     if(parts.length !== 2) return period;
+
     const startDate = new Date(parts[0]);
-    const endDate   = new Date(parts[1]);
+    const endDate = new Date(parts[1]);
     const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
     const startStr = `${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
-    const endStr   = `${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
+    const endStr = `${months[endDate.getMonth()]} ${endDate.getFullYear()}`;
     return `${startStr} – ${endStr}`;
   }
+
   function getFundingColor(type){
     return type === 'private' ? 'var(--private-gold)' : 'var(--public-red)';
   }
-  function byStartDesc(a,b){ return parseStartDate(b.period) - parseStartDate(a.period); }
-  function esc(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  function byStartDesc(a,b){
+    return parseStartDate(b.period) - parseStartDate(a.period);
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
 
   /* ===== DOM ===== */
   const qInput = document.getElementById('q');
-  const grid   = document.getElementById('grid');
-  const count  = document.getElementById('count');
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('count');
   const fundingChips = document.getElementById('fundingChips');
-  const statusChips  = document.getElementById('statusChips');
+  const statusChips = document.getElementById('statusChips');
+
   let q = "";
 
   /* ===== Build Filter Chips ===== */
   function buildChips(){
     fundingChips.innerHTML = FUNDING_TYPES.map(t => {
       const active = onFunding.has(t.value);
-      return `
-        <button class="chip ${active ? 'is-on':''}" data-funding="${t.value}"
-                style="${active ? `background:${t.color};color:#fff` : ''}">
-          ${t.label}
-        </button>`;
+      return `<button class="chip ${active ? 'is-on':''}" data-funding="${t.value}" style="${active ? `background:${t.color};color:#fff` : ''}">
+        ${t.label}
+      </button>`;
     }).join('');
 
     statusChips.innerHTML = STATUSES.map(s => {
       const active = onStatus.has(s.value);
-      return `
-        <button class="chip ${active ? 'is-on':''}" data-status="${s.value}"
-                style="${active ? `background:${s.color};color:#fff` : ''}">
-          ${s.label}
-        </button>`;
+      return `<button class="chip ${active ? 'is-on':''}" data-status="${s.value}" style="${active ? `background:${s.color};color:#fff` : ''}">
+        ${s.label}
+      </button>`;
     }).join('');
 
     fundingChips.querySelectorAll('[data-funding]').forEach(btn=>{
@@ -455,6 +449,7 @@ function generateDiamondNetwork() {
         buildChips(); render();
       };
     });
+
     statusChips.querySelectorAll('[data-status]').forEach(btn=>{
       btn.onclick = () => {
         const v = btn.dataset.status;
@@ -472,16 +467,20 @@ function generateDiamondNetwork() {
     const keywordsText = (project.keywords||[]).join(' ');
     const fundingText = project.type === 'private' ? 'industry funded' : 'government funded';
     const statusText = computeStatus(project.period);
+
     const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${rolesText} ${keywordsText} ${fundingText} ${statusText}`.toLowerCase();
     return searchText.includes(q.toLowerCase());
   }
+
   function passFunding(project){
     return onFunding.size ? onFunding.has(project.type) : true;
   }
+
   function passStatus(project){
     const s = computeStatus(project.period);
     return onStatus.size ? onStatus.has(s) : true;
   }
+
   function filterProjects(){
     return PROJECTS.filter(passFunding).filter(passStatus).filter(matchesQuery).sort(byStartDesc);
   }
@@ -489,74 +488,76 @@ function generateDiamondNetwork() {
   /* ===== Card ===== */
   function createCard(project){
     const fundingColor = getFundingColor(project.type);
-    const periodFmt    = formatPeriod(project.period);
-    const status       = computeStatus(project.period);
+    const periodFmt = formatPeriod(project.period);
+    const status = computeStatus(project.period);
 
-    // Badges: keywords + funding + status
+    // Badges
     const keywordBadges = (project.keywords||[]).map(k=>`<span class="badge">${esc(k)}</span>`).join('');
-    const fundingBadge  = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':'Government-Funded'}</span>`;
-    const statusBadge   = `<span class="badge" style="border-color:${status==='ongoing'?'#111827':'#9ca3af'};color:${status==='ongoing'?'#111827':'#6b7280'}">${status==='ongoing'?'Ongoing':'Completed'}</span>`;
+    const fundingBadge = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':'Government-Funded'}</span>`;
+    const statusBadge = `<span class="badge" style="border-color:${status==='ongoing'?'#111827':'#9ca3af'};color:${status==='ongoing'?'#111827':'#6b7280'}">${status==='ongoing'?'Ongoing':'Completed'}</span>`;
 
     // Roles
     const r = project.roles || {};
-    const pi  = r.principalInvestigator ? esc(r.principalInvestigator) : '—';
+    const pi = r.principalInvestigator ? esc(r.principalInvestigator) : '—';
     const lead= r.leadResearcher ? esc(r.leadResearcher) : '—';
     const res = (r.researchers && r.researchers.length) ? r.researchers.map(esc).join(', ') : '—';
 
-    const outerClass = project.type === 'private' ? 'card--private' : 'card--public';
-    const notchColor  = fundingColor;
+    // Determine outer class based on status and funding type
+    let outerClass;
+    if (status === 'completed') {
+      outerClass = 'card--completed'; // White background for completed
+    } else {
+      outerClass = project.type === 'private' ? 'card--private' : 'card--public';
+    }
+    
+    const notchColor = fundingColor;
 
-    return `
-      <article class="card ${outerClass}">
-        <div class="inner">
-          <div class="type-notch" style="background:${notchColor}"></div>
-          <div class="body">
-            <!-- Status Badges (funding + status) -->
-            <div class="badges-status">
-              ${fundingBadge}
-              ${statusBadge}
+    return `<article class="card ${outerClass}">
+      <div class="inner">
+        <div class="type-notch" style="background:${notchColor}"></div>
+        <div class="body">
+          <!-- Status Badges -->
+          <div class="badges-status">
+            ${fundingBadge}
+            ${statusBadge}
+          </div>
+          <!-- Keyword Badges -->
+          <div class="badges-keywords">
+            ${keywordBadges}
+          </div>
+          <!-- Titles -->
+          <div class="project-title-en">${esc(project.titleEn)}</div>
+          <div class="project-title-ko"><span class="ko">${esc(project.titleKo)}</span></div>
+          <!-- Meta -->
+          <div class="meta-info">
+            <div class="meta-item">
+              <span class="meta-label">Period</span>
+              <span class="meta-value">${esc(periodFmt)}</span>
             </div>
-            
-            <!-- Keyword Badges -->
-            <div class="badges-keywords">
-              ${keywordBadges}
+            <div class="meta-item">
+              <span class="meta-label">Funding Agency</span>
+              <span class="meta-value">${esc(project.fundingAgency)}</span>
             </div>
-
-            <!-- Titles -->
-            <div class="project-title-en">${esc(project.titleEn)}</div>
-            <div class="project-title-ko"><span class="ko">${esc(project.titleKo)}</span></div>
-
-            <!-- Meta -->
-            <div class="meta-info">
-              <div class="meta-item">
-                <span class="meta-label">Period</span>
-                <span class="meta-value">${esc(periodFmt)}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Funding Agency</span>
-                <span class="meta-value">${esc(project.fundingAgency)}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Amount</span>
-                <span class="meta-value amount">${esc(project.amount)}</span>
-              </div>
-              <div class="meta-item pi">
-                <span class="meta-label">Principal Investigator</span>
-                <span class="meta-value">${pi}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Lead Researcher</span>
-                <span class="meta-value">${lead}</span>
-              </div>
-              <div class="meta-item">
-                <span class="meta-label">Researchers</span>
-                <span class="meta-value">${res}</span>
-              </div>
+            <div class="meta-item">
+              <span class="meta-label">Amount</span>
+              <span class="meta-value amount">${esc(project.amount)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Principal Investigator</span>
+              <span class="meta-value">${pi}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Lead Researcher</span>
+              <span class="meta-value">${lead}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Researchers</span>
+              <span class="meta-value">${res}</span>
             </div>
           </div>
         </div>
-      </article>
-    `;
+      </div>
+    </article>`;
   }
 
   /* ===== Render ===== */
@@ -571,8 +572,10 @@ function generateDiamondNetwork() {
   }
 
   /* ===== Init ===== */
-  const qInput = document.getElementById('q');
-  qInput.addEventListener('input', (e) => { q = e.target.value; render(); });
+  qInput.addEventListener('input', (e) => {
+    q = e.target.value;
+    render();
+  });
 
   buildChips();
   render();
