@@ -15,8 +15,8 @@ permalink: /members-current.html
       --phd-gold: rgb(214, 177, 77);
       --ms-red: rgb(172, 14, 14);
       --combined-gold: rgb(234, 207, 127);
-      --undergrad-pink: rgb(236, 72, 153);
-      --primary-dark: #111827;
+      --undergrad-pink: rgb(236, 72, 153); /* legacy (not used now) */
+      --primary-dark: #111827; /* black */
     }
 
     /* Banner */
@@ -122,7 +122,8 @@ permalink: /members-current.html
     .stat-card.phd-stat{ border-top:3px solid var(--phd-gold); }
     .stat-card.ms-stat{ border-top:3px solid var(--ms-red); }
     .stat-card.combined-stat{ border-top:3px solid var(--combined-gold); }
-    .stat-card.undergrad-stat{ border-top:3px solid var(--undergrad-pink); }
+    /* UNDERGRAD stat top border -> black */
+    .stat-card.undergrad-stat{ border-top:3px solid var(--primary-dark); }
     .stat-card.total-stat{ border-top:3px solid var(--primary-dark); }
 
     /* Section Headers */
@@ -132,11 +133,11 @@ permalink: /members-current.html
     .degree-badge-header.phd{ background:var(--phd-gold);color:#111827; }
     .degree-badge-header.ms{ background:var(--ms-red);color:#fff; }
     .degree-badge-header.combined{ background:var(--combined-gold);color:#111827; }
-    /* UNDERGRAD header badge: white background + dark text + pink border */
+    /* UNDERGRAD header badge: white background + black border/text */
     .degree-badge-header.undergrad{
       background:#fff;
-      color:#111827;
-      border:2px solid var(--undergrad-pink);
+      color:var(--primary-dark);
+      border:2px solid var(--primary-dark);
     }
 
     /* Grid Layout */
@@ -151,7 +152,8 @@ permalink: /members-current.html
     .card-banner.phd{ background:var(--phd-gold); }
     .card-banner.ms{ background:var(--ms-red); }
     .card-banner.combined{ background:var(--combined-gold); }
-    .card-banner.undergrad{ background:var(--undergrad-pink); }
+    /* UNDERGRAD card banner -> black */
+    .card-banner.undergrad{ background:var(--primary-dark); }
 
     .card-content{ padding:20px; }
     .member-info{ display:flex;gap:16px; }
@@ -167,7 +169,8 @@ permalink: /members-current.html
     .member-name{ font-size:18px;font-weight:900;color:#111827;margin-bottom:4px; word-break:keep-all; overflow-wrap:anywhere; }
     .member-role{ display:inline-flex;align-items:center;padding:3px 10px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:999px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:8px; }
     .member-role.combined{ background:var(--combined-gold);border-color:var(--combined-gold);color:#111827; }
-    .member-role.undergrad{ background:var(--undergrad-pink);border-color:var(--undergrad-pink);color:#fff; }
+    /* UNDERGRAD role badge -> black */
+    .member-role.undergrad{ background:var(--primary-dark);border-color:var(--primary-dark);color:#fff; }
     .member-period{ font-size:12px;color:#6b7280;margin-bottom:12px; }
     .member-field{ font-size:13px;color:#374151;margin-bottom:6px; word-break:keep-all; overflow-wrap:anywhere; }
     .member-field strong{ font-weight:700;color:#111827; }
@@ -181,7 +184,8 @@ permalink: /members-current.html
     .btn-details.phd:hover{ background:var(--phd-gold);color:#111827; }
     .btn-details.ms:hover{ background:var(--ms-red); }
     .btn-details.combined:hover{ background:var(--combined-gold);color:#111827; }
-    .btn-details.undergrad:hover{ background:var(--undergrad-pink);color:#fff; }
+    /* UNDERGRAD button hover -> black (already black base) */
+    .btn-details.undergrad:hover{ background:var(--primary-dark); color:#fff; }
 
     /* Modal */
     .modal-overlay{ position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;display:none;opacity:0;transition:opacity 0.3s; }
@@ -199,7 +203,8 @@ permalink: /members-current.html
     .modal-degree.phd{ background:var(--phd-gold);color:#111827; }
     .modal-degree.ms{ background:var(--ms-red);color:#fff; }
     .modal-degree.combined{ background:var(--combined-gold);color:#111827; }
-    .modal-degree.undergrad{ background:var(--undergrad-pink);color:#fff; }
+    /* UNDERGRAD modal bar -> black */
+    .modal-degree.undergrad{ background:var(--primary-dark);color:#fff; }
     .modal-body{ padding:20px;overflow-y:auto;flex:1; }
     .modal-section{ margin-bottom:24px; }
     .modal-section:last-child{ margin-bottom:0; }
@@ -329,19 +334,19 @@ function generateDiamondNetwork() {
   <div class="stats-container">
     <div class="stat-card phd-stat">
       <div class="stat-number" id="phdCount">0</div>
-      <div class="stat-label">Ph.D. Students</div>
+      <div class="stat-label">Ph.D. Program</div>
     </div>
     <div class="stat-card combined-stat">
       <div class="stat-number" id="combinedCount">0</div>
-      <div class="stat-label">Ph.D.–M.S. Combined</div>
+      <div class="stat-label">Ph.D.–M.S. Combined Program</div>
     </div>
     <div class="stat-card ms-stat">
       <div class="stat-number" id="msCount">0</div>
-      <div class="stat-label">M.S. Students</div>
+      <div class="stat-label">M.S. Program</div>
     </div>
     <div class="stat-card undergrad-stat">
       <div class="stat-number" id="undergradCount">0</div>
-      <div class="stat-label">Undergraduate Students</div>
+      <div class="stat-label">Undergraduate Researcher Program</div>
     </div>
     <div class="stat-card total-stat">
       <div class="stat-number" id="totalCount">0</div>
@@ -460,11 +465,11 @@ function generateDiamondNetwork() {
     </div>
   </div>
 
-  <!-- Undergraduate Students -->
+  <!-- Undergraduate Researchers -->
   <div class="section-header">
     <h2 class="section-title">
       <span class="degree-badge-header undergrad">U.R.</span>
-      Undergraduate Students
+      Undergraduate Researchers
     </h2>
   </div>
 
