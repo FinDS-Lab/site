@@ -238,28 +238,85 @@ permalink: /archives-gallery.html
   {% else %}
     <div class="gallery-grid" id="galleryGrid">
       {% for gallery in galleries_sorted %}
+
+        {%- comment -%}
+        Build base path (always ends with '/')
+        {%- endcomment -%}
+        {% assign base = gallery.url %}
+        {% if base and base != "" %}
+          {% unless base contains '/' and base | slice: -1, 1 == '/' %}
+            {% assign base = base | append: '/' %}
+          {% endunless %}
+        {% endif %}
+
+        {%- comment -%}
+        Resolve thumbnail url
+        {%- endcomment -%}
         {% assign thumb_url = nil %}
         {% if gallery.thumb %}
           {% if gallery.thumb contains '://' or gallery.thumb[0] == '/' %}
             {% assign thumb_url = gallery.thumb | relative_url %}
           {% else %}
-            {% assign base = gallery.url %}
-            {% if base[-1] != '/' %}{% assign base = base | append: '/' %}{% endif %}
             {% assign thumb_url = base | append: gallery.thumb | relative_url %}
           {% endif %}
         {% endif %}
 
-        {% if thumb_url == nil %}
-          {% assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery.url" %}
-          {% assign images = "" | split: "" %}
-          {% for f in gallery_files %}
-            {% assign ext = f.extname | downcase %}
-            {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' %}
-              {% assign images = images | push: f %}
+        {%- comment -%}
+        If no explicit thumb, try to pick first image either from front matter images or static_files fallback
+        {%- endcomment -%}
+        {% assign images_csv = '' %}
+        {% assign has_images_from_front_matter = false %}
+
+        {% if gallery.images and gallery.images.size > 0 %}
+          {% assign has_images_from_front_matter = true %}
+          {% for _img in gallery.images %}
+            {% assign _img_url = '' %}
+            {% if _img contains '://' or _img[0] == '/' %}
+              {% assign _img_url = _img | relative_url %}
+            {% else %}
+              {% assign _img_url = base | append: _img | relative_url %}
+            {% endif %}
+            {% if images_csv == '' %}
+              {% assign images_csv = _img_url %}
+            {% else %}
+              {% assign images_csv = images_csv | append: ',' | append: _img_url %}
             {% endif %}
           {% endfor %}
-          {% if images.size > 0 %}
-            {% assign thumb_url = images[0].path | relative_url %}
+
+          {% if thumb_url == nil %}
+            {% assign first_img = images_csv | split: ',' | first %}
+            {% assign thumb_url = first_img %}
+          {% endif %}
+        {% endif %}
+
+        {% if thumb_url == nil or images_csv == '' %}
+          {%- comment -%}
+          Fallback: discover images from static_files under this gallery folder
+          {%- endcomment -%}
+          {% assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery.url" %}
+          {% assign discovered = "" | split: "" %}
+          {% for f in gallery_files %}
+            {% assign ext = f.extname | downcase %}
+            {% if ext == '.jpg' or ext == '.jpeg' or ext == '.png' or ext == '.webp' or ext == '.gif' %}
+              {% assign discovered = discovered | push: f %}
+            {% endif %}
+          {% endfor %}
+
+          {% if discovered.size > 0 %}
+            {% if thumb_url == nil %}
+              {% assign thumb_url = discovered[0].path | relative_url %}
+            {% endif %}
+
+            {% if images_csv == '' %}
+              {% for f in discovered %}
+                {% assign p = f.path | relative_url %}
+                {% if forloop.first %}
+                  {% assign images_csv = p %}
+                {% else %}
+                  {% assign images_csv = images_csv | append: ',' | append: p %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
           {% endif %}
         {% endif %}
 
@@ -267,6 +324,9 @@ permalink: /archives-gallery.html
           {% assign thumb_url = '/assets/img/placeholders/gallery.jpg' | relative_url %}
         {% endunless %}
 
+        {%- comment -%}
+        Search text (title + tags)
+        {%- endcomment -%}
         {% assign search_text = gallery.title | downcase %}
         {% if gallery.tags %}
           {% assign tags_text = gallery.tags | join: ' ' | downcase %}
@@ -279,7 +339,7 @@ permalink: /archives-gallery.html
              data-date="{{ gallery.date | date: '%b %d, %Y' }}"
              data-tags="{{ gallery.tags | join: ',' | escape }}"
              data-url="{{ gallery.url | relative_url }}"
-             data-images="{{ images | map: 'path' | join: ',' | relative_url }}"
+             data-images="{{ images_csv | escape }}"
              onclick="openGalleryModal(this)">
           <div class="gallery-thumb" style="background-image:url('{{ thumb_url }}')"></div>
           <div class="gallery-content">
