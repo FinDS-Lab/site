@@ -240,29 +240,28 @@ permalink: /archives-gallery.html
       {% for gallery in galleries_sorted %}
 
         {%- comment -%}
-        Build base path (always ends with '/')
+        Build source base path from the file location, not the permalink.
+        Example: "/gallery/2025-09-01-1/"
         {%- endcomment -%}
-        {% assign base = gallery.url %}
-        {% if base and base != "" %}
-          {% unless base contains '/' and base | slice: -1, 1 == '/' %}
-            {% assign base = base | append: '/' %}
-          {% endunless %}
-        {% endif %}
+        {% assign base = '/' | append: gallery.path | remove: gallery.name | replace: '//','/' %}
+        {% unless base contains '/' and base | slice: -1, 1 == '/' %}
+          {% assign base = base | append: '/' %}
+        {% endunless %}
 
         {%- comment -%}
-        Resolve thumbnail url
+        Resolve thumbnail url from front matter or discovered images under source folder
         {%- endcomment -%}
         {% assign thumb_url = nil %}
         {% if gallery.thumb %}
           {% if gallery.thumb contains '://' or gallery.thumb[0] == '/' %}
             {% assign thumb_url = gallery.thumb | relative_url %}
           {% else %}
-            {% assign thumb_url = base | append: gallery.thumb | relative_url %}
+            {% assign thumb_url = base | append: gallery.thumb | replace: '//','/' | relative_url %}
           {% endif %}
         {% endif %}
 
         {%- comment -%}
-        If no explicit thumb, try to pick first image either from front matter images or static_files fallback
+        Build images_csv from front matter (source-folder based), else discover from static_files under source folder
         {%- endcomment -%}
         {% assign images_csv = '' %}
         {% assign has_images_from_front_matter = false %}
@@ -274,7 +273,7 @@ permalink: /archives-gallery.html
             {% if _img contains '://' or _img[0] == '/' %}
               {% assign _img_url = _img | relative_url %}
             {% else %}
-              {% assign _img_url = base | append: _img | relative_url %}
+              {% assign _img_url = base | append: _img | replace: '//','/' | relative_url %}
             {% endif %}
             {% if images_csv == '' %}
               {% assign images_csv = _img_url %}
@@ -290,10 +289,7 @@ permalink: /archives-gallery.html
         {% endif %}
 
         {% if thumb_url == nil or images_csv == '' %}
-          {%- comment -%}
-          Fallback: discover images from static_files under this gallery folder
-          {%- endcomment -%}
-          {% assign gallery_files = site.static_files | where_exp: "f", "f.path contains gallery.url" %}
+          {% assign gallery_files = site.static_files | where_exp: "f", "f.path contains base" %}
           {% assign discovered = "" | split: "" %}
           {% for f in gallery_files %}
             {% assign ext = f.extname | downcase %}
@@ -440,9 +436,9 @@ function generateDiamondNetwork(){
   const diamondPath='M100,40 L140,100 L100,160 L60,100 Z';
   svg+=`<path d="${diamondPath}" fill="none" class="burst-line" stroke-width="2"/>`;
   svg+=`<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity="0.5"/>`;
-  svg+=`<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity="0.5"/>`;
-  svg+=`<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity="0.3"/>`;
-  svg+=`<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity="0.3"/>`;
+  svg+=`<line x1="60" y1="100" x2="140" y1="100" class="burst-line" opacity="0.5"/>`;
+  svg+=`<line x1="80" y1="70" x2="120" y1="130" class="burst-line" opacity="0.3"/>`;
+  svg+=`<line x1="120" y1="70" x2="80" y1="130" class="burst-line" opacity="0.3"/>`;
   const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
   for(let i=0;i<4;i++){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity="0.3"/>`}
   nodes.forEach((n,i)=>{const r=i<4?4:(i===4?5:2.5); svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot" opacity="${i===4?1:.8}"/>`});
