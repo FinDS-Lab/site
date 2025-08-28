@@ -225,8 +225,8 @@ function generateDiamondNetwork() {
 
   /* Card (outer tint = type color) */
   .card{border-radius:1rem;overflow:hidden}
-  .card.card--public{background:rgba(172, 14, 14, 0.15)}
-  .card.card--private{background:rgba(214, 177, 77, 0.18)}
+  .card.card--public-ongoing{background:rgba(172, 14, 14, 0.15)}
+  .card.card--private-ongoing{background:rgba(214, 177, 77, 0.18)}
   .card.card--completed{background:#ffffff}
 
   /* Inner white body */
@@ -507,7 +507,8 @@ function generateDiamondNetwork() {
     if (status === 'completed') {
       outerClass = 'card--completed'; // White background for completed
     } else {
-      outerClass = project.type === 'private' ? 'card--private' : 'card--public';
+      // Ongoing projects: apply color based on funding type
+      outerClass = project.type === 'private' ? 'card--private-ongoing' : 'card--public-ongoing';
     }
     
     const notchColor = fundingColor;
