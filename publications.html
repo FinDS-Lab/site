@@ -1043,8 +1043,16 @@ permalink: /publications.html
     const words = (str || '').split(' ');
     
     return words.map((word, index) => {
-      // Skip if already uppercase abbreviation (like SCIE, KCI, etc.)
-      if (word === word.toUpperCase() && word.length > 1 && /^[A-Z]+$/.test(word)) return word;
+      // Preserve words that are entirely uppercase (acronyms like IEEE, AAAI, ISIS2023)
+      // Check if word contains only uppercase letters and possibly numbers
+      if (/^[A-Z0-9]+$/.test(word)) {
+        return word; // Keep as-is
+      }
+      
+      // Preserve mixed case acronyms or special formatting (like PhD, LaTeX, JavaScript)
+      if (word.match(/^[A-Z][a-z]+[A-Z]/) || word.includes('PhD') || word.includes('LaTeX')) {
+        return word;
+      }
       
       // Always capitalize first and last word
       if (index === 0 || index === words.length - 1) {
