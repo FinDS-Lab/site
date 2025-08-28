@@ -13,7 +13,7 @@ permalink: /members-director.html
     .breadcrumbs a:hover{text-decoration:underline}
     .breadcrumbs .sep{opacity:.8}
 
-    /* ===== NEW Animated Gradient Banner ===== */
+    /* ===== NEW Animated Gradient Banner ===== -->
     :root {
       --gold: rgb(214, 177, 77);
       --gold-mid: rgb(234, 197, 97);
@@ -107,6 +107,12 @@ permalink: /members-director.html
 
 <!-- ===== Styles ===== -->
 <style>
+  /* Word break prevention for Korean/English */
+  * {
+    word-break: keep-all !important;
+    overflow-wrap: anywhere;
+  }
+  
   /* director 페이지 전용 변수 - site.css 오버라이드 */
   .director-page {
     --accent: rgb(214, 177, 77) !important; /* Gold로 강제 변경 */
@@ -311,6 +317,63 @@ permalink: /members-director.html
   .honors-list{list-style:none;padding:0;margin:0;}
   .honors-list li{font-size:13px;color:#78350f;padding:2px 0;}
 
+  /* Advisor Section */
+  .advisor-section{
+    margin-top:12px;
+    padding:12px 14px;
+    background:linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(99,102,241,0.05) 100%);
+    border-radius:8px;
+    border:1px solid rgba(59,130,246,0.15);
+  }
+  .advisor-title{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-weight:800;
+    font-size:13px;
+    color:#1e40af;
+    margin-bottom:8px;
+  }
+  .advisor-info{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+  }
+  .advisor-label{
+    font-weight:700;
+    color:#3730a3;
+  }
+  .advisor-name{
+    color:#1e40af;
+    text-decoration:none;
+    font-weight:600;
+    padding:3px 8px;
+    background:rgba(59,130,246,0.08);
+    border-radius:6px;
+    transition:all 0.2s;
+  }
+  .advisor-name:hover{
+    background:rgba(59,130,246,0.15);
+    transform:translateY(-1px);
+    box-shadow:0 2px 4px rgba(59,130,246,0.2);
+  }
+  .advisor-affiliation{
+    color:#64748b;
+    font-size:12px;
+    font-weight:500;
+  }
+  .multiple-advisors{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+  }
+  .advisor-separator{
+    color:#94a3b8;
+    font-weight:400;
+  }
+
   /* Mentoring Program */
   .mentoring-year{margin-bottom:16px;}
   .mentoring-year-header{
@@ -366,9 +429,26 @@ permalink: /members-director.html
   }
   .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
 
-  /* Network Canvas */
-  #networkCanvas{width:100%;height:400px;border-radius:12px;background:#f8fafc;margin-top:1rem;}
-  #networkInfo{margin-top:16px;padding:12px;background:#f8f9fa;border-radius:8px;font-size:13px;text-align:center;color:#6b7280;}
+  /* Enhanced Network Canvas Styles */
+  #networkCanvas{
+    width:100%;
+    height:500px;
+    border-radius:16px;
+    background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
+    margin-top:1rem;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+  }
+  #networkInfo{
+    margin-top:16px;
+    padding:14px;
+    background: linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(234,207,127,0.05) 100%);
+    border-radius:12px;
+    font-size:14px;
+    text-align:center;
+    color:#374151;
+    font-weight:600;
+    border: 1px solid rgba(214,177,77,0.1);
+  }
 </style>
 
 <!-- ===== Main Content ===== -->
@@ -519,6 +599,28 @@ permalink: /members-director.html
         </div>
       </div>
 
+      <!-- Collaboration Network -->
+      <div class="director-card">
+        <div class="card-head">Collaboration Network</div>
+        <div class="card-body">
+          <div class="network-controls">
+            <span class="slider-label">Min. Papers:</span>
+            <div class="slider-container">
+              <span style="font-size:12px;color:#9ca3af;">0</span>
+              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
+              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
+            </div>
+            <span class="slider-value" id="sliderValue">1+</span>
+          </div>
+          
+          <canvas id="networkCanvas"></canvas>
+          
+          <div id="networkInfo">
+            Loading collaboration data...
+          </div>
+        </div>
+      </div>
+
       <!-- Education -->
       <div class="director-card">
         <div class="card-head">Education</div>
@@ -532,6 +634,19 @@ permalink: /members-director.html
                 <div class="title">Ph.D. in Engineering</div>
                 <div class="desc">Industrial and Systems Engineering, KAIST</div>
                 <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
+                <div class="advisor-section">
+                  <div class="advisor-title">
+                    <span>👨‍🏫</span>
+                    <span>Advisor</span>
+                  </div>
+                  <div class="advisor-info">
+                    <span class="advisor-label">Prof.</span>
+                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                      Woo Chang Kim
+                    </a>
+                    <span class="advisor-affiliation">(KAIST)</span>
+                  </div>
+                </div>
                 <div class="honors-section">
                   <div class="honors-title">
                     <span>🏆</span>
@@ -551,6 +666,19 @@ permalink: /members-director.html
                 <div class="title">Master of Science</div>
                 <div class="desc">Industrial and Systems Engineering, KAIST</div>
                 <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
+                <div class="advisor-section">
+                  <div class="advisor-title">
+                    <span>👨‍🏫</span>
+                    <span>Advisor</span>
+                  </div>
+                  <div class="advisor-info">
+                    <span class="advisor-label">Prof.</span>
+                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                      Woo Chang Kim
+                    </a>
+                    <span class="advisor-affiliation">(KAIST)</span>
+                  </div>
+                </div>
                 <div class="honors-section">
                   <div class="honors-title">
                     <span>🏆</span>
@@ -570,6 +698,27 @@ permalink: /members-director.html
                 <div class="title">Bachelor of Engineering</div>
                 <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
                 <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
+                <div class="advisor-section">
+                  <div class="advisor-title">
+                    <span>👨‍🏫</span>
+                    <span>Advisors</span>
+                  </div>
+                  <div class="multiple-advisors">
+                    <div class="advisor-info">
+                      <span class="advisor-label">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" class="advisor-name">
+                        Jang Ho Kim
+                      </a>
+                    </div>
+                    <span class="advisor-separator">&</span>
+                    <div class="advisor-info">
+                      <span class="advisor-label">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" class="advisor-name">
+                        Myeong-Ju Park
+                      </a>
+                    </div>
+                  </div>
+                </div>
                 <div class="honors-section">
                   <div class="honors-title">
                     <span>🏆</span>
@@ -654,28 +803,6 @@ permalink: /members-director.html
               <div class="desc-ko">한국지능정보시스템학회 종신회원</div>
             </li>
           </ul>
-        </div>
-      </div>
-
-      <!-- Collaboration Network -->
-      <div class="director-card">
-        <div class="card-head">Collaboration Network</div>
-        <div class="card-body">
-          <div class="network-controls">
-            <span class="slider-label">Min. Papers:</span>
-            <div class="slider-container">
-              <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
-              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
-            </div>
-            <span class="slider-value" id="sliderValue">1+</span>
-          </div>
-          
-          <canvas id="networkCanvas"></canvas>
-          
-          <div id="networkInfo">
-            Loading collaboration data...
-          </div>
         </div>
       </div>
 
@@ -898,12 +1025,12 @@ permalink: /members-director.html
   </div>
 </section>
 
-<!-- Load AUTHORS from include (defines window.AUTHORS) -->
+<!-- Load AUTHORS from include -->
 {% include authors-data.html %}
 
 <!-- Scripts -->
 <script>
-  // ===== Banner click-burst (Heart/Club/Spade/Diamond) =====
+  // ===== Banner click-burst functions =====
   function createNetworkBurst(event, element) {
     const rect = element.getBoundingClientRect();
     const x = event.clientX - rect.left - 100;
@@ -921,6 +1048,7 @@ permalink: /members-director.html
     element.appendChild(networkDiv);
     setTimeout(()=>{ element.removeChild(networkDiv); }, 2000);
   }
+  
   function generateHeartNetwork(){
     let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
     const heartPath='M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
@@ -931,6 +1059,7 @@ permalink: /members-director.html
     nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${3+Math.random()*2}" class="burst-dot"/>`});
     svg+='</svg>'; return svg;
   }
+  
   function generateClubNetwork(){
     let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
     const circles=[{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
@@ -942,6 +1071,7 @@ permalink: /members-director.html
     nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${2+Math.random()*2}" class="burst-dot"/>`});
     svg+='</svg>'; return svg;
   }
+  
   function generateSpadeNetwork(){
     let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
     const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
@@ -954,6 +1084,7 @@ permalink: /members-director.html
     nodes.forEach((n,i)=>{const r=(i===0||i===7)?4:3; svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot"/>`});
     svg+='</svg>'; return svg;
   }
+  
   function generateDiamondNetwork(){
     let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
     const diamondPath='M100,40 L140,100 L100,160 L60,100 Z';
@@ -982,20 +1113,18 @@ permalink: /members-director.html
     document.getElementById(`mentoring-${year}`).classList.toggle('show');
   }
 
-  // ===== Collaboration Network (AUTHORS + site.data.pubs.json 활용) =====
-
-  // 1) Jekyll 데이터 바인딩: _data/pubs.json → JS 배열
+  // ===== ENHANCED Collaboration Network =====
+  
+  // Load publications data from Jekyll
   const PUBS = {{ site.data.pubs | jsonify }};
+  const DIRECTOR_ID = 1;
 
-  // 2) 중앙 노드(Director) ID 지정
-  const DIRECTOR_ID = 1; // AUTHORS[1]이 Director(Insu Choi)라고 가정
-
-  // 3) 협업 횟수 집계: Director가 저자로 포함된 논문만 대상으로, 공동저자 카운트
+  // Count collaborations
   function countCollaborations() {
     const counts = {};
     PUBS.forEach(pub => {
       if (!Array.isArray(pub.authors)) return;
-      if (!pub.authors.includes(DIRECTOR_ID)) return; // Director가 참여한 논문만
+      if (!pub.authors.includes(DIRECTOR_ID)) return;
       pub.authors.forEach(aid => {
         if (aid !== DIRECTOR_ID) {
           counts[aid] = (counts[aid] || 0) + 1;
@@ -1005,178 +1134,343 @@ permalink: /members-director.html
     return counts;
   }
 
-  // 4) 슬라이더/정보 UI 설정
+  // Initialize variables
   let currentThreshold = 1;
   let collaborations = countCollaborations();
-  let maxCollaborations = 0;
+  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
+  let animationFrame;
+  let mousePos = { x: 0, y: 0 };
+  let hoveredNode = null;
 
-  const collabValues = Object.values(collaborations);
-  maxCollaborations = collabValues.length > 0 ? Math.max(...collabValues) : 5;
-
+  // UI Elements
   const slider = document.getElementById('networkSlider');
   const maxLabel = document.getElementById('maxSliderLabel');
   const sliderValue = document.getElementById('sliderValue');
   const infoEl = document.getElementById('networkInfo');
 
+  // Setup slider
   if (slider) {
-    slider.max = Math.max(1, maxCollaborations);
+    slider.max = maxCollaborations;
     maxLabel.textContent = maxCollaborations + '+';
-    slider.value = Math.min(slider.value, slider.max);
+    slider.value = Math.min(1, maxCollaborations);
     currentThreshold = parseInt(slider.value);
 
     slider.addEventListener('input', function() {
       currentThreshold = parseInt(this.value);
       sliderValue.textContent = currentThreshold > 0 ? currentThreshold + '+' : '0';
       updateNetworkInfo();
-      if (window.drawNetwork) drawNetwork();
+      buildNodes();
     });
   }
 
   function updateNetworkInfo() {
+    const visible = Object.values(collaborations).filter(freq => freq >= currentThreshold).length;
+    const total = Object.keys(collaborations).length;
+    
     if (currentThreshold === 0) {
-      const total = Object.keys(collaborations).length;
-      infoEl.innerHTML = `Showing all <b>${total}</b> collaborators`;
+      infoEl.innerHTML = `Displaying all <b>${total}</b> collaborators in network`;
     } else {
-      const visible = Object.values(collaborations).filter(freq => freq >= currentThreshold).length;
-      infoEl.innerHTML = `Showing <b>${visible}</b> collaborators with <b>${currentThreshold}+</b> papers`;
+      infoEl.innerHTML = `Displaying <b>${visible}</b> of <b>${total}</b> collaborators • <b>${currentThreshold}+</b> joint publications`;
     }
   }
 
-  function getNodeColor(frequency, isVisible) {
-    if (!isVisible) return '#f3f4f6';
-    const ratio = maxCollaborations ? (frequency / maxCollaborations) : 0;
-    if (ratio >= 0.75) return 'rgb(214, 177, 77)';
-    if (ratio >= 0.5)  return 'rgb(234, 207, 127)';
-    if (ratio >= 0.25) return '#cbd5e1';
-    return '#e5e7eb';
-  }
-
-  // 5) 캔버스 드로잉
+  // Canvas setup
   const canvas = document.getElementById('networkCanvas');
   if (canvas) {
     const ctx = canvas.getContext('2d');
-
-    function sizeCanvas() {
-      const w = canvas.offsetWidth || 800;
-      canvas.width  = w * (window.devicePixelRatio || 1);
-      canvas.height = 800;
-      canvas.style.height = '400px';
-    }
-    sizeCanvas();
-    window.addEventListener('resize', () => { sizeCanvas(); buildNodes(); });
-
     let nodes = [];
+    let particles = [];
+
+    // Size canvas properly
+    function sizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 500 * window.devicePixelRatio;
+      canvas.style.height = '500px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+
+    // Create floating particles for ambiance
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      
+      reset() {
+        this.x = Math.random() * canvas.width / window.devicePixelRatio;
+        this.y = Math.random() * canvas.height / window.devicePixelRatio;
+        this.vx = (Math.random() - 0.5) * 0.2;
+        this.vy = (Math.random() - 0.5) * 0.2;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.opacity = Math.random() * 0.3 + 0.1;
+      }
+      
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        const w = canvas.width / window.devicePixelRatio;
+        const h = canvas.height / window.devicePixelRatio;
+        
+        if (this.x < 0 || this.x > w) this.vx *= -1;
+        if (this.y < 0 || this.y > h) this.vy *= -1;
+      }
+      
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(214, 177, 77, ${this.opacity})`;
+        ctx.fill();
+      }
+    }
+
+    // Initialize particles
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+
+    // Build node positions
     function buildNodes() {
       nodes = [];
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      const centerX = canvas.width / (2 * window.devicePixelRatio);
+      const centerY = canvas.height / (2 * window.devicePixelRatio);
 
-      // Center (Director)
+      // Director node at center
       nodes.push({
         id: DIRECTOR_ID,
-        name: (window.AUTHORS && window.AUTHORS[DIRECTOR_ID] && (window.AUTHORS[DIRECTOR_ID].en || window.AUTHORS[DIRECTOR_ID].ko)) || 'Director',
+        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
         x: centerX,
         y: centerY,
-        radius: 30,
+        vx: 0,
+        vy: 0,
+        radius: 35,
         color: 'rgb(172, 14, 14)',
         isCenter: true,
         frequency: 999
       });
 
-      const coAuthorIds = Object.keys(collaborations).map(k => parseInt(k, 10));
-      const N = coAuthorIds.length;
-      const distance = Math.min(canvas.width, canvas.height) * 0.25 + 60;
-
-      coAuthorIds.forEach((aid, idx) => {
-        const angle = (idx / Math.max(1, N)) * Math.PI * 2;
+      // Collaborator nodes in circular pattern
+      const coAuthorIds = Object.keys(collaborations)
+        .map(k => parseInt(k, 10))
+        .sort((a, b) => collaborations[b] - collaborations[a]);
+      
+      const visibleNodes = coAuthorIds.filter(id => collaborations[id] >= currentThreshold);
+      const N = visibleNodes.length;
+      
+      // Spiral layout for better distribution
+      visibleNodes.forEach((aid, idx) => {
         const freq = collaborations[aid] || 1;
+        const angle = (idx / N) * Math.PI * 2 - Math.PI / 2;
+        const radiusMultiplier = 0.8 - (freq / maxCollaborations) * 0.2;
+        const distance = Math.min(centerX, centerY) * radiusMultiplier;
+        
         nodes.push({
           id: aid,
-          name: (window.AUTHORS && window.AUTHORS[aid] && (window.AUTHORS[aid].en || window.AUTHORS[aid].ko)) || `Author ${aid}`,
+          name: AUTHORS[aid]?.en || `Author ${aid}`,
           x: centerX + Math.cos(angle) * distance,
           y: centerY + Math.sin(angle) * distance,
-          radius: 10 + (maxCollaborations ? (freq / maxCollaborations) * 15 : 0),
-          baseColor: getNodeColor(freq, true),
-          frequency: freq
+          vx: 0,
+          vy: 0,
+          targetX: centerX + Math.cos(angle) * distance,
+          targetY: centerY + Math.sin(angle) * distance,
+          radius: 12 + (freq / maxCollaborations) * 20,
+          color: getNodeColor(freq),
+          frequency: freq,
+          angle: angle
         });
       });
     }
 
-    function drawNetwork() {
-      const DPR = window.devicePixelRatio || 1;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function getNodeColor(frequency) {
+      const ratio = frequency / maxCollaborations;
+      if (ratio >= 0.75) return 'rgb(214, 177, 77)';
+      if (ratio >= 0.5) return 'rgb(234, 207, 127)';
+      if (ratio >= 0.25) return 'rgb(252, 211, 77)';
+      return 'rgb(254, 240, 138)';
+    }
 
-      // Edges
-      for (let i=1; i<nodes.length; i++) {
+    // Mouse interaction
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mousePos.x = e.clientX - rect.left;
+      mousePos.y = e.clientY - rect.top;
+      
+      // Check hover
+      hoveredNode = null;
+      nodes.forEach(node => {
+        const dx = mousePos.x - node.x;
+        const dy = mousePos.y - node.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < node.radius) {
+          hoveredNode = node;
+          canvas.style.cursor = 'pointer';
+        }
+      });
+      
+      if (!hoveredNode) {
+        canvas.style.cursor = 'default';
+      }
+    });
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw gradient background
+      const gradient = ctx.createRadialGradient(
+        canvas.width / (2 * window.devicePixelRatio), 
+        canvas.height / (2 * window.devicePixelRatio), 
+        0,
+        canvas.width / (2 * window.devicePixelRatio), 
+        canvas.height / (2 * window.devicePixelRatio), 
+        Math.max(canvas.width, canvas.height) / (2 * window.devicePixelRatio)
+      );
+      gradient.addColorStop(0, '#fafbfc');
+      gradient.addColorStop(1, '#f3f4f6');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw particles
+      particles.forEach(p => {
+        p.update();
+        p.draw(ctx);
+      });
+      
+      // Draw connections
+      for (let i = 1; i < nodes.length; i++) {
         const node = nodes[i];
-        const isVisible = node.frequency >= currentThreshold;
+        
+        // Create gradient for each line
+        const grad = ctx.createLinearGradient(
+          nodes[0].x, nodes[0].y,
+          node.x, node.y
+        );
+        
+        const opacity = 0.15 + (node.frequency / maxCollaborations) * 0.25;
+        grad.addColorStop(0, `rgba(172, 14, 14, ${opacity})`);
+        grad.addColorStop(1, `rgba(214, 177, 77, ${opacity})`);
+        
         ctx.beginPath();
         ctx.moveTo(nodes[0].x, nodes[0].y);
         ctx.lineTo(node.x, node.y);
-        if (isVisible) {
-          const opacity = 0.1 + (node.frequency / Math.max(1,maxCollaborations) * 0.4);
-          ctx.strokeStyle = `rgba(214, 177, 77, ${opacity})`;
-          ctx.lineWidth = (1 + (node.frequency / Math.max(1,maxCollaborations)) * 3) * DPR;
-        } else {
-          ctx.strokeStyle = 'rgba(203, 213, 225, 0.2)';
-          ctx.lineWidth = 1 * DPR;
-        }
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 0.5 + (node.frequency / maxCollaborations) * 2;
         ctx.stroke();
       }
-
-      // Nodes
-      nodes.forEach(node => {
+      
+      // Draw nodes with subtle animation
+      nodes.forEach((node, idx) => {
+        // Subtle floating animation
+        if (!node.isCenter) {
+          const time = Date.now() * 0.001;
+          node.x = node.targetX + Math.sin(time + idx) * 2;
+          node.y = node.targetY + Math.cos(time + idx) * 2;
+        }
+        
+        // Node shadow
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 2;
+        
+        // Draw node
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius * (hoveredNode === node ? 1.1 : 1), 0, Math.PI * 2);
+        
+        // Gradient fill
+        const nodeGrad = ctx.createRadialGradient(
+          node.x - node.radius * 0.3,
+          node.y - node.radius * 0.3,
+          0,
+          node.x,
+          node.y,
+          node.radius
+        );
+        
         if (node.isCenter) {
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-          ctx.fillStyle = node.color;
-          ctx.fill();
-          ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
-          ctx.lineWidth = 1 * (window.devicePixelRatio || 1);
-          ctx.stroke();
-
-          ctx.font = `${24 * DPR}px sans-serif`;
-          ctx.fillStyle = '#111827';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'top';
-          ctx.fillText(node.name, node.x, node.y + node.radius + 12);
+          nodeGrad.addColorStop(0, 'rgb(220, 38, 38)');
+          nodeGrad.addColorStop(1, 'rgb(172, 14, 14)');
         } else {
-          const isVisible = node.frequency >= currentThreshold;
-
+          const baseColor = node.color;
+          nodeGrad.addColorStop(0, baseColor);
+          nodeGrad.addColorStop(1, adjustBrightness(baseColor, -20));
+        }
+        
+        ctx.fillStyle = nodeGrad;
+        ctx.fill();
+        
+        // Border
+        ctx.strokeStyle = node.isCenter ? 'rgba(172, 14, 14, 0.3)' : 'rgba(214, 177, 77, 0.3)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        ctx.shadowColor = 'transparent';
+        
+        // Draw text
+        ctx.font = node.isCenter ? 'bold 14px sans-serif' : 'bold 11px sans-serif';
+        ctx.fillStyle = node.isCenter ? '#111827' : '#374151';
+        ctx.textAlign = 'center';
+        
+        // Name
+        ctx.fillText(node.name, node.x, node.y + node.radius + 15);
+        
+        // Paper count
+        if (!node.isCenter) {
+          ctx.font = '10px sans-serif';
+          ctx.fillStyle = '#6b7280';
+          const paperText = node.frequency === 1 ? '1 paper' : `${node.frequency} papers`;
+          ctx.fillText(paperText, node.x, node.y + node.radius + 28);
+        }
+        
+        // Hover tooltip
+        if (hoveredNode === node && !node.isCenter) {
+          const tooltipWidth = 180;
+          const tooltipHeight = 50;
+          const tooltipX = node.x - tooltipWidth / 2;
+          const tooltipY = node.y - node.radius - tooltipHeight - 10;
+          
+          // Tooltip background
+          ctx.fillStyle = 'rgba(31, 41, 55, 0.95)';
           ctx.beginPath();
-          ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-          ctx.fillStyle = isVisible ? node.baseColor : '#f3f4f6';
-          ctx.globalAlpha = isVisible ? 1 : 0.3;
+          ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 8);
           ctx.fill();
-          ctx.globalAlpha = 1;
-
-          ctx.strokeStyle = isVisible ? 'rgba(0, 0, 0, 0.1)' : 'rgba(0, 0, 0, 0.05)';
-          ctx.lineWidth = 1 * DPR;
-          ctx.stroke();
-
-          ctx.font = `${(isVisible ? 20 : 16) * DPR}px sans-serif`;
-          ctx.fillStyle = isVisible ? '#111827' : '#cbd5e1';
+          
+          // Tooltip text
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 12px sans-serif';
           ctx.textAlign = 'center';
-          ctx.textBaseline = 'top';
-          ctx.globalAlpha = isVisible ? 1 : 0.3;
-          ctx.fillText(node.name, node.x, node.y + node.radius + 8);
-
-          if (isVisible) {
-            ctx.font = `${12 * DPR}px sans-serif`;
-            ctx.fillStyle = '#6b7280';
-            ctx.fillText(`(${node.frequency} paper${node.frequency > 1 ? 's' : ''})`, node.x, node.y + node.radius + 28);
-          }
-          ctx.globalAlpha = 1;
+          ctx.fillText(node.name, node.x, tooltipY + 20);
+          
+          ctx.font = '11px sans-serif';
+          ctx.fillStyle = '#d1d5db';
+          ctx.fillText(`${node.frequency} collaborative publication${node.frequency > 1 ? 's' : ''}`, node.x, tooltipY + 36);
         }
       });
-
-      requestAnimationFrame(drawNetwork);
+      
+      animationFrame = requestAnimationFrame(animate);
     }
 
+    // Helper function to adjust color brightness
+    function adjustBrightness(color, amount) {
+      const rgb = color.match(/\d+/g);
+      const r = Math.min(255, Math.max(0, parseInt(rgb[0]) + amount));
+      const g = Math.min(255, Math.max(0, parseInt(rgb[1]) + amount));
+      const b = Math.min(255, Math.max(0, parseInt(rgb[2]) + amount));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // Initialize
+    sizeCanvas();
     buildNodes();
     updateNetworkInfo();
-    drawNetwork();
-    // PUBLIC: redraw available globally (e.g., after window resize)
-    window.drawNetwork = () => { buildNodes(); updateNetworkInfo(); };
+    animate();
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(animationFrame);
+      sizeCanvas();
+      buildNodes();
+      animate();
+    });
   }
 </script>
