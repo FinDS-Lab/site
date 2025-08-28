@@ -43,7 +43,9 @@ images:
 <!-- ===== Banner ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <div class="relative rounded-2xl overflow-hidden ring-1 ring-slate-200">
-    {% assign cover_url = page.dir | append: page.thumb | replace: "//","/" | relative_url %}
+    {%- comment -%} 소스 폴더 기준 경로 (permalink 무시) {%- endcomment -%}
+    {% assign src_dir = '/' | append: page.path | remove: page.name | replace: '//','/' %}
+    {% assign cover_url = src_dir | append: page.thumb | replace: '//','/' | relative_url %}
     <img src="{{ cover_url }}" alt="{{ page.title }} cover"
          class="w-full h-[200px] md:h-[260px] object-cover" width="1600" height="320">
     <div class="absolute inset-0 bg-black/40"></div>
@@ -73,7 +75,7 @@ images:
   {% if page.images and page.images.size > 0 %}
     <div class="image-grid">
       {% for img in page.images %}
-        {% assign img_url = page.dir | append: img | replace: "//","/" | relative_url %}
+        {% assign img_url = src_dir | append: img | replace: '//','/' | relative_url %}
         <a href="{{ img_url }}" target="_blank" rel="noopener" class="image-card">
           <div class="image-wrapper">
             <img src="{{ img_url }}" alt="{{ img }}" loading="lazy">
@@ -85,8 +87,8 @@ images:
       {% endfor %}
     </div>
   {% else %}
-    <!-- Fallback: site.static_files 방식 -->
-    {% assign here = page.dir %}
+    <!-- Fallback: site.static_files 방식 (소스 폴더 기준) -->
+    {% assign here = src_dir %}
     {% assign files = site.static_files | where_exp: "f", "f.path contains here" %}
     
     {% assign imgs = "" | split: "" %}
