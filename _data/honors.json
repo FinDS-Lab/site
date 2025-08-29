@@ -95,6 +95,15 @@
   ],
   "2022": [
     {
+      "type": "scholarship",
+      "icon": "💰",
+      "title": "김영한글로벌리더장학금",
+      "event": "Young-Han Kim Global Leader Scholarship",
+      "organization": "한국과학기술원 (KAIST)",
+      "date": "Aug 5",
+      "winners": []
+    },
+    {
       "type": "award",
       "icon": "🏆",
       "title": "장려상 (3위)",
@@ -186,6 +195,24 @@
     }
   ],
   "2021": [
+    {
+      "type": "scholarship",
+      "icon": "💰",
+      "title": "KAIST 인성장학금 (공로 부문)",
+      "event": "Exemplary Conduct Scholarship (Achievement Division)",
+      "organization": "한국과학기술원 (KAIST)",
+      "date": "Aug 27",
+      "winners": []
+    },
+    {
+      "type": "scholarship",
+      "icon": "💰",
+      "title": "국가우수장학금(이공계) 재학중우수자",
+      "event": "National Excellence Scholarship (Natural Sciences and Engineering Track)",
+      "organization": "한국장학재단",
+      "date": "May 14",
+      "winners": []
+    },
     {
       "type": "award",
       "icon": "🏆",
