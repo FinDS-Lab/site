@@ -1382,7 +1382,11 @@ permalink: /members-director.html
       <!-- Mentoring Program -->
       <div class="director-card">
         <div class="card-head">Mentoring Program</div>
-        <div class="card-body">
+        <div class="card-body" id="mentoringContainer">
+          <!-- JavaScript가 동적으로 생성 -->
+          <div style="text-align:center; padding:20px; color:#6b7280;">Loading mentoring data...</div>
+        </div>
+      </div>
           <!-- 2025 -->
           <div class="mentoring-year">
             <div class="mentoring-year-header" onclick="toggleMentoring(this, 2025)">
@@ -1829,157 +1833,159 @@ permalink: /members-director.html
   }
 
   // ===== Mentee Modal and Mentoring Program System =====
-  const MENTEES = {};
-  let mentoringData = {};
+const MENTEES = {};
+let mentoringData = {};
+
+// Function to format name (add space for 2-character names)
+function formatName(name) {
+  return name.length === 2 ? name[0] + '　' + name[1] : name;
+}
+
+// Load mentees.json and build mentoring sections
+fetch('{{ "/assets/data/mentees.json" | relative_url }}')
+  .then(response => response.json())
+  .then(data => {
+    mentoringData = data;
+    
+    // Flatten the nested structure into MENTEES object
+    for (const year in data) {
+      if (data[year]) {
+        for (const id in data[year]) {
+          MENTEES[id] = data[year][id];
+        }
+      }
+    }
+    
+    // Build mentoring years by participation
+    buildMentoringYears();
+  })
+  .catch(error => {
+    console.error('Error loading mentees data:', error);
+    const container = document.getElementById('mentoringContainer');
+    if (container) {
+      container.innerHTML = 
+        '<div style="text-align:center; padding:20px; color:#ef4444;">Error loading mentoring data</div>';
+    }
+  });
+
+function buildMentoringYears() {
+  const mentoringByYear = {};
+  const startYear = 2016; // 2017이 아닌 2016부터 시작
+  const currentYear = 2025;
   
-  // Function to format name (add space for 2-character names)
-  function formatName(name) {
-    return name.length === 2 ? name[0] + '　' + name[1] : name;
+  // Initialize years
+  for (let year = currentYear; year >= startYear; year--) {
+    mentoringByYear[year] = [];
   }
   
-  // Load mentees.json and build mentoring sections
-  fetch('{{ "/assets/data/mentees.json" | relative_url }}')
-    .then(response => response.json())
-    .then(data => {
-      mentoringData = data;
-      
-      // Flatten the nested structure into MENTEES object
-      for (const year in data) {
-        if (data[year]) {
-          for (const id in data[year]) {
-            MENTEES[id] = data[year][id];
-          }
+  // Group mentees by participation years
+  for (const yearGroup in mentoringData) {
+    if (mentoringData[yearGroup]) {
+      for (const id in mentoringData[yearGroup]) {
+        const mentee = mentoringData[yearGroup][id];
+        if (mentee.participationYears) {
+          mentee.participationYears.forEach(year => {
+            const yearNum = parseInt(year);
+            if (mentoringByYear[yearNum]) {
+              mentoringByYear[yearNum].push({
+                id: id,
+                name: mentee.name
+              });
+            }
+          });
         }
       }
-      
-      // Build mentoring years by participation
-      buildMentoringYears();
-    })
-    .catch(error => {
-      console.error('Error loading mentees data:', error);
-      document.getElementById('mentoringContainer').innerHTML = 
-        '<div style="text-align:center; padding:20px; color:#ef4444;">Error loading mentoring data</div>';
-    });
+    }
+  }
   
-  function buildMentoringYears() {
-    const mentoringByYear = {};
-    const startYear = 2017;
-    const currentYear = 2025;
-    
-    // Initialize years
-    for (let year = currentYear; year >= startYear; year--) {
-      mentoringByYear[year] = [];
-    }
-    
-    // Group mentees by participation years
-    for (const yearGroup in mentoringData) {
-      if (mentoringData[yearGroup]) {
-        for (const id in mentoringData[yearGroup]) {
-          const mentee = mentoringData[yearGroup][id];
-          if (mentee.participationYears) {
-            mentee.participationYears.forEach(year => {
-              const yearNum = parseInt(year);
-              if (mentoringByYear[yearNum]) {
-                mentoringByYear[yearNum].push({
-                  id: id,
-                  name: mentee.name
-                });
-              }
-            });
-          }
-        }
-      }
-    }
-    
-    // Sort each year's mentees by name (가나다 순)
-    for (const year in mentoringByYear) {
-      mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
-    }
-    
-    // Build HTML
-    let html = '';
-    for (let year = currentYear; year >= startYear; year--) {
-      const mentees = mentoringByYear[year];
-      if (mentees && mentees.length > 0) {
-        html += `
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
-              <div class="mentoring-year-title">${year}</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">${mentees.length}</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-${year}">
-              <div class="mentee-list">
-                ${mentees.map(mentee => 
-                  `<div class="mentee-chip" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
-                ).join('')}
-              </div>
+  // Sort each year's mentees by name (가나다 순)
+  for (const year in mentoringByYear) {
+    mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  }
+  
+  // Build HTML
+  let html = '';
+  for (let year = currentYear; year >= startYear; year--) {
+    const mentees = mentoringByYear[year];
+    if (mentees && mentees.length > 0) {
+      html += `
+        <div class="mentoring-year">
+          <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
+            <div class="mentoring-year-title">${year}</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="mentoring-count">${mentees.length}</span>
+              <span class="mentoring-toggle">▶</span>
             </div>
           </div>
-        `;
-      }
+          <div class="mentoring-content" id="mentoring-${year}">
+            <div class="mentee-list">
+              ${mentees.map(mentee => 
+                `<div class="mentee-chip" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
+              ).join('')}
+            </div>
+          </div>
+        </div>
+      `;
     }
-    
-    document.getElementById('mentoringContainer').innerHTML = html || 
-      '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
   }
   
-  function openMenteeModal(menteeId) {
-    const mentee = MENTEES[menteeId];
-    if (!mentee) {
-      console.error('Mentee not found:', menteeId);
-      return;
-    }
+  const container = document.getElementById('mentoringContainer');
+  if (container) {
+    container.innerHTML = html || 
+      '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
+  }
+}
 
-    document.getElementById('menteeModalName').textContent = mentee.name;
-
-    const modalBody = document.getElementById('menteeModalBody');
-    modalBody.innerHTML = `
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">🏫</span>
-        <span class="mentee-info-label">University</span>
-        <span class="mentee-info-value">${mentee.university}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">📚</span>
-        <span class="mentee-info-label">Department</span>
-        <span class="mentee-info-value">${mentee.department}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">📅</span>
-        <span class="mentee-info-label">Entry Year</span>
-        <span class="mentee-info-value">${mentee.entryYear}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">🎗</span>
-        <span class="mentee-info-label">Participation Years</span>
-        <div class="participation-years">
-          ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
-        </div>
-      </div>
-    `;
-
-    document.getElementById('menteeModal').classList.add('show');
-    document.body.style.overflow = 'hidden';
+function openMenteeModal(menteeId) {
+  const mentee = MENTEES[menteeId];
+  if (!mentee) {
+    console.error('Mentee not found:', menteeId);
+    alert('멘티 정보를 찾을 수 없습니다.');
+    return;
   }
 
-  function closeMenteeModal(event) {
-    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
-      return;
-    }
-    document.getElementById('menteeModal').classList.remove('show');
-    document.body.style.overflow = '';
-  }
+  document.getElementById('menteeModalName').textContent = formatName(mentee.name);
 
-  function closeMenteeModal(event) {
-    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
-      return;
-    }
-    document.getElementById('menteeModal').classList.remove('show');
-    document.body.style.overflow = '';
+  const modalBody = document.getElementById('menteeModalBody');
+  modalBody.innerHTML = `
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">🏫</span>
+      <span class="mentee-info-label">University</span>
+      <span class="mentee-info-value">${mentee.university || 'N/A'}</span>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">📚</span>
+      <span class="mentee-info-label">Department</span>
+      <span class="mentee-info-value">${mentee.department || 'N/A'}</span>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">📅</span>
+      <span class="mentee-info-label">Entry Year</span>
+      <span class="mentee-info-value">${mentee.entryYear || 'N/A'}</span>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">🎗</span>
+      <span class="mentee-info-label">Participation Years</span>
+      <div class="participation-years">
+        ${mentee.participationYears ? 
+          mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('') :
+          '<span style="color:#6b7280;">N/A</span>'}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('menteeModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// 중복 제거 - 하나만 남기기
+function closeMenteeModal(event) {
+  if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
+    return;
   }
+  document.getElementById('menteeModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
 
   // ===== Clean and Elegant Collaboration Network =====
   // Load publications data from Jekyll
@@ -2300,3 +2306,4 @@ permalink: /members-director.html
     });
   }
 </script>
+
