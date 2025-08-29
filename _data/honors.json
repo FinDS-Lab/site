@@ -117,8 +117,8 @@
     {
       "type": "scholarship",
       "icon": "💰",
-      "title": "김영한글로벌리더장학금",
-      "event": "Young-Han Kim Global Leader Scholarship",
+      "title": "수혜자",
+      "event": "김영한글로벌리더장학금",
       "organization": "한국과학기술원 (KAIST)",
       "date": "Aug 5",
       "winners": [
@@ -227,36 +227,12 @@
     {
       "type": "award",
       "icon": "🏆",
-      "title": "장려상 (3위)",
-      "event": "2022 춘계학술논문발표회 대학원생 논문발표 부문",
-      "organization": "한국데이터정보과학회",
-      "date": "May 13",
-      "winners": [
-        {"name": "최인수", "level": "phd"}
-      ]
-    }
-  ],
-  "2021": [
-    {
-      "type": "scholarship",
-      "icon": "💰",
-      "title": "KAIST 인성장학금 (공로 부문)",
-      "event": "Exemplary Conduct Scholarship (Achievement Division)",
-      "organization": "한국과학기술원 (KAIST)",
-      "date": "Aug 27",
-      "winners": [
-        {"name": "최인수", "level": "ms"}
-      ]
-    },
-    {
-      "type": "scholarship",
-      "icon": "💰",
-      "title": "국가우수장학금(이공계) 재학중우수자",
-      "event": "National Excellence Scholarship (Natural Sciences and Engineering Track)",
+자",
+      "event": "국가우수장학금(이공계)",
       "organization": "한국장학재단",
       "date": "May 14",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -267,7 +243,7 @@
       "organization": "한국지능정보사회진흥원",
       "date": "Dec 16",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -278,7 +254,7 @@
       "organization": "한국데이터정보과학회",
       "date": "Nov 26",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -289,7 +265,7 @@
       "organization": "NH투자증권",
       "date": "Nov 26",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -300,7 +276,7 @@
       "organization": "대한산업공학회",
       "date": "Nov 12",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -311,7 +287,7 @@
       "organization": "대한지역사회영양학회",
       "date": "Oct 22",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -322,7 +298,7 @@
       "organization": "LG CNS 엔트루 컨설팅",
       "date": "Oct 14",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -333,7 +309,7 @@
       "organization": "대한산업공학회",
       "date": "Aug 14",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -344,7 +320,7 @@
       "organization": "DB김준기문화재단",
       "date": "May 7",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     },
     {
@@ -355,7 +331,7 @@
       "organization": "매일경제신문",
       "date": "Apr 19",
       "winners": [
-        {"name": "최인수", "level": "ms"}
+        {"name": "최인수", "level": "phd"}
       ]
     }
   ],
