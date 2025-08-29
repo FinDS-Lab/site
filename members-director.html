@@ -3,7 +3,6 @@ layout: default
 title: director
 permalink: /members-director.html
 ---
-
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <style>
@@ -622,7 +621,7 @@ function generateDiamondNetwork() {
     border-radius:4px;
   }
 
-  /* Mentoring Program */
+  /* Mentoring Program - Modal approach */
   .mentoring-year{margin-bottom:16px;}
   .mentoring-year-header{
     display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
@@ -638,203 +637,66 @@ function generateDiamondNetwork() {
   .mentoring-content.show{display:block;}
   .mentee-list{display:flex;flex-wrap:wrap;gap:8px;}
   .mentee-chip{
-    position:relative;display:inline-flex;align-items:center;padding:6px 12px;
+    position:relative;display:inline-flex;align-items:center;padding:8px 16px;
     background:#fff;border:1px solid #e5e7eb;border-radius:999px;
-    font-size:13px;font-weight:600;transition:all .2s;cursor:default;
+    font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;
   }
   .mentee-chip:hover{
     box-shadow:0 4px 12px rgba(0,0,0,0.15);
     transform:translateY(-2px);
     border-color:var(--gold);
   }
-  .mentee-badge{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:6px;}
-  
-  /* Enhanced Tooltip Design */
-  .mentee-tooltip{
-    position:absolute;
-    bottom:calc(100% + 12px);
-    left:50%;
-    transform:translateX(-50%);
-    width:240px;
-    background:linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(254,251,235,0.98) 100%);
-    border:1px solid rgba(214,177,77,0.3);
-    border-radius:12px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.15);
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index:100;
+  .mentee-badge{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:8px;}
+
+  /* Modal Styles */
+  .mentee-modal{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+    display:none;align-items:center;justify-content:center;z-index:1000;
+    padding:20px;box-sizing:border-box;
   }
-  
-  /* Responsive tooltip positioning */
-  .mentee-chip:first-child .mentee-tooltip,
-  .mentee-chip:nth-child(2) .mentee-tooltip {
-    left:0;
-    transform:translateX(0);
+  .mentee-modal.show{display:flex;}
+  .mentee-modal-content{
+    background:#fff;border-radius:16px;max-width:400px;width:100%;
+    box-shadow:0 20px 40px rgba(0,0,0,0.2);position:relative;
+    max-height:80vh;overflow-y:auto;
   }
-  
-  .mentee-chip:first-child:hover .mentee-tooltip,
-  .mentee-chip:nth-child(2):hover .mentee-tooltip {
-    transform:translateX(0) translateY(-4px);
-  }
-  
-  .mentee-chip:last-child .mentee-tooltip,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip {
-    left:auto;
-    right:0;
-    transform:translateX(0);
-  }
-  
-  .mentee-chip:last-child:hover .mentee-tooltip,
-  .mentee-chip:nth-last-child(2):hover .mentee-tooltip {
-    transform:translateX(0) translateY(-4px);
-  }
-  
-  /* Center positioned tooltips (default) */
-  .mentee-chip:hover .mentee-tooltip{
-    opacity:1;
-    visibility:visible;
-    transform:translateX(-50%) translateY(-4px);
-  }
-  
-  /* Adjust arrow for left-aligned tooltips */
-  .mentee-chip:first-child .mentee-tooltip::after,
-  .mentee-chip:nth-child(2) .mentee-tooltip::after,
-  .mentee-chip:first-child .mentee-tooltip::before,
-  .mentee-chip:nth-child(2) .mentee-tooltip::before {
-    left:30px;
-    transform:translateX(0);
-  }
-  
-  /* Adjust arrow for right-aligned tooltips */
-  .mentee-chip:last-child .mentee-tooltip::after,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip::after,
-  .mentee-chip:last-child .mentee-tooltip::before,
-  .mentee-chip:nth-last-child(2) .mentee-tooltip::before {
-    left:auto;
-    right:30px;
-    transform:translateX(0);
-  }
-  
-  /* Mobile responsive */
-  @media (max-width: 640px) {
-    .mentee-tooltip {
-      width:200px;
-    }
-    
-    /* On mobile, all tooltips should be centered if possible */
-    .mentee-chip .mentee-tooltip {
-      position:fixed;
-      left:50% !important;
-      right:auto !important;
-      transform:translateX(-50%);
-      max-width:calc(100vw - 40px);
-    }
-    
-    .mentee-chip:hover .mentee-tooltip {
-      transform:translateX(-50%) translateY(-4px);
-    }
-    
-    .mentee-chip .mentee-tooltip::after,
-    .mentee-chip .mentee-tooltip::before {
-      left:50% !important;
-      right:auto !important;
-      transform:translateX(-50%);
-    }
-  }
-  
-  /* Tooltip Arrow */
-  .mentee-tooltip::after{
-    content:'';
-    position:absolute;
-    top:100%;
-    left:50%;
-    transform:translateX(-50%);
-    border:6px solid transparent;
-    border-top-color:rgba(254,251,235,0.98);
-  }
-  
-  .mentee-tooltip::before{
-    content:'';
-    position:absolute;
-    top:100%;
-    left:50%;
-    transform:translateX(-50%);
-    border:7px solid transparent;
-    border-top-color:rgba(214,177,77,0.3);
-  }
-  
-  /* Tooltip Header */
-  .tooltip-header{
+  .mentee-modal-header{
     background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    padding:10px 14px;
-    border-radius:11px 11px 0 0;
-    border-bottom:1px solid rgba(214,177,77,0.2);
+    padding:20px;border-radius:16px 16px 0 0;position:relative;
   }
-  
-  .tooltip-title{
-    font-weight:800;
-    font-size:12px;
-    color:#fff;
-    text-align:center;
-    text-transform:uppercase;
-    letter-spacing:0.5px;
-    text-shadow:0 1px 2px rgba(0,0,0,0.1);
+  .mentee-modal-close{
+    position:absolute;top:15px;right:15px;width:30px;height:30px;
+    border:none;background:rgba(255,255,255,0.2);color:#fff;
+    border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:bold;transition:all .2s;
   }
-  
-  /* Tooltip Content */
-  .tooltip-content{
-    padding:12px;
+  .mentee-modal-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1);}
+  .mentee-modal-title{
+    font-size:20px;font-weight:900;color:#fff;text-align:center;
+    text-shadow:0 1px 2px rgba(0,0,0,0.1);margin:0;
   }
-  
-  .tooltip-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 0;
-    font-size:11px;
-    border-bottom:1px solid rgba(214,177,77,0.1);
+  .mentee-modal-body{padding:24px;}
+  .mentee-info-row{
+    display:flex;align-items:center;gap:12px;padding:12px 0;
+    border-bottom:1px solid #f3f4f6;
   }
-  
-  .tooltip-row:last-child{
-    border-bottom:none;
+  .mentee-info-row:last-child{border-bottom:none;}
+  .mentee-info-icon{
+    width:24px;text-align:center;color:var(--gold);font-size:16px;
   }
-  
-  .tooltip-icon{
-    width:20px;
-    text-align:center;
-    color:var(--gold);
+  .mentee-info-label{
+    font-weight:700;color:#6b7280;min-width:100px;font-size:14px;
   }
-  
-  .tooltip-label{
-    flex:1;
-    color:#6b7280;
-    font-weight:600;
+  .mentee-info-value{
+    color:#111827;font-weight:600;font-size:14px;flex:1;
   }
-  
-  .tooltip-value{
-    color:#111827;
-    font-weight:700;
+  .participation-years{
+    display:flex;gap:6px;flex-wrap:wrap;
   }
-  
-  /* Year badges in tooltip */
-  .year-badges{
-    display:inline-flex;
-    gap:4px;
-    margin-left:4px;
-  }
-  .year-badge{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    padding:2px 6px;
-    border-radius:999px;
-    background:var(--gold);
-    font-size:10px;
-    font-weight:800;
-    color:#fff;
-    line-height:1;
+  .participation-year{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:4px 10px;border-radius:999px;background:var(--gold);
+    font-size:12px;font-weight:800;color:#fff;
   }
 
   /* Network Slider */
@@ -1309,170 +1171,23 @@ function generateDiamondNetwork() {
             </div>
             <div class="mentoring-content" id="mentoring-2024">
               <div class="mentee-list">
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('hyeji-choi')">
                   최혜지
                   <span class="mentee-badge" style="background:#d946ef"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">경희대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업경영공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2016</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('doyoung-lee')">
                   이도영
                   <span class="mentee-badge" style="background:#3b82f6"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">카이스트</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업및시스템공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2017</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('seongsu-park')">
                   박성수
                   <span class="mentee-badge" style="background:#10b981"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">서울대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2015</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('minji-kim-2024')">
                   김민지
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">연세대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">경영학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2018</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('hyunwoo-jung')">
                   정현우
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">성균관대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">시스템경영공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2016</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                          <span class="year-badge">2024</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1489,135 +1204,19 @@ function generateDiamondNetwork() {
             </div>
             <div class="mentoring-content" id="mentoring-2023">
               <div class="mentee-list">
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('seoyeon-jang')">
                   장서연
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">이화여대</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">경영학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2014</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('taehyun-oh')">
                   오태현
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">포항공대</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업경영공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2013</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('jihun-yoon')">
                   윤지훈
                   <span class="mentee-badge" style="background:#f59e0b"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">고려대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">산업경영공학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2015</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="mentee-chip">
+                <div class="mentee-chip" onclick="openMenteeModal('minji-kim-2023')">
                   김민지
                   <span class="mentee-badge" style="background:#ef4444"></span>
-                  <div class="mentee-tooltip">
-                    <div class="tooltip-header">
-                      <div class="tooltip-title">Mentoring Program</div>
-                    </div>
-                    <div class="tooltip-content">
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🏫</span>
-                        <span class="tooltip-label">University</span>
-                        <span class="tooltip-value">한양대학교</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📚</span>
-                        <span class="tooltip-label">Department</span>
-                        <span class="tooltip-value">컴퓨터소프트웨어학과</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">📅</span>
-                        <span class="tooltip-label">Entry Year</span>
-                        <span class="tooltip-value">2014</span>
-                      </div>
-                      <div class="tooltip-row">
-                        <span class="tooltip-icon">🎗</span>
-                        <span class="tooltip-label">Participation</span>
-                        <span class="year-badges">
-                          <span class="year-badge">2023</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1628,6 +1227,19 @@ function generateDiamondNetwork() {
     </main>
   </div>
 </section>
+
+<!-- Mentee Modal -->
+<div class="mentee-modal" id="menteeModal" onclick="closeMenteeModal(event)">
+  <div class="mentee-modal-content" onclick="event.stopPropagation()">
+    <div class="mentee-modal-header">
+      <h2 class="mentee-modal-title" id="menteeModalName">멘티 정보</h2>
+      <button class="mentee-modal-close" onclick="closeMenteeModal()">&times;</button>
+    </div>
+    <div class="mentee-modal-body" id="menteeModalBody">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+  </div>
+</div>
 
 <!-- Load AUTHORS from include -->
 {% include authors-data.html %}
@@ -1656,6 +1268,447 @@ function generateDiamondNetwork() {
   function generateHeartNetwork(){
     let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
     const heartPath='M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+    svg+=`<path d="${heartPath}" fill="none" class="burst-line" stroke-width="2"/>`;
+    const nodes=[{x:70,y:35},{x:130,y:35},{x:40,y:70},{x:160,y:70},{x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}];
+    const connections=[[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.5"/>`});
+    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${3+Math.random()*2}" class="burst-dot"/>`});
+    svg+='</svg>'; return svg;
+  }
+  
+  function generateClubNetwork(){
+    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const circles=[{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
+    circles.forEach(c=>{svg+=`<circle cx="${c.x}" cy="${c.y}" r="${c.r}" fill="none" class="burst-line" stroke-width="2"/>`});
+    svg+=`<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+    const nodes=[]; circles.forEach(c=>{for(let i=0;i<6;i++){const a=(i*2*Math.PI)/6;nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)})}});
+    nodes.push({x:100,y:100},{x:100,y:140});
+    for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y; const dist=Math.sqrt(dx*dx+dy*dy); if(dist<40){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-dist/40)*0.4}"/>`}}}
+    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${2+Math.random()*2}" class="burst-dot"/>`});
+    svg+='</svg>'; return svg;
+  }
+  
+  function generateSpadeNetwork(){
+    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+    svg+=`<path d="${spadePath}" fill="none" class="burst-line" stroke-width="2"/>`;
+    svg+=`<path d="M100,105 L90,130 L110,130 Z" fill="none" class="burst-line" stroke-width="2"/>`;
+    svg+=`<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+    const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
+    const connections=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.4"/>`});
+    nodes.forEach((n,i)=>{const r=(i===0||i===7)?4:3; svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot"/>`});
+    svg+='</svg>'; return svg;
+  }
+  
+  function generateDiamondNetwork(){
+    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+    const diamondPath='M100,40 L140,100 L100,160 L60,100 Z';
+    svg+=`<path d="${diamondPath}" fill="none" class="burst-line" stroke-width="2"/>`;
+    svg+=`<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity="0.5"/>`;
+    svg+=`<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity="0.5"/>`;
+    svg+=`<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity="0.3"/>`;
+    svg+=`<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity="0.3"/>`;
+    const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
+    for(let i=0;i<4;i++){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity="0.3"/>`}
+    nodes.forEach((n,i)=>{const r=i<4?4:(i===4?5:2.5); svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot" opacity="${i===4?1:.8}"/>`});
+    for(let i=0;i<4;i++){const ang=(i*Math.PI)/2; const x=100+30*Math.cos(ang); const y=100+30*Math.sin(ang); svg+=`<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity="0.6"/>`}
+    svg+='</svg>'; return svg;
+  }
+
+  // ===== Research Interests Toggle =====
+  function toggleRI(header) {
+    header.classList.toggle('active');
+    const content = header.nextElementSibling;
+    content.classList.toggle('show');
+  }
+
+  // ===== Mentoring Program Toggle =====
+  function toggleMentoring(header, year) {
+    header.classList.toggle('expanded');
+    document.getElementById(`mentoring-${year}`).classList.toggle('show');
+  }
+
+  // ===== Mentee Modal System =====
+  const MENTEES = {{ site.data.mentees | jsonify }};
+
+  function openMenteeModal(menteeId) {
+    const mentee = MENTEES[menteeId];
+    if (!mentee) return;
+
+    document.getElementById('menteeModalName').textContent = mentee.name;
+    
+    const modalBody = document.getElementById('menteeModalBody');
+    modalBody.innerHTML = `
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">🏫</span>
+        <span class="mentee-info-label">University</span>
+        <span class="mentee-info-value">${mentee.university}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">📚</span>
+        <span class="mentee-info-label">Department</span>
+        <span class="mentee-info-value">${mentee.department}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">📅</span>
+        <span class="mentee-info-label">Entry Year</span>
+        <span class="mentee-info-value">${mentee.entryYear}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">📧</span>
+        <span class="mentee-info-label">Email</span>
+        <span class="mentee-info-value">${mentee.email}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">🔬</span>
+        <span class="mentee-info-label">Specialization</span>
+        <span class="mentee-info-value">${mentee.specialization}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">🎓</span>
+        <span class="mentee-info-label">Current Status</span>
+        <span class="mentee-info-value">${mentee.currentStatus}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">🎗</span>
+        <span class="mentee-info-label">Participation Years</span>
+        <div class="participation-years">
+          ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
+        </div>
+      </div>
+    `;
+
+    document.getElementById('menteeModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenteeModal(event) {
+    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
+      return;
+    }
+    document.getElementById('menteeModal').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // ===== Clean and Elegant Collaboration Network =====
+  
+  // Load publications data from Jekyll
+  const PUBS = {{ site.data.pubs | jsonify }};
+  const DIRECTOR_ID = 1;
+
+  // Count collaborations
+  function countCollaborations() {
+    const counts = {};
+    PUBS.forEach(pub => {
+      if (!Array.isArray(pub.authors)) return;
+      if (!pub.authors.includes(DIRECTOR_ID)) return;
+      pub.authors.forEach(aid => {
+        if (aid !== DIRECTOR_ID) {
+          counts[aid] = (counts[aid] || 0) + 1;
+        }
+      });
+    });
+    return counts;
+  }
+
+  // Initialize variables
+  let currentThreshold = 1;
+  let collaborations = countCollaborations();
+  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
+  let hoveredNode = null;
+  let networkInitialized = false;
+
+  // UI Elements
+  const slider = document.getElementById('networkSlider');
+  const maxLabel = document.getElementById('maxSliderLabel');
+  const sliderValue = document.getElementById('sliderValue');
+  const infoEl = document.getElementById('networkInfo');
+
+  // Setup slider
+  if (slider) {
+    slider.max = maxCollaborations;
+    maxLabel.textContent = maxCollaborations + '+';
+    slider.value = Math.min(1, maxCollaborations);
+    currentThreshold = parseInt(slider.value);
+
+    slider.addEventListener('input', function() {
+      currentThreshold = parseInt(this.value);
+      sliderValue.textContent = currentThreshold + '+';
+      updateNetworkInfo();
+      if (networkInitialized) {
+        buildNetwork();
+        drawNetwork();
+      }
+    });
+  }
+
+  function updateNetworkInfo() {
+    const visible = Object.entries(collaborations)
+      .filter(([id, freq]) => freq >= currentThreshold).length;
+    const total = Object.keys(collaborations).length;
+    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${currentThreshold}+</b> papers`;
+  }
+
+  // Canvas setup
+  const canvas = document.getElementById('networkCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
+
+    // Size canvas
+    function sizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 500 * window.devicePixelRatio;
+      canvas.style.height = '500px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+
+    // Build network structure
+    function buildNetwork() {
+      nodes = [];
+      const centerX = canvas.width / (2 * window.devicePixelRatio);
+      const centerY = canvas.height / (2 * window.devicePixelRatio);
+
+      // Director at center
+      nodes.push({
+        id: DIRECTOR_ID,
+        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+        x: centerX,
+        y: centerY,
+        radius: 35,
+        isCenter: true,
+        frequency: 999
+      });
+
+      // Get collaborators sorted by frequency and filtered by threshold
+      const coAuthors = Object.entries(collaborations)
+        .filter(([id, freq]) => freq >= currentThreshold)
+        .sort((a, b) => b[1] - a[1]);
+
+      // Arrange in concentric circles based on frequency
+      const rings = [];
+      const ringSizes = [8, 12, 16]; // max nodes per ring
+      let ringIndex = 0;
+      let nodesInRing = [];
+
+      coAuthors.forEach(([id, freq]) => {
+        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
+          rings.push(nodesInRing);
+          nodesInRing = [];
+          ringIndex++;
+        }
+        nodesInRing.push({ id: parseInt(id), freq });
+      });
+      if (nodesInRing.length > 0) rings.push(nodesInRing);
+
+      // Place nodes in rings
+      rings.forEach((ring, rIdx) => {
+        const radius = 120 + rIdx * 80;
+        ring.forEach((item, nIdx) => {
+          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+          const freq = item.freq;
+          
+          nodes.push({
+            id: item.id,
+            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+            x: centerX + Math.cos(angle) * radius,
+            y: centerY + Math.sin(angle) * radius,
+            radius: 10 + (freq / maxCollaborations) * 15,
+            frequency: freq,
+            ring: rIdx
+          });
+        });
+      });
+    }
+
+    // Draw the network
+    function drawNetwork() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Background
+      const centerX = canvas.width / (2 * window.devicePixelRatio);
+      const centerY = canvas.height / (2 * window.devicePixelRatio);
+      
+      // Subtle radial gradient
+      const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
+      bgGrad.addColorStop(0, '#fefefe');
+      bgGrad.addColorStop(1, '#f9fafb');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw subtle grid dots for background
+      ctx.fillStyle = '#e5e7eb';
+      for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
+        for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
+          ctx.beginPath();
+          ctx.arc(x, y, 1, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      
+      // Draw connections
+      nodes.slice(1).forEach(node => {
+        const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
+        const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
+        grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
+        grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
+        grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
+        
+        ctx.beginPath();
+        ctx.moveTo(nodes[0].x, nodes[0].y);
+        ctx.lineTo(node.x, node.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
+        ctx.stroke();
+      });
+      
+      // Draw nodes
+      nodes.forEach(node => {
+        const isHovered = hoveredNode === node;
+        const scale = isHovered ? 1.1 : 1;
+        
+        // Shadow
+        ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
+        ctx.shadowBlur = isHovered ? 15 : 8;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 2;
+        
+        // Node circle
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
+        
+        if (node.isCenter) {
+          // Director node - red gradient
+          const grad = ctx.createRadialGradient(
+            node.x - node.radius * 0.3, 
+            node.y - node.radius * 0.3, 
+            0,
+            node.x, node.y, node.radius
+          );
+          grad.addColorStop(0, '#ef4444');
+          grad.addColorStop(1, '#b91c1c');
+          ctx.fillStyle = grad;
+        } else {
+          // Collaborator nodes - gold gradient based on frequency
+          const grad = ctx.createRadialGradient(
+            node.x - node.radius * 0.3, 
+            node.y - node.radius * 0.3, 
+            0,
+            node.x, node.y, node.radius
+          );
+          const ratio = node.frequency / maxCollaborations;
+          if (ratio > 0.66) {
+            grad.addColorStop(0, '#fbbf24');
+            grad.addColorStop(1, '#d97706');
+          } else if (ratio > 0.33) {
+            grad.addColorStop(0, '#fde047');
+            grad.addColorStop(1, '#facc15');
+          } else {
+            grad.addColorStop(0, '#fef3c7');
+            grad.addColorStop(1, '#fde68a');
+          }
+          ctx.fillStyle = grad;
+        }
+        ctx.fill();
+        
+        // Border
+        ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        
+        ctx.shadowColor = 'transparent';
+        
+        // Text labels
+        ctx.fillStyle = '#1f2937';
+        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // Name below node
+        ctx.fillText(node.name, node.x, node.y + node.radius + 14);
+        
+        // Paper count for collaborators
+        if (!node.isCenter) {
+          ctx.fillStyle = '#6b7280';
+          ctx.font = '9px Inter, sans-serif';
+          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + 26);
+        }
+      });
+      
+      // Hover tooltip
+      if (hoveredNode && !hoveredNode.isCenter) {
+        const tooltipWidth = 160;
+        const tooltipHeight = 45;
+        let tooltipX = hoveredNode.x - tooltipWidth / 2;
+        let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
+        
+        // Keep tooltip in bounds
+        tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
+        tooltipY = Math.max(10, tooltipY);
+        
+        // Tooltip background
+        ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
+        ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
+        ctx.fill();
+        ctx.stroke();
+        
+        // Tooltip text
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
+        
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = '10px Inter, sans-serif';
+        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`, 
+                     tooltipX + tooltipWidth / 2, tooltipY + 32);
+      }
+    }
+
+    // Mouse interaction
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      hoveredNode = null;
+      nodes.forEach(node => {
+        const dx = x - node.x;
+        const dy = y - node.y;
+        if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
+          hoveredNode = node;
+        }
+      });
+      
+      canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
+      drawNetwork();
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      hoveredNode = null;
+      drawNetwork();
+    });
+
+    // Initialize
+    sizeCanvas();
+    buildNetwork();
+    updateNetworkInfo();
+    drawNetwork();
+    networkInitialized = true;
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+      sizeCanvas();
+      buildNetwork();
+      drawNetwork();
+    });
+  }
+</script> 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
     svg+=`<path d="${heartPath}" fill="none" class="burst-line" stroke-width="2"/>`;
     const nodes=[{x:70,y:35},{x:130,y:35},{x:40,y:70},{x:160,y:70},{x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}];
     const connections=[[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
