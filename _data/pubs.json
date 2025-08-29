@@ -2531,7 +2531,7 @@
   },
   {
     "year": 2017,
-    "code_label": "T/D",
+    "code_label": "T",
     "indexing_group": "Domestic Conference",
     "type": "conference",
     "language": "Korean",
@@ -2547,7 +2547,7 @@
   },
  {
   "year": 2025,
-  "code_label": "T/D",
+  "code_label": "T",
   "indexing_group": "Thesis / Dissertation",
   "type": "dissertation",
   "language": "English",
@@ -2563,7 +2563,7 @@
 },
  {
   "year": 2021,
-  "code_label": "T/D",
+  "code_label": "T",
   "indexing_group": "Thesis / Dissertation",
   "type": "thesis",
   "language": "English",
@@ -2579,7 +2579,7 @@
 },
  {
   "year": 2018,
-  "code_label": "T/D",
+  "code_label": "T",
   "indexing_group": "Thesis / Dissertation",
   "type": "thesis",
   "language": "Korean",
