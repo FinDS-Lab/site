@@ -68,10 +68,15 @@ permalink: /projects.html
       align-items: flex-end;
       justify-content: flex-start;
       min-height: 200px;
+      /* ensure Korean/English break at word boundaries */
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
     .breadcrumbs-banner {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       font-size: 13px; font-weight: 600; margin-bottom: 8px;
+      word-break: keep-all; overflow-wrap: anywhere; hyphens: auto;
     }
     .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
     .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
@@ -85,6 +90,9 @@ permalink: /projects.html
       text-shadow: 0 2px 4px rgba(0,0,0,.12);
       letter-spacing: -.02em;
       margin: 0;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
 
     /* Responsive */
@@ -256,23 +264,20 @@ function generateDiamondNetwork() {
   .project-title-en{font-size:14px;font-weight:900;color:#111827;margin-top:8px}
   .project-title-ko{font-size:12px;color:#6b7280;margin-top:4px;word-break:keep-all}
 
-  /* 메타 정보 — Principal Investigator 필드 너비 증가 */
+  /* 메타 정보 — PI 길이에 따른 값 열 너비 고정(카드별 동일) */
   .meta-info{
     display:grid;
-    grid-template-columns:minmax(140px, 200px) 1fr;
+    /* 1열: 라벨은 내용에 맞춤, 2열: PI 값의 길이에 맞춰 카드 내 전체 행 공통 너비 */
+    grid-template-columns:max-content minmax(0, var(--value-col-w, 420px));
     column-gap:12px;
     row-gap:8px;
     margin-top:12px;
     padding-top:12px;
     border-top:1px solid #f3f4f6
   }
-  .meta-item{
-    display:contents;
-    font-size:10.5px;
-  }
-  .meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5}
-  .meta-value{color:#111827;font-size:10.5px;line-height:1.5}
-  .meta-value .ko{word-break:keep-all}
+  .meta-item{display:contents;font-size:10.5px}
+  .meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5;white-space:nowrap}
+  .meta-value{color:#111827;font-size:10.5px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
 
   /* Korean muted helper for secondary names */
   .ko-muted{color:#9ca3af}
@@ -291,8 +296,10 @@ function generateDiamondNetwork() {
     .search-container{flex-direction:column;align-items:stretch}
     .search{width:100%}
     .count{text-align:center;width:100%}
+
+    /* 모바일에서는 값 열을 유동으로(읽기성↑) */
     .meta-info{
-      grid-template-columns:minmax(120px, 160px) 1fr;
+      grid-template-columns:max-content 1fr;
       column-gap:10px;
       row-gap:8px;
     }
@@ -381,7 +388,7 @@ function generateDiamondNetwork() {
         researchers: ["최인수"]
       }
     },
-        {
+    {
       titleEn: "SK AI College — Educational Video Production Services",
       titleKo: "SK AI College - 교육 영상 제작에 관한 용역",
       period: "2021-07-24 – 2021-08-31",
@@ -551,9 +558,8 @@ function generateDiamondNetwork() {
     // Determine outer class based on status and funding type
     let outerClass;
     if (status === 'completed') {
-      outerClass = 'card--completed'; // White background for completed
+      outerClass = 'card--completed';
     } else {
-      // Ongoing projects: apply color based on funding type
       outerClass = (project.type === 'private' || project.type === 'contract') ? 'card--private-ongoing' : 'card--public-ongoing';
     }
     
@@ -598,7 +604,7 @@ function generateDiamondNetwork() {
             </div>
             <div class="meta-item">
               <span class="meta-label">Principal Investigator</span>
-              <span class="meta-value">${pi}</span>
+              <span class="meta-value meta-value--pi">${pi}</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Lead Researcher</span>
@@ -614,6 +620,29 @@ function generateDiamondNetwork() {
     </article>`;
   }
 
+  /* ===== Compute value column width from PI and apply (per card) ===== */
+  function applyValueColWidths(){
+    const cards = document.querySelectorAll('.card .meta-info');
+    cards.forEach(mi => {
+      const piEl = mi.querySelector('.meta-value--pi');
+      if(!piEl) return;
+      // Temporarily measure actual content width
+      const range = document.createRange();
+      range.selectNodeContents(piEl);
+      const rects = range.getBoundingClientRect ? range.getBoundingClientRect() : piEl.getBoundingClientRect();
+      let w = (rects && rects.width) ? rects.width : piEl.offsetWidth;
+
+      // Add small breathing space; clamp to avoid over-wide column
+      const PAD = 12;             // 여유 공백
+      const MIN = 140;            // 너무 좁지 않게
+      const MAX = 260;            // 너무 넓지 않게 (요청 반영)
+      const valueCol = Math.max(MIN, Math.min(MAX, Math.ceil(w + PAD)));
+
+      // Set CSS var on this meta-info
+      mi.style.setProperty('--value-col-w', valueCol + 'px');
+    });
+  }
+
   /* ===== Render ===== */
   function render(){
     const data = filterProjects();
@@ -623,6 +652,9 @@ function generateDiamondNetwork() {
       grid.innerHTML = data.map(createCard).join('');
     }
     count.textContent = `${data.length} of ${PROJECTS.length}`;
+
+    // After DOM update, apply widths based on PI content
+    applyValueColWidths();
   }
 
   /* ===== Init ===== */
@@ -630,6 +662,10 @@ function generateDiamondNetwork() {
     q = e.target.value;
     render();
   });
+
+  // Re-apply widths if fonts load or viewport changes can affect measurement
+  window.addEventListener('load', applyValueColWidths);
+  window.addEventListener('resize', applyValueColWidths);
 
   buildChips();
   render();
