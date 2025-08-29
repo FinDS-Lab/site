@@ -221,17 +221,16 @@ function generateDiamondNetwork() {
 .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
 /* Card */
-.card{border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;background:#fff}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:1rem;overflow:hidden;}
 .card-row{display:grid;grid-template-columns:56px 1fr}
 
-/* Left side indicator */
+/* Left side indicator - Updated to match publications style */
 .card-left{
   display:flex;
   align-items:center;
   justify-content:center;
   font-weight:900;
   font-size:13px;
-  color:#fff;
   user-select:none;
 }
 .card-left.lecturer{background:var(--lect-gold);color:#111}
@@ -248,7 +247,7 @@ function generateDiamondNetwork() {
 .badge-role-ta{background:var(--ta-red);color:#fff}
 
 /* Other badges */
-.badge-school{background:#f8fafc;border:1px solid #e5e7eb;color:#374151}
+.badge-school{background:#111827;color:#fff;border:1px solid #111827}
 .badge-period{background:#f8fafc;border:1px solid #e5e7eb;color:#374151}
 .badge-section{background:#e0f2fe;border:1px solid #7dd3fc;color:#0369a1;font-size:10px;padding:.2rem .5rem}
 
@@ -295,6 +294,10 @@ function generateDiamondNetwork() {
     <div>
       <label class="text-xs font-bold text-slate-600 block mb-1">University</label>
       <div class="chips" id="schoolChips"></div>
+    </div>
+    <div>
+      <label class="text-xs font-bold text-slate-600 block mb-1">Year</label>
+      <div class="chips" id="yearChips"></div>
     </div>
     <div>
       <label class="text-xs font-bold text-slate-600 block mb-1">Semester</label>
@@ -440,6 +443,10 @@ function generateDiamondNetwork() {
   const allPeriodsFlat = RAW.flatMap(r => r.periods);
   const ALL_SEMS = Array.from(new Set(allPeriodsFlat.map(p => p.replace(/-\d+$/, '')))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
   const onSems = new Set();
+  
+  // Extract unique years from all periods
+  const ALL_YEARS = Array.from(new Set(allPeriodsFlat.map(p => p.split(' ')[0]))).sort((a,b) => b-a);
+  const onYears = new Set();
 
   /* DOM */
   const grid = document.getElementById('grid');
@@ -448,6 +455,7 @@ function generateDiamondNetwork() {
   const roleChips = document.getElementById('roleChips');
   const schoolChips = document.getElementById('schoolChips');
   const semChips = document.getElementById('semChips');
+  const yearChips = document.getElementById('yearChips');
   const clearBtn = document.getElementById('clearFilters');
 
   /* Chips */
@@ -462,6 +470,11 @@ function generateDiamondNetwork() {
       return `<button class="chip ${active?'is-on':''}" data-school="${s}">${s}</button>`;
     }).join('');
 
+    yearChips.innerHTML = ALL_YEARS.map(y=>{
+      const active = onYears.has(y);
+      return `<button class="chip ${active?'is-on':''}" data-year="${y}">${y}</button>`;
+    }).join('');
+
     semChips.innerHTML = ALL_SEMS.map(s=>{
       const active = onSems.has(s);
       return `<button class="chip ${active?'is-on':''}" data-sem="${s}">${s}</button>`;
@@ -472,6 +485,9 @@ function generateDiamondNetwork() {
     });
     schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
       btn.onclick = ()=>{ const v=btn.dataset.school; onSchools.has(v)?onSchools.delete(v):onSchools.add(v); buildChips(); render(); };
+    });
+    yearChips.querySelectorAll('[data-year]').forEach(btn=>{
+      btn.onclick = ()=>{ const v=btn.dataset.year; onYears.has(v)?onYears.delete(v):onYears.add(v); buildChips(); render(); };
     });
     semChips.querySelectorAll('[data-sem]').forEach(btn=>{
       btn.onclick = ()=>{ const v=btn.dataset.sem; onSems.has(v)?onSems.delete(v):onSems.add(v); buildChips(); render(); };
@@ -487,12 +503,17 @@ function generateDiamondNetwork() {
   }
   function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
   function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
+  function passYears(i){
+    // Check if any of the periods match the selected years
+    const years = i.periods.map(p => p.split(' ')[0]);
+    return onYears.size ? years.some(y => onYears.has(y)) : true;
+  }
   function passSems(i){
     // Check if any of the periods match the selected semesters (ignoring section numbers)
     const sems = i.periods.map(p => p.replace(/-\d+$/, ''));
     return onSems.size ? sems.some(s => onSems.has(s)) : true;
   }
-  function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passSems).filter(matchesQuery).sort(byStartDesc); }
+  function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passYears).filter(passSems).filter(matchesQuery).sort(byStartDesc); }
 
   /* Card */
   function card(item){
@@ -540,6 +561,7 @@ function generateDiamondNetwork() {
   clearBtn.onclick = () => {
     onRoles.clear();
     onSchools.clear();
+    onYears.clear();
     onSems.clear();
     qInput.value = '';
     q = '';
