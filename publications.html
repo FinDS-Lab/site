@@ -1494,8 +1494,9 @@ permalink: /publications.html
     const authorNames = (pub.authors || []).map(id => getAuthorName(id, false));
     
     // If no authors, use "Anonymous"
-    const primaryAuthor = authorNames.length > 0 ? authorNames[0] : "Anonymous";
     const allAuthors = authorNames.length > 0 ? authorNames : ["Anonymous"];
+    const allAuthorsStr = allAuthors.join(", ");
+    const allAuthorsInitials = allAuthors.map(a => toInitials(a));
     
     let pubDetails = '';
     if (pub.volume) pubDetails += `, ${pub.volume}`;
@@ -1509,25 +1510,17 @@ permalink: /publications.html
     const isBook = pub.type === 'book';
     const details = isBook ? bookDetails : pubDetails;
     
-    // Generate citation formats with fallback values
+    // Generate citation formats with ALL authors (no et al.)
     const formats = {
-      MLA: authorNames.length > 1 ? 
-        `${primaryAuthor} et al. "${title}." ${venue}${details} (${year}).` :
-        `${primaryAuthor}. "${title}." ${venue}${details} (${year}).`,
+      MLA: `${allAuthorsStr}. "${title}." ${venue}${details} (${year}).`,
       
-      APA: authorNames.length > 1 ?
-        `${toInitials(primaryAuthor)} et al. (${year}). ${title}. ${venue}${details}.` :
-        `${toInitials(primaryAuthor)}. (${year}). ${title}. ${venue}${details}.`,
+      APA: `${allAuthorsInitials.join(", ")}. (${year}). ${title}. ${venue}${details}.`,
       
-      Chicago: authorNames.length > 1 ?
-        `${primaryAuthor} et al. ${year}. "${title}." ${venue}${details}.` :
-        `${primaryAuthor}. ${year}. "${title}." ${venue}${details}.`,
+      Chicago: `${allAuthorsStr}. ${year}. "${title}." ${venue}${details}.`,
       
-      Harvard: authorNames.length > 1 ?
-        `${toInitials(primaryAuthor)} et al. (${year}) ${title}. ${venue}${details}.` :
-        `${toInitials(primaryAuthor)} (${year}) ${title}. ${venue}${details}.`,
+      Harvard: `${allAuthorsInitials.join(", ")} (${year}) ${title}. ${venue}${details}.`,
       
-      Vancouver: `${allAuthors.map(a => toInitials(a)).join(', ')}. ${title}. ${venue}. ${year}${details}.`
+      Vancouver: `${allAuthorsInitials.join(", ")}. ${title}. ${venue}. ${year}${details}.`
     };
 
     citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
@@ -1583,4 +1576,8 @@ permalink: /publications.html
     buildChips();
     render();
   };
+  
+  // Make openCite and copyText globally accessible
+  window.openCite = openCite;
+  window.copyText = copyText;
 </script>
