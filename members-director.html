@@ -684,12 +684,12 @@ permalink: /members-director.html
   
   .timeline.edu .logo{
     position:absolute;
-    left:7px;
-    top:0;
-    width:44px;
-    height:44px;
+    left:14px;
+    top:14px;
+    width:30px;
+    height:30px;
     object-fit:contain;
-    border-radius:8px;
+    border-radius:6px;
     background:#fff;
     box-shadow:0 0 0 1px #e5e7eb;
     transform:translateX(-50%);
@@ -698,6 +698,27 @@ permalink: /members-director.html
   
   .timeline.edu > li::before{
     display:none; /* Hide the default timeline dot for education items */
+  }
+
+  /* Timeline with Logo - For Employment */
+  .timeline.emp > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
+  
+  .timeline.emp .logo{
+    position:absolute;
+    left:14px;
+    top:14px;
+    width:30px;
+    height:30px;
+    object-fit:contain;
+    border-radius:6px;
+    background:#fff;
+    box-shadow:0 0 0 1px #e5e7eb;
+    transform:translateX(-50%);
+    z-index:2;
+  }
+  
+  .timeline.emp > li::before{
+    display:none; /* Hide the default timeline dot for employment items */
   }
 
   /* Honors */
@@ -1099,120 +1120,114 @@ permalink: /members-director.html
             <li>
               <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
                    onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2025.02.</div>
-                <div class="title">Ph.D. in Engineering</div>
-                <div class="desc">Industrial and Systems Engineering, KAIST</div>
-                <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
-                
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisor</span>
-                  </div>
-                  <div class="advisor-info">
-                    <span class="advisor-label">Prof.</span>
-                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                      Woo Chang Kim
-                    </a>
-                    <span class="advisor-affiliation">(KAIST)</span>
-                  </div>
+              <div class="year">2025.02.</div>
+              <div class="title">Ph.D. in Engineering</div>
+              <div class="desc">Industrial and Systems Engineering, KAIST</div>
+              <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
+              
+              <div class="advisor-section">
+                <div class="advisor-title">
+                  <span>👨‍🏫</span>
+                  <span>Advisor</span>
                 </div>
-                
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
-                  </ul>
+                <div class="advisor-info">
+                  <span class="advisor-label">Prof.</span>
+                  <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                    Woo Chang Kim
+                  </a>
+                  <span class="advisor-affiliation">(KAIST)</span>
                 </div>
+              </div>
+              
+              <div class="honors-section">
+                <div class="honors-title">
+                  <span>🏆</span>
+                  <span>Honors</span>
+                </div>
+                <ul class="honors-list">
+                  <li><b>Best Doctoral Dissertation Award</b>, KORMS</li>
+                </ul>
               </div>
             </li>
             
             <li>
               <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
                    onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2021.02.</div>
-                <div class="title">Master of Science</div>
-                <div class="desc">Industrial and Systems Engineering, KAIST</div>
-                <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
-                
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisor</span>
-                  </div>
-                  <div class="advisor-info">
-                    <span class="advisor-label">Prof.</span>
-                    <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                      Woo Chang Kim
-                    </a>
-                    <span class="advisor-affiliation">(KAIST)</span>
-                  </div>
+              <div class="year">2021.02.</div>
+              <div class="title">Master of Science</div>
+              <div class="desc">Industrial and Systems Engineering, KAIST</div>
+              <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
+              
+              <div class="advisor-section">
+                <div class="advisor-title">
+                  <span>👨‍🏫</span>
+                  <span>Advisor</span>
                 </div>
-                
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Best Master Thesis Award</b>, KIIE</li>
-                  </ul>
+                <div class="advisor-info">
+                  <span class="advisor-label">Prof.</span>
+                  <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                    Woo Chang Kim
+                  </a>
+                  <span class="advisor-affiliation">(KAIST)</span>
                 </div>
+              </div>
+              
+              <div class="honors-section">
+                <div class="honors-title">
+                  <span>🏆</span>
+                  <span>Honors</span>
+                </div>
+                <ul class="honors-list">
+                  <li><b>Best Master Thesis Award</b>, KIIE</li>
+                </ul>
               </div>
             </li>
             
             <li>
               <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
                    onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div>
-                <div class="year">2018.02.</div>
-                <div class="title">Bachelor of Engineering</div>
-                <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
-                <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
-                
-                <div class="advisor-section">
-                  <div class="advisor-title">
-                    <span>👨‍🏫</span>
-                    <span>Advisors</span>
-                  </div>
-                  <div class="multiple-advisors">
-                    <div class="advisor-item">
-                      <span class="advisor-role">Academic Advisor</span>
-                      <div class="advisor-info">
-                        <span class="advisor-label">Prof.</span>
-                        <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" class="advisor-name">
-                          Jang Ho Kim
-                        </a>
-                        <span class="advisor-affiliation">(Korea University)</span>
-                      </div>
+              <div class="year">2018.02.</div>
+              <div class="title">Bachelor of Engineering</div>
+              <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
+              <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
+              
+              <div class="advisor-section">
+                <div class="advisor-title">
+                  <span>👨‍🏫</span>
+                  <span>Advisors</span>
+                </div>
+                <div class="multiple-advisors">
+                  <div class="advisor-item">
+                    <span class="advisor-role">Academic Advisor</span>
+                    <div class="advisor-info">
+                      <span class="advisor-label">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" class="advisor-name">
+                        Jang Ho Kim
+                      </a>
+                      <span class="advisor-affiliation">(Korea University)</span>
                     </div>
-                    <div class="advisor-item">
-                      <span class="advisor-role">Thesis Supervisor</span>
-                      <div class="advisor-info">
-                        <span class="advisor-label">Prof.</span>
-                        <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" class="advisor-name">
-                          Myeong-Ju Park
-                        </a>
-                        <span class="advisor-affiliation">(Seoul National University)</span>
-                      </div>
+                  </div>
+                  <div class="advisor-item">
+                    <span class="advisor-role">Thesis Supervisor</span>
+                    <div class="advisor-info">
+                      <span class="advisor-label">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" class="advisor-name">
+                        Myeong-Ju Park
+                      </a>
+                      <span class="advisor-affiliation">(Seoul National University)</span>
                     </div>
                   </div>
                 </div>
-                
-                <div class="honors-section">
-                  <div class="honors-title">
-                    <span>🏆</span>
-                    <span>Honors</span>
-                  </div>
-                  <ul class="honors-list">
-                    <li><b>Valedictorian</b>, 1st out of 86 students</li>
-                  </ul>
+              </div>
+              
+              <div class="honors-section">
+                <div class="honors-title">
+                  <span>🏆</span>
+                  <span>Honors</span>
                 </div>
+                <ul class="honors-list">
+                  <li><b>Valedictorian</b>, 1st out of 86 students</li>
+                </ul>
               </div>
             </li>
           </ul>
@@ -1223,32 +1238,42 @@ permalink: /members-director.html
       <div class="director-card">
         <div class="card-head">Employment</div>
         <div class="card-body">
-          <ul class="timeline">
+          <ul class="timeline emp">
             <li>
+              <img src="{{ '/assets/img/logos/dwu.png' | relative_url }}" alt="DWU" class="logo" 
+                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
               <div class="year">2025.09. – Present</div>
               <div class="title">Assistant Professor</div>
               <div class="desc">Department of Business Administration, Dongduk Women's University</div>
               <div class="desc-ko">조교수 / 동덕여자대학교 경영학과</div>
             </li>
             <li>
+              <img src="{{ '/assets/img/logos/kangnam.png' | relative_url }}" alt="Gangnam" class="logo" 
+                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
               <div class="year">2025.03. – 2025.08.</div>
               <div class="title">Lecturer</div>
               <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
               <div class="desc-ko">강사 / 강남대학교 전자반도체공학부</div>
             </li>
             <li>
+              <img src="{{ '/assets/img/logos/korea.png' | relative_url }}" alt="Korea University" class="logo" 
+                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
               <div class="year">2025.03. – 2025.08.</div>
               <div class="title">Lecturer</div>
               <div class="desc">Digital Business Major, Korea University</div>
               <div class="desc-ko">강사 / 고려대학교 디지털비즈니스전공</div>
             </li>
             <li>
+              <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
+                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
               <div class="year">2024.03. – 2024.08.</div>
               <div class="title">Lecturer</div>
               <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
               <div class="desc-ko">강사 / 경희대학교 산업경영공학과</div>
             </li>
             <li>
+              <img src="{{ '/assets/img/logos/ey.png' | relative_url }}" alt="EY" class="logo" 
+                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
               <div class="year">2020.03. – 2020.05.</div>
               <div class="title">Intern</div>
               <div class="desc">Performance Improvement Department, EY Hanyoung</div>
