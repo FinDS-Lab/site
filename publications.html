@@ -16,6 +16,12 @@ permalink: /publications.html
       --gold-dark: rgb(194, 157, 57);
     }
 
+    /* ===== Global word-wrapping (KO/EN word-based breaks) ===== */
+    html, body, *, *::before, *::after {
+      word-break: keep-all;        /* CJK도 단어 단위로 끊기 */
+      overflow-wrap: break-word;   /* 너무 긴 단어는 단어 경계에 가깝게 줄바꿈 */
+    }
+
     /* Banner */
     .banner-section {
       background: linear-gradient(
@@ -343,7 +349,7 @@ permalink: /publications.html
     flex-direction: column;
     gap: 2px;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   .authorship-en {
@@ -432,6 +438,7 @@ permalink: /publications.html
     transition: all .2s;
     white-space: nowrap;
     word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .chip:hover {
@@ -545,7 +552,7 @@ permalink: /publications.html
   .indexing-badge {
     flex-shrink: 0;
     word-break: keep-all;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   .badge-lang {
@@ -572,7 +579,7 @@ permalink: /publications.html
     border-radius: 999px;
     background: #f8fafc;
     border: 1px solid #e5e7eb;
-    color: #111827;  /* Black for "Published on" text */
+    color: #111827;
     font-weight: 700;
     white-space: nowrap;
     width: fit-content;
@@ -586,13 +593,12 @@ permalink: /publications.html
   }
   
   /* Date color based on publication type */
-  .badge-pub.pub-conference .date-only {
-    color: rgb(172, 14, 14);
-  }
-  
-  .badge-pub.pub-journal .date-only {
-    color: rgb(214, 177, 77);
-  }
+  .badge-pub.pub-conference .date-only { color: rgb(172, 14, 14); }
+  .badge-pub.pub-journal .date-only    { color: rgb(214, 177, 77); }
+  .badge-pub.pub-book .date-only       { color: rgb(220, 38, 38); }   /* book-pink */
+  .badge-pub.pub-report .date-only     { color: rgb(251, 113, 133); } /* report-pink */
+  .badge-pub.pub-thesis .date-only     { color: rgb(17, 24, 39); }    /* thesis-black */
+  .badge-pub.pub-preprint .date-only   { color: #6b7280; }            /* gray */
 
   /* Awards styles */
   .awards-container {
@@ -630,8 +636,10 @@ permalink: /publications.html
     right: 0;
     font-size: 11px;
     font-weight: 600;
-    white-space: normal;
+    white-space: normal;           /* 여러 줄 허용 */
     line-height: 1.3;
+    word-break: keep-all;          /* 단어 단위 줄바꿈 */
+    overflow-wrap: break-word;     /* 너무 긴 단어만 적절히 */
   }
 
   .award-tooltip:hover .tooltiptext { visibility: visible; }
@@ -653,7 +661,6 @@ permalink: /publications.html
     color: #111827;
     margin-bottom: 8px;
     word-break: keep-all;
-    word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.4;
   }
@@ -663,7 +670,6 @@ permalink: /publications.html
     color: #374151;
     font-size: 13px;
     word-break: keep-all;
-    word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.4;
   }
@@ -673,7 +679,6 @@ permalink: /publications.html
     color: #6b7280;
     font-size: 12px;
     word-break: keep-all;
-    word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.4;
   }
@@ -708,6 +713,7 @@ permalink: /publications.html
     color: #2563eb;
     text-decoration: none;
     transition: all 0.2s;
+    word-break: break-all; /* DOI/URL은 예외적으로 임의분리 허용 */
   }
 
   .paper-detail-item.doi .value:hover {
@@ -727,6 +733,7 @@ permalink: /publications.html
     font-size: 11px;
     white-space: nowrap;
     word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   .idx-scie, .idx-ssci, .idx-ahci { background: rgba(214,177,77,.95); color: #111; }
@@ -1029,41 +1036,17 @@ permalink: /publications.html
   /* ===== Title Case Function ===== */
   function toTitleCase(str) {
     if (!str) return str;
-    
-    // Don't apply title case if the string appears to already be properly formatted
-    // (has mix of upper and lower case in a reasonable pattern)
     const hasLowerCase = /[a-z]/.test(str);
     const hasUpperCase = /[A-Z]/.test(str);
-    
-    // If it's all caps or all lowercase, apply title case
     const needsTitleCase = !hasLowerCase || !hasUpperCase;
-    
-    if (!needsTitleCase) {
-      // Already has mixed case, just return as-is
-      return str;
-    }
-    
-    // Only apply title case to all-caps or all-lowercase strings
+    if (!needsTitleCase) return str;
     const lowercaseWords = ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','or','the','to','via','with'];
     const words = str.split(' ');
-    
     return words.map((word, index) => {
-      // Preserve acronyms and numbers
-      if (/^[A-Z0-9]+$/.test(word) && word.length > 1) {
-        return word;
-      }
-      
-      // First and last word always capitalized
-      if (index === 0 || index === words.length - 1) {
+      if (/^[A-Z0-9]+$/.test(word) && word.length > 1) return word;
+      if (index === 0 || index === words.length - 1)
         return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      }
-      
-      // Lowercase articles, prepositions, conjunctions
-      if (lowercaseWords.includes(word.toLowerCase())) {
-        return word.toLowerCase();
-      }
-      
-      // Normal capitalization
+      if (lowercaseWords.includes(word.toLowerCase())) return word.toLowerCase();
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
     }).join(' ');
   }
@@ -1075,40 +1058,33 @@ permalink: /publications.html
   function autoNumberCodeLabels(pubs) {
     // First, sort all publications by published_date (oldest first)
     const sorted = [...pubs].sort((a, b) => {
-      // If both have published_date, sort by date
       if (a.published_date && b.published_date) {
         return new Date(a.published_date) - new Date(b.published_date);
       }
-      // If only one has date, prioritize the one with date
       if (a.published_date && !b.published_date) return -1;
       if (!a.published_date && b.published_date) return 1;
-      // If neither has date, sort by year
       return a.year - b.year;
     });
 
-    // Count each type from oldest to newest
-    const counts = { J: 0, K: 0, C: 0, B: 0, R: 0 };
+    // Count each type from oldest to newest (J,K,C,B,R,T 추가)
+    const counts = { J: 0, K: 0, C: 0, B: 0, R: 0, T: 0 };
     
-    // Process from oldest to newest
     for (let i = 0; i < sorted.length; i++) {
       const pub = sorted[i];
       const prefix = pub.code_label ? pub.code_label.replace(/[0-9]/g, '') : '';
-      
       if (prefix && counts[prefix] !== undefined) {
         counts[prefix]++;
         sorted[i].code_label = `${prefix}${counts[prefix]}`;
       }
     }
     
-    // Now sort by year descending for display (but keep the assigned numbers)
+    // Display: year desc, date desc, then code number desc
     return sorted.sort((a, b) => {
       if (b.year !== a.year) return b.year - a.year;
-      // Within same year, sort by published_date descending (newest first)
       if (a.published_date && b.published_date) {
         const dateComp = new Date(b.published_date) - new Date(a.published_date);
         if (dateComp !== 0) return dateComp;
       }
-      // If dates are the same or one is missing, sort by code_label number (descending)
       const getNum = (label) => {
         const match = (label || '').match(/\d+/);
         return match ? parseInt(match[0]) : 0;
@@ -1167,33 +1143,24 @@ permalink: /publications.html
   }
 
   function determineLanguageMode(pub) {
-    // International conferences and international journals -> English
     if (pub.indexing_group === "International Conference" || 
         pub.indexing_group === "International - Domestic Joint Conference") {
       return 'english';
     }
-    
-    // International journals (SCIE, SSCI, ESCI, A&HCI, Scopus, Other International) -> English
     if (pub.type === "journal" && 
         !pub.indexing_group.includes("KCI") && 
         !pub.indexing_group.includes("Domestic")) {
       return 'english';
     }
-    
-    // Domestic conferences and KCI journals -> Korean
     if (pub.indexing_group === "Domestic Conference" || 
         pub.indexing_group.includes("KCI")) {
       return 'korean';
     }
-    
-    // Book, Report, Preprint, Working Paper -> follow language field
     if (pub.type === "book" || pub.type === "report" || 
         pub.indexing_group === "Preprint" || 
         pub.indexing_group === "Working Paper") {
       return (pub.language === 'Korean') ? 'korean' : 'english';
     }
-    
-    // Default
     return (pub.language === 'Korean') ? 'korean' : 'english';
   }
 
@@ -1208,7 +1175,7 @@ permalink: /publications.html
     return d.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
   }
 
-  // UPDATED: returns either "Published on ..." or "Presented on ..." based on provided label text
+  // returns either "Published on ..." or "Presented on ..." with date span
   function formatPubDateWithLabel(iso, labelText) {
     if (!iso) return "";
     const d = new Date(iso + "T00:00:00");
@@ -1324,11 +1291,9 @@ permalink: /publications.html
       leftClass = pub.type;
     }
 
-    // Determine language mode based on publication type
     const langMode = determineLanguageMode(pub);
     const useKorean = (langMode === 'korean');
 
-    // Use titles and venues as-is without Title Case conversion
     const lang = pub.language || 'English';
     const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : pub.title;
     const displayVenue = (useKorean && pub.venue_ko) ? pub.venue_ko : pub.venue;
@@ -1342,7 +1307,7 @@ permalink: /publications.html
 
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
     
-    // Determine publication type for date color
+    // Determine publication type class for date color
     let pubTypeClass = '';
     if (pub.type === 'conference' || pub.indexing_group === 'International Conference' || 
         pub.indexing_group === 'Domestic Conference' || 
@@ -1353,9 +1318,17 @@ permalink: /publications.html
                pub.indexing_group === 'ESCI' || pub.indexing_group === 'Scopus' ||
                pub.indexing_group.includes('KCI') || pub.indexing_group.includes('Other')) {
       pubTypeClass = 'pub-journal';
+    } else if (pub.type === 'book') {
+      pubTypeClass = 'pub-book';
+    } else if (pub.type === 'report') {
+      pubTypeClass = 'pub-report';
+    } else if (pub.type === 'thesis') {
+      pubTypeClass = 'pub-thesis';
+    } else if (pub.indexing_group === 'Preprint') {
+      pubTypeClass = 'pub-preprint';
     }
     
-    // NEW: Compute date label by code_label prefix
+    // Date label by code prefix
     const codePrefix = (pub.code_label || '').replace(/[0-9]/g, '');
     const dateLabelText = (codePrefix === 'C') ? 'Presented on' : 'Published on';
 
@@ -1364,12 +1337,11 @@ permalink: /publications.html
         <span class="val">${formatPubDateWithLabel(pub.published_date, dateLabelText)}</span>
       </span>` : ``;
 
-    // Awards - create trophy icons based on awards count
+    // Awards trophies with tooltip (word-based wrapping applied via CSS)
     let awardsHtml = '';
     if (pub.awards && pub.awards > 0) {
       const awardDetails = pub.award_details || [];
       awardsHtml = '<div class="awards-container">';
-      
       for (let i = 0; i < pub.awards; i++) {
         const tooltip = awardDetails[i] || `Award ${i + 1}`;
         awardsHtml += `
@@ -1391,7 +1363,6 @@ permalink: /publications.html
     const detailsHtml = citationDetails.length > 0 ? 
       `<div class="paper-details">${citationDetails.join('')}</div>` : '';
 
-    // Store publication data with a unique key
     const pubKey = `pub_${key.replace('-', '_')}`;
     window[pubKey] = pub;
 
@@ -1433,18 +1404,13 @@ permalink: /publications.html
     if (filtered.length === 0) {
       pubWrap.innerHTML = `<div class="empty-state">No publications found. Try adjusting your search or filters.</div>`;
     } else {
-      // Check if any filter is active (excluding search)
       const hasActiveFilters = onFilters.type.size > 0 || 
                               onFilters.journal.size > 0 || 
                               onFilters.conference.size > 0;
-      
-      // Get current year for default expansion
-      const currentYear = new Date().getFullYear();
       const mostRecentYear = years[0];
       
       pubWrap.innerHTML = years.map(y => {
         const items = filtered.filter(p => p.year === y);
-        // If filters are active, expand all; otherwise only expand most recent year
         const shouldCollapse = hasActiveFilters ? false : (y !== mostRecentYear);
         
         return `
@@ -1486,14 +1452,11 @@ permalink: /publications.html
   }
 
   function openCite(pub) {
-    // Use fallback values for missing data
     const title = pub.title || "Untitled";
     const venue = pub.venue || "Unknown Venue";
     const year = pub.year || new Date().getFullYear();
     
     const authorNames = (pub.authors || []).map(id => getAuthorName(id, false));
-    
-    // If no authors, use "Anonymous"
     const allAuthors = authorNames.length > 0 ? authorNames : ["Anonymous"];
     const allAuthorsStr = allAuthors.join(", ");
     const allAuthorsInitials = allAuthors.map(a => toInitials(a));
@@ -1510,16 +1473,11 @@ permalink: /publications.html
     const isBook = pub.type === 'book';
     const details = isBook ? bookDetails : pubDetails;
     
-    // Generate citation formats with ALL authors (no et al.)
     const formats = {
       MLA: `${allAuthorsStr}. "${title}." ${venue}${details} (${year}).`,
-      
       APA: `${allAuthorsInitials.join(", ")}. (${year}). ${title}. ${venue}${details}.`,
-      
       Chicago: `${allAuthorsStr}. ${year}. "${title}." ${venue}${details}.`,
-      
       Harvard: `${allAuthorsInitials.join(", ")} (${year}) ${title}. ${venue}${details}.`,
-      
       Vancouver: `${allAuthorsInitials.join(", ")}. ${title}. ${venue}. ${year}${details}.`
     };
 
@@ -1546,7 +1504,7 @@ permalink: /publications.html
     setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
 
-  /* ===== Events ===== */
+  /* ===== Init & Events ===== */
   document.getElementById('pubSearch').oninput = (e) => {
     q = e.target.value;
     render();
@@ -1562,11 +1520,9 @@ permalink: /publications.html
     }
   };
 
-  /* ===== Init ===== */
   buildChips();
   render();
   
-  // Clear all filters button
   document.getElementById('clearAllFilters').onclick = () => {
     onFilters.type.clear();
     onFilters.journal.clear();
@@ -1577,7 +1533,6 @@ permalink: /publications.html
     render();
   };
   
-  // Make openCite and copyText globally accessible
   window.openCite = openCite;
   window.copyText = copyText;
 </script>
