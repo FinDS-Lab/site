@@ -4,12 +4,6 @@ title: director
 permalink: /members-director.html
 ---
 
----
-layout: default
-title: director
-permalink: /members-director.html
----
-
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <style>
@@ -342,27 +336,31 @@ function generateDiamondNetwork() {
     box-shadow:0 4px 12px rgba(172,14,14,0.3);
   }
 
-  /* Publication Stats - Journal categories first row, Conference second row */
+  /* Publication Stats - Simple 3 column layout */
   .pub-stats{
     display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    grid-template-rows:auto auto auto;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:auto auto auto auto;
     gap:10px;
   }
   
-  /* First row: International Journals */
+  /* First row: SCIE, SSCI, A&HCI */
   .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-  .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
-  .pub-stat.journal-scopus { grid-column: 3; grid-row: 1; }
-  .pub-stat.journal-other { grid-column: 4; grid-row: 1; }
+  .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+  .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
   
-  /* Second row: Conferences + KCI */
-  .pub-stat.conf-intl { grid-column: 1; grid-row: 2; }
-  .pub-stat.journal-kci { grid-column: 2; grid-row: 2; }
-  .pub-stat.conf-domestic { grid-column: 3; grid-row: 2; }
+  /* Second row: ESCI, SCOPUS, OTHER INT'L */
+  .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+  .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+  .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
   
-  /* Third row: Citations (spans full width) */
-  .pub-stat.citation { grid-column: 1/-1; grid-row: 3; }
+  /* Third row: INT'L CONF, KCI, DOM CONF */
+  .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+  .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+  .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
+  
+  /* Fourth row: Citations (spans full width) */
+  .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
   
   .pub-stat{
     background:#f8fafc;
@@ -387,6 +385,8 @@ function generateDiamondNetwork() {
   
   /* International categories - Gold colors */
   .pub-stat.journal-scie::before{background:rgba(214,177,77,1)}
+  .pub-stat.journal-ssci::before{background:rgba(214,177,77,0.95)}
+  .pub-stat.journal-ahci::before{background:rgba(214,177,77,0.9)}
   .pub-stat.journal-esci::before{background:rgba(214,177,77,0.85)}
   .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.7)}
   .pub-stat.journal-other::before{background:rgba(214,177,77,0.55)}
@@ -426,26 +426,24 @@ function generateDiamondNetwork() {
     overflow-wrap:anywhere;
   }
   
-  /* Tablet */
+  /* Tablet - same 3 column layout */
   @media (max-width: 768px) {
     .pub-stats{
       grid-template-columns:repeat(3, 1fr);
-      grid-template-rows:auto auto auto;
+      grid-template-rows:auto auto auto auto;
       gap:8px;
     }
     
-    /* First row: International Journals */
+    /* Same positioning as desktop */
     .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-    .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
-    .pub-stat.journal-scopus { grid-column: 3; grid-row: 1; }
-    
-    /* Second row: Other Int'l, Int'l Conf, KCI */
-    .pub-stat.journal-other { grid-column: 1; grid-row: 2; }
-    .pub-stat.conf-intl { grid-column: 2; grid-row: 2; }
-    .pub-stat.journal-kci { grid-column: 3; grid-row: 2; }
-    
-    /* Third row: Dom Conf + Citation (spans remaining) */
-    .pub-stat.conf-domestic { grid-column: 1; grid-row: 3; }
+    .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+    .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
+    .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+    .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+    .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
+    .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+    .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+    .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
     .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
     
     .pub-stat{
@@ -459,31 +457,25 @@ function generateDiamondNetwork() {
     }
   }
   
-  /* Mobile */
+  /* Mobile - same 3 column layout */
   @media (max-width: 480px) {
     .pub-stats{
-      grid-template-columns:repeat(2, 1fr);
-      grid-template-rows:auto auto auto auto auto;
+      grid-template-columns:repeat(3, 1fr);
+      grid-template-rows:auto auto auto auto;
       gap:6px;
     }
     
-    /* First row: Top International Journals */
+    /* Same positioning as desktop */
     .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-    .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
-    
-    /* Second row: Other International */
-    .pub-stat.journal-scopus { grid-column: 1; grid-row: 2; }
-    .pub-stat.journal-other { grid-column: 2; grid-row: 2; }
-    
-    /* Third row: Conferences */
+    .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+    .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
+    .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+    .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+    .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
     .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
     .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-    
-    /* Fourth row: Domestic */
-    .pub-stat.conf-domestic { grid-column: 1; grid-row: 4; }
-    
-    /* Fifth row: Citations (spans full width) */
-    .pub-stat.citation { grid-column: 1/-1; grid-row: 5; }
+    .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
+    .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
     
     .pub-stat{
       padding:8px;
@@ -497,7 +489,7 @@ function generateDiamondNetwork() {
     }
   }
 
-  /* Research Interests - Updated with cleaner structure */
+  /* Research Interests - Updated with better toggle design */
   .ri-item{
     border:1px solid #e5e7eb;
     border-radius:12px;
@@ -509,9 +501,13 @@ function generateDiamondNetwork() {
   .ri-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;cursor:pointer;user-select:none;transition:all .2s;}
   .ri-header:hover{background:#fef9f3;}
   .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
-  .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:8px;}
-  .ri-icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;background:var(--gold);color:#fff;border-radius:50%;font-size:11px;transition:transform .3s;}
-  .ri-header.active .ri-icon{transform:rotate(90deg);}
+  .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:12px;}
+  .ri-toggle{
+    width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+    color:var(--gold);font-size:14px;font-weight:900;transition:transform .3s ease;
+    border:2px solid var(--gold);border-radius:50%;background:rgba(214,177,77,0.1);
+  }
+  .ri-header.active .ri-toggle{transform:rotate(90deg);background:var(--gold);color:#fff;}
   .ri-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
   .ri-content.show{max-height:500px;transition:max-height .3s ease-in;}
   .ri-list{padding:16px;list-style:none;}
@@ -961,8 +957,8 @@ function generateDiamondNetwork() {
           <div class="ri-item">
             <div class="ri-header" onclick="toggleRI(this)">
               <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Financial Data Science
+                <span class="ri-toggle">▶</span>
+                <span>Financial Data Science</span>
               </div>
             </div>
             <div class="ri-content">
@@ -986,8 +982,8 @@ function generateDiamondNetwork() {
           <div class="ri-item">
             <div class="ri-header" onclick="toggleRI(this)">
               <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Business Analytics
+                <span class="ri-toggle">▶</span>
+                <span>Business Analytics</span>
               </div>
             </div>
             <div class="ri-content">
@@ -1011,8 +1007,8 @@ function generateDiamondNetwork() {
           <div class="ri-item">
             <div class="ri-header" onclick="toggleRI(this)">
               <div class="ri-title">
-                <span class="ri-icon">▶</span>
-                Data-Inspired Decision Making
+                <span class="ri-toggle">▶</span>
+                <span>Data-Inspired Decision Making</span>
               </div>
             </div>
             <div class="ri-content">
@@ -1256,7 +1252,15 @@ function generateDiamondNetwork() {
           <div class="pub-stats">
             <div class="pub-stat journal-scie">
               <div class="pub-stat-number">12</div>
-              <div class="pub-stat-label">SCIE & SSCI & A&HCI</div>
+              <div class="pub-stat-label">SCIE</div>
+            </div>
+            <div class="pub-stat journal-ssci">
+              <div class="pub-stat-number">8</div>
+              <div class="pub-stat-label">SSCI</div>
+            </div>
+            <div class="pub-stat journal-ahci">
+              <div class="pub-stat-number">3</div>
+              <div class="pub-stat-label">A&HCI</div>
             </div>
             <div class="pub-stat journal-esci">
               <div class="pub-stat-number">6</div>
