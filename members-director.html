@@ -1135,27 +1135,27 @@ function generateDiamondNetwork() {
         </div>
       </div>
 
-      <!-- Collaboration Network -->
-      <div class="director-card">
-        <div class="card-head">Collaboration Network</div>
-        <div class="card-body">
-          <div class="network-controls">
-            <span class="slider-label">Min. Papers:</span>
-            <div class="slider-container">
-              <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
-              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
-            </div>
-            <span class="slider-value" id="sliderValue">1+</span>
+    <!-- Collaboration Network -->
+    <div class="director-card">
+      <div class="card-head">Collaboration Network</div>
+      <div class="card-body">
+        <div class="network-controls">
+          <span class="slider-label">Min. Papers:</span>
+          <div class="slider-container">
+            <span style="font-size:12px;color:#9ca3af;">0</span>
+            <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
+            <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
           </div>
-          
-          <canvas id="networkCanvas"></canvas>
-          
-          <div id="networkInfo">
-            Loading collaboration data...
-          </div>
+          <span class="slider-value" id="sliderValue">1+</span>
+        </div>
+    
+        <canvas id="networkCanvas"></canvas>
+    
+        <div id="networkInfo">
+          Loading collaboration data...
         </div>
       </div>
+    </div>
 
       <!-- Mentoring Program -->
       <div class="director-card">
@@ -1377,13 +1377,25 @@ function generateDiamondNetwork() {
     document.body.style.overflow = '';
   }
 
+<script>
   // ===== Clean and Elegant Collaboration Network =====
-  
+  // (AUTHORS는 {% include authors-data.html %}에서 주입된 전역 객체라고 가정)
+  // PUBS는 Jekyll data: site.data.pubs
+
   // Load publications data from Jekyll
   const PUBS = {{ site.data.pubs | jsonify }};
   const DIRECTOR_ID = 1;
 
-  // Count collaborations
+  // 안전한 이름 헬퍼 (영문/국문 동시 반환)
+  function getNames(id) {
+    const a = (typeof AUTHORS !== "undefined" && AUTHORS && AUTHORS[id]) ? AUTHORS[id] : null;
+    return {
+      en: (a && (a.en || a.name_en || a.name)) || `Author ${id}`,
+      ko: (a && (a.ko || a.name_ko || a.local || "")) || ""
+    };
+  }
+
+  // 공동연구 카운트
   function countCollaborations() {
     const counts = {};
     PUBS.forEach(pub => {
@@ -1398,28 +1410,29 @@ function generateDiamondNetwork() {
     return counts;
   }
 
-  // Initialize variables
+  // 상태
   let currentThreshold = 1;
   let collaborations = countCollaborations();
-  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
+  const totalCollabs = Object.keys(collaborations).length;
+  let maxCollaborations = Math.max(...Object.values(collaborations || {0:1}), 1);
   let hoveredNode = null;
   let networkInitialized = false;
 
-  // UI Elements
+  // UI 엘리먼트
   const slider = document.getElementById('networkSlider');
   const maxLabel = document.getElementById('maxSliderLabel');
   const sliderValue = document.getElementById('sliderValue');
   const infoEl = document.getElementById('networkInfo');
 
-  // Setup slider
+  // 슬라이더 셋업
   if (slider) {
     slider.max = maxCollaborations;
     maxLabel.textContent = maxCollaborations + '+';
     slider.value = Math.min(1, maxCollaborations);
-    currentThreshold = parseInt(slider.value);
+    currentThreshold = parseInt(slider.value, 10);
 
     slider.addEventListener('input', function() {
-      currentThreshold = parseInt(this.value);
+      currentThreshold = parseInt(this.value, 10);
       sliderValue.textContent = currentThreshold + '+';
       updateNetworkInfo();
       if (networkInitialized) {
@@ -1431,36 +1444,43 @@ function generateDiamondNetwork() {
 
   function updateNetworkInfo() {
     const visible = Object.entries(collaborations)
-      .filter(([id, freq]) => freq >= currentThreshold).length;
-    const total = Object.keys(collaborations).length;
-    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${currentThreshold}+</b> papers`;
+      .filter(([_, freq]) => freq >= currentThreshold).length;
+    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${totalCollabs}</b> collaborators with <b>${currentThreshold}+</b> papers`;
   }
 
-  // Canvas setup
+  // 캔버스
   const canvas = document.getElementById('networkCanvas');
   if (canvas) {
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     let nodes = [];
 
-    // Size canvas
+    // 캔버스 사이징 (스케일 누적 방지)
     function sizeCanvas() {
       const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 500 * window.devicePixelRatio;
+      const dpr = window.devicePixelRatio || 1;
       canvas.style.height = '500px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const heightCSS = 500;
+      canvas.width  = Math.floor(rect.width * dpr);
+      canvas.height = Math.floor(heightCSS * dpr);
+      // reset transform -> scale (누적 방지)
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
     }
 
-    // Build network structure
+    // 네트워크 구성
     function buildNetwork() {
       nodes = [];
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
+      const dpr = window.devicePixelRatio || 1;
+      const centerX = canvas.width  / (2 * dpr);
+      const centerY = canvas.height / (2 * dpr);
 
-      // Director at center
+      const centerNames = getNames(DIRECTOR_ID);
+
+      // 중앙 노드
       nodes.push({
         id: DIRECTOR_ID,
-        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+        nameEn: centerNames.en,
+        nameKo: centerNames.ko,
         x: centerX,
         y: centerY,
         radius: 35,
@@ -1468,16 +1488,15 @@ function generateDiamondNetwork() {
         frequency: 999
       });
 
-      // Get collaborators sorted by frequency and filtered by threshold
+      // 공저자 필터/정렬
       const coAuthors = Object.entries(collaborations)
-        .filter(([id, freq]) => freq >= currentThreshold)
+        .filter(([_, freq]) => freq >= currentThreshold)
         .sort((a, b) => b[1] - a[1]);
 
-      // Arrange in concentric circles based on frequency
+      // 동심원 배치
       const rings = [];
-      const ringSizes = [8, 12, 16]; // max nodes per ring
-      let ringIndex = 0;
-      let nodesInRing = [];
+      const ringSizes = [8, 12, 16]; // ring당 노드 수 제한
+      let ringIndex = 0, nodesInRing = [];
 
       coAuthors.forEach(([id, freq]) => {
         if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
@@ -1485,63 +1504,66 @@ function generateDiamondNetwork() {
           nodesInRing = [];
           ringIndex++;
         }
-        nodesInRing.push({ id: parseInt(id), freq });
+        nodesInRing.push({ id: parseInt(id, 10), freq });
       });
       if (nodesInRing.length > 0) rings.push(nodesInRing);
 
-      // Place nodes in rings
+      // 노드 위치/정보 생성
       rings.forEach((ring, rIdx) => {
         const radius = 120 + rIdx * 80;
         ring.forEach((item, nIdx) => {
           const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
           const freq = item.freq;
-          
+          const nm = getNames(item.id);
+
           nodes.push({
             id: item.id,
-            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+            nameEn: nm.en,
+            nameKo: nm.ko,
             x: centerX + Math.cos(angle) * radius,
             y: centerY + Math.sin(angle) * radius,
             radius: 10 + (freq / maxCollaborations) * 15,
             frequency: freq,
-            ring: rIdx
+            ring: rIdx,
+            isCenter: false
           });
         });
       });
     }
 
-    // Draw the network
+    // 렌더
     function drawNetwork() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Background
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-      
-      // Subtle radial gradient
+
+      const dpr = window.devicePixelRatio || 1;
+      const centerX = canvas.width  / (2 * dpr);
+      const centerY = canvas.height / (2 * dpr);
+
+      // 배경 그라데이션
       const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
       bgGrad.addColorStop(0, '#fefefe');
       bgGrad.addColorStop(1, '#f9fafb');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw subtle grid dots for background
+
+      // 배경 점
       ctx.fillStyle = '#e5e7eb';
-      for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
-        for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
+      for (let x = 20; x < canvas.width / dpr; x += 30) {
+        for (let y = 20; y < canvas.height / dpr; y += 30) {
           ctx.beginPath();
           ctx.arc(x, y, 1, 0, Math.PI * 2);
           ctx.fill();
         }
       }
-      
-      // Draw connections
+
+      // 연결선
       nodes.slice(1).forEach(node => {
         const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
         const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
         grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
         grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
         grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
-        
+
         ctx.beginPath();
         ctx.moveTo(nodes[0].x, nodes[0].y);
         ctx.lineTo(node.x, node.y);
@@ -1549,41 +1571,29 @@ function generateDiamondNetwork() {
         ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
         ctx.stroke();
       });
-      
-      // Draw nodes
+
+      // 노드
       nodes.forEach(node => {
         const isHovered = hoveredNode === node;
         const scale = isHovered ? 1.1 : 1;
-        
-        // Shadow
+
+        // 그림자
         ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
         ctx.shadowBlur = isHovered ? 15 : 8;
         ctx.shadowOffsetX = 0;
         ctx.shadowOffsetY = 2;
-        
-        // Node circle
+
+        // 노드 원
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
-        
+
         if (node.isCenter) {
-          // Director node - red gradient
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
+          const grad = ctx.createRadialGradient(node.x - node.radius * 0.3, node.y - node.radius * 0.3, 0, node.x, node.y, node.radius);
           grad.addColorStop(0, '#ef4444');
           grad.addColorStop(1, '#b91c1c');
           ctx.fillStyle = grad;
         } else {
-          // Collaborator nodes - gold gradient based on frequency
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3, 
-            node.y - node.radius * 0.3, 
-            0,
-            node.x, node.y, node.radius
-          );
+          const grad = ctx.createRadialGradient(node.x - node.radius * 0.3, node.y - node.radius * 0.3, 0, node.x, node.y, node.radius);
           const ratio = node.frequency / maxCollaborations;
           if (ratio > 0.66) {
             grad.addColorStop(0, '#fbbf24');
@@ -1598,79 +1608,100 @@ function generateDiamondNetwork() {
           ctx.fillStyle = grad;
         }
         ctx.fill();
-        
-        // Border
+
+        // 테두리
         ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
         ctx.lineWidth = 1.5;
         ctx.stroke();
-        
+
+        // 라벨 (영문/국문 2줄)
         ctx.shadowColor = 'transparent';
-        
-        // Text labels
-        ctx.fillStyle = '#1f2937';
-        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        
-        // Name below node
-        ctx.fillText(node.name, node.x, node.y + node.radius + 14);
-        
-        // Paper count for collaborators
-        if (!node.isCenter) {
+
+        // EN
+        ctx.fillStyle = '#1f2937';
+        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
+        ctx.fillText(node.nameEn, node.x, node.y + node.radius + 14);
+
+        // KO (있으면 표시)
+        if (node.nameKo) {
           ctx.fillStyle = '#6b7280';
+          ctx.font = '10px Inter, sans-serif';
+          ctx.fillText(node.nameKo, node.x, node.y + node.radius + 26);
+        }
+
+        // 공저 수
+        if (!node.isCenter) {
+          ctx.fillStyle = '#9ca3af';
           ctx.font = '9px Inter, sans-serif';
-          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + 26);
+          const yOffset = node.nameKo ? 38 : 26; // 국문 줄이 있으면 더 아래
+          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + yOffset);
         }
       });
-      
-      // Hover tooltip
+
+      // 툴팁 (영문/국문 2줄)
       if (hoveredNode && !hoveredNode.isCenter) {
-        const tooltipWidth = 160;
-        const tooltipHeight = 45;
+        const hasKo = !!hoveredNode.nameKo;
+        const tooltipHeight = hasKo ? 58 : 45;
+        const tooltipWidth = 200;
+
         let tooltipX = hoveredNode.x - tooltipWidth / 2;
         let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
-        
-        // Keep tooltip in bounds
-        tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
+
+        // 경계 보정
+        const dprW = canvas.width / (window.devicePixelRatio || 1);
+        tooltipX = Math.max(10, Math.min(tooltipX, dprW - tooltipWidth - 10));
         tooltipY = Math.max(10, tooltipY);
-        
-        // Tooltip background
+
+        // 배경
         ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
         ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
+        if (ctx.roundRect) {
+          ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
+        } else {
+          // roundRect 미지원 브라우저 대응
+          ctx.rect(tooltipX, tooltipY, tooltipWidth, tooltipHeight);
+        }
         ctx.fill();
         ctx.stroke();
-        
-        // Tooltip text
+
+        // 텍스트
+        ctx.textAlign = 'center';
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
-        
+        ctx.fillText(hoveredNode.nameEn, tooltipX + tooltipWidth / 2, tooltipY + 18);
+
+        if (hasKo) {
+          ctx.fillStyle = '#d1d5db';
+          ctx.font = '10px Inter, sans-serif';
+          ctx.fillText(hoveredNode.nameKo, tooltipX + tooltipWidth / 2, tooltipY + 32);
+        }
+
         ctx.fillStyle = '#fbbf24';
         ctx.font = '10px Inter, sans-serif';
-        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`, 
-                     tooltipX + tooltipWidth / 2, tooltipY + 32);
+        const yLine = hasKo ? (tooltipY + 46) : (tooltipY + 32);
+        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`, tooltipX + tooltipWidth / 2, yLine);
       }
     }
 
-    // Mouse interaction
+    // 상호작용
     canvas.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       hoveredNode = null;
-      nodes.forEach(node => {
+      for (const node of nodes) {
         const dx = x - node.x;
         const dy = y - node.y;
-        if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
+        if (Math.sqrt(dx*dx + dy*dy) < node.radius + 6) {
           hoveredNode = node;
+          break;
         }
-      });
-      
+      }
       canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
       drawNetwork();
     });
@@ -1680,14 +1711,14 @@ function generateDiamondNetwork() {
       drawNetwork();
     });
 
-    // Initialize
+    // 초기화
     sizeCanvas();
     buildNetwork();
     updateNetworkInfo();
     drawNetwork();
     networkInitialized = true;
-    
-    // Handle resize
+
+    // 리사이즈
     window.addEventListener('resize', () => {
       sizeCanvas();
       buildNetwork();
@@ -1695,8 +1726,8 @@ function generateDiamondNetwork() {
     });
   }
 </script>
-
   
+
 
 
 
