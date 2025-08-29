@@ -1395,6 +1395,10 @@ permalink: /publications.html
     const detailsHtml = citationDetails.length > 0 ? 
       `<div class="paper-details">${citationDetails.join('')}</div>` : '';
 
+    // Store publication data with a unique key
+    const pubKey = `pub_${key.replace('-', '_')}`;
+    window[pubKey] = pub;
+
     return `
       <li class="paper-card">
         <div class="paper-row">
@@ -1417,7 +1421,7 @@ permalink: /publications.html
             <div class="paper-venue">${displayVenue || ''}</div>
             ${detailsHtml}
             <div class="paper-foot">
-              <button class="btn" onclick='openCite(${JSON.stringify(pub)})'>Cite</button>
+              <button class="btn" onclick="openCite(window['${pubKey}'])">Cite</button>
             </div>
           </div>
         </div>
