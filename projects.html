@@ -110,7 +110,7 @@ permalink: /projects.html
           <span class="sep">›</span>
           <span aria-current="page">Projects</span>
         </nav>
-        <h1 class="banner-title">Research Projects</h1>
+        <h1 class="banner-title">Projects</h1>
       </div>
     </div>
   </div>
@@ -224,10 +224,16 @@ function generateDiamondNetwork() {
   .grid{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
 
   /* Card (outer tint = type color) */
-  .card{border-radius:1rem;overflow:hidden}
-  .card.card--public-ongoing{background:rgba(172, 14, 14, 0.15)}
-  .card.card--private-ongoing{background:rgba(214, 177, 77, 0.18)}
+  .card{border-radius:1rem;overflow:hidden;display:block}
+
+  /* Stronger & forced background for ongoing state */
+  .card.card--public-ongoing{background:rgba(172, 14, 14, 0.14) !important}
+  .card.card--private-ongoing{background:rgba(214, 177, 77, 0.18) !important}
   .card.card--completed{background:#ffffff}
+
+  /* Make the tint more noticeable by slightly styling the inner border */
+  .card.card--public-ongoing .inner{border-color: rgba(172, 14, 14, 0.28)}
+  .card.card--private-ongoing .inner{border-color: rgba(214, 177, 77, 0.35)}
 
   /* Inner white body */
   .inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
@@ -267,6 +273,9 @@ function generateDiamondNetwork() {
   .meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5}
   .meta-value{color:#111827;font-size:10.5px;line-height:1.5}
   .meta-value .ko{word-break:keep-all}
+
+  /* Korean muted helper for secondary names */
+  .ko-muted{color:#9ca3af}
 
   /* 금액 강조 */
   .amount{font-weight:800;color:#111827}
@@ -448,6 +457,12 @@ function generateDiamondNetwork() {
     return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
 
+  /* === English → Korean agency mapping for muted secondary label === */
+  const AGENCY_KO = {
+    "Korea Institute of Public Finance": "한국조세재정연구원",
+    "CRAFTA": "크래프타"
+  };
+
   /* ===== DOM ===== */
   const qInput = document.getElementById('q');
   const grid = document.getElementById('grid');
@@ -524,7 +539,7 @@ function generateDiamondNetwork() {
 
     // Badges
     const keywordBadges = (project.keywords||[]).map(k=>`<span class="badge">${esc(k)}</span>`).join('');
-    const fundingBadge = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':'Government-Funded'}</span>`;
+    const fundingBadge = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':(project.type==='contract'?'Contract':'Government-Funded')}</span>`;
     const statusBadge = `<span class="badge" style="border-color:${status==='ongoing'?'#111827':'#9ca3af'};color:${status==='ongoing'?'#111827':'#6b7280'}">${status==='ongoing'?'Ongoing':'Completed'}</span>`;
 
     // Roles
@@ -539,10 +554,17 @@ function generateDiamondNetwork() {
       outerClass = 'card--completed'; // White background for completed
     } else {
       // Ongoing projects: apply color based on funding type
-      outerClass = project.type === 'private' ? 'card--private-ongoing' : 'card--public-ongoing';
+      outerClass = (project.type === 'private' || project.type === 'contract') ? 'card--private-ongoing' : 'card--public-ongoing';
     }
     
     const notchColor = fundingColor;
+
+    // Funding Agency value with Korean muted suffix (mapped)
+    const agencyEn = project.fundingAgency || '';
+    const agencyKo = AGENCY_KO[agencyEn];
+    const agencyValue = agencyKo
+      ? `${esc(agencyEn)} <span class="ko-muted">· ${esc(agencyKo)}</span>`
+      : esc(agencyEn);
 
     return `<article class="card ${outerClass}">
       <div class="inner">
@@ -568,7 +590,7 @@ function generateDiamondNetwork() {
             </div>
             <div class="meta-item">
               <span class="meta-label">Funding Agency</span>
-              <span class="meta-value">${esc(project.fundingAgency)}</span>
+              <span class="meta-value">${agencyValue}</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Amount</span>
