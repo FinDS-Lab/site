@@ -342,12 +342,28 @@ function generateDiamondNetwork() {
     box-shadow:0 4px 12px rgba(172,14,14,0.3);
   }
 
-  /* Publication Stats */
+  /* Publication Stats - Journal categories first row, Conference second row */
   .pub-stats{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns:repeat(4, 1fr);
+    grid-template-rows:auto auto auto;
     gap:10px;
   }
+  
+  /* First row: International Journals */
+  .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+  .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
+  .pub-stat.journal-scopus { grid-column: 3; grid-row: 1; }
+  .pub-stat.journal-other { grid-column: 4; grid-row: 1; }
+  
+  /* Second row: Conferences + KCI */
+  .pub-stat.conf-intl { grid-column: 1; grid-row: 2; }
+  .pub-stat.journal-kci { grid-column: 2; grid-row: 2; }
+  .pub-stat.conf-domestic { grid-column: 3; grid-row: 2; }
+  
+  /* Third row: Citations (spans full width) */
+  .pub-stat.citation { grid-column: 1/-1; grid-row: 3; }
+  
   .pub-stat{
     background:#f8fafc;
     border:1px solid #e5e7eb;
@@ -371,19 +387,17 @@ function generateDiamondNetwork() {
   
   /* International categories - Gold colors */
   .pub-stat.journal-scie::before{background:rgba(214,177,77,1)}
-  .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.75)}
-  .pub-stat.journal-other::before{background:rgba(214,177,77,0.5)}
+  .pub-stat.journal-esci::before{background:rgba(214,177,77,0.85)}
+  .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.7)}
+  .pub-stat.journal-other::before{background:rgba(214,177,77,0.55)}
+  .pub-stat.conf-intl::before{background:rgba(214,177,77,0.4)}
   
   /* Domestic categories - Red colors */
   .pub-stat.journal-kci::before{background:rgba(172,14,14,0.9)}
   .pub-stat.conf-domestic::before{background:rgba(172,14,14,0.6)}
   
-  /* International Conference - Gold */
-  .pub-stat.conf-intl::before{background:rgba(214,177,77,0.85)}
-  
   /* Citations - Special gradient */
   .pub-stat.citation{
-    grid-column:1/-1;
     background:linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(172,14,14,0.05) 100%);
     border:1px solid rgba(214,177,77,0.2);
   }
@@ -415,9 +429,25 @@ function generateDiamondNetwork() {
   /* Tablet */
   @media (max-width: 768px) {
     .pub-stats{
-      grid-template-columns:repeat(2, 1fr);
+      grid-template-columns:repeat(3, 1fr);
+      grid-template-rows:auto auto auto;
       gap:8px;
     }
+    
+    /* First row: International Journals */
+    .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+    .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
+    .pub-stat.journal-scopus { grid-column: 3; grid-row: 1; }
+    
+    /* Second row: Other Int'l, Int'l Conf, KCI */
+    .pub-stat.journal-other { grid-column: 1; grid-row: 2; }
+    .pub-stat.conf-intl { grid-column: 2; grid-row: 2; }
+    .pub-stat.journal-kci { grid-column: 3; grid-row: 2; }
+    
+    /* Third row: Dom Conf + Citation (spans remaining) */
+    .pub-stat.conf-domestic { grid-column: 1; grid-row: 3; }
+    .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
+    
     .pub-stat{
       padding:10px;
     }
@@ -433,8 +463,28 @@ function generateDiamondNetwork() {
   @media (max-width: 480px) {
     .pub-stats{
       grid-template-columns:repeat(2, 1fr);
+      grid-template-rows:auto auto auto auto auto;
       gap:6px;
     }
+    
+    /* First row: Top International Journals */
+    .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+    .pub-stat.journal-esci { grid-column: 2; grid-row: 1; }
+    
+    /* Second row: Other International */
+    .pub-stat.journal-scopus { grid-column: 1; grid-row: 2; }
+    .pub-stat.journal-other { grid-column: 2; grid-row: 2; }
+    
+    /* Third row: Conferences */
+    .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+    .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+    
+    /* Fourth row: Domestic */
+    .pub-stat.conf-domestic { grid-column: 1; grid-row: 4; }
+    
+    /* Fifth row: Citations (spans full width) */
+    .pub-stat.citation { grid-column: 1/-1; grid-row: 5; }
+    
     .pub-stat{
       padding:8px;
     }
@@ -445,12 +495,9 @@ function generateDiamondNetwork() {
       font-size:9px;
       letter-spacing:0;
     }
-    .pub-stat.citation{
-      grid-column:1/-1;
-    }
   }
 
-  /* Research Interests */
+  /* Research Interests - Updated with cleaner structure */
   .ri-item{
     border:1px solid #e5e7eb;
     border-radius:12px;
@@ -793,8 +840,6 @@ function generateDiamondNetwork() {
     color:#fff;
     line-height:1;
   }
-  
-  /* Mentoring participation year badges (연도 배지 전용) */
 
   /* Network Slider */
   .network-controls{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;}
@@ -924,15 +969,15 @@ function generateDiamondNetwork() {
               <ul class="ri-list">
                 <li>
                   <div class="ri-list-title">AI in Quantitative Finance & Asset Management</div>
-                  <div class="ri-list-desc">포트폴리오 최적화, 투자자 성향 기반 자산배분, 트레이딩 전략</div>
+                  <div class="ri-list-desc">인공지능 기반 포트폴리오 최적화, 자산 배분, 알고리즘 트레이딩</div>
                 </li>
                 <li>
-                  <div class="ri-list-title">Asset Pricing & Market Making</div>
-                  <div class="ri-list-desc">자산 가격결정, 시장조성, 주문흐름 분석</div>
+                  <div class="ri-list-title">Financial Time-Series Modeling & Forecasting</div>
+                  <div class="ri-list-desc">변동성 예측, 국면 전환 모형, 선후행 관계 분석, 수익률 예측</div>
                 </li>
                 <li>
-                  <div class="ri-list-title">Time-Series for Finance</div>
-                  <div class="ri-list-desc">변동성 예측, 국면 전환 모형, 선후행 관계 탐지</div>
+                  <div class="ri-list-title">Household Finance & Behavioral Decision Modeling</div>
+                  <div class="ri-list-desc">가계 금융, 투자자 행동 분석, 행동재무학적 의사결정 모형화</div>
                 </li>
               </ul>
             </div>
@@ -948,12 +993,16 @@ function generateDiamondNetwork() {
             <div class="ri-content">
               <ul class="ri-list">
                 <li>
-                  <div class="ri-list-title">Financial Modeling</div>
-                  <div class="ri-list-desc">금융 모델링 및 데이터 기반 자산배분</div>
+                  <div class="ri-list-title">Cross-Domain Analytics: Risk, Customers, Performance, Markets</div>
+                  <div class="ri-list-desc">도메인별 위험 관리, 고객 분석, 성과 평가, 시장 인사이트 도출</div>
                 </li>
                 <li>
-                  <div class="ri-list-title">Decision-Focused Learning</div>
-                  <div class="ri-list-desc">복잡한 투자 문제 해결을 위한 의사결정 중심 학습</div>
+                  <div class="ri-list-title">Data Visualization & Interpretability in Business Analytics</div>
+                  <div class="ri-list-desc">복잡한 데이터를 직관적으로 전달하는 데이터 시각화 및 해석 가능성 강화</div>
+                </li>
+                <li>
+                  <div class="ri-list-title">Business Insights from AI Methods: Time-Series Models, Graph-Based Models, and NLP</div>
+                  <div class="ri-list-desc">시계열 모형, 그래프 기반 분석, 자연어 처리(NLP) 등 AI 기법을 활용한 비즈니스 인사이트</div>
                 </li>
               </ul>
             </div>
@@ -969,12 +1018,16 @@ function generateDiamondNetwork() {
             <div class="ri-content">
               <ul class="ri-list">
                 <li>
-                  <div class="ri-list-title">AI-Powered Decision Systems</div>
-                  <div class="ri-list-desc">그래프 표현과 강화학습 기반 의사결정</div>
+                  <div class="ri-list-title">Graph-Based Decision Systems & Optimization</div>
+                  <div class="ri-list-desc">그래프 구조와 최적화를 활용한 이해 가능한 의사결정 시스템</div>
                 </li>
                 <li>
-                  <div class="ri-list-title">Household Finance</div>
-                  <div class="ri-list-desc">가계금융 및 투자자 행동 모델링</div>
+                  <div class="ri-list-title">Risk-Aware & User-Friendly Decision Tools</div>
+                  <div class="ri-list-desc">금융·경영 위험을 반영하고 사용자 친화적인 스마트 의사결정 도구</div>
+                </li>
+                <li>
+                  <div class="ri-list-title">Decision Analytics for Complex Business Problems</div>
+                  <div class="ri-list-desc">복잡한 경영 및 투자 의사결정 문제 해결을 위한 최적화 및 분석 방법론</div>
                 </li>
               </ul>
             </div>
@@ -1203,7 +1256,11 @@ function generateDiamondNetwork() {
           <div class="pub-stats">
             <div class="pub-stat journal-scie">
               <div class="pub-stat-number">12</div>
-              <div class="pub-stat-label">SCIE/SSCI/A&HCI</div>
+              <div class="pub-stat-label">SCIE & SSCI & A&HCI</div>
+            </div>
+            <div class="pub-stat journal-esci">
+              <div class="pub-stat-number">6</div>
+              <div class="pub-stat-label">ESCI</div>
             </div>
             <div class="pub-stat journal-scopus">
               <div class="pub-stat-number">8</div>
@@ -1213,13 +1270,13 @@ function generateDiamondNetwork() {
               <div class="pub-stat-number">5</div>
               <div class="pub-stat-label">Other Int'l</div>
             </div>
-            <div class="pub-stat journal-kci">
-              <div class="pub-stat-number">15</div>
-              <div class="pub-stat-label">KCI</div>
-            </div>
             <div class="pub-stat conf-intl">
               <div class="pub-stat-number">23</div>
               <div class="pub-stat-label">Int'l Conf</div>
+            </div>
+            <div class="pub-stat journal-kci">
+              <div class="pub-stat-number">15</div>
+              <div class="pub-stat-label">KCI</div>
             </div>
             <div class="pub-stat conf-domestic">
               <div class="pub-stat-number">18</div>
@@ -1318,49 +1375,100 @@ function generateDiamondNetwork() {
                 <div class="mentee-chip">
                   박성수
                   <span class="mentee-badge" style="background:#10b981"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 서울대학교</div>
-                    <div class="mentee-tooltip-line">📚 산업공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2015</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">서울대학교</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">산업공학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2015</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mentee-chip">
                   김민지
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 연세대학교</div>
-                    <div class="mentee-tooltip-line">📚 경영학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2018</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2024</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">연세대학교</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">경영학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2018</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2024</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mentee-chip">
                   정현우
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 성균관대학교</div>
-                    <div class="mentee-tooltip-line">📚 시스템경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2016</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                        <span class="year-badge">2024</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">성균관대학교</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">시스템경영공학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2016</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                          <span class="year-badge">2024</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1379,65 +1487,133 @@ function generateDiamondNetwork() {
               <div class="mentee-list">
                 <div class="mentee-chip">
                   장서연
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 이화여대</div>
-                    <div class="mentee-tooltip-line">📚 경영학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2014</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">이화여대</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">경영학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2014</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mentee-chip">
                   오태현
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 포항공대</div>
-                    <div class="mentee-tooltip-line">📚 산업경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2013</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">포항공대</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">산업경영공학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2013</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mentee-chip">
                   윤지훈
                   <span class="mentee-badge" style="background:#f59e0b"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 고려대학교</div>
-                    <div class="mentee-tooltip-line">📚 산업경영공학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2015</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">고려대학교</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">산업경영공학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2015</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="mentee-chip">
                   김민지
                   <span class="mentee-badge" style="background:#ef4444"></span>
-                  <span class="mentee-tooltip">
-                    <div class="mentee-tooltip-line"><b>멘토링 프로그램</b></div>
-                    <div class="mentee-tooltip-line">🏫 한양대학교</div>
-                    <div class="mentee-tooltip-line">📚 컴퓨터소프트웨어학과</div>
-                    <div class="mentee-tooltip-line">📅 입학년도: 2014</div>
-                    <div class="mentee-tooltip-line">
-                      🎗 참가년도:
-                      <span class="year-badges">
-                        <span class="year-badge">2023</span>
-                      </span>
+                  <div class="mentee-tooltip">
+                    <div class="tooltip-header">
+                      <div class="tooltip-title">Mentoring Program</div>
                     </div>
-                  </span>
+                    <div class="tooltip-content">
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🏫</span>
+                        <span class="tooltip-label">University</span>
+                        <span class="tooltip-value">한양대학교</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📚</span>
+                        <span class="tooltip-label">Department</span>
+                        <span class="tooltip-value">컴퓨터소프트웨어학과</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">📅</span>
+                        <span class="tooltip-label">Entry Year</span>
+                        <span class="tooltip-value">2014</span>
+                      </div>
+                      <div class="tooltip-row">
+                        <span class="tooltip-icon">🎗</span>
+                        <span class="tooltip-label">Participation</span>
+                        <span class="year-badges">
+                          <span class="year-badge">2023</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1855,4 +2031,3 @@ function generateDiamondNetwork() {
     });
   }
 </script>
-
