@@ -894,28 +894,6 @@ function generateDiamondNetwork() {
         </div>
       </div>
 
-      <!-- Collaboration Network -->
-      <div class="director-card">
-        <div class="card-head">Collaboration Network</div>
-        <div class="card-body">
-          <div class="network-controls">
-            <span class="slider-label">Min. Papers:</span>
-            <div class="slider-container">
-              <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
-              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
-            </div>
-            <span class="slider-value" id="sliderValue">1+</span>
-          </div>
-          
-          <canvas id="networkCanvas"></canvas>
-          
-          <div id="networkInfo">
-            Loading collaboration data...
-          </div>
-        </div>
-      </div>
-
       <!-- Education -->
       <div class="director-card">
         <div class="card-head">Education</div>
@@ -1153,6 +1131,28 @@ function generateDiamondNetwork() {
               <div class="pub-stat-number">245</div>
               <div class="pub-stat-label">Citations</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collaboration Network -->
+      <div class="director-card">
+        <div class="card-head">Collaboration Network</div>
+        <div class="card-body">
+          <div class="network-controls">
+            <span class="slider-label">Min. Papers:</span>
+            <div class="slider-container">
+              <span style="font-size:12px;color:#9ca3af;">0</span>
+              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
+              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
+            </div>
+            <span class="slider-value" id="sliderValue">1+</span>
+          </div>
+          
+          <canvas id="networkCanvas"></canvas>
+          
+          <div id="networkInfo">
+            Loading collaboration data...
           </div>
         </div>
       </div>
@@ -1697,4 +1697,5 @@ function generateDiamondNetwork() {
 </script>
 
   
+
 
