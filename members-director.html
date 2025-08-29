@@ -821,10 +821,22 @@ permalink: /members-director.html
 
   .mentee-list{display:flex;flex-wrap:wrap;gap:8px;}
 
+  /* Mentee chip with fixed width for alignment */
   .mentee-chip{
-    position:relative;display:inline-flex;align-items:center;padding:8px 16px;
-    background:#fff;border:1px solid #e5e7eb;border-radius:999px;
-    font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:80px;
+    padding:8px 12px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+    transition:all .2s;
+    cursor:pointer;
+    text-align:center;
   }
 
   .mentee-chip:hover{
@@ -1182,25 +1194,25 @@ permalink: /members-director.html
                   <span>👨‍🏫</span>
                   <span>Advisors</span>
                 </div>
-                <div class="multiple-advisors">
-                  <div class="advisor-item">
-                    <span class="advisor-role">Academic Advisor, 2nd Thesis Supervisor</span>
-                    <div class="advisor-info">
-                      <span class="advisor-label">Prof.</span>
-                      <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" class="advisor-name">
+                <div style="margin-left: 20px;">
+                  <div style="margin-bottom: 12px;">
+                    <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">Academic Advisor, 2nd Thesis Supervisor</div>
+                    <div style="font-size: 13px;">
+                      <span style="font-weight: 700; color: #3730a3;">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
                         Jang Ho Kim
                       </a>
-                      <span class="advisor-affiliation">(Korea University)</span>
+                      <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Korea University)</span>
                     </div>
                   </div>
-                  <div class="advisor-item">
-                    <span class="advisor-role">1st Thesis Supervisor</span>
-                    <div class="advisor-info">
-                      <span class="advisor-label">Prof.</span>
-                      <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" class="advisor-name">
+                  <div>
+                    <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">1st Thesis Supervisor</div>
+                    <div style="font-size: 13px;">
+                      <span style="font-weight: 700; color: #3730a3;">Prof.</span>
+                      <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
                         Myeong-Ju Park
                       </a>
-                      <span class="advisor-affiliation">(Seoul National University)</span>
+                      <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Seoul National University)</span>
                     </div>
                   </div>
                 </div>
@@ -1386,54 +1398,54 @@ permalink: /members-director.html
             </div>
             <div class="mentoring-content" id="mentoring-2025">
               <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('park-seongsu')">박성수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-suin')">이수인</div>
                 <div class="mentee-chip" onclick="openMenteeModal('kang-byungoh')">강병오</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-junghyun')">박정현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('oh-yoonjin')">오윤진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-chan')">이찬</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-juhyun')">임주현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yujin')">정유진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-daehyun')">김대현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-chaemin')">이채민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-junpil')">장준필</div>
-                <div class="mentee-chip" onclick="openMenteeModal('chae-jinki')">채진기</div>
-                <div class="mentee-chip" onclick="openMenteeModal('han-dongsu')">한동수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('byun-donghyun')">변동현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('ahn-hyungmin')">안형민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-jinhong')">박진홍</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taekyung')">이태경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-juyeon')">김주연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-bin')">윤빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-chaehee')">윤채희</div>
                 <div class="mentee-chip" onclick="openMenteeModal('go-hyunwoo')">고현우</div>
                 <div class="mentee-chip" onclick="openMenteeModal('koo-jihoe')">구지회</div>
                 <div class="mentee-chip" onclick="openMenteeModal('kwon-dongha')">권동하</div>
+                <div class="mentee-chip" onclick="openMenteeModal('kim-daehyun')">김대현</div>
+                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
+                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyun')">김민균</div>
+                <div class="mentee-chip" onclick="openMenteeModal('kim-seoyeon')">김서연</div>
                 <div class="mentee-chip" onclick="openMenteeModal('kim-yeram')">김예람</div>
                 <div class="mentee-chip" onclick="openMenteeModal('kim-jaehyun')">김재현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('oh-yunje')">오윤제</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoo-buil')">유부일</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seungju')">이승주</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jeon-jihyun')">전지현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-yejun')">윤예준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('sung-minji')">성민지</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-kyungsu')">신경수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-jiyeon')">박지연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shim-dasol')">심다솔</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-subin')">이수빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taehyung')">이태형</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-yujung')">최유정</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyun')">김민균</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seongjun')">이성준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-seungmin')">장승민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-yosep')">이요셉</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-sangyun')">정상윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('hong-junki')">홍준기</div>
+                <div class="mentee-chip" onclick="openMenteeModal('kim-juyeon')">김주연</div>
                 <div class="mentee-chip" onclick="openMenteeModal('park-seryeon')">박세련</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seoyeon')">김서연</div>
+                <div class="mentee-chip" onclick="openMenteeModal('park-seongsu')">박성수</div>
+                <div class="mentee-chip" onclick="openMenteeModal('park-junghyun')">박정현</div>
+                <div class="mentee-chip" onclick="openMenteeModal('park-jinhong')">박진홍</div>
+                <div class="mentee-chip" onclick="openMenteeModal('park-jiyeon')">박지연</div>
+                <div class="mentee-chip" onclick="openMenteeModal('byun-donghyun')">변동현</div>
+                <div class="mentee-chip" onclick="openMenteeModal('sung-minji')">성민지</div>
+                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
+                <div class="mentee-chip" onclick="openMenteeModal('shin-kyungsu')">신경수</div>
+                <div class="mentee-chip" onclick="openMenteeModal('shim-dasol')">심다솔</div>
+                <div class="mentee-chip" onclick="openMenteeModal('ahn-hyungmin')">안형민</div>
+                <div class="mentee-chip" onclick="openMenteeModal('oh-yunje')">오윤제</div>
+                <div class="mentee-chip" onclick="openMenteeModal('oh-yoonjin')">오윤진</div>
+                <div class="mentee-chip" onclick="openMenteeModal('yoo-buil')">유부일</div>
+                <div class="mentee-chip" onclick="openMenteeModal('yoon-bin')">윤　빈</div>
+                <div class="mentee-chip" onclick="openMenteeModal('yoon-yejun')">윤예준</div>
+                <div class="mentee-chip" onclick="openMenteeModal('yoon-chaehee')">윤채희</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-seongjun')">이성준</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-seungju')">이승주</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-suin')">이수인</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-subin')">이수빈</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-yosep')">이요셉</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-chan')">이　찬</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-chaemin')">이채민</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-taekyung')">이태경</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lee-taehyung')">이태형</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
+                <div class="mentee-chip" onclick="openMenteeModal('lim-juhyun')">임주현</div>
+                <div class="mentee-chip" onclick="openMenteeModal('jang-seungmin')">장승민</div>
+                <div class="mentee-chip" onclick="openMenteeModal('jang-junpil')">장준필</div>
+                <div class="mentee-chip" onclick="openMenteeModal('jeon-jihyun')">전지현</div>
+                <div class="mentee-chip" onclick="openMenteeModal('jung-sangyun')">정상윤</div>
+                <div class="mentee-chip" onclick="openMenteeModal('jung-yujin')">정유진</div>
+                <div class="mentee-chip" onclick="openMenteeModal('chae-jinki')">채진기</div>
+                <div class="mentee-chip" onclick="openMenteeModal('choi-yujung')">최유정</div>
+                <div class="mentee-chip" onclick="openMenteeModal('han-dongsu')">한동수</div>
+                <div class="mentee-chip" onclick="openMenteeModal('hong-junki')">홍준기</div>
               </div>
             </div>
           </div>
@@ -1875,6 +1887,14 @@ permalink: /members-director.html
 
     document.getElementById('menteeModal').classList.add('show');
     document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenteeModal(event) {
+    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
+      return;
+    }
+    document.getElementById('menteeModal').classList.remove('show');
+    document.body.style.overflow = '';
   }
 
   function closeMenteeModal(event) {
