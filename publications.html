@@ -584,6 +584,15 @@ permalink: /publications.html
     color: #374151;
     font-weight: 700;
   }
+  
+  /* Date color based on publication type */
+  .badge-pub.pub-conference .val {
+    color: rgb(172, 14, 14);
+  }
+  
+  .badge-pub.pub-journal .val {
+    color: rgb(214, 177, 77);
+  }
 
   /* Awards styles */
   .awards-container {
@@ -1339,8 +1348,21 @@ permalink: /publications.html
 
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
     
+    // Determine publication type for date color
+    let pubTypeClass = '';
+    if (pub.type === 'conference' || pub.indexing_group === 'International Conference' || 
+        pub.indexing_group === 'Domestic Conference' || 
+        pub.indexing_group === 'International - Domestic Joint Conference') {
+      pubTypeClass = 'pub-conference';
+    } else if (pub.type === 'journal' || pub.indexing_group === 'SCIE' || 
+               pub.indexing_group === 'SSCI' || pub.indexing_group === 'A&HCI' || 
+               pub.indexing_group === 'ESCI' || pub.indexing_group === 'Scopus' ||
+               pub.indexing_group.includes('KCI') || pub.indexing_group.includes('Other')) {
+      pubTypeClass = 'pub-journal';
+    }
+    
     const pubDateBadge = pub.published_date ? 
-      `<span class="badge-pub">
+      `<span class="badge-pub ${pubTypeClass}">
         <span class="val">${formatPubDateWithLabel(pub.published_date, useKorean)}</span>
       </span>` : ``;
 
