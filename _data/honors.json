@@ -7,7 +7,9 @@
       "event": "제11회 경영과학 박사학위논문상",
       "organization": "한국경영과학회",
       "date": "Nov 8",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -16,7 +18,9 @@
       "event": "2024 추계학술대회 경쟁 부문",
       "organization": "한국경영과학회",
       "date": "Nov 8",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -25,7 +29,9 @@
       "event": "2024 춘계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "May 17",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     }
   ],
   "2023": [
@@ -36,7 +42,9 @@
       "event": "제1회 S&P Global Market Intelligence–KAIST–UNIST–경희대학교 퀀트 투자 경진대회",
       "organization": "S&P Market Intelligence, KAIST, UNIST, 경희대학교",
       "date": "Dec 4",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -45,7 +53,9 @@
       "event": "제4회 NH투자증권 빅데이터 경진대회",
       "organization": "NH투자증권",
       "date": "Dec 1",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -54,7 +64,9 @@
       "event": "2023 추계학술대회 포스터 발표 부문",
       "organization": "한국산업경영시스템학회",
       "date": "Nov 10",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -63,7 +75,9 @@
       "event": "2023 추계학술대회 경쟁 부문",
       "organization": "한국경영과학회",
       "date": "Nov 10",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -72,7 +86,9 @@
       "event": "2023 추계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "Nov 3",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -81,7 +97,9 @@
       "event": "2023 하계국제학술대회 대학원생 논문 및 캡스톤디자인 공모전",
       "organization": "한국정책학회",
       "date": "Jun 15",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -90,7 +108,9 @@
       "event": "2023 춘계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "May 12",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     }
   ],
   "2022": [
@@ -101,7 +121,9 @@
       "event": "Young-Han Kim Global Leader Scholarship",
       "organization": "한국과학기술원 (KAIST)",
       "date": "Aug 5",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -110,7 +132,9 @@
       "event": "제3회 NH투자증권 빅데이터 경진대회",
       "organization": "NH투자증권",
       "date": "Dec 12",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -119,7 +143,9 @@
       "event": "2022 추계종합학술대회 일반 부문",
       "organization": "한국정보기술학회",
       "date": "Dec 2",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -128,7 +154,9 @@
       "event": "제2회 디지털산업혁신 빅데이터 플랫폼 활용 금융 아이디어 경진대회",
       "organization": "에프앤가이드, 한국지능정보사회진흥원",
       "date": "Nov 24",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -137,7 +165,9 @@
       "event": "제1회 KAIST 산업/사회 문제해결 포스터 경진대회",
       "organization": "KAIST 산업및시스템공학과",
       "date": "Nov 9",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -146,7 +176,9 @@
       "event": "2022 추계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "Nov 4",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -155,7 +187,9 @@
       "event": "제1회 산업공학 홍보영상 공모전",
       "organization": "대한산업공학회",
       "date": "Nov 4",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -164,7 +198,9 @@
       "event": "2022 하계학술논문발표회 우수연구 포스터 부문",
       "organization": "한국통계학회",
       "date": "Jun 25",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -173,7 +209,9 @@
       "event": "제1회 나의 실패 이야기 에세이 공모전",
       "organization": "KAIST 실패연구소",
       "date": "Jun 17",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -182,7 +220,9 @@
       "event": "2022 하계종합학술대회 일반 부문",
       "organization": "한국정보기술학회",
       "date": "Jun 3",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     },
     {
       "type": "award",
@@ -191,7 +231,9 @@
       "event": "2022 춘계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "May 13",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "phd"}
+      ]
     }
   ],
   "2021": [
@@ -202,7 +244,9 @@
       "event": "Exemplary Conduct Scholarship (Achievement Division)",
       "organization": "한국과학기술원 (KAIST)",
       "date": "Aug 27",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "scholarship",
@@ -211,7 +255,9 @@
       "event": "National Excellence Scholarship (Natural Sciences and Engineering Track)",
       "organization": "한국장학재단",
       "date": "May 14",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -220,7 +266,9 @@
       "event": "제9회 빅콘테스트",
       "organization": "한국지능정보사회진흥원",
       "date": "Dec 16",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -229,7 +277,9 @@
       "event": "2021 추계학술논문발표회 대학원생 논문발표 부문",
       "organization": "한국데이터정보과학회",
       "date": "Nov 26",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -238,7 +288,9 @@
       "event": "제2회 NH투자증권 빅데이터 경진대회",
       "organization": "NH투자증권",
       "date": "Nov 26",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -247,7 +299,9 @@
       "event": "제17회 대한산업공학회 석사논문경진대회",
       "organization": "대한산업공학회",
       "date": "Nov 12",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -256,7 +310,9 @@
       "event": "2021 추계학술대회 질병관리청 자료 활용 부문",
       "organization": "대한지역사회영양학회",
       "date": "Oct 22",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -265,7 +321,9 @@
       "event": "2021 Entrue 컨설팅 우수논문 대회",
       "organization": "LG CNS 엔트루 컨설팅",
       "date": "Oct 14",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -274,7 +332,9 @@
       "event": "2021 FIELD 캠프",
       "organization": "대한산업공학회",
       "date": "Aug 14",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -283,7 +343,9 @@
       "event": "제11회 DB 금융경제 공모전",
       "organization": "DB김준기문화재단",
       "date": "May 7",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -292,7 +354,9 @@
       "event": "제35회 매일경제신문 대학(원)생 경제논문 공모전",
       "organization": "매일경제신문",
       "date": "Apr 19",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     }
   ],
   "2020": [
@@ -303,7 +367,9 @@
       "event": "2020 FIELD 캠프",
       "organization": "대한산업공학회",
       "date": "Aug 22",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     }
   ],
   "2019": [
@@ -314,7 +380,9 @@
       "event": "제8회 산업융합 활성화 방안 및 사례연구 논문공모전",
       "organization": "국가산업융합지원센터, 대한산업공학회",
       "date": "Nov 8",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -323,7 +391,9 @@
       "event": "제1회 대학생 스마트시티 아이디어 경진대회",
       "organization": "한국토지주택공사, 대한산업공학회",
       "date": "Sep 6",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     },
     {
       "type": "award",
@@ -332,7 +402,9 @@
       "event": "제2회 International Quant Championship 대한민국 지역 결선",
       "organization": "WorldQuant",
       "date": "Jul 15",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "ms"}
+      ]
     }
   ],
   "2018": [
@@ -343,7 +415,9 @@
       "event": "2017학년도 전기 학위수여식 학업우수부문 졸업자 시상",
       "organization": "경희대학교",
       "date": "Feb 13",
-      "winners": []
+      "winners": [
+        {"name": "최인수", "level": "bs"}
+      ]
     }
   ]
 }
