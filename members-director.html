@@ -1817,79 +1817,81 @@ permalink: /members-director.html
   // Build mentoring years by participation
   buildMentoringYears();
  
- function buildMentoringYears() {
-   const mentoringByYear = {};
-   let minYear = 9999;
-   let maxYear = 0;
-   
-   // Find min and max years from participationYears
-   for (const id in mentoringData) {
-     const mentee = mentoringData[id];
-     if (mentee.participationYears && mentee.participationYears.length > 0) {
-       mentee.participationYears.forEach(year => {
-         const yearNum = parseInt(year);
-         minYear = Math.min(minYear, yearNum);
-         maxYear = Math.max(maxYear, yearNum);
-       });
-     }
-   }
-   
-   // Initialize years
-   for (let year = maxYear; year >= minYear; year--) {
-     mentoringByYear[year] = [];
-   }
-   
-   // Group mentees by participation years
-   for (const id in mentoringData) {
-     const mentee = mentoringData[id];
-     if (mentee.participationYears) {
-       mentee.participationYears.forEach(year => {
-         const yearNum = parseInt(year);
-         if (mentoringByYear[yearNum] !== undefined) {
-           mentoringByYear[yearNum].push({
-             id: id,
-             name: mentee.name
-           });
-         }
-       });
-     }
-   }
-   
-   // Sort each year's mentees by name (가나다 순)
-   for (const year in mentoringByYear) {
-     mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
-   }
-   
-   // Build HTML
-   let html = '';
-   for (let year = maxYear; year >= minYear; year--) {
-     const mentees = mentoringByYear[year];
-     if (mentees && mentees.length > 0) {
-       html += `
-         <div class="mentoring-year">
-           <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
-             <div class="mentoring-year-title">${year}</div>
-             <div style="display:flex;align-items:center;gap:8px">
-               <span class="mentoring-count">${mentees.length}</span>
-               <span class="mentoring-toggle">▶</span>
-             </div>
-           </div>
-           <div class="mentoring-content" id="mentoring-${year}">
-             <div class="mentee-list">
-                ${mentees.map(mentee => {
-                  const participationCount = MENTEES[mentee.id].participationYears ? MENTEES[mentee.id].participationYears.length : 0;
-                  return `<div class="mentee-chip" data-count="${participationCount}" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`;
-                }).join('')}
-             </div>
-           </div>
-         </div>
-       `;
-     }
-   }
-   
-   document.getElementById('mentoringContainer').innerHTML = html || 
-     '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
- }
+function buildMentoringYears() {
+  const mentoringByYear = {};
+  let minYear = 9999;
+  let maxYear = 0;
+  
+  // Find min and max years
+  for (const id in mentoringData) {
+    const mentee = mentoringData[id];
+    if (mentee.participationYears && mentee.participationYears.length > 0) {
+      mentee.participationYears.forEach(year => {
+        const yearNum = parseInt(year);
+        minYear = Math.min(minYear, yearNum);
+        maxYear = Math.max(maxYear, yearNum);
+      });
+    }
+  }
+  
+  // Initialize years
+  for (let year = maxYear; year >= minYear; year--) {
+    mentoringByYear[year] = [];
+  }
+  
+  // Group mentees by participation years with cumulative count
+  for (const id in mentoringData) {
+    const mentee = mentoringData[id];
+    if (mentee.participationYears) {
+      // Sort years to calculate cumulative participation
+      const sortedYears = mentee.participationYears.map(y => parseInt(y)).sort((a, b) => a - b);
+      
+      sortedYears.forEach((year, index) => {
+        if (mentoringByYear[year] !== undefined) {
+          mentoringByYear[year].push({
+            id: id,
+            name: mentee.name,
+            cumulativeCount: index + 1  // 누적 참여 횟수
+          });
+        }
+      });
+    }
+  }
+  
+  // Sort each year's mentees by name
+  for (const year in mentoringByYear) {
+    mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  }
+  
+  // Build HTML
+  let html = '';
+  for (let year = maxYear; year >= minYear; year--) {
+    const mentees = mentoringByYear[year];
+    if (mentees && mentees.length > 0) {
+      html += `
+        <div class="mentoring-year">
+          <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
+            <div class="mentoring-year-title">${year}</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="mentoring-count">${mentees.length}</span>
+              <span class="mentoring-toggle">▶</span>
+            </div>
+          </div>
+          <div class="mentoring-content" id="mentoring-${year}">
+            <div class="mentee-list">
+              ${mentees.map(mentee => 
+                `<div class="mentee-chip" data-count="${mentee.cumulativeCount}" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
+              ).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  }
+  
+  document.getElementById('mentoringContainer').innerHTML = html || 
+    '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
+}
  
   function openMenteeModal(menteeId) {
    const mentee = MENTEES[menteeId];
@@ -2293,6 +2295,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
