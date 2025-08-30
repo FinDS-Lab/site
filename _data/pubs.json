@@ -398,23 +398,6 @@
  {
    "year": 2022,
    "code_label": "J",
-   "indexing_group": "ESCI",
-   "type": "journal",
-   "language": "English",
-   "title": "Analyzing and Utilizing Thematic Stocks Based on Text Mining Techniques and Information Flow-Based Networks: An Example of the Republic of Korea's Mask-Themed Stocks",
-   "authors": [1, 2],
-   "author_marks": ["1", "*"],
-   "venue": "Industrial Engineering & Management Systems",
-   "published_date": "2022-06-01",
-   "volume": "21",
-   "issue": "2",
-   "pages": "244-266",
-   "doi": "10.7232/iems.2022.21.2.244",
-   "awards": 0
- },
- {
-   "year": 2022,
-   "code_label": "J",
    "indexing_group": "SCIE",
    "type": "journal",
    "language": "English",
