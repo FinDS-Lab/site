@@ -192,7 +192,7 @@
  {
   "year": 2024,
   "code_label": ["C", "J"],
-  "indexing_group": ["International Conference", "Scopus"],
+  "indexing_group": ["International Conference", "International Journal", "Scopus"],
   "type": ["conference", "journal"],
   "language": "English",
   "title": "A Transparent Single Financial Asset Trading Framework via Reinforcement Learning",
