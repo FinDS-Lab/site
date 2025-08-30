@@ -312,33 +312,19 @@ function generateDiamondNetwork() {
       <button id="toggleFilters" style="padding: .4rem .8rem; border: 1px solid #e5e7eb; border-radius: .6rem; font-size: 12px; font-weight: 700; background: #fff; cursor: pointer; color: #374151; transition: all .2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='#fff'">Expand</button>
     </div>
     
-      <div id="filterContent" style="display: none; padding: 16px;">
-        <style>
-          @media (max-width: 640px) {
-            #clearAllFilters {
-              position: relative !important;
-              top: auto !important;
-              right: auto !important;
-              display: block !important;
-              width: 100% !important;
-              margin-bottom: 12px !important;
-              text-align: center !important;
-            }
-          }
-        </style>
-        
-        <button id="clearAllFilters" style="position: absolute; top: -8px; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
-        
-        <div class="filter-section">
-          <label class="filter-label">Funding Type</label>
-          <div class="chips" id="fundingChips"></div>
-        </div>
-      
-        <div class="filter-section">
-          <label class="filter-label">Project Status</label>
-          <div class="chips" id="statusChips"></div>
-        </div>
-      </div>
+<div id="filterContent" style="display: none; padding: 16px;">
+  <button id="clearAllFilters" style="width: 100%; padding: .5rem 1rem; border: 2px solid rgb(214, 177, 77); border-radius: .6rem; font-size: 12px; font-weight: 800; background: rgba(214, 177, 77, 0.1); cursor: pointer; color: rgb(194, 157, 57); transition: all .2s; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.background='rgba(214, 177, 77, 0.2)'" onmouseout="this.style.background='rgba(214, 177, 77, 0.1)'">Clear all filters</button>
+  
+  <div class="filter-section">
+    <label class="filter-label">Funding Type</label>
+    <div class="chips" id="fundingChips"></div>
+  </div>
+
+  <div class="filter-section">
+    <label class="filter-label">Project Status</label>
+    <div class="chips" id="statusChips"></div>
+  </div>
+</div>
   </div>
 </section>
 
