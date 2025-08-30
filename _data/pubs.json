@@ -2588,10 +2588,10 @@
   "authors": [1],
   "author_marks": ["1"],
   "venue": "Kyung Hee University",
-  "venue_ko": "경희대학교 학사 졸업프로젝트논문",
+  "venue_ko": "경희대학교 학사 학위 논문 (졸업설계프로젝트)",
   "published_date": "2018-02-13",
   "awards": 1,
- "award_details": ["제11회 ㅇㅇ"]
+ "award_details": ["제4회 경희대학교 산업경영공학과 추계학술제 우수상"]
 },
  {
   "year": 2017,
@@ -2604,7 +2604,7 @@
   "authors": [1],
   "author_marks": ["1"],
   "venue": "Kyung Hee University",
-  "venue_ko": "경희대학교 학사 졸업프로젝트논문",
+  "venue_ko": "경희대학교 학사 학위 논문 (졸업설계프로젝트)",
   "published_date": "2017-02-15",
   "awards": 0
 }
