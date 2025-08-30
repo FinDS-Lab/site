@@ -165,7 +165,7 @@
     "university": "고려대학교",
     "department": "산업경영공학부",
     "entryYear": "2021",
-    "participationYears": ["2021"]
+    "participationYears": ["2020"]
   },
   "shin-youngseo": {
     "name": "신영서",
@@ -199,7 +199,7 @@
     "name": "이도영",
     "university": "경희대학교",
     "department": "산업경영공학과",
-    "entryYear": "2017",
+    "entryYear": "2020",
     "participationYears": ["2020", "2021", "2022", "2023"]
   },
   "lee-suyeon": {
@@ -365,10 +365,10 @@
   },
   "shim-eun": {
     "name": "심은",
-    "university": "경희대학교",
-    "department": "산업경영공학과",
-    "entryYear": "2021",
-    "participationYears": ["2021"]
+    "university": "서강대학교",
+    "department": "컴퓨터공학과",
+    "entryYear": "2022",
+    "participationYears": ["2021", "2024"]
   },
   "oh-yoonjin": {
     "name": "오윤진",
@@ -943,12 +943,5 @@
     "department": "산업및시스템공학과",
     "entryYear": "2021",
     "participationYears": ["2024"]
-  },
-  "shim-eun-external": {
-    "name": "심은",
-    "university": "서강대학교",
-    "department": "컴퓨터공학과",
-    "entryYear": "2022",
-    "participationYears": ["2021, 2024"]
   }
 }
