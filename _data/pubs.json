@@ -1,4 +1,21 @@
 [
+  {
+    "year": 2025,
+    "code_label": "J",
+    "indexing_group": "SSCI",
+    "type": "journal",
+    "language": "English",
+    "title": "Explainable AI-Based Mass Appraisal: Insights from Machine Learning Applications in Korea’s Residential Property Market",
+    "authors": [8, 1, 2],
+    "author_marks": ["1", "1,*", "2"],
+    "venue": "International Journal of Strategic Property Management",
+    "published_date": "2025-09-05",
+    "volume": "139",
+    "issue": "55",
+    "pages": "1",
+    "doi": "10.3846/ijspm.2025.0016",
+    "awards": 0
+  },
  {
    "year": 2025,
    "code_label": "J",
