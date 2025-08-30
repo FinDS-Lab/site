@@ -11,21 +11,21 @@ title: home
     --red-dark: rgb(127, 10, 10);
 
     /* ▶ 캐러셀: 살짝 줄인 고정 배너 너비 */
-    --banner-w-desktop: 1000px;  /* PC (이전 1080) */
-    --banner-w-tablet: 760px;    /* 태블릿 (이전 820) */
-    --banner-w-mobile: 300px;    /* 모바일 (이전 320) */
+    --banner-w-desktop: 1000px;  /* PC */
+    --banner-w-tablet: 760px;    /* 태블릿 */
+    --banner-w-mobile: 300px;    /* 모바일 */
 
-    /* ▶ 좌우 대칭 여백(총량) : 화면폭에서 뺄 값 (각 기기별) */
-    --safe-gap-desktop: 120px;   /* 좌+우 합(예: 60px씩) */
-    --safe-gap-tablet: 80px;     /* 좌+우 합(예: 40px씩) */
-    --safe-gap-mobile: 36px;     /* 좌+우 합(예: 18px씩) */
+    /* ▶ 좌우 대칭 여백(총량) : 화면폭에서 뺄 값 */
+    --safe-gap-desktop: 120px;   /* 좌+우 합 */
+    --safe-gap-tablet: 80px;
+    --safe-gap-mobile: 36px;
 
     /* ▶ 섹션 패딩(좌우) */
     --section-pad-desktop: 24px;
     --section-pad-tablet: 16px;
     --section-pad-mobile: 12px;
 
-    /* ▶ CTA(두 버튼) 최대 폭 (컨테이너 안에서만 줄임) */
+    /* ▶ CTA(두 버튼) 최대 폭 */
     --cta-w-desktop: 520px;
     --cta-w-tablet: 460px;
     --cta-w-mobile: 320px;
@@ -36,15 +36,13 @@ title: home
     position: relative;
     width: 100%;
     max-width: 100%;
-    height: 480px;                    /* 살짝 낮춤(이전 500) */
+    height: 480px;
     margin: 1.5rem auto;
     padding: 0 var(--section-pad-desktop);
     display: flex;
     justify-content: center;
-    overflow: clip;                   /* 가로 스크롤 방지 */
+    overflow: clip;
   }
-
-  /* “고정 너비 배너” + 화면폭-여백 중 더 작은 값으로 제한 */
   .carousel-container {
     width: min(var(--banner-w-desktop), calc(100% - var(--safe-gap-desktop)));
     height: 100%;
@@ -55,35 +53,25 @@ title: home
     margin: 0 auto;
     box-sizing: border-box;
   }
-
-  /* 반응형: 좌우 여백/섹션 패딩/배너 높이 보정 */
   @media (max-width: 1024px) {
-    .carousel-container {
-      width: min(var(--banner-w-tablet), calc(100% - var(--safe-gap-tablet)));
-    }
+    .carousel-container { width: min(var(--banner-w-tablet), calc(100% - var(--safe-gap-tablet))); }
     .hero-section { height: 420px; padding: 0 var(--section-pad-tablet); }
   }
-  @media (max-width: 768px) {
-    .carousel-container { border-radius: 1rem; }
-  }
+  @media (max-width: 768px) { .carousel-container { border-radius: 1rem; } }
   @media (max-width: 540px) {
-    .carousel-container {
-      width: min(var(--banner-w-mobile), calc(100% - var(--safe-gap-mobile)));
-    }
+    .carousel-container { width: min(var(--banner-w-mobile), calc(100% - var(--safe-gap-mobile))); }
     .hero-section { height: 340px; padding: 0 var(--section-pad-mobile); }
   }
   @media (max-width: 480px) { .hero-section { height: 320px; } }
   @media (max-width: 380px) { .hero-section { height: 300px; } }
 
   .carousel-wrapper { position:relative;width:100%;height:100%;overflow:hidden; }
-
   .carousel-track {
     display: flex;
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     will-change: transform;
   }
-
   .carousel-slide {
     min-width: 100%;
     width: 100%;
@@ -94,168 +82,110 @@ title: home
     background: #000;
     overflow: hidden;
   }
-
-  .carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
+  .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .carousel-overlay {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
-    display: flex;
-    align-items: center;
-    padding: 0 5%;
-    height: 100%;
-    overflow: hidden;
+    display: flex; align-items: center; padding: 0 5%; height: 100%; overflow: hidden;
   }
-
-  @media (max-width: 768px) {
-    .carousel-overlay { padding: 0 20px; align-items: center; }
-  }
+  @media (max-width: 768px) { .carousel-overlay { padding: 0 20px; align-items: center; } }
 
   .carousel-content {
-    max-width: 600px;
-    color: white;
-    animation: fadeInUp 0.8s ease-out;
-    max-height: 90%;
-    overflow: hidden;
+    max-width: 600px; color: white; animation: fadeInUp 0.8s ease-out;
+    max-height: 90%; overflow: hidden;
   }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
   .tag-badge {
     display: inline-block;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    color: #000;
-    padding: 6px 16px;
-    border-radius: 999px;
-    font-weight: 900;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
+    color: #000; padding: 6px 16px; border-radius: 999px; font-weight: 900;
+    font-size: 14px; letter-spacing: 0.5px; margin-bottom: 16px;
   }
-
-  @media (max-width: 480px) {
-    .tag-badge { font-size: 12px; padding: 4px 12px; margin-bottom: 12px; }
-  }
+  @media (max-width: 480px) { .tag-badge { font-size: 12px; padding: 4px 12px; margin-bottom: 12px; } }
 
   .hero-title {
-    font-size: clamp(22px, 5vw, 44px); /* 약간 축소 */
-    font-weight: 900;
-    line-height: 1.2;
-    margin-bottom: 18px;
+    font-size: clamp(22px, 5vw, 44px);
+    font-weight: 900; line-height: 1.2; margin-bottom: 18px;
   }
   @media (max-width: 540px) { .hero-title { font-size: 24px; margin-bottom: 16px; } }
   @media (max-width: 380px) { .hero-title { font-size: 22px; margin-bottom: 14px; } }
 
-  /* ===== CTA(두 버튼) 영역: 동일 크기 + 컨테이너 내에서 자동 축소 ===== */
+  /* ===== CTA 두 버튼: 동일 크기, 기기별 폰트 자동 축소 ===== */
   .hero-buttons{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    width: 100%;
-    max-width: var(--cta-w-desktop);  /* 컨테이너보다 커지지 않음 */
-    margin: 0;
-    justify-items: stretch;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    width: 100%; max-width: var(--cta-w-desktop); margin: 0; justify-items: stretch;
   }
   @media (max-width: 1024px){ .hero-buttons{ max-width: var(--cta-w-tablet); } }
-  @media (max-width: 540px){
-    .hero-buttons{ max-width: var(--cta-w-mobile); gap: 10px; }
-  }
+  @media (max-width: 540px){ .hero-buttons{ max-width: var(--cta-w-mobile); gap: 10px; } }
   @media (max-width: 480px){ .hero-buttons{ gap: 8px; } }
 
   .btn-hero {
     min-height: 44px;
-    padding: 12px 22px;            /* 미세 축소 */
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.1;
-    text-decoration: none;
-    transition: all 0.3s;
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 12px 18px; /* 살짝 축소 */
+    border-radius: 8px; font-weight: 700;
+    font-size: 14px; line-height: 1.1;
+    text-decoration: none; transition: all 0.3s;
+    display: inline-block; width: 100%; text-align: center;
+
+    /* 기본은 한 줄 유지 + 넘치면 말줄임(안전망) */
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  @media (max-width: 380px){ .btn-hero{ font-size: 12.5px; padding: 10px 16px; min-height: 40px; } }
+  /* ▶ 모바일/극소형 화면에서 폰트를 더 줄여 '한 줄'에 들어가게 */
+  @media (max-width: 540px){
+    .btn-hero { 
+      /* 11px ~ 13px 사이에서 화면폭에 맞춰 자동 축소 */
+      font-size: clamp(11px, 3.4vw, 13px);
+      padding: 11px 14px;
+      letter-spacing: 0.1px;
+    }
+  }
+  @media (max-width: 380px){
+    .btn-hero{ font-size: clamp(10.5px, 3.6vw, 12px); padding: 10px 12px; min-height: 40px; }
+  }
+  @media (max-width: 340px){
+    .btn-hero{ font-size: clamp(10px, 3.8vw, 11.5px); }
+  }
 
   /* 두 버튼 모두 빨간색 */
-  .btn-hero.primary,
-  .btn-hero.secondary {
+  .btn-hero.primary, .btn-hero.secondary {
     background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-    color: #fff;
-    border: 2px solid transparent;
+    color: #fff; border: 2px solid transparent;
   }
-  .btn-hero.primary:hover,
-  .btn-hero.secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+  .btn-hero.primary:hover, .btn-hero.secondary:hover {
+    transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
   }
   @media (hover: none) {
-    .btn-hero.primary:active,
-    .btn-hero.secondary:active {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+    .btn-hero.primary:active, .btn-hero.secondary:active {
+      transform: translateY(-2px); box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
     }
   }
 
   /* Carousel Dots */
   .carousel-dots {
-    position: absolute;
-    bottom: 20px;                 /* 약간 위로 */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 10;
-    padding: 8px;
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10; padding: 8px;
   }
   @media (max-width: 480px) { .carousel-dots { bottom: 14px; } }
-
-  .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.4);
-    border: none; cursor: pointer; transition: all 0.3s; padding: 0; position: relative;
-  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); border: none; cursor: pointer; transition: all 0.3s; padding: 0; position: relative; }
   .dot::before { content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px; }
   .dot.active { width: 24px; border-radius: 4px; background: var(--gold); }
 
-  /* Introduction Section (변경 없음, 여백만 유지) */
+  /* Introduction Section */
   .intro-section {
-    max-width: 1200px;
-    margin: 80px auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 40px;
-    align-items: center;
+    max-width: 1200px; margin: 80px auto; padding: 0 24px;
+    display: grid; grid-template-columns: 180px 1fr; gap: 40px; align-items: center;
   }
   @media (max-width: 768px) {
-    .intro-section {
-      grid-template-columns: 1fr;
-      margin: 60px auto;
-      text-align: center;
-      padding: 0 20px;
-      gap: 30px;
-    }
+    .intro-section { grid-template-columns: 1fr; margin: 60px auto; text-align: center; padding: 0 20px; gap: 30px; }
   }
   @media (max-width: 480px) { .intro-section { margin: 40px auto; padding: 0 16px; gap: 24px; } }
 
   .logo-box {
     width: 180px; height: 180px; background: white; border-radius: 24px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    position: relative; overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden;
   }
   @media (max-width: 768px) { .logo-box { margin: 0 auto; } }
   @media (max-width: 480px) { .logo-box { width: 150px; height: 150px; border-radius: 20px; } }
@@ -279,26 +209,15 @@ title: home
   .intro-content .description { margin-top: 16px; font-size: 16px; line-height: 1.8; color: #4b5563; }
   @media (max-width: 480px) { .intro-content .description { font-size: 14px; line-height: 1.7; } }
 
-  /* News & Notice Section (변경 없음) */
+  /* News & Notice Section */
   .updates-section {
-    max-width: 1200px;
-    margin: 0 auto 80px;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    max-width: 1200px; margin: 0 auto 80px; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
   }
   @media (max-width: 768px) {
-    .updates-section {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-bottom: 60px;
-      padding: 0 20px;
-    }
+    .updates-section { grid-template-columns: 1fr; gap: 24px; margin-bottom: 60px; padding: 0 20px; }
   }
-  @media (max-width: 480px) {
-    .updates-section { padding: 0 16px; gap: 20px; margin-bottom: 40px; }
-  }
+  @media (max-width: 480px) { .updates-section { padding: 0 16px; gap: 20px; margin-bottom: 40px; } }
 
   .update-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.05); transition: all 0.3s; }
   @media (max-width: 480px) { .update-card { border-radius: 16px; } }
