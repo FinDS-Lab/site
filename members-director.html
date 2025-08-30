@@ -1515,44 +1515,46 @@ permalink: /members-director.html
      '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
  }
  
- function openMenteeModal(menteeId) {
-   const mentee = MENTEES[menteeId];
-   if (!mentee) {
-     console.error('Mentee not found:', menteeId);
-     return;
-   }
+  function openMenteeModal(menteeId) {
+    const mentee = MENTEES[menteeId];
+    if (!mentee) {
+      console.error('Mentee not found:', menteeId);
+      return;
+    }
 
-   document.getElementById('menteeModalName').textContent = mentee.name;
+    document.getElementById('menteeModalName').textContent = mentee.name;
 
-   const modalBody = document.getElementById('menteeModalBody');
-   modalBody.innerHTML = `
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">🏫</span>
-       <span class="mentee-info-label">University</span>
-       <span class="mentee-info-value">${mentee.university}</span>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">📚</span>
-       <span class="mentee-info-label">Department</span>
-       <span class="mentee-info-value">${mentee.department}</span>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">📅</span>
-       <span class="mentee-info-label">Entry Year</span>
-       <span class="mentee-info-value">${mentee.entryYear}</span>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">🎗</span>
-       <span class="mentee-info-label">Participation Years</span>
-       <div class="participation-years">
-         ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
-       </div>
-     </div>
-   `;
+    const modalBody = document.getElementById('menteeModalBody');
+    modalBody.innerHTML = `
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">🏫</span>
+        <span class="mentee-info-label">University</span>
+        <span class="mentee-info-value">${mentee.university}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">📚</span>
+        <span class="mentee-info-label">Department</span>
+        <span class="mentee-info-value">${mentee.department}</span>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">📅</span>
+        <span class="mentee-info-label">Entry Year</span>
+        <div class="participation-years">
+          <span class="participation-year">${mentee.entryYear}</span>
+        </div>
+      </div>
+      <div class="mentee-info-row">
+        <span class="mentee-info-icon">⭐</span>
+        <span class="mentee-info-label">Participation Years</span>
+        <div class="participation-years">
+          ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
+        </div>
+      </div>
+    `;
 
-   document.getElementById('menteeModal').classList.add('show');
-   document.body.style.overflow = 'hidden';
- }
+    document.getElementById('menteeModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
 
  function closeMenteeModal(event) {
    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
@@ -1890,4 +1892,5 @@ permalink: /members-director.html
    });
  }
 </script>
+
 
