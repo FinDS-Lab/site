@@ -6,1731 +6,1402 @@ permalink: /members-director.html
 
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <style>
-    :root {
-      --gold: rgb(214, 177, 77);
-      --gold-mid: rgb(234, 197, 97);
-      --gold-dark: rgb(194, 157, 57);
-    }
+ <style>
+   :root {
+     --gold: rgb(214, 177, 77);
+     --gold-mid: rgb(234, 197, 97);
+     --gold-dark: rgb(194, 157, 57);
+   }
 
-    /* Banner */
-    .banner-section {
-      background: linear-gradient(
-        135deg,
-        var(--gold) 0%,
-        var(--gold-mid) 25%,
-        var(--gold-dark) 50%,
-        var(--gold) 75%,
-        var(--gold-mid) 100%
-      );
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      position: relative;
-      overflow: hidden;
-      min-height: 200px;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      cursor: pointer;
-    }
+   /* Banner */
+   .banner-section {
+     background: linear-gradient(
+       135deg,
+       var(--gold) 0%,
+       var(--gold-mid) 25%,
+       var(--gold-dark) 50%,
+       var(--gold) 75%,
+       var(--gold-mid) 100%
+     );
+     background-size: 400% 400%;
+     animation: gradientShift 15s ease infinite;
+     position: relative;
+     overflow: hidden;
+     min-height: 200px;
+     border-radius: 1rem;
+     box-shadow: 0 10px 30px rgba(0,0,0,.08);
+     cursor: pointer;
+   }
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+   @keyframes gradientShift {
+     0% { background-position: 0% 50%; }
+     50% { background-position: 100% 50%; }
+     100% { background-position: 0% 50%; }
+   }
 
-    /* Burst container */
-    .network-burst {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      pointer-events: none;
-      opacity: 0;
-      animation: burstAnimation 2s ease-out forwards;
-    }
+   /* Burst container */
+   .network-burst {
+     position: absolute;
+     width: 200px;
+     height: 200px;
+     pointer-events: none;
+     opacity: 0;
+     animation: burstAnimation 2s ease-out forwards;
+   }
 
-    @keyframes burstAnimation {
-      0% {
-        opacity: 0;
-        transform: scale(.3) rotate(0deg);
-      }
-      30% {
-        opacity: .85;
-      }
-      100% {
-        opacity: 0;
-        transform: scale(2) rotate(180deg);
-      }
-    }
+   @keyframes burstAnimation {
+     0% {
+       opacity: 0;
+       transform: scale(.3) rotate(0deg);
+     }
+     30% {
+       opacity: .85;
+     }
+     100% {
+       opacity: 0;
+       transform: scale(2) rotate(180deg);
+     }
+   }
 
-    .network-burst svg {
-      width: 100%;
-      height: 100%;
-    }
+   .network-burst svg {
+     width: 100%;
+     height: 100%;
+   }
 
-    .burst-line {
-      stroke: rgba(255,255,255,.8);
-      stroke-width: 1.5;
-      fill: none;
-    }
+   .burst-line {
+     stroke: rgba(255,255,255,.8);
+     stroke-width: 1.5;
+     fill: none;
+   }
 
-    .burst-dot {
-      fill: rgba(255,255,255,.95);
-    }
+   .burst-dot {
+     fill: rgba(255,255,255,.95);
+   }
 
-    /* Banner content */
-    .banner-content {
-      position: relative;
-      z-index: 10;
-      padding: 32px 24px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      min-height: 200px;
-    }
+   /* Banner content */
+   .banner-content {
+     position: relative;
+     z-index: 10;
+     padding: 32px 24px;
+     display: flex;
+     align-items: flex-end;
+     justify-content: flex-start;
+     min-height: 200px;
+   }
 
-    .banner-breadcrumbs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .5rem;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+   .banner-breadcrumbs {
+     display: flex;
+     flex-wrap: wrap;
+     gap: .5rem;
+     align-items: center;
+     font-size: 13px;
+     font-weight: 600;
+     margin-bottom: 8px;
+   }
 
-    .banner-breadcrumbs a {
-      color: rgba(255,255,255,.92);
-      text-decoration: none;
-      transition: color .2s;
-    }
+   .banner-breadcrumbs a {
+     color: rgba(255,255,255,.92);
+     text-decoration: none;
+     transition: color .2s;
+   }
 
-    .banner-breadcrumbs a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
+   .banner-breadcrumbs a:hover {
+     color: #fff;
+     text-decoration: underline;
+   }
 
-    .banner-breadcrumbs .sep {
-      color: rgba(255,255,255,.8);
-    }
+   .banner-breadcrumbs .sep {
+     color: rgba(255,255,255,.8);
+   }
 
-    .banner-breadcrumbs span:not(.sep):not(a) {
-      color: #fff;
-      font-weight: 800;
-    }
+   .banner-breadcrumbs span:not(.sep):not(a) {
+     color: #fff;
+     font-weight: 800;
+   }
 
-    .banner-title {
-      font-size: 2.25rem;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,.12);
-      letter-spacing: -.02em;
-      margin: 0;
-    }
+   .banner-title {
+     font-size: 2.25rem;
+     font-weight: 900;
+     color: #fff;
+     text-shadow: 0 2px 4px rgba(0,0,0,.12);
+     letter-spacing: -.02em;
+     margin: 0;
+   }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .banner-content {
-        padding: 24px 18px;
-        min-height: 160px;
-      }
-      .banner-section {
-        min-height: 160px;
-      }
-      .banner-title {
-        font-size: 1.9rem;
-      }
-      .banner-breadcrumbs {
-        font-size: 12px;
-      }
-    }
+   /* Responsive */
+   @media (max-width: 768px) {
+     .banner-content {
+       padding: 24px 18px;
+       min-height: 160px;
+     }
+     .banner-section {
+       min-height: 160px;
+     }
+     .banner-title {
+       font-size: 1.9rem;
+     }
+     .banner-breadcrumbs {
+       font-size: 12px;
+     }
+   }
 
-    @media (max-width: 480px) {
-      .banner-content {
-        padding: 20px 16px;
-        min-height: 130px;
-      }
-      .banner-section {
-        min-height: 130px;
-      }
-      .banner-title {
-        font-size: 1.6rem;
-      }
-      .banner-breadcrumbs {
-        font-size: 11px;
-      }
-    }
-  </style>
+   @media (max-width: 480px) {
+     .banner-content {
+       padding: 20px 16px;
+       min-height: 130px;
+     }
+     .banner-section {
+       min-height: 130px;
+     }
+     .banner-title {
+       font-size: 1.6rem;
+     }
+     .banner-breadcrumbs {
+       font-size: 11px;
+     }
+   }
+ </style>
 
-  <div class="banner-section" onclick="createNetworkBurst(event, this)">
-    <div class="banner-content">
-      <div>
-        <nav aria-label="Breadcrumb" class="banner-breadcrumbs" onclick="event.stopPropagation()">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <span class="sep">›</span>
-          <a href="{{ '/members-current.html' | relative_url }}">Members</a>
-          <span class="sep">›</span>
-          <span aria-current="page">Director</span>
-        </nav>
-        <h1 class="banner-title">Director</h1>
-      </div>
-    </div>
-  </div>
+ <div class="banner-section" onclick="createNetworkBurst(event, this)">
+   <div class="banner-content">
+     <div>
+       <nav aria-label="Breadcrumb" class="banner-breadcrumbs" onclick="event.stopPropagation()">
+         <a href="{{ '/' | relative_url }}">Home</a>
+         <span class="sep">›</span>
+         <a href="{{ '/members-current.html' | relative_url }}">Members</a>
+         <span class="sep">›</span>
+         <span aria-current="page">Director</span>
+       </nav>
+       <h1 class="banner-title">Director</h1>
+     </div>
+   </div>
+ </div>
 </section>
 
 <script>
-  /* Interactive gold burst (cards suits) */
-  function createNetworkBurst(event, element) {
-    const rect = element.getBoundingClientRect();
-    const x = event.clientX - rect.left - 100;
-    const y = event.clientY - rect.top - 100;
+ /* Interactive gold burst (cards suits) */
+ function createNetworkBurst(event, element) {
+   const rect = element.getBoundingClientRect();
+   const x = event.clientX - rect.left - 100;
+   const y = event.clientY - rect.top - 100;
 
-    const networkDiv = document.createElement('div');
-    networkDiv.className = 'network-burst';
-    networkDiv.style.left = x + 'px';
-    networkDiv.style.top = y + 'px';
+   const networkDiv = document.createElement('div');
+   networkDiv.className = 'network-burst';
+   networkDiv.style.left = x + 'px';
+   networkDiv.style.top = y + 'px';
 
-    const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    networkDiv.innerHTML = randomPattern();
+   const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
+   const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+   networkDiv.innerHTML = randomPattern();
 
-    element.appendChild(networkDiv);
-    setTimeout(()=> element.removeChild(networkDiv), 2000);
-  }
+   element.appendChild(networkDiv);
+   setTimeout(()=> element.removeChild(networkDiv), 2000);
+ }
 
-  /* Heart */
-  function generateHeartNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
-    svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
-    
-    const nodes = [
-      {x:70,y:35},{x:130,y:35},
-      {x:40,y:70},{x:160,y:70},
-      {x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}
-    ];
-    const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
-    
-    connections.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`);
-    nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`);
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Heart */
+ function generateHeartNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+   svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
+   
+   const nodes = [
+     {x:70,y:35},{x:130,y:35},
+     {x:40,y:70},{x:160,y:70},
+     {x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}
+   ];
+   const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+   
+   connections.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`);
+   nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`);
+   
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Club */
-  function generateClubNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const circles = [{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
-    circles.forEach(c=> svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`);
-    svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
-    
-    const nodes=[];
-    circles.forEach(c=>{
-      for(let i=0;i<6;i++){
-        const a=i*2*Math.PI/6;
-        nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)});
-      }
-    });
-    nodes.push({x:100,y:100},{x:100,y:140});
-    
-    for(let i=0;i<nodes.length;i++){
-      for(let j=i+1;j<nodes.length;j++){
-        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.hypot(dx,dy);
-        if(d<40){
-          svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-d/40)*0.4}"/>`;
-        }
-      }
-    }
-    
-    nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`);
-    svg += '</svg>';
-    return svg;
-  }
+ /* Club */
+ function generateClubNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const circles = [{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
+   circles.forEach(c=> svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`);
+   svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+   
+   const nodes=[];
+   circles.forEach(c=>{
+     for(let i=0;i<6;i++){
+       const a=i*2*Math.PI/6;
+       nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)});
+     }
+   });
+   nodes.push({x:100,y:100},{x:100,y:140});
+   
+   for(let i=0;i<nodes.length;i++){
+     for(let j=i+1;j<nodes.length;j++){
+       const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.hypot(dx,dy);
+       if(d<40){
+         svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-d/40)*0.4}"/>`;
+       }
+     }
+   }
+   
+   nodes.forEach(n=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`);
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Spade */
-  function generateSpadeNetwork() {
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
-    svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
-    svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
-    svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
-    
-    const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
-    const conn=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
-    
-    conn.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`);
-    nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0||i===7)?4:3}" class="burst-dot"/>`);
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Spade */
+ function generateSpadeNetwork() {
+   let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+   svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
+   svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
+   svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+   
+   const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
+   const conn=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+   
+   conn.forEach(([f,t])=> svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`);
+   nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0||i===7)?4:3}" class="burst-dot"/>`);
+   
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Diamond */
-  function generateDiamondNetwork() {
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const diamond='M100,40 L140,100 L100,160 L60,100 Z';
-    svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
-    svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
-    svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
-    svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
-    svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
-    
-    const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
-    
-    for(let i=0;i<4;i++){
-      svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`;
-    }
-    
-    nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${i<4?4:(i===4?5:2.5)}" class="burst-dot" opacity="${i===4?1:.85}"/>`);
-    
-    for(let i=0;i<4;i++){
-      const a=i*Math.PI/2;
-      const x=100+30*Math.cos(a), y=100+30*Math.sin(a);
-      svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`;
-    }
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Diamond */
+ function generateDiamondNetwork() {
+   let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const diamond='M100,40 L140,100 L100,160 L60,100 Z';
+   svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
+   svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
+   svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
+   svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
+   svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
+   
+   const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
+   
+   for(let i=0;i<4;i++){
+     svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`;
+   }
+   
+   nodes.forEach((n,i)=> svg += `<circle cx="${n.x}" cy="${n.y}" r="${i<4?4:(i===4?5:2.5)}" class="burst-dot" opacity="${i===4?1:.85}"/>`);
+   
+   for(let i=0;i<4;i++){
+     const a=i*Math.PI/2;
+     const x=100+30*Math.cos(a), y=100+30*Math.sin(a);
+     svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`;
+   }
+   
+   svg += '</svg>';
+   return svg;
+ }
 </script>
 
 <!-- ===== Styles ===== -->
 <style>
-  /* Word break prevention for Korean/English */
-  * {
-    word-break: keep-all !important;
-    overflow-wrap: anywhere;
-  }
-
-  /* director 페이지 전용 변수 - site.css 오버라이드 */
-  .director-page {
-    --accent: rgb(214, 177, 77) !important; /* Gold로 강제 변경 */
-    --gold:#d6b14d;
-    --gold-light:#eacf7d;
-    --gold-fg:#111827;
-    --red:#ac0e0e;
-    --red-dark:#7f0a0a;
-  }
-
-  /* director 전용 카드 - site.css의 .card 오버라이드 */
-  .director-card {
-    background:#fff !important;
-    border:1px solid #e5e7eb !important;
-    border-radius:16px !important;
-    -webkit-border-radius:16px !important;
-    -moz-border-radius:16px !important;
-    overflow:hidden !important;
-    box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
-    transition:all 0.2s;
-    margin-bottom: 1.5rem;
-    /* site.css의 패딩 오버라이드 */
-    padding: 0 !important;
-  }
-
-  .director-card:hover {
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.08) !important;
-  }
-
-  .card:hover{
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-  }
-
-  .card-head{
-    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    color:var(--gold-fg);
-    font-weight:900;
-    padding:1rem 1.25rem;
-    font-size:18px;
-    position:relative;
-    overflow:hidden;
-  }
-
-  .card-head::after{
-    content:"";
-    position:absolute;
-    top:0;
-    right:-100px;
-    width:200px;
-    height:100%;
-    background:rgba(255,255,255,0.15);
-    transform:skewX(-25deg);
-  }
-
-  .card-body{
-    padding:1.5rem;
-  }
-
-  /* Layout Grid */
-  .main-grid{
-    display:grid;
-    grid-template-columns:340px 1fr;
-    gap:1.5rem;
-  }
-
-  @media (max-width: 968px) {
-    .main-grid{
-      grid-template-columns:1fr;
-      gap:1.5rem;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .main-grid{gap:1rem;}
-    .card{margin-bottom:1rem;}
-    .card-body{padding:1.25rem;}
-    .card-head{padding:0.875rem 1rem;font-size:16px;}
-  }
-
-  /* Profile Sidebar */
-  .profile-photo{
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15);
-  }
-
-  .profile-photo img{
-    width:100%;
-    height:auto;
-    display:block;
-  }
-
-  .profile-info{margin-top:1.5rem;}
-  .profile-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
-  .profile-item:last-child{border-bottom:none;}
-  .profile-emoji{font-size:20px;line-height:1;margin-top:2px;}
-  .profile-content{flex:1;}
-  .profile-label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
-  .profile-value{font-size:14px;color:#111827;font-weight:500;}
-  .profile-value a{color:#3b82f6;text-decoration:none;}
-  .profile-value a:hover{text-decoration:underline;}
-
-  /* Action Buttons */
-  .button-group{display:flex;gap:8px;margin-top:1.5rem;}
-  .action-btn{
-    flex:1;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-    font-size:13px;
-    border-radius:8px;
-    padding:.65rem 1rem;
-    text-decoration:none;
-    transition:all .2s;
-    white-space:nowrap;
-    background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-    color:#fff;
-    border:none;
-    cursor:pointer;
-  }
-
-  .action-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(172,14,14,0.3);
-  }
-
-  /* Publication Stats - Simple 3 column layout */
-  .pub-stats{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    grid-template-rows:auto auto auto auto;
-    gap:10px;
-  }
-
-  /* First row: SCIE, SSCI, A&HCI */
-  .pub-stat.journal-scie {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .pub-stat.journal-ssci {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .pub-stat.journal-ahci {
-    grid-column: 3;
-    grid-row: 1;
-  }
-
-  /* Second row: ESCI, SCOPUS, OTHER INT'L */
-  .pub-stat.journal-esci {
-    grid-column: 1;
-    grid-row: 2;
-  }
-  .pub-stat.journal-scopus {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .pub-stat.journal-other {
-    grid-column: 3;
-    grid-row: 2;
-  }
-
-  /* Third row: INT'L CONF, KCI, DOM CONF */
-  .pub-stat.conf-intl {
-    grid-column: 1;
-    grid-row: 3;
-  }
-  .pub-stat.journal-kci {
-    grid-column: 2;
-    grid-row: 3;
-  }
-  .pub-stat.conf-domestic {
-    grid-column: 3;
-    grid-row: 3;
-  }
-
-  /* Fourth row: Citations (spans full width) */
-  .pub-stat.citation {
-    grid-column: 1/-1;
-    grid-row: 4;
-  }
-
-  .pub-stat{
-    background:#f8fafc;
-    border:1px solid #e5e7eb;
-    border-radius:10px;
-    padding:12px;
-    text-align:center;
-    transition:all .2s;
-    position:relative;
-    word-break:keep-all;
-    overflow-wrap:anywhere;
-  }
-
-  .pub-stat::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    height:3px;
-    border-radius:10px 10px 0 0;
-  }
-
-  /* International categories - Gold colors */
-  .pub-stat.journal-scie::before{background:rgba(214,177,77,1)}
-  .pub-stat.journal-ssci::before{background:rgba(214,177,77,0.95)}
-  .pub-stat.journal-ahci::before{background:rgba(214,177,77,0.9)}
-  .pub-stat.journal-esci::before{background:rgba(214,177,77,0.85)}
-  .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.7)}
-  .pub-stat.journal-other::before{background:rgba(214,177,77,0.55)}
-  .pub-stat.conf-intl::before{background:rgba(214,177,77,0.4)}
-
-  /* Domestic categories - Red colors */
-  .pub-stat.journal-kci::before{background:rgba(172,14,14,0.9)}
-  .pub-stat.conf-domestic::before{background:rgba(172,14,14,0.6)}
-
-  /* Citations - Special gradient */
-  .pub-stat.citation{
-    background:linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(172,14,14,0.05) 100%);
-    border:1px solid rgba(214,177,77,0.2);
-  }
-
-  .pub-stat.citation::before{
-    background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
-  }
-
-  .pub-stat:hover{
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-  }
-
-  .pub-stat-number{
-    font-size:24px;
-    font-weight:900;
-    color:#111827;
-    word-break:keep-all;
-  }
-
-  .pub-stat-label{
-    font-size:11px;
-    color:#6b7280;
-    margin-top:4px;
-    text-transform:uppercase;
-    letter-spacing:.3px;
-    font-weight:700;
-    word-break:keep-all;
-    overflow-wrap:anywhere;
-  }
-
-  /* Tablet - same 3 column layout */
-  @media (max-width: 768px) {
-    .pub-stats{
-      grid-template-columns:repeat(3, 1fr);
-      grid-template-rows:auto auto auto auto;
-      gap:8px;
-    }
-
-    /* Same positioning as desktop */
-    .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-    .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
-    .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
-    .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
-    .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
-    .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
-    .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
-    .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-    .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
-    .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
-
-    .pub-stat{
-      padding:10px;
-    }
-
-    .pub-stat-number{
-      font-size:20px;
-    }
-
-    .pub-stat-label{
-      font-size:10px;
-    }
-  }
-
-  /* Mobile - same 3 column layout */
-  @media (max-width: 480px) {
-    .pub-stats{
-      grid-template-columns:repeat(3, 1fr);
-      grid-template-rows:auto auto auto auto;
-      gap:6px;
-    }
-
-    /* Same positioning as desktop */
-    .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-    .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
-    .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
-    .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
-    .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
-    .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
-    .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
-    .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-    .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
-    .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
-
-    .pub-stat{
-      padding:8px;
-    }
-
-    .pub-stat-number{
-      font-size:18px;
-    }
-
-    .pub-stat-label{
-      font-size:9px;
-      letter-spacing:0;
-    }
-  }
-
-  /* Research Interests - Updated with better toggle design */
-  .ri-item{
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    overflow:hidden;
-    margin-bottom:12px;
-    transition:all .3s;
-  }
-
-  .ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
-
-  .ri-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;cursor:pointer;user-select:none;transition:all .2s;}
-  .ri-header:hover{background:#fef9f3;}
-  .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
-
-  .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:12px;}
-
-  .ri-toggle{
-    width:24px;height:24px;display:flex;align-items:center;justify-content:center;
-    color:var(--gold);font-size:14px;font-weight:900;transition:transform .3s ease;
-    border:2px solid var(--gold);border-radius:50%;background:rgba(214,177,77,0.1);
-  }
-
-  .ri-header.active .ri-toggle{transform:rotate(90deg);background:var(--gold);color:#fff;}
-
-  .ri-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
-  .ri-content.show{max-height:500px;transition:max-height .3s ease-in;}
-
-  .ri-list{padding:16px;list-style:none;}
-  .ri-list li{margin-bottom:12px;padding-left:24px;position:relative;}
-  .ri-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--gold);border-radius:50%;}
-
-  .ri-list-title{font-weight:800;font-size:14px;color:#111827;margin-bottom:4px;}
-  .ri-list-desc{font-size:13px;color:#6b7280;}
-
-  /* Timeline */
-  .timeline{list-style:none;margin:0;padding:0;position:relative;}
-
-  .timeline::before{
-    content:"";position:absolute;left:14px;top:1rem;bottom:1rem;width:3px;
-    background:linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:2px;
-  }
-
-  .timeline > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
-
-  .timeline > li::before{
-    content:"";position:absolute;left:14px;top:1.05rem;width:16px;height:16px;
-    background:var(--red);border-radius:50%;transform:translateX(-50%);
-    box-shadow:0 0 0 3px rgba(172,14,14,.08);z-index:1;
-  }
-
-  .year{font-size:16px;font-weight:900;color:var(--red);}
-  .title{font-weight:900;color:#1f2937;margin-top:8px;}
-  .desc{color:#374151;font-size:14px;margin-top:4px;font-weight:500;}
-  .desc-ko{color:#9ca3af;font-size:12px;margin-top:2px;font-weight:400;}
-
-  /* Timeline with Logo - Modified for Education */
-  .timeline.edu > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
-  
-  .timeline.edu .logo{
-    display:block;
-    width:45px;
-    height:45px;
-    object-fit:contain;
-    border-radius:8px;
-    margin-bottom:10px;
-  }
-  
-  /* Timeline with Logo - For Employment */
-  .timeline.emp > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
-  
-  .timeline.emp .logo{
-    display:block;
-    width:45px;
-    height:45px;
-    object-fit:contain;
-    border-radius:8px;
-    margin-bottom:10px;
-  }
-
-  /* Honors */
-  .honors-section{margin-top:12px;padding:10px 14px;background:#fef9f3;border-radius:8px;border:1px solid rgba(214,177,77,0.2);}
-  .honors-title{display:flex;align-items:center;gap:6px;font-weight:800;font-size:13px;color:#92400e;margin-bottom:6px;}
-  .honors-list{list-style:none;padding:0;margin:0;}
-  .honors-list li{font-size:13px;color:#78350f;padding:2px 0;}
-
-  /* Advisor Section */
-  .advisor-section{
-    margin-top:12px;
-    padding:12px 14px;
-    background:linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(99,102,241,0.05) 100%);
-    border-radius:8px;
-    border:1px solid rgba(59,130,246,0.15);
-  }
-
-  .advisor-title{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-weight:800;
-    font-size:13px;
-    color:#1e40af;
-    margin-bottom:8px;
-  }
-
-  .advisor-info{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-  }
-
-  .advisor-label{
-    font-weight:700;
-    color:#3730a3;
-  }
-
-  .advisor-name{
-    color:#1e40af;
-    text-decoration:none;
-    font-weight:600;
-    padding:3px 8px;
-    background:rgba(59,130,246,0.08);
-    border-radius:6px;
-    transition:all 0.2s;
-  }
-
-  .advisor-name:hover{
-    background:rgba(59,130,246,0.15);
-    transform:translateY(-1px);
-    box-shadow:0 2px 4px rgba(59,130,246,0.2);
-  }
-
-  .advisor-affiliation{
-    color:#64748b;
-    font-size:12px;
-    font-weight:500;
-  }
-
-  .multiple-advisors{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-
-  .advisor-item{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    position:relative;
-    padding-left:20px;
-  }
-
-  .advisor-item::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:50%;
-    transform:translateY(-50%);
-    width:4px;
-    height:4px;
-    background:#3b82f6;
-    border-radius:50%;
-  }
-
-  .advisor-role{
-    font-size:11px;
-    color:#6b7280;
-    font-weight:600;
-    background:#f3f4f6;
-    padding:2px 6px;
-    border-radius:4px;
-  }
-
-  /* Mentoring Program - Modal approach */
-  .mentoring-year{margin-bottom:16px;}
-
-  .mentoring-year-header{
-    display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
-    background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;
-    cursor:pointer;user-select:none;transition:all .2s;
-  }
-
-  .mentoring-year-header:hover{background:#f3f4f6;}
-  .mentoring-year-title{font-weight:900;font-size:15px;color:#111827;}
-  .mentoring-count{background:var(--gold);color:var(--gold-fg);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;}
-  .mentoring-toggle{font-size:12px;transition:transform .2s;}
-  .mentoring-year-header.expanded .mentoring-toggle{transform:rotate(90deg);}
-
-  .mentoring-content{display:none;margin-top:8px;padding:12px;background:#fafbfc;border:1px solid #e5e7eb;border-radius:12px;}
-  .mentoring-content.show{display:block;}
-
-  .mentee-list{display:flex;flex-wrap:wrap;gap:8px;}
-
-  /* Mentee chip with fixed width for alignment */
-  .mentee-chip{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:80px;
-    padding:8px 12px;
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:999px;
-    font-size:14px;
-    font-weight:600;
-    transition:all .2s;
-    cursor:pointer;
-    text-align:center;
-  }
-
-  .mentee-chip:hover{
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
-    transform:translateY(-2px);
-    border-color:var(--gold);
-  }
-
-  .mentee-badge{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:8px;}
-
-  /* Modal Styles */
-  .mentee-modal{
-    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
-    display:none;align-items:center;justify-content:center;z-index:1000;
-    padding:20px;box-sizing:border-box;
-  }
-
-  .mentee-modal.show{display:flex;}
-
-  .mentee-modal-content{
-    background:#fff;border-radius:16px;max-width:400px;width:100%;
-    box-shadow:0 20px 40px rgba(0,0,0,0.2);position:relative;
-    max-height:80vh;overflow-y:auto;
-  }
-
-  .mentee-modal-header{
-    background:linear-gradient(135deg, #d6b14d 0%, #eacf7d 100%);
-    padding:20px;border-radius:16px 16px 0 0;position:relative;
-  }
-
-  .mentee-modal-close{
-    position:absolute;top:15px;right:15px;width:30px;height:30px;
-    border:none;background:rgba(255,255,255,0.2);color:#fff;
-    border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    font-size:18px;font-weight:bold;transition:all .2s;
-  }
-
-  .mentee-modal-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1);}
-
-  .mentee-modal-title{
-    font-size:20px;font-weight:900;color:#fff;text-align:center;
-    text-shadow:0 1px 2px rgba(0,0,0,0.1);margin:0;
-  }
-
-  .mentee-modal-body{padding:24px;}
-
-  .mentee-info-row{
-    display:flex;align-items:center;gap:12px;padding:12px 0;
-    border-bottom:1px solid #f3f4f6;
-  }
-
-  .mentee-info-row:last-child{border-bottom:none;}
-
-  .mentee-info-icon{
-    width:24px;text-align:center;color:var(--gold);font-size:16px;
-  }
-
-  .mentee-info-label{
-    font-weight:700;color:#6b7280;min-width:100px;font-size:14px;
-  }
-
-  .mentee-info-value{
-    color:#111827;font-weight:600;font-size:14px;flex:1;
-  }
-
-  .participation-years{
-    display:flex;gap:6px;flex-wrap:wrap;
-  }
-
-  .participation-year{
-    display:inline-flex;align-items:center;justify-content:center;
-    padding:4px 10px;border-radius:999px;background:var(--gold);
-    font-size:12px;font-weight:800;color:#fff;
-  }
-
-  /* Network Slider */
-  .network-controls{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;}
-  .slider-label{font-size:13px;font-weight:700;color:#6b7280;white-space:nowrap;}
-  .slider-container{flex:1;display:flex;align-items:center;gap:12px;}
-  .network-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;background:#e5e7eb;border-radius:3px;outline:none;}
-
-  .network-slider::-webkit-slider-thumb{
-    -webkit-appearance:none;appearance:none;width:20px;height:20px;
-    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);transition:all .2s;
-  }
-
-  .network-slider::-moz-range-thumb{
-    width:20px;height:20px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);border:none;
-  }
-
-  .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
-
-  /* Enhanced Network Canvas Styles */
-  #networkCanvas{
-    width:100%;
-    height:500px;
-    border-radius:16px;
-    background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
-    margin-top:1rem;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
-  }
-
-  #networkInfo{
-    margin-top:16px;
-    padding:14px;
-    background: linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(234,207,127,0.05) 100%);
-    border-radius:12px;
-    font-size:14px;
-    text-align:center;
-    color:#374151;
-    font-weight:600;
-    border: 1px solid rgba(214,177,77,0.1);
-  }
+ /* Word break prevention for Korean/English */
+ * {
+   word-break: keep-all !important;
+   overflow-wrap: anywhere;
+ }
+
+ /* director 페이지 전용 변수 - site.css 오버라이드 */
+ .director-page {
+   --accent: rgb(214, 177, 77) !important; /* Gold로 강제 변경 */
+   --gold:#d6b14d;
+   --gold-light:#eacf7d;
+   --gold-fg:#111827;
+   --red:#ac0e0e;
+   --red-dark:#7f0a0a;
+ }
+
+ /* director 전용 카드 - site.css의 .card 오버라이드 */
+ .director-card {
+   background:#fff !important;
+   border:1px solid #e5e7eb !important;
+   border-radius:16px !important;
+   -webkit-border-radius:16px !important;
+   -moz-border-radius:16px !important;
+   overflow:hidden !important;
+   box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
+   transition:all 0.2s;
+   margin-bottom: 1.5rem;
+   /* site.css의 패딩 오버라이드 */
+   padding: 0 !important;
+ }
+
+ .director-card:hover {
+   transform:translateY(-2px);
+   box-shadow:0 4px 12px rgba(0,0,0,0.08) !important;
+ }
+
+ .card:hover{
+   box-shadow:0 4px 12px rgba(0,0,0,0.08);
+ }
+
+ .card-head{
+   background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+   color:var(--gold-fg);
+   font-weight:900;
+   padding:1rem 1.25rem;
+   font-size:18px;
+   position:relative;
+   overflow:hidden;
+ }
+
+ .card-head::after{
+   content:"";
+   position:absolute;
+   top:0;
+   right:-100px;
+   width:200px;
+   height:100%;
+   background:rgba(255,255,255,0.15);
+   transform:skewX(-25deg);
+ }
+
+ .card-body{
+   padding:1.5rem;
+ }
+
+ /* Layout Grid */
+ .main-grid{
+   display:grid;
+   grid-template-columns:340px 1fr;
+   gap:1.5rem;
+ }
+
+ @media (max-width: 968px) {
+   .main-grid{
+     grid-template-columns:1fr;
+     gap:1.5rem;
+   }
+ }
+
+ @media (max-width: 640px) {
+   .main-grid{gap:1rem;}
+   .card{margin-bottom:1rem;}
+   .card-body{padding:1.25rem;}
+   .card-head{padding:0.875rem 1rem;font-size:16px;}
+ }
+
+ /* Profile Sidebar */
+ .profile-photo{
+   border-radius:12px;
+   overflow:hidden;
+   box-shadow:0 10px 30px rgba(0,0,0,0.15);
+ }
+
+ .profile-photo img{
+   width:100%;
+   height:auto;
+   display:block;
+ }
+
+ .profile-info{margin-top:1.5rem;}
+ .profile-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
+ .profile-item:last-child{border-bottom:none;}
+ .profile-emoji{font-size:20px;line-height:1;margin-top:2px;}
+ .profile-content{flex:1;}
+ .profile-label{display:block;font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+ .profile-value{font-size:14px;color:#111827;font-weight:500;}
+ .profile-value a{color:#3b82f6;text-decoration:none;}
+ .profile-value a:hover{text-decoration:underline;}
+
+ /* Action Buttons */
+ .button-group{display:flex;gap:8px;margin-top:1.5rem;}
+ .action-btn{
+   flex:1;
+   display:inline-flex;
+   align-items:center;
+   justify-content:center;
+   font-weight:900;
+   font-size:13px;
+   border-radius:8px;
+   padding:.65rem 1rem;
+   text-decoration:none;
+   transition:all .2s;
+   white-space:nowrap;
+   background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+   color:#fff;
+   border:none;
+   cursor:pointer;
+ }
+
+ .action-btn:hover{
+   transform:translateY(-2px);
+   box-shadow:0 4px 12px rgba(172,14,14,0.3);
+ }
+
+ /* Publication Stats - Simple 3 column layout */
+ .pub-stats{
+   display:grid;
+   grid-template-columns:repeat(3, 1fr);
+   grid-template-rows:auto auto auto auto;
+   gap:10px;
+ }
+
+ /* First row: SCIE, SSCI, A&HCI */
+ .pub-stat.journal-scie {
+   grid-column: 1;
+   grid-row: 1;
+ }
+ .pub-stat.journal-ssci {
+   grid-column: 2;
+   grid-row: 1;
+ }
+ .pub-stat.journal-ahci {
+   grid-column: 3;
+   grid-row: 1;
+ }
+
+ /* Second row: ESCI, SCOPUS, OTHER INT'L */
+ .pub-stat.journal-esci {
+   grid-column: 1;
+   grid-row: 2;
+ }
+ .pub-stat.journal-scopus {
+   grid-column: 2;
+   grid-row: 2;
+ }
+ .pub-stat.journal-other {
+   grid-column: 3;
+   grid-row: 2;
+ }
+
+ /* Third row: INT'L CONF, KCI, DOM CONF */
+ .pub-stat.conf-intl {
+   grid-column: 1;
+   grid-row: 3;
+ }
+ .pub-stat.journal-kci {
+   grid-column: 2;
+   grid-row: 3;
+ }
+ .pub-stat.conf-domestic {
+   grid-column: 3;
+   grid-row: 3;
+ }
+
+ /* Fourth row: Citations (spans full width) */
+ .pub-stat.citation {
+   grid-column: 1/-1;
+   grid-row: 4;
+ }
+
+ .pub-stat{
+   background:#f8fafc;
+   border:1px solid #e5e7eb;
+   border-radius:10px;
+   padding:12px;
+   text-align:center;
+   transition:all .2s;
+   position:relative;
+   word-break:keep-all;
+   overflow-wrap:anywhere;
+ }
+
+ .pub-stat::before{
+   content:"";
+   position:absolute;
+   top:0;
+   left:0;
+   right:0;
+   height:3px;
+   border-radius:10px 10px 0 0;
+ }
+
+ /* International categories - Gold colors */
+ .pub-stat.journal-scie::before{background:rgba(214,177,77,1)}
+ .pub-stat.journal-ssci::before{background:rgba(214,177,77,0.95)}
+ .pub-stat.journal-ahci::before{background:rgba(214,177,77,0.9)}
+ .pub-stat.journal-esci::before{background:rgba(214,177,77,0.85)}
+ .pub-stat.journal-scopus::before{background:rgba(214,177,77,0.7)}
+ .pub-stat.journal-other::before{background:rgba(214,177,77,0.55)}
+ .pub-stat.conf-intl::before{background:rgba(214,177,77,0.4)}
+
+ /* Domestic categories - Red colors */
+ .pub-stat.journal-kci::before{background:rgba(172,14,14,0.9)}
+ .pub-stat.conf-domestic::before{background:rgba(172,14,14,0.6)}
+
+ /* Citations - Special gradient */
+ .pub-stat.citation{
+   background:linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(172,14,14,0.05) 100%);
+   border:1px solid rgba(214,177,77,0.2);
+ }
+
+ .pub-stat.citation::before{
+   background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
+ }
+
+ .pub-stat:hover{
+   transform:translateY(-2px);
+   box-shadow:0 4px 12px rgba(0,0,0,0.1);
+ }
+
+ .pub-stat-number{
+   font-size:24px;
+   font-weight:900;
+   color:#111827;
+   word-break:keep-all;
+ }
+
+ .pub-stat-label{
+   font-size:11px;
+   color:#6b7280;
+   margin-top:4px;
+   text-transform:uppercase;
+   letter-spacing:.3px;
+   font-weight:700;
+   word-break:keep-all;
+   overflow-wrap:anywhere;
+ }
+
+ /* Tablet - same 3 column layout */
+ @media (max-width: 768px) {
+   .pub-stats{
+     grid-template-columns:repeat(3, 1fr);
+     grid-template-rows:auto auto auto auto;
+     gap:8px;
+   }
+
+   /* Same positioning as desktop */
+   .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+   .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+   .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
+   .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+   .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+   .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
+   .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+   .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+   .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
+   .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
+
+   .pub-stat{
+     padding:10px;
+   }
+
+   .pub-stat-number{
+     font-size:20px;
+   }
+
+   .pub-stat-label{
+     font-size:10px;
+   }
+ }
+
+ /* Mobile - same 3 column layout */
+ @media (max-width: 480px) {
+   .pub-stats{
+     grid-template-columns:repeat(3, 1fr);
+     grid-template-rows:auto auto auto auto;
+     gap:6px;
+   }
+
+   /* Same positioning as desktop */
+   .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+   .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+   .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
+   .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+   .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+   .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
+   .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+   .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+   .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
+   .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
+
+   .pub-stat{
+     padding:8px;
+   }
+
+   .pub-stat-number{
+     font-size:18px;
+   }
+
+   .pub-stat-label{
+     font-size:9px;
+     letter-spacing:0;
+   }
+ }
+
+ /* Research Interests - Updated with better toggle design */
+ .ri-item{
+   border:1px solid #e5e7eb;
+   border-radius:12px;
+   overflow:hidden;
+   margin-bottom:12px;
+   transition:all .3s;
+ }
+
+ .ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
+
+ .ri-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;cursor:pointer;user-select:none;transition:all .2s;}
+ .ri-header:hover{background:#fef9f3;}
+ .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
+
+ .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:12px;}
+
+ .ri-toggle{
+   width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+   color:var(--gold);font-size:14px;font-weight:900;transition:transform .3s ease;
+   border:2px solid var(--gold);border-radius:50%;background:rgba(214,177,77,0.1);
+ }
+
+ .ri-header.active .ri-toggle{transform:rotate(90deg);background:var(--gold);color:#fff;}
+
+ .ri-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
+ .ri-content.show{max-height:500px;transition:max-height .3s ease-in;}
+
+ .ri-list{padding:16px;list-style:none;}
+ .ri-list li{margin-bottom:12px;padding-left:24px;position:relative;}
+ .ri-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;background:var(--gold);border-radius:50%;}
+
+ .ri-list-title{font-weight:800;font-size:14px;color:#111827;margin-bottom:4px;}
+ .ri-list-desc{font-size:13px;color:#6b7280;}
+
+ /* Timeline */
+ .timeline{list-style:none;margin:0;padding:0;position:relative;}
+
+ .timeline::before{
+   content:"";position:absolute;left:14px;top:1rem;bottom:1rem;width:3px;
+   background:linear-gradient(180deg, var(--gold) 0%, var(--gold-light) 100%);
+   border-radius:2px;
+ }
+
+ .timeline > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
+
+ .timeline > li::before{
+   content:"";position:absolute;left:14px;top:1.05rem;width:16px;height:16px;
+   background:var(--red);border-radius:50%;transform:translateX(-50%);
+   box-shadow:0 0 0 3px rgba(172,14,14,.08);z-index:1;
+ }
+
+ .year{font-size:16px;font-weight:900;color:var(--red);}
+ .title{font-weight:900;color:#1f2937;margin-top:8px;}
+ .desc{color:#374151;font-size:14px;margin-top:4px;font-weight:500;}
+ .desc-ko{color:#9ca3af;font-size:12px;margin-top:2px;font-weight:400;}
+
+ /* Timeline with Logo - Modified for Education */
+ .timeline.edu > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
+ 
+ .timeline.edu .logo{
+   display:block;
+   width:45px;
+   height:45px;
+   object-fit:contain;
+   border-radius:8px;
+   margin-bottom:10px;
+ }
+ 
+ /* Timeline with Logo - For Employment */
+ .timeline.emp > li{position:relative;padding-left:48px;padding-bottom:1.75rem;}
+ 
+ .timeline.emp .logo{
+   display:block;
+   width:45px;
+   height:45px;
+   object-fit:contain;
+   border-radius:8px;
+   margin-bottom:10px;
+ }
+
+ /* Honors */
+ .honors-section{margin-top:12px;padding:10px 14px;background:#fef9f3;border-radius:8px;border:1px solid rgba(214,177,77,0.2);}
+ .honors-title{display:flex;align-items:center;gap:6px;font-weight:800;font-size:13px;color:#92400e;margin-bottom:6px;}
+ .honors-list{list-style:none;padding:0;margin:0;}
+ .honors-list li{font-size:13px;color:#78350f;padding:2px 0;}
+
+ /* Advisor Section */
+ .advisor-section{
+   margin-top:12px;
+   padding:12px 14px;
+   background:linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(99,102,241,0.05) 100%);
+   border-radius:8px;
+   border:1px solid rgba(59,130,246,0.15);
+ }
+
+ .advisor-title{
+   display:flex;
+   align-items:center;
+   gap:6px;
+   font-weight:800;
+   font-size:13px;
+   color:#1e40af;
+   margin-bottom:8px;
+ }
+
+ .advisor-info{
+   display:flex;
+   align-items:center;
+   gap:8px;
+   font-size:13px;
+ }
+
+ .advisor-label{
+   font-weight:700;
+   color:#3730a3;
+ }
+
+ .advisor-name{
+   color:#1e40af;
+   text-decoration:none;
+   font-weight:600;
+   padding:3px 8px;
+   background:rgba(59,130,246,0.08);
+   border-radius:6px;
+   transition:all 0.2s;
+ }
+
+ .advisor-name:hover{
+   background:rgba(59,130,246,0.15);
+   transform:translateY(-1px);
+   box-shadow:0 2px 4px rgba(59,130,246,0.2);
+ }
+
+ .advisor-affiliation{
+   color:#64748b;
+   font-size:12px;
+   font-weight:500;
+ }
+
+ .multiple-advisors{
+   display:flex;
+   flex-direction:column;
+   gap:10px;
+ }
+
+ .advisor-item{
+   display:flex;
+   align-items:center;
+   gap:8px;
+   position:relative;
+   padding-left:20px;
+ }
+
+ .advisor-item::before{
+   content:"";
+   position:absolute;
+   left:0;
+   top:50%;
+   transform:translateY(-50%);
+   width:4px;
+   height:4px;
+   background:#3b82f6;
+   border-radius:50%;
+ }
+
+ .advisor-role{
+   font-size:11px;
+   color:#6b7280;
+   font-weight:600;
+   background:#f3f4f6;
+   padding:2px 6px;
+   border-radius:4px;
+ }
+
+ /* Mentoring Program - Modal approach */
+ .mentoring-year{margin-bottom:16px;}
+
+ .mentoring-year-header{
+   display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+   background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;
+   cursor:pointer;user-select:none;transition:all .2s;
+ }
+
+ .mentoring-year-header:hover{background:#f3f4f6;}
+ .mentoring-year-title{font-weight:900;font-size:15px;color:#111827;}
+ .mentoring-count{background:var(--gold);color:var(--gold-fg);padding:2px 8px;border-radius:999px;font-size:12px;font-weight:700;}
+ .mentoring-toggle{font-size:12px;transition:transform .2s;}
+ .mentoring-year-header.expanded .mentoring-toggle{transform:rotate(90deg);}
+
+ .mentoring-content{display:none;margin-top:8px;padding:12px;background:#fafbfc;border:1px solid #e5e7eb;border-radius:12px;}
+ .mentoring-content.show{display:block;}
+
+ .mentee-list{display:flex;flex-wrap:wrap;gap:8px;}
+
+ /* Mentee chip with fixed width for alignment */
+ .mentee-chip{
+   position:relative;
+   display:inline-flex;
+   align-items:center;
+   justify-content:center;
+   min-width:80px;
+   padding:8px 12px;
+   background:#fff;
+   border:1px solid #e5e7eb;
+   border-radius:999px;
+   font-size:14px;
+   font-weight:600;
+   transition:all .2s;
+   cursor:pointer;
+   text-align:center;
+ }
+
+ .mentee-chip:hover{
+   box-shadow:0 4px 12px rgba(0,0,0,0.15);
+   transform:translateY(-2px);
+   border-color:var(--gold);
+ }
+
+ .mentee-badge{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:8px;}
+
+ /* Modal Styles */
+ .mentee-modal{
+   position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+   display:none;align-items:center;justify-content:center;z-index:1000;
+   padding:20px;box-sizing:border-box;
+ }
+
+ .mentee-modal.show{display:flex;}
+
+ .mentee-modal-content{
+   background:#fff;border-radius:16px;max-width:400px;width:100%;
+   box-shadow:0 20px 40px rgba(0,0,0,0.2);position:relative;
+   max-height:80vh;overflow-y:auto;
+ }
+
+ .mentee-modal-header{
+   background:linear-gradient(135deg, #d6b14d 0%, #eacf7d 100%);
+   padding:20px;border-radius:16px 16px 0 0;position:relative;
+ }
+
+ .mentee-modal-close{
+   position:absolute;top:15px;right:15px;width:30px;height:30px;
+   border:none;background:rgba(255,255,255,0.2);color:#fff;
+   border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;
+   font-size:18px;font-weight:bold;transition:all .2s;
+ }
+
+ .mentee-modal-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1);}
+
+ .mentee-modal-title{
+   font-size:20px;font-weight:900;color:#fff;text-align:center;
+   text-shadow:0 1px 2px rgba(0,0,0,0.1);margin:0;
+ }
+
+ .mentee-modal-body{padding:24px;}
+
+ .mentee-info-row{
+   display:flex;align-items:center;gap:12px;padding:12px 0;
+   border-bottom:1px solid #f3f4f6;
+ }
+
+ .mentee-info-row:last-child{border-bottom:none;}
+
+ .mentee-info-icon{
+   width:24px;text-align:center;color:var(--gold);font-size:16px;
+ }
+
+ .mentee-info-label{
+   font-weight:700;color:#6b7280;min-width:100px;font-size:14px;
+ }
+
+ .mentee-info-value{
+   color:#111827;font-weight:600;font-size:14px;flex:1;
+ }
+
+ .participation-years{
+   display:flex;gap:6px;flex-wrap:wrap;
+ }
+
+ .participation-year{
+   display:inline-flex;align-items:center;justify-content:center;
+   padding:4px 10px;border-radius:999px;background:var(--gold);
+   font-size:12px;font-weight:800;color:#fff;
+ }
+
+ /* Network Slider */
+ .network-controls{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px;background:#f8f9fa;border-radius:8px;}
+ .slider-label{font-size:13px;font-weight:700;color:#6b7280;white-space:nowrap;}
+ .slider-container{flex:1;display:flex;align-items:center;gap:12px;}
+ .network-slider{flex:1;-webkit-appearance:none;appearance:none;height:6px;background:#e5e7eb;border-radius:3px;outline:none;}
+
+ .network-slider::-webkit-slider-thumb{
+   -webkit-appearance:none;appearance:none;width:20px;height:20px;
+   background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+   border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);transition:all .2s;
+ }
+
+ .network-slider::-moz-range-thumb{
+   width:20px;height:20px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+   border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(214,177,77,0.3);border:none;
+ }
+
+ .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
+
+ /* Enhanced Network Canvas Styles */
+ #networkCanvas{
+   width:100%;
+   height:500px;
+   border-radius:16px;
+   background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
+   margin-top:1rem;
+   box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+ }
+
+ #networkInfo{
+   margin-top:16px;
+   padding:14px;
+   background: linear-gradient(135deg, rgba(214,177,77,0.05) 0%, rgba(234,207,127,0.05) 100%);
+   border-radius:12px;
+   font-size:14px;
+   text-align:center;
+   color:#374151;
+   font-weight:600;
+   border: 1px solid rgba(214,177,77,0.1);
+ }
 </style>
 
 <!-- ===== Main Content ===== -->
 <section class="director-page max-w-7xl mx-auto px-4 pb-8">
-  <div class="main-grid" style="margin-top:2rem;">
-    
-    <!-- Profile Sidebar -->
-    <aside>
-      <div class="director-card">
-        <div class="card-head">Profile</div>
-        <div class="card-body">
-          <div class="profile-photo">
-            <img src="{{ '/assets/img/members/director.jpg' | relative_url }}" alt="Insu Choi" 
-                 onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
-          </div>
-          
-          <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
-          <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
-          
-          <div class="profile-info">
-            <div class="profile-item">
-              <span class="profile-emoji">👨‍🏫</span>
-              <div class="profile-content">
-                <span class="profile-label">Position</span>
-                <span class="profile-value">Director, FINDS Lab</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">🏛️</span>
-              <div class="profile-content">
-                <span class="profile-label">Affiliation</span>
-                <span class="profile-value">Assistant Professor, DWU</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📍</span>
-              <div class="profile-content">
-                <span class="profile-label">Office</span>
-                <span class="profile-value">Sungin Hall · Room 702</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📧</span>
-              <div class="profile-content">
-                <span class="profile-label">E-mail</span>
-                <span class="profile-value">
-                  <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="button-group">
-            <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
-            <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-    
-    <!-- Main Content -->
-    <main>
-      <!-- Introduction -->
-      <div class="director-card">
-        <div class="card-head">Introduction</div>
-        <div class="card-body">
-          <p style="line-height:1.8; color:#374151;">
-            My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
-            with a particular focus on <b>integrating data science and financial engineering</b> to address <b>real-world financial challenges</b>.
-          </p>
-          <p style="line-height:1.8; color:#374151; margin-top:1rem;">
-            Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
-            <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
-          </p>
-        </div>
-      </div>
-      
-      <!-- Research Interests -->
-      <div class="director-card">
-        <div class="card-head">Research Interests</div>
-        <div class="card-body">
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-toggle">▶</span>
-                <span>Financial Data Science</span>
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">AI in Quantitative Finance & Asset Management</div>
-                  <div class="ri-list-desc">인공지능 기반 포트폴리오 최적화, 자산 배분, 알고리즘 트레이딩</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Financial Time-Series Modeling & Forecasting</div>
-                  <div class="ri-list-desc">변동성 예측, 국면 전환 모형, 선후행 관계 분석, 수익률 예측</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Household Finance & Behavioral Decision Modeling</div>
-                  <div class="ri-list-desc">가계 금융, 투자자 행동 분석, 행동재무학적 의사결정 모형화</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-toggle">▶</span>
-                <span>Business Analytics</span>
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">Cross-Domain Analytics: Risk, Customers, Performance, Markets</div>
-                  <div class="ri-list-desc">도메인별 위험 관리, 고객 분석, 성과 평가, 시장 인사이트 도출</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Data Visualization & Interpretability in Business Analytics</div>
-                  <div class="ri-list-desc">복잡한 데이터를 직관적으로 전달하는 데이터 시각화 및 해석 가능성 강화</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Business Insights from AI Methods: Time-Series Models, Graph-Based Models, and NLP</div>
-                  <div class="ri-list-desc">시계열 모형, 그래프 기반 분석, 자연어 처리(NLP) 등 AI 기법을 활용한 비즈니스 인사이트</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="ri-item">
-            <div class="ri-header" onclick="toggleRI(this)">
-              <div class="ri-title">
-                <span class="ri-toggle">▶</span>
-                <span>Data-Inspired Decision Making</span>
-              </div>
-            </div>
-            <div class="ri-content">
-              <ul class="ri-list">
-                <li>
-                  <div class="ri-list-title">Graph-Based Decision Systems & Optimization</div>
-                  <div class="ri-list-desc">그래프 구조와 최적화를 활용한 이해 가능한 의사결정 시스템</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Risk-Aware & User-Friendly Decision Tools</div>
-                  <div class="ri-list-desc">금융·경영 위험을 반영하고 사용자 친화적인 스마트 의사결정 도구</div>
-                </li>
-                <li>
-                  <div class="ri-list-title">Decision Analytics for Complex Business Problems</div>
-                  <div class="ri-list-desc">복잡한 경영 및 투자 의사결정 문제 해결을 위한 최적화 및 분석 방법론</div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Education -->
-      <div class="director-card">
-        <div class="card-head">Education</div>
-        <div class="card-body">
-          <ul class="timeline edu">
-            <li>
-              <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2025.02.</div>
-              <div class="title">Ph.D. in Engineering</div>
-              <div class="desc">Industrial and Systems Engineering, KAIST</div>
-              <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
-              
-              <div class="advisor-section">
-                <div class="advisor-title">
-                  <span>👨‍🏫</span>
-                  <span>Advisor</span>
-                </div>
-                <div class="advisor-info">
-                  <span class="advisor-label">Prof.</span>
-                  <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                    Woo Chang Kim
-                  </a>
-                  <span class="advisor-affiliation">(KAIST)</span>
-                </div>
-              </div>
-              
-              <div class="honors-section">
-                <div class="honors-title">
-                  <span>🏆</span>
-                  <span>Honors</span>
-                </div>
-                <ul class="honors-list">
-                  <li><b>Best Doctoral Dissertation Award</b>, Korean Operations Research and Management Science Society (KORMS)</li>
-                </ul>
-              </div>
-            </li>
-            
-            <li>
-              <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2021.02.</div>
-              <div class="title">Master of Science</div>
-              <div class="desc">Industrial and Systems Engineering, KAIST</div>
-              <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
-              
-              <div class="advisor-section">
-                <div class="advisor-title">
-                  <span>👨‍🏫</span>
-                  <span>Advisor</span>
-                </div>
-                <div class="advisor-info">
-                  <span class="advisor-label">Prof.</span>
-                  <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
-                    Woo Chang Kim
-                  </a>
-                  <span class="advisor-affiliation">(KAIST)</span>
-                </div>
-              </div>
-              
-              <div class="honors-section">
-                <div class="honors-title">
-                  <span>🏆</span>
-                  <span>Honors</span>
-                </div>
-                <ul class="honors-list">
-                  <li><b>Best Master Thesis Award</b>, Korean Institute of Industrial Engineers (KIIE)</li>
-                </ul>
-              </div>
-            </li>
-            
-            <li>
-              <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2018.02.</div>
-              <div class="title">Bachelor of Engineering</div>
-              <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
-              <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
-              
-              <div class="advisor-section">
-                <div class="advisor-title">
-                  <span>👨‍🏫</span>
-                  <span>Advisors</span>
-                </div>
-                <div style="margin-left: 20px;">
-                  <div style="margin-bottom: 12px;">
-                    <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">Academic Advisor, 2nd Thesis Supervisor</div>
-                    <div style="font-size: 13px;">
-                      <span style="font-weight: 700; color: #3730a3;">Prof.</span>
-                      <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
-                        Jang Ho Kim
-                      </a>
-                      <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Korea University)</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">1st Thesis Supervisor</div>
-                    <div style="font-size: 13px;">
-                      <span style="font-weight: 700; color: #3730a3;">Prof.</span>
-                      <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
-                        Myeong-Ju Park
-                      </a>
-                      <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Seoul National University)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="honors-section">
-                <div class="honors-title">
-                  <span>🏆</span>
-                  <span>Honors</span>
-                </div>
-                <ul class="honors-list">
-                  <li><b>Valedictorian</b>, 1st out of 86 students</li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!-- Employment -->
-      <div class="director-card">
-        <div class="card-head">Employment</div>
-        <div class="card-body">
-          <ul class="timeline emp">
-            <li>
-              <img src="{{ '/assets/img/logos/dwu.png' | relative_url }}" alt="DWU" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2025.09. – Present</div>
-              <div class="title"><b>Assistant Professor</b></div>
-              <div class="desc">Department of Business Administration, Dongduk Women's University</div>
-              <div class="desc-ko"><b>조교수</b> / 동덕여자대학교 경영학과</div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/kangnam.png' | relative_url }}" alt="Gangnam" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2025.03. – 2025.08.</div>
-              <div class="title"><b>Lecturer</b></div>
-              <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
-              <div class="desc-ko"><b>강사</b> / 강남대학교 전자반도체공학부</div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/korea.png' | relative_url }}" alt="Korea University" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2025.03. – 2025.08.</div>
-              <div class="title"><b>Lecturer</b></div>
-              <div class="desc">Digital Business Major, Korea University</div>
-              <div class="desc-ko"><b>강사</b> / 고려대학교 디지털비즈니스전공</div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2024.03. – 2024.08.</div>
-              <div class="title"><b>Lecturer</b></div>
-              <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
-              <div class="desc-ko"><b>강사</b> / 경희대학교 산업경영공학과</div>
-            </li>
-            <li>
-              <img src="{{ '/assets/img/logos/ey.png' | relative_url }}" alt="EY" class="logo" 
-                   onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
-              <div class="year">2020.03. – 2020.05.</div>
-              <div class="title"><b>Intern</b></div>
-              <div class="desc">Performance Improvement Department, EY Hanyoung</div>
-              <div class="desc-ko"><b>인턴</b> / EY한영 성과개선팀</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!-- Professional Affiliations -->
-      <div class="director-card">
-        <div class="card-head">Professional Affiliations</div>
-        <div class="card-body">
-          <ul class="timeline">
-            <li>
-              <div class="year">2025.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Institute of Industrial Engineers (KIIE)</div>
-              <div class="desc-ko">대한산업공학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2023.09. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Securities Association (KSA)</div>
-              <div class="desc-ko">한국증권학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2023.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korean Academic Society of Business Administration (KASBA)</div>
-              <div class="desc-ko">한국경영학회 종신회원</div>
-            </li>
-            <li>
-              <div class="year">2022.06. – Present</div>
-              <div class="title">Lifetime Member</div>
-              <div class="desc">Korea Intelligent Information Systems Society (KIISS)</div>
-              <div class="desc-ko">한국지능정보시스템학회 종신회원</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!-- Publication Statistics -->
-      <div class="director-card">
-        <div class="card-head">Publication Statistics</div>
-        <div class="card-body">
-          <div class="pub-stats">
-            <div class="pub-stat journal-scie">
-              <div class="pub-stat-number">8</div>
-              <div class="pub-stat-label">SCIE</div>
-            </div>
-            <div class="pub-stat journal-ssci">
-              <div class="pub-stat-number">8</div>
-              <div class="pub-stat-label">SSCI</div>
-            </div>
-            <div class="pub-stat journal-ahci">
-              <div class="pub-stat-number">0</div>
-              <div class="pub-stat-label">A&HCI</div>
-            </div>
-            <div class="pub-stat journal-esci">
-              <div class="pub-stat-number">1</div>
-              <div class="pub-stat-label">ESCI</div>
-            </div>
-            <div class="pub-stat journal-scopus">
-              <div class="pub-stat-number">1</div>
-              <div class="pub-stat-label">Scopus</div>
-            </div>
-            <div class="pub-stat journal-other">
-              <div class="pub-stat-number">1</div>
-              <div class="pub-stat-label">Other Int'l</div>
-            </div>
-            <div class="pub-stat conf-intl">
-              <div class="pub-stat-number">9</div>
-              <div class="pub-stat-label">Int'l Conf</div>
-            </div>
-            <div class="pub-stat journal-kci">
-              <div class="pub-stat-number">3</div>
-              <div class="pub-stat-label">KCI</div>
-            </div>
-            <div class="pub-stat conf-domestic">
-              <div class="pub-stat-number">140</div>
-              <div class="pub-stat-label">Dom. Conf</div>
-            </div>
-            <div class="pub-stat citation">
-              <div class="pub-stat-number">122</div>
-              <div class="pub-stat-label">Citations</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Collaboration Network -->
-      <div class="director-card">
-        <div class="card-head">Collaboration Network</div>
-        <div class="card-body">
-          <div class="network-controls">
-            <span class="slider-label">Min. Papers:</span>
-            <div class="slider-container">
-              <span style="font-size:12px;color:#9ca3af;">0</span>
-              <input type="range" id="networkSlider" class="network-slider" min="0" max="5" value="1" step="1">
-              <span style="font-size:12px;color:#9ca3af;" id="maxSliderLabel">5+</span>
-            </div>
-            <span class="slider-value" id="sliderValue">1+</span>
-          </div>
-          <canvas id="networkCanvas"></canvas>
-          <div id="networkInfo">
-            Loading collaboration data...
-          </div>
-        </div>
-      </div>
-      
-      <!-- Mentoring Program -->
-      <div class="director-card">
-        <div class="card-head">Mentoring Program</div>
-        <div class="card-body">
-          <!-- 2025 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2025)">
-              <div class="mentoring-year-title">2025</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">48</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2025">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('kang-byungoh')">강병오</div>
-                <div class="mentee-chip" onclick="openMenteeModal('go-hyunwoo')">고현우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('koo-jihoe')">구지회</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kwon-dongha')">권동하</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-daehyun')">김대현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyun')">김민균</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seoyeon')">김서연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-yeram')">김예람</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-jaehyun')">김재현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-juyeon')">김주연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-seryeon')">박세련</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-seongsu')">박성수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-junghyun')">박정현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-jinhong')">박진홍</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-jiyeon')">박지연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('byun-donghyun')">변동현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('sung-minji')">성민지</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-kyungsu')">신경수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shim-dasol')">심다솔</div>
-                <div class="mentee-chip" onclick="openMenteeModal('ahn-hyungmin')">안형민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('oh-yunje')">오윤제</div>
-                <div class="mentee-chip" onclick="openMenteeModal('oh-yoonjin')">오윤진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoo-buil')">유부일</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-bin')">윤　빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-yejun')">윤예준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-chaehee')">윤채희</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seongjun')">이성준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seungju')">이승주</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-suin')">이수인</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-subin')">이수빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-yosep')">이요셉</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-chan')">이　찬</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-chaemin')">이채민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taekyung')">이태경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taehyung')">이태형</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-juhyun')">임주현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-seungmin')">장승민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-junpil')">장준필</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jeon-jihyun')">전지현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-sangyun')">정상윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yujin')">정유진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('chae-jinki')">채진기</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-yujung')">최유정</div>
-                <div class="mentee-chip" onclick="openMenteeModal('han-dongsu')">한동수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('hong-junki')">홍준기</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2024 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2024)">
-              <div class="mentoring-year-title">2024</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">25</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2024">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('lee-junyong')">이준용</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-donghwi')">임동휘</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yongsu')">정용수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yujin')">정유진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-nari')">김나리</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-hyunseo')">김현서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-jungyun')">신정윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('ahn-sewon')">안세원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-suheum')">박수흠</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-bin')">윤빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-hyunseo')">이현서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('cha-hongseok')">차홍석</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seonghoon')">김성훈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyun')">김민균</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-sangyeon')">김상연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seongjun')">이성준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-junyoung')">이준영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-hyerin')">이혜린</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-seungmin')">장승민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jeon-kyudam')">전규담</div>
-                <div class="mentee-chip" onclick="openMenteeModal('han-jiwon')">한지원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-yeona')">최연아</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shim-eun-external')">심은</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2023 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2023)">
-              <div class="mentoring-year-title">2023</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">30</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2023">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('kang-myunggu')">강명구</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-doyoon')">김도윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-20')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-yewon')">이예원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-suyoung')">임수영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yongsu')">정용수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yujin')">정유진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-nari')">김나리</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-hyunseo')">김현서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-jungyun')">신정윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taekyung')">이태경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-juyeon')">김주연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('seo-yujung')">서유정</div>
-                <div class="mentee-chip" onclick="openMenteeModal('ahn-sewon')">안세원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yang-jinhyuk')">양진혁</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-namyeon')">김남연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seonghoon')">김성훈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('nam-haeun')">남하은</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-junseo')">박준서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-jinwoo')">박진우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('baek-woobin')">백우빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('sung-minji')">성민지</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-kyungsu')">신경수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-soeun')">윤소은</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-minjae')">정민재</div>
-                <div class="mentee-chip" onclick="openMenteeModal('hong-minki')">홍민기</div>
-                <div class="mentee-chip" onclick="openMenteeModal('han-subin')">한수빈</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seoyeon')">김서연</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2022 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2022)">
-              <div class="mentoring-year-title">2022</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">16</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2022">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-20')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kwon-suyoung')">권수영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-yewon')">이예원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-gayeon')">김가연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-suyoung')">임수영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yongsu')">정용수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-hyunsu')">장현수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-jubi')">최주비</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-jinwoo')">최진우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-nari')">김나리</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-dongwan')">김동완</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-hyunseo')">김현서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-shinjae')">박신재</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-hyungjin')">손형진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-jungyun')">신정윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-seojun')">윤서준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-taekyung')">이태경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-dabin')">이다빈</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2021 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2021)">
-              <div class="mentoring-year-title">2021</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">39</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2021">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-17')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-20')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kang-myunggu')">강명구</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-suyeon')">이수연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-haewon')">임해원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jo-youngseo')">조영서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-heekyung')">김희경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-hyunjin')">이현진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('son-changki')">손창기</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jo-kyungmo')">조경모</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-seoyeon')">박서연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kwon-suyoung')">권수영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-chiyeon')">김치연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-yewon')">이예원</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-hyun')">최현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kwak-dongyeop')">곽동엽</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-gayeon')">김가연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minwoo')">김민우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-junseop')">김준섭</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-seokjin')">박석진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-junghyun')">박정현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('park-hyunwoo')">박현우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('seo-jungin')">서정인</div>
-                <div class="mentee-chip" onclick="openMenteeModal('sung-woongi')">성운기</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-jihwan')">신지환</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shim-eun')">심은</div>
-                <div class="mentee-chip" onclick="openMenteeModal('oh-yoonjin')">오윤진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-seungeun')">이승은</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-woonggeun')">이웅근</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-chan')">이찬</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-donghwi')">임동휘</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-soyoung')">임소영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-suyoung')">임수영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-juhyun')">임주현</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jang-hyerin')">장혜린</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yongsu')">정용수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-yehyang')">김예향</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2020 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2020)">
-              <div class="mentoring-year-title">2020</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">17</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2020">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyung')">김민경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-heekyung')">김희경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('koo-minjin')">구민진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-17')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minji-19')">김민지</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kang-myunggu')">강명구</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-doyoon')">김도윤</div>
-                <div class="mentee-chip" onclick="openMenteeModal('na-yujin')">나유진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shim-eunyoung')">심은영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-youngseo')">신영서</div>
-                <div class="mentee-chip" onclick="openMenteeModal('shin-eunmin')">신은민</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yang-sungjae')">양성재</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoon-namkyung')">윤남경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-doyoung-20')">이도영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-suyeon')">이수연</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-junyong')">이준용</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lim-haewon')">임해원</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2019 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2019)">
-              <div class="mentoring-year-title">2019</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">11</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2019">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('kwon-bongjun')">권봉준</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yang-jumi')">양주미</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-daye')">김다예</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-seokyung')">김서경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-sujin')">김수진</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-heekyung')">김희경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('ryu-hyorim')">류효림</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-shinhyung')">이신형</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jung-yeonju')">정연주</div>
-                <div class="mentee-chip" onclick="openMenteeModal('han-chulhyun')">한철현</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2018 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2018)">
-              <div class="mentoring-year-title">2018</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">4</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2018">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('lee-geunyoung')">이근영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-jiwoo')">최지우</div>
-                <div class="mentee-chip" onclick="openMenteeModal('kim-minkyung')">김민경</div>
-                <div class="mentee-chip" onclick="openMenteeModal('jo-youngseo')">조영서</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2017 -->
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, 2017)">
-              <div class="mentoring-year-title">2017</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">4</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-2017">
-              <div class="mentee-list">
-                <div class="mentee-chip" onclick="openMenteeModal('choi-hyeji')">최혜지</div>
-                <div class="mentee-chip" onclick="openMenteeModal('yoo-jungsu')">유정수</div>
-                <div class="mentee-chip" onclick="openMenteeModal('lee-geunyoung')">이근영</div>
-                <div class="mentee-chip" onclick="openMenteeModal('choi-jiwoo')">최지우</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-    </main>
-  </div>
+ <div class="main-grid" style="margin-top:2rem;">
+   
+   <!-- Profile Sidebar -->
+   <aside>
+     <div class="director-card">
+       <div class="card-head">Profile</div>
+       <div class="card-body">
+         <div class="profile-photo">
+           <img src="{{ '/assets/img/members/director.jpg' | relative_url }}" alt="Insu Choi" 
+                onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+         </div>
+         
+         <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
+         <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
+         
+         <div class="profile-info">
+           <div class="profile-item">
+             <span class="profile-emoji">👨‍🏫</span>
+             <div class="profile-content">
+               <span class="profile-label">Position</span>
+               <span class="profile-value">Director, FINDS Lab</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">🏛️</span>
+             <div class="profile-content">
+               <span class="profile-label">Affiliation</span>
+               <span class="profile-value">Assistant Professor, DWU</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">📍</span>
+             <div class="profile-content">
+               <span class="profile-label">Office</span>
+               <span class="profile-value">Sungin Hall · Room 702</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">📧</span>
+             <div class="profile-content">
+               <span class="profile-label">E-mail</span>
+               <span class="profile-value">
+                 <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
+               </span>
+             </div>
+           </div>
+         </div>
+         
+         <div class="button-group">
+           <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
+           <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
+         </div>
+       </div>
+     </div>
+   </aside>
+   
+   <!-- Main Content -->
+   <main>
+     <!-- Introduction -->
+     <div class="director-card">
+       <div class="card-head">Introduction</div>
+       <div class="card-body">
+         <p style="line-height:1.8; color:#374151;">
+           My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
+           with a particular focus on <b>integrating data science and financial engineering</b> to address <b>real-world financial challenges</b>.
+         </p>
+         <p style="line-height:1.8; color:#374151; margin-top:1rem;">
+           Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
+           <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
+         </p>
+       </div>
+     </div>
+     
+     <!-- Research Interests -->
+     <div class="director-card">
+       <div class="card-head">Research Interests</div>
+       <div class="card-body">
+         <div class="ri-item">
+           <div class="ri-header" onclick="toggleRI(this)">
+             <div class="ri-title">
+               <span class="ri-toggle">▶</span>
+               <span>Financial Data Science</span>
+             </div>
+           </div>
+           <div class="ri-content">
+             <ul class="ri-list">
+               <li>
+                 <div class="ri-list-title">AI in Quantitative Finance & Asset Management</div>
+                 <div class="ri-list-desc">인공지능 기반 포트폴리오 최적화, 자산 배분, 알고리즘 트레이딩</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Financial Time-Series Modeling & Forecasting</div>
+                 <div class="ri-list-desc">변동성 예측, 국면 전환 모형, 선후행 관계 분석, 수익률 예측</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Household Finance & Behavioral Decision Modeling</div>
+                 <div class="ri-list-desc">가계 금융, 투자자 행동 분석, 행동재무학적 의사결정 모형화</div>
+               </li>
+             </ul>
+           </div>
+         </div>
+         
+         <div class="ri-item">
+           <div class="ri-header" onclick="toggleRI(this)">
+             <div class="ri-title">
+               <span class="ri-toggle">▶</span>
+               <span>Business Analytics</span>
+             </div>
+           </div>
+           <div class="ri-content">
+             <ul class="ri-list">
+               <li>
+                 <div class="ri-list-title">Cross-Domain Analytics: Risk, Customers, Performance, Markets</div>
+                 <div class="ri-list-desc">도메인별 위험 관리, 고객 분석, 성과 평가, 시장 인사이트 도출</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Data Visualization & Interpretability in Business Analytics</div>
+                 <div class="ri-list-desc">복잡한 데이터를 직관적으로 전달하는 데이터 시각화 및 해석 가능성 강화</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Business Insights from AI Methods: Time-Series Models, Graph-Based Models, and NLP</div>
+                 <div class="ri-list-desc">시계열 모형, 그래프 기반 분석, 자연어 처리(NLP) 등 AI 기법을 활용한 비즈니스 인사이트</div>
+               </li>
+             </ul>
+           </div>
+         </div>
+         
+         <div class="ri-item">
+           <div class="ri-header" onclick="toggleRI(this)">
+             <div class="ri-title">
+               <span class="ri-toggle">▶</span>
+               <span>Data-Inspired Decision Making</span>
+             </div>
+           </div>
+           <div class="ri-content">
+             <ul class="ri-list">
+               <li>
+                 <div class="ri-list-title">Graph-Based Decision Systems & Optimization</div>
+                 <div class="ri-list-desc">그래프 구조와 최적화를 활용한 이해 가능한 의사결정 시스템</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Risk-Aware & User-Friendly Decision Tools</div>
+                 <div class="ri-list-desc">금융·경영 위험을 반영하고 사용자 친화적인 스마트 의사결정 도구</div>
+               </li>
+               <li>
+                 <div class="ri-list-title">Decision Analytics for Complex Business Problems</div>
+                 <div class="ri-list-desc">복잡한 경영 및 투자 의사결정 문제 해결을 위한 최적화 및 분석 방법론</div>
+               </li>
+             </ul>
+           </div>
+         </div>
+       </div>
+     </div>
+     
+     <!-- Education -->
+     <div class="director-card">
+       <div class="card-head">Education</div>
+       <div class="card-body">
+         <ul class="timeline edu">
+           <li>
+             <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2025.02.</div>
+             <div class="title">Ph.D. in Engineering</div>
+             <div class="desc">Industrial and Systems Engineering, KAIST</div>
+             <div class="desc-ko">카이스트 산업및시스템공학과 박사</div>
+             
+             <div class="advisor-section">
+               <div class="advisor-title">
+                 <span>👨‍🏫</span>
+                 <span>Advisor</span>
+               </div>
+               <div class="advisor-info">
+                 <span class="advisor-label">Prof.</span>
+                 <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                   Woo Chang Kim
+                 </a>
+                 <span class="advisor-affiliation">(KAIST)</span>
+               </div>
+             </div>
+             
+             <div class="honors-section">
+               <div class="honors-title">
+                 <span>🏆</span>
+                 <span>Honors</span>
+               </div>
+               <ul class="honors-list">
+                 <li><b>Best Doctoral Dissertation Award</b>, Korean Operations Research and Management Science Society (KORMS)</li>
+               </ul>
+             </div>
+           </li>
+           
+           <li>
+             <img src="{{ '/assets/img/logos/kaist.png' | relative_url }}" alt="KAIST" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2021.02.</div>
+             <div class="title">Master of Science</div>
+             <div class="desc">Industrial and Systems Engineering, KAIST</div>
+             <div class="desc-ko">카이스트 산업및시스템공학과 석사</div>
+             
+             <div class="advisor-section">
+               <div class="advisor-title">
+                 <span>👨‍🏫</span>
+                 <span>Advisor</span>
+               </div>
+               <div class="advisor-info">
+                 <span class="advisor-label">Prof.</span>
+                 <a href="https://scholar.google.com/citations?user=EXAMPLE_WOOCHANG" target="_blank" class="advisor-name">
+                   Woo Chang Kim
+                 </a>
+                 <span class="advisor-affiliation">(KAIST)</span>
+               </div>
+             </div>
+             
+             <div class="honors-section">
+               <div class="honors-title">
+                 <span>🏆</span>
+                 <span>Honors</span>
+               </div>
+               <ul class="honors-list">
+                 <li><b>Best Master Thesis Award</b>, Korean Institute of Industrial Engineers (KIIE)</li>
+               </ul>
+             </div>
+           </li>
+           
+           <li>
+             <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2018.02.</div>
+             <div class="title">Bachelor of Engineering</div>
+             <div class="desc">Industrial & Management Systems Engineering, Kyung Hee University</div>
+             <div class="desc-ko">경희대학교 산업경영공학과 학사</div>
+             
+             <div class="advisor-section">
+               <div class="advisor-title">
+                 <span>👨‍🏫</span>
+                 <span>Advisors</span>
+               </div>
+               <div style="margin-left: 20px;">
+                 <div style="margin-bottom: 12px;">
+                   <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">Academic Advisor, 2nd Thesis Supervisor</div>
+                   <div style="font-size: 13px;">
+                     <span style="font-weight: 700; color: #3730a3;">Prof.</span>
+                     <a href="https://scholar.google.com/citations?user=EXAMPLE_JANGHO" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
+                       Jang Ho Kim
+                     </a>
+                     <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Korea University)</span>
+                   </div>
+                 </div>
+                 <div>
+                   <div style="font-size: 11px; color: #6b7280; font-weight: 600; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 6px;">1st Thesis Supervisor</div>
+                   <div style="font-size: 13px;">
+                     <span style="font-weight: 700; color: #3730a3;">Prof.</span>
+                     <a href="https://scholar.google.com/citations?user=EXAMPLE_MYEONGJU" target="_blank" style="color: #1e40af; text-decoration: none; font-weight: 600; padding: 3px 8px; background: rgba(59,130,246,0.08); border-radius: 6px; transition: all 0.2s;">
+                       Myeong-Ju Park
+                     </a>
+                     <span style="color: #64748b; font-size: 12px; font-weight: 500;">(Seoul National University)</span>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             
+             <div class="honors-section">
+               <div class="honors-title">
+                 <span>🏆</span>
+                 <span>Honors</span>
+               </div>
+               <ul class="honors-list">
+                 <li><b>Valedictorian</b>, 1st out of 86 students</li>
+               </ul>
+             </div>
+           </li>
+         </ul>
+       </div>
+     </div>
+     
+     <!-- Employment -->
+     <div class="director-card">
+       <div class="card-head">Employment</div>
+       <div class="card-body">
+         <ul class="timeline emp">
+           <li>
+             <img src="{{ '/assets/img/logos/dwu.png' | relative_url }}" alt="DWU" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2025.09. – Present</div>
+             <div class="title"><b>Assistant Professor</b></div>
+             <div class="desc">Department of Business Administration, Dongduk Women's University</div>
+             <div class="desc-ko"><b>조교수</b> / 동덕여자대학교 경영학과</div>
+           </li>
+           <li>
+             <img src="{{ '/assets/img/logos/kangnam.png' | relative_url }}" alt="Gangnam" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2025.03. – 2025.08.</div>
+             <div class="title"><b>Lecturer</b></div>
+             <div class="desc">Department of Electronic and Semiconductor Engineering, Gangnam University</div>
+             <div class="desc-ko"><b>강사</b> / 강남대학교 전자반도체공학부</div>
+           </li>
+           <li>
+             <img src="{{ '/assets/img/logos/korea.png' | relative_url }}" alt="Korea University" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2025.03. – 2025.08.</div>
+             <div class="title"><b>Lecturer</b></div>
+             <div class="desc">Digital Business Major, Korea University</div>
+             <div class="desc-ko"><b>강사</b> / 고려대학교 디지털비즈니스전공</div>
+           </li>
+           <li>
+             <img src="{{ '/assets/img/logos/kyunghee.png' | relative_url }}" alt="Kyung Hee" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2024.03. – 2024.08.</div>
+             <div class="title"><b>Lecturer</b></div>
+             <div class="desc">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+             <div class="desc-ko"><b>강사</b> / 경희대학교 산업경영공학과</div>
+           </li>
+           <li>
+             <img src="{{ '/assets/img/logos/ey.png' | relative_url }}" alt="EY" class="logo" 
+                  onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+             <div class="year">2020.03. – 2020.05.</div>
+             <div class="title"><b>Intern</b></div>
+             <div class="desc">Performance Improvement Department, EY Hanyoung</div>
+             <div class="desc-ko"><b>인턴</b> / EY한영 성과개선팀</div>
+           </li>
+         </ul>
+       </div>
+     </div>
+     
+     <!-- Professional Affiliations -->
+     <div class="director-card">
+       <div class="card-head">Professional Affiliations</div>
+       <div class="card-body">
+         <ul class="timeline">
+           <li>
+             <div class="year">2025.06. – Present</div>
+             <div class="title">Lifetime Member</div>
+             <div class="desc">Korean Institute of Industrial Engineers (KIIE)</div>
+             <div class="desc-ko">대한산업공학회 종신회원</div>
+           </li>
+           <li>
+             <div class="year">2023.09. – Present</div>
+             <div class="title">Lifetime Member</div>
+             <div class="desc">Korean Securities Association (KSA)</div>
+             <div class="desc-ko">한국증권학회 종신회원</div>
+           </li>
+           <li>
+             <div class="year">2023.06. – Present</div>
+<div class="title">Lifetime Member</div>
+             <div class="desc">Korean Academic Society of Business Administration (KASBA)</div>
+             <div class="desc-ko">한국경영학회 종신회원</div>
+           </li>
+           <li>
+             <div class="year">2022.06. – Present</div>
+             <div class="title">Lifetime Member</div>
+             <div class="desc">Korea Intelligent Information Systems Society (KIISS)</div>
+             <div class="desc-ko">한국지능정보시스템학회 종신회원</div>
+           </li>
+         </ul>
+       </div>
+     </div>
+     
+     <!-- Publication Statistics -->
+     <div class="director-card">
+       <div class="card-head">Publication Statistics</div>
+       <div class="card-body">
+         <div class="pub-stats">
+           <div class="pub-stat journal-scie">
+             <div class="pub-stat-number">8</div>
+             <div class="pub-stat-label">SCIE</div>
+           </div>
+           <div class="pub-stat journal-ssci">
+             <div class="pub-stat-number">8</div>
+             <div class="pub-stat-label">SSCI</div>
+           </div>
+           <div class="pub-stat journal-ahci">
+             <div class="pub-stat-number">0</div>
+             <div class="pub-stat-label">A&HCI</div>
+           </div>
+           <div class="pub-stat journal-esci">
+             <div class="pub-stat-number">1</div>
+             <div class="pub-stat-label">ESCI</div>
+           </div>
+           <div class="pub-stat journal-scopus">
+             <div class="pub-stat-number">1</div>
+             <div class="pub-stat-label">Scopus</div>
+           </div>
+           <div class="pub-stat journal-other">
+             <div class="pub-stat-number">1</div>
+             <div class="pub-stat-label">Other Int'l</div>
+           </div>
+           <div class="pub-stat conf-intl">
+             <div class="pub-stat-number">9</div>
+             <div class="pub-stat-label">Int'l Conf</div>
+           </div>
+           <div class="pub-stat journal-kci">
+             <div class="pub-stat-number">3</div>
+             <div class="pub-stat-label">KCI</div>
+           </div>
+           <div class="pub-stat conf-domestic">
+             <div class="pub-stat-number">140</div>
+             <div class="pub-stat-label">Dom. Conf</div>
+           </div>
+           <div class="pub-stat citation">
+             <div class="pub-stat-number">122</div>
+             <div class="pub-stat-label">Citations</div>
+           </div>
+         </div>
+       </div>
+     </div>
+     
+     <!-- Collaboration Network -->
+     <div class="director-card">
+       <div class="card-head">Collaboration Network</div>
+       <div class="card-body">
+         <div class="network-controls">
+           <span class="slider-label">Collaboration Threshold:</span>
+           <div class="slider-container">
+             <span style="font-size:12px;color:#9ca3af;">0%</span>
+             <input type="range" id="networkSlider" class="network-slider" min="0" max="100" value="10" step="5">
+             <span style="font-size:12px;color:#9ca3af;">100%</span>
+           </div>
+           <span class="slider-value" id="sliderValue">10%</span>
+         </div>
+         <canvas id="networkCanvas"></canvas>
+         <div id="networkInfo">
+           Loading collaboration data...
+         </div>
+       </div>
+     </div>
+     
+     <!-- Mentoring Program -->
+     <div class="director-card">
+       <div class="card-head">Mentoring Program</div>
+       <div class="card-body" id="mentoringContainer">
+         <!-- Will be populated by JavaScript -->
+       </div>
+     </div>
+     
+   </main>
+ </div>
 </section>
 
 <!-- Mentee Modal -->
 <div class="mentee-modal" id="menteeModal" onclick="closeMenteeModal(event)">
-  <div class="mentee-modal-content" onclick="event.stopPropagation()">
-    <div class="mentee-modal-header">
-      <h2 class="mentee-modal-title" id="menteeModalName">멘티 정보</h2>
-      <button class="mentee-modal-close" onclick="closeMenteeModal()">&times;</button>
-    </div>
-    <div class="mentee-modal-body" id="menteeModalBody">
-      <!-- Content will be populated by JavaScript -->
-    </div>
-  </div>
+ <div class="mentee-modal-content" onclick="event.stopPropagation()">
+   <div class="mentee-modal-header">
+     <h2 class="mentee-modal-title" id="menteeModalName">멘티 정보</h2>
+     <button class="mentee-modal-close" onclick="closeMenteeModal()">&times;</button>
+   </div>
+   <div class="mentee-modal-body" id="menteeModalBody">
+     <!-- Content will be populated by JavaScript -->
+   </div>
+ </div>
 </div>
 
 <!-- Load AUTHORS from include -->
@@ -1738,565 +1409,493 @@ permalink: /members-director.html
 
 <!-- Scripts -->
 <script>
-  // ===== Banner click-burst functions =====
-  function createNetworkBurst(event, element) {
-    const rect = element.getBoundingClientRect();
-    const x = event.clientX - rect.left - 100;
-    const y = event.clientY - rect.top - 100;
+ // ===== Research Interests Toggle =====
+ function toggleRI(header) {
+   header.classList.toggle('active');
+   const content = header.nextElementSibling;
+   content.classList.toggle('show');
+ }
 
-    const networkDiv = document.createElement('div');
-    networkDiv.className = 'network-burst';
-    networkDiv.style.left = x + 'px';
-    networkDiv.style.top = y + 'px';
+ // ===== Mentoring Program Toggle =====
+ function toggleMentoring(header, year) {
+   header.classList.toggle('expanded');
+   document.getElementById(`mentoring-${year}`).classList.toggle('show');
+ }
 
-    const patterns = [generateHeartNetwork(), generateClubNetwork(), generateSpadeNetwork(), generateDiamondNetwork()];
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    networkDiv.innerHTML = randomPattern;
+ // ===== Mentee Modal and Mentoring Program System =====
+ const MENTEES = {};
+ let mentoringData = {};
+ 
+ // Function to format name (add space for 2-character names)
+ function formatName(name) {
+   return name.length === 2 ? name[0] + '　' + name[1] : name;
+ }
+ 
+ // Load mentees.json and build mentoring sections
+ fetch('{{ "/assets/data/mentees.json" | relative_url }}')
+   .then(response => response.json())
+   .then(data => {
+     mentoringData = data;
+     
+     // Store all mentees in MENTEES object
+     for (const id in data) {
+       MENTEES[id] = data[id];
+     }
+     
+     // Build mentoring years by participation
+     buildMentoringYears();
+   })
+   .catch(error => {
+     console.error('Error loading mentees data:', error);
+     document.getElementById('mentoringContainer').innerHTML = 
+       '<div style="text-align:center; padding:20px; color:#ef4444;">Error loading mentoring data</div>';
+   });
+ 
+ function buildMentoringYears() {
+   const mentoringByYear = {};
+   let minYear = 9999;
+   let maxYear = 0;
+   
+   // Find min and max years from participationYears
+   for (const id in mentoringData) {
+     const mentee = mentoringData[id];
+     if (mentee.participationYears && mentee.participationYears.length > 0) {
+       mentee.participationYears.forEach(year => {
+         const yearNum = parseInt(year);
+         minYear = Math.min(minYear, yearNum);
+         maxYear = Math.max(maxYear, yearNum);
+       });
+     }
+   }
+   
+   // Initialize years
+   for (let year = maxYear; year >= minYear; year--) {
+     mentoringByYear[year] = [];
+   }
+   
+   // Group mentees by participation years
+   for (const id in mentoringData) {
+     const mentee = mentoringData[id];
+     if (mentee.participationYears) {
+       mentee.participationYears.forEach(year => {
+         const yearNum = parseInt(year);
+         if (mentoringByYear[yearNum] !== undefined) {
+           mentoringByYear[yearNum].push({
+             id: id,
+             name: mentee.name
+           });
+         }
+       });
+     }
+   }
+   
+   // Sort each year's mentees by name (가나다 순)
+   for (const year in mentoringByYear) {
+     mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+   }
+   
+   // Build HTML
+   let html = '';
+   for (let year = maxYear; year >= minYear; year--) {
+     const mentees = mentoringByYear[year];
+     if (mentees && mentees.length > 0) {
+       html += `
+         <div class="mentoring-year">
+           <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
+             <div class="mentoring-year-title">${year}</div>
+             <div style="display:flex;align-items:center;gap:8px">
+               <span class="mentoring-count">${mentees.length}</span>
+               <span class="mentoring-toggle">▶</span>
+             </div>
+           </div>
+           <div class="mentoring-content" id="mentoring-${year}">
+             <div class="mentee-list">
+               ${mentees.map(mentee => 
+                 `<div class="mentee-chip" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
+               ).join('')}
+             </div>
+           </div>
+         </div>
+       `;
+     }
+   }
+   
+   document.getElementById('mentoringContainer').innerHTML = html || 
+     '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
+ }
+ 
+ function openMenteeModal(menteeId) {
+   const mentee = MENTEES[menteeId];
+   if (!mentee) {
+     console.error('Mentee not found:', menteeId);
+     return;
+   }
 
-    element.appendChild(networkDiv);
-    setTimeout(()=>{
-      element.removeChild(networkDiv);
-    }, 2000);
-  }
+   document.getElementById('menteeModalName').textContent = mentee.name;
 
-  function generateHeartNetwork(){
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const heartPath='M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
-    svg+=`<path d="${heartPath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    const nodes=[{x:70,y:35},{x:130,y:35},{x:40,y:70},{x:160,y:70},{x:100,y:140},{x:60,y:50},{x:140,y:50},{x:80,y:90},{x:120,y:90}];
-    const connections=[[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
-    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.5"/>`});
-    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${3+Math.random()*2}" class="burst-dot"/>`});
-    svg+='</svg>';
-    return svg;
-  }
+   const modalBody = document.getElementById('menteeModalBody');
+   modalBody.innerHTML = `
+     <div class="mentee-info-row">
+       <span class="mentee-info-icon">🏫</span>
+       <span class="mentee-info-label">University</span>
+       <span class="mentee-info-value">${mentee.university}</span>
+     </div>
+     <div class="mentee-info-row">
+       <span class="mentee-info-icon">📚</span>
+       <span class="mentee-info-label">Department</span>
+       <span class="mentee-info-value">${mentee.department}</span>
+     </div>
+     <div class="mentee-info-row">
+       <span class="mentee-info-icon">📅</span>
+       <span class="mentee-info-label">Entry Year</span>
+       <span class="mentee-info-value">${mentee.entryYear}</span>
+     </div>
+     <div class="mentee-info-row">
+       <span class="mentee-info-icon">🎗</span>
+       <span class="mentee-info-label">Participation Years</span>
+       <div class="participation-years">
+         ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
+       </div>
+     </div>
+   `;
 
-  function generateClubNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const circles=[{x:100,y:60,r:25},{x:75,y:85,r:25},{x:125,y:85,r:25}];
-    circles.forEach(c=>{svg+=`<circle cx="${c.x}" cy="${c.y}" r="${c.r}" fill="none" class="burst-line" stroke-width="2"/>`});
-    svg+=`<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
-    const nodes=[];
-    circles.forEach(c=>{for(let i=0;i<6;i++){const a=(i*2*Math.PI)/6;nodes.push({x:c.x+c.r*Math.cos(a),y:c.y+c.r*Math.sin(a)})}});
-    nodes.push({x:100,y:100},{x:100,y:140});
-    for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y; const dist=Math.sqrt(dx*dx+dy*dy); if(dist<40){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" class="burst-line" opacity="${0.3+(1-dist/40)*0.4}"/>`}}}
-    nodes.forEach(n=>{svg+=`<circle cx="${n.x}" cy="${n.y}" r="${2+Math.random()*2}" class="burst-dot"/>`});
-    svg+='</svg>';
-    return svg;
-  }
+   document.getElementById('menteeModal').classList.add('show');
+   document.body.style.overflow = 'hidden';
+ }
 
-  function generateSpadeNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const spadePath='M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
-    svg+=`<path d="${spadePath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<path d="M100,105 L90,130 L110,130 Z" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
-    const nodes=[{x:100,y:50},{x:75,y:70},{x:125,y:70},{x:60,y:85},{x:140,y:85},{x:85,y:110},{x:115,y:110},{x:100,y:105},{x:90,y:130},{x:110,y:130},{x:100,y:145}];
-    const connections=[[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
-    connections.forEach(([f,t])=>{svg+=`<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity="0.4"/>`});
-    nodes.forEach((n,i)=>{const r=(i===0||i===7)?4:3; svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot"/>`});
-    svg+='</svg>';
-    return svg;
-  }
+ function closeMenteeModal(event) {
+   if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
+     return;
+   }
+   document.getElementById('menteeModal').classList.remove('show');
+   document.body.style.overflow = '';
+ }
 
-  function generateDiamondNetwork(){
-    let svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const diamondPath='M100,40 L140,100 L100,160 L60,100 Z';
-    svg+=`<path d="${diamondPath}" fill="none" class="burst-line" stroke-width="2"/>`;
-    svg+=`<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity="0.5"/>`;
-    svg+=`<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity="0.5"/>`;
-    svg+=`<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity="0.3"/>`;
-    svg+=`<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity="0.3"/>`;
-    const nodes=[{x:100,y:40},{x:140,y:100},{x:100,y:160},{x:60,y:100},{x:100,y:100},{x:80,y:70},{x:120,y:70},{x:80,y:130},{x:120,y:130},{x:120,y:100},{x:80,y:100}];
-    for(let i=0;i<4;i++){svg+=`<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity="0.3"/>`}
-    nodes.forEach((n,i)=>{const r=i<4?4:(i===4?5:2.5); svg+=`<circle cx="${n.x}" cy="${n.y}" r="${r}" class="burst-dot" opacity="${i===4?1:.8}"/>`});
-    for(let i=0;i<4;i++){const ang=(i*Math.PI)/2; const x=100+30*Math.cos(ang); const y=100+30*Math.sin(ang); svg+=`<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity="0.6"/>`}
-    svg+='</svg>';
-    return svg;
-  }
+ // ===== Clean and Elegant Collaboration Network =====
+ // Load publications data from Jekyll
+ const PUBS = {{ site.data.pubs | jsonify }};
+ const DIRECTOR_ID = 1;
 
-  // ===== Research Interests Toggle =====
-  function toggleRI(header) {
-    header.classList.toggle('active');
-    const content = header.nextElementSibling;
-    content.classList.toggle('show');
-  }
+ // Count collaborations (only papers including director)
+ function countCollaborations() {
+   const counts = {};
+   let directorPapers = 0;
+   
+   PUBS.forEach(pub => {
+     if (!Array.isArray(pub.authors)) return;
+     if (!pub.authors.includes(DIRECTOR_ID)) return;
+     
+     directorPapers++;
+     pub.authors.forEach(aid => {
+       if (aid !== DIRECTOR_ID) {
+         counts[aid] = (counts[aid] || 0) + 1;
+       }
+     });
+   });
+   
+   return { counts, directorPapers };
+ }
 
-  // ===== Mentoring Program Toggle =====
-  function toggleMentoring(header, year) {
-    header.classList.toggle('expanded');
-    document.getElementById(`mentoring-${year}`).classList.toggle('show');
-  }
+ // Initialize variables
+ let currentThreshold = 10; // Start at 10%
+ let { counts: collaborations, directorPapers } = countCollaborations();
+ let maxCollaborations = Math.max(...Object.values(collaborations), 1);
+ let hoveredNode = null;
+ let networkInitialized = false;
 
-  // ===== Mentee Modal and Mentoring Program System =====
-  const MENTEES = {};
-  let mentoringData = {};
-  
-  // Function to format name (add space for 2-character names)
-  function formatName(name) {
-    return name.length === 2 ? name[0] + '　' + name[1] : name;
-  }
-  
-  // Load mentees.json and build mentoring sections
-  fetch('{{ "/assets/data/mentees.json" | relative_url }}')
-    .then(response => response.json())
-    .then(data => {
-      mentoringData = data;
-      
-      // Flatten the nested structure into MENTEES object
-      for (const year in data) {
-        if (data[year]) {
-          for (const id in data[year]) {
-            MENTEES[id] = data[year][id];
-          }
-        }
-      }
-      
-      // Build mentoring years by participation
-      buildMentoringYears();
-    })
-    .catch(error => {
-      console.error('Error loading mentees data:', error);
-      document.getElementById('mentoringContainer').innerHTML = 
-        '<div style="text-align:center; padding:20px; color:#ef4444;">Error loading mentoring data</div>';
-    });
-  
-  function buildMentoringYears() {
-    const mentoringByYear = {};
-    const startYear = 2017;
-    const currentYear = 2025;
-    
-    // Initialize years
-    for (let year = currentYear; year >= startYear; year--) {
-      mentoringByYear[year] = [];
-    }
-    
-    // Group mentees by participation years
-    for (const yearGroup in mentoringData) {
-      if (mentoringData[yearGroup]) {
-        for (const id in mentoringData[yearGroup]) {
-          const mentee = mentoringData[yearGroup][id];
-          if (mentee.participationYears) {
-            mentee.participationYears.forEach(year => {
-              const yearNum = parseInt(year);
-              if (mentoringByYear[yearNum]) {
-                mentoringByYear[yearNum].push({
-                  id: id,
-                  name: mentee.name
-                });
-              }
-            });
-          }
-        }
-      }
-    }
-    
-    // Sort each year's mentees by name (가나다 순)
-    for (const year in mentoringByYear) {
-      mentoringByYear[year].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
-    }
-    
-    // Build HTML
-    let html = '';
-    for (let year = currentYear; year >= startYear; year--) {
-      const mentees = mentoringByYear[year];
-      if (mentees && mentees.length > 0) {
-        html += `
-          <div class="mentoring-year">
-            <div class="mentoring-year-header" onclick="toggleMentoring(this, ${year})">
-              <div class="mentoring-year-title">${year}</div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span class="mentoring-count">${mentees.length}</span>
-                <span class="mentoring-toggle">▶</span>
-              </div>
-            </div>
-            <div class="mentoring-content" id="mentoring-${year}">
-              <div class="mentee-list">
-                ${mentees.map(mentee => 
-                  `<div class="mentee-chip" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
-                ).join('')}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
-    
-    document.getElementById('mentoringContainer').innerHTML = html || 
-      '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
-  }
-  
-  function openMenteeModal(menteeId) {
-    const mentee = MENTEES[menteeId];
-    if (!mentee) {
-      console.error('Mentee not found:', menteeId);
-      return;
-    }
+ // UI Elements
+ const slider = document.getElementById('networkSlider');
+ const sliderValue = document.getElementById('sliderValue');
+ const infoEl = document.getElementById('networkInfo');
 
-    document.getElementById('menteeModalName').textContent = mentee.name;
+ // Setup slider
+ if (slider) {
+   slider.value = 10; // Start at 10%
+   currentThreshold = 10;
 
-    const modalBody = document.getElementById('menteeModalBody');
-    modalBody.innerHTML = `
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">🏫</span>
-        <span class="mentee-info-label">University</span>
-        <span class="mentee-info-value">${mentee.university}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">📚</span>
-        <span class="mentee-info-label">Department</span>
-        <span class="mentee-info-value">${mentee.department}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">📅</span>
-        <span class="mentee-info-label">Entry Year</span>
-        <span class="mentee-info-value">${mentee.entryYear}</span>
-      </div>
-      <div class="mentee-info-row">
-        <span class="mentee-info-icon">🎗</span>
-        <span class="mentee-info-label">Participation Years</span>
-        <div class="participation-years">
-          ${mentee.participationYears.map(year => `<span class="participation-year">${year}</span>`).join('')}
-        </div>
-      </div>
-    `;
+   slider.addEventListener('input', function() {
+     currentThreshold = parseInt(this.value);
+     sliderValue.textContent = currentThreshold + '%';
+     updateNetworkInfo();
+     if (networkInitialized) {
+       buildNetwork();
+       drawNetwork();
+     }
+   });
+ }
 
-    document.getElementById('menteeModal').classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
+ function updateNetworkInfo() {
+   const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
+   const visible = Object.entries(collaborations)
+     .filter(([id, freq]) => freq >= thresholdCount).length;
+   const total = Object.keys(collaborations).length;
 
-  function closeMenteeModal(event) {
-    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
-      return;
-    }
-    document.getElementById('menteeModal').classList.remove('show');
-    document.body.style.overflow = '';
-  }
+   infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)`;
+ }
 
-  function closeMenteeModal(event) {
-    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
-      return;
-    }
-    document.getElementById('menteeModal').classList.remove('show');
-    document.body.style.overflow = '';
-  }
+ // Canvas setup
+ const canvas = document.getElementById('networkCanvas');
+ if (canvas) {
+   const ctx = canvas.getContext('2d');
+   let nodes = [];
 
-  // ===== Clean and Elegant Collaboration Network =====
-  // Load publications data from Jekyll
-  const PUBS = {{ site.data.pubs | jsonify }};
-  const DIRECTOR_ID = 1;
+   // Size canvas
+   function sizeCanvas() {
+     const rect = canvas.getBoundingClientRect();
+     canvas.width = rect.width * window.devicePixelRatio;
+     canvas.height = 500 * window.devicePixelRatio;
+     canvas.style.height = '500px';
+     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+   }
 
-  // Count collaborations
-  function countCollaborations() {
-    const counts = {};
-    PUBS.forEach(pub => {
-      if (!Array.isArray(pub.authors)) return;
-      if (!pub.authors.includes(DIRECTOR_ID)) return;
+   // Build network structure
+   function buildNetwork() {
+     nodes = [];
+     const centerX = canvas.width / (2 * window.devicePixelRatio);
+     const centerY = canvas.height / (2 * window.devicePixelRatio);
+     const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
 
-      pub.authors.forEach(aid => {
-        if (aid !== DIRECTOR_ID) {
-          counts[aid] = (counts[aid] || 0) + 1;
-        }
-      });
-    });
-    return counts;
-  }
+     // Director at center
+     nodes.push({
+       id: DIRECTOR_ID,
+       name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+       x: centerX,
+       y: centerY,
+       radius: 35,
+       isCenter: true,
+       frequency: 999
+     });
 
-  // Initialize variables
-  let currentThreshold = 1;
-  let collaborations = countCollaborations();
-  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
-  let hoveredNode = null;
-  let networkInitialized = false;
+     // Get collaborators sorted by frequency and filtered by threshold
+     const coAuthors = Object.entries(collaborations)
+       .filter(([id, freq]) => freq >= thresholdCount)
+       .sort((a, b) => b[1] - a[1]);
 
-  // UI Elements
-  const slider = document.getElementById('networkSlider');
-  const maxLabel = document.getElementById('maxSliderLabel');
-  const sliderValue = document.getElementById('sliderValue');
-  const infoEl = document.getElementById('networkInfo');
+     // Arrange in concentric circles based on frequency
+     const rings = [];
+     const ringSizes = [8, 12, 16]; // max nodes per ring
+     let ringIndex = 0;
+     let nodesInRing = [];
 
-  // Setup slider
-  if (slider) {
-    slider.max = maxCollaborations;
-    maxLabel.textContent = maxCollaborations + '+';
-    slider.value = Math.min(1, maxCollaborations);
-    currentThreshold = parseInt(slider.value);
+     coAuthors.forEach(([id, freq]) => {
+       if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
+         rings.push(nodesInRing);
+         nodesInRing = [];
+         ringIndex++;
+       }
+       nodesInRing.push({ id: parseInt(id), freq });
+     });
+     if (nodesInRing.length > 0) rings.push(nodesInRing);
 
-    slider.addEventListener('input', function() {
-      currentThreshold = parseInt(this.value);
-      sliderValue.textContent = currentThreshold + '+';
-      updateNetworkInfo();
-      if (networkInitialized) {
-        buildNetwork();
-        drawNetwork();
-      }
-    });
-  }
+     // Place nodes in rings
+     rings.forEach((ring, rIdx) => {
+       const radius = 120 + rIdx * 80;
+       ring.forEach((item, nIdx) => {
+         const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+         const freq = item.freq;
+         const percentage = Math.round((freq / directorPapers) * 100);
 
-  function updateNetworkInfo() {
-    const visible = Object.entries(collaborations)
-      .filter(([id, freq]) => freq >= currentThreshold).length;
-    const total = Object.keys(collaborations).length;
+         nodes.push({
+           id: item.id,
+           name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+           x: centerX + Math.cos(angle) * radius,
+           y: centerY + Math.sin(angle) * radius,
+           radius: 10 + (freq / maxCollaborations) * 15,
+           frequency: freq,
+           percentage: percentage,
+           ring: rIdx
+         });
+       });
+     });
+   }
 
-    infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${currentThreshold}+</b> papers`;
-  }
+   // Draw the network
+   function drawNetwork() {
+     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Canvas setup
-  const canvas = document.getElementById('networkCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
+     // Background
+     const centerX = canvas.width / (2 * window.devicePixelRatio);
+     const centerY = canvas.height / (2 * window.devicePixelRatio);
 
-    // Size canvas
-    function sizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 500 * window.devicePixelRatio;
-      canvas.style.height = '500px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
+     // Subtle radial gradient
+     const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
+     bgGrad.addColorStop(0, '#fefefe');
+     bgGrad.addColorStop(1, '#f9fafb');
+     ctx.fillStyle = bgGrad;
+     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Build network structure
-    function buildNetwork() {
-      nodes = [];
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
+     // Draw subtle grid dots for background
+     ctx.fillStyle = '#e5e7eb';
+     for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
+       for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
+         ctx.beginPath();
+         ctx.arc(x, y, 1, 0, Math.PI * 2);
+         ctx.fill();
+       }
+     }
 
-      // Director at center
-      nodes.push({
-        id: DIRECTOR_ID,
-        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-        x: centerX,
-        y: centerY,
-        radius: 35,
-        isCenter: true,
-        frequency: 999
-      });
+     // Draw connections
+     nodes.slice(1).forEach(node => {
+       const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
+       const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
+       grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
+       grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
+       grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
 
-      // Get collaborators sorted by frequency and filtered by threshold
-      const coAuthors = Object.entries(collaborations)
-        .filter(([id, freq]) => freq >= currentThreshold)
-        .sort((a, b) => b[1] - a[1]);
+       ctx.beginPath();
+       ctx.moveTo(nodes[0].x, nodes[0].y);
+       ctx.lineTo(node.x, node.y);
+       ctx.strokeStyle = grad;
+       ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
+       ctx.stroke();
+     });
 
-      // Arrange in concentric circles based on frequency
-      const rings = [];
-      const ringSizes = [8, 12, 16]; // max nodes per ring
-      let ringIndex = 0;
-      let nodesInRing = [];
+     // Draw nodes
+     nodes.forEach(node => {
+       const isHovered = hoveredNode === node;
+       const scale = isHovered ? 1.1 : 1;
 
-      coAuthors.forEach(([id, freq]) => {
-        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-          rings.push(nodesInRing);
-          nodesInRing = [];
-          ringIndex++;
-        }
-        nodesInRing.push({ id: parseInt(id), freq });
-      });
-      if (nodesInRing.length > 0) rings.push(nodesInRing);
+       // Shadow
+       ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
+       ctx.shadowBlur = isHovered ? 15 : 8;
+       ctx.shadowOffsetX = 0;
+       ctx.shadowOffsetY = 2;
 
-      // Place nodes in rings
-      rings.forEach((ring, rIdx) => {
-        const radius = 120 + rIdx * 80;
-        ring.forEach((item, nIdx) => {
-          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-          const freq = item.freq;
+       // Node circle
+       ctx.beginPath();
+       ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
 
-          nodes.push({
-            id: item.id,
-            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-            x: centerX + Math.cos(angle) * radius,
-            y: centerY + Math.sin(angle) * radius,
-            radius: 10 + (freq / maxCollaborations) * 15,
-            frequency: freq,
-            ring: rIdx
-          });
-        });
-      });
-    }
+       if (node.isCenter) {
+         // Director node - red gradient
+         const grad = ctx.createRadialGradient(
+           node.x - node.radius * 0.3,
+           node.y - node.radius * 0.3,
+           0,
+           node.x, node.y, node.radius
+         );
+         grad.addColorStop(0, '#ef4444');
+         grad.addColorStop(1, '#b91c1c');
+         ctx.fillStyle = grad;
+       } else {
+         // Collaborator nodes - gold gradient based on frequency
+         const grad = ctx.createRadialGradient(
+           node.x - node.radius * 0.3,
+           node.y - node.radius * 0.3,
+           0,
+           node.x, node.y, node.radius
+         );
+         const ratio = node.frequency / maxCollaborations;
+         if (ratio > 0.66) {
+           grad.addColorStop(0, '#fbbf24');
+           grad.addColorStop(1, '#d97706');
+         } else if (ratio > 0.33) {
+           grad.addColorStop(0, '#fde047');
+           grad.addColorStop(1, '#facc15');
+         } else {
+           grad.addColorStop(0, '#fef3c7');
+           grad.addColorStop(1, '#fde68a');
+         }
+         ctx.fillStyle = grad;
+       }
+       ctx.fill();
 
-    // Draw the network
-    function drawNetwork() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+       // Border
+       ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
+       ctx.lineWidth = 1.5;
+       ctx.stroke();
 
-      // Background
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
+       ctx.shadowColor = 'transparent';
 
-      // Subtle radial gradient
-      const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
-      bgGrad.addColorStop(0, '#fefefe');
-      bgGrad.addColorStop(1, '#f9fafb');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+       // Text labels
+       ctx.fillStyle = '#1f2937';
+       ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
+       ctx.textAlign = 'center';
+       ctx.textBaseline = 'middle';
 
-      // Draw subtle grid dots for background
-      ctx.fillStyle = '#e5e7eb';
-      for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
-        for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
-          ctx.beginPath();
-          ctx.arc(x, y, 1, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
+       // Name below node
+       ctx.fillText(node.name, node.x, node.y + node.radius + 14);
 
-      // Draw connections
-      nodes.slice(1).forEach(node => {
-        const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
-        const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
-        grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
-        grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
-        grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
+       // Paper count for collaborators
+       if (!node.isCenter) {
+         ctx.fillStyle = '#6b7280';
+         ctx.font = '9px Inter, sans-serif';
+         ctx.fillText(`${node.frequency} papers (${node.percentage}%)`, node.x, node.y + node.radius + 26);
+       }
+     });
 
-        ctx.beginPath();
-        ctx.moveTo(nodes[0].x, nodes[0].y);
-        ctx.lineTo(node.x, node.y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
-        ctx.stroke();
-      });
+     // Hover tooltip
+     if (hoveredNode && !hoveredNode.isCenter) {
+       const tooltipWidth = 180;
+       const tooltipHeight = 60;
+       let tooltipX = hoveredNode.x - tooltipWidth / 2;
+       let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
 
-      // Draw nodes
-      nodes.forEach(node => {
-        const isHovered = hoveredNode === node;
-        const scale = isHovered ? 1.1 : 1;
+       // Keep tooltip in bounds
+       tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
+       tooltipY = Math.max(10, tooltipY);
 
-        // Shadow
-        ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
-        ctx.shadowBlur = isHovered ? 15 : 8;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 2;
+       // Tooltip background
+       ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
+       ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
+       ctx.lineWidth = 1;
+       ctx.beginPath();
+       ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
+       ctx.fill();
+       ctx.stroke();
 
-        // Node circle
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
+       // Tooltip text
+       ctx.fillStyle = '#fff';
+       ctx.font = 'bold 11px Inter, sans-serif';
+       ctx.textAlign = 'center';
+       ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
 
-        if (node.isCenter) {
-          // Director node - red gradient
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3,
-            node.y - node.radius * 0.3,
-            0,
-            node.x, node.y, node.radius
-          );
-          grad.addColorStop(0, '#ef4444');
-          grad.addColorStop(1, '#b91c1c');
-          ctx.fillStyle = grad;
-        } else {
-          // Collaborator nodes - gold gradient based on frequency
-          const grad = ctx.createRadialGradient(
-            node.x - node.radius * 0.3,
-            node.y - node.radius * 0.3,
-            0,
-            node.x, node.y, node.radius
-          );
-          const ratio = node.frequency / maxCollaborations;
-          if (ratio > 0.66) {
-            grad.addColorStop(0, '#fbbf24');
-            grad.addColorStop(1, '#d97706');
-          } else if (ratio > 0.33) {
-            grad.addColorStop(0, '#fde047');
-            grad.addColorStop(1, '#facc15');
-          } else {
-            grad.addColorStop(0, '#fef3c7');
-            grad.addColorStop(1, '#fde68a');
-          }
-          ctx.fillStyle = grad;
-        }
-        ctx.fill();
+       ctx.fillStyle = '#fbbf24';
+       ctx.font = '10px Inter, sans-serif';
+       ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`,
+                    tooltipX + tooltipWidth / 2, tooltipY + 32);
+       
+       ctx.fillStyle = '#fde047';
+       ctx.fillText(`(${hoveredNode.percentage}% of director's papers)`,
+                    tooltipX + tooltipWidth / 2, tooltipY + 46);
+     }
+   }
 
-        // Border
-        ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
+   // Mouse interaction
+   canvas.addEventListener('mousemove', (e) => {
+     const rect = canvas.getBoundingClientRect();
+     const x = e.clientX - rect.left;
+     const y = e.clientY - rect.top;
 
-        ctx.shadowColor = 'transparent';
+     hoveredNode = null;
+     nodes.forEach(node => {
+       const dx = x - node.x;
+       const dy = y - node.y;
+       if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
+         hoveredNode = node;
+       }
+     });
 
-        // Text labels
-        ctx.fillStyle = '#1f2937';
-        ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
+     canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
+     drawNetwork();
+   });
 
-        // Name below node
-        ctx.fillText(node.name, node.x, node.y + node.radius + 14);
+   canvas.addEventListener('mouseleave', () => {
+     hoveredNode = null;
+     drawNetwork();
+   });
 
-        // Paper count for collaborators
-        if (!node.isCenter) {
-          ctx.fillStyle = '#6b7280';
-          ctx.font = '9px Inter, sans-serif';
-          ctx.fillText(`${node.frequency} papers`, node.x, node.y + node.radius + 26);
-        }
-      });
+   // Initialize
+   sizeCanvas();
+   buildNetwork();
+   updateNetworkInfo();
+   drawNetwork();
+   networkInitialized = true;
 
-      // Hover tooltip
-      if (hoveredNode && !hoveredNode.isCenter) {
-        const tooltipWidth = 160;
-        const tooltipHeight = 45;
-        let tooltipX = hoveredNode.x - tooltipWidth / 2;
-        let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
-
-        // Keep tooltip in bounds
-        tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
-        tooltipY = Math.max(10, tooltipY);
-
-        // Tooltip background
-        ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
-        ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
-        ctx.fill();
-        ctx.stroke();
-
-        // Tooltip text
-        ctx.fillStyle = '#fff';
-        ctx.font = 'bold 11px Inter, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
-
-        ctx.fillStyle = '#fbbf24';
-        ctx.font = '10px Inter, sans-serif';
-        ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`,
-                     tooltipX + tooltipWidth / 2, tooltipY + 32);
-      }
-    }
-
-    // Mouse interaction
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      hoveredNode = null;
-      nodes.forEach(node => {
-        const dx = x - node.x;
-        const dy = y - node.y;
-        if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
-          hoveredNode = node;
-        }
-      });
-
-      canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-      drawNetwork();
-    });
-
-    canvas.addEventListener('mouseleave', () => {
-      hoveredNode = null;
-      drawNetwork();
-    });
-
-    // Initialize
-    sizeCanvas();
-    buildNetwork();
-    updateNetworkInfo();
-    drawNetwork();
-    networkInitialized = true;
-
-    // Handle resize
-    window.addEventListener('resize', () => {
-      sizeCanvas();
-      buildNetwork();
-      drawNetwork();
-    });
-  }
+   // Handle resize
+   window.addEventListener('resize', () => {
+     sizeCanvas();
+     buildNetwork();
+     drawNetwork();
+   });
+ }
 </script>
