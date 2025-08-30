@@ -88,14 +88,14 @@ permalink: /about-honors.html
     @media (max-width: 768px) {
       .banner-content { padding: 24px 18px; min-height: 160px; }
       .banner-section { min-height: 160px; }
-      .banner-title { font-size: 1.9rem; }
+      .banner-title { font-size: 1.75rem; }
       .breadcrumbs-banner { font-size: 12px; }
     }
     @media (max-width: 480px) {
       .banner-content { padding: 20px 16px; min-height: 130px; }
       .banner-section { min-height: 130px; }
-      .banner-title { font-size: 1.6rem; }
-      .breadcrumbs-banner { font-size: 11px; }
+      .banner-title { font-size: 1.5rem; }
+      .breadcrumbs-banner { font-size: 11px; gap: .3rem; }
     }
   </style>
 
@@ -205,15 +205,17 @@ function generateDiamondNetwork() {
 :root{
   --honor-red: rgb(172, 14, 14);
   --award-gold: rgb(214, 177, 77);
+  --scholarship-blue: rgb(37, 99, 235);
   --primary-dark: #111827;
   --gradient-gold: linear-gradient(135deg, var(--award-gold), rgb(234, 207, 127));
   --gradient-red: linear-gradient(135deg, var(--honor-red), rgb(200, 40, 40));
+  --gradient-blue: linear-gradient(135deg, var(--scholarship-blue), rgb(59, 130, 246));
 }
 
 /* Year sections */
 .year-section{
-  margin-bottom: 24px;
-  border-radius: 1rem;
+  margin-bottom: 20px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
   transition: all 0.3s ease;
@@ -266,7 +268,7 @@ function generateDiamondNetwork() {
 }
 
 .year-header.collapsed{
-  border-radius: 1rem;
+  border-radius: 12px;
 }
 
 .year-badge{
@@ -296,17 +298,21 @@ function generateDiamondNetwork() {
   transform: rotate(-90deg);
 }
 
-/* Awards container */
+/* Awards container - 모바일 max-height 제거 */
 .awards-container{
   background: #fff;
   overflow: hidden;
   transition: all .4s ease;
-  max-height: 2000px;
+  max-height: none;
 }
 
 .awards-container.hidden{
-  max-height: 0;
+  max-height: 0 !important;
   opacity: 0;
+}
+
+.awards-container:not(.hidden){
+  max-height: none !important;
 }
 
 /* Grid layout for awards */
@@ -323,10 +329,10 @@ function generateDiamondNetwork() {
   }
 }
 
-/* Award card */
+/* Award card - 통일된 스타일 */
 .award-card{
   border: 1px solid #e5e7eb;
-  border-radius: 1rem;
+  border-radius: 12px;
   overflow: hidden;
   background: #fff;
   transition: all .3s ease;
@@ -349,6 +355,10 @@ function generateDiamondNetwork() {
   background: var(--gradient-red);
 }
 
+.award-card.scholarship::before {
+  background: var(--gradient-blue);
+}
+
 .award-card:hover{
   transform: translateY(-3px);
   box-shadow: 0 10px 25px rgba(0,0,0,.15);
@@ -363,7 +373,7 @@ function generateDiamondNetwork() {
   padding-left: 42px;
 }
 
-/* Award type indicator */
+/* Award type indicator - 장학금 추가 */
 .award-indicator{
   position: absolute;
   left: 16px;
@@ -381,24 +391,36 @@ function generateDiamondNetwork() {
   background: var(--gradient-gold);
 }
 
+.award-indicator.scholarship{
+  background: var(--gradient-blue);
+}
+
 /* Award body */
 .award-body{
   padding: 18px 20px 18px 0;
   position: relative;
 }
 
-/* Award date */
+/* Award header - 날짜와 배지를 한 줄에 */
+.award-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Award date - 상단 왼쪽 */
 .award-date{
-  position: absolute;
-  top: 18px;
-  right: 20px;
-  font-size: 12px;
+  font-size: 11px;
   color: #9ca3af;
   font-weight: 700;
-  background: #f8fafc;
-  padding: 4px 8px;
+  background: #f9fafb;
+  padding: 3px 8px;
   border-radius: 6px;
   border: 1px solid #e5e7eb;
+  white-space: nowrap;
 }
 
 /* Award badge with icon */
@@ -409,18 +431,17 @@ function generateDiamondNetwork() {
   background: linear-gradient(135deg, #f8fafc, #f1f5f9);
   border: 1px solid #e2e8f0;
   border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 11px;
+  padding: 5px 12px;
+  font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 12px;
   color: #475569;
   letter-spacing: 0.5px;
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .award-icon{
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* Award title - 한글/영어 단어 단위 줄바꿈 */
@@ -486,6 +507,12 @@ function generateDiamondNetwork() {
   color: #991b1b;
 }
 
+.winner-pill.bs{
+  border-color: var(--scholarship-blue);
+  background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+  color: #1e40af;
+}
+
 .winner-pill.prof{
   border-color: var(--award-gold);
   background: linear-gradient(135deg, #fef7e6, #fff7ed);
@@ -499,7 +526,7 @@ function generateDiamondNetwork() {
   color: #9ca3af;
   font-weight: 600;
   border: 2px dashed #d1d5db;
-  border-radius: 1rem;
+  border-radius: 12px;
   background: linear-gradient(135deg, #fafafa, #f9fafb);
   font-size: 14px;
 }
@@ -512,27 +539,141 @@ function generateDiamondNetwork() {
   opacity: 0.5;
 }
 
-/* Mobile responsive */
+/* Mobile responsive - 전면 개선 */
 @media (max-width: 768px) {
-  .year-badge { font-size: 18px; }
-  .award-title { font-size: 15px; }
-  .award-meta { font-size: 13px; }
-  .winner-pill { font-size: 11px; padding: 5px 10px; }
-  .award-body { padding: 16px 18px 16px 0; }
-  .year-header { padding: 14px 20px; }
-  .awards-grid { padding: 16px; gap: 14px; grid-template-columns: 1fr; }
-  .award-inner { padding-left: 38px; }
-  .award-indicator { left: 14px; top: 14px; bottom: 14px; width: 5px; }
+  .year-section { margin-bottom: 16px; }
+  .year-badge { font-size: 17px; }
+  .year-header { padding: 14px 18px; }
+  .year-toggle { font-size: 12px; gap: 6px; }
+  .chevron { width: 20px; height: 20px; }
+  
+  .awards-grid { 
+    padding: 16px; 
+    gap: 14px; 
+    grid-template-columns: 1fr; 
+  }
+  
+  .award-card { border-radius: 10px; }
+  .award-inner { padding-left: 36px; }
+  .award-indicator { 
+    left: 14px; 
+    top: 14px; 
+    bottom: 14px; 
+    width: 5px; 
+  }
+  
+  .award-body { padding: 16px 16px 16px 0; }
+  .award-header { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 6px; 
+  }
+  .award-date { font-size: 10px; padding: 2px 6px; }
+  .award-badge { 
+    font-size: 9px; 
+    padding: 4px 10px; 
+  }
+  .award-icon { font-size: 12px; }
+  .award-title { 
+    font-size: 14px; 
+    margin-bottom: 8px; 
+  }
+  .award-meta { 
+    font-size: 12px; 
+    margin-bottom: 10px; 
+  }
+  
+  .winners { 
+    gap: 6px; 
+    margin-top: 10px; 
+  }
+  .winner-pill { 
+    font-size: 10px; 
+    padding: 4px 9px; 
+  }
+  
+  .empty { 
+    padding: 40px 20px; 
+    font-size: 13px; 
+  }
+  .empty::before { font-size: 40px; }
 }
 
 @media (max-width: 480px) {
+  .year-section { 
+    margin-bottom: 14px; 
+    border-radius: 10px; 
+  }
   .year-badge { font-size: 16px; }
-  .award-title { font-size: 14px; }
-  .award-meta { font-size: 12px; }
-  .winner-pill { font-size: 10px; }
-  .award-body { padding: 14px 16px 14px 0; }
-  .year-header { padding: 12px 16px; }
-  .awards-grid { padding: 14px; gap: 12px; }
+  .year-header { padding: 12px 14px; }
+  .year-toggle { font-size: 11px; }
+  .chevron { width: 18px; height: 18px; }
+  
+  .awards-grid { 
+    padding: 12px; 
+    gap: 12px; 
+  }
+  
+  .award-card { border-radius: 8px; }
+  .award-inner { padding-left: 32px; }
+  .award-indicator { 
+    left: 12px; 
+    top: 12px; 
+    bottom: 12px; 
+    width: 4px; 
+  }
+  
+  .award-body { padding: 14px 14px 14px 0; }
+  .award-date { 
+    font-size: 9px; 
+    padding: 2px 5px; 
+    border-radius: 4px; 
+  }
+  .award-badge { 
+    font-size: 8px; 
+    padding: 3px 8px; 
+    letter-spacing: 0.3px; 
+  }
+  .award-icon { font-size: 11px; }
+  .award-title { 
+    font-size: 13px; 
+    margin-bottom: 6px; 
+    line-height: 1.35; 
+  }
+  .award-meta { 
+    font-size: 11px; 
+    margin-bottom: 8px; 
+    line-height: 1.4; 
+  }
+  
+  .winners { 
+    gap: 5px; 
+    margin-top: 8px; 
+  }
+  .winner-pill { 
+    font-size: 9px; 
+    padding: 3px 7px; 
+    gap: 4px; 
+  }
+  
+  .empty { 
+    padding: 35px 16px; 
+    font-size: 12px; 
+    border-radius: 8px; 
+  }
+  .empty::before { 
+    font-size: 36px; 
+    margin-bottom: 12px; 
+  }
+}
+
+/* 초소형 디바이스 (320px) */
+@media (max-width: 360px) {
+  .banner-title { font-size: 1.35rem; }
+  .year-badge { font-size: 15px; }
+  .award-title { font-size: 12px; }
+  .award-meta { font-size: 10px; }
+  .winner-pill { font-size: 8px; padding: 2px 6px; }
 }
 </style>
 
@@ -554,10 +695,59 @@ function getRecentYears() {
   return years.slice(0, 3);
 }
 
-// 수상 카드 생성
+// 날짜를 기준으로 학위 레벨 결정하는 함수
+function getDegreeLevel(dateStr, name) {
+  // 날짜 파싱 (예: "May 17", "2024.05.17" 등 다양한 형식 처리)
+  const currentYear = new Date().getFullYear();
+  let parsedDate;
+  
+  // "May 17" 같은 형식인 경우 현재 연도 추가
+  if (!dateStr.includes('20')) {
+    dateStr = dateStr + ', ' + currentYear;
+  }
+  
+  // 날짜 파싱 시도
+  parsedDate = new Date(dateStr.replace(/\./g, '-'));
+  
+  // 2021년 3월 이후: 박사
+  const phdStart = new Date('2021-03-01');
+  // 2018년 2월 26일 이후 ~ 2021년 2월: 석사
+  const msStart = new Date('2018-02-26');
+  const msEnd = new Date('2021-02-28');
+  
+  // 교수님은 항상 prof
+  if (name && (name.includes('Prof') || name.includes('교수'))) {
+    return 'prof';
+  }
+  
+  // 날짜 기준으로 학위 판단
+  if (parsedDate >= phdStart) {
+    return 'phd';
+  } else if (parsedDate >= msStart && parsedDate <= msEnd) {
+    return 'ms';
+  } else {
+    return 'bs'; // 학사
+  }
+}
+
+// 수상 카드 생성 - 날짜 위치 변경 및 학위 자동 판단
 function createAwardCard(item) {
   const winnersHtml = item.winners.map(w => {
-    return `<span class="winner-pill ${w.level}">${w.name}</span>`;
+    // 기존 level이 있으면 사용, 없으면 날짜 기준으로 자동 판단
+    let level = w.level;
+    if (!level || level === '') {
+      level = getDegreeLevel(item.date, w.name);
+    }
+    // ms가 아닌 석사 관련 레벨을 ms로 통일
+    if (level === 'master' || level === 'msc') {
+      level = 'ms';
+    }
+    // bs가 아닌 학사 관련 레벨을 bs로 통일
+    if (level === 'bachelor' || level === 'undergrad' || level === 'ug') {
+      level = 'bs';
+    }
+    
+    return `<span class="winner-pill ${level}">${w.name}</span>`;
   }).join('');
 
   return `
@@ -565,11 +755,13 @@ function createAwardCard(item) {
       <div class="award-inner">
         <div class="award-indicator ${item.type}"></div>
         <div class="award-body">
-          <span class="award-date">${item.date}</span>
-          <span class="award-badge">
-            <span class="award-icon">${item.icon}</span>
-            ${item.title}
-          </span>
+          <div class="award-header">
+            <span class="award-date">${item.date}</span>
+            <span class="award-badge">
+              <span class="award-icon">${item.icon}</span>
+              ${item.title}
+            </span>
+          </div>
           <div class="award-title">${item.event}</div>
           <div class="award-meta">${item.organization}</div>
           <div class="winners">${winnersHtml}</div>
@@ -621,17 +813,41 @@ function initPage() {
   container.innerHTML = html;
 }
 
-// 토글 함수
+// 토글 함수 - 애니메이션 개선
 function toggleYear(header) {
   const container = header.nextElementSibling;
   const isHidden = container.classList.contains('hidden');
   
   if (isHidden) {
+    // 열기
+    container.style.maxHeight = '0px';
     container.classList.remove('hidden');
     header.classList.remove('collapsed');
+    
+    // 높이 계산 후 애니메이션
+    setTimeout(() => {
+      const height = container.scrollHeight;
+      container.style.maxHeight = height + 'px';
+      
+      // 애니메이션 후 max-height 제거
+      setTimeout(() => {
+        container.style.maxHeight = 'none';
+      }, 400);
+    }, 10);
   } else {
-    container.classList.add('hidden');
-    header.classList.add('collapsed');
+    // 닫기
+    const height = container.scrollHeight;
+    container.style.maxHeight = height + 'px';
+    
+    setTimeout(() => {
+      container.style.maxHeight = '0px';
+      
+      setTimeout(() => {
+        container.classList.add('hidden');
+        header.classList.add('collapsed');
+        container.style.maxHeight = '';
+      }, 400);
+    }, 10);
   }
 }
 
