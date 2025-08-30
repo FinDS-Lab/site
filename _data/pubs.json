@@ -252,19 +252,6 @@
    "code_label": "C",
    "indexing_group": "International - Domestic Joint Conference",
    "type": "conference",
-   "language": "Korean",
-   "title": "금융 시장 하방 위험의 예측을 위한 조건부 정보 전이 그래프의 활용",
-   "authors": [1, 2],
-   "author_marks": ["1", "*"],
-   "venue": "2024 한국경영정보학회 추계국제학술대회",
-   "published_date": "2024-11-15",
-   "awards": 0
- },
- {
-   "year": 2024,
-   "code_label": "C",
-   "indexing_group": "International - Domestic Joint Conference",
-   "type": "conference",
    "language": "English",
    "title": "A Study on the Use of Spatiotemporal Graphs Based on Linear and Nonlinear Statistical Dependencies in Financial Time Series Forecasting",
    "authors": [1, 2],
@@ -790,10 +777,25 @@
    "authors": [1, 2],
    "author_marks": ["1", "*"],
    "venue": "2024 Fall Conference of the Korean Operations Research and Management Science Society",
+   "venue_ko": "2024년 한국경영정보학회 추계국제학술대회",
+   "published_date": "2024-11-15",
+   "awards": 0
+ },
+   {
+   "year": 2024,
+   "code_label": "C",
+   "indexing_group": "Domestic Conference",
+   "type": "conference",
+   "language": "Korean",
+   "title": "Utilization of conditional information transfer graphs for predicting downside risk in financial markets",
+   "title_ko": "금융 시장 하방 위험의 예측을 위한 조건부 정보 전이 그래프의 활용",
+   "authors": [1, 2],
+   "author_marks": ["1", "*"],
+   "venue": "2024 Fall International Conference of the Korea Society of Management Information Systems",
    "venue_ko": "2024 한국경영과학회 추계학술대회",
    "published_date": "2024-11-08",
    "awards": 1,
-   "award_details": ["내용"]
+   "award_details": ["2024 한국경영과학회 추계학술대회 경쟁 부문 우수상"]
  },
  {
    "year": 2024,
@@ -809,7 +811,7 @@
    "venue_ko": "2024 한국경영과학회 추계학술대회",
    "published_date": "2024-11-08",
    "awards": 1,
-   "award_details": ["내용"]
+   "award_details": ["제11회 경영과학 박사학위논문상 우수상"]
  },
  {
    "year": 2024,
