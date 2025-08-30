@@ -205,11 +205,12 @@ function generateDiamondNetwork() {
 :root{
   --honor-red: rgb(172, 14, 14);
   --award-gold: rgb(214, 177, 77);
-  --scholarship-blue: rgb(37, 99, 235);
+  --scholarship-red: rgb(172, 14, 14);
+  --bs-gray: rgb(107, 114, 128);
   --primary-dark: #111827;
   --gradient-gold: linear-gradient(135deg, var(--award-gold), rgb(234, 207, 127));
   --gradient-red: linear-gradient(135deg, var(--honor-red), rgb(200, 40, 40));
-  --gradient-blue: linear-gradient(135deg, var(--scholarship-blue), rgb(59, 130, 246));
+  --gradient-gray: linear-gradient(135deg, var(--bs-gray), rgb(156, 163, 175));
 }
 
 /* Year sections */
@@ -351,12 +352,13 @@ function generateDiamondNetwork() {
   transition: transform .3s ease;
 }
 
-.award-card.honor::before {
+.award-card.honor::before,
+.award-card.scholarship::before {
   background: var(--gradient-red);
 }
 
-.award-card.scholarship::before {
-  background: var(--gradient-blue);
+.award-card.award::before {
+  background: var(--gradient-gold);
 }
 
 .award-card:hover{
@@ -383,16 +385,13 @@ function generateDiamondNetwork() {
   border-radius: 6px;
 }
 
-.award-indicator.honor{
+.award-indicator.honor,
+.award-indicator.scholarship{
   background: var(--gradient-red);
 }
 
 .award-indicator.award{
   background: var(--gradient-gold);
-}
-
-.award-indicator.scholarship{
-  background: var(--gradient-blue);
 }
 
 /* Award body */
@@ -401,29 +400,17 @@ function generateDiamondNetwork() {
   position: relative;
 }
 
-/* Award header - 날짜와 배지를 한 줄에 */
-.award-header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Award date - 상단 왼쪽 */
+/* Award date - 최상단에 단독 배치 */
 .award-date{
+  display: block;
   font-size: 11px;
   color: #9ca3af;
   font-weight: 700;
-  background: #f9fafb;
-  padding: 3px 8px;
-  border-radius: 6px;
-  border: 1px solid #e5e7eb;
+  margin-bottom: 8px;
   white-space: nowrap;
 }
 
-/* Award badge with icon */
+/* Award badge with icon - 날짜 아래에 배치 */
 .award-badge{
   display: inline-flex;
   align-items: center;
@@ -438,6 +425,7 @@ function generateDiamondNetwork() {
   color: #475569;
   letter-spacing: 0.5px;
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  margin-bottom: 12px;
 }
 
 .award-icon{
@@ -508,9 +496,9 @@ function generateDiamondNetwork() {
 }
 
 .winner-pill.bs{
-  border-color: var(--scholarship-blue);
-  background: linear-gradient(135deg, #eff6ff, #f0f9ff);
-  color: #1e40af;
+  border-color: #9ca3af;
+  background: linear-gradient(135deg, #f3f4f6, #f9fafb);
+  color: #4b5563;
 }
 
 .winner-pill.prof{
@@ -563,15 +551,14 @@ function generateDiamondNetwork() {
   }
   
   .award-body { padding: 16px 16px 16px 0; }
-  .award-header { 
-    flex-direction: column; 
-    align-items: flex-start; 
-    gap: 6px; 
+  .award-date { 
+    font-size: 10px; 
+    margin-bottom: 6px;
   }
-  .award-date { font-size: 10px; padding: 2px 6px; }
   .award-badge { 
     font-size: 9px; 
     padding: 4px 10px; 
+    margin-bottom: 10px;
   }
   .award-icon { font-size: 12px; }
   .award-title { 
@@ -626,13 +613,13 @@ function generateDiamondNetwork() {
   .award-body { padding: 14px 14px 14px 0; }
   .award-date { 
     font-size: 9px; 
-    padding: 2px 5px; 
-    border-radius: 4px; 
+    margin-bottom: 5px;
   }
   .award-badge { 
     font-size: 8px; 
     padding: 3px 8px; 
     letter-spacing: 0.3px; 
+    margin-bottom: 8px;
   }
   .award-icon { font-size: 11px; }
   .award-title { 
@@ -755,13 +742,11 @@ function createAwardCard(item) {
       <div class="award-inner">
         <div class="award-indicator ${item.type}"></div>
         <div class="award-body">
-          <div class="award-header">
-            <span class="award-date">${item.date}</span>
-            <span class="award-badge">
-              <span class="award-icon">${item.icon}</span>
-              ${item.title}
-            </span>
-          </div>
+          <span class="award-date">${item.date}</span>
+          <span class="award-badge">
+            <span class="award-icon">${item.icon}</span>
+            ${item.title}
+          </span>
           <div class="award-title">${item.event}</div>
           <div class="award-meta">${item.organization}</div>
           <div class="winners">${winnersHtml}</div>
