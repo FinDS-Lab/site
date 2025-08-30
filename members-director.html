@@ -939,6 +939,42 @@ permalink: /members-director.html
 
  .slider-value{font-size:18px;font-weight:900;color:var(--gold);min-width:20px;text-align:center;}
 
+   /* Zoom Controls */
+  .zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+
+  .zoom-btn {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+  }
+
+  .zoom-btn:hover {
+    background: var(--gold);
+    color: white;
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .zoom-level {
+    margin-left: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 50px;
+  }
  /* Enhanced Network Canvas Styles */
  #networkCanvas{
    width:100%;
@@ -1434,6 +1470,12 @@ permalink: /members-director.html
            </div>
            <span class="slider-value" id="sliderValue">10%</span>
          </div>
+         <div class="zoom-controls">
+           <button class="zoom-btn" onclick="zoomNetwork(1.2)">🔍+</button>
+           <button class="zoom-btn" onclick="zoomNetwork(0.8)">🔍-</button>
+           <button class="zoom-btn" onclick="resetZoom()">↺ Reset</button>
+           <span class="zoom-level" id="zoomLevel">100%</span>
+         </div>
          <canvas id="networkCanvas"></canvas>
          <div id="networkInfo">
            Loading collaboration data...
@@ -1694,37 +1736,99 @@ permalink: /members-director.html
  }
 
  // Canvas setup
- const canvas = document.getElementById('networkCanvas');
- if (canvas) {
-   const ctx = canvas.getContext('2d');
-   let nodes = [];
+  // Canvas setup
+  const canvas = document.getElementById('networkCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let nodes = [];
+    let zoomLevel = 1;
+    let baseRadius = 120; // 기본 반경
 
-   // Size canvas
-   function sizeCanvas() {
-     const rect = canvas.getBoundingClientRect();
-     canvas.width = rect.width * window.devicePixelRatio;
-     canvas.height = 500 * window.devicePixelRatio;
-     canvas.style.height = '500px';
-     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-   }
+    // Zoom functions
+    window.zoomNetwork = function(factor) {
+      zoomLevel *= factor;
+      zoomLevel = Math.max(0.3, Math.min(2, zoomLevel)); // 30% ~ 200% 제한
+      document.getElementById('zoomLevel').textContent = Math.round(zoomLevel * 100) + '%';
+      buildNetwork();
+      drawNetwork();
+    }
 
-   // Build network structure
-   function buildNetwork() {
-     nodes = [];
-     const centerX = canvas.width / (2 * window.devicePixelRatio);
-     const centerY = canvas.height / (2 * window.devicePixelRatio);
-     const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
+    window.resetZoom = function() {
+      zoomLevel = 1;
+      document.getElementById('zoomLevel').textContent = '100%';
+      buildNetwork();
+      drawNetwork();
+    }
 
-     // Director at center
-     nodes.push({
-       id: DIRECTOR_ID,
-       name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-       x: centerX,
-       y: centerY,
-       radius: 35,
-       isCenter: true,
-       frequency: 999
-     });
+    // Size canvas
+    function sizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 500 * window.devicePixelRatio;
+      canvas.style.height = '500px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+
+    // Build network structure
+    function buildNetwork() {
+      nodes = [];
+      const centerX = canvas.width / (2 * window.devicePixelRatio);
+      const centerY = canvas.height / (2 * window.devicePixelRatio);
+      const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
+
+      // Director at center
+      nodes.push({
+        id: DIRECTOR_ID,
+        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+        x: centerX,
+        y: centerY,
+        radius: 35 * zoomLevel,
+        isCenter: true,
+        frequency: 999
+      });
+
+      // Get collaborators sorted by frequency and filtered by threshold
+      const coAuthors = Object.entries(collaborations)
+        .filter(([id, freq]) => freq >= thresholdCount)
+        .sort((a, b) => b[1] - a[1]);
+
+      // Arrange in concentric circles based on frequency
+      const rings = [];
+      const ringSizes = [8, 12, 16];
+      let ringIndex = 0;
+      let nodesInRing = [];
+
+      coAuthors.forEach(([id, freq]) => {
+        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
+          rings.push(nodesInRing);
+          nodesInRing = [];
+          ringIndex++;
+        }
+        nodesInRing.push({ id: parseInt(id), freq });
+      });
+      if (nodesInRing.length > 0) rings.push(nodesInRing);
+
+      // Place nodes in rings with zoom
+      rings.forEach((ring, rIdx) => {
+        const radius = (baseRadius + rIdx * 80) * zoomLevel;
+        ring.forEach((item, nIdx) => {
+          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+          const freq = item.freq;
+          const percentage = Math.round((freq / directorPapers) * 100);
+
+          nodes.push({
+            id: item.id,
+            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+            x: centerX + Math.cos(angle) * radius,
+            y: centerY + Math.sin(angle) * radius,
+            radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+            frequency: freq,
+            percentage: percentage,
+            ring: rIdx
+          });
+        });
+      });
+    }
 
      // Get collaborators sorted by frequency and filtered by threshold
      const coAuthors = Object.entries(collaborations)
@@ -1959,6 +2063,7 @@ permalink: /members-director.html
    });
  }
 </script>
+
 
 
 
