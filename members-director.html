@@ -325,19 +325,18 @@ permalink: /members-director.html
  }
 
  /* director 전용 카드 - site.css의 .card 오버라이드 */
- .director-card {
-   background:#fff !important;
-   border:1px solid #e5e7eb !important;
-   border-radius:16px !important;
-   -webkit-border-radius:16px !important;
-   -moz-border-radius:16px !important;
-   overflow:hidden !important;
-   box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
-   transition:all 0.2s;
-   margin-bottom: 1.5rem;
-   /* site.css의 패딩 오버라이드 */
-   padding: 0 !important;
- }
+.director-card {
+  background:#fff !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:16px !important;
+  overflow:hidden !important;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04) !important;
+  transition:all 0.2s;
+  margin-bottom: 1.5rem;
+  padding: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
 
  .director-card:hover {
    transform:translateY(-2px);
@@ -350,12 +349,13 @@ permalink: /members-director.html
 
  .card-head{
    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-   color:var(--gold-fg);
+   color:#ffffff;  /* 흰색으로 변경 */
    font-weight:900;
    padding:1rem 1.25rem;
    font-size:18px;
    position:relative;
    overflow:hidden;
+   text-shadow: 0 1px 3px rgba(0,0,0,0.2);  /* 가독성을 위한 그림자 추가 */
  }
 
  .card-head::after{
@@ -1143,6 +1143,51 @@ permalink: /members-director.html
  font-weight:600;
  border: 1px solid rgba(214,177,77,0.1);
 }
+
+ /* ===== 모바일 반응형 추가 수정 ===== */
+@media (max-width: 640px) {
+  .director-page.max-w-7xl {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  .main-grid {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  .director-card {
+    border-radius: 12px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .card-body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+  
+  .profile-value,
+  .desc,
+  .title,
+  .ri-list-desc,
+  .ri-list-title {
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+}
+
+@media (max-width: 968px) {
+  .main-grid {
+    display: block !important;
+  }
+  
+  .main-grid > * {
+    width: 100% !important;
+    margin-bottom: 1.5rem;
+  }
+}
+ 
 </style>
 
 <!-- ===== Main Content ===== -->
@@ -2170,6 +2215,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
