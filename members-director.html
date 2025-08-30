@@ -1960,17 +1960,20 @@ permalink: /members-director.html
 
  // UI Elements
  const slider = document.getElementById('networkSlider');
- const sliderValue = document.getElementById('sliderValue');
+ const sliderValue = document.getElementById('sliderValue'); // 이 요소가 없어도 에러 방지
  const infoEl = document.getElementById('networkInfo');
-
+ 
  // Setup slider
  if (slider) {
-   slider.value = 10; // Start at 10%
+   slider.value = 10;
    currentThreshold = 10;
-
+ 
    slider.addEventListener('input', function() {
      currentThreshold = parseInt(this.value);
-     sliderValue.textContent = currentThreshold + '%';
+     // sliderValue가 존재하면 업데이트, 없으면 무시
+     if (sliderValue) {
+       sliderValue.textContent = currentThreshold + '%';
+     }
      updateNetworkInfo();
      if (networkInitialized) {
        buildNetwork();
@@ -1996,26 +1999,23 @@ if (canvas) {
   let zoomLevel = 1;
   let baseRadius = 120; // 기본 반경
 
-  // Zoom functions
-  window.zoomNetwork = function(factor) {
-    zoomLevel *= factor;
-    zoomLevel = Math.max(0.3, Math.min(2, zoomLevel)); // 30% ~ 200% 제한
-    document.getElementById('zoomLevel').textContent = Math.round(zoomLevel * 100) + '%';
-    buildNetwork();
-    drawNetwork();
-  }
-
    window.zoomNetwork = function(factor) {
      zoomLevel *= factor;
      zoomLevel = Math.max(0.3, Math.min(2, zoomLevel));
-     // document.getElementById('zoomLevel').textContent = Math.round(zoomLevel * 100) + '%'; // 이 줄 제거
+     const zoomLevelEl = document.getElementById('zoomLevel');
+     if (zoomLevelEl) {
+       zoomLevelEl.textContent = Math.round(zoomLevel * 100) + '%';
+     }
      buildNetwork();
      drawNetwork();
    }
    
    window.resetZoom = function() {
      zoomLevel = 1;
-     // document.getElementById('zoomLevel').textContent = '100%'; // 이 줄 제거
+     const zoomLevelEl = document.getElementById('zoomLevel');
+     if (zoomLevelEl) {
+       zoomLevelEl.textContent = '100%';
+     }
      buildNetwork();
      drawNetwork();
    }
@@ -2280,6 +2280,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
