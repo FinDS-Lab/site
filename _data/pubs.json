@@ -368,22 +368,6 @@
    "awards": 0
  },
  {
-   "year": 2022,
-   "code_label": "J",
-   "indexing_group": "SCIE",
-   "type": "journal",
-   "language": "English",
-   "title": "Dietary Pattern Extraction Using Natural Language Processing Techniques",
-   "authors": [1, 87, 2],
-   "author_marks": ["1", "*", "*"],
-   "venue": "Frontiers in Nutrition",
-   "published_date": "2022-03-09",
-   "volume": "9",
-   "pages": "765794",
-   "doi": "10.3389/fnut.2022.765794",
-   "awards": 0
- },
- {
    "year": 2021,
    "code_label": "J",
    "indexing_group": "SCIE",
