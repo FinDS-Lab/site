@@ -545,8 +545,8 @@
       ]
     },
     {
-      "type": "honor",
-      "icon": "🎓",
+      "type": "award",
+      "icon": "🏆",
       "title": "우수상 (1위)",
       "event": "2016학년도 1학기 학업 우수 부문",
       "organization": "경희대학교 공과대학",
@@ -613,8 +613,8 @@
       ]
     },
     {
-      "type": "honor",
-      "icon": "🎓",
+      "type": "award",
+      "icon": "🏆",
       "title": "최우수상 (1위)",
       "event": "2015학년도 1학기 학업 우수 부문",
       "organization": "경희대학교 공과대학",
@@ -637,8 +637,8 @@
       ]
     },
     {
-      "type": "honor",
-      "icon": "🎓",
+      "type": "award",
+      "icon": "🏆",
       "title": "우수상 (1위)",
       "event": "2014학년도 1학기 학업 우수 부문",
       "organization": "경희대학교 공과대학",
@@ -650,8 +650,8 @@
   ],
   "2013": [
     {
-      "type": "honor",
-      "icon": "🎓",
+      "type": "award",
+      "icon": "🏆",
       "title": "최우수상 (1위)",
       "event": "2013학년도 1학기 학업 우수 부문",
       "organization": "경희대학교 공과대학",
