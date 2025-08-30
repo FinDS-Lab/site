@@ -1423,33 +1423,24 @@ permalink: /members-director.html
  }
 
  // ===== Mentee Modal and Mentoring Program System =====
- const MENTEES = {};
- let mentoringData = {};
- 
- // Function to format name (add space for 2-character names)
- function formatName(name) {
-   return name.length === 2 ? name[0] + '　' + name[1] : name;
- }
- 
- // Load mentees.json and build mentoring sections
- fetch('{{ "/assets/data/mentees.json" | relative_url }}')
-   .then(response => response.json())
-   .then(data => {
-     mentoringData = data;
-     
-     // Store all mentees in MENTEES object
-     for (const id in data) {
-       MENTEES[id] = data[id];
-     }
-     
-     // Build mentoring years by participation
-     buildMentoringYears();
-   })
-   .catch(error => {
-     console.error('Error loading mentees data:', error);
-     document.getElementById('mentoringContainer').innerHTML = 
-       '<div style="text-align:center; padding:20px; color:#ef4444;">Error loading mentoring data</div>';
-   });
+  // ===== Mentee Modal and Mentoring Program System =====
+  const MENTEES = {};
+  
+  // Function to format name (add space for 2-character names)
+  function formatName(name) {
+    return name.length === 2 ? name[0] + '　' + name[1] : name;
+  }
+  
+  // Load mentees data from Jekyll data file
+  const mentoringData = {{ site.data.mentees | jsonify }};
+  
+  // Store all mentees in MENTEES object
+  for (const id in mentoringData) {
+    MENTEES[id] = mentoringData[id];
+  }
+  
+  // Build mentoring years by participation
+  buildMentoringYears();
  
  function buildMentoringYears() {
    const mentoringByYear = {};
@@ -1899,3 +1890,4 @@ permalink: /members-director.html
    });
  }
 </script>
+
