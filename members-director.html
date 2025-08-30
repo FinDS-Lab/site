@@ -1723,7 +1723,7 @@ permalink: /members-director.html
            <div class="control-group">
              <span class="slider-label">Threshold:</span>
              <div class="slider-container">
-               <input type="range" id="networkSlider" class="network-slider" min="0" max="100" value="10" step="1">
+               <input type="range" id="networkSlider" class="network-slider" min="0" max="100" value="3" step="1">
              </div>
            </div>
            
@@ -1952,7 +1952,7 @@ permalink: /members-director.html
  }
 
  // Initialize variables
- let currentThreshold = 10; // Start at 10%
+ let currentThreshold = 3; // Start at 10%
  let { counts: collaborations, directorPapers } = countCollaborations();
  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
  let hoveredNode = null;
@@ -1965,8 +1965,8 @@ permalink: /members-director.html
  
  // Setup slider
  if (slider) {
-   slider.value = 10;
-   currentThreshold = 10;
+   slider.value = 3;
+   currentThreshold = 3;
  
    slider.addEventListener('input', function() {
      currentThreshold = parseInt(this.value);
@@ -2280,6 +2280,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
