@@ -320,15 +320,6 @@ function generateDiamondNetwork() {
   <div class="grid" id="grid"></div>
 </section>
 
-<!-- ===== Raw List (Liquid) ===== -->
-<section class="max-w-7xl mx-auto px-4 pb-8">
-  <h2 style="font-weight:900;margin:8px 0">Raw List (Liquid)</h2>
-  {% for project in site.data.projects %}
-    <h3>{{ project.titleEn }}</h3>
-    <p>{{ project.titleKo }}</p>
-  {% endfor %}
-</section>
-
 <script>
 (() => {
   /* ===== Raw Data from _data/projects.json via Liquid ===== */
