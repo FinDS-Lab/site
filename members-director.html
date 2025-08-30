@@ -971,6 +971,8 @@ permalink: /members-director.html
  padding: 12px;
  background: #f8f9fa;
  border-radius: 8px;
+ max-width: 100%;
+ overflow-x: auto;
 }
 
 .control-group {
@@ -1114,6 +1116,7 @@ permalink: /members-director.html
  border: none;
 }
 
+/* Threshold 슬라이더 값 - 금색 */
 .slider-badge {
  display: inline-flex;
  align-items: center;
@@ -1126,6 +1129,13 @@ permalink: /members-director.html
  font-size: 13px;
  font-weight: 800;
  box-shadow: 0 2px 4px rgba(214,177,77,0.3);
+}
+
+/* Zoom 레벨 표시 - 다른 색상 (파란색 계열) */
+#zoomLevel {
+ background: #3b82f6;
+ color: white;
+ box-shadow: 0 2px 4px rgba(59,130,246,0.3);
 }
 
 .zoom-btn {
@@ -1153,10 +1163,37 @@ permalink: /members-director.html
    flex-direction: column;
    align-items: stretch;
    gap: 12px;
+   padding: 10px;
  }
  
  .control-group {
    justify-content: space-between;
+   flex-wrap: wrap;
+ }
+ 
+ .slider-container {
+   max-width: 100%;
+   flex: 1;
+ }
+ 
+ .network-slider {
+   width: 80px !important;  /* 150px에서 80px로 줄임 */
+ }
+}
+
+@media (max-width: 480px) {
+ .network-slider {
+   width: 60px !important;  /* 더 작은 화면에서는 60px */
+ }
+ 
+ .slider-label {
+   font-size: 11px !important;
+ }
+ 
+ .zoom-btn {
+   min-width: 28px !important;
+   padding: 4px 6px !important;
+   font-size: 12px !important;
  }
 }
 
@@ -2209,6 +2246,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
