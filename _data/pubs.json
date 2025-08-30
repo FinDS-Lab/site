@@ -367,6 +367,17 @@
    "doi": "10.7232/iems.2022.21.2.244",
    "awards": 0
  },
+  {
+   "year": 2022,
+   "code_label": "J",
+   "indexing_group": "KCI Excellent",
+   "type": "journal",
+   "language": "Korean",
+   "title": "On the Possibility of Incorporating Cryptocurrency Index into the U.S. ETF Market: From the Perspective of Systemic Risk and Mean-Variance Portfolio Optimization",
+   "title_ko": "미국 ETF 시장의 암호화폐 지수 도입 가능성: 시스템 리스크와 포트폴리오 이론의 관점에서",
+   "authors": [110, 111, 19, 113, 1, 2],
+   "author_marks": ["1", "1", "1", "1", "1", "*"],
+   "venue": "대한산업공학회지"},
  {
    "year": 2021,
    "code_label": "J",
@@ -384,17 +395,6 @@
    "doi": "10.3390/e23060734",
    "awards": 0
  },
- {
-   "year": 2022,
-   "code_label": "J",
-   "indexing_group": "KCI Excellent",
-   "type": "journal",
-   "language": "Korean",
-   "title": "On the Possibility of Incorporating Cryptocurrency Index into the U.S. ETF Market: From the Perspective of Systemic Risk and Mean-Variance Portfolio Optimization",
-   "title_ko": "미국 ETF 시장의 암호화폐 지수 도입 가능성: 시스템 리스크와 포트폴리오 이론의 관점에서",
-   "authors": [110, 111, 19, 113, 1, 2],
-   "author_marks": ["1", "1", "1", "1", "1", "*"],
-   "venue": "대한산업공학회지"},
  {
    "year": 2021,
    "code_label": "J",
