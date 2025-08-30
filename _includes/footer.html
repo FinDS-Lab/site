@@ -7,7 +7,8 @@
         <a class="link-underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
       </p>
 
-      <p class="mt-1 text-center text-xs text-slate-400">
+      <!-- ⬇️ id 추가 (스크립트에서 색 제어) -->
+      <p id="copyright" class="mt-1 text-center text-xs text-slate-400">
         Copyright © <span id="year"></span> FINDS Lab. All Rights Reserved.
       </p>
     </div>
@@ -25,9 +26,9 @@
 
 <!-- Footer styles -->
 <style>
-  /* 동적 링크 컬러(보색)를 담는 변수 */
+  /* 동적 링크 컬러(보색 또는 지정색)를 담는 변수 */
   #siteFooter {
-    --link-color: #334155; /* 초기/폴백: slate-700 */
+    --link-color: #334155; /* 기본값: slate-700 */
   }
 
   /* 링크 언더라인 슬라이드 + 동적 색 */
@@ -109,8 +110,9 @@
       });
     }
 
-    // ===== 링크 컬러를 footer 배경의 보색으로 자동 설정 =====
+    // ===== 색상 유틸 =====
     var footer = document.getElementById('siteFooter');
+    var copyrightEl = document.getElementById('copyright');
 
     function parseCssColor(str) {
       // rgb/rgba
@@ -182,29 +184,47 @@
       return hslToCss(compH, compS, compL);
     }
 
-    function applyComplementaryLinkColor() {
+    function isLightBackground(colorStr) {
+      var rgb = parseCssColor(colorStr);
+      if (!rgb) return false;
+      var hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+      return hsl.l >= 90; // 매우 밝음(거의 흰색)
+    }
+
+    // 흰색 배경이면 링크=rgb(172,14,14), 카피라이트=검정; 아니면 보색 유지
+    function applyFooterColors() {
       if (!footer) return;
-      // 실제 렌더된 배경색 취득 (다크모드 CSS 적용 반영)
       var bg = getComputedStyle(footer).backgroundColor;
-      var comp = computeComplementary(bg);
-      if (comp) {
-        footer.style.setProperty('--link-color', comp);
+
+      if (isLightBackground(bg)) {
+        // 요구사항: 흰 배경일 때 링크 빨간색(172,14,14), 카피라이트 검정
+        footer.style.setProperty('--link-color', 'rgb(172, 14, 14)');
+        if (copyrightEl) {
+          copyrightEl.style.color = '#000000';
+        }
+      } else {
+        // 그 외 배경: 보색 사용, 카피라이트 색은 기본/다크모드 CSS에 맡김
+        var comp = computeComplementary(bg);
+        if (comp) footer.style.setProperty('--link-color', comp);
+        if (copyrightEl) {
+          copyrightEl.style.color = ''; // 리셋 -> 클래스/다크모드 규칙 적용
+        }
       }
     }
 
     // 초기 적용
-    applyComplementaryLinkColor();
+    applyFooterColors();
 
     // 다크모드 전환 시 재계산
     var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
     if (mql && typeof mql.addEventListener === 'function') {
-      mql.addEventListener('change', applyComplementaryLinkColor);
+      mql.addEventListener('change', applyFooterColors);
     } else if (mql && typeof mql.addListener === 'function') {
       // Safari 구버전 호환
-      mql.addListener(applyComplementaryLinkColor);
+      mql.addListener(applyFooterColors);
     }
 
-    // 폰트/레이아웃 변경 등으로 footer 배경이 변할 수 있는 경우를 대비해 resize 시 재계산(저비용)
-    window.addEventListener('resize', applyComplementaryLinkColor, { passive: true });
+    // 리사이즈 등으로 배경이 바뀔 수 있는 경우 대비
+    window.addEventListener('resize', applyFooterColors, { passive: true });
   })();
 </script>
