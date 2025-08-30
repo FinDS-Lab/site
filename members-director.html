@@ -581,37 +581,50 @@ permalink: /members-director.html
  }
 
  /* Tablet - same 3 column layout */
- @media (max-width: 768px) {
-   .pub-stats{
-     grid-template-columns:repeat(3, 1fr);
-     grid-template-rows:auto auto auto auto;
-     gap:8px;
-   }
+/* Mobile - 3 column layout with equal heights */
+@media (max-width: 480px) {
+  .pub-stats{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(60px, auto); /* 최소 높이 설정으로 통일 */
+    gap: 6px;
+  }
 
-   /* Same positioning as desktop */
-   .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-   .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
-   .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
-   .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
-   .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
-   .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
-   .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
-   .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-   .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
-   .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
+  /* Same positioning as desktop */
+  .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
+  .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
+  .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
+  .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
+  .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
+  .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
+  .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
+  .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
+  .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
+  
+  /* Citation spans all 3 columns */
+  .pub-stat.citation { 
+    grid-column: 1 / span 3; /* 3열 전체 차지 */
+    grid-row: 4; 
+  }
 
-   .pub-stat{
-     padding:10px;
-   }
+  .pub-stat{
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px; /* 최소 높이 보장 */
+  }
 
-   .pub-stat-number{
-     font-size:20px;
-   }
+  .pub-stat-number{
+    font-size: 18px;
+  }
 
-   .pub-stat-label{
-     font-size:10px;
-   }
- }
+  .pub-stat-label{
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+}
 
 /* Mobile - 2 column layout for better readability */
 @media (max-width: 480px) {
@@ -2280,6 +2293,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
