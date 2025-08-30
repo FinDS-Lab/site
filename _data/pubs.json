@@ -2559,7 +2559,7 @@
   "venue_ko": "한국과학기술원 박사학위논문",
   "published_date": "2024-11-22",
   "awards": 1,
- "award_details": ["제11회 ㅇㅇ"]
+ "award_details": ["제11회 한국경영과학회 박사학위논문상 우수상"]
 },
  {
   "year": 2020,
@@ -2575,7 +2575,7 @@
   "venue_ko": "한국과학기술원 석사학위논문",
   "published_date": "2020-12-01",
   "awards": 1,
- "award_details": ["제11회 ㅇㅇ"]
+ "award_details": ["제17회 대한산업공학회 석사논문경진대회 우수상"]
 },
  {
   "year": 2018,
@@ -2588,7 +2588,7 @@
   "authors": [1],
   "author_marks": ["1"],
   "venue": "Kyung Hee University",
-  "venue_ko": "경희대학교 학사 학위 논문 (졸업설계프로젝트)",
+  "venue_ko": "경희대학교 학사학위논문 (졸업설계프로젝트)",
   "published_date": "2018-02-13",
   "awards": 1,
  "award_details": ["제4회 경희대학교 산업경영공학과 추계학술제 우수상"]
@@ -2604,7 +2604,7 @@
   "authors": [1],
   "author_marks": ["1"],
   "venue": "Kyung Hee University",
-  "venue_ko": "경희대학교 학사 학위 논문 (졸업설계프로젝트)",
+  "venue_ko": "경희대학교 학사학위논문 (졸업설계프로젝트)",
   "published_date": "2017-02-15",
   "awards": 0
 }
