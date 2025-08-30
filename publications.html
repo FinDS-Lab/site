@@ -1006,21 +1006,28 @@ permalink: /publications.html
 
 <!-- ===== Filter Sections ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="toolbar">
-    <div class="filter-section" style="position: relative;">
-      <label class="filter-label">Publication Type</label>
-      <button id="clearAllFilters" style="position: absolute; top: -8px; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
-      <div class="chips" id="typeChips"></div>
+  <div class="toolbar" style="padding: 0;">
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #f8fafc; border-radius: 1rem 1rem 0 0; border-bottom: 1px solid #e5e7eb;">
+      <h3 style="font-size: 14px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Filters</h3>
+      <button id="toggleFilters" style="padding: .4rem .8rem; border: 1px solid #e5e7eb; border-radius: .6rem; font-size: 12px; font-weight: 700; background: #fff; cursor: pointer; color: #374151; transition: all .2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='#fff'">Expand</button>
     </div>
+    
+    <div id="filterContent" style="display: none; padding: 16px;">
+      <div class="filter-section" style="position: relative;">
+        <label class="filter-label">Publication Type</label>
+        <button id="clearAllFilters" style="position: absolute; top: -8px; right: 0; padding: .3rem .6rem; border: 1px solid #e5e7eb; border-radius: .5rem; font-size: 11px; font-weight: 800; background: #fff; cursor: pointer; color: #6b7280; transition: all .2s;">Clear all filters</button>
+        <div class="chips" id="typeChips"></div>
+      </div>
 
-    <div class="filter-section">
-      <label class="filter-label">Journal Indexing</label>
-      <div class="chips" id="journalChips"></div>
-    </div>
+      <div class="filter-section">
+        <label class="filter-label">Journal Indexing</label>
+        <div class="chips" id="journalChips"></div>
+      </div>
 
-    <div class="filter-section">
-      <label class="filter-label">Conference</label>
-      <div class="chips" id="conferenceChips"></div>
+      <div class="filter-section">
+        <label class="filter-label">Conference</label>
+        <div class="chips" id="conferenceChips"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1571,6 +1578,19 @@ permalink: /publications.html
 
   buildChips();
   render();
+  
+  buildChips();
+  render();
+  
+  // Toggle filter section
+  document.getElementById('toggleFilters').onclick = () => {
+    const filterContent = document.getElementById('filterContent');
+    const toggleBtn = document.getElementById('toggleFilters');
+    const isHidden = filterContent.style.display === 'none';
+    
+    filterContent.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? 'Collapse' : 'Expand';
+  };
   
   document.getElementById('clearAllFilters').onclick = () => {
     onFilters.type.clear();
