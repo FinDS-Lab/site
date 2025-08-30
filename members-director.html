@@ -298,10 +298,21 @@ permalink: /members-director.html
 <!-- ===== Styles ===== -->
 <style>
  /* Word break prevention for Korean/English */
- * {
-   word-break: keep-all !important;
-   overflow-wrap: anywhere;
- }
+/* Word break prevention for Korean/English */
+* {
+  word-break: keep-all !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+/* 영문 긴 단어 처리 */
+.profile-value,
+.desc,
+.title,
+.card-body p {
+  word-break: break-word !important;
+  hyphens: auto;
+}
 
  /* director 페이지 전용 변수 - site.css 오버라이드 */
  .director-page {
@@ -588,40 +599,33 @@ permalink: /members-director.html
    }
  }
 
- /* Mobile - same 3 column layout */
- @media (max-width: 480px) {
-   .pub-stats{
-     grid-template-columns:repeat(3, 1fr);
-     grid-template-rows:auto auto auto auto;
-     gap:6px;
-   }
+/* Mobile - 2 column layout for better readability */
+@media (max-width: 480px) {
+  .pub-stats{
+    grid-template-columns:repeat(2, 1fr);
+    gap:8px;
+  }
 
-   /* Same positioning as desktop */
-   .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-   .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
-   .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
-   .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
-   .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
-   .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
-   .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
-   .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-   .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
-   .pub-stat.citation { grid-column: 1/-1; grid-row: 4; }
+  .pub-stat{
+    padding:10px 6px;
+  }
 
-   .pub-stat{
-     padding:8px;
-   }
+  .pub-stat.citation {
+    grid-column: 1/-1;
+  }
 
-   .pub-stat-number{
-     font-size:18px;
-   }
+  .pub-stat-number{
+    font-size:16px;
+  }
 
-   .pub-stat-label{
-     font-size:9px;
-     letter-spacing:0;
-   }
- }
-
+  .pub-stat-label{
+    font-size:9px;
+    letter-spacing:0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
  /* Research Interests - Updated with better toggle design */
  .ri-item{
    border:1px solid #e5e7eb;
@@ -970,6 +974,96 @@ permalink: /members-director.html
  cursor: pointer;
  box-shadow: 0 2px 8px rgba(214,177,77,0.3);
  transition: all .2s;
+
+ /* ===== 모바일 반응형 추가 수정 ===== */
+
+/* 전체 섹션 패딩 조정 */
+@media (max-width: 640px) {
+  .director-page {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  section.max-w-7xl {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  .director-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 12px !important;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  #networkCanvas {
+    height: 400px !important;
+  }
+}
+
+/* main-grid 모바일 완전 분리 */
+@media (max-width: 968px) {
+  .main-grid {
+    display: block !important;
+  }
+  
+  .main-grid > * {
+    width: 100% !important;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Network Controls 모바일 최적화 */
+@media (max-width: 768px) {
+  .network-controls {
+    padding: 8px !important;
+  }
+  
+  .network-slider {
+    width: 100px !important;
+  }
+  
+  .slider-label {
+    font-size: 11px !important;
+  }
+  
+  .control-group {
+    gap: 6px !important;
+  }
+}
+
+/* 버튼 그룹 모바일 최적화 */
+@media (max-width: 480px) {
+  .button-group {
+    flex-direction: column !important;
+  }
+  
+  .action-btn {
+    width: 100% !important;
+    padding: 0.75rem !important;
+  }
+}
+
+/* overflow 방지 */
+.director-page,
+.main-grid,
+.director-card {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* 긴 텍스트 처리 */
+.profile-value a,
+.desc,
+.title {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+}
 }
 
 .network-slider::-moz-range-thumb {
@@ -2076,6 +2170,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
