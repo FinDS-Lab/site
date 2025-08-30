@@ -374,18 +374,32 @@ permalink: /members-director.html
  }
 
  /* Layout Grid */
- .main-grid{
-   display:grid;
-   grid-template-columns:340px 1fr;
-   gap:1.5rem;
- }
+.main-grid{
+  display:grid;
+  grid-template-columns:340px 1fr;
+  gap:1.5rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
 
- @media (max-width: 968px) {
-   .main-grid{
-     grid-template-columns:1fr;
-     gap:1.5rem;
-   }
- }
+@media (max-width: 968px) {
+  .main-grid{
+    grid-template-columns:1fr;
+    gap:1.5rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-grid{
+    gap:1rem;
+    padding: 0 0.5rem;
+  }
+  .director-card {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 
  @media (max-width: 640px) {
    .main-grid{gap:1rem;}
@@ -838,7 +852,29 @@ permalink: /members-director.html
    cursor:pointer;
    text-align:center;
  }
+ 
+/* 3회 이상 참여자 */
+.mentee-chip[data-count="3"],
+.mentee-chip[data-count="4"] {
+  background: rgba(214, 177, 77, 0.25);
+  border-color: rgba(214, 177, 77, 0.6);
+  color: #92400e;
+}
 
+/* 5회 이상 참여자 */
+.mentee-chip[data-count="5"],
+.mentee-chip[data-count="6"],
+.mentee-chip[data-count="7"],
+.mentee-chip[data-count="8"],
+.mentee-chip[data-count="9"],
+.mentee-chip[data-count="10"] {
+  background: rgba(214, 177, 77, 0.5);
+  border-color: var(--gold);
+  color: #fff;
+  font-weight: 800;
+}
+
+ 
  .mentee-chip:hover{
    box-shadow:0 4px 12px rgba(0,0,0,0.15);
    transform:translateY(-2px);
@@ -912,17 +948,6 @@ permalink: /members-director.html
    font-size:12px;font-weight:800;color:#fff;
  }
 
- .participation-year.participation-3plus {
-  background: rgba(214, 177, 77, 0.3);  /* 30% 금색 */
-  color: #92400e;  /* 진한 갈색 텍스트 */
-  border: 1px solid rgba(214, 177, 77, 0.5);
-}
-
-.participation-year.participation-5plus {
-  background: rgba(214, 177, 77, 0.6);  /* 60% 금색 */
-  color: #78350f;  /* 더 진한 갈색 텍스트 */
-  border: 1px solid rgba(214, 177, 77, 0.8);
-}
 /* Network Controls - Combined */
 .network-controls {
  display: flex;
@@ -1762,9 +1787,10 @@ permalink: /members-director.html
            </div>
            <div class="mentoring-content" id="mentoring-${year}">
              <div class="mentee-list">
-               ${mentees.map(mentee => 
-                 `<div class="mentee-chip" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`
-               ).join('')}
+                ${mentees.map(mentee => {
+                  const participationCount = MENTEES[mentee.id].participationYears ? MENTEES[mentee.id].participationYears.length : 0;
+                  return `<div class="mentee-chip" data-count="${participationCount}" onclick="openMenteeModal('${mentee.id}')">${formatName(mentee.name)}</div>`;
+                }).join('')}
              </div>
            </div>
          </div>
@@ -1806,15 +1832,9 @@ permalink: /members-director.html
        <span class="mentee-info-icon">⭐</span>
        <span class="mentee-info-label">Participation Years</span>
        <div class="participation-years">
-         ${mentee.participationYears.map(year => {
-           let className = 'participation-year';
-           if (mentee.participationYears.length >= 5) {
-             className += ' participation-5plus';
-           } else if (mentee.participationYears.length >= 3) {
-             className += ' participation-3plus';
-           }
-           return `<span class="${className}">${year}</span>`;
-         }).join('')}
+        ${mentee.participationYears.map(year => 
+          `<span class="participation-year">${year}</span>`
+        ).join('')}
        </div>
      </div>
    `;
@@ -2176,6 +2196,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
