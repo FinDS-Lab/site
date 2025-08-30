@@ -536,7 +536,7 @@
    "author_marks": ["1"],
    "venue": "2025 Fall Conference of the Korean Academic Society of Business Administration",
    "venue_ko": "2025 대한경영학회 추계학술대회",
-   "published_date": "2025-11-01",
+   "published_date": "2025-12-05",
    "awards": 0
  },
  {
@@ -551,7 +551,7 @@
    "author_marks": ["1", "1", "1", "1", "*"],
    "venue": "2025 Fall Conference of the Korean Institute of Industrial Engineers",
    "venue_ko": "2025 대한산업공학회 추계학술대회",
-   "published_date": "2025-11-01",
+   "published_date": "2025-11-07",
    "awards": 0
  },
  {
@@ -592,13 +592,28 @@
    "language": "Korean",
    "title": "Network‑Infused Explainable Deep Clustering for Financial Customer Segmentation and Persona Development",
    "title_ko": "네트워크 인사이트 기반 설명 가능한 딥 클러스터링을 활용한 금융 고객 세분화 및 페르소나 개발",
-   "authors": [1, 2],
-   "author_marks": ["1", "*"],
+   "authors": [1],
+   "author_marks": ["1,*"],
    "venue": "2025 Fall Conference of the Korean Operations Research and Management Science Society",
    "venue_ko": "2025 한국경영과학회 추계학술대회",
    "published_date": "2025-11-01",
    "awards": 0
  },
+  {
+ "year": 2025,
+ "code_label": "C",
+ "indexing_group": "Domestic Conference",
+ "type": "conference",
+ "language": "Korean",
+ "title": "Dynamic Factor Portfolio Strategy Using Market Regime Recognition and Machine Learning-Based Variable Selection",
+ "title_ko": "시장 국면 인지와 기계학습 기반 변수 선택을 활용한 동적 팩터 포트폴리오 전략",
+ "authors": [141, 142, 143, 144, 1],
+ "author_marks": ["1", "1", "1", "1", "*"],
+ "venue": "2025 Summer Conference of the Korean Data Mining Society",
+ "venue_ko": "2025 한국데이터마이닝학회 하계학술대회",
+ "published_date": "2025-08-01",
+ "awards": 0
+},
  {
    "year": 2025,
    "code_label": "C",
@@ -611,7 +626,7 @@
    "author_marks": ["1", "2", "2", "2", "*"],
    "venue": "2025 Fall Conference of Korea Intelligent Information Systems Society",
    "venue_ko": "2025 한국지능정보시스템학회 추계학술대회",
-   "published_date": "2025-11-01",
+   "published_date": "2025-11-28",
    "awards": 0
  },
  {
@@ -1932,7 +1947,7 @@
     "author_marks": ["1", "2", "2", "*"],
     "venue": "2022 Fall Conference of the Korean Institute of Industrial Engineers",
     "venue_ko": "2022 대한산업공학회 추계학술대회",
-    "published_date": "2022-11-04",
+    "published_date": "2022-11-04",ㄹ
     "awards": 0
   },
   {
