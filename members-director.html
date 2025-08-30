@@ -1736,333 +1736,290 @@ permalink: /members-director.html
  }
 
  // Canvas setup
-  // Canvas setup
   const canvas = document.getElementById('networkCanvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let nodes = [];
-    let zoomLevel = 1;
-    let baseRadius = 120; // 기본 반경
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let nodes = [];
+  let zoomLevel = 1;
+  let baseRadius = 120; // 기본 반경
 
-    // Zoom functions
-    window.zoomNetwork = function(factor) {
-      zoomLevel *= factor;
-      zoomLevel = Math.max(0.3, Math.min(2, zoomLevel)); // 30% ~ 200% 제한
-      document.getElementById('zoomLevel').textContent = Math.round(zoomLevel * 100) + '%';
-      buildNetwork();
-      drawNetwork();
-    }
+  // Zoom functions
+  window.zoomNetwork = function(factor) {
+    zoomLevel *= factor;
+    zoomLevel = Math.max(0.3, Math.min(2, zoomLevel)); // 30% ~ 200% 제한
+    document.getElementById('zoomLevel').textContent = Math.round(zoomLevel * 100) + '%';
+    buildNetwork();
+    drawNetwork();
+  }
 
-    window.resetZoom = function() {
-      zoomLevel = 1;
-      document.getElementById('zoomLevel').textContent = '100%';
-      buildNetwork();
-      drawNetwork();
-    }
+  window.resetZoom = function() {
+    zoomLevel = 1;
+    document.getElementById('zoomLevel').textContent = '100%';
+    buildNetwork();
+    drawNetwork();
+  }
 
-    // Size canvas
-    function sizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * window.devicePixelRatio;
-      canvas.height = 500 * window.devicePixelRatio;
-      canvas.style.height = '500px';
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-    }
+  // Size canvas
+  function sizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = 500 * window.devicePixelRatio;
+    canvas.style.height = '500px';
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
 
-    // Build network structure
-    function buildNetwork() {
-      nodes = [];
-      const centerX = canvas.width / (2 * window.devicePixelRatio);
-      const centerY = canvas.height / (2 * window.devicePixelRatio);
-      const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
+  // Build network structure
+  function buildNetwork() {
+    nodes = [];
+    const centerX = canvas.width / (2 * window.devicePixelRatio);
+    const centerY = canvas.height / (2 * window.devicePixelRatio);
+    const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
 
-      // Director at center
-      nodes.push({
-        id: DIRECTOR_ID,
-        name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-        x: centerX,
-        y: centerY,
-        radius: 35 * zoomLevel,
-        isCenter: true,
-        frequency: 999
-      });
+    // Director at center
+    nodes.push({
+      id: DIRECTOR_ID,
+      name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+      x: centerX,
+      y: centerY,
+      radius: 35 * zoomLevel,
+      isCenter: true,
+      frequency: 999
+    });
 
-      // Get collaborators sorted by frequency and filtered by threshold
-      const coAuthors = Object.entries(collaborations)
-        .filter(([id, freq]) => freq >= thresholdCount)
-        .sort((a, b) => b[1] - a[1]);
+    // Get collaborators sorted by frequency and filtered by threshold
+    const coAuthors = Object.entries(collaborations)
+      .filter(([id, freq]) => freq >= thresholdCount)
+      .sort((a, b) => b[1] - a[1]);
 
-      // Arrange in concentric circles based on frequency
-      const rings = [];
-      const ringSizes = [8, 12, 16];
-      let ringIndex = 0;
-      let nodesInRing = [];
+    // Arrange in concentric circles based on frequency
+    const rings = [];
+    const ringSizes = [8, 12, 16];
+    let ringIndex = 0;
+    let nodesInRing = [];
 
-      coAuthors.forEach(([id, freq]) => {
-        if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-          rings.push(nodesInRing);
-          nodesInRing = [];
-          ringIndex++;
-        }
-        nodesInRing.push({ id: parseInt(id), freq });
-      });
-      if (nodesInRing.length > 0) rings.push(nodesInRing);
+    coAuthors.forEach(([id, freq]) => {
+      if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
+        rings.push(nodesInRing);
+        nodesInRing = [];
+        ringIndex++;
+      }
+      nodesInRing.push({ id: parseInt(id), freq });
+    });
+    if (nodesInRing.length > 0) rings.push(nodesInRing);
 
-      // Place nodes in rings with zoom
-      rings.forEach((ring, rIdx) => {
-        const radius = (baseRadius + rIdx * 80) * zoomLevel;
-        ring.forEach((item, nIdx) => {
-          const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-          const freq = item.freq;
-          const percentage = Math.round((freq / directorPapers) * 100);
+    // Place nodes in rings with zoom
+    rings.forEach((ring, rIdx) => {
+      const radius = (baseRadius + rIdx * 80) * zoomLevel;
+      ring.forEach((item, nIdx) => {
+        const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+        const freq = item.freq;
+        const percentage = Math.round((freq / directorPapers) * 100);
 
-          nodes.push({
-            id: item.id,
-            name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-            x: centerX + Math.cos(angle) * radius,
-            y: centerY + Math.sin(angle) * radius,
-            radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
-            frequency: freq,
-            percentage: percentage,
-            ring: rIdx
-          });
+        nodes.push({
+          id: item.id,
+          name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+          x: centerX + Math.cos(angle) * radius,
+          y: centerY + Math.sin(angle) * radius,
+          radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+          frequency: freq,
+          percentage: percentage,
+          ring: rIdx
         });
       });
+    });
+  }
+
+  // Draw the network
+  function drawNetwork() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Background
+    const centerX = canvas.width / (2 * window.devicePixelRatio);
+    const centerY = canvas.height / (2 * window.devicePixelRatio);
+
+    // Subtle radial gradient
+    const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
+    bgGrad.addColorStop(0, '#fefefe');
+    bgGrad.addColorStop(1, '#f9fafb');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw subtle grid dots for background
+    ctx.fillStyle = '#e5e7eb';
+    for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
+      for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1, 0, Math.PI * 2);
+        ctx.fill();
+      }
     }
 
-     // Get collaborators sorted by frequency and filtered by threshold
-     const coAuthors = Object.entries(collaborations)
-       .filter(([id, freq]) => freq >= thresholdCount)
-       .sort((a, b) => b[1] - a[1]);
+    // Draw connections
+    nodes.slice(1).forEach(node => {
+      const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
+      const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
+      grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
+      grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
+      grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
 
-     // Arrange in concentric circles based on frequency
-     const rings = [];
-     const ringSizes = [8, 12, 16]; // max nodes per ring
-     let ringIndex = 0;
-     let nodesInRing = [];
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y);
+      ctx.lineTo(node.x, node.y);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
+      ctx.stroke();
+    });
 
-     coAuthors.forEach(([id, freq]) => {
-       if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-         rings.push(nodesInRing);
-         nodesInRing = [];
-         ringIndex++;
-       }
-       nodesInRing.push({ id: parseInt(id), freq });
-     });
-     if (nodesInRing.length > 0) rings.push(nodesInRing);
+    // Draw nodes
+    nodes.forEach(node => {
+      const isHovered = hoveredNode === node;
+      const scale = isHovered ? 1.1 : 1;
 
-     // Place nodes in rings
-     rings.forEach((ring, rIdx) => {
-       const radius = 120 + rIdx * 80;
-       ring.forEach((item, nIdx) => {
-         const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-         const freq = item.freq;
-         const percentage = Math.round((freq / directorPapers) * 100);
+      // Shadow
+      ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
+      ctx.shadowBlur = isHovered ? 15 : 8;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
 
-         nodes.push({
-           id: item.id,
-           name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-           x: centerX + Math.cos(angle) * radius,
-           y: centerY + Math.sin(angle) * radius,
-           radius: 10 + (freq / maxCollaborations) * 15,
-           frequency: freq,
-           percentage: percentage,
-           ring: rIdx
-         });
-       });
-     });
-   }
+      // Node circle
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
 
-   // Draw the network
-   function drawNetwork() {
-     ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (node.isCenter) {
+        // Director node - red gradient
+        const grad = ctx.createRadialGradient(
+          node.x - node.radius * 0.3,
+          node.y - node.radius * 0.3,
+          0,
+          node.x, node.y, node.radius
+        );
+        grad.addColorStop(0, '#ef4444');
+        grad.addColorStop(1, '#b91c1c');
+        ctx.fillStyle = grad;
+      } else {
+        // Collaborator nodes - gold gradient based on frequency
+        const grad = ctx.createRadialGradient(
+          node.x - node.radius * 0.3,
+          node.y - node.radius * 0.3,
+          0,
+          node.x, node.y, node.radius
+        );
+        const ratio = node.frequency / maxCollaborations;
+        if (ratio > 0.66) {
+          grad.addColorStop(0, '#fbbf24');
+          grad.addColorStop(1, '#d97706');
+        } else if (ratio > 0.33) {
+          grad.addColorStop(0, '#fde047');
+          grad.addColorStop(1, '#facc15');
+        } else {
+          grad.addColorStop(0, '#fef3c7');
+          grad.addColorStop(1, '#fde68a');
+        }
+        ctx.fillStyle = grad;
+      }
+      ctx.fill();
 
-     // Background
-     const centerX = canvas.width / (2 * window.devicePixelRatio);
-     const centerY = canvas.height / (2 * window.devicePixelRatio);
+      // Border
+      ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
 
-     // Subtle radial gradient
-     const bgGrad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 300);
-     bgGrad.addColorStop(0, '#fefefe');
-     bgGrad.addColorStop(1, '#f9fafb');
-     ctx.fillStyle = bgGrad;
-     ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.shadowColor = 'transparent';
 
-     // Draw subtle grid dots for background
-     ctx.fillStyle = '#e5e7eb';
-     for (let x = 20; x < canvas.width / window.devicePixelRatio; x += 30) {
-       for (let y = 20; y < canvas.height / window.devicePixelRatio; y += 30) {
-         ctx.beginPath();
-         ctx.arc(x, y, 1, 0, Math.PI * 2);
-         ctx.fill();
-       }
-     }
+      // Text labels
+      ctx.fillStyle = '#1f2937';
+      ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
 
-     // Draw connections
-     nodes.slice(1).forEach(node => {
-       const grad = ctx.createLinearGradient(nodes[0].x, nodes[0].y, node.x, node.y);
-       const alpha = 0.15 + (node.frequency / maxCollaborations) * 0.25;
-       grad.addColorStop(0, `rgba(172, 14, 14, ${alpha})`);
-       grad.addColorStop(0.5, `rgba(214, 177, 77, ${alpha})`);
-       grad.addColorStop(1, `rgba(214, 177, 77, ${alpha * 0.5})`);
+      // Name below node
+      ctx.fillText(node.name, node.x, node.y + node.radius + 14);
 
-       ctx.beginPath();
-       ctx.moveTo(nodes[0].x, nodes[0].y);
-       ctx.lineTo(node.x, node.y);
-       ctx.strokeStyle = grad;
-       ctx.lineWidth = Math.max(0.5, node.frequency / maxCollaborations * 2);
-       ctx.stroke();
-     });
+      // Paper count for collaborators
+      if (!node.isCenter) {
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '9px Inter, sans-serif';
+        ctx.fillText(`${node.frequency} papers (${node.percentage}%)`, node.x, node.y + node.radius + 26);
+      }
+    });
 
-     // Draw nodes
-     nodes.forEach(node => {
-       const isHovered = hoveredNode === node;
-       const scale = isHovered ? 1.1 : 1;
+    // Hover tooltip
+    if (hoveredNode && !hoveredNode.isCenter) {
+      const tooltipWidth = 180;
+      const tooltipHeight = 60;
+      let tooltipX = hoveredNode.x - tooltipWidth / 2;
+      let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
 
-       // Shadow
-       ctx.shadowColor = isHovered ? 'rgba(214, 177, 77, 0.3)' : 'rgba(0, 0, 0, 0.1)';
-       ctx.shadowBlur = isHovered ? 15 : 8;
-       ctx.shadowOffsetX = 0;
-       ctx.shadowOffsetY = 2;
+      // Keep tooltip in bounds
+      tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
+      tooltipY = Math.max(10, tooltipY);
 
-       // Node circle
-       ctx.beginPath();
-       ctx.arc(node.x, node.y, node.radius * scale, 0, Math.PI * 2);
+      // Tooltip background
+      ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
+      ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
+      ctx.fill();
+      ctx.stroke();
 
-       if (node.isCenter) {
-         // Director node - red gradient
-         const grad = ctx.createRadialGradient(
-           node.x - node.radius * 0.3,
-           node.y - node.radius * 0.3,
-           0,
-           node.x, node.y, node.radius
-         );
-         grad.addColorStop(0, '#ef4444');
-         grad.addColorStop(1, '#b91c1c');
-         ctx.fillStyle = grad;
-       } else {
-         // Collaborator nodes - gold gradient based on frequency
-         const grad = ctx.createRadialGradient(
-           node.x - node.radius * 0.3,
-           node.y - node.radius * 0.3,
-           0,
-           node.x, node.y, node.radius
-         );
-         const ratio = node.frequency / maxCollaborations;
-         if (ratio > 0.66) {
-           grad.addColorStop(0, '#fbbf24');
-           grad.addColorStop(1, '#d97706');
-         } else if (ratio > 0.33) {
-           grad.addColorStop(0, '#fde047');
-           grad.addColorStop(1, '#facc15');
-         } else {
-           grad.addColorStop(0, '#fef3c7');
-           grad.addColorStop(1, '#fde68a');
-         }
-         ctx.fillStyle = grad;
-       }
-       ctx.fill();
+      // Tooltip text
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
 
-       // Border
-       ctx.strokeStyle = node.isCenter ? 'rgba(185, 28, 28, 0.3)' : 'rgba(217, 119, 6, 0.3)';
-       ctx.lineWidth = 1.5;
-       ctx.stroke();
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = '10px Inter, sans-serif';
+      ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`,
+                   tooltipX + tooltipWidth / 2, tooltipY + 32);
+      
+      ctx.fillStyle = '#fde047';
+      ctx.fillText(`(${hoveredNode.percentage}% of director's papers)`,
+                   tooltipX + tooltipWidth / 2, tooltipY + 46);
+    }
+  }
 
-       ctx.shadowColor = 'transparent';
+  // Mouse interaction
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-       // Text labels
-       ctx.fillStyle = '#1f2937';
-       ctx.font = node.isCenter ? 'bold 12px Inter, sans-serif' : '11px Inter, sans-serif';
-       ctx.textAlign = 'center';
-       ctx.textBaseline = 'middle';
+    hoveredNode = null;
+    nodes.forEach(node => {
+      const dx = x - node.x;
+      const dy = y - node.y;
+      if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
+        hoveredNode = node;
+      }
+    });
 
-       // Name below node
-       ctx.fillText(node.name, node.x, node.y + node.radius + 14);
+    canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
+    drawNetwork();
+  });
 
-       // Paper count for collaborators
-       if (!node.isCenter) {
-         ctx.fillStyle = '#6b7280';
-         ctx.font = '9px Inter, sans-serif';
-         ctx.fillText(`${node.frequency} papers (${node.percentage}%)`, node.x, node.y + node.radius + 26);
-       }
-     });
+  canvas.addEventListener('mouseleave', () => {
+    hoveredNode = null;
+    drawNetwork();
+  });
 
-     // Hover tooltip
-     if (hoveredNode && !hoveredNode.isCenter) {
-       const tooltipWidth = 180;
-       const tooltipHeight = 60;
-       let tooltipX = hoveredNode.x - tooltipWidth / 2;
-       let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
+  // Initialize
+  sizeCanvas();
+  buildNetwork();
+  updateNetworkInfo();
+  drawNetwork();
+  networkInitialized = true;
 
-       // Keep tooltip in bounds
-       tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
-       tooltipY = Math.max(10, tooltipY);
-
-       // Tooltip background
-       ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
-       ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
-       ctx.lineWidth = 1;
-       ctx.beginPath();
-       ctx.roundRect(tooltipX, tooltipY, tooltipWidth, tooltipHeight, 6);
-       ctx.fill();
-       ctx.stroke();
-
-       // Tooltip text
-       ctx.fillStyle = '#fff';
-       ctx.font = 'bold 11px Inter, sans-serif';
-       ctx.textAlign = 'center';
-       ctx.fillText(hoveredNode.name, tooltipX + tooltipWidth / 2, tooltipY + 18);
-
-       ctx.fillStyle = '#fbbf24';
-       ctx.font = '10px Inter, sans-serif';
-       ctx.fillText(`${hoveredNode.frequency} joint publication${hoveredNode.frequency > 1 ? 's' : ''}`,
-                    tooltipX + tooltipWidth / 2, tooltipY + 32);
-       
-       ctx.fillStyle = '#fde047';
-       ctx.fillText(`(${hoveredNode.percentage}% of director's papers)`,
-                    tooltipX + tooltipWidth / 2, tooltipY + 46);
-     }
-   }
-
-   // Mouse interaction
-   canvas.addEventListener('mousemove', (e) => {
-     const rect = canvas.getBoundingClientRect();
-     const x = e.clientX - rect.left;
-     const y = e.clientY - rect.top;
-
-     hoveredNode = null;
-     nodes.forEach(node => {
-       const dx = x - node.x;
-       const dy = y - node.y;
-       if (Math.sqrt(dx * dx + dy * dy) < node.radius + 5) {
-         hoveredNode = node;
-       }
-     });
-
-     canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-     drawNetwork();
-   });
-
-   canvas.addEventListener('mouseleave', () => {
-     hoveredNode = null;
-     drawNetwork();
-   });
-
-   // Initialize
-   sizeCanvas();
-   buildNetwork();
-   updateNetworkInfo();
-   drawNetwork();
-   networkInitialized = true;
-
-   // Handle resize
-   window.addEventListener('resize', () => {
-     sizeCanvas();
-     buildNetwork();
-     drawNetwork();
-   });
- }
+  // Handle resize
+  window.addEventListener('resize', () => {
+    sizeCanvas();
+    buildNetwork();
+    drawNetwork();
+  });
+}
 </script>
+
 
 
 
