@@ -9,59 +9,67 @@ title: home
     --gold-light: rgb(234, 207, 127);
     --red: rgb(172, 14, 14);
     --red-dark: rgb(127, 10, 10);
+
+    /* 고정 배너 너비 (디바이스별) */
+    --banner-w-desktop: 1080px;  /* PC */
+    --banner-w-tablet: 820px;    /* 태블릿 */
+    --banner-w-mobile: 320px;    /* 모바일: 좌우 여백 확보 */
   }
 
   /* Hero Carousel - Fixed Heights */
   .hero-section {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: 100%;
     height: 500px;
     margin: 1.5rem auto;
     padding: 0 24px;
+    display: flex;
+    justify-content: center;
   }
 
+  /* “고정 너비 배너”로 전환 + 중앙 정렬 */
   .carousel-container {
-    width: 100%;
+    width: var(--banner-w-desktop);
+    max-width: 100%;
     height: 100%;
     overflow: hidden;
     background: #000;
     border-radius: 1.5rem;
     position: relative;
+    margin: 0 auto;
   }
 
-  /* Fixed heights for all breakpoints */
+  /* 고정 높이 유지 + 반응형 배너 폭 변경 */
+  @media (max-width: 1024px) {
+    .carousel-container { width: var(--banner-w-tablet); }
+  }
   @media (max-width: 768px) {
     .hero-section {
-      height: 400px;  /* Fixed height */
+      height: 400px;
       padding: 0 16px;
       margin: 1rem auto;
     }
-    .carousel-container { 
-      border-radius: 1rem; 
-      height: 100%;  /* Ensure container fills section */
+    .carousel-container {
+      border-radius: 1rem;
+      height: 100%;
     }
   }
-
   @media (max-width: 540px) {
     .hero-section {
-      height: 360px;  /* Fixed height for mobile */
+      height: 360px;
       padding: 0 12px;
     }
+    .carousel-container { width: var(--banner-w-mobile); }
   }
-
   @media (max-width: 480px) {
-    .hero-section {
-      height: 340px;  /* Fixed height for small mobile */
-      padding: 0 12px;
-    }
+    .hero-section { height: 340px; padding: 0 12px; }
+  }
+  @media (max-width: 380px) {
+    .hero-section { height: 320px; }
   }
 
-  @media (max-width: 380px) {
-    .hero-section {
-      height: 320px;  /* Fixed height for very small mobile */
-    }
-  }
+  .carousel-wrapper { position:relative;width:100%;height:100%;overflow:hidden; }
 
   .carousel-track {
     display: flex;
@@ -95,14 +103,14 @@ title: home
     display: flex;
     align-items: center;
     padding: 0 5%;
-    height: 100%;  /* Ensure overlay fills slide */
-    overflow: hidden;  /* Prevent content overflow */
+    height: 100%;
+    overflow: hidden;
   }
 
   @media (max-width: 768px) {
-    .carousel-overlay { 
-      padding: 0 20px; 
-      align-items: center;  /* Keep centered vertically */
+    .carousel-overlay {
+      padding: 0 20px;
+      align-items: center;
     }
   }
 
@@ -110,7 +118,6 @@ title: home
     max-width: 600px;
     color: white;
     animation: fadeInUp 0.8s ease-out;
-    /* Prevent content from making slide taller */
     max-height: 90%;
     overflow: hidden;
   }
@@ -174,6 +181,8 @@ title: home
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 520px; /* 버튼 묶음 폭 제한 */
   }
 
   /* Buttons */
@@ -187,6 +196,32 @@ title: home
     transition: all 0.3s;
     display: inline-block;
     white-space: nowrap;
+
+    /* 두 버튼 동일 폭 강제 */
+    flex: 1 1 0;
+    text-align: center;
+    min-width: 0;
+  }
+
+  /* 두 버튼 모두 빨간색 통일 */
+  .btn-hero.primary,
+  .btn-hero.secondary {
+    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+    color: white;
+    border: 2px solid transparent;
+  }
+  .btn-hero.primary:hover,
+  .btn-hero.secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+  }
+
+  @media (hover: none) {
+    .btn-hero.primary:active,
+    .btn-hero.secondary:active {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3);
+    }
   }
 
   /* Mobile: Vertical stack with equal width */
@@ -197,7 +232,7 @@ title: home
       align-items: stretch;
       gap: 10px;
       width: 90%;
-      max-width: 320px;
+      max-width: 320px; /* 모바일에서도 중앙 고정폭 → 좌우 여백 대칭 */
       margin: 0;
     }
     .btn-hero {
@@ -226,38 +261,6 @@ title: home
     }
   }
 
-  .btn-hero.primary {
-    background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
-    color: white;
-    border: 2px solid transparent;
-  }
-  .btn-hero.primary:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); 
-  }
-
-  .btn-hero.secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-  }
-  .btn-hero.secondary:hover { 
-    background: rgba(255, 255, 255, 0.2); 
-    border-color: rgba(255, 255, 255, 0.5); 
-  }
-
-  @media (hover: none) {
-    .btn-hero.primary:active { 
-      transform: translateY(-2px); 
-      box-shadow: 0 10px 25px rgba(172, 14, 14, 0.3); 
-    }
-    .btn-hero.secondary:active { 
-      background: rgba(255, 255, 255, 0.2); 
-      border-color: rgba(255, 255, 255, 0.5); 
-    }
-  }
-
   /* Carousel Dots */
   .carousel-dots {
     position: absolute;
@@ -269,38 +272,36 @@ title: home
     z-index: 10;
     padding: 8px;
   }
-  
-  @media (max-width: 480px) { 
-    .carousel-dots { 
-      bottom: 16px; 
-    } 
+
+  @media (max-width: 480px) {
+    .carousel-dots { bottom: 16px; }
   }
 
   .dot {
-    width: 8px; 
-    height: 8px; 
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
-    border: none; 
-    cursor: pointer; 
-    transition: all 0.3s; 
-    padding: 0; 
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding: 0;
     position: relative;
   }
-  
-  .dot::before { 
-    content: ''; 
-    position: absolute; 
-    top: -8px; 
-    left: -8px; 
-    right: -8px; 
-    bottom: -8px; 
+
+  .dot::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
   }
-  
-  .dot.active { 
-    width: 24px; 
-    border-radius: 4px; 
-    background: var(--gold); 
+
+  .dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--gold);
   }
 
   /* Introduction Section */
@@ -333,121 +334,111 @@ title: home
   }
 
   .logo-box {
-    width: 180px; 
-    height: 180px; 
-    background: white; 
+    width: 180px;
+    height: 180px;
+    background: white;
     border-radius: 24px;
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
     justify-content: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08); 
-    position: relative; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    position: relative;
     overflow: hidden;
   }
-  
-  @media (max-width: 768px) { 
-    .logo-box { 
-      margin: 0 auto; 
-    } 
+
+  @media (max-width: 768px) {
+    .logo-box { margin: 0 auto; }
   }
-  
-  @media (max-width: 480px) { 
-    .logo-box { 
-      width: 150px; 
-      height: 150px; 
-      border-radius: 20px; 
-    } 
+
+  @media (max-width: 480px) {
+    .logo-box {
+      width: 150px;
+      height: 150px;
+      border-radius: 20px;
+    }
   }
 
   .logo-box::before {
-    content: ''; 
-    position: absolute; 
+    content: '';
+    position: absolute;
     inset: 0;
     background: linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(172,14,14,0.1) 100%);
-    opacity: 0; 
+    opacity: 0;
     transition: opacity 0.3s;
   }
-  
-  .logo-box:hover::before { 
-    opacity: 1; 
+
+  .logo-box:hover::before { opacity: 1; }
+
+  .logo-box img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
   }
 
-  .logo-box img { 
-    width: 140px; 
-    height: 140px; 
-    object-fit: contain; 
-    position: relative; 
-    z-index: 1; 
-  }
-  
-  @media (max-width: 480px) { 
-    .logo-box img { 
-      width: 110px; 
-      height: 110px; 
-    } 
+  @media (max-width: 480px) {
+    .logo-box img {
+      width: 110px;
+      height: 110px;
+    }
   }
 
-  .intro-content h2 { 
-    color: var(--red); 
-    font-size: 24px; 
-    font-weight: 900; 
-    margin-bottom: 8px; 
-  }
-  
-  @media (max-width: 480px) { 
-    .intro-content h2 { 
-      font-size: 20px; 
-    } 
+  .intro-content h2 {
+    color: var(--red);
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 8px;
   }
 
-  .intro-content h3 { 
-    font-size: 32px; 
-    margin-bottom: 4px; 
-  }
-  
-  @media (max-width: 480px) { 
-    .intro-content h3 { 
-      font-size: 24px; 
-    } 
+  @media (max-width: 480px) {
+    .intro-content h2 { font-size: 20px; }
   }
 
-  .intro-content .lab-name { 
-    color: var(--gold); 
-    font-weight: 900; 
+  .intro-content h3 {
+    font-size: 32px;
+    margin-bottom: 4px;
   }
 
-  .intro-content .lab-full { 
-    font-size: 18px; 
-    color: #374151; 
-    margin-left: 8px; 
-  }
-  
-  @media (max-width: 768px) { 
-    .intro-content .lab-full { 
-      display: block; 
-      margin-left: 0; 
-      margin-top: 8px; 
-    } 
-  }
-  
-  @media (max-width: 480px) { 
-    .intro-content .lab-full { 
-      font-size: 15px; 
-    } 
+  @media (max-width: 480px) {
+    .intro-content h3 { font-size: 24px; }
   }
 
-  .intro-content .description { 
-    margin-top: 16px; 
-    font-size: 16px; 
-    line-height: 1.8; 
-    color: #4b5563; 
+  .intro-content .lab-name {
+    color: var(--gold);
+    font-weight: 900;
   }
-  
-  @media (max-width: 480px) { 
-    .intro-content .description { 
-      font-size: 14px; 
-      line-height: 1.7; 
-    } 
+
+  .intro-content .lab-full {
+    font-size: 18px;
+    color: #374151;
+    margin-left: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .intro-content .lab-full {
+      display: block;
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .intro-content .lab-full { font-size: 15px; }
+  }
+
+  .intro-content .description {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #4b5563;
+  }
+
+  @media (max-width: 480px) {
+    .intro-content .description {
+      font-size: 14px;
+      line-height: 1.7;
+    }
   }
 
   /* News & Notice Section */
@@ -484,233 +475,194 @@ title: home
     box-shadow: 0 10px 40px rgba(0,0,0,0.05);
     transition: all 0.3s;
   }
-  
-  @media (max-width: 480px) { 
-    .update-card { 
-      border-radius: 16px; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-card { border-radius: 16px; }
   }
 
-  .update-card:hover { 
-    transform: translateY(-5px); 
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1); 
+  .update-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
   }
-  
-  @media (hover: none) { 
-    .update-card:hover { 
-      transform: none; 
-    } 
+
+  @media (hover: none) {
+    .update-card:hover { transform: none; }
   }
 
   .update-header {
     padding: 24px 28px;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
     border-bottom: 2px solid #f3f4f6;
-    display: flex; 
-    justify-content: space-between; 
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
-  
-  @media (max-width: 480px) { 
-    .update-header { 
-      padding: 18px 20px; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-header { padding: 18px 20px; }
   }
 
   .update-title {
-    font-size: 20px; 
-    font-weight: 900; 
+    font-size: 20px;
+    font-weight: 900;
     color: #111827;
-    display: flex; 
-    align-items: center; 
+    display: flex;
+    align-items: center;
     gap: 10px;
   }
-  
-  @media (max-width: 480px) { 
-    .update-title { 
-      font-size: 18px; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-title { font-size: 18px; }
   }
 
   .update-icon {
-    width: 32px; 
+    width: 32px;
     height: 32px;
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border-radius: 10px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 18px;
   }
-  
-  @media (max-width: 480px) { 
-    .update-icon { 
-      width: 28px; 
-      height: 28px; 
-      font-size: 16px; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-icon { width: 28px; height: 28px; font-size: 16px; }
   }
 
   .update-more {
-    color: var(--red); 
-    font-weight: 700; 
-    font-size: 14px; 
+    color: var(--red);
+    font-weight: 700;
+    font-size: 14px;
     text-decoration: none;
-    display: flex; 
-    align-items: center; 
-    gap: 4px; 
+    display: flex;
+    align-items: center;
+    gap: 4px;
     transition: gap 0.2s;
-    padding: 4px 8px; 
+    padding: 4px 8px;
     margin: -4px -8px;
   }
-  
-  .update-more:hover { 
-    gap: 8px; 
-  }
 
-  .update-list { 
-    padding: 8px; 
-  }
-  
-  @media (max-width: 480px) { 
-    .update-list { 
-      padding: 4px; 
-    } 
+  .update-more:hover { gap: 8px; }
+
+  .update-list { padding: 8px; }
+
+  @media (max-width: 480px) {
+    .update-list { padding: 4px; }
   }
 
   .update-item {
-    padding: 20px; 
-    border-radius: 12px; 
-    transition: all 0.2s; 
-    cursor: pointer; 
-    position: relative; 
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
     overflow: hidden;
     -webkit-tap-highlight-color: transparent;
   }
-  
-  @media (max-width: 480px) { 
-    .update-item { 
-      padding: 16px; 
-      border-radius: 10px; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-item { padding: 16px; border-radius: 10px; }
   }
 
   .update-item::before {
-    content: ''; 
-    position: absolute; 
-    left: 0; 
-    top: 50%; 
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
     transform: translateY(-50%);
-    width: 4px; 
-    height: 0; 
-    background: var(--gold); 
+    width: 4px;
+    height: 0;
+    background: var(--gold);
     transition: height 0.3s;
   }
-  
-  .update-item:hover { 
-    background: #fef9f3; 
-  }
-  
-  .update-item:hover::before { 
-    height: 60%; 
-  }
-  
-  @media (hover: none) { 
-    .update-item:active { 
-      background: #fef9f3; 
-    } 
+
+  .update-item:hover { background: #fef9f3; }
+  .update-item:hover::before { height: 60%; }
+
+  @media (hover: none) {
+    .update-item:active { background: #fef9f3; }
   }
 
-  .update-date { 
-    display: flex; 
-    align-items: baseline; 
-    gap: 6px; 
-    margin-bottom: 8px; 
+  .update-date {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 8px;
   }
 
-  .date-day { 
-    font-size: 24px; 
-    font-weight: 900; 
-    color: var(--red); 
-  }
-  
-  @media (max-width: 480px) { 
-    .date-day { 
-      font-size: 20px; 
-    } 
+  .date-day {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--red);
   }
 
-  .date-month { 
-    font-size: 12px; 
-    font-weight: 700; 
-    color: #9ca3af; 
+  @media (max-width: 480px) {
+    .date-day { font-size: 20px; }
+  }
+
+  .date-month {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
   }
 
   .update-item-title {
-    font-size: 15px; 
-    font-weight: 800; 
-    color: #1f2937; 
-    line-height: 1.5; 
-    display: block; 
+    font-size: 15px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.5;
+    display: block;
     cursor: pointer;
-    overflow: hidden; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 2; 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
-  
-  @media (max-width: 480px) { 
-    .update-item-title { 
-      font-size: 14px; 
-      line-height: 1.4; 
-    } 
+
+  @media (max-width: 480px) {
+    .update-item-title { font-size: 14px; line-height: 1.4; }
   }
 
-  .update-meta { 
-    margin-top: 6px; 
-    font-size: 12px; 
-    color: #9ca3af; 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
+  .update-meta {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
 
   .meta-tag {
-    display: inline-flex; 
-    align-items: center; 
-    gap: 4px; 
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     padding: 2px 8px;
-    background: rgba(214,177,77,0.1); 
-    border-radius: 999px; 
+    background: rgba(214,177,77,0.1);
+    border-radius: 999px;
     font-weight: 600;
   }
-  
-  @media (max-width: 480px) { 
-    .meta-tag { 
-      font-size: 11px; 
-      padding: 2px 6px; 
-    } 
+
+  @media (max-width: 480px) {
+    .meta-tag { font-size: 11px; padding: 2px 6px; }
   }
 
-  .empty-message { 
-    padding: 40px; 
-    text-align: center; 
-    color: #9ca3af; 
-    font-size: 14px; 
+  .empty-message {
+    padding: 40px;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 14px;
   }
-  
-  @media (max-width: 480px) { 
-    .empty-message { 
-      padding: 30px 20px; 
-      font-size: 13px; 
-    } 
+
+  @media (max-width: 480px) {
+    .empty-message { padding: 30px 20px; font-size: 13px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    * { 
-      animation-duration: 0.01ms !important; 
-      animation-iteration-count: 1 !important; 
-      transition-duration: 0.01ms !important; 
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 </style>
@@ -718,7 +670,7 @@ title: home
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="carousel-container">
-    <div class="carousel-wrapper" style="position:relative;width:100%;height:100%;overflow:hidden;">
+    <div class="carousel-wrapper">
       <div class="carousel-track" id="carouselTrack">
         <!-- Slide 1 -->
         <div class="carousel-slide">
@@ -734,7 +686,7 @@ title: home
             </div>
           </div>
         </div>
-        
+
         <!-- Slide 2 -->
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
@@ -749,7 +701,7 @@ title: home
             </div>
           </div>
         </div>
-        
+
         <!-- Slide 3 -->
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
@@ -782,7 +734,7 @@ title: home
       <img src="{{ '/assets/img/brand/logo-finds.png' | relative_url }}" alt="FINDS Lab Logo">
     </div>
   </div>
-  
+
   <div class="intro-content">
     <h2>Dongduk Women's University</h2>
     <h3>
@@ -817,7 +769,7 @@ title: home
         {% endif %}
       {% endfor %}
       {% assign news_items = news_items | sort: 'date' | reverse %}
-      
+
       {% if news_items.size == 0 %}
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
@@ -840,7 +792,7 @@ title: home
       {% endif %}
     </div>
   </div>
-  
+
   <!-- Notice Card -->
   <div class="update-card">
     <div class="update-header">
@@ -858,7 +810,7 @@ title: home
         {% endif %}
       {% endfor %}
       {% assign notice_items = notice_items | sort: 'date' | reverse %}
-      
+
       {% if notice_items.size == 0 %}
         <div class="empty-message">게시글이 없습니다.</div>
       {% else %}
@@ -897,9 +849,10 @@ title: home
 
     // Ensure all slides have consistent dimensions
     function setSlideWidths() {
-      const containerWidth = track.parentElement.offsetWidth;
-      const containerHeight = track.parentElement.offsetHeight;
-      
+      const container = track.parentElement; // .carousel-wrapper
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
       slides.forEach(slide => {
         slide.style.width = containerWidth + 'px';
         slide.style.minWidth = containerWidth + 'px';
@@ -935,33 +888,27 @@ title: home
       if (isTransitioning) return;
       goToSlide((currentIndex + 1) % slides.length);
     }
-    
+
     function prevSlide() {
       if (isTransitioning) return;
       goToSlide((currentIndex - 1 + slides.length) % slides.length);
     }
 
-    function startAutoplay() { 
-      stopAutoplay(); 
-      interval = setInterval(nextSlide, 5000); 
-    }
-    
-    function stopAutoplay() { 
-      if (interval) { 
-        clearInterval(interval); 
-        interval = null; 
-      } 
+    function startAutoplay() {
+      stopAutoplay();
+      interval = setInterval(nextSlide, 5000);
     }
 
-    function handleTouchStart(e) { 
-      touchStartX = e.changedTouches[0].screenX; 
+    function stopAutoplay() {
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
     }
-    
-    function handleTouchEnd(e) { 
-      touchEndX = e.changedTouches[0].screenX; 
-      handleSwipe(); 
-    }
-    
+
+    function handleTouchStart(e) { touchStartX = e.changedTouches[0].screenX; }
+    function handleTouchEnd(e) { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }
+
     function handleSwipe() {
       const swipeThreshold = 50;
       const diff = touchStartX - touchEndX;
