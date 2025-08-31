@@ -681,6 +681,21 @@ permalink: /publications.html
     line-height: 1.4;
   }
 
+  /* ===== FIX: Keep author names and superscripts together ===== */
+  .author-with-mark {
+    display: inline-block;
+    white-space: nowrap;  /* Prevents breaking between name and superscript */
+  }
+
+  .paper-meta sup {
+    font-size: 0.65em;
+    margin-left: 1px;
+    color: #6b7280;
+    font-weight: 600;
+    vertical-align: super;  /* Changed from baseline to super */
+    line-height: 0;         /* Prevents superscript from affecting line height */
+  }
+
   .paper-venue {
     margin-bottom: 6px;
     color: #6b7280;
@@ -858,16 +873,6 @@ permalink: /publications.html
     border-radius: 1rem;
     background: #fff;
     margin-top: 20px;
-  }
-
-  /* Readability for custom superscripts */
-  .paper-meta sup {
-    font-size: 0.65em;
-    margin-left: 1px;
-    color: #6b7280;
-    font-weight: 600;
-    vertical-align: baseline;
-    line-height: 1;
   }
 
   /* Mobile Tweaks */
@@ -1344,12 +1349,13 @@ permalink: /publications.html
     const venues = arr(useKorean ? pub.venue_ko : pub.venue).filter(Boolean);
     const displayVenue = venues.length ? venues.join('<br>') : '';
 
+    // FIXED: Wrap each author+mark as a unit to prevent line-breaking
     const authors = (pub.authors || []).map((id, idx) => {
       const name = getAuthorName(id, useKorean);
       const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
-      const sup = mark ? `<sup>${String(mark)}</sup>` : "";
-      return `${name}${sup}`;
-    }).join(", ");
+      // Each author+superscript is wrapped in a non-breaking span
+      return `<span class="author-with-mark">${name}${mark ? `<sup>${String(mark)}</sup>` : ''}</span>`;
+    }).join(', ');
 
     const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
 
@@ -1577,9 +1583,6 @@ permalink: /publications.html
     }
   };
 
-  buildChips();
-  render();
-  
   buildChips();
   render();
   
