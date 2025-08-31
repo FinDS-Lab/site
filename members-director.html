@@ -1382,123 +1382,64 @@ permalink: /members-director.html
  
 </style>
 
+<!-- ===== Main Content ===== -->
 <section class="director-page max-w-7xl mx-auto px-4 pb-8">
-  <div class="main-grid" style="margin-top:2rem;">
-    
-    <!-- Profile Sidebar -->
-    <aside>
-      <div class="director-card">
-        <div class="card-head">Profile</div>
-        <div class="card-body">
-          <div class="profile-photo">
-            <img src="{{ '/assets/img/members/director.jpg' | relative_url }}" alt="Insu Choi" 
-                 onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
-          </div>
-          
-          <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
-          <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
-          
-          <div class="profile-info">
-            <div class="profile-item">
-              <span class="profile-emoji">👨‍🏫</span>
-              <div class="profile-content">
-                <span class="profile-label">Position</span>
-                <span class="profile-value">Director, FINDS Lab.</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">🏛️</span>
-              <div class="profile-content">
-                <span class="profile-label">Affiliation</span>
-                <span class="profile-value">Assistant Professor, Dongduk Women's University</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📍</span>
-              <div class="profile-content">
-                <span class="profile-label">Office</span>
-                <span class="profile-value">Humanities Hall · Room 706</span>
-              </div>
-            </div>
-            <div class="profile-item">
-              <span class="profile-emoji">📧</span>
-              <div class="profile-content">
-                <span class="profile-label">E-mail</span>
-                <span class="profile-value" style="display:flex; align-items:center; gap:6px;">
-                  <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
-                  <button class="copy-btn" data-copy-email title="이메일 복사">📋 Copy</button>
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="button-group">
-            <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
-            <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-  </div>
-</section>
-
-<style>
-  /* location.html과 동일한 copy 버튼 스타일 */
-  .copy-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    height:26px;
-    padding:0 8px;
-    border-radius:6px;
-    border:1px solid #d1d5db;
-    background:#ffffff;
-    font-weight:500;
-    font-size:12px;
-    color:#374151;
-    cursor:pointer;
-    transition:all 0.15s ease;
-    white-space:nowrap
-  }
-  .copy-btn:hover{
-    background:#f8fafc;
-    border-color:#9ca3af;
-    transform:translateY(-1px);
-    box-shadow:0 2px 4px rgba(0,0,0,.1)
-  }
-  .copy-btn:active{
-    transform:translateY(0);
-    box-shadow:0 1px 2px rgba(0,0,0,.1)
-  }
-  .copy-btn.copied{
-    background:#10b981;
-    border-color:#10b981;
-    color:white
-  }
-</style>
-
-<script>
-  (function(){
-    const EMAIL = "ischoi@dwu.ac.kr";
-    document.addEventListener('click', async (e)=>{
-      const btn = e.target.closest('[data-copy-email]');
-      if(!btn) return;
-      try{
-        await navigator.clipboard.writeText(EMAIL);
-        const originalText = btn.textContent;
-        btn.textContent = '✅ Copied!';
-        btn.classList.add('copied');
-        setTimeout(()=>{
-          btn.textContent = originalText;
-          btn.classList.remove('copied');
-        }, 2000);
-      }catch(err){
-        alert('복사에 실패했습니다. 잠시 후 다시 시도해주세요.');
-      }
-    });
-  })();
-</script>
-
+ <div class="main-grid" style="margin-top:2rem;">
+   
+   <!-- Profile Sidebar -->
+   <aside>
+     <div class="director-card">
+       <div class="card-head">Profile</div>
+       <div class="card-body">
+         <div class="profile-photo">
+           <img src="{{ '/assets/img/members/director.jpg' | relative_url }}" alt="Insu Choi" 
+                onerror="this.onerror=null; this.src='{{ '/assets/img/members/default.jpg' | relative_url }}'">
+         </div>
+         
+         <h1 style="text-align:center; margin:1rem 0 0.25rem; font-size:1.5rem; font-weight:900; font-family:'Noto Sans KR','Noto Sans',sans-serif;">Insu Choi, Ph.D.</h1>
+         <p style="text-align:center; margin:0; color:#6b7280; font-size:0.875rem;">최인수</p>
+         
+         <div class="profile-info">
+           <div class="profile-item">
+             <span class="profile-emoji">👨‍🏫</span>
+             <div class="profile-content">
+               <span class="profile-label">Position</span>
+               <span class="profile-value">Director, FINDS Lab.</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">🏛️</span>
+             <div class="profile-content">
+               <span class="profile-label">Affiliation</span>
+               <span class="profile-value">Assistant Professor, Dongduk Women's University</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">📍</span>
+             <div class="profile-content">
+               <span class="profile-label">Office</span>
+               <span class="profile-value">Humanities Hall · Room 706</span>
+             </div>
+           </div>
+           <div class="profile-item">
+             <span class="profile-emoji">📧</span>
+             <div class="profile-content">
+               <span class="profile-label">E-mail</span>
+               <span class="profile-value">
+                 <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
+               </span>
+             </div>
+           </div>
+         </div>
+         
+         <div class="button-group">
+           <button class="action-btn" onclick="window.open('{{ '/assets/docs/CV_InsuChoi.pdf' | relative_url }}', '_blank')">Download CV</button>
+           <button class="action-btn" onclick="window.open('https://scholar.google.com/citations?user=EXAMPLE', '_blank')">Google Scholar</button>
+         </div>
+       </div>
+     </div>
+   </aside>
+   
    <!-- Main Content -->
    <main>
      <!-- Introduction -->
@@ -1614,7 +1555,7 @@ permalink: /members-director.html
         <div class="year">2025.02.</div>
         <div class="title">Ph.D. in Engineering</div>
         <div class="desc">in <b>Industrial and Systems Engineering</b>, Korea Advanced Institute of Science and Technology</div>
-        <div class="desc-ko">KAIST 산업및시스템공학 공학박사</div>
+        <div class="desc-ko">KAIST 공학박사 (산업및시스템공학) </div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -1651,7 +1592,7 @@ permalink: /members-director.html
         <div class="year">2021.02.</div>
         <div class="title">Master of Science (M.S.)</div>
         <div class="desc">in <b>Industrial and Systems Engineering</b>, Korea Advanced Institute of Science and Technology</div>
-        <div class="desc-ko">KAIST 산업및시스템공학 공학석사</div>
+        <div class="desc-ko">KAIST 공학석사 (산업및시스템공학) </div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -1690,7 +1631,7 @@ permalink: /members-director.html
         <div class="desc" style="display:block; margin-top:4px;">
           in <b>Industrial and Management Systems Engineering</b>, Kyung Hee University
         </div>
-        <div class="desc-ko">경희대학교 산업경영공학 공학사</div>
+        <div class="desc-ko">경희대학교 공학사 (산업경영공학) </div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -2493,49 +2434,3 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
