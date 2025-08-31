@@ -326,11 +326,11 @@ title: home
     <h3>
       <span class="lab-name">FINDS Lab.</span>
       <span class="lab-full">
-        (<b>Fin</b>ancial <b>D</b>ata <b>S</b>cience <b>Laboratory</b>)
+        (<b>F</b>ancial <b>In</b>novation and <b>D</b>ata-Illuminated <b>S</b>)olutions Laboratory)
       </span>
     </h3>
     <p class="description">
-      동덕여자대학교 경영대학 경영융합학부 <b>금융데이터사이언스 연구실</b> 홈페이지입니다.
+      동덕여자대학교 경영대학 경영융합학부 <b>데이터 기반 금융혁신 솔루션 연구실</b> 홈페이지입니다.
     </p>
   </div>
 </section>
