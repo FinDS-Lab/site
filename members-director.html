@@ -1057,39 +1057,45 @@ permalink: /members-director.html
 }
 
 /* Mobile responsiveness */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   .network-controls {
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
+    gap: 12px;
     padding: 12px;
   }
   
+  /* 각 그룹을 별도 줄로 */
   .control-group {
-    display: grid;
-    grid-template-columns: 65px 1fr;  /* 레이블 65px 고정, 나머지 공간 */
+    display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     width: 100%;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
   }
   
   .slider-label {
-    min-width: 65px;
-    text-align: left;
+    min-width: 70px;
+    font-size: 12px;
   }
   
-  /* Threshold 슬라이더 */
+  /* Threshold 줄 */
   .control-group:first-child .slider-container {
-    width: 100%;
+    flex: 1;
+    margin: 0 12px;
   }
   
   .network-slider {
     width: 100% !important;
   }
   
-  /* Zoom 버튼 그룹 */
+  /* Zoom 줄 - 버튼들 오른쪽 정렬 */
   .control-group:last-child {
-    grid-template-columns: 65px auto;
+    display: flex;
+    justify-content: space-between;
   }
   
   .control-group:last-child > div {
@@ -2064,14 +2070,17 @@ function buildMentoringYears() {
    });
  }
 
- function updateNetworkInfo() {
-   const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
-   const visible = Object.entries(collaborations)
-     .filter(([id, freq]) => freq >= thresholdCount).length;
-   const total = Object.keys(collaborations).length;
+function updateNetworkInfo() {
+  const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
+  const visible = Object.entries(collaborations)
+    .filter(([id, freq]) => freq >= thresholdCount).length;
+  const total = Object.keys(collaborations).length;
+  
+  const isMobile = window.innerWidth <= 768;
+  const touchHint = isMobile ? ' • Pinch to zoom' : '';
 
-   infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)`;
- }
+  infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)${touchHint}`;
+}
 
  // Canvas setup
   const canvas = document.getElementById('networkCanvas');
@@ -2359,6 +2368,61 @@ function sizeCanvas() {
     drawNetwork();
   });
 
+ // 터치 줌 기능 추가
+let touchStartDistance = 0;
+let initialZoom = 1;
+
+// 두 터치 포인트 간 거리 계산
+function getTouchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// 터치 시작
+canvas.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    e.preventDefault();
+    touchStartDistance = getTouchDistance(e.touches);
+    initialZoom = zoomLevel;
+  }
+});
+
+// 터치 이동 (핀치 줌)
+canvas.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && touchStartDistance > 0) {
+    e.preventDefault();
+    const currentDistance = getTouchDistance(e.touches);
+    const scale = currentDistance / touchStartDistance;
+    
+    zoomLevel = initialZoom * scale;
+    zoomLevel = Math.max(0.5, Math.min(3, zoomLevel)); // 줌 범위 제한
+    
+    buildNetwork();
+    drawNetwork();
+  }
+});
+
+// 터치 종료
+canvas.addEventListener('touchend', (e) => {
+  if (e.touches.length < 2) {
+    touchStartDistance = 0;
+  }
+});
+
+// 더블 탭으로 줌 리셋
+let lastTap = 0;
+canvas.addEventListener('touchend', (e) => {
+  const currentTime = new Date().getTime();
+  const tapLength = currentTime - lastTap;
+  
+  if (tapLength < 300 && tapLength > 0) {
+    e.preventDefault();
+    resetZoom();
+  }
+  lastTap = currentTime;
+});
+ 
   // Initialize
   sizeCanvas();
   buildNetwork();
@@ -2374,6 +2438,7 @@ function sizeCanvas() {
   });
 }
 </script>
+
 
 
 
