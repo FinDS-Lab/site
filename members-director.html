@@ -1028,6 +1028,7 @@ permalink: /members-director.html
  }
 
 /* Network Controls - Combined */
+/* Network Controls - Combined */
 .network-controls {
   display: flex;
   align-items: center;
@@ -1052,35 +1053,48 @@ permalink: /members-director.html
   font-weight: 700;
   color: #6b7280;
   white-space: nowrap;
+  min-width: 65px;  /* 레이블 최소 너비 고정 */
 }
 
-.slider-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.network-slider {
-  width: 250px;  /* 150px에서 250px로 증가 */
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  background: #e5e7eb;
-  border-radius: 3px;
-  outline: none;
-}
-
-/* 태블릿 */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
-  .network-slider {
-    width: 200px !important;  /* 120px에서 200px로 증가 */
+  .network-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 12px;
   }
-}
-
-/* 모바일 */
-@media (max-width: 480px) {
+  
+  .control-group {
+    display: grid;
+    grid-template-columns: 65px 1fr;  /* 레이블 65px 고정, 나머지 공간 */
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .slider-label {
+    min-width: 65px;
+    text-align: left;
+  }
+  
+  /* Threshold 슬라이더 */
+  .control-group:first-child .slider-container {
+    width: 100%;
+  }
+  
   .network-slider {
-    width: 150px !important;  /* 100px에서 150px로 증가 */
+    width: 100% !important;
+  }
+  
+  /* Zoom 버튼 그룹 */
+  .control-group:last-child {
+    grid-template-columns: 65px auto;
+  }
+  
+  .control-group:last-child > div {
+    display: flex;
+    gap: 8px;
   }
 }
  
@@ -1281,28 +1295,25 @@ permalink: /members-director.html
 }
 
 /* Enhanced Network Canvas Styles */
-#networkCanvas{
+/* Enhanced Network Canvas Styles */
+#networkCanvas {
   width: 100%;
-  height: auto;  /* JavaScript에서 동적으로 설정 */
+  height: 500px;  /* 기본값 */
   border-radius: 16px;
   background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
   margin-top: 1rem;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
 }
 
-/* 미디어 쿼리 제거 - JavaScript에서 처리 */
-
-/* 태블릿 */
 @media (max-width: 768px) {
   #networkCanvas {
-    height: 500px !important;
+    height: 400px !important;
   }
 }
 
-/* 모바일 */
 @media (max-width: 480px) {
   #networkCanvas {
-    height: 450px !important;
+    height: 350px !important;
   }
 }
 
@@ -2095,13 +2106,19 @@ if (canvas) {
 function sizeCanvas() {
   const rect = canvas.getBoundingClientRect();
   const isMobile = window.innerWidth <= 768;
+  const isSmallMobile = window.innerWidth <= 480;
   
-  // 모바일에서는 정사각형에 가깝게, 데스크톱은 직사각형
-  const aspectRatio = isMobile ? 1 : 1.2;  
-  const canvasWidth = rect.width;
-  const canvasHeight = canvasWidth / aspectRatio;
+  // 화면 크기별 높이 설정
+  let canvasHeight;
+  if (isSmallMobile) {
+    canvasHeight = 350;  // 작은 모바일
+  } else if (isMobile) {
+    canvasHeight = 400;  // 일반 모바일
+  } else {
+    canvasHeight = 500;  // 데스크톱
+  }
   
-  canvas.width = canvasWidth * window.devicePixelRatio;
+  canvas.width = rect.width * window.devicePixelRatio;
   canvas.height = canvasHeight * window.devicePixelRatio;
   canvas.style.height = canvasHeight + 'px';
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -2357,6 +2374,7 @@ function sizeCanvas() {
   });
 }
 </script>
+
 
 
 
