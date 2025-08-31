@@ -326,7 +326,7 @@ title: home
     <h3>
       <span class="lab-name">FINDS Lab.</span>
       <span class="lab-full">
-        (<b>F</b>ancial <b>In</b>novation and <b>D</b>ata-Illuminated <b>S</b>)olutions Laboratory)
+        (<b>F</b>ancial <b>In</b>novation and <b>D</b>ata-Illuminated <b>S</b>olutions Laboratory)
       </span>
     </h3>
     <p class="description">
