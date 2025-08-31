@@ -1058,6 +1058,7 @@ permalink: /members-director.html
 
 /* Mobile responsiveness */
 /* Mobile responsiveness */
+/* Mobile responsiveness */
 @media (max-width: 768px) {
   .network-controls {
     flex-direction: column;
@@ -1070,7 +1071,6 @@ permalink: /members-director.html
   .control-group {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     padding: 8px;
     background: white;
@@ -1092,10 +1092,11 @@ permalink: /members-director.html
     width: 100% !important;
   }
   
-  /* Zoom 줄 - 버튼들 오른쪽 정렬 */
+  /* Zoom 줄 - 왼쪽 정렬로 변경 */
   .control-group:last-child {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;  /* space-between에서 flex-start로 변경 */
+    gap: 12px;
   }
   
   .control-group:last-child > div {
@@ -1638,21 +1639,24 @@ permalink: /members-director.html
            <span>👨‍🏫</span>
            <span>Advisors</span>
          </div>
-         <div class="advisor-info" style="margin-bottom: 8px;">
-           <span class="advisor-label">Academic Advisor & 2nd Thesis:</span>
-           <a href="https://scholar.google.com/citations?hl=en&amp;user=uTiqWBMAAAAJ" target="_blank" class="advisor-name">
-             Jang Ho Kim
-           </a>
-           <span class="advisor-affiliation">(Korea University)</span>
-         </div>
-         <div class="advisor-info">
-           <span class="advisor-label">1st Thesis Supervisor:</span>
-           <a href="https://scholar.google.com/citations?user=O8OYIzMAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" class="advisor-name">
-             Myoung-Ju Park
-           </a>
-           <span class="advisor-affiliation">(Seoul National University)</span>
-         </div>
-       </div>
+        <div class="advisor-info" style="margin-bottom: 8px; flex-direction: column; align-items: flex-start;">
+  <span class="advisor-label">Academic Advisor & 2nd Thesis Supervisor:</span>
+  <div style="margin-top: 6px;">
+    <a href="https://scholar.google.com/citations?hl=en&amp;user=uTiqWBMAAAAJ" target="_blank" class="advisor-name">
+      Jang Ho Kim
+    </a>
+    <span class="advisor-affiliation">(Korea University)</span>
+  </div>
+</div>
+<div class="advisor-info" style="flex-direction: column; align-items: flex-start;">
+  <span class="advisor-label">1st Thesis Supervisor:</span>
+  <div style="margin-top: 6px;">
+    <a href="https://scholar.google.com/citations?user=O8OYIzMAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" class="advisor-name">
+      Myoung-Ju Park
+    </a>
+    <span class="advisor-affiliation">(Seoul National University)</span>
+  </div>
+</div>
 
        <div class="honors-section">
          <div class="honors-title">
@@ -2438,6 +2442,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
