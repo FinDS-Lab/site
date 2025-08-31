@@ -1425,8 +1425,11 @@ permalink: /members-director.html
              <span class="profile-emoji">📧</span>
              <div class="profile-content">
                <span class="profile-label">E-mail</span>
-               <span class="profile-value">
+               <span class="profile-value" style="display:flex; align-items:center; gap:6px;">
                  <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
+                 <button onclick="copyEmail()" style="border:none; background:#f0f0f0; padding:2px 6px; border-radius:4px; cursor:pointer;">
+                   📋
+                 </button>
                </span>
              </div>
            </div>
@@ -1439,7 +1442,20 @@ permalink: /members-director.html
        </div>
      </div>
    </aside>
-   
+ </div>
+</section>
+
+<script>
+  function copyEmail() {
+    const email = "ischoi@dwu.ac.kr";
+    navigator.clipboard.writeText(email).then(() => {
+      alert("Copied: " + email);
+    }).catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
+  }
+</script>
+
    <!-- Main Content -->
    <main>
      <!-- Introduction -->
@@ -1555,7 +1571,7 @@ permalink: /members-director.html
         <div class="year">2025.02.</div>
         <div class="title">Ph.D. in Engineering</div>
         <div class="desc">in <b>Industrial and Systems Engineering</b>, Korea Advanced Institute of Science and Technology</div>
-        <div class="desc-ko">KAIST 공학박사 (산업및시스템공학) </div>
+        <div class="desc-ko">KAIST 산업및시스템공학 공학박사</div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -1592,7 +1608,7 @@ permalink: /members-director.html
         <div class="year">2021.02.</div>
         <div class="title">Master of Science (M.S.)</div>
         <div class="desc">in <b>Industrial and Systems Engineering</b>, Korea Advanced Institute of Science and Technology</div>
-        <div class="desc-ko">KAIST 공학석사 (산업및시스템공학) </div>
+        <div class="desc-ko">KAIST 산업및시스템공학 공학석사</div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -1631,7 +1647,7 @@ permalink: /members-director.html
         <div class="desc" style="display:block; margin-top:4px;">
           in <b>Industrial and Management Systems Engineering</b>, Kyung Hee University
         </div>
-        <div class="desc-ko">경희대학교 공학사 (산업경영공학) </div>
+        <div class="desc-ko">경희대학교 산업경영공학 공학사</div>
 
         <div class="advisor-section">
           <div class="advisor-title">
@@ -2434,6 +2450,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
