@@ -1146,6 +1146,16 @@ permalink: /members-director.html
   border-color: var(--gold);
   transform: translateY(-1px);
 }
+/* Network slider 기본 설정 */
+.network-slider {
+  width: 250px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  outline: none;
+}
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
@@ -1158,33 +1168,24 @@ permalink: /members-director.html
   
   .control-group {
     justify-content: space-between;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;  /* wrap에서 nowrap으로 변경 */
+    width: 100%;
+  }
+  
+  .control-group:first-child {  /* Threshold 그룹 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
   
   .slider-container {
-    max-width: 100%;
-    flex: 1;
+    flex: 1;  /* 남은 공간 모두 차지 */
+    max-width: none;
   }
   
-.network-slider {
-  width: 250px;  /* 150px → 250px */
-  -webkit-appearance: none;
-  appearance: none;
-  height: 6px;
-  background: #e5e7eb;
-  border-radius: 3px;
-  outline: none;
-}
-
-@media (max-width: 768px) {
   .network-slider {
-    width: 400px !important;  /* 120px → 200px */
-  }
-}
-
-@media (max-width: 480px) {
-  .network-slider {
-    width: 240px !important;  /* 100px → 160px */
+    width: 100% !important;  /* 컨테이너 전체 너비 */
+    min-width: 200px;
   }
 }
 
@@ -1210,17 +1211,19 @@ permalink: /members-director.html
   }
   
   #networkCanvas {
-    height: 400px !important;
+    height: 450px !important;  /* 400px에서 450px로 증가 */
   }
 }
 
 @media (max-width: 480px) {
   .network-slider {
-    width: 100px !important;  /* 60px에서 100px로 증가 */
+    width: 100% !important;  /* 전체 너비 유지 */
+    min-width: 150px;
   }
   
   .slider-label {
     font-size: 11px !important;
+    flex-shrink: 0;  /* 라벨 크기 고정 */
   }
   
   .zoom-btn {
@@ -1271,18 +1274,25 @@ permalink: /members-director.html
 
 /* Enhanced Network Canvas Styles */
 #networkCanvas{
- width:100%;
- height:600px;  /* 500px → 600px */
- border-radius:16px;
- background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
- margin-top:1rem;
- box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+  width:100%;
+  height:600px;  /* 데스크톱 기본 높이 */
+  border-radius:16px;
+  background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
+  margin-top:1rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
 }
 
-/* 모바일에서도 적절한 높이 유지 */
-@media (max-width: 640px) {
+/* 태블릿 */
+@media (max-width: 768px) {
   #networkCanvas {
-    height: 550px !important;  /* 400px → 450px */
+    height: 500px !important;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  #networkCanvas {
+    height: 450px !important;
   }
 }
 
@@ -2074,12 +2084,14 @@ if (canvas) {
   // Size canvas
 function sizeCanvas() {
   const rect = canvas.getBoundingClientRect();
+  const isMobile = window.innerWidth <= 768;
+  const canvasHeight = isMobile ? 450 : 600;  // 모바일은 450px, 데스크톱은 600px
+  
   canvas.width = rect.width * window.devicePixelRatio;
-  canvas.height = 600 * window.devicePixelRatio;  // 500 → 600
-  canvas.style.height = '600px';  // '500px' → '600px'
+  canvas.height = canvasHeight * window.devicePixelRatio;
+  canvas.style.height = canvasHeight + 'px';
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
-
   // Build network structure
   function buildNetwork() {
     nodes = [];
@@ -2331,6 +2343,7 @@ function sizeCanvas() {
   });
 }
 </script>
+
 
 
 
