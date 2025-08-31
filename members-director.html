@@ -676,33 +676,6 @@ permalink: /members-director.html
     word-break: keep-all; /* 한글 줄바꿈 방지 */
   }
 }
-/* Mobile - 2 column layout for better readability */
-@media (max-width: 480px) {
-  .pub-stats{
-    grid-template-columns:repeat(2, 1fr);
-    gap:8px;
-  }
-
-  .pub-stat{
-    padding:10px 6px;
-  }
-
-  .pub-stat.citation {
-    grid-column: 1/-1;
-  }
-
-  .pub-stat-number{
-    font-size:16px;
-  }
-
-  .pub-stat-label{
-    font-size:9px;
-    letter-spacing:0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
  /* Research Interests - Updated with better toggle design */
  .ri-item{
    border:1px solid #e5e7eb;
@@ -1088,7 +1061,7 @@ permalink: /members-director.html
 }
 
 .network-slider {
-  width: 150px;
+  width: 250px;  /* 150px에서 250px로 증가 */
   -webkit-appearance: none;
   appearance: none;
   height: 6px;
@@ -1097,6 +1070,20 @@ permalink: /members-director.html
   outline: none;
 }
 
+/* 태블릿 */
+@media (max-width: 768px) {
+  .network-slider {
+    width: 200px !important;  /* 120px에서 200px로 증가 */
+  }
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  .network-slider {
+    width: 150px !important;  /* 100px에서 150px로 증가 */
+  }
+}
+ 
 .network-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -1267,12 +1254,19 @@ permalink: /members-director.html
 
 /* Enhanced Network Canvas Styles */
 #networkCanvas{
- width:100%;
- height:500px;
- border-radius:16px;
- background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
- margin-top:1rem;
- box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+  width:100%;
+  height:600px;  /* 500px에서 600px로 증가 */
+  border-radius:16px;
+  background: radial-gradient(ellipse at center, #fafbfc 0%, #f3f4f6 100%);
+  margin-top:1rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
+}
+
+/* 모바일에서도 적절한 높이 유지 */
+@media (max-width: 640px) {
+  #networkCanvas {
+    height: 450px !important;  /* 400px에서 450px로 증가 */
+  }
 }
 
 #networkInfo{
@@ -2061,13 +2055,13 @@ if (canvas) {
    }
 
   // Size canvas
-  function sizeCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * window.devicePixelRatio;
-    canvas.height = 500 * window.devicePixelRatio;
-    canvas.style.height = '500px';
-    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  }
+function sizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * window.devicePixelRatio;
+  canvas.height = 600 * window.devicePixelRatio;  // 500에서 600으로
+  canvas.style.height = '600px';  // 500px에서 600px로
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+}
 
   // Build network structure
   function buildNetwork() {
@@ -2320,6 +2314,7 @@ if (canvas) {
   });
 }
 </script>
+
 
 
 
