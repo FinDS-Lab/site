@@ -324,6 +324,35 @@ permalink: /members-director.html
    --red-dark:#7f0a0a;
  }
 
+/* 이메일 복사 버튼 스타일 */
+.email-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+}
+
+.email-copy-btn:hover {
+  background: #f8fafc;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.email-copy-btn.copied {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+ 
  /* director 전용 카드 - site.css의 .card 오버라이드 */
 .director-card {
   background:#fff !important;
@@ -1422,14 +1451,17 @@ permalink: /members-director.html
              </div>
            </div>
            <div class="profile-item">
-             <span class="profile-emoji">📧</span>
-             <div class="profile-content">
-               <span class="profile-label">E-mail</span>
-               <span class="profile-value">
-                 <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
-               </span>
-             </div>
-           </div>
+            <span class="profile-emoji">📧</span>
+            <div class="profile-content">
+              <span class="profile-label">E-mail</span>
+              <span class="profile-value" style="display: flex; align-items: center; gap: 8px;">
+                <a href="mailto:ischoi@dwu.ac.kr">ischoi@dwu.ac.kr</a>
+                <button class="email-copy-btn" onclick="copyEmail()" title="이메일 복사">
+                  📋
+                </button>
+              </span>
+            </div>
+          </div>
          </div>
          
          <div class="button-group">
@@ -1866,8 +1898,28 @@ permalink: /members-director.html
    document.getElementById(`mentoring-${year}`).classList.toggle('show');
  }
 
+// 이메일 복사 함수
+function copyEmail() {
+  const email = 'ischoi@dwu.ac.kr';
+  const btn = document.querySelector('.email-copy-btn');
+  
+  navigator.clipboard.writeText(email).then(() => {
+    // 복사 성공
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = '✅';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      btn.innerHTML = originalContent;
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    // 복사 실패 시 폴백
+    alert('복사에 실패했습니다. 다시 시도해주세요.');
+  });
+}
+ 
  // ===== Mentee Modal and Mentoring Program System =====
-  // ===== Mentee Modal and Mentoring Program System =====
   const MENTEES = {};
   
   // Function to format name (add space for 2-character names)
@@ -2434,3 +2486,4 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
