@@ -6,7 +6,7 @@ permalink: /gallery/2025-09-01-open/
 tags: [logo]
 thumb: logo-finds.png
 images:
-  - logo1.png
+  - logo-finds.png
 ---
 
 <!-- ===== Styles ===== -->
