@@ -264,7 +264,7 @@ title: home
           <div class="carousel-overlay">
             <div class="carousel-content">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Towards Data-Illuminated<br>Financial Management Innovation</h1>
+              <h1 class="hero-title">Towards Data-Illuminated<br>Financial Innovation</h1>
               <div class="hero-buttons">
                 <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
                 <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
