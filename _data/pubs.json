@@ -1036,7 +1036,7 @@
    "venue_ko": "2024 한국데이터정보과학회 춘계학술논문발표회",
    "published_date": "2024-05-17",
    "awards": 1,
-   "award_details": ["내용"]
+   "award_details": ["2024 한국데이터정보과학회 춘계학술논문발표회 대학원생 논문발표 부문 장려상상"]
  },
  {
    "year": 2024,
@@ -1364,7 +1364,7 @@
     "venue_ko": "2023 한국산업경영시스템학회 추계학술대회",
     "published_date": "2023-11-10",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2023 한국산업경영시스템학회 추계학술대회 우수논문상"]
   },
   {
     "year": 2023,
@@ -1409,7 +1409,7 @@
     "venue_ko": "2023 한국데이터정보과학회 추계학술논문발표회",
     "published_date": "2023-11-03",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2023 한국데이터정보과학회 추계학술논문발표회 대학원생 논문발표 부문 장려상"]
   },
   {
     "year": 2023,
@@ -1630,7 +1630,8 @@
   "venue": "2023 Summer International Conference of the Korean Association for Policy Studies",
   "venue_ko": "2023 한국정책학회 하계국제학술대회",
   "published_date": "2023-07-15",
-  "awards": 1
+  "awards": 1,
+  "award_details": "2023 한국정책학회 하계국제학술대회 대학원생 논문 및 캡스톤디자인 공모전전"
 },
   {
     "year": 2023,
@@ -1796,7 +1797,7 @@
     "venue_ko": "2023 한국데이터정보과학회 춘계학술논문발표회",
     "published_date": "2023-05-12",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2023 한국데이터정보과학회 춘계학술논문발표회 대학원생 논문발표 부문 장려상"]
   },
   {
     "year": 2022,
@@ -1812,7 +1813,7 @@
     "venue_ko": "2022 한국정보기술학회 추계종합학술대회",
     "published_date": "2022-12-02",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국정보기술학회 추계종합학술대회 일반 부문 우수논문상상"]
   },
   {
     "year": 2022,
@@ -1843,7 +1844,7 @@
     "venue_ko": "2022 한국데이터정보과학회 추계학술논문발표회",
     "published_date": "2022-11-04",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국데이터정보과학회 추계학술논문발표회 대학원생 논문발표 부문 장려상"]
   },
   {
     "year": 2022,
@@ -1889,7 +1890,7 @@
     "venue_ko": "2022 한국산업경영시스템학회 추계학술대회",
     "published_date": "2022-11-04",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국산업경영시스템학회 추계학술대회 우수논문상"]
   },
   {
     "year": 2022,
@@ -1993,9 +1994,9 @@
     "author_marks": ["1", "*"],
     "venue": "2022 Summer Conference of the Korean Statistical Society",
     "venue_ko": "2022 한국통계학회 하계학술논문발표회",
-    "published_date": "2022-06-24",
+    "published_date": "2022-06-25",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국통계학회 하계학술논문발표회 우수연구 포스터 부문 장려상"]
   },
    {
     "year": 2022,
@@ -2054,7 +2055,7 @@
     "venue_ko": "2022 한국정보기술학회 하계종합학술대회",
     "published_date": "2022-06-03",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국정보기술학회 하계종합학술대회 일반 부문 우수논문상상"]
   },
   {
     "year": 2022,
@@ -2188,7 +2189,7 @@
     "venue_ko": "2022 한국데이터정보과학회 춘계학술논문발표회",
     "published_date": "2022-05-13",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2022 한국데이터정보과학회 춘계학술논문발표회 대학원생 논문발표 부문 장려상상"]
   },
    {
     "year": 2022,
@@ -2489,7 +2490,7 @@
     "venue_ko": "2021 대한지역사회영양학회 추계학술대회",
     "published_date": "2021-10-22",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["2021 대한지역사회영양학회 추계학술대회 질병관리청 자료 활용 부문 우수논문상상"]
   },
   {
     "year": 2021,
@@ -2580,7 +2581,7 @@
     "venue_ko": "2019 대한산업공학회 추계학술대회",
     "published_date": "2019-11-08",
     "awards": 1,
-    "award_details": ["우수논문상"]
+    "award_details": ["제8회 산업융합 활성화 방안 및 사례연구 논문공모전 우수상"]
   },
   {
     "year": 2019,
