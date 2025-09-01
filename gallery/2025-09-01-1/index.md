@@ -4,12 +4,9 @@ title: "FINDS Lab. Logo"
 date: 2025-09-01
 permalink: /gallery/2025-09-01-open/
 tags: [logo]
-thumb: logo1.png
+thumb: logo-finds.png
 images:
   - logo1.png
-  - logo2.png
-  - logo3.png
-  - logo4.png
 ---
 
 <!-- ===== Styles ===== -->
