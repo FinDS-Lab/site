@@ -22,6 +22,20 @@ title: home
     --cta-w-mobile: 320px;
   }
 
+  /* -----------------------------
+     단어 단위 줄바꿈(한글/영문 공통)
+     ----------------------------- */
+  .keep-words{
+    /* CJK(한글) 단어 단위 줄바꿈 */
+    word-break: keep-all;
+    /* 아주 긴 영문/URL은 적절히 줄바꿈 허용 */
+    overflow-wrap: anywhere;
+    /* 영문 단어 하이픈 처리(지원 브라우저에서만) */
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+  }
+
   /* =========================
      HERO: News/Notice와 폭 정렬
      ========================= */
@@ -191,6 +205,20 @@ title: home
   .intro-content .description{ margin-top:16px; font-size:16px; line-height:1.8; color:#4b5563; }
   @media (max-width:480px){ .intro-content .description{ font-size:14px; line-height:1.7; } }
 
+  /* 소개/히어로 텍스트에도 단어 단위 줄바꿈 적용 */
+  .hero-title.keep-words,
+  .intro-content.keep-words h2,
+  .intro-content.keep-words h3,
+  .intro-content.keep-words .lab-name,
+  .intro-content.keep-words .lab-full,
+  .intro-content.keep-words .description{
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+  }
+
   .updates-section{
     max-width: var(--container-max);
     margin: 0 auto 80px;
@@ -239,6 +267,12 @@ title: home
     font-size:15px; font-weight:800; color:#1f2937; line-height:1.5; display:block; cursor:pointer;
     overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
   }
+  /* News/Notice 타이틀도 단어 단위 줄바꿈 */
+  .update-item-title.keep-words{
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
   @media (max-width:480px){ .update-item-title{ font-size:14px; line-height:1.4; } }
 
   .update-meta{ margin-top:6px; font-size:12px; color:#9ca3af; display:flex; align-items:center; gap:12px; }
@@ -262,9 +296,9 @@ title: home
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-1.jpg' | relative_url }}" alt="FINDS Lab Hero 1" loading="eager">
           <div class="carousel-overlay">
-            <div class="carousel-content">
+            <div class="carousel-content keep-words">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Towards Data-Illuminated<br>Financial Innovation</h1>
+              <h1 class="hero-title keep-words">Towards Data-Illuminated<br>Financial Innovation</h1>
               <div class="hero-buttons">
                 <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
                 <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
@@ -277,9 +311,9 @@ title: home
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-2.jpg' | relative_url }}" alt="FINDS Lab Hero 2" loading="lazy">
           <div class="carousel-overlay">
-            <div class="carousel-content">
+            <div class="carousel-content keep-words">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Accomplishments</h1>
+              <h1 class="hero-title keep-words">Accomplishments</h1>
               <div class="hero-buttons">
                 <a href="{{ '/publications.html' | relative_url }}" class="btn-hero primary">Publications</a>
                 <a href="{{ '/projects.html' | relative_url }}" class="btn-hero secondary">Projects</a>
@@ -292,9 +326,9 @@ title: home
         <div class="carousel-slide">
           <img src="{{ '/assets/img/hero/slide-3.jpg' | relative_url }}" alt="FINDS Lab Hero 3" loading="lazy">
           <div class="carousel-overlay">
-            <div class="carousel-content">
+            <div class="carousel-content keep-words">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title">Updates</h1>
+              <h1 class="hero-title keep-words">Updates</h1>
               <div class="hero-buttons">
                 <a href="{{ '/archives-notice.html' | relative_url }}" class="btn-hero primary">Notice</a>
                 <a href="{{ '/archives-news.html' | relative_url }}" class="btn-hero secondary">News</a>
@@ -321,15 +355,15 @@ title: home
     </div>
   </div>
 
-  <div class="intro-content">
-    <h2>Dongduk Women's University</h2>
-    <h3>
-      <span class="lab-name">FINDS Lab.</span>
-      <span class="lab-full">
+  <div class="intro-content keep-words">
+    <h2 class="keep-words">Dongduk Women's University</h2>
+    <h3 class="keep-words">
+      <span class="lab-name keep-words">FINDS Lab.</span>
+      <span class="lab-full keep-words">
         (<b>Fin</b>ancial <b>D</b>ata Intelligence <b>S</b>olutions Laboratory)
       </span>
     </h3>
-    <p class="description">
+    <p class="description keep-words">
       동덕여자대학교 경영대학 경영융합학부 <b>금융데이터인텔리전스 연구실</b> 홈페이지입니다.
     </p>
   </div>
@@ -365,7 +399,7 @@ title: home
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <span class="update-item-title">
+            <span class="update-item-title keep-words">
               {{ post.title }}
             </span>
             {% if post.category %}
@@ -406,7 +440,7 @@ title: home
               <span class="date-day">{{ post.date | date: "%d" }}</span>
               <span class="date-month">{{ post.date | date: "%Y.%m" }}</span>
             </div>
-            <span class="update-item-title">
+            <span class="update-item-title keep-words">
               {{ post.title }}
             </span>
             {% if post.category %}
