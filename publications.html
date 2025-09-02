@@ -385,15 +385,47 @@ permalink: /publications.html
     flex-wrap: wrap;
   }
 
-  .search { flex: 1; min-width: 0; }
+  .search { 
+    flex: 1; 
+    min-width: 0;
+    position: relative;
+  }
 
   .search input {
     width: 100%;
     border: 1px solid #e5e7eb;
     border-radius: .6rem;
-    padding: .6rem .8rem;
+    padding: .6rem 2.5rem .6rem .8rem;
     font-size: 14px;
     box-sizing: border-box;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #6b7280;
+    transition: all 0.2s;
+  }
+
+  .search-clear:hover {
+    background: #f3f4f6;
+    color: #374151;
+  }
+
+  .search-clear.visible {
+    display: flex;
   }
 
   .count {
@@ -678,7 +710,7 @@ permalink: /publications.html
     font-size: 13px;
     word-break: keep-all;
     overflow-wrap: break-word;
-    line-height: 1.4;
+    line-height: 1.6;  /* Increased from 1.4 to 1.6 for better spacing */
   }
 
   /* ===== FIX: Keep author names and superscripts together ===== */
@@ -931,6 +963,7 @@ permalink: /publications.html
     <div class="search-container">
       <div class="search">
         <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+        <button id="searchClear" class="search-clear" title="Clear search">×</button>
       </div>
       <div class="count" id="count"></div>
     </div>
@@ -1188,6 +1221,7 @@ permalink: /publications.html
 
   /* ===== DOM ===== */
   const searchInput = document.getElementById('pubSearch');
+  const searchClear = document.getElementById('searchClear');
   const countEl = document.getElementById('count');
   const pubWrap = document.getElementById('pubWrap');
   const modal = document.getElementById('citeModal');
@@ -1350,8 +1384,15 @@ permalink: /publications.html
     const displayVenue = venues.length ? venues.join('<br>') : '';
 
     // FIXED: Wrap each author+mark as a unit to prevent line-breaking
+    // UPDATED: Add spacing for 2-character Korean names
     const authors = (pub.authors || []).map((id, idx) => {
-      const name = getAuthorName(id, useKorean);
+      let name = getAuthorName(id, useKorean);
+      
+      // If Korean name with exactly 2 characters, add spacing
+      if (useKorean && name && /^[가-힣]{2}$/.test(name)) {
+        name = name.split('').join('&nbsp;&nbsp;'); // Add double non-breaking space
+      }
+      
       const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
       // Each author+superscript is wrapped in a non-breaking span
       return `<span class="author-with-mark">${name}${mark ? `<sup>${String(mark)}</sup>` : ''}</span>`;
@@ -1505,43 +1546,125 @@ permalink: /publications.html
     return a.en || a.ko || `Author ${authorId}`;
   }
 
+  // UPDATED: Better citation formatting following standard styles
+  function formatAuthorsForCitation(authors, style) {
+    if (!authors || authors.length === 0) return "Anonymous";
+    
+    const authorNames = authors.map(id => getAuthorName(id, false));
+    
+    switch(style) {
+      case 'MLA':
+        // MLA 9th Edition: Last, First, and First Last.
+        if (authorNames.length === 1) {
+          return toInitialsReversed(authorNames[0]);
+        } else if (authorNames.length === 2) {
+          return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
+        } else {
+          return toInitialsReversed(authorNames[0]) + ", et al.";
+        }
+        
+      case 'APA':
+        // APA 7th Edition: Last, F. M., & Last, F. M.
+        const apaAuthors = authorNames.map(name => toInitials(name));
+        if (apaAuthors.length === 1) {
+          return apaAuthors[0];
+        } else if (apaAuthors.length <= 20) {
+          return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
+        } else {
+          return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
+        }
+        
+      case 'Chicago':
+        // Chicago 17th Edition
+        if (authorNames.length === 1) {
+          return toInitialsReversed(authorNames[0]);
+        } else if (authorNames.length <= 3) {
+          return authorNames.slice(0, -1).join(", ") + ", and " + authorNames[authorNames.length - 1];
+        } else {
+          return authorNames[0] + ", et al.";
+        }
+        
+      case 'Harvard':
+        // Harvard: Last, F.M. and Last, F.M.
+        const harvardAuthors = authorNames.map(name => toInitials(name));
+        if (harvardAuthors.length === 1) {
+          return harvardAuthors[0];
+        } else if (harvardAuthors.length === 2) {
+          return harvardAuthors[0] + " and " + harvardAuthors[1];
+        } else {
+          return harvardAuthors[0] + " et al.";
+        }
+        
+      case 'Vancouver':
+        // Vancouver: Last FM, Last FM.
+        const vanAuthors = authorNames.map(name => {
+          const clean = name.replace(/\*/g, '').trim();
+          const parts = clean.split(/\s+/);
+          const last = parts.pop() || '';
+          const initials = parts.map(p => (p?.[0] || '').toUpperCase()).join("");
+          return `${last} ${initials}`;
+        });
+        if (vanAuthors.length <= 6) {
+          return vanAuthors.join(", ");
+        } else {
+          return vanAuthors.slice(0, 6).join(", ") + ", et al.";
+        }
+        
+      default:
+        return authorNames.join(", ");
+    }
+  }
+
   function toInitials(name) {
     const clean = (name || '').replace(/\*/g, '').trim();
     const parts = clean.split(/\s+/);
     const last = parts.pop() || '';
     const initials = parts.map(p => (p?.[0] || '').toUpperCase() + ".").join(" ");
-    return `${last}, ${initials}`;
+    return `${last}, ${initials}`.replace(/,\s*$/, '');
+  }
+
+  function toInitialsReversed(name) {
+    const clean = (name || '').replace(/\*/g, '').trim();
+    const parts = clean.split(/\s+/);
+    if (parts.length === 1) return parts[0];
+    const last = parts.pop() || '';
+    const first = parts.join(" ");
+    return `${last}, ${first}`;
   }
 
   function openCite(pub) {
     const title = pub.title || "Untitled";
-    const venueJoined = arr(pub.venue).filter(Boolean).join(" / ");
+    const venueJoined = arr(pub.venue).filter(Boolean).join(", ");
     const venue = venueJoined || "Unknown Venue";
     const year = pub.year || new Date().getFullYear();
-    
-    const authorNames = (pub.authors || []).map(id => getAuthorName(id, false));
-    const allAuthors = authorNames.length > 0 ? authorNames : ["Anonymous"];
-    const allAuthorsStr = allAuthors.join(", ");
-    const allAuthorsInitials = allAuthors.map(a => toInitials(a));
-    
-    let pubDetails = '';
-    if (pub.volume) pubDetails += `, ${pub.volume}`;
-    if (pub.issue) pubDetails += `(${pub.issue})`;
-    if (pub.pages) pubDetails += `, ${pub.pages}`;
-    if (pub.doi) pubDetails += `. https://doi.org/${pub.doi}`;
-    
-    let bookDetails = '';
-    if (pub.isbn) bookDetails = `. ISBN: ${pub.isbn}`;
-    
     const isBook = arr(pub.type).includes('book');
-    const details = isBook ? bookDetails : pubDetails;
+    const isThesis = arr(pub.type).includes('thesis');
+    
+    // Build details string based on publication type
+    let details = '';
+    if (isBook) {
+      if (pub.isbn) details = `. ISBN: ${pub.isbn}`;
+    } else if (isThesis) {
+      details = `. ${venue}`;
+    } else {
+      // Journal or Conference
+      if (pub.volume) details += `, vol. ${pub.volume}`;
+      if (pub.issue) details += `, no. ${pub.issue}`;
+      if (pub.pages) details += `, pp. ${pub.pages}`;
+    }
+    
+    // DOI if available
+    let doiString = '';
+    if (pub.doi) {
+      doiString = `. https://doi.org/${pub.doi}`;
+    }
     
     const formats = {
-      MLA: `${allAuthorsStr}. "${title}." ${venue}${details} (${year}).`,
-      APA: `${allAuthorsInitials.join(", ")}. (${year}). ${title}. ${venue}${details}.`,
-      Chicago: `${allAuthorsStr}. ${year}. "${title}." ${venue}${details}.`,
-      Harvard: `${allAuthorsInitials.join(", ")} (${year}) ${title}. ${venue}${details}.`,
-      Vancouver: `${allAuthorsInitials.join(", ")}. ${title}. ${venue}. ${year}${details}.`
+      'MLA (9th ed.)': `${formatAuthorsForCitation(pub.authors, 'MLA')}. "${title}." ${venue}${details}, ${year}${doiString}.`,
+      'APA (7th ed.)': `${formatAuthorsForCitation(pub.authors, 'APA')} (${year}). ${title}. ${venue}${details}${doiString}.`,
+      'Chicago (17th ed.)': `${formatAuthorsForCitation(pub.authors, 'Chicago')}. "${title}." ${venue}${details} (${year})${doiString}.`,
+      'Harvard': `${formatAuthorsForCitation(pub.authors, 'Harvard')} (${year}) '${title}', ${venue}${details}${doiString}.`,
+      'Vancouver': `${formatAuthorsForCitation(pub.authors, 'Vancouver')}. ${title}. ${venue}. ${year}${details}${doiString}.`
     };
 
     citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
@@ -1570,6 +1693,16 @@ permalink: /publications.html
   /* ===== Init & Events ===== */
   document.getElementById('pubSearch').oninput = (e) => {
     q = e.target.value;
+    searchClear.classList.toggle('visible', q.length > 0);
+    render();
+  };
+
+  // Clear button functionality
+  searchClear.onclick = () => {
+    searchInput.value = '';
+    q = '';
+    searchClear.classList.remove('visible');
+    searchInput.focus();
     render();
   };
 
@@ -1602,6 +1735,7 @@ permalink: /publications.html
     onFilters.conference.clear();
     searchInput.value = '';
     q = '';
+    searchClear.classList.remove('visible');
     buildChips();
     render();
   };
