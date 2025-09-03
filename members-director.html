@@ -1010,7 +1010,7 @@ permalink: /members-director.html
  .mentee-modal.show{display:flex;}
 
  .mentee-modal-content{
-   background:#fff;border-radius:16px;max-width:400px;width:100%;
+   background:#fff;border-radius:16px;max-width:500px;width:95%;
    box-shadow:0 20px 40px rgba(0,0,0,0.2);position:relative;
    max-height:80vh;overflow-y:auto;
  }
@@ -1061,28 +1061,50 @@ permalink: /members-director.html
 }
 
 /* 모바일 스타일 추가 */
+/* 모바일 스타일 추가 */
 @media (max-width: 640px) {
   .mentee-modal-content {
-    max-width: 90%;  /* 모바일에서 너비 조정 */
+    max-width: 95%;  /* 95%로 늘림 */
+    width: 95%;
+  }
+  
+  .mentee-modal-body {
+    padding: 20px;  /* 24px에서 줄임 */
+  }
+  
+  .mentee-info-row {
+    gap: 8px;  /* 12px에서 8px로 */
+    padding: 10px 0;  /* 12px에서 10px로 */
   }
   
   .mentee-info-label {
-    min-width: 90px;  /* 140px에서 90px로 줄임 */
-    font-size: 13px;
+    min-width: 75px;  /* 90px에서 75px로 더 줄임 */
+    font-size: 12px;  /* 13px에서 12px로 */
   }
   
   .mentee-info-value {
     flex: 1;
-    min-width: 0;  /* 중요: flex 아이템이 줄어들 수 있게 */
+    min-width: 0;
   }
   
   .participation-years {
-    max-width: 100%;  /* 부모 너비 초과 방지 */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);  /* 2열 그리드 */
+    gap: 4px;
+    max-width: 100%;
   }
   
   .participation-year {
-    padding: 3px 6px;  /* 패딩 줄임 */
-    font-size: 11px;  /* 폰트 크기 줄임 */
+    padding: 4px 8px;  /* 적절한 패딩 */
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
+  /* Entry Year는 전체 너비 사용 */
+  .mentee-info-row:nth-child(3) .participation-year {
+    display: inline-flex;
+    width: fit-content;
   }
 }
 /* Network Controls - Combined */
@@ -2051,6 +2073,15 @@ function buildMentoringYears() {
    }
    document.getElementById('menteeModalName').textContent = mentee.name;
    const modalBody = document.getElementById('menteeModalBody');
+   
+   // Entry Year를 위한 단일 뱃지
+   const entryYearHtml = `<span class="participation-year single-year">${mentee.entryYear}</span>`;
+   
+   // Participation Years를 위한 그리드
+   const participationYearsHtml = mentee.participationYears.map(year => 
+     `<span class="participation-year">${year}</span>`
+   ).join('');
+   
    modalBody.innerHTML = `
      <div class="mentee-info-row">
        <span class="mentee-info-icon">🏫</span>
@@ -2065,15 +2096,13 @@ function buildMentoringYears() {
      <div class="mentee-info-row">
        <span class="mentee-info-icon">📅</span>
        <span class="mentee-info-label">Entry Year</span>
-       <span class="participation-year">${mentee.entryYear}</span>
+       <div class="mentee-info-value">${entryYearHtml}</div>
      </div>
      <div class="mentee-info-row">
        <span class="mentee-info-icon">⭐</span>
-       <span class="mentee-info-label">Participation Years</span>
-       <div class="participation-years">
-        ${mentee.participationYears.map(year => 
-          `<span class="participation-year">${year}</span>`
-        ).join('')}
+       <span class="mentee-info-label">Participation</span>
+       <div class="mentee-info-value">
+         <div class="participation-years">${participationYearsHtml}</div>
        </div>
      </div>
    `;
@@ -2513,6 +2542,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
