@@ -1044,11 +1044,45 @@ permalink: /members-director.html
    width:24px;text-align:center;color:var(--gold);font-size:16px;
    margin-top:2px;
  }
- .mentee-info-label{
-   font-weight:700;color:#6b7280;min-width:140px;font-size:14px;
- }
+.mentee-info-label{
+   font-weight:700;color:#6b7280;min-width:90px;font-size:13px;
+   white-space: nowrap;
+}
 .mentee-info-value{
    color:#111827;font-weight:600;font-size:14px;flex:1;
+}
+ /* Entry Year - 단일 뱃지 */
+.single-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* Participation Years - 그리드 레이아웃 */
+.participation-years {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.participation-year {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--gold);
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
 }
 .participation-years{
    display:flex;gap:6px;flex-wrap:wrap;
@@ -1061,45 +1095,50 @@ permalink: /members-director.html
 }
 
 /* 모바일 스타일 추가 */
-/* 모바일 스타일 추가 */
 @media (max-width: 640px) {
   .mentee-modal-content {
-    max-width: 95%;  /* 95%로 늘림 */
+    max-width: 95%;
     width: 95%;
   }
   
   .mentee-modal-body {
-    padding: 20px;  /* 24px에서 줄임 */
+    padding: 20px;
   }
   
   .mentee-info-row {
-    gap: 8px;  /* 12px에서 8px로 */
-    padding: 10px 0;  /* 12px에서 10px로 */
+    gap: 8px;
+    padding: 10px 0;
   }
   
   .mentee-info-label {
-    min-width: 75px;  /* 90px에서 75px로 더 줄임 */
-    font-size: 12px;  /* 13px에서 12px로 */
+    min-width: 80px;
+    font-size: 12px;
   }
   
   .mentee-info-value {
-    flex: 1;
-    min-width: 0;
+    font-size: 13px;
   }
   
+  /* Participation Years - 모바일에서 2열 그리드 */
   .participation-years {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);  /* 2열 그리드 */
+    grid-template-columns: repeat(2, 1fr);
     gap: 4px;
-    max-width: 100%;
+    width: 100%;
   }
   
   .participation-year {
-    padding: 4px 8px;  /* 적절한 패딩 */
+    padding: 4px 8px;
     font-size: 11px;
     text-align: center;
-    white-space: nowrap;
   }
+  
+  /* Entry Year는 inline-flex 유지 */
+  .single-year {
+    display: inline-flex;
+    width: auto;
+  }
+}
   
   /* Entry Year는 전체 너비 사용 */
   .mentee-info-row:nth-child(3) .participation-year {
@@ -2075,7 +2114,7 @@ function buildMentoringYears() {
    const modalBody = document.getElementById('menteeModalBody');
    
    // Entry Year를 위한 단일 뱃지
-   const entryYearHtml = `<span class="participation-year single-year">${mentee.entryYear}</span>`;
+   const entryYearHtml = `<span class="single-year">${mentee.entryYear}</span>`;
    
    // Participation Years를 위한 그리드
    const participationYearsHtml = mentee.participationYears.map(year => 
@@ -2542,6 +2581,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
