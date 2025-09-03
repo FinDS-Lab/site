@@ -310,7 +310,8 @@ permalink: /publications.html
 
   .authorship-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;  /* FIXED: Changed from center to flex-start */
+    gap: 12px;  /* FIXED: Added explicit gap */
     padding: 8px 12px;
     background: #f8fafc;
     border-radius: 0.5rem;
@@ -335,8 +336,8 @@ permalink: /publications.html
     font-weight: 900;
     font-size: 12px;
     border-radius: 6px;
-    margin-right: 12px;
     flex-shrink: 0;
+    margin-top: 2px;  /* FIXED: Added slight top margin */
   }
 
   .authorship-mark.asterisk {
@@ -350,6 +351,8 @@ permalink: /publications.html
     gap: 2px;
     word-break: keep-all;
     overflow-wrap: break-word;
+    flex: 1;  /* FIXED: Take remaining space */
+    min-width: 0;  /* FIXED: Allow text to wrap properly */
   }
 
   .authorship-en {
@@ -947,7 +950,6 @@ permalink: /publications.html
       min-width: 24px;
       height: 24px;
       font-size: 10px;
-      margin-right: 8px;
     }
     
     .authorship-en { font-size: 11px; }
