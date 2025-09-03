@@ -1037,7 +1037,7 @@ permalink: /members-director.html
 .mentee-modal-body{padding:24px;}
 .mentee-info-row {
   display: flex;
-  align-items: center;  /* 기존 flex-start를 center로 변경 */
+  align-items: flex-start;  /* center를 flex-start로 변경 - 상단 정렬 */
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid #f3f4f6;
@@ -1048,11 +1048,8 @@ permalink: /members-director.html
   text-align: center;
   color: var(--gold);
   font-size: 16px;
-  margin-top: 0;  /* 기존 margin-top: 2px; 를 0으로 변경 */
-  display: flex;  /* 추가 */
-  align-items: center;  /* 추가 */
-  justify-content: center;  /* 추가 */
-  height: 20px;  /* 추가: 레이블 텍스트 높이와 맞춤 */
+  margin-top: 2px;  /* 아이콘을 약간 아래로 내려서 텍스트와 정렬 */
+  flex-shrink: 0;  /* 추가: 아이콘 크기 고정 */
 }
 .mentee-info-label {
   font-weight: 700;
@@ -1060,9 +1057,7 @@ permalink: /members-director.html
   min-width: 90px;
   font-size: 13px;
   white-space: nowrap;
-  display: flex;  /* 추가 */
-  align-items: center;  /* 추가 */
-  height: 20px;  /* 추가: 아이콘과 동일한 높이 */
+  flex-shrink: 0;  /* 추가: 레이블 크기 고정 */
 }
 .mentee-info-value{
    color:#111827;font-weight:600;font-size:14px;flex:1;
@@ -1086,9 +1081,9 @@ permalink: /members-director.html
   display: inline-flex;
   gap: 6px;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;  /* center를 flex-start로 변경 */
+  max-width: 200px;  /* 추가: 최대 너비 제한 */
 }
-
 .participation-year {
   display: inline-flex;
   align-items: center;
@@ -1148,14 +1143,7 @@ permalink: /members-director.html
     width: auto;
   }
 }
-  
-  /* Entry Year는 전체 너비 사용 */
-  .mentee-info-row:nth-child(3) .participation-year {
-    display: inline-flex;
-    width: fit-content;
-  }
-}
-/* Network Controls - Combined */
+
 /* Network Controls - Combined */
 .network-controls {
   display: flex;
@@ -2590,6 +2578,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
