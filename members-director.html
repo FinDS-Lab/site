@@ -1037,7 +1037,7 @@ permalink: /members-director.html
 .mentee-modal-body{padding:24px;}
 .mentee-info-row {
   display: flex;
-  align-items: flex-start;  /* center를 flex-start로 변경 - 상단 정렬 */
+  align-items: flex-start;  /* 상단 정렬 */
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px solid #f3f4f6;
@@ -1057,7 +1057,8 @@ permalink: /members-director.html
   min-width: 90px;
   font-size: 13px;
   white-space: nowrap;
-  flex-shrink: 0;  /* 추가: 레이블 크기 고정 */
+  flex-shrink: 0;
+  padding-top: 2px;  /* 추가: 이모지와 높이 맞춤 */
 }
 .mentee-info-value{
    color:#111827;font-weight:600;font-size:14px;flex:1;
@@ -1073,9 +1074,8 @@ permalink: /members-director.html
   font-size: 12px;
   font-weight: 800;
   color: #fff;
-  min-width: 50px;
+  min-width: 55px;  /* 50px에서 55px로 증가 */
 }
-
 /* Participation Years - 그리드 레이아웃 */
 .participation-years {
   display: inline-flex;
@@ -1095,7 +1095,7 @@ permalink: /members-director.html
   font-weight: 800;
   color: #fff;
   white-space: nowrap;
-  min-width: 50px;
+  min-width: 55px;  /* 50px를 55px로 변경 - Entry Year와 동일하게 */
 }
 
 /* 모바일 스타일 추가 */
@@ -2578,6 +2578,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
