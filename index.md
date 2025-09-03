@@ -298,7 +298,9 @@ title: home
           <div class="carousel-overlay">
             <div class="carousel-content keep-words">
               <span class="tag-badge">FINDS Lab.</span>
-              <h1 class="hero-title keep-words">Towards Data-Illuminated<br>Financial Innovation</h1>
+              <h1 class="hero-title keep-words">
+              Towards <span style="white-space: nowrap;">Data-Illuminated</span><br>Financial Innovation
+              </h1>
               <div class="hero-buttons">
                 <a href="{{ '/about-introduction.html' | relative_url }}" class="btn-hero primary">Introduction</a>
                 <a href="{{ '/about-honors.html' | relative_url }}" class="btn-hero secondary">Honors</a>
