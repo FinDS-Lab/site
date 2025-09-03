@@ -1047,19 +1047,44 @@ permalink: /members-director.html
  .mentee-info-label{
    font-weight:700;color:#6b7280;min-width:140px;font-size:14px;
  }
- .mentee-info-value{
+.mentee-info-value{
    color:#111827;font-weight:600;font-size:14px;flex:1;
- }
- .participation-years{
+}
+.participation-years{
    display:flex;gap:6px;flex-wrap:wrap;
    align-items:flex-start;
- }
- .participation-year{
+}
+.participation-year{
    display:inline-flex;align-items:center;justify-content:center;
    padding:4px 10px;border-radius:999px;background:var(--gold);
    font-size:12px;font-weight:800;color:#fff;
- }
+}
 
+/* 모바일 스타일 추가 */
+@media (max-width: 640px) {
+  .mentee-modal-content {
+    max-width: 90%;  /* 모바일에서 너비 조정 */
+  }
+  
+  .mentee-info-label {
+    min-width: 90px;  /* 140px에서 90px로 줄임 */
+    font-size: 13px;
+  }
+  
+  .mentee-info-value {
+    flex: 1;
+    min-width: 0;  /* 중요: flex 아이템이 줄어들 수 있게 */
+  }
+  
+  .participation-years {
+    max-width: 100%;  /* 부모 너비 초과 방지 */
+  }
+  
+  .participation-year {
+    padding: 3px 6px;  /* 패딩 줄임 */
+    font-size: 11px;  /* 폰트 크기 줄임 */
+  }
+}
 /* Network Controls - Combined */
 /* Network Controls - Combined */
 .network-controls {
@@ -2488,6 +2513,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
