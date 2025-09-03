@@ -1112,11 +1112,17 @@ permalink: /members-director.html
   .mentee-info-row {
     gap: 8px;
     padding: 10px 0;
+    align-items: flex-start;  /* 추가: 상단 정렬 */
+  }
+  
+  .mentee-info-icon {
+    margin-top: 0;  /* 추가: 모바일에서 margin 제거 */
   }
   
   .mentee-info-label {
     min-width: 80px;
     font-size: 12px;
+    padding-top: 0;  /* 추가: 모바일에서 padding 제거 */
   }
   
   .mentee-info-value {
@@ -1129,18 +1135,21 @@ permalink: /members-director.html
     grid-template-columns: repeat(2, 1fr);
     gap: 4px;
     width: 100%;
+    max-width: none;  /* 추가: 모바일에서 너비 제한 해제 */
   }
   
   .participation-year {
     padding: 4px 8px;
     font-size: 11px;
     text-align: center;
+    min-width: auto;  /* 추가: 모바일에서 최소너비 자동 */
   }
   
   /* Entry Year는 inline-flex 유지 */
   .single-year {
     display: inline-flex;
     width: auto;
+    min-width: 55px;  /* 추가: 모바일에서도 최소너비 유지 */
   }
 }
 
@@ -2578,6 +2587,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
