@@ -1064,6 +1064,7 @@ permalink: /members-director.html
    color:#111827;font-weight:600;font-size:14px;flex:1;
 }
 /* Entry Year - 단일 뱃지 */
+/* Entry Year - 단일 뱃지 */
 .single-year {
   display: inline-flex;
   align-items: center;
@@ -1074,16 +1075,18 @@ permalink: /members-director.html
   font-size: 12px;
   font-weight: 800;
   color: #fff;
-  min-width: 55px;  /* 50px에서 55px로 증가 */
+  min-width: 55px;
 }
+
 /* Participation Years - 그리드 레이아웃 */
 .participation-years {
   display: inline-flex;
   gap: 6px;
   flex-wrap: wrap;
-  align-items: flex-start;  /* center를 flex-start로 변경 */
-  max-width: 200px;  /* 추가: 최대 너비 제한 */
+  align-items: center;
+  max-width: 200px;
 }
+
 .participation-year {
   display: inline-flex;
   align-items: center;
@@ -1095,10 +1098,10 @@ permalink: /members-director.html
   font-weight: 800;
   color: #fff;
   white-space: nowrap;
-  min-width: 55px;  /* 50px를 55px로 변경 - Entry Year와 동일하게 */
+  min-width: 55px;
 }
 
-/* 모바일 스타일 추가 */
+/* 모바일 스타일 - 완전히 재설계 */
 @media (max-width: 640px) {
   .mentee-modal-content {
     max-width: 95%;
@@ -1112,44 +1115,51 @@ permalink: /members-director.html
   .mentee-info-row {
     gap: 8px;
     padding: 10px 0;
-    align-items: flex-start;  /* 추가: 상단 정렬 */
+    align-items: flex-start;
   }
   
   .mentee-info-icon {
-    margin-top: 0;  /* 추가: 모바일에서 margin 제거 */
+    margin-top: 0;
   }
   
   .mentee-info-label {
     min-width: 80px;
     font-size: 12px;
-    padding-top: 0;  /* 추가: 모바일에서 padding 제거 */
+    padding-top: 0;
   }
   
   .mentee-info-value {
     font-size: 13px;
+    flex: 1;
   }
   
-  /* Participation Years - 모바일에서 2열 그리드 */
+  /* Entry Year - 모바일에서 일관된 스타일 */
+  .single-year {
+    display: inline-flex;
+    padding: 3px 8px;
+    font-size: 11px;
+    min-width: 48px;
+    max-width: 48px;  /* 최대 너비도 고정 */
+    text-align: center;
+  }
+  
+  /* Participation Years - 모바일에서 Entry Year와 동일한 스타일 */
   .participation-years {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: inline-flex;
+    flex-wrap: wrap;
     gap: 4px;
-    width: 100%;
-    max-width: none;  /* 추가: 모바일에서 너비 제한 해제 */
+    align-items: center;
+    max-width: 100%;
   }
   
   .participation-year {
-    padding: 4px 8px;
-    font-size: 11px;
-    text-align: center;
-    min-width: auto;  /* 추가: 모바일에서 최소너비 자동 */
-  }
-  
-  /* Entry Year는 inline-flex 유지 */
-  .single-year {
     display: inline-flex;
-    width: auto;
-    min-width: 55px;  /* 추가: 모바일에서도 최소너비 유지 */
+    padding: 3px 8px;
+    font-size: 11px;
+    min-width: 48px;
+    max-width: 48px;  /* Entry Year와 동일한 최대 너비 */
+    text-align: center;
+    flex: 0 0 48px;  /* 고정 너비 */
   }
 }
 
@@ -1181,8 +1191,6 @@ permalink: /members-director.html
   min-width: 65px;  /* 레이블 최소 너비 고정 */
 }
 
-/* Mobile responsiveness */
-/* Mobile responsiveness */
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .network-controls {
@@ -1426,7 +1434,6 @@ permalink: /members-director.html
   word-wrap: break-word !important;
 }
 
-/* Enhanced Network Canvas Styles */
 /* Enhanced Network Canvas Styles */
 #networkCanvas {
   width: 100%;
@@ -2110,50 +2117,52 @@ function buildMentoringYears() {
     '<div style="text-align:center; padding:20px; color:#6b7280;">No mentoring data available</div>';
 }
  
-  function openMenteeModal(menteeId) {
-   const mentee = MENTEES[menteeId];
-   if (!mentee) {
-     console.error('Mentee not found:', menteeId);
-     return;
-   }
-   document.getElementById('menteeModalName').textContent = mentee.name;
-   const modalBody = document.getElementById('menteeModalBody');
-   
-   // Entry Year를 위한 단일 뱃지
-   const entryYearHtml = `<span class="single-year">${mentee.entryYear}</span>`;
-   
-   // Participation Years를 위한 그리드
-   const participationYearsHtml = mentee.participationYears.map(year => 
-     `<span class="participation-year">${year}</span>`
-   ).join('');
-   
-   modalBody.innerHTML = `
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">🏫</span>
-       <span class="mentee-info-label">University</span>
-       <span class="mentee-info-value">${mentee.university}</span>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">📚</span>
-       <span class="mentee-info-label">Department</span>
-       <span class="mentee-info-value">${mentee.department}</span>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">📅</span>
-       <span class="mentee-info-label">Entry Year</span>
-       <div class="mentee-info-value">${entryYearHtml}</div>
-     </div>
-     <div class="mentee-info-row">
-       <span class="mentee-info-icon">⭐</span>
-       <span class="mentee-info-label">Participation</span>
-       <div class="mentee-info-value">
-         <div class="participation-years">${participationYearsHtml}</div>
-       </div>
-     </div>
-   `;
-   document.getElementById('menteeModal').classList.add('show');
-   document.body.style.overflow = 'hidden';
- }
+ function openMenteeModal(menteeId) {
+  const mentee = MENTEES[menteeId];
+  if (!mentee) {
+    console.error('Mentee not found:', menteeId);
+    return;
+  }
+  document.getElementById('menteeModalName').textContent = mentee.name;
+  const modalBody = document.getElementById('menteeModalBody');
+  
+  // Entry Year를 위한 단일 뱃지
+  const entryYearHtml = `<span class="single-year">${mentee.entryYear}</span>`;
+  
+  // Participation Years를 위한 뱃지들
+  const participationYearsHtml = `
+    <div class="participation-years">
+      ${mentee.participationYears.map(year => 
+        `<span class="participation-year">${year}</span>`
+      ).join('')}
+    </div>
+  `;
+  
+  modalBody.innerHTML = `
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">🏫</span>
+      <span class="mentee-info-label">University</span>
+      <span class="mentee-info-value">${mentee.university}</span>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">📚</span>
+      <span class="mentee-info-label">Department</span>
+      <span class="mentee-info-value">${mentee.department}</span>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">📅</span>
+      <span class="mentee-info-label">Entry Year</span>
+      <div class="mentee-info-value">${entryYearHtml}</div>
+    </div>
+    <div class="mentee-info-row">
+      <span class="mentee-info-icon">⭐</span>
+      <span class="mentee-info-label">Participation</span>
+      <div class="mentee-info-value">${participationYearsHtml}</div>
+    </div>
+  `;
+  document.getElementById('menteeModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
 
  function closeMenteeModal(event) {
    if (event && event.target !== event.currentTarget && !event.target.classList.contains('mentee-modal-close')) {
@@ -2587,6 +2596,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
