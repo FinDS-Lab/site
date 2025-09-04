@@ -706,6 +706,7 @@ permalink: /members-director.html
   }
 }
  /* Research Interests - Updated with better toggle design */
+ /* Research Interests - Updated with better toggle design */
  .ri-item{
    border:1px solid #e5e7eb;
    border-radius:12px;
@@ -716,19 +717,51 @@ permalink: /members-director.html
 
  .ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
 
- .ri-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;cursor:pointer;user-select:none;transition:all .2s;}
+ .ri-header{
+   display:flex;
+   align-items:center;
+   justify-content:space-between;
+   padding:14px 16px;
+   padding-left:50px;
+   background:#f8fafc;
+   cursor:pointer;
+   user-select:none;
+   transition:all .2s;
+   position:relative;
+ }
  .ri-header:hover{background:#fef9f3;}
  .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
 
- .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;gap:12px;}
+ .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;}
 
  .ri-toggle{
-   width:24px;height:24px;display:flex;align-items:center;justify-content:center;
-   color:var(--gold);font-size:14px;font-weight:900;transition:transform .3s ease;
-   border:2px solid var(--gold);border-radius:50%;background:rgba(214,177,77,0.1);
+   position:absolute;
+   left:0;
+   top:0;
+   bottom:0;
+   width:40px;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+   color:#fff;
+   font-size:14px;
+   font-weight:900;
+   transition:all .3s ease;
+   border-radius:12px 0 0 12px;
  }
 
- .ri-header.active .ri-toggle{transform:rotate(90deg);background:var(--gold);color:#fff;}
+ .ri-toggle::after{
+   content:"▶";
+ }
+
+ .ri-header.active .ri-toggle{
+   background:linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+ }
+
+ .ri-header.active .ri-toggle::after{
+   content:"▼";
+ }
 
  .ri-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
  .ri-content.show{max-height:500px;transition:max-height .3s ease-in;}
@@ -1511,6 +1544,24 @@ permalink: /members-director.html
     margin-bottom: 1.5rem;
   }
 }
+
+/* Advisor 모바일 반응형 추가 */
+@media (max-width: 640px) {
+  .advisor-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .advisor-label {
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .advisor-name {
+    margin-left: 0;
+  }
+}
  
 </style>
 
@@ -1565,6 +1616,13 @@ permalink: /members-director.html
               </span>
             </div>
           </div>
+          <div class="profile-item">
+            <span class="profile-emoji">📞</span>
+            <div class="profile-content">
+              <span class="profile-label">Phone</span>
+              <span class="profile-value">02-940-4424</span>
+            </div>
+          </div>
          </div>
          
          <div class="button-group">
@@ -1582,12 +1640,13 @@ permalink: /members-director.html
        <div class="card-head">Introduction</div>
        <div class="card-body">
          <p style="line-height:1.8; color:#374151;">
-           My research centers on <b>financial data science</b>, <b>business analytics</b>, and <b>data-driven decision making</b>, 
-           with a particular focus on <b>integrating data science and financial engineering</b> to address <b>real-world financial challenges</b>.
+           I am an Assistant Professor at Dongduk Women's University, specializing in <b>Financial Data Science</b>, <b>Business Analytics</b>, and <b>Data-Driven Decision Making</b>. My research integrates cutting-edge data science methodologies with financial engineering to address real-world challenges in finance and business.
          </p>
          <p style="line-height:1.8; color:#374151; margin-top:1rem;">
-           Through this work, my goal is to contribute to both <b>academia</b> and <b>industry</b> by producing 
-           <b>rigorous yet practical research outcomes</b> that can be applied broadly in <b>financial practice</b>.
+           My work encompasses three key areas: First, I develop <b>AI-driven solutions for quantitative finance</b>, including portfolio optimization, algorithmic trading, and financial time-series forecasting. Second, I apply <b>advanced analytics across business domains</b>, leveraging time-series models, graph-based analytics, and NLP to extract actionable insights. Third, I design <b>intelligent decision support systems</b> that combine optimization techniques with user-friendly interfaces to solve complex business problems.
+         </p>
+         <p style="line-height:1.8; color:#374151; margin-top:1rem;">
+           Through this interdisciplinary approach, I aim to bridge the gap between <b>academic rigor and practical application</b>, contributing innovations that advance both theoretical understanding and industry practice in financial data science.
          </p>
        </div>
      </div>
@@ -1596,12 +1655,10 @@ permalink: /members-director.html
      <div class="director-card">
        <div class="card-head">Research Interests</div>
        <div class="card-body">
-         <div class="ri-item">
+<div class="ri-item">
            <div class="ri-header" onclick="toggleRI(this)">
-             <div class="ri-title">
-               <span class="ri-toggle">▶</span>
-               <span>Financial Data Science</span>
-             </div>
+             <div class="ri-toggle"></div>
+             <div class="ri-title">Financial Data Science</div>
            </div>
            <div class="ri-content">
              <ul class="ri-list">
@@ -1623,10 +1680,8 @@ permalink: /members-director.html
          
          <div class="ri-item">
            <div class="ri-header" onclick="toggleRI(this)">
-             <div class="ri-title">
-               <span class="ri-toggle">▶</span>
-               <span>Business Analytics</span>
-             </div>
+             <div class="ri-toggle"></div>
+             <div class="ri-title">Business Analytics</div>
            </div>
            <div class="ri-content">
              <ul class="ri-list">
@@ -1648,10 +1703,8 @@ permalink: /members-director.html
          
          <div class="ri-item">
            <div class="ri-header" onclick="toggleRI(this)">
-             <div class="ri-title">
-               <span class="ri-toggle">▶</span>
-               <span>Data-Inspired Decision Making</span>
-             </div>
+             <div class="ri-toggle"></div>
+             <div class="ri-title">Data-Inspired Decision Making</div>
            </div>
            <div class="ri-content">
              <ul class="ri-list">
@@ -2198,7 +2251,9 @@ function buildMentoringYears() {
  }
 
  // Initialize variables
- let currentThreshold = 3; // Start at 10%
+// Initialize variables
+ const isMobileInit = window.innerWidth <= 768;
+ let currentThreshold = isMobileInit ? 5 : 3;
  let { counts: collaborations, directorPapers } = countCollaborations();
  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
  let hoveredNode = null;
@@ -2211,8 +2266,8 @@ function buildMentoringYears() {
  
  // Setup slider
  if (slider) {
-   slider.value = 3;
-   currentThreshold = 3;
+   slider.value = isMobileInit ? 5 : 3;
+   currentThreshold = isMobileInit ? 5 : 3;
  
    slider.addEventListener('input', function() {
      currentThreshold = parseInt(this.value);
@@ -2233,13 +2288,9 @@ function updateNetworkInfo() {
   const visible = Object.entries(collaborations)
     .filter(([id, freq]) => freq >= thresholdCount).length;
   const total = Object.keys(collaborations).length;
-  
-  const isMobile = window.innerWidth <= 768;
-  const touchHint = isMobile ? ' • Pinch to zoom' : '';
 
-  infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)${touchHint}`;
+  infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)`;
 }
-
  // Canvas setup
   const canvas = document.getElementById('networkCanvas');
 if (canvas) {
