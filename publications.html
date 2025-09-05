@@ -1380,9 +1380,17 @@ permalink: /publications.html
     const langMode = determineLanguageMode(pub);
     const useKorean = (langMode === 'korean');
     const lang = pub.language || 'English';
-    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : pub.title;
-
-    const venues = arr(useKorean ? pub.venue_ko : pub.venue).filter(Boolean);
+    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : (pub.title || '');
+    
+    let venues = [];
+    if (useKorean) {
+      venues = arr(pub.venue_ko).filter(Boolean);
+      if (venues.length === 0) {
+        venues = arr(pub.venue).filter(Boolean);
+      }
+    } else {
+      venues = arr(pub.venue).filter(Boolean);
+    }
     const displayVenue = venues.length ? venues.join('<br>') : '';
 
     // FIXED: Wrap each author+mark as a unit to prevent line-breaking
