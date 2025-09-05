@@ -486,11 +486,11 @@ permalink: /members-director.html
  }
 
  /* Publication Stats - Simple 3 column layout */
-/* Publication Stats - Equal width 3 column layout */
+/* Publication Stats - 5 row layout */
 .pub-stats{
   display:grid;
-  grid-template-columns:repeat(3, minmax(0, 1fr)); /* 균등 분할 보장 */
-  grid-template-rows:auto auto auto auto;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  grid-template-rows:auto auto auto auto auto;
   gap:10px;
 }
 
@@ -538,8 +538,22 @@ permalink: /members-director.html
 
 /* Fourth row: Citations (spans full width) */
 .pub-stat.citation {
-  grid-column: 1 / -1; /* 전체 너비 차지 */
+  grid-column: 1 / -1;
   grid-row: 4;
+}
+
+/* Fifth row: g-index, h-index, i10-index */
+.pub-stat.index-g {
+  grid-column: 1;
+  grid-row: 5;
+}
+.pub-stat.index-h {
+  grid-column: 2;
+  grid-row: 5;
+}
+.pub-stat.index-i10 {
+  grid-column: 3;
+  grid-row: 5;
 }
 
 .pub-stat{
@@ -587,6 +601,20 @@ permalink: /members-director.html
   background:linear-gradient(90deg, var(--gold) 0%, var(--red) 100%);
 }
 
+/* Index stats - Blue gradient */
+.pub-stat.index-g,
+.pub-stat.index-h,
+.pub-stat.index-i10 {
+  background:linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(139,92,246,0.05) 100%);
+  border:1px solid rgba(59,130,246,0.2);
+}
+
+.pub-stat.index-g::before,
+.pub-stat.index-h::before,
+.pub-stat.index-i10::before {
+  background:linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
 .pub-stat:hover{
   transform:translateY(-2px);
   box-shadow:0 4px 12px rgba(0,0,0,0.1);
@@ -610,11 +638,11 @@ permalink: /members-director.html
   overflow-wrap:anywhere;
 }
 
-/* Mobile - 3 column layout maintained */
+/* Mobile - 3 column layout maintained with 5 rows */
 @media (max-width: 480px) {
   .pub-stats{
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 균등 3열 유지 */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-auto-rows: minmax(60px, auto);
     gap: 6px;
   }
@@ -632,12 +660,17 @@ permalink: /members-director.html
   
   /* Citation spans all 3 columns */
   .pub-stat.citation { 
-    grid-column: 1 / -1; /* 전체 너비 차지 */
+    grid-column: 1 / -1;
     grid-row: 4; 
   }
   
+  /* Index stats row */
+  .pub-stat.index-g { grid-column: 1; grid-row: 5; }
+  .pub-stat.index-h { grid-column: 2; grid-row: 5; }
+  .pub-stat.index-i10 { grid-column: 3; grid-row: 5; }
+  
   .pub-stat{
-    padding: 8px 4px; /* 좌우 패딩 최소화 */
+    padding: 8px 4px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -646,110 +679,63 @@ permalink: /members-director.html
   }
   
   .pub-stat-number{
-    font-size: 16px; /* 모바일용 크기 */
+    font-size: 16px;
   }
   
   .pub-stat-label{
     font-size: 9px;
     letter-spacing: 0;
     word-break: keep-all;
-    white-space: nowrap; /* 한 줄 유지 */
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 
- /* Tablet - same 3 column layout */
-/* Mobile - 3 column layout with equal heights */
-@media (max-width: 480px) {
-  .pub-stats{
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 1fr을 minmax(0, 1fr)로 변경 */
-    grid-auto-rows: minmax(60px, auto);
-    gap: 6px;
-  }
-  
-  /* Same positioning as desktop */
-  .pub-stat.journal-scie { grid-column: 1; grid-row: 1; }
-  .pub-stat.journal-ssci { grid-column: 2; grid-row: 1; }
-  .pub-stat.journal-ahci { grid-column: 3; grid-row: 1; }
-  .pub-stat.journal-esci { grid-column: 1; grid-row: 2; }
-  .pub-stat.journal-scopus { grid-column: 2; grid-row: 2; }
-  .pub-stat.journal-other { grid-column: 3; grid-row: 2; }
-  .pub-stat.conf-intl { grid-column: 1; grid-row: 3; }
-  .pub-stat.journal-kci { grid-column: 2; grid-row: 3; }
-  .pub-stat.conf-domestic { grid-column: 3; grid-row: 3; }
-  
-  /* Citation spans all 3 columns */
-  .pub-stat.citation { 
-    grid-column: 1 / -1; /* 'span 3' 대신 '1 / -1' 사용 */
-    grid-row: 4; 
-  }
-  
-  .pub-stat{
-    padding: 8px 4px; /* 좌우 패딩 줄임 */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 60px;
-  }
-  
-  .pub-stat-number{
-    font-size: 16px; /* 18px에서 16px로 줄임 */
-  }
-  
-  .pub-stat-label{
-    font-size: 9px;
-    letter-spacing: 0;
-    word-break: keep-all; /* 한글 줄바꿈 방지 */
-  }
+/* Research Interests - Updated with better toggle design */
+.ri-item{
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:12px;
+  transition:all .3s;
 }
- /* Research Interests - Updated with better toggle design */
- /* Research Interests - Updated with better toggle design */
- .ri-item{
-   border:1px solid #e5e7eb;
-   border-radius:12px;
-   overflow:hidden;
-   margin-bottom:12px;
-   transition:all .3s;
- }
 
- .ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
+.ri-item:hover{box-shadow:0 4px 12px rgba(214,177,77,0.15);}
 
- .ri-header{
-   display:flex;
-   align-items:center;
-   justify-content:space-between;
-   padding:14px 16px;
-   padding-left:50px;
-   background:#f8fafc;
-   cursor:pointer;
-   user-select:none;
-   transition:all .2s;
-   position:relative;
- }
- .ri-header:hover{background:#fef9f3;}
- .ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
+.ri-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  padding-left:50px;
+  background:#f8fafc;
+  cursor:pointer;
+  user-select:none;
+  transition:all .2s;
+  position:relative;
+}
+.ri-header:hover{background:#fef9f3;}
+.ri-header.active{background:linear-gradient(135deg, rgba(214,177,77,0.1) 0%, rgba(234,207,127,0.1) 100%);border-bottom:1px solid rgba(214,177,77,0.2);}
 
- .ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;}
+.ri-title{font-weight:900;font-size:15px;color:#111827;display:flex;align-items:center;}
 
- .ri-toggle{
-   position:absolute;
-   left:0;
-   top:0;
-   bottom:0;
-   width:40px;
-   display:flex;
-   align-items:center;
-   justify-content:center;
-   background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-   color:#fff;
-   font-size:14px;
-   font-weight:900;
-   transition:all .3s ease;
-   border-radius:12px 0 0 12px;
- }
+.ri-toggle{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  color:#fff;
+  font-size:14px;
+  font-weight:900;
+  transition:all .3s ease;
+  border-radius:12px 0 0 12px;
+}
 
  .ri-toggle::after{
    content:"▶";
@@ -2415,6 +2401,54 @@ function sizeCanvas() {
     });
   }
 
+// ===== Auto-count Publication Statistics =====
+function countPublications() {
+  const stats = {
+    'SCIE': 0,
+    'SSCI': 0,
+    'A&HCI': 0,
+    'ESCI': 0,
+    'Scopus': 0,
+    'Other International': 0,
+    'International Conference': 0,
+    'KCI Excellent': 0,
+    'KCI Accredited': 0,
+    'Domestic Conference': 0
+  };
+  
+  // PUBS는 이미 로드되어 있음
+  PUBS.forEach(pub => {
+    // indexing_group이 배열일 수도 있음
+    const indexingGroups = Array.isArray(pub.indexing_group) 
+      ? pub.indexing_group 
+      : (pub.indexing_group ? [pub.indexing_group] : []);
+    
+    indexingGroups.forEach(group => {
+      if (stats.hasOwnProperty(group)) {
+        stats[group]++;
+      }
+    });
+  });
+  
+  // Update DOM
+  document.getElementById('stat-scie').textContent = stats['SCIE'];
+  document.getElementById('stat-ssci').textContent = stats['SSCI'];
+  document.getElementById('stat-ahci').textContent = stats['A&HCI'];
+  document.getElementById('stat-esci').textContent = stats['ESCI'];
+  document.getElementById('stat-scopus').textContent = stats['Scopus'];
+  document.getElementById('stat-other').textContent = stats['Other International'];
+  document.getElementById('stat-intl-conf').textContent = stats['International Conference'];
+  
+  // KCI는 Excellent와 Accredited 합산
+  const kciTotal = stats['KCI Excellent'] + stats['KCI Accredited'];
+  document.getElementById('stat-kci').textContent = kciTotal;
+  
+  document.getElementById('stat-dom-conf').textContent = stats['Domestic Conference'];
+}
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', countPublications);
+ 
   // Draw the network
   function drawNetwork() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -2660,6 +2694,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
