@@ -2343,19 +2343,6 @@
   {
     "year": 2021,
     "code_label": "C",
-    "indexing_group": "International Conference",
-    "type": "conference",
-    "language": "English",
-    "title": "Forecasting exchange rate fluctuations using nonlinear causal network analysis and deep learning techniques",
-    "authors": [1, 73, 2],
-    "author_marks": ["1", "2", "*"],
-    "venue": "2021 Korean Association of Financial Engineering – Sungkyunkwan University International Conference on Finance",
-    "published_date": "2021-12-20",
-    "awards": 0
-  },
-  {
-    "year": 2021,
-    "code_label": "C",
     "indexing_group": "Domestic Conference",
     "type": "conference",
     "language": "Korean",
