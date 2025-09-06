@@ -2899,17 +2899,7 @@ canvas.addEventListener('mouseleave', () => {
       
       const breakdown = node.typeBreakdown || { journal: 0, conference: 0, book: 0, report: 0 };
       
-      // 4가지 타입 모두 같은 색상으로 표시
-      const publicationDetails = `
-        <span class="collab-stat">${breakdown.journal || 0} Journal</span>
-        <span class="collab-stat">${breakdown.conference || 0} Conference</span>
-        <span class="collab-stat">${breakdown.book || 0} Book</span>
-        <span class="collab-stat">${breakdown.report || 0} Report</span>
-      `;
-      
-const breakdown = node.typeBreakdown || { journal: 0, conference: 0, book: 0, report: 0 };
-    
-    modalBody.innerHTML = `
+      modalBody.innerHTML = `
       <div class="collab-info-row">
         <span class="collab-info-icon">📊</span>
         <span class="collab-info-label">Total Works</span>
@@ -3031,6 +3021,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
