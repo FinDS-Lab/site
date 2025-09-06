@@ -1656,22 +1656,49 @@ permalink: /members-director.html
   flex: 1;
 }
 
-.collab-stat {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--gold);
-  font-size: 12px;
-  font-weight: 800;
-  color: #111;
-  margin-right: 6px;
-  margin-bottom: 4px;
-  border: 1px solid rgba(194, 157, 57, 0.3);
+.breakdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 0;
 }
 
-/* 모바일 스타일 추가 */
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(214,177,77,0.08) 0%, rgba(214,177,77,0.12) 100%);
+  border-radius: 8px;
+  border-left: 3px solid var(--gold);
+  transition: all 0.2s;
+}
+
+.breakdown-item:hover {
+  background: linear-gradient(135deg, rgba(214,177,77,0.12) 0%, rgba(214,177,77,0.18) 100%);
+  transform: translateX(2px);
+}
+
+.breakdown-bullet {
+  color: var(--gold);
+  font-weight: 900;
+  font-size: 14px;
+}
+
+.breakdown-count {
+  font-weight: 900;
+  font-size: 14px;
+  color: #111827;
+  min-width: 20px;
+}
+
+.breakdown-type {
+  font-weight: 600;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* 모바일 스타일 */
 @media (max-width: 640px) {
   .collab-modal-content {
     max-width: 95%;
@@ -1696,9 +1723,17 @@ permalink: /members-director.html
     font-size: 13px;
   }
   
-  .collab-stat {
-    font-size: 11px;
-    padding: 3px 8px;
+  .breakdown-item {
+    padding: 5px 10px;
+    gap: 6px;
+  }
+  
+  .breakdown-count {
+    font-size: 13px;
+  }
+  
+  .breakdown-type {
+    font-size: 12px;
   }
 }
  
@@ -2872,23 +2907,48 @@ canvas.addEventListener('mouseleave', () => {
         <span class="collab-stat">${breakdown.report || 0} Report</span>
       `;
       
-      modalBody.innerHTML = `
-        <div class="collab-info-row">
-          <span class="collab-info-icon">📊</span>
-          <span class="collab-info-label">Total Works</span>
-          <span class="collab-info-value">${node.frequency}</span>
+const breakdown = node.typeBreakdown || { journal: 0, conference: 0, book: 0, report: 0 };
+    
+    modalBody.innerHTML = `
+      <div class="collab-info-row">
+        <span class="collab-info-icon">📊</span>
+        <span class="collab-info-label">Total Works</span>
+        <span class="collab-info-value">${node.frequency}</span>
+      </div>
+      <div class="collab-info-row">
+        <span class="collab-info-icon">📈</span>
+        <span class="collab-info-label">Co-work Rate</span>
+        <span class="collab-info-value">${node.percentage}%</span>
+      </div>
+      <div class="collab-info-row">
+        <span class="collab-info-icon">📚</span>
+        <span class="collab-info-label">Breakdown</span>
+        <div class="collab-info-value">
+          <div class="breakdown-list">
+            <div class="breakdown-item">
+              <span class="breakdown-bullet">•</span>
+              <span class="breakdown-count">${breakdown.journal || 0}</span>
+              <span class="breakdown-type">journal paper${(breakdown.journal || 0) !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="breakdown-bullet">•</span>
+              <span class="breakdown-count">${breakdown.conference || 0}</span>
+              <span class="breakdown-type">conference proceeding${(breakdown.conference || 0) !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="breakdown-bullet">•</span>
+              <span class="breakdown-count">${breakdown.book || 0}</span>
+              <span class="breakdown-type">book${(breakdown.book || 0) !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="breakdown-item">
+              <span class="breakdown-bullet">•</span>
+              <span class="breakdown-count">${breakdown.report || 0}</span>
+              <span class="breakdown-type">report${(breakdown.report || 0) !== 1 ? 's' : ''}</span>
+            </div>
+          </div>
         </div>
-        <div class="collab-info-row">
-          <span class="collab-info-icon">📈</span>
-          <span class="collab-info-label">Co-work Rate</span>
-          <span class="collab-info-value">${node.percentage}%</span>
-        </div>
-        <div class="collab-info-row">
-          <span class="collab-info-icon">📚</span>
-          <span class="collab-info-label">Breakdown</span>
-          <div class="collab-info-value">${publicationDetails}</div>
-        </div>
-      `;
+      </div>
+    `;
       
       document.getElementById('collabModal').classList.add('show');
       document.body.style.overflow = 'hidden';
@@ -2971,6 +3031,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
