@@ -4,6 +4,7 @@ title: director
 permalink: /members-director.html
 ---
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
  <style>
@@ -2268,20 +2269,17 @@ permalink: /members-director.html
       <h2 class="collab-modal-title">Curriculum Vitae</h2>
       <button class="collab-modal-close" onclick="closeResumeModal()">&times;</button>
     </div>
-    <div class="collab-modal-body" style="padding:0;">
-<div id="resumeViewer" style="position:relative; height:80vh;">
-  <object
-    data="{{ '/assets/docs/ISChoi_CV.pdf' | relative_url }}#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
-    type="application/pdf"
-    width="100%" height="100%">
-    <iframe
-      src="{{ '/assets/docs/ISChoi_CV.pdf' | relative_url }}#view=FitH&toolbar=0&navpanes=0&scrollbar=0"
-      width="100%" height="100%" style="border:0;">
-    </iframe>
-    <p style="padding:1rem">PDF를 표시할 수 없습니다.</p>
-  </object>
-  <!-- 우클릭 방지 오버레이 (보기만 제한 / 다운로드 강제 차단은 불가) -->
-  <div oncontextmenu="return false" style="position:absolute; inset:0; background:transparent;"></div>
+    <div class="collab-modal-body" style="padding:20px;">
+      <canvas id="pdfCanvas" style="width:100%; height:auto; display:block;"></canvas>
+      <div style="text-align:center; margin-top:15px; padding:10px; background:#f8f9fa; border-radius:8px;">
+        <button onclick="prevPage()" class="zoom-btn" style="margin-right:10px;">◀ 이전</button>
+        <span style="font-weight:600; margin:0 10px;">
+          <span id="pageNum">1</span> / <span id="pageCount">1</span>
+        </span>
+        <button onclick="nextPage()" class="zoom-btn" style="margin-left:10px;">다음 ▶</button>
+      </div>
+    </div>
+  </div>
 </div>
 
     </div>
@@ -3048,22 +3046,86 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 
- function openResumeModal() {
+// ===== PDF.js for Resume Modal =====
+let pdfDoc = null, pageNum = 1;
+
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+function openResumeModal() {
   document.getElementById('resumeModal').classList.add('show');
   document.body.style.overflow = 'hidden';
+  
+  if (!pdfDoc && typeof pdfjsLib !== 'undefined') {
+    const pdfPath = '{{ "/assets/docs/ISChoi_CV.pdf" | relative_url }}';
+    
+    pdfjsLib.getDocument(pdfPath).promise.then(function(pdf) {
+      pdfDoc = pdf;
+      document.getElementById('pageCount').textContent = pdf.numPages;
+      renderPage(pageNum);
+    }).catch(function(error) {
+      console.error('PDF 로드 실패:', error);
+      document.querySelector('#resumeModal .collab-modal-body').innerHTML = `
+        <div style="text-align:center; padding:40px;">
+          <p>PDF를 불러올 수 없습니다.</p>
+          <a href="{{ '/assets/docs/ISChoi_CV.pdf' | relative_url }}" 
+             target="_blank" 
+             class="action-btn" 
+             style="display:inline-block; margin-top:20px;">
+            📄 CV 다운로드
+          </a>
+        </div>
+      `;
+    });
+  } else if (pdfDoc) {
+    renderPage(pageNum);
+  }
 }
+
+function renderPage(num) {
+  if (!pdfDoc) return;
+  
+  pdfDoc.getPage(num).then(function(page) {
+    const canvas = document.getElementById('pdfCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const container = canvas.parentElement;
+    const maxWidth = container.clientWidth - 40;
+    const viewport = page.getViewport({scale: 1});
+    const scale = maxWidth / viewport.width;
+    const scaledViewport = page.getViewport({scale: scale});
+    
+    canvas.height = scaledViewport.height;
+    canvas.width = scaledViewport.width;
+    
+    page.render({
+      canvasContext: ctx,
+      viewport: scaledViewport
+    });
+    
+    document.getElementById('pageNum').textContent = num;
+  });
+}
+
+function prevPage() {
+  if (pageNum <= 1) return;
+  pageNum--;
+  renderPage(pageNum);
+}
+
+function nextPage() {
+  if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
+  pageNum++;
+  renderPage(pageNum);
+}
+
 function closeResumeModal(event) {
   if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) return;
   document.getElementById('resumeModal').classList.remove('show');
   document.body.style.overflow = '';
 }
-
-// (선택) 단축키 차단: Ctrl/Cmd+S, Ctrl/Cmd+P
-document.addEventListener('keydown', (e) => {
-  const opened = document.getElementById('resumeModal')?.classList.contains('show');
-  if (!opened) return;
-  if ((e.ctrlKey || e.metaKey) && ['s','p'].includes(e.key.toLowerCase())) e.preventDefault();
-});
 
 </script>
 
