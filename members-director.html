@@ -2633,28 +2633,27 @@ function sizeCanvas() {
     if (nodesInRing.length > 0) rings.push(nodesInRing);
 
     // Place nodes in rings with zoom
-    rings.forEach((ring, rIdx) => {
-      const radius = (baseRadius + rIdx * 80) * zoomLevel;
-      ring.forEach((item, nIdx) => {
-        const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-        const freq = item.freq;
-        const percentage = Math.round((freq / directorPapers) * 100);
-
-        nodes.push({
-          id: item.id,
-          name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-          x: centerX + Math.cos(angle) * radius,
-          y: centerY + Math.sin(angle) * radius,
-          radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
-          frequency: freq,
-          percentage: percentage,
-          ring: rIdx,
-          typeBreakdown: typeBreakdown[item.id] // 이 줄 추가
-        });
-      });
-    });
-    if (nodesInRing.length > 0) rings.push(nodesInRing);
-  }
+   rings.forEach((ring, rIdx) => {
+         const radius = (baseRadius + rIdx * 80) * zoomLevel;
+         ring.forEach((item, nIdx) => {
+           const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+           const freq = item.freq;
+           const percentage = Math.round((freq / directorPapers) * 100);
+   
+           nodes.push({
+             id: item.id,
+             name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+             x: centerX + Math.cos(angle) * radius,
+             y: centerY + Math.sin(angle) * radius,
+             radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+             frequency: freq,
+             percentage: percentage,
+             ring: rIdx,
+             typeBreakdown: typeBreakdown[item.id]
+           });
+         });
+       });
+     }
 
   // ===== Auto-count Publication Statistics =====
   function countPublications() {
@@ -3021,6 +3020,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
