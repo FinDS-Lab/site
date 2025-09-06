@@ -2256,30 +2256,55 @@ function buildMentoringYears() {
  const DIRECTOR_ID = 1;
 
  // Count collaborations (only papers including director)
- function countCollaborations() {
-   const counts = {};
-   let directorPapers = 0;
-   
-   PUBS.forEach(pub => {
-     if (!Array.isArray(pub.authors)) return;
-     if (!pub.authors.includes(DIRECTOR_ID)) return;
-     
-     directorPapers++;
-     pub.authors.forEach(aid => {
-       if (aid !== DIRECTOR_ID) {
-         counts[aid] = (counts[aid] || 0) + 1;
-       }
-     });
-   });
-   
-   return { counts, directorPapers };
- }
+function countCollaborations() {
+  const counts = {};
+  const typeBreakdown = {}; // 각 저자별 publication 타입 카운트
+  let directorPapers = 0;
+  
+  PUBS.forEach(pub => {
+    if (!Array.isArray(pub.authors)) return;
+    if (!pub.authors.includes(DIRECTOR_ID)) return;
+    
+    directorPapers++;
+    
+    // publication 타입 결정
+    let pubType = 'paper'; // 기본값
+    const ig = Array.isArray(pub.indexing_group) ? pub.indexing_group : [pub.indexing_group];
+    const types = Array.isArray(pub.type) ? pub.type : [pub.type];
+    
+    if (ig.some(g => g && g.includes('Conference')) || types.includes('conference')) {
+      pubType = 'conference';
+    } else if (types.includes('journal')) {
+      pubType = 'journal';
+    }
+    
+    pub.authors.forEach(aid => {
+      if (aid !== DIRECTOR_ID) {
+        counts[aid] = (counts[aid] || 0) + 1;
+        
+        if (!typeBreakdown[aid]) {
+          typeBreakdown[aid] = { journal: 0, conference: 0, other: 0 };
+        }
+        
+        if (pubType === 'journal') {
+          typeBreakdown[aid].journal++;
+        } else if (pubType === 'conference') {
+          typeBreakdown[aid].conference++;
+        } else {
+          typeBreakdown[aid].other++;
+        }
+      }
+    });
+  });
+  
+  return { counts, typeBreakdown, directorPapers };
+}
 
  // Initialize variables
 // Initialize variables
  const isMobileInit = window.innerWidth <= 768;
  let currentThreshold = isMobileInit ? 5 : 3;
- let { counts: collaborations, directorPapers } = countCollaborations();
+ let { counts: collaborations, typeBreakdown, directorPapers } = countCollaborations();
  let maxCollaborations = Math.max(...Object.values(collaborations), 1);
  let hoveredNode = null;
  let networkInitialized = false;
@@ -2413,19 +2438,17 @@ function sizeCanvas() {
         const freq = item.freq;
         const percentage = Math.round((freq / directorPapers) * 100);
 
-        nodes.push({
-          id: item.id,
-          name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-          x: centerX + Math.cos(angle) * radius,
-          y: centerY + Math.sin(angle) * radius,
-          radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
-          frequency: freq,
-          percentage: percentage,
-          ring: rIdx
-        });
-      });
-    });
-  }
+       nodes.push({
+         id: item.id,
+         name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+         x: centerX + Math.cos(angle) * radius,
+         y: centerY + Math.sin(angle) * radius,
+         radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+         frequency: freq,
+         percentage: percentage,
+         ring: rIdx,
+         typeBreakdown: typeBreakdown[item.id] // 이 줄 추가
+       });
 
 // ===== Auto-count Publication Statistics =====
 function countPublications() {
@@ -2590,11 +2613,17 @@ document.addEventListener('DOMContentLoaded', countPublications);
     });
 
     // Hover tooltip
-    if (hoveredNode && !hoveredNode.isCenter) {
-      const tooltipWidth = 180;
-      const tooltipHeight = 60;
-      let tooltipX = hoveredNode.x - tooltipWidth / 2;
-      let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
+     if (hoveredNode && !hoveredNode.isCenter) {
+       const tooltipWidth = 180;
+       const breakdown = hoveredNode.typeBreakdown;
+       let tooltipHeight = 60;
+       if (breakdown) {
+         const types = [breakdown.journal, breakdown.conference, breakdown.other].filter(x => x > 0).length;
+         if (types === 2) tooltipHeight = 70;
+         if (types === 3) tooltipHeight = 80;
+       }
+       let tooltipX = hoveredNode.x - tooltipWidth / 2;
+       let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
 
       // Keep tooltip in bounds
       tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - tooltipWidth - 10));
@@ -2617,12 +2646,37 @@ document.addEventListener('DOMContentLoaded', countPublications);
 
       ctx.fillStyle = '#fbbf24';
       ctx.font = '10px Inter, sans-serif';
-      ctx.fillText(`${hoveredNode.frequency} collaborative works${hoveredNode.frequency > 1 ? 's' : ''}`,
-                   tooltipX + tooltipWidth / 2, tooltipY + 32);
+      const breakdown = hoveredNode.typeBreakdown;
+      let lastTextY = 32;
+      
+      if (breakdown) {
+        const parts = [];
+        if (breakdown.journal > 0) parts.push(`${breakdown.journal} journal paper${breakdown.journal > 1 ? 's' : ''}`);
+        if (breakdown.conference > 0) parts.push(`${breakdown.conference} conference proceeding${breakdown.conference > 1 ? 's' : ''}`);
+        if (breakdown.other > 0) parts.push(`${breakdown.other} other${breakdown.other > 1 ? 's' : ''}`);
+        
+        if (parts.length === 1) {
+          ctx.fillText(parts[0], tooltipX + tooltipWidth / 2, tooltipY + 32);
+          lastTextY = 32;
+        } else if (parts.length === 2) {
+          ctx.fillText(parts[0], tooltipX + tooltipWidth / 2, tooltipY + 28);
+          ctx.fillText(parts[1], tooltipX + tooltipWidth / 2, tooltipY + 42);
+          lastTextY = 42;
+        } else {
+          ctx.fillText(parts[0], tooltipX + tooltipWidth / 2, tooltipY + 24);
+          ctx.fillText(parts[1], tooltipX + tooltipWidth / 2, tooltipY + 36);
+          ctx.fillText(parts[2], tooltipX + tooltipWidth / 2, tooltipY + 48);
+          lastTextY = 48;
+        }
+      } else {
+        ctx.fillText(`${hoveredNode.frequency} collaborative work${hoveredNode.frequency === 1 ? '' : 's'}`,
+                     tooltipX + tooltipWidth / 2, tooltipY + 32);
+        lastTextY = 32;
+      }
       
       ctx.fillStyle = '#fde047';
       ctx.fillText(`(${hoveredNode.percentage}% of director's works)`,
-                   tooltipX + tooltipWidth / 2, tooltipY + 46);
+                   tooltipX + tooltipWidth / 2, tooltipY + lastTextY + 14);
     }
   }
 
@@ -2720,6 +2774,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
