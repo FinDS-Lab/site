@@ -2433,18 +2433,22 @@ function countCollaborations() {
     directorPapers++;
     
     // publication 타입 결정 (4가지로 세분화)
-    let pubType = 'journal'; // 기본값
     const ig = Array.isArray(pub.indexing_group) ? pub.indexing_group : [pub.indexing_group];
     const types = Array.isArray(pub.type) ? pub.type : [pub.type];
     
-    if (ig.some(g => g && g.includes('Conference')) || types.includes('conference')) {
-      pubType = 'conference';
-    } else if (types.includes('book')) {
+    let pubType = 'journal'; // 기본값
+    
+    // type 필드 우선 체크
+    if (types.includes('book')) {
       pubType = 'book';
     } else if (types.includes('report')) {
       pubType = 'report';
+    } else if (types.includes('conference')) {
+      pubType = 'conference';
     } else if (types.includes('journal')) {
       pubType = 'journal';
+    } else if (ig.some(g => g && String(g).includes('Conference'))) {
+      pubType = 'conference';
     }
     
     pub.authors.forEach(aid => {
@@ -2502,7 +2506,7 @@ function updateNetworkInfo() {
     .filter(([id, freq]) => freq >= thresholdCount).length;
   const total = Object.keys(collaborations).length;
 
-  infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers (≥${currentThreshold}% of ${directorPapers} total)`;
+  infoEl.innerHTML = `<span style="color:#d6b14d">●</span> Showing <b>${visible}</b> of <b>${total}</b> collaborators with <b>${thresholdCount}+</b> papers<br>(≥${currentThreshold}% of ${directorPapers} total)`;
 }
  // Canvas setup
   const canvas = document.getElementById('networkCanvas');
@@ -2850,48 +2854,45 @@ canvas.addEventListener('mouseleave', () => {
   });
 
   // Modal functions
-   window.openCollabModal = function(node) {
-    document.getElementById('collabModalName').textContent = node.name;
-    const modalBody = document.getElementById('collabModalBody');
-    
-    const breakdown = node.typeBreakdown;
-    let publicationDetails = '';
-    
-    if (breakdown) {
-      const parts = [];
-      if (breakdown.journal > 0) {
-        parts.push(`<span class="collab-stat">${breakdown.journal} Journal${breakdown.journal > 1 ? 's' : ''}</span>`);
-      }
-      if (breakdown.conference > 0) {
-        parts.push(`<span class="collab-stat" style="background: var(--conference-red);">${breakdown.conference} Conference${breakdown.conference > 1 ? 's' : ''}</span>`);
-      }
-      if (breakdown.other > 0) {
-        parts.push(`<span class="collab-stat" style="background: #6b7280;">${breakdown.other} Other${breakdown.other > 1 ? 's' : ''}</span>`);
-      }
-      publicationDetails = parts.join('');
+  window.openCollabModal = function(node) {
+      // 한국어 이름이 있는지 확인
+      const authorKo = AUTHORS[node.id]?.ko;
+      const displayName = authorKo ? `${node.name} (${authorKo})` : node.name;
+      
+      document.getElementById('collabModalName').textContent = displayName;
+      const modalBody = document.getElementById('collabModalBody');
+      
+      const breakdown = node.typeBreakdown || { journal: 0, conference: 0, book: 0, report: 0 };
+      
+      // 4가지 타입 모두 같은 색상으로 표시
+      const publicationDetails = `
+        <span class="collab-stat">${breakdown.journal || 0} Journal</span>
+        <span class="collab-stat">${breakdown.conference || 0} Conference</span>
+        <span class="collab-stat">${breakdown.book || 0} Book</span>
+        <span class="collab-stat">${breakdown.report || 0} Report</span>
+      `;
+      
+      modalBody.innerHTML = `
+        <div class="collab-info-row">
+          <span class="collab-info-icon">📊</span>
+          <span class="collab-info-label">Total Works</span>
+          <span class="collab-info-value">${node.frequency}</span>
+        </div>
+        <div class="collab-info-row">
+          <span class="collab-info-icon">📈</span>
+          <span class="collab-info-label">Co-work Rate</span>
+          <span class="collab-info-value">${node.percentage}%</span>
+        </div>
+        <div class="collab-info-row">
+          <span class="collab-info-icon">📚</span>
+          <span class="collab-info-label">Breakdown</span>
+          <div class="collab-info-value">${publicationDetails}</div>
+        </div>
+      `;
+      
+      document.getElementById('collabModal').classList.add('show');
+      document.body.style.overflow = 'hidden';
     }
-    
-    modalBody.innerHTML = `
-      <div class="collab-info-row">
-        <span class="collab-info-icon">📊</span>
-        <span class="collab-info-label">Total Papers</span>
-        <span class="collab-info-value">${node.frequency} collaborative work${node.frequency > 1 ? 's' : ''}</span>
-      </div>
-      <div class="collab-info-row">
-        <span class="collab-info-icon">📈</span>
-        <span class="collab-info-label">Percentage</span>
-        <span class="collab-info-value">${node.percentage}% of director's total publications</span>
-      </div>
-      <div class="collab-info-row">
-        <span class="collab-info-icon">📚</span>
-        <span class="collab-info-label">Breakdown</span>
-        <div class="collab-info-value">${publicationDetails || 'No detailed breakdown available'}</div>
-      </div>
-    `;
-    
-    document.getElementById('collabModal').classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
  
   window.closeCollabModal = function(event) {
     if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) {
@@ -2970,6 +2971,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
