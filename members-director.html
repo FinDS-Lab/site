@@ -3107,35 +3107,36 @@ function renderPage(num) {
     // 모바일 감지
     const isMobile = window.innerWidth <= 768;
     
-    // 컨테이너 너비
+    // 컨테이너 너비 (모달 내부 패딩 고려)
     const containerWidth = container.clientWidth;
-    const maxWidth = isMobile ? containerWidth - 20 : containerWidth - 40;
+    const maxWidth = containerWidth - (isMobile ? 0 : 20); // 모바일에서는 패딩 제거
     
     // 뷰포트 계산
     const viewport = page.getViewport({scale: 1});
     let scale = maxWidth / viewport.width;
     
-    // 모바일에서는 약간 더 크게 (화질 향상)
-    if (isMobile) {
-      scale = scale * 1.5; // 1.5배 더 크게 렌더링
-    }
+    // 스케일 제한 (너무 크거나 작아지지 않도록)
+    scale = Math.min(scale, isMobile ? 1.2 : 1.5);
     
-    const scaledViewport = page.getViewport({scale: scale * dpr});
+    const scaledViewport = page.getViewport({scale: scale});
     
-    // 캔버스 실제 크기 (고해상도)
+    // 캔버스 실제 크기 설정
     canvas.width = scaledViewport.width;
     canvas.height = scaledViewport.height;
     
-    // 캔버스 표시 크기 (CSS)
-    canvas.style.width = (scaledViewport.width / dpr) + 'px';
-    canvas.style.height = (scaledViewport.height / dpr) + 'px';
-    
-    // 고해상도 렌더링
-    ctx.scale(dpr, dpr);
+    // 캔버스 표시 크기 (CSS) - 컨테이너 너비에 맞춤
+    if (isMobile) {
+      const displayScale = Math.min(1, maxWidth / scaledViewport.width);
+      canvas.style.width = (scaledViewport.width * displayScale) + 'px';
+      canvas.style.height = (scaledViewport.height * displayScale) + 'px';
+    } else {
+      canvas.style.width = scaledViewport.width + 'px';
+      canvas.style.height = scaledViewport.height + 'px';
+    }
     
     const renderContext = {
       canvasContext: ctx,
-      viewport: page.getViewport({scale: scale}),
+      viewport: scaledViewport,
       // 텍스트 레이어 비활성화 (성능)
       enableWebGL: false,
       renderInteractiveForms: false
@@ -3166,6 +3167,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
