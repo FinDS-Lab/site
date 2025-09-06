@@ -1737,6 +1737,14 @@ permalink: /members-director.html
     font-size: 12px;
   }
 }
+
+ @media (max-width: 768px) {
+  #pdfCanvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
+  }
+}
  
 </style>
 
@@ -3092,20 +3100,50 @@ function renderPage(num) {
     
     const ctx = canvas.getContext('2d');
     const container = canvas.parentElement;
-    const maxWidth = container.clientWidth - 40;
+    
+    // 디바이스 픽셀 비율 (레티나 디스플레이 대응)
+    const dpr = window.devicePixelRatio || 1;
+    
+    // 모바일 감지
+    const isMobile = window.innerWidth <= 768;
+    
+    // 컨테이너 너비
+    const containerWidth = container.clientWidth;
+    const maxWidth = isMobile ? containerWidth - 20 : containerWidth - 40;
+    
+    // 뷰포트 계산
     const viewport = page.getViewport({scale: 1});
-    const scale = maxWidth / viewport.width;
-    const scaledViewport = page.getViewport({scale: scale});
+    let scale = maxWidth / viewport.width;
     
-    canvas.height = scaledViewport.height;
+    // 모바일에서는 약간 더 크게 (화질 향상)
+    if (isMobile) {
+      scale = scale * 1.5; // 1.5배 더 크게 렌더링
+    }
+    
+    const scaledViewport = page.getViewport({scale: scale * dpr});
+    
+    // 캔버스 실제 크기 (고해상도)
     canvas.width = scaledViewport.width;
+    canvas.height = scaledViewport.height;
     
-    page.render({
+    // 캔버스 표시 크기 (CSS)
+    canvas.style.width = (scaledViewport.width / dpr) + 'px';
+    canvas.style.height = (scaledViewport.height / dpr) + 'px';
+    
+    // 고해상도 렌더링
+    ctx.scale(dpr, dpr);
+    
+    const renderContext = {
       canvasContext: ctx,
-      viewport: scaledViewport
-    });
+      viewport: page.getViewport({scale: scale}),
+      // 텍스트 레이어 비활성화 (성능)
+      enableWebGL: false,
+      renderInteractiveForms: false
+    };
     
-    document.getElementById('pageNum').textContent = num;
+    page.render(renderContext).promise.then(function() {
+      document.getElementById('pageNum').textContent = num;
+    });
   });
 }
 
@@ -3128,6 +3166,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
