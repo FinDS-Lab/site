@@ -1665,8 +1665,41 @@ permalink: /members-director.html
   background: var(--gold);
   font-size: 12px;
   font-weight: 800;
-  color: #fff;
+  color: #111;
   margin-right: 6px;
+  margin-bottom: 4px;
+  border: 1px solid rgba(194, 157, 57, 0.3);
+}
+
+/* 모바일 스타일 추가 */
+@media (max-width: 640px) {
+  .collab-modal-content {
+    max-width: 95%;
+    width: 95%;
+  }
+  
+  .collab-modal-body {
+    padding: 20px;
+  }
+  
+  .collab-info-row {
+    gap: 8px;
+    padding: 10px 0;
+  }
+  
+  .collab-info-label {
+    min-width: 80px;
+    font-size: 12px;
+  }
+  
+  .collab-info-value {
+    font-size: 13px;
+  }
+  
+  .collab-stat {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
 }
  
 </style>
@@ -2399,13 +2432,17 @@ function countCollaborations() {
     
     directorPapers++;
     
-    // publication 타입 결정
-    let pubType = 'paper'; // 기본값
+    // publication 타입 결정 (4가지로 세분화)
+    let pubType = 'journal'; // 기본값
     const ig = Array.isArray(pub.indexing_group) ? pub.indexing_group : [pub.indexing_group];
     const types = Array.isArray(pub.type) ? pub.type : [pub.type];
     
     if (ig.some(g => g && g.includes('Conference')) || types.includes('conference')) {
       pubType = 'conference';
+    } else if (types.includes('book')) {
+      pubType = 'book';
+    } else if (types.includes('report')) {
+      pubType = 'report';
     } else if (types.includes('journal')) {
       pubType = 'journal';
     }
@@ -2415,16 +2452,10 @@ function countCollaborations() {
         counts[aid] = (counts[aid] || 0) + 1;
         
         if (!typeBreakdown[aid]) {
-          typeBreakdown[aid] = { journal: 0, conference: 0, other: 0 };
+          typeBreakdown[aid] = { journal: 0, conference: 0, book: 0, report: 0 };
         }
         
-        if (pubType === 'journal') {
-          typeBreakdown[aid].journal++;
-        } else if (pubType === 'conference') {
-          typeBreakdown[aid].conference++;
-        } else {
-          typeBreakdown[aid].other++;
-        }
+        typeBreakdown[aid][pubType] = (typeBreakdown[aid][pubType] || 0) + 1;
       }
     });
   });
@@ -2819,7 +2850,7 @@ canvas.addEventListener('mouseleave', () => {
   });
 
   // Modal functions
-  window.openCollabModal = function(node) {
+   window.openCollabModal = function(node) {
     document.getElementById('collabModalName').textContent = node.name;
     const modalBody = document.getElementById('collabModalBody');
     
@@ -2861,7 +2892,7 @@ canvas.addEventListener('mouseleave', () => {
     document.getElementById('collabModal').classList.add('show');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   window.closeCollabModal = function(event) {
     if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) {
       return;
@@ -2939,6 +2970,7 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 </script>
+
 
 
 
