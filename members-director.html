@@ -3056,12 +3056,6 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 
-// ===== PDF.js for Resume Modal =====
-let pdfDoc = null, pageNum = 1;
-
-if (typeof pdfjsLib !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
 
 function openResumeModal() {
   document.getElementById('resumeModal').classList.add('show');
@@ -3075,19 +3069,13 @@ function openResumeModal() {
   const iframe = document.getElementById('pdfViewer');
   iframe.src = viewerUrl;
 }
- 
-    const renderContext = {
-      canvasContext: ctx,
-      viewport: scaledViewport,
-      // 텍스트 레이어 비활성화 (성능)
-      enableWebGL: false,
-      renderInteractiveForms: false
-    };
-    
-    page.render(renderContext).promise.then(function() {
-      document.getElementById('pageNum').textContent = num;
-    });
-  });
+
+function closeResumeModal(event) {
+  if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) return;
+  document.getElementById('resumeModal').classList.remove('show');
+  document.body.style.overflow = '';
+  // iframe src 초기화
+  document.getElementById('pdfViewer').src = '';
 }
 
 function closeResumeModal(event) {
@@ -3099,6 +3087,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
