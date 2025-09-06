@@ -3,8 +3,6 @@ layout: default
 title: director
 permalink: /members-director.html
 ---
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
  <style>
@@ -2272,19 +2270,23 @@ permalink: /members-director.html
 
 <!-- Resume Modal -->
 <div class="collab-modal" id="resumeModal" onclick="closeResumeModal(event)">
-  <div class="collab-modal-content" style="max-width: 900px;" onclick="event.stopPropagation()">
+  <div class="collab-modal-content" style="max-width: 900px; height: 85vh;" onclick="event.stopPropagation()">
     <div class="collab-modal-header">
       <h2 class="collab-modal-title">Curriculum Vitae</h2>
       <button class="collab-modal-close" onclick="closeResumeModal()">&times;</button>
     </div>
-    <div class="collab-modal-body" style="padding:20px;">
-      <canvas id="pdfCanvas" style="width:100%; height:auto; display:block;"></canvas>
-      <div style="text-align:center; margin-top:15px; padding:10px; background:#f8f9fa; border-radius:8px;">
-        <button onclick="prevPage()" class="zoom-btn" style="margin-right:10px;">◀ 이전</button>
-        <span style="font-weight:600; margin:0 10px;">
-          <span id="pageNum">1</span> / <span id="pageCount">1</span>
-        </span>
-        <button onclick="nextPage()" class="zoom-btn" style="margin-left:10px;">다음 ▶</button>
+    <div class="collab-modal-body" style="padding:0; height: calc(100% - 70px); display: flex; flex-direction: column;">
+      <iframe id="pdfViewer" 
+              style="width:100%; height:100%; border:none; flex:1;"
+              frameborder="0">
+      </iframe>
+      <div style="text-align:center; padding:10px; background:#f8f9fa; border-top:1px solid #e5e7eb;">
+        <a href="https://drive.google.com/uc?export=download&id=1zpEwO0DSBH8VZmbi8lI9RBpqf3xckRTK" 
+           target="_blank" 
+           class="action-btn" 
+           style="display:inline-block; padding:8px 20px; font-size:13px;">
+          📄 Download CV
+        </a>
       </div>
     </div>
   </div>
@@ -3065,75 +3067,15 @@ function openResumeModal() {
   document.getElementById('resumeModal').classList.add('show');
   document.body.style.overflow = 'hidden';
   
-  if (!pdfDoc && typeof pdfjsLib !== 'undefined') {
-    const pdfPath = '{{ "/assets/docs/ISChoi_CV.pdf" | relative_url }}';
-    
-    pdfjsLib.getDocument(pdfPath).promise.then(function(pdf) {
-      pdfDoc = pdf;
-      document.getElementById('pageCount').textContent = pdf.numPages;
-      renderPage(pageNum);
-    }).catch(function(error) {
-      console.error('PDF 로드 실패:', error);
-      document.querySelector('#resumeModal .collab-modal-body').innerHTML = `
-        <div style="text-align:center; padding:40px;">
-          <p>PDF를 불러올 수 없습니다.</p>
-          <a href="{{ '/assets/docs/ISChoi_CV.pdf' | relative_url }}" 
-             target="_blank" 
-             class="action-btn" 
-             style="display:inline-block; margin-top:20px;">
-            📄 CV 다운로드
-          </a>
-        </div>
-      `;
-    });
-  } else if (pdfDoc) {
-    renderPage(pageNum);
-  }
-}
-
-function renderPage(num) {
-  if (!pdfDoc) return;
+  // Google Drive 파일 ID
+  const fileId = '1zpEwO0DSBH8VZmbi8lI9RBpqf3xckRTK';
+  // Google Docs Viewer URL
+  const viewerUrl = `https://drive.google.com/file/d/${fileId}/preview`;
   
-  pdfDoc.getPage(num).then(function(page) {
-    const canvas = document.getElementById('pdfCanvas');
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    const container = canvas.parentElement;
-    
-    // 디바이스 픽셀 비율 (레티나 디스플레이 대응)
-    const dpr = window.devicePixelRatio || 1;
-    
-    // 모바일 감지
-    const isMobile = window.innerWidth <= 768;
-    
-    // 컨테이너 너비 (모달 내부 패딩 고려)
-    const containerWidth = container.clientWidth;
-    const maxWidth = containerWidth - (isMobile ? 0 : 20); // 모바일에서는 패딩 제거
-    
-    // 뷰포트 계산
-    const viewport = page.getViewport({scale: 1});
-    let scale = maxWidth / viewport.width;
-    
-    // 스케일 제한 (너무 크거나 작아지지 않도록)
-    scale = Math.min(scale, isMobile ? 1.2 : 1.5);
-    
-    const scaledViewport = page.getViewport({scale: scale});
-    
-    // 캔버스 실제 크기 설정
-    canvas.width = scaledViewport.width;
-    canvas.height = scaledViewport.height;
-    
-    // 캔버스 표시 크기 (CSS) - 컨테이너 너비에 맞춤
-    if (isMobile) {
-      const displayScale = Math.min(1, maxWidth / scaledViewport.width);
-      canvas.style.width = (scaledViewport.width * displayScale) + 'px';
-      canvas.style.height = (scaledViewport.height * displayScale) + 'px';
-    } else {
-      canvas.style.width = scaledViewport.width + 'px';
-      canvas.style.height = scaledViewport.height + 'px';
-    }
-    
+  const iframe = document.getElementById('pdfViewer');
+  iframe.src = viewerUrl;
+}
+ 
     const renderContext = {
       canvasContext: ctx,
       viewport: scaledViewport,
@@ -3148,25 +3090,16 @@ function renderPage(num) {
   });
 }
 
-function prevPage() {
-  if (pageNum <= 1) return;
-  pageNum--;
-  renderPage(pageNum);
-}
-
-function nextPage() {
-  if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
-  pageNum++;
-  renderPage(pageNum);
-}
-
 function closeResumeModal(event) {
   if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) return;
   document.getElementById('resumeModal').classList.remove('show');
   document.body.style.overflow = '';
+  // iframe src 초기화
+  document.getElementById('pdfViewer').src = '';
 }
 
 </script>
+
 
 
 
