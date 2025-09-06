@@ -21,3 +21,14 @@ defaults:
       type: news
     values:
       layout: news_post   # 개별 뉴스 페이지 기본 레이아웃
+
+# Static files
+defaults:
+  - scope:
+      path: "assets/docs"
+    values:
+      pdf: true
+
+# Include docs folder
+include:
+  - assets/docs
