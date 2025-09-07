@@ -199,9 +199,18 @@ title: home
   .intro-content h3{ font-size:32px; margin-bottom:4px; }
   @media (max-width:480px){ .intro-content h3{ font-size:24px; } }
   .intro-content .lab-name{ color:var(--gold); font-weight:900; }
-  .intro-content .lab-full{ font-size:18px; color:#374151; margin-left:8px; }
-  @media (max-width:768px){ .intro-content .lab-full{ display:block; margin-left:0; margin-top:8px; } }
-  @media (max-width:480px){ .intro-content .lab-full{ font-size:15px; } }
+.intro-content .lab-full{
+  font-size:18px;
+  color:#000;        /* 검은색으로 변경 */
+  margin-left:0;     /* 들여쓰기 제거로 정렬 맞춤 */
+}
+@media (max-width:768px){
+  .intro-content .lab-full{
+    display:block;
+    margin-left:0;   /* 모바일/태블릿에서도 확실히 0 */
+    margin-top:8px;
+  }
+}
   .intro-content .description{ margin-top:16px; font-size:16px; line-height:1.8; color:#4b5563; }
   @media (max-width:480px){ .intro-content .description{ font-size:14px; line-height:1.7; } }
 
