@@ -3120,43 +3120,37 @@ function sizeCanvas() {
       .filter(([id, freq]) => freq >= thresholdCount)
       .sort((a, b) => b[1] - a[1]);
 
-    // Arrange in concentric circles based on frequency
-    const rings = [];
-    const ringSizes = [8, 12, 16];
-    let ringIndex = 0;
-    let nodesInRing = [];
+    // Heart shape function
+function getHeartPosition(t, scale = 1) {
+  const x = 16 * Math.pow(Math.sin(t), 3);
+  const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+  return { x: x * scale, y: y * scale };
+}
 
-    coAuthors.forEach(([id, freq]) => {
-      if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-        rings.push(nodesInRing);
-        nodesInRing = [];
-        ringIndex++;
-      }
-      nodesInRing.push({ id: parseInt(id), freq });
-    });
-    if (nodesInRing.length > 0) rings.push(nodesInRing);
-
-    // Place nodes in rings with zoom
-   rings.forEach((ring, rIdx) => {
-         const radius = (baseRadius + rIdx * 80) * zoomLevel;
-         ring.forEach((item, nIdx) => {
-           const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-           const freq = item.freq;
-           const percentage = Math.round((freq / directorPapers) * 100);
-   
-           nodes.push({
-             id: item.id,
-             name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-             x: centerX + Math.cos(angle) * radius,
-             y: centerY + Math.sin(angle) * radius,
-             radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
-             frequency: freq,
-             percentage: percentage,
-             ring: rIdx,
-             typeBreakdown: typeBreakdown[item.id]
-           });
-         });
-       });
+// Arrange collaborators in heart shape
+const totalNodes = coAuthors.length;
+coAuthors.forEach(([id, freq], index) => {
+  // Distribute nodes evenly along the heart curve
+  const t = (index / totalNodes) * Math.PI * 2;
+  const scale = 8 * zoomLevel; // Adjust heart size
+  const heartPos = getHeartPosition(t, scale);
+  
+  const percentage = Math.round((freq / directorPapers) * 100);
+  
+  // Add some variation based on frequency (closer to center for frequent collaborators)
+  const distanceFactor = 0.7 + (0.3 * (1 - freq / maxCollaborations));
+  
+  nodes.push({
+    id: parseInt(id),
+    name: AUTHORS[id]?.en || `Author ${id}`,
+    x: centerX + heartPos.x * distanceFactor,
+    y: centerY + heartPos.y * distanceFactor,
+    radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+    frequency: freq,
+    percentage: percentage,
+    typeBreakdown: typeBreakdown[id]
+  });
+});
      }
 
   // ===== Auto-count Publication Statistics =====
@@ -3687,6 +3681,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
