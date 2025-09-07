@@ -1744,78 +1744,105 @@ permalink: /members-director.html
   }
 }
 
-/* Leadership Section in Education */
-.leadership-section {
+/* Leadership Toggle Section */
+.leadership-toggle-section {
   margin-top: 12px;
-  padding: 12px 14px;
-  background: linear-gradient(135deg, rgba(239,68,68,0.03) 0%, rgba(236,72,153,0.03) 100%);
-  border-radius: 8px;
   border: 1px solid rgba(239,68,68,0.15);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.leadership-title {
+.leadership-toggle-header {
   display: flex;
   align-items: center;
   gap: 6px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, rgba(239,68,68,0.03) 0%, rgba(236,72,153,0.03) 100%);
+  cursor: pointer;
+  user-select: none;
   font-weight: 800;
   font-size: 13px;
   color: #dc2626;
-  margin-bottom: 8px;
+  transition: all 0.2s;
+}
+
+.leadership-toggle-header:hover {
+  background: linear-gradient(135deg, rgba(239,68,68,0.06) 0%, rgba(236,72,153,0.06) 100%);
+}
+
+.leadership-toggle-header .toggle-icon {
+  margin-left: auto;
+  transition: transform 0.3s;
+  font-size: 11px;
+}
+
+.leadership-toggle-header.active .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.leadership-content-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background: #fff;
+}
+
+.leadership-content-wrapper.show {
+  max-height: 300px;
+  transition: max-height 0.3s ease-in;
 }
 
 .leadership-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 6px 0;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(239,68,68,0.08);
 }
 
-.leadership-icon {
-  font-size: 14px;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.leadership-content {
-  flex: 1;
+.leadership-item:first-child {
+  border-top: none;
 }
 
 .leadership-role {
-  font-weight: 700;
   font-size: 13px;
   color: #111827;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+}
+
+.leadership-affiliation {
+  font-size: 12px;
+  color: #374151;
+  margin-bottom: 4px;
 }
 
 .leadership-period {
-  font-size: 12px;
+  font-size: 11px;
   color: #6b7280;
-}
-
-.leadership-desc {
-  font-size: 12px;
-  color: #374151;
-  margin-top: 4px;
-  font-style: italic;
+  display: inline-block;
+  padding: 2px 6px;
+  background: rgba(107,114,128,0.08);
+  border-radius: 4px;
 }
 
 /* 모바일 반응형 */
 @media (max-width: 640px) {
-  .leadership-section {
-    padding: 10px 12px;
+  .leadership-toggle-header {
+    padding: 8px 12px;
+    font-size: 12px;
   }
   
-  .leadership-title {
-    font-size: 12px;
+  .leadership-item {
+    padding: 10px 12px;
   }
   
   .leadership-role {
     font-size: 12px;
   }
   
-  .leadership-period,
-  .leadership-desc {
+  .leadership-affiliation {
     font-size: 11px;
+  }
+  
+  .leadership-period {
+    font-size: 10px;
   }
 }
  
@@ -2040,18 +2067,18 @@ permalink: /members-director.html
           </div>
         </div>
 
-        <!-- Leadership 섹션 추가 -->
-        <div class="leadership-section">
-          <div class="leadership-title">
+        <!-- Leadership 토글 섹션 -->
+        <div class="leadership-toggle-section">
+          <div class="leadership-toggle-header" onclick="toggleLeadership(this)">
             <span>👑</span>
             <span>Leadership</span>
+            <span class="toggle-icon">▶</span>
           </div>
-          <div class="leadership-item">
-            <span class="leadership-icon">🎓</span>
-            <div class="leadership-content">
-              <div class="leadership-role">Graduate Student Representative, Department of Industrial and Systems Engineering / Graduate School of Data Science</div>
+          <div class="leadership-content-wrapper">
+            <div class="leadership-item">
+              <div class="leadership-role"><b>Graduate Student Representative</b></div>
+              <div class="leadership-affiliation">Department of Industrial and Systems Engineering / Graduate School of Data Science, KAIST</div>
               <div class="leadership-period">2021.09. - 2025.01.</div>
-              <div class="leadership-desc">산업및시스템공학과 / 데이터사이언스대학원 대학원생 대표</div>
             </div>
           </div>
         </div>
@@ -2135,26 +2162,23 @@ permalink: /members-director.html
           </div>
         </div>
 
-        <!-- Leadership 섹션 추가 - 2개 역할 -->
-        <div class="leadership-section">
-          <div class="leadership-title">
+        <!-- Leadership 토글 섹션 -->
+        <div class="leadership-toggle-section">
+          <div class="leadership-toggle-header" onclick="toggleLeadership(this)">
             <span>👑</span>
             <span>Leadership</span>
+            <span class="toggle-icon">▶</span>
           </div>
-          <div class="leadership-item">
-            <span class="leadership-icon">🏛️</span>
-            <div class="leadership-content">
-              <div class="leadership-role">President of Student Council, Department of Industrial and Management Systems Engineering</div>
-              <div class="leadership-period">2016.01. - 2016.12.</div>
-              <div class="leadership-desc">산업경영공학과 학생회장</div>
-            </div>
-          </div>
-          <div class="leadership-item" style="margin-top: 8px;">
-            <span class="leadership-icon">📢</span>
-            <div class="leadership-content">
-              <div class="leadership-role">Head of Culture & Public Relations, 41st Engineering College Student Council</div>
+          <div class="leadership-content-wrapper">
+            <div class="leadership-item">
+              <div class="leadership-role"><b>Head of Culture & Public Relations</b></div>
+              <div class="leadership-affiliation">41st Engineering College Student Council, Kyung Hee University</div>
               <div class="leadership-period">2017.01. - 2017.11.</div>
-              <div class="leadership-desc">제41대 공과대학 학생회 문화홍보처장</div>
+            </div>
+            <div class="leadership-item">
+              <div class="leadership-role"><b>President of Student Council</b></div>
+              <div class="leadership-affiliation">Department of Industrial and Management Systems Engineering, Kyung Hee University</div>
+              <div class="leadership-period">2016.01. - 2016.12.</div>
             </div>
           </div>
         </div>
@@ -2173,8 +2197,6 @@ permalink: /members-director.html
     </ul>
   </div>
 </div>
-
-
      
      <!-- Employment -->
      <div class="director-card">
@@ -3164,6 +3186,12 @@ canvas.addEventListener('touchend', (e) => {
   });
 }
 
+ // Leadership 토글 함수
+function toggleLeadership(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.classList.toggle('show');
+}
 
 function openResumeModal() {
   document.getElementById('resumeModal').classList.add('show');
@@ -3195,6 +3223,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
