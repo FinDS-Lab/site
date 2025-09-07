@@ -159,6 +159,38 @@ permalink: /members-director.html
        font-size: 11px;
      }
    }
+
+  /* intro-section 정렬 보정 */
+.intro-section .intro-content {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-align: left;               /* 혹시 가운데 정렬이면 왼쪽으로 */
+}
+
+/* 헤딩/문단의 남는 좌측 여백 제거 */
+.intro-section .intro-content h2,
+.intro-section .intro-content h3,
+.intro-section .intro-content p {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* FINDS Lab. / 풀네임을 줄 맨앞에 정확히 시작시키기 */
+.intro-section .lab-name,
+.intro-section .lab-full {
+  display: block;                 /* span -> block로 바꿔 줄 시작 정렬 통일 */
+  margin: 0;                      /* 남는 여백 제거 */
+  padding: 0;
+}
+
+/* 풀네임과 한국어 설명 사이 간격(원하시면 조절) */
+.intro-section .lab-full {
+  margin-top: 2px;                /* 살짝만 띄우기 */
+}
+.intro-section .description {
+  margin-top: 8px;                /* “엔터 2번” 대신 적당한 간격 */
+}
+  
  </style>
 
  <div class="banner-section" onclick="createNetworkBurst(event, this)">
@@ -3688,6 +3720,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
