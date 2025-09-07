@@ -2012,6 +2012,48 @@ permalink: /members-director.html
     font-size: 10px;
   }
 }
+
+/* Activity Leadership Styles */
+.activity-leadership-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #f3f4f6;
+}
+
+.activity-leadership-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #dc2626;
+  margin-bottom: 12px;
+}
+
+.activity-leadership-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f9fafb;
+}
+
+.activity-leadership-item:last-child {
+  border-bottom: none;
+}
+
+.activity-leadership-role {
+  font-weight: 700;
+  font-size: 14px;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.activity-leadership-dates {
+  font-size: 12px;
+  color: #6b7280;
+  padding: 2px 6px;
+  background: rgba(239,68,68,0.05);
+  border-radius: 4px;
+  display: inline-block;
+}
  
 </style>
 
@@ -3455,26 +3497,34 @@ const activitiesData = {
     periods: [
       { status: 'Member', dates: '2022.03. - 2024.12.' },
       { status: 'Alumni', dates: '2025.01. - Present' }
+    ],
+    leadership: [
+      { role: 'Vice President', dates: '2023.03. - 2024.02.' },
+      { role: 'Secretary', dates: '2022.09. - 2023.02.' }
     ]
   },
   'kfac': {
     name: 'KFAC (Korea Financial Analytics Community)',
     periods: [
       { status: 'Member', dates: '2021.03. - Present' }
-      { status: 'Member', dates: '2017.01. - Present' }
-    ]
+    ],
+    leadership: null // 리더십 없음
   },
   'mensa': {
     name: 'MENSA KOREA',
     periods: [
       { status: 'Member', dates: '2017.01. - Present' }
-    ]
+    ],
+    leadership: null
   },
   'field': {
     name: 'FIELD',
     periods: [
       { status: 'Member', dates: '2019.09. - 2022.02.' },
       { status: 'Alumni', dates: '2022.03. - Present' }
+    ],
+    leadership: [
+      { role: 'President', dates: '2021.01. - 2021.12.' }
     ]
   },
   'fba': {
@@ -3482,6 +3532,9 @@ const activitiesData = {
     periods: [
       { status: 'Member', dates: '2020.01. - 2023.06.' },
       { status: 'Alumni', dates: '2023.07. - Present' }
+    ],
+    leadership: [
+      { role: 'Research Director', dates: '2022.01. - 2023.06.' }
     ]
   },
   'dading': {
@@ -3489,7 +3542,8 @@ const activitiesData = {
     periods: [
       { status: 'Member', dates: '2018.03. - 2021.08.' },
       { status: 'Alumni', dates: '2021.09. - Present' }
-    ]
+    ],
+    leadership: null
   }
 };
 
@@ -3501,6 +3555,8 @@ function openActivityModal(activityId) {
   const modalBody = document.getElementById('activityModalBody');
   
   let html = '';
+  
+  // Membership periods
   activity.periods.forEach(period => {
     html += `
       <div class="activity-period">
@@ -3509,6 +3565,27 @@ function openActivityModal(activityId) {
       </div>
     `;
   });
+  
+  // Leadership section (if exists)
+  if (activity.leadership && activity.leadership.length > 0) {
+    html += `
+      <div class="activity-leadership-section">
+        <div class="activity-leadership-title">
+          <span>👑</span> Leadership
+        </div>
+    `;
+    
+    activity.leadership.forEach(lead => {
+      html += `
+        <div class="activity-leadership-item">
+          <div class="activity-leadership-role">${lead.role}</div>
+          <div class="activity-leadership-dates">${lead.dates}</div>
+        </div>
+      `;
+    });
+    
+    html += `</div>`;
+  }
   
   modalBody.innerHTML = html;
   document.getElementById('activityModal').classList.add('show');
@@ -3532,6 +3609,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
