@@ -1743,6 +1743,81 @@ permalink: /members-director.html
     -webkit-font-smoothing: antialiased;
   }
 }
+
+/* Leadership Section in Education */
+.leadership-section {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(239,68,68,0.03) 0%, rgba(236,72,153,0.03) 100%);
+  border-radius: 8px;
+  border: 1px solid rgba(239,68,68,0.15);
+}
+
+.leadership-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.leadership-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.leadership-icon {
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.leadership-content {
+  flex: 1;
+}
+
+.leadership-role {
+  font-weight: 700;
+  font-size: 13px;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.leadership-period {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.leadership-desc {
+  font-size: 12px;
+  color: #374151;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+  .leadership-section {
+    padding: 10px 12px;
+  }
+  
+  .leadership-title {
+    font-size: 12px;
+  }
+  
+  .leadership-role {
+    font-size: 12px;
+  }
+  
+  .leadership-period,
+  .leadership-desc {
+    font-size: 11px;
+  }
+}
  
 </style>
 
@@ -1965,6 +2040,22 @@ permalink: /members-director.html
           </div>
         </div>
 
+        <!-- Leadership 섹션 추가 -->
+        <div class="leadership-section">
+          <div class="leadership-title">
+            <span>👑</span>
+            <span>Leadership</span>
+          </div>
+          <div class="leadership-item">
+            <span class="leadership-icon">🎓</span>
+            <div class="leadership-content">
+              <div class="leadership-role">Graduate Student Representative, Department of Industrial and Systems Engineering / Graduate School of Data Science</div>
+              <div class="leadership-period">2021.09. - 2025.01.</div>
+              <div class="leadership-desc">산업및시스템공학과 / 데이터사이언스대학원 대학원생 대표</div>
+            </div>
+          </div>
+        </div>
+
         <div class="honors-section">
           <div class="honors-title">
             <span>🏆</span>
@@ -2037,9 +2128,34 @@ permalink: /members-director.html
             <span class="advisor-label">Advisors:</span>
             <a href="https://scholar.google.com/citations?hl=en&amp;user=uTiqWBMAAAAJ" target="_blank" class="advisor-name">
               Jang Ho Kim
+            </a>
             <a href="https://scholar.google.com/citations?user=O8OYIzMAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" class="advisor-name">
               Myoung-Ju Park
             </a>
+          </div>
+        </div>
+
+        <!-- Leadership 섹션 추가 - 2개 역할 -->
+        <div class="leadership-section">
+          <div class="leadership-title">
+            <span>👑</span>
+            <span>Leadership</span>
+          </div>
+          <div class="leadership-item">
+            <span class="leadership-icon">🏛️</span>
+            <div class="leadership-content">
+              <div class="leadership-role">President of Student Council, Department of Industrial and Management Systems Engineering</div>
+              <div class="leadership-period">2016.01. - 2016.12.</div>
+              <div class="leadership-desc">산업경영공학과 학생회장</div>
+            </div>
+          </div>
+          <div class="leadership-item" style="margin-top: 8px;">
+            <span class="leadership-icon">📢</span>
+            <div class="leadership-content">
+              <div class="leadership-role">Head of Culture & Public Relations, 41st Engineering College Student Council</div>
+              <div class="leadership-period">2017.01. - 2017.11.</div>
+              <div class="leadership-desc">제41대 공과대학 학생회 문화홍보처장</div>
+            </div>
           </div>
         </div>
 
@@ -3079,6 +3195,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
