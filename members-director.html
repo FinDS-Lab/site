@@ -2059,6 +2059,31 @@ permalink: /members-director.html
   border-radius: 4px;
   display: inline-block;
 }
+
+ /* Activity Generation Badge */
+.activity-generation {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.generation-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(214,177,77,0.3);
+}
+
+/* Founding member special style */
+.generation-badge:contains("Founding") {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  box-shadow: 0 2px 6px rgba(220,38,38,0.3);
+}
  
 </style>
 
@@ -3498,55 +3523,60 @@ function openResumeModal() {
 // ===== Activities System =====
 const activitiesData = {
   'captima': {
-    name: 'CAPTIMA',
+    name: 'CAPTIMA (Computer Applications for Optima)',
+    generation: '3rd Generation', // 기수 추가
     periods: [
-      { status: 'Member', dates: '2022.03. - 2024.12.' },
-      { status: 'Alumni', dates: '2025.01. - Present' }
+      { status: 'Member', dates: '2013.03. - 2018.02.' },
+      { status: 'Alumni', dates: '2018.03. - Present' }
     ],
     leadership: [
-      { role: 'Vice President', dates: '2023.03. - 2024.02.' },
-      { role: 'Secretary', dates: '2022.09. - 2023.02.' }
+      { role: 'President', dates: '2015.06. - 2015.01.' },
+      { role: 'Vice President', dates: '2013.12. - 2014.08.' }
     ]
   },
   'kfac': {
-    name: 'KFAC (Korea Financial Analytics Community)',
+    name: 'KFAC (KAIST Financial Analysis Club)',
+    generation: '12th Generation', // 기수 추가
     periods: [
-      { status: 'Member', dates: '2021.03. - Present' }
+      { status: 'Member', dates: '2018.03. - 2019.02.' },
+      { status: 'Alumni', dates: '2019.03. - Present' }
     ],
-    leadership: null // 리더십 없음
+    leadership: [
+      { role: 'Acting President', dates: '2021.03. - 2021.08.' }
+    ]
   },
   'mensa': {
     name: 'MENSA KOREA',
+    generation: null, // 기수 없음
     periods: [
-      { status: 'Member', dates: '2017.01. - Present' }
+      { status: 'Member', dates: '2019.01. - Present' }
     ],
     leadership: null
   },
   'field': {
-    name: 'FIELD',
+    name: 'FIELD (Future Industrial Engineering Leaders and Dreamers)',
+    generation: '1st Generation (Founding Member)', // 창립 멤버
     periods: [
-      { status: 'Member', dates: '2019.09. - 2022.02.' },
-      { status: 'Alumni', dates: '2022.03. - Present' }
+      { status: 'Member', dates: '2019.03. - 2024.12.' },
+      { status: 'Alumni', dates: '2020.01. - Present' }
     ],
-    leadership: [
-      { role: 'President', dates: '2021.01. - 2021.12.' }
-    ]
+    leadership: null
   },
   'fba': {
     name: 'FBA Quant',
+    generation: '5th Generation', // 기수 추가
     periods: [
-      { status: 'Member', dates: '2020.01. - 2023.06.' },
-      { status: 'Alumni', dates: '2023.07. - Present' }
+      { status: 'Member', dates: '2022.01. - 2022.12.' },
+      { status: 'Alumni', dates: '2023.01. - Present' }
     ],
-    leadership: [
-      { role: 'Research Director', dates: '2022.01. - 2023.06.' }
-    ]
+    leadership: null
   },
   'dading': {
     name: 'DadingCoding',
+    generation: null, // 기수 없음
     periods: [
-      { status: 'Member', dates: '2018.03. - 2021.08.' },
-      { status: 'Alumni', dates: '2021.09. - Present' }
+      { status: 'Member', dates: '2024.02. - 2024.07.' },
+      { status: 'Alumni', dates: '2024.08. - Present' }
     ],
     leadership: null
   }
@@ -3560,6 +3590,15 @@ function openActivityModal(activityId) {
   const modalBody = document.getElementById('activityModalBody');
   
   let html = '';
+  
+  // Generation info (if exists)
+  if (activity.generation) {
+    html += `
+      <div class="activity-generation">
+        <span class="generation-badge">${activity.generation}</span>
+      </div>
+    `;
+  }
   
   // Membership periods
   activity.periods.forEach(period => {
@@ -3614,6 +3653,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
