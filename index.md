@@ -360,11 +360,12 @@ title: home
   <div class="intro-content keep-words">
     <h2 class="keep-words">Dongduk Women's University</h2>
     <h3 class="keep-words">
-      <span class="lab-name keep-words">FINDS Lab.</span>
+      <span class="lab-name keep-words">FINDS Lab.</span><br>
       <span class="lab-full keep-words">
-        (<b>Fin</b>ancial <b>D</b>ata Intelligence <b>S</b>olutions Laboratory)
+        Financial Data Intelligence Solutions Laboratory
       </span>
     </h3>
+    <br><br>
     <p class="description keep-words">
       동덕여자대학교 경영대학 경영융합학부 <b>금융데이터인텔리전스 연구실</b> 홈페이지입니다.
     </p>
