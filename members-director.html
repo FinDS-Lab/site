@@ -1739,16 +1739,17 @@ permalink: /members-director.html
 /* Activities Section - Minimal Design for 6 items */
 .activities-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  max-width: 300px;
+  grid-template-columns: repeat(3, minmax(90px, 120px));
+  gap: 20px;
+  justify-content: center;
   padding: 10px 0;
+  width: 100%;
 }
 
 .activity-item {
-  width: 80px;
-  height: 80px;
-  padding: 15px;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 20px;
   background: #f8fafc;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -1877,29 +1878,25 @@ permalink: /members-director.html
 /* Mobile responsive - 2x3 grid on mobile */
 @media (max-width: 640px) {
   .activities-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(70px, 1fr));
     gap: 12px;
-    max-width: 250px;
+    padding: 10px;
   }
   
   .activity-item {
-    width: 65px;
-    height: 65px;
-    padding: 12px;
+    padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
   .activities-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(60px, 1fr));
     gap: 10px;
-    max-width: 220px;
+    padding: 8px;
   }
   
   .activity-item {
-    width: 60px;
-    height: 60px;
-    padding: 10px;
+    padding: 12px;
   }
 }
  
@@ -3609,6 +3606,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
