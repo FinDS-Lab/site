@@ -1736,6 +1736,173 @@ permalink: /members-director.html
   }
 }
 
+/* Activities Section - Minimal Design for 6 items */
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  max-width: 300px;
+  padding: 10px 0;
+}
+
+.activity-item {
+  width: 80px;
+  height: 80px;
+  padding: 15px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+}
+
+.activity-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  opacity: 1;
+  background: #fff;
+  border-color: var(--gold);
+}
+
+.activity-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(30%);
+  transition: filter 0.2s;
+}
+
+.activity-item:hover .activity-logo {
+  filter: grayscale(0%);
+}
+
+/* Activity Modal - Same style as other modals */
+.activity-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.activity-modal.show {
+  display: flex;
+}
+
+.activity-modal-content {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 95%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.activity-modal-header {
+  background: linear-gradient(135deg, #d6b14d 0%, #eacf7d 100%);
+  padding: 20px;
+  border-radius: 16px 16px 0 0;
+  position: relative;
+}
+
+.activity-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all .2s;
+}
+
+.activity-modal-close:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+}
+
+.activity-modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  margin: 0;
+}
+
+.activity-modal-body {
+  padding: 24px;
+}
+
+.activity-period {
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.activity-period:last-child {
+  border-bottom: none;
+}
+
+.activity-status {
+  font-weight: 700;
+  font-size: 14px;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.activity-dates {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* Mobile responsive - 2x3 grid on mobile */
+@media (max-width: 640px) {
+  .activities-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 250px;
+  }
+  
+  .activity-item {
+    width: 65px;
+    height: 65px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .activities-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 220px;
+  }
+  
+  .activity-item {
+    width: 60px;
+    height: 60px;
+    padding: 10px;
+  }
+}
+ 
  @media (max-width: 768px) {
   #pdfCanvas {
     image-rendering: -webkit-optimize-contrast;
@@ -2284,7 +2451,65 @@ permalink: /members-director.html
          </ul>
        </div>
      </div>
-     
+
+<!-- Activities -->
+<div class="director-card">
+  <div class="card-head">Activities</div>
+  <div class="card-body">
+    <div class="activities-grid">
+      <div class="activity-item" onclick="openActivityModal('captima')">
+        <img src="{{ '/assets/img/logos/captima.png' | relative_url }}" 
+             alt="CAPTIMA" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+      <div class="activity-item" onclick="openActivityModal('kfac')">
+        <img src="{{ '/assets/img/logos/kfac.png' | relative_url }}" 
+             alt="KFAC" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+      <div class="activity-item" onclick="openActivityModal('mensa')">
+        <img src="{{ '/assets/img/logos/mensa.png' | relative_url }}" 
+             alt="MENSA KOREA" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+      <div class="activity-item" onclick="openActivityModal('field')">
+        <img src="{{ '/assets/img/logos/field.png' | relative_url }}" 
+             alt="FIELD" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+      <div class="activity-item" onclick="openActivityModal('fba')">
+        <img src="{{ '/assets/img/logos/fba.png' | relative_url }}" 
+             alt="FBA Quant" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+      <div class="activity-item" onclick="openActivityModal('dading')">
+        <img src="{{ '/assets/img/logos/dading.png' | relative_url }}" 
+             alt="DadingCoding" 
+             class="activity-logo"
+             onerror="this.onerror=null; this.src='{{ '/assets/img/logos/default.png' | relative_url }}'">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Activity Modal -->
+<div class="activity-modal" id="activityModal" onclick="closeActivityModal(event)">
+  <div class="activity-modal-content" onclick="event.stopPropagation()">
+    <div class="activity-modal-header">
+      <h2 class="activity-modal-title" id="activityModalTitle">Activity</h2>
+      <button class="activity-modal-close" onclick="closeActivityModal()">&times;</button>
+    </div>
+    <div class="activity-modal-body" id="activityModalBody">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+  </div>
+</div>
+    
  <!-- Publication Statistics -->
 <div class="director-card">
   <div class="card-head">Publication Statistics</div>
@@ -2431,6 +2656,18 @@ permalink: /members-director.html
   </div>
 </div>
 
+<!-- Activity Modal -->
+<div class="activity-modal" id="activityModal" onclick="closeActivityModal(event)">
+  <div class="activity-modal-content" onclick="event.stopPropagation()">
+    <div class="activity-modal-header">
+      <h2 class="activity-modal-title" id="activityModalTitle">Activity</h2>
+      <button class="activity-modal-close" onclick="closeActivityModal()">&times;</button>
+    </div>
+    <div class="activity-modal-body" id="activityModalBody">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+  </div>
+</div>
 
 <!-- Load AUTHORS from include -->
 {% include authors-data.html %}
@@ -3211,14 +3448,81 @@ function openResumeModal() {
   iframe.src = viewerUrl;
 }
 
-function closeResumeModal(event) {
-  if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) return;
-  document.getElementById('resumeModal').classList.remove('show');
-  document.body.style.overflow = '';
-  // iframe src 초기화
-  document.getElementById('pdfViewer').src = '';
+// ===== Activities System =====
+const activitiesData = {
+  'captima': {
+    name: 'CAPTIMA',
+    periods: [
+      { status: 'Member', dates: '2022.03. - 2024.12.' },
+      { status: 'Alumni', dates: '2025.01. - Present' }
+    ]
+  },
+  'kfac': {
+    name: 'KFAC (Korea Financial Analytics Community)',
+    periods: [
+      { status: 'Member', dates: '2021.03. - Present' }
+      { status: 'Member', dates: '2017.01. - Present' }
+    ]
+  },
+  'mensa': {
+    name: 'MENSA KOREA',
+    periods: [
+      { status: 'Member', dates: '2017.01. - Present' }
+    ]
+  },
+  'field': {
+    name: 'FIELD',
+    periods: [
+      { status: 'Member', dates: '2019.09. - 2022.02.' },
+      { status: 'Alumni', dates: '2022.03. - Present' }
+    ]
+  },
+  'fba': {
+    name: 'FBA Quant',
+    periods: [
+      { status: 'Member', dates: '2020.01. - 2023.06.' },
+      { status: 'Alumni', dates: '2023.07. - Present' }
+    ]
+  },
+  'dading': {
+    name: 'DadingCoding',
+    periods: [
+      { status: 'Member', dates: '2018.03. - 2021.08.' },
+      { status: 'Alumni', dates: '2021.09. - Present' }
+    ]
+  }
+};
+
+function openActivityModal(activityId) {
+  const activity = activitiesData[activityId];
+  if (!activity) return;
+  
+  document.getElementById('activityModalTitle').textContent = activity.name;
+  const modalBody = document.getElementById('activityModalBody');
+  
+  let html = '';
+  activity.periods.forEach(period => {
+    html += `
+      <div class="activity-period">
+        <div class="activity-status">${period.status}</div>
+        <div class="activity-dates">${period.dates}</div>
+      </div>
+    `;
+  });
+  
+  modalBody.innerHTML = html;
+  document.getElementById('activityModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
 }
 
+function closeActivityModal(event) {
+  if (event && event.target !== event.currentTarget && !event.target.classList.contains('activity-modal-close')) {
+    return;
+  }
+  document.getElementById('activityModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+ 
 function closeResumeModal(event) {
   if (event && event.target !== event.currentTarget && !event.target.classList.contains('collab-modal-close')) return;
   document.getElementById('resumeModal').classList.remove('show');
@@ -3228,6 +3532,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
