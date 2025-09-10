@@ -1564,77 +1564,120 @@ permalink: /publications.html
   }
 
   // 수정된 Citation 포맷팅 함수
-  function formatAuthorsForCitation(authors, style) {
-    if (!authors || authors.length === 0) return "Anonymous";
-    
-    const authorNames = authors.map(id => getAuthorName(id, false));
-    
-    switch(style) {
-      case 'APA':
-        const apaAuthors = authorNames.map(name => {
-          const clean = name.replace(/\*/g, '').trim();
-          const parts = clean.split(/\s+/);
-          const last = parts[parts.length - 1];
-          const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-          return `${last}, ${initials}`;
+ // 수정된 formatAuthorsForCitation 함수
+function formatAuthorsForCitation(authors, style) {
+  if (!authors || authors.length === 0) return "Anonymous";
+  
+  const authorNames = authors.map(id => getAuthorName(id, false));
+  
+  switch(style) {
+    case 'APA':
+      // APA 7th: 모든 저자 나열 (21명 이상일 때만 줄임)
+      const apaAuthors = authorNames.map(name => {
+        const clean = name.replace(/\*/g, '').trim();
+        const parts = clean.split(/\s+/);
+        const last = parts[parts.length - 1];
+        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
+        return `${last}, ${initials}`;
+      });
+      
+      if (apaAuthors.length === 1) {
+        return apaAuthors[0];
+      } else if (apaAuthors.length === 2) {
+        return apaAuthors[0] + ", & " + apaAuthors[1];
+      } else if (apaAuthors.length <= 20) {
+        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
+      } else {
+        // 21명 이상일 때만 줄임
+        return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
+      }
+      
+    case 'MLA':
+      // MLA 9th: 3명까지는 모두 나열, 4명 이상일 때 et al.
+      if (authorNames.length === 1) {
+        return toInitialsReversed(authorNames[0]);
+      } else if (authorNames.length === 2) {
+        return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
+      } else if (authorNames.length === 3) {
+        return toInitialsReversed(authorNames[0]) + ", " + authorNames[1] + ", and " + authorNames[2];
+      } else {
+        // 4명 이상일 때만 et al. 사용
+        return toInitialsReversed(authorNames[0]) + ", et al.";
+      }
+      
+    case 'Chicago':
+      // Chicago 17th: 10명까지 모두 나열
+      if (authorNames.length === 1) {
+        return toInitialsReversed(authorNames[0]);
+      } else if (authorNames.length <= 10) {
+        // 10명까지는 모두 나열
+        const formattedNames = authorNames.map((name, index) => {
+          if (index === 0) return toInitialsReversed(name);
+          return name;
         });
-        
-        if (apaAuthors.length === 1) {
-          return apaAuthors[0];
-        } else if (apaAuthors.length === 2) {
-          return apaAuthors[0] + ", & " + apaAuthors[1];
-        } else if (apaAuthors.length <= 20) {
-          return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
-        } else {
-          return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
-        }
-        
-      case 'MLA':
-        if (authorNames.length === 1) {
-          return toInitialsReversed(authorNames[0]);
-        } else if (authorNames.length === 2) {
-          return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
-        } else {
-          return toInitialsReversed(authorNames[0]) + ", et al.";
-        }
-        
-      case 'Chicago':
-        if (authorNames.length === 1) {
-          return toInitialsReversed(authorNames[0]);
-        } else if (authorNames.length <= 3) {
-          return authorNames.slice(0, -1).join(", ") + ", and " + authorNames[authorNames.length - 1];
-        } else {
-          return authorNames[0] + ", et al.";
-        }
-        
-      case 'Harvard':
-        const harvardAuthors = authorNames.map(name => toInitials(name));
-        if (harvardAuthors.length === 1) {
-          return harvardAuthors[0];
-        } else if (harvardAuthors.length === 2) {
-          return harvardAuthors[0] + " and " + harvardAuthors[1];
-        } else {
-          return harvardAuthors[0] + " et al.";
-        }
-        
-      case 'Vancouver':
-        const vanAuthors = authorNames.map(name => {
-          const clean = name.replace(/\*/g, '').trim();
-          const parts = clean.split(/\s+/);
-          const last = parts.pop() || '';
-          const initials = parts.map(p => (p?.[0] || '').toUpperCase()).join("");
-          return `${last} ${initials}`;
+        return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
+      } else {
+        // 11명 이상일 때 첫 7명 + et al.
+        const formattedNames = authorNames.slice(0, 7).map((name, index) => {
+          if (index === 0) return toInitialsReversed(name);
+          return name;
         });
-        if (vanAuthors.length <= 6) {
-          return vanAuthors.join(", ");
-        } else {
-          return vanAuthors.slice(0, 6).join(", ") + ", et al.";
-        }
-        
-      default:
-        return authorNames.join(", ");
-    }
+        return formattedNames.join(", ") + ", et al.";
+      }
+      
+    case 'Harvard':
+      // Harvard: 3명까지 모두 나열
+      const harvardAuthors = authorNames.map(name => toInitials(name));
+      if (harvardAuthors.length === 1) {
+        return harvardAuthors[0];
+      } else if (harvardAuthors.length === 2) {
+        return harvardAuthors[0] + " and " + harvardAuthors[1];
+      } else if (harvardAuthors.length === 3) {
+        return harvardAuthors[0] + ", " + harvardAuthors[1] + " and " + harvardAuthors[2];
+      } else {
+        // 4명 이상일 때 et al.
+        return harvardAuthors[0] + " et al.";
+      }
+      
+    case 'Vancouver':
+      // Vancouver: 6명까지 모두 나열
+      const vanAuthors = authorNames.map(name => {
+        const clean = name.replace(/\*/g, '').trim();
+        const parts = clean.split(/\s+/);
+        const last = parts.pop() || '';
+        const initials = parts.map(p => (p?.[0] || '').toUpperCase()).join("");
+        return `${last} ${initials}`;
+      });
+      
+      if (vanAuthors.length <= 6) {
+        return vanAuthors.join(", ");
+      } else {
+        // 7명 이상일 때 처음 6명 + et al.
+        return vanAuthors.slice(0, 6).join(", ") + ", et al.";
+      }
+      
+    default:
+      // 기본: 모든 저자 나열
+      return authorNames.join(", ");
   }
+}
+
+// APA용 sentence case 함수
+function toSentenceCase(str) {
+  if (!str) return str;
+  // 첫 글자와 콜론(:) 뒤 첫 글자만 대문자
+  // 고유명사나 약어는 유지
+  return str.charAt(0).toUpperCase() + 
+         str.slice(1).replace(/[A-Z]/g, (match, offset) => {
+           // 콜론 뒤면 대문자 유지
+           if (offset > 0 && str[offset - 2] === ':') return match;
+           // 약어(연속 대문자)면 유지
+           if (offset > 0 && /[A-Z]/.test(str[offset - 1])) return match;
+           if (offset < str.length - 1 && /[A-Z]/.test(str[offset + 1])) return match;
+           // 그 외는 소문자로
+           return match.toLowerCase();
+         });
+}
 
   // 개선된 Citation 생성 함수
   function openCite(pub) {
