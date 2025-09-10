@@ -854,6 +854,45 @@ permalink: /publications.html
    background: #f8fafc;
  }
 
+/* Modal close button X style */
+.modal-close-btn {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  font-size: 24px;
+  font-weight: 300;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* Modal header 스타일 수정 - 상대 위치 추가 */
+.modal header {
+  position: relative;  /* 추가 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+ 
  .modal-title {
    font-size: 18px;
    font-weight: 900;
@@ -963,6 +1002,8 @@ permalink: /publications.html
    .award-trophy { font-size: 14px; }
    .indexing-badge { font-size: 9px; padding: .2rem .4rem; }
  }
+
+ 
 </style>
 
 <!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
@@ -1083,14 +1124,15 @@ permalink: /publications.html
 <section class="max-w-7xl mx-auto px-4 mt-6" id="pubWrap"></section>
 
 <!-- ===== Cite Modal ===== -->
+<!-- 수정된 코드 -->
 <div id="citeModal" class="modal-backdrop">
- <div class="modal">
-   <header>
-     <h3 class="modal-title">Citation Formats</h3>
-     <button id="btnCloseCite" class="copy-btn">Close</button>
-   </header>
-   <div class="p-4" id="citeBody"></div>
- </div>
+  <div class="modal">
+    <header>
+      <h3 class="modal-title">Citation Formats</h3>
+      <button id="btnCloseCite" class="modal-close-btn" aria-label="Close">&times;</button>
+    </header>
+    <div class="p-4" id="citeBody"></div>
+  </div>
 </div>
 
 <script>
