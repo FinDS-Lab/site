@@ -9,1068 +9,1074 @@ permalink: /publications.html
 
 <!-- ===== Gold Interactive Banner (Hearts/Clubs/Spades/Diamonds) ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
-  <style>
-    :root {
-      --gold: rgb(214, 177, 77);
-      --gold-mid: rgb(234, 197, 97);
-      --gold-dark: rgb(194, 157, 57);
-    }
+ <style>
+   :root {
+     --gold: rgb(214, 177, 77);
+     --gold-mid: rgb(234, 197, 97);
+     --gold-dark: rgb(194, 157, 57);
+   }
 
-    /* ===== Global word-wrapping (KO/EN word-based breaks) ===== */
-    html, body, *, *::before, *::after {
-      word-break: keep-all;        /* CJK도 단어 단위로 끊기 */
-      overflow-wrap: break-word;   /* 너무 긴 단어는 단어 경계에 가깝게 줄바꿈 */
-    }
+   /* ===== Global word-wrapping (KO/EN word-based breaks) ===== */
+   html, body, *, *::before, *::after {
+     word-break: keep-all;        /* CJK도 단어 단위로 끊기 */
+     overflow-wrap: break-word;   /* 너무 긴 단어는 단어 경계에 가깝게 줄바꿈 */
+   }
 
-    /* Banner */
-    .banner-section {
-      background: linear-gradient(
-        135deg,
-        var(--gold) 0%,
-        var(--gold-mid) 25%,
-        var(--gold-dark) 50%,
-        var(--gold) 75%,
-        var(--gold-mid) 100%
-      );
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-      position: relative;
-      overflow: hidden;
-      min-height: 200px;
-      border-radius: 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      cursor: pointer;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+   /* Banner */
+   .banner-section {
+     background: linear-gradient(
+       135deg,
+       var(--gold) 0%,
+       var(--gold-mid) 25%,
+       var(--gold-dark) 50%,
+       var(--gold) 75%,
+       var(--gold-mid) 100%
+     );
+     background-size: 400% 400%;
+     animation: gradientShift 15s ease infinite;
+     position: relative;
+     overflow: hidden;
+     min-height: 200px;
+     border-radius: 1rem;
+     box-shadow: 0 10px 30px rgba(0,0,0,.08);
+     cursor: pointer;
+   }
+   @keyframes gradientShift {
+     0% { background-position: 0% 50%; }
+     50% { background-position: 100% 50%; }
+     100% { background-position: 0% 50%; }
+   }
 
-    /* Burst container */
-    .network-burst {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      pointer-events: none;
-      opacity: 0;
-      animation: burstAnimation 2s ease-out forwards;
-    }
-    @keyframes burstAnimation {
-      0%   { opacity: 0; transform: scale(.3) rotate(0deg); }
-      30%  { opacity: .85; }
-      100% { opacity: 0; transform: scale(2) rotate(180deg); }
-    }
-    .network-burst svg { width: 100%; height: 100%; }
-    .burst-line { stroke: rgba(255,255,255,.8); stroke-width: 1.5; fill: none; }
-    .burst-dot  { fill: rgba(255,255,255,.95); }
+   /* Burst container */
+   .network-burst {
+     position: absolute;
+     width: 200px;
+     height: 200px;
+     pointer-events: none;
+     opacity: 0;
+     animation: burstAnimation 2s ease-out forwards;
+   }
+   @keyframes burstAnimation {
+     0%   { opacity: 0; transform: scale(.3) rotate(0deg); }
+     30%  { opacity: .85; }
+     100% { opacity: 0; transform: scale(2) rotate(180deg); }
+   }
+   .network-burst svg { width: 100%; height: 100%; }
+   .burst-line { stroke: rgba(255,255,255,.8); stroke-width: 1.5; fill: none; }
+   .burst-dot  { fill: rgba(255,255,255,.95); }
 
-    /* Banner content (left-bottom) */
-    .banner-content {
-      position: relative;
-      z-index: 10;
-      padding: 32px 24px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      min-height: 200px;
-    }
-    .breadcrumbs-banner {
-      display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
-      font-size: 13px; font-weight: 600; margin-bottom: 8px;
-    }
-    .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
-    .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
-    .breadcrumbs-banner .sep { color: rgba(255,255,255,.8); }
-    .breadcrumbs-banner span:not(.sep):not(a) { color: #fff; font-weight: 800; }
+   /* Banner content (left-bottom) */
+   .banner-content {
+     position: relative;
+     z-index: 10;
+     padding: 32px 24px;
+     display: flex;
+     align-items: flex-end;
+     justify-content: flex-start;
+     min-height: 200px;
+   }
+   .breadcrumbs-banner {
+     display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+     font-size: 13px; font-weight: 600; margin-bottom: 8px;
+   }
+   .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
+   .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
+   .breadcrumbs-banner .sep { color: rgba(255,255,255,.8); }
+   .breadcrumbs-banner span:not(.sep):not(a) { color: #fff; font-weight: 800; }
 
-    .banner-title {
-      font-size: 2.25rem;
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 2px 4px rgba(0,0,0,.12);
-      letter-spacing: -.02em;
-      margin: 0;
-    }
+   .banner-title {
+     font-size: 2.25rem;
+     font-weight: 900;
+     color: #fff;
+     text-shadow: 0 2px 4px rgba(0,0,0,.12);
+     letter-spacing: -.02em;
+     margin: 0;
+   }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      .banner-content { padding: 24px 18px; min-height: 160px; }
-      .banner-section { min-height: 160px; }
-      .banner-title { font-size: 1.9rem; }
-      .breadcrumbs-banner { font-size: 12px; }
-    }
-    @media (max-width: 480px) {
-      .banner-content { padding: 20px 16px; min-height: 130px; }
-      .banner-section { min-height: 130px; }
-      .banner-title { font-size: 1.6rem; }
-      .breadcrumbs-banner { font-size: 11px; }
-    }
-  </style>
+   /* Responsive */
+   @media (max-width: 768px) {
+     .banner-content { padding: 24px 18px; min-height: 160px; }
+     .banner-section { min-height: 160px; }
+     .banner-title { font-size: 1.9rem; }
+     .breadcrumbs-banner { font-size: 12px; }
+   }
+   @media (max-width: 480px) {
+     .banner-content { padding: 20px 16px; min-height: 130px; }
+     .banner-section { min-height: 130px; }
+     .banner-title { font-size: 1.6rem; }
+     .breadcrumbs-banner { font-size: 11px; }
+   }
+ </style>
 
-  <div class="banner-section" onclick="createNetworkBurst(event, this)">
-    <div class="banner-content">
-      <div>
-        <nav aria-label="Breadcrumb" class="breadcrumbs-banner" onclick="event.stopPropagation()">
-          <a href="{{ '/' | relative_url }}">Home</a>
-          <span class="sep">›</span>
-          <span aria-current="page">Publications</span>
-        </nav>
-        <h1 class="banner-title">Publications</h1>
-      </div>
-    </div>
-  </div>
+ <div class="banner-section" onclick="createNetworkBurst(event, this)">
+   <div class="banner-content">
+     <div>
+       <nav aria-label="Breadcrumb" class="breadcrumbs-banner" onclick="event.stopPropagation()">
+         <a href="{{ '/' | relative_url }}">Home</a>
+         <span class="sep">›</span>
+         <span aria-current="page">Publications</span>
+       </nav>
+       <h1 class="banner-title">Publications</h1>
+     </div>
+   </div>
+ </div>
 </section>
 
 <script>
-  /* Interactive gold burst (cards suits) */
-  function createNetworkBurst(event, element) {
-    const rect = element.getBoundingClientRect();
-    const x = event.clientX - rect.left - 100;
-    const y = event.clientY - rect.top - 100;
-    
-    const networkDiv = document.createElement('div');
-    networkDiv.className = 'network-burst';
-    networkDiv.style.left = x + 'px';
-    networkDiv.style.top = y + 'px';
-    
-    const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
-    networkDiv.innerHTML = randomPattern();
-    
-    element.appendChild(networkDiv);
-    setTimeout(() => element.removeChild(networkDiv), 2000);
-  }
+ /* Interactive gold burst (cards suits) */
+ function createNetworkBurst(event, element) {
+   const rect = element.getBoundingClientRect();
+   const x = event.clientX - rect.left - 100;
+   const y = event.clientY - rect.top - 100;
+   
+   const networkDiv = document.createElement('div');
+   networkDiv.className = 'network-burst';
+   networkDiv.style.left = x + 'px';
+   networkDiv.style.top = y + 'px';
+   
+   const patterns = [generateHeartNetwork, generateClubNetwork, generateSpadeNetwork, generateDiamondNetwork];
+   const randomPattern = patterns[Math.floor(Math.random() * patterns.length)];
+   networkDiv.innerHTML = randomPattern();
+   
+   element.appendChild(networkDiv);
+   setTimeout(() => element.removeChild(networkDiv), 2000);
+ }
 
-  /* Heart */
-  function generateHeartNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
-    svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
-    
-    const nodes = [
-      {x:70,y:35}, {x:130,y:35},
-      {x:40,y:70}, {x:160,y:70},
-      {x:100,y:140}, {x:60,y:50}, {x:140,y:50}, {x:80,y:90}, {x:120,y:90}
-    ];
-    const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
-    
-    connections.forEach(([f,t]) => 
-      svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`
-    );
-    nodes.forEach(n => 
-      svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`
-    );
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Heart */
+ function generateHeartNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const heartPath = 'M100,140 C80,120 40,100 40,70 C40,50 55,35 70,35 C85,35 95,45 100,55 C105,45 115,35 130,35 C145,35 160,50 160,70 C160,100 120,120 100,140 Z';
+   svg += `<path d="${heartPath}" class="burst-line" stroke-width="2"/>`;
+   
+   const nodes = [
+     {x:70,y:35}, {x:130,y:35},
+     {x:40,y:70}, {x:160,y:70},
+     {x:100,y:140}, {x:60,y:50}, {x:140,y:50}, {x:80,y:90}, {x:120,y:90}
+   ];
+   const connections = [[0,1],[0,2],[1,3],[2,4],[3,4],[0,5],[1,6],[5,7],[6,8],[7,8]];
+   
+   connections.forEach(([f,t]) => 
+     svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".5"/>`
+   );
+   nodes.forEach(n => 
+     svg += `<circle cx="${n.x}" cy="${n.y}" r="${3 + Math.random()*2}" class="burst-dot"/>`
+   );
+   
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Club */
-  function generateClubNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const circles = [{x:100,y:60,r:25}, {x:75,y:85,r:25}, {x:125,y:85,r:25}];
-    
-    circles.forEach(c => 
-      svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`
-    );
-    svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
-    
-    const nodes = [];
-    circles.forEach(c => {
-      for(let i = 0; i < 6; i++) {
-        const a = i * 2 * Math.PI / 6;
-        nodes.push({x: c.x + c.r * Math.cos(a), y: c.y + c.r * Math.sin(a)});
-      }
-    });
-    nodes.push({x:100,y:100}, {x:100,y:140});
-    
-    for(let i = 0; i < nodes.length; i++) {
-      for(let j = i + 1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x;
-        const dy = nodes[i].y - nodes[j].y;
-        const d = Math.hypot(dx, dy);
-        if(d < 40) {
-          svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" 
-                  class="burst-line" opacity="${0.3 + (1 - d/40) * 0.4}"/>`;
-        }
-      }
-    }
-    
-    nodes.forEach(n => 
-      svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`
-    );
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Club */
+ function generateClubNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const circles = [{x:100,y:60,r:25}, {x:75,y:85,r:25}, {x:125,y:85,r:25}];
+   
+   circles.forEach(c => 
+     svg += `<circle cx="${c.x}" cy="${c.y}" r="${c.r}" class="burst-line" stroke-width="2"/>`
+   );
+   svg += `<line x1="100" y1="100" x2="100" y2="140" class="burst-line" stroke-width="3"/>`;
+   
+   const nodes = [];
+   circles.forEach(c => {
+     for(let i = 0; i < 6; i++) {
+       const a = i * 2 * Math.PI / 6;
+       nodes.push({x: c.x + c.r * Math.cos(a), y: c.y + c.r * Math.sin(a)});
+     }
+   });
+   nodes.push({x:100,y:100}, {x:100,y:140});
+   
+   for(let i = 0; i < nodes.length; i++) {
+     for(let j = i + 1; j < nodes.length; j++) {
+       const dx = nodes[i].x - nodes[j].x;
+       const dy = nodes[i].y - nodes[j].y;
+       const d = Math.hypot(dx, dy);
+       if(d < 40) {
+         svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" 
+                 class="burst-line" opacity="${0.3 + (1 - d/40) * 0.4}"/>`;
+       }
+     }
+   }
+   
+   nodes.forEach(n => 
+     svg += `<circle cx="${n.x}" cy="${n.y}" r="${2 + Math.random()*2}" class="burst-dot"/>`
+   );
+   
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Spade */
-  function generateSpadeNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const spadePath = 'M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
-    
-    svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
-    svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
-    svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
-    
-    const nodes = [
-      {x:100,y:50}, {x:75,y:70}, {x:125,y:70},
-      {x:60,y:85}, {x:140,y:85}, {x:85,y:110}, {x:115,y:110},
-      {x:100,y:105}, {x:90,y:130}, {x:110,y:130}, {x:100,y:145}
-    ];
-    
-    const conn = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
-    
-    conn.forEach(([f,t]) => 
-      svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`
-    );
-    
-    nodes.forEach((n,i) => 
-      svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0 || i===7) ? 4 : 3}" class="burst-dot"/>`
-    );
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Spade */
+ function generateSpadeNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const spadePath = 'M100,50 C80,50 60,65 60,85 C60,105 75,110 85,110 C90,110 95,108 100,105 C105,108 110,110 115,110 C125,110 140,105 140,85 C140,65 120,50 100,50 Z';
+   
+   svg += `<path d="${spadePath}" class="burst-line" stroke-width="2"/>`;
+   svg += `<path d="M100,105 L90,130 L110,130 Z" class="burst-line" stroke-width="2"/>`;
+   svg += `<line x1="100" y1="130" x2="100" y2="145" class="burst-line" stroke-width="3"/>`;
+   
+   const nodes = [
+     {x:100,y:50}, {x:75,y:70}, {x:125,y:70},
+     {x:60,y:85}, {x:140,y:85}, {x:85,y:110}, {x:115,y:110},
+     {x:100,y:105}, {x:90,y:130}, {x:110,y:130}, {x:100,y:145}
+   ];
+   
+   const conn = [[0,1],[0,2],[1,3],[2,4],[3,5],[4,6],[5,7],[6,7],[7,8],[7,9],[8,10],[9,10]];
+   
+   conn.forEach(([f,t]) => 
+     svg += `<line x1="${nodes[f].x}" y1="${nodes[f].y}" x2="${nodes[t].x}" y2="${nodes[t].y}" class="burst-line" opacity=".4"/>`
+   );
+   
+   nodes.forEach((n,i) => 
+     svg += `<circle cx="${n.x}" cy="${n.y}" r="${(i===0 || i===7) ? 4 : 3}" class="burst-dot"/>`
+   );
+   
+   svg += '</svg>';
+   return svg;
+ }
 
-  /* Diamond */
-  function generateDiamondNetwork() {
-    let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
-    const diamond = 'M100,40 L140,100 L100,160 L60,100 Z';
-    
-    svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
-    svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
-    svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
-    svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
-    svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
-    
-    const nodes = [
-      {x:100,y:40}, {x:140,y:100}, {x:100,y:160}, {x:60,y:100},
-      {x:100,y:100}, {x:80,y:70}, {x:120,y:70}, {x:80,y:130},
-      {x:120,y:130}, {x:120,y:100}, {x:80,y:100}
-    ];
-    
-    for(let i = 0; i < 4; i++) {
-      svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`;
-    }
-    
-    nodes.forEach((n,i) => 
-      svg += `<circle cx="${n.x}" cy="${n.y}" r="${i < 4 ? 4 : (i === 4 ? 5 : 2.5)}" class="burst-dot" opacity="${i === 4 ? 1 : .85}"/>`
-    );
-    
-    for(let i = 0; i < 4; i++) {
-      const a = i * Math.PI / 2;
-      const x = 100 + 30 * Math.cos(a);
-      const y = 100 + 30 * Math.sin(a);
-      svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`;
-    }
-    
-    svg += '</svg>';
-    return svg;
-  }
+ /* Diamond */
+ function generateDiamondNetwork() {
+   let svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">';
+   const diamond = 'M100,40 L140,100 L100,160 L60,100 Z';
+   
+   svg += `<path d="${diamond}" class="burst-line" stroke-width="2"/>`;
+   svg += `<line x1="100" y1="40" x2="100" y2="160" class="burst-line" opacity=".55"/>`;
+   svg += `<line x1="60" y1="100" x2="140" y2="100" class="burst-line" opacity=".55"/>`;
+   svg += `<line x1="80" y1="70" x2="120" y2="130" class="burst-line" opacity=".3"/>`;
+   svg += `<line x1="120" y1="70" x2="80" y2="130" class="burst-line" opacity=".3"/>`;
+   
+   const nodes = [
+     {x:100,y:40}, {x:140,y:100}, {x:100,y:160}, {x:60,y:100},
+     {x:100,y:100}, {x:80,y:70}, {x:120,y:70}, {x:80,y:130},
+     {x:120,y:130}, {x:120,y:100}, {x:80,y:100}
+   ];
+   
+   for(let i = 0; i < 4; i++) {
+     svg += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[4].x}" y2="${nodes[4].y}" class="burst-line" opacity=".32"/>`;
+   }
+   
+   nodes.forEach((n,i) => 
+     svg += `<circle cx="${n.x}" cy="${n.y}" r="${i < 4 ? 4 : (i === 4 ? 5 : 2.5)}" class="burst-dot" opacity="${i === 4 ? 1 : .85}"/>`
+   );
+   
+   for(let i = 0; i < 4; i++) {
+     const a = i * Math.PI / 2;
+     const x = 100 + 30 * Math.cos(a);
+     const y = 100 + 30 * Math.sin(a);
+     svg += `<circle cx="${x}" cy="${y}" r="1.5" class="burst-dot" opacity=".65"/>`;
+   }
+   
+   svg += '</svg>';
+   return svg;
+ }
 </script>
 
 <!-- ===== Styles ===== -->
 <style>
-  :root {
-    --journal-gold: rgb(214, 177, 77);
-    --conference-red: rgb(172, 14, 14);
-    --joint-orange: 217,119,6;
-    --book-pink: rgb(220, 38, 38);
-    --report-pink: rgb(251, 113, 133);
-    --thesis-black: rgb(17, 24, 39);
-  }
-
-  /* Authorship Legend Section */
-  .authorship-legend {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    padding: 20px;
-    margin: 20px 0;
-  }
-
-  .authorship-title {
-    font-size: 14px;
-    font-weight: 800;
-    color: #111827;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid #f3f4f6;
-  }
-
-  .authorship-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
-  }
-
-  .authorship-item {
-    display: flex;
-    align-items: flex-start;  /* FIXED: Changed from center to flex-start */
-    gap: 12px;  /* FIXED: Added explicit gap */
-    padding: 8px 12px;
-    background: #f8fafc;
-    border-radius: 0.5rem;
-    transition: all 0.2s;
-  }
-
-  .authorship-item:hover {
-    background: #f3f4f6;
-    transform: translateX(2px);
-  }
-
-  .authorship-mark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 28px;
-    height: 28px;
-    padding: 0 8px;
-    background: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    color: #374151;
-    font-weight: 900;
-    font-size: 12px;
-    border-radius: 6px;
-    flex-shrink: 0;
-    margin-top: 2px;  /* FIXED: Added slight top margin */
-  }
-
-  .authorship-mark.asterisk {
-    font-size: 16px;
-    padding-bottom: 2px;
-  }
-
-  .authorship-desc {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-    flex: 1;  /* FIXED: Take remaining space */
-    min-width: 0;  /* FIXED: Allow text to wrap properly */
-  }
-
-  .authorship-en {
-    font-size: 12px;
-    font-weight: 700;
-    color: #111827;
-    line-height: 1.3;
-  }
-
-  .authorship-ko {
-    font-size: 11px;
-    font-weight: 600;
-    color: #6b7280;
-    line-height: 1.3;
-  }
-
-  /* Toolbar */
-  .toolbar {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    padding: 16px;
-    margin-top: 20px;
-  }
-
-  .search-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .search { 
-    flex: 1; 
-    min-width: 0;
-    position: relative;
-  }
-
-  .search input {
-    width: 100%;
-    border: 1px solid #e5e7eb;
-    border-radius: .6rem;
-    padding: .6rem 2.5rem .6rem .8rem;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-
-  .search-clear {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
-    border: none;
-    background: #fff;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: #6b7280;
-    transition: all 0.2s;
-  }
-
-  .search-clear:hover {
-    background: #f3f4f6;
-    color: #374151;
-  }
-
-  .search-clear.visible {
-    display: flex;
-  }
-
-  .count {
-    font-size: 13px;
-    color: #6b7280;
-    font-weight: 600;
-    background: #fff;
-    padding: .4rem .8rem;
-    border: 1px solid #e5e7eb;
-    border-radius: .5rem;
-    white-space: nowrap;
-  }
-
-  .filter-section { margin-top: 8px; }
-
-  .filter-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #6b7280;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    padding: .5rem 1rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    background: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all .2s;
-    white-space: nowrap;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-  }
-
-  .chip:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,.1);
-  }
-
-  .chip.is-on { box-shadow: inset 0 0 0 2px #111827; }
-  .chip:focus-visible { outline: 2px solid #111827; outline-offset: 2px; }
-  
-  .chip-journal.is-on { background: var(--journal-gold); color: #111; }
-  .chip-conference.is-on { background: var(--conference-red); color: #fff; }
-  .chip-book.is-on { background: var(--book-pink); color: #fff; }
-  .chip-report.is-on { background: var(--report-pink); color: #fff; }
-  .chip-thesis.is-on { background: var(--thesis-black); color: #fff; }
-
-  /* Year sections */
-  .year-section {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    overflow: hidden;
-    margin-bottom: 16px;
-  }
-
-  .year-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: #f8fafc;
-    border-bottom: 1px solid #e5e7eb;
-  }
-
-  .year-title {
-    font-size: 18px;
-    font-weight: 900;
-    color: #111827;
-  }
-
-  .year-toggle {
-    padding: .4rem .8rem;
-    border: 1px solid #e5e7eb;
-    border-radius: .6rem;
-    background: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-
-  .year-toggle:hover { background: #f8fafc; }
-
-  .year-content { padding: 16px; }
-  .paper-list { display: grid; gap: 14px; }
-
-  /* Paper Card */
-  .paper-card {
-    background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 1rem;
-    overflow: hidden;
-  }
-
-  .paper-row {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-  }
-
-  .paper-left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 13px;
-    color: #fff;
-    user-select: none;
-    text-align: center;
-  }
-
-  .paper-left span { display: inline-block; } /* for multi-line code labels */
-
-  .paper-left.journal { background: var(--journal-gold); color: #111; }
-  .paper-left.conference { background: var(--conference-red); }
-  .paper-left.book { background: var(--book-pink); color: #fff; }
-  .paper-left.report { background: var(--report-pink); color: #fff; }
-  .paper-left.thesis { background: var(--thesis-black); color: #fff; }
-  .paper-left.preprint { background: #e5e7eb; color: #6b7280; }
-  .paper-left.empty { background: #f1f5f9; color: #e5e7eb; }
-
-  .paper-body { padding: 14px 16px; }
-
-  /* Header & Badges */
-  .paper-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  .indexing-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-grow: 1;
-  }
-
-  .indexing-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .indexing-badge {
-    flex-shrink: 0;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-  }
-
-  .badge-lang {
-    display: inline-flex;
-    align-items: center;
-    height: 26px;
-    padding: 0 10px;
-    border-radius: 999px;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: .2px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .badge-lang.english { background: #002868; color: #fff; }
-  .badge-lang.korean { background: #CD2E3A; color: #fff; }
-
-  .badge-pub {
-    height: 22px;
-    padding: 0 .6rem;
-    font-size: 10px;
-    line-height: 22px;
-    border-radius: 999px;
-    background: #f8fafc;
-    border: 1px solid #e5e7eb;
-    color: #111827;
-    font-weight: 700;
-    white-space: nowrap;
-    width: fit-content;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .badge-pub .val {
-    color: #374151;
-    font-weight: 700;
-  }
-
-  /* Date color based on publication type */
-  .badge-pub.pub-conference .date-only { color: rgb(172, 14, 14); }
-  .badge-pub.pub-journal   .date-only { color: rgb(214, 177, 77); }
-  .badge-pub.pub-book      .date-only { color: rgb(220, 38, 38); }   /* book-pink */
-  .badge-pub.pub-report    .date-only { color: rgb(251, 113, 133); } /* report-pink */
-  .badge-pub.pub-thesis    .date-only { color: rgb(17, 24, 39); }    /* thesis-black */
-  .badge-pub.pub-preprint  .date-only { color: #6b7280; }            /* gray */
-
-  /* ====== ADDED: make "Published/Presented" black & "on" gray ====== */
-  .badge-pub .val .label-word { color: #000; font-weight: 700; }
-  .badge-pub .val .label-on   { color: #6b7280; font-weight: 700; }
-
-  /* Awards styles */
-  .awards-container {
-    display: flex;
-    gap: 4px;
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-
-  .award-trophy {
-    font-size: 18px;
-    cursor: help;
-    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
-    transition: transform 0.2s;
-  }
-
-  .award-trophy:hover { transform: scale(1.2); }
-
-  .award-tooltip {
-    position: relative;
-    display: inline-block;
-  }
-
-  .award-tooltip .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #111827;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 8px;
-    position: absolute;
-    z-index: 1;
-    top: 125%;
-    right: 0;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: normal;           /* 여러 줄 허용 */
-    line-height: 1.3;
-    word-break: keep-all;          /* 단어 단위 줄바꿈 */
-    overflow-wrap: break-word;     /* 너무 긴 단어만 적절히 */
-  }
-
-  .award-tooltip:hover .tooltiptext { visibility: visible; }
-
-  .award-tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    right: 10px;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #111827 transparent;
-  }
-
-  .paper-title {
-    font-weight: 900;
-    font-size: 15px;
-    color: #111827;
-    margin-bottom: 8px;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-    line-height: 1.4;
-  }
-
-  .paper-meta {
-    margin-bottom: 6px;
-    color: #374151;
-    font-size: 13px;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-    line-height: 1.6;  /* Increased from 1.4 to 1.6 for better spacing */
-  }
-
-  /* ===== FIX: Keep author names and superscripts together ===== */
-  .author-with-mark {
-    display: inline-block;
-    white-space: nowrap;  /* Prevents breaking between name and superscript */
-  }
-
-  .paper-meta sup {
-    font-size: 0.65em;
-    margin-left: 1px;
-    color: #6b7280;
-    font-weight: 600;
-    vertical-align: super;  /* Changed from baseline to super */
-    line-height: 0;         /* Prevents superscript from affecting line height */
-  }
-
-  .paper-venue {
-    margin-bottom: 6px;
-    color: #6b7280;
-    font-size: 12px;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-    line-height: 1.4;
-  }
-
-  .paper-details {
-    margin-bottom: 10px;
-    font-size: 11px;
-    color: #6b7280;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    line-height: 1.4;
-  }
-
-  .paper-detail-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .paper-detail-item .label {
-    font-weight: 700;
-    color: #9ca3af;
-  }
-
-  .paper-detail-item .value {
-    font-weight: 600;
-    color: #6b7280;
-  }
-
-  .paper-detail-item.doi .value {
-    color: #2563eb;
-    text-decoration: none;
-    transition: all 0.2s;
-    word-break: break-all; /* DOI/URL은 예외적으로 임의분리 허용 */
-  }
-
-  .paper-detail-item.doi .value:hover {
-    color: #1d4ed8;
-    text-decoration: underline;
-  }
-
-  .paper-foot { display: flex; gap: 8px; }
-
-  /* Index Badges */
-  .idx {
-    display: inline-flex;
-    align-items: center;
-    padding: .3rem .6rem;
-    border-radius: 9999px;
-    font-weight: 800;
-    font-size: 11px;
-    white-space: nowrap;
-    word-break: keep-all;
-    overflow-wrap: break-word;
-  }
-
-  .idx-scie, .idx-ssci, .idx-ahci { background: rgba(214,177,77,.95); color: #111; }
-  .idx-esci { background: rgba(214,177,77,.80); color: #111; }
-  .idx-scopus { background: rgba(214,177,77,.65); color: #111; }
-  .idx-other-intl { background: rgba(214,177,77,.45); color: #111; }
-  .idx-kci-exc { background: rgba(214,177,77,.35); color: #111; }
-  .idx-kci { background: rgba(214,177,77,.25); color: #111; }
-  .idx-other-domestic { background: rgba(214,177,77,.15); color: #111; }
-  .idx-intl-conf { background: rgba(172,14,14,.85); color: #fff; }
-  .idx-domestic-conf { background: rgba(172,14,14,.45); color: #111; }
-  .idx-joint-conf { background: rgba(217,119,6,.85); color: #fff; }
-  .idx-book { background: var(--book-pink); color: #fff; }
-  .idx-report { background: var(--report-pink); color: #fff; }
-  .idx-thesis { background: var(--thesis-black); color: #fff; }
-  .idx-preprint, .idx-working { background: #fff; border: 1px solid #e5e7eb; color: #6b7280; }
-
-  /* Buttons */
-  .btn {
-    padding: .4rem .8rem;
-    border: 1px solid #e5e7eb;
-    border-radius: .6rem;
-    background: #fff;
-    font-weight: 700;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-
-  .btn:hover { background: #f8fafc; }
-
-  /* Modal */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 99999;
-  }
-
-  .modal {
-    background: #fff;
-    border-radius: 1rem;
-    max-width: 720px;
-    width: 100%;
-    max-height: 80vh;
-    overflow: auto;
-  }
-
-  .modal header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 20px;
-    border-bottom: 1px solid #e5e7eb;
-    background: #f8fafc;
-  }
-
-  .modal-title {
-    font-size: 18px;
-    font-weight: 900;
-    color: #111827;
-  }
-
-  .cite-block {
-    border: 1px solid #e5e7eb;
-    border-radius: .75rem;
-    padding: 12px 14px;
-    background: #f8fafc;
-    margin-bottom: 12px;
-  }
-
-  .cite-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .cite-label {
-    font-weight: 800;
-    font-size: 13px;
-    color: #111827;
-  }
-
-  .cite-text {
-    font-size: 13px;
-    color: #374151;
-    line-height: 1.5;
-  }
-
-  .copy-btn {
-    border: 1px solid #e5e7eb;
-    border-radius: .5rem;
-    padding: .3rem .6rem;
-    font-size: 11px;
-    font-weight: 800;
-    background: #fff;
-    cursor: pointer;
-  }
-
-  .copy-btn:hover { background: #f8fafc; }
-
-  /* Empty */
-  .empty-state {
-    padding: 48px 20px;
-    text-align: center;
-    color: #6b7280;
-    font-size: 14px;
-    font-weight: 600;
-    border: 1px dashed #e5e7eb;
-    border-radius: 1rem;
-    background: #fff;
-    margin-top: 20px;
-  }
-
-  /* Mobile Tweaks */
-  @media (max-width: 640px) {
-    .search-container { flex-direction: column; align-items: stretch; }
-    .search { width: 100%; }
-    .count { text-align: center; width: 100%; }
-    .paper-row { grid-template-columns: 48px 1fr; }
-    .paper-title { font-size: 14px; }
-    .chip { font-size: 11px; padding: .4rem .8rem; }
-    .authorship-grid { grid-template-columns: 1fr; }
-    .authorship-item { padding: 10px; }
-    
-    .paper-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
-    
-    .indexing-wrapper { width: 100%; }
-    
-    .indexing-row {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      width: 100%;
-    }
-    
-    .indexing-badge { font-size: 10px; padding: .25rem .5rem; }
-    .badge-lang { height: 22px; padding: 0 6px; font-size: 9px; }
-    .badge-pub { height: 22px; padding: 0 6px; font-size: 9px; }
-    .award-trophy { font-size: 16px; }
-    .awards-container { margin-left: 0; }
-  }
-
-  @media (max-width: 380px) {
-    .badge-pub { padding: 0 5px; font-size: 8px; }
-    .badge-lang { font-size: 8px; padding: 0 5px; }
-    
-    .authorship-mark {
-      min-width: 24px;
-      height: 24px;
-      font-size: 10px;
-    }
-    
-    .authorship-en { font-size: 11px; }
-    .authorship-ko { font-size: 10px; }
-    .award-trophy { font-size: 14px; }
-    .indexing-badge { font-size: 9px; padding: .2rem .4rem; }
-  }
+ :root {
+   --journal-gold: rgb(214, 177, 77);
+   --conference-red: rgb(172, 14, 14);
+   --joint-orange: 217,119,6;
+   --book-pink: rgb(220, 38, 38);
+   --report-pink: rgb(251, 113, 133);
+   --thesis-black: rgb(17, 24, 39);
+ }
+
+ /* Authorship Legend Section */
+ .authorship-legend {
+   background: #fff;
+   border: 1px solid #e5e7eb;
+   border-radius: 1rem;
+   padding: 20px;
+   margin: 20px 0;
+ }
+
+ .authorship-title {
+   font-size: 14px;
+   font-weight: 800;
+   color: #111827;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   margin-bottom: 16px;
+   padding-bottom: 12px;
+   border-bottom: 2px solid #f3f4f6;
+ }
+
+ .authorship-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+   gap: 12px;
+ }
+
+ .authorship-item {
+   display: flex;
+   align-items: flex-start;
+   gap: 12px;
+   padding: 8px 12px;
+   background: #f8fafc;
+   border-radius: 0.5rem;
+   transition: all 0.2s;
+ }
+
+ .authorship-item:hover {
+   background: #f3f4f6;
+   transform: translateX(2px);
+ }
+
+ .authorship-mark {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   min-width: 28px;
+   height: 28px;
+   padding: 0 8px;
+   background: #f3f4f6;
+   border: 1px solid #e5e7eb;
+   color: #374151;
+   font-weight: 900;
+   font-size: 12px;
+   border-radius: 6px;
+   flex-shrink: 0;
+   margin-top: 2px;
+ }
+
+ .authorship-mark.asterisk {
+   font-size: 16px;
+   padding-bottom: 2px;
+ }
+
+ .authorship-desc {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+   flex: 1;
+   min-width: 0;
+ }
+
+ .authorship-en {
+   font-size: 12px;
+   font-weight: 700;
+   color: #111827;
+   line-height: 1.3;
+ }
+
+ .authorship-ko {
+   font-size: 11px;
+   font-weight: 600;
+   color: #6b7280;
+   line-height: 1.3;
+ }
+
+ /* Toolbar */
+ .toolbar {
+   display: flex;
+   flex-direction: column;
+   gap: 14px;
+   background: #f8fafc;
+   border: 1px solid #e5e7eb;
+   border-radius: 1rem;
+   padding: 16px;
+   margin-top: 20px;
+ }
+
+ .search-container {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   flex-wrap: wrap;
+ }
+
+ .search { 
+   flex: 1; 
+   min-width: 0;
+   position: relative;
+ }
+
+ .search input {
+   width: 100%;
+   border: 1px solid #e5e7eb;
+   border-radius: .6rem;
+   padding: .6rem 2.5rem .6rem .8rem;
+   font-size: 14px;
+   box-sizing: border-box;
+ }
+
+ .search-clear {
+   position: absolute;
+   right: 8px;
+   top: 50%;
+   transform: translateY(-50%);
+   width: 28px;
+   height: 28px;
+   border: none;
+   background: #fff;
+   border-radius: 50%;
+   cursor: pointer;
+   display: none;
+   align-items: center;
+   justify-content: center;
+   font-size: 16px;
+   color: #6b7280;
+   transition: all 0.2s;
+ }
+
+ .search-clear:hover {
+   background: #f3f4f6;
+   color: #374151;
+ }
+
+ .search-clear.visible {
+   display: flex;
+ }
+
+ .count {
+   font-size: 13px;
+   color: #6b7280;
+   font-weight: 600;
+   background: #fff;
+   padding: .4rem .8rem;
+   border: 1px solid #e5e7eb;
+   border-radius: .5rem;
+   white-space: nowrap;
+ }
+
+ .filter-section { margin-top: 8px; }
+
+ .filter-label {
+   font-size: 12px;
+   font-weight: 700;
+   color: #6b7280;
+   text-transform: uppercase;
+   letter-spacing: .5px;
+   margin-bottom: 8px;
+   display: block;
+ }
+
+ .chips {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+ }
+
+ .chip {
+   display: inline-flex;
+   align-items: center;
+   padding: .5rem 1rem;
+   border-radius: 999px;
+   border: 1px solid transparent;
+   background: #fff;
+   font-weight: 700;
+   font-size: 12px;
+   cursor: pointer;
+   transition: all .2s;
+   white-space: nowrap;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+ }
+
+ .chip:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 2px 8px rgba(0,0,0,.1);
+ }
+
+ .chip.is-on { box-shadow: inset 0 0 0 2px #111827; }
+ .chip:focus-visible { outline: 2px solid #111827; outline-offset: 2px; }
+ 
+ .chip-journal.is-on { background: var(--journal-gold); color: #111; }
+ .chip-conference.is-on { background: var(--conference-red); color: #fff; }
+ .chip-book.is-on { background: var(--book-pink); color: #fff; }
+ .chip-report.is-on { background: var(--report-pink); color: #fff; }
+ .chip-thesis.is-on { background: var(--thesis-black); color: #fff; }
+
+ /* Year sections */
+ .year-section {
+   background: #fff;
+   border: 1px solid #e5e7eb;
+   border-radius: 1rem;
+   overflow: hidden;
+   margin-bottom: 16px;
+ }
+
+ .year-head {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 12px 16px;
+   background: #f8fafc;
+   border-bottom: 1px solid #e5e7eb;
+ }
+
+ .year-title {
+   font-size: 18px;
+   font-weight: 900;
+   color: #111827;
+ }
+
+ .year-toggle {
+   padding: .4rem .8rem;
+   border: 1px solid #e5e7eb;
+   border-radius: .6rem;
+   background: #fff;
+   font-weight: 700;
+   font-size: 12px;
+   cursor: pointer;
+   transition: all .2s;
+ }
+
+ .year-toggle:hover { background: #f8fafc; }
+
+ .year-content { padding: 16px; }
+ .paper-list { display: grid; gap: 14px; }
+
+ /* Paper Card */
+ .paper-card {
+   background: #fff;
+   border: 1px solid #e5e7eb;
+   border-radius: 1rem;
+   overflow: hidden;
+ }
+
+ .paper-row {
+   display: grid;
+   grid-template-columns: 56px 1fr;
+ }
+
+ .paper-left {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-weight: 900;
+   font-size: 13px;
+   color: #fff;
+   user-select: none;
+   text-align: center;
+ }
+
+ .paper-left span { display: inline-block; }
+
+ .paper-left.journal { background: var(--journal-gold); color: #111; }
+ .paper-left.conference { background: var(--conference-red); }
+ .paper-left.book { background: var(--book-pink); color: #fff; }
+ .paper-left.report { background: var(--report-pink); color: #fff; }
+ .paper-left.thesis { background: var(--thesis-black); color: #fff; }
+ .paper-left.preprint { background: #e5e7eb; color: #6b7280; }
+ .paper-left.empty { background: #f1f5f9; color: #e5e7eb; }
+
+ .paper-body { padding: 14px 16px; }
+
+ /* Header & Badges */
+ .paper-header {
+   display: flex;
+   align-items: flex-start;
+   gap: 8px;
+   margin-bottom: 10px;
+ }
+
+ .indexing-wrapper {
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   flex-grow: 1;
+ }
+
+ .indexing-row {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+ }
+
+ .indexing-badge {
+   flex-shrink: 0;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+ }
+
+ .badge-lang {
+   display: inline-flex;
+   align-items: center;
+   height: 26px;
+   padding: 0 10px;
+   border-radius: 999px;
+   font-weight: 800;
+   font-size: 11px;
+   letter-spacing: .2px;
+   white-space: nowrap;
+   flex-shrink: 0;
+ }
+
+ .badge-lang.english { background: #002868; color: #fff; }
+ .badge-lang.korean { background: #CD2E3A; color: #fff; }
+
+ .badge-pub {
+   height: 22px;
+   padding: 0 .6rem;
+   font-size: 10px;
+   line-height: 22px;
+   border-radius: 999px;
+   background: #f8fafc;
+   border: 1px solid #e5e7eb;
+   color: #111827;
+   font-weight: 700;
+   white-space: nowrap;
+   width: fit-content;
+   display: inline-flex;
+   align-items: center;
+ }
+
+ .badge-pub .val {
+   color: #374151;
+   font-weight: 700;
+ }
+
+ /* Date color based on publication type */
+ .badge-pub.pub-conference .date-only { color: rgb(172, 14, 14); }
+ .badge-pub.pub-journal   .date-only { color: rgb(214, 177, 77); }
+ .badge-pub.pub-book      .date-only { color: rgb(220, 38, 38); }
+ .badge-pub.pub-report    .date-only { color: rgb(251, 113, 133); }
+ .badge-pub.pub-thesis    .date-only { color: rgb(17, 24, 39); }
+ .badge-pub.pub-preprint  .date-only { color: #6b7280; }
+
+ .badge-pub .val .label-word { color: #000; font-weight: 700; }
+ .badge-pub .val .label-on   { color: #6b7280; font-weight: 700; }
+
+ /* Awards styles */
+ .awards-container {
+   display: flex;
+   gap: 4px;
+   margin-left: auto;
+   flex-shrink: 0;
+ }
+
+ .award-trophy {
+   font-size: 18px;
+   cursor: help;
+   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+   transition: transform 0.2s;
+ }
+
+ .award-trophy:hover { transform: scale(1.2); }
+
+ .award-tooltip {
+   position: relative;
+   display: inline-block;
+ }
+
+ .award-tooltip .tooltiptext {
+   visibility: hidden;
+   width: 200px;
+   background-color: #111827;
+   color: #fff;
+   text-align: center;
+   border-radius: 6px;
+   padding: 5px 8px;
+   position: absolute;
+   z-index: 1;
+   top: 125%;
+   right: 0;
+   font-size: 11px;
+   font-weight: 600;
+   white-space: normal;
+   line-height: 1.3;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+ }
+
+ .award-tooltip:hover .tooltiptext { visibility: visible; }
+
+ .award-tooltip .tooltiptext::after {
+   content: "";
+   position: absolute;
+   bottom: 100%;
+   right: 10px;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: transparent transparent #111827 transparent;
+ }
+
+ .paper-title {
+   font-weight: 900;
+   font-size: 15px;
+   color: #111827;
+   margin-bottom: 8px;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+   line-height: 1.4;
+ }
+
+ .paper-meta {
+   margin-bottom: 6px;
+   color: #374151;
+   font-size: 13px;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+   line-height: 1.6;
+ }
+
+ .author-with-mark {
+   display: inline-block;
+   white-space: nowrap;
+ }
+
+ .paper-meta sup {
+   font-size: 0.65em;
+   margin-left: 1px;
+   color: #6b7280;
+   font-weight: 600;
+   vertical-align: super;
+   line-height: 0;
+ }
+
+ .paper-venue {
+   margin-bottom: 6px;
+   color: #6b7280;
+   font-size: 12px;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+   line-height: 1.4;
+ }
+
+ .paper-venue em {
+   font-style: italic;
+ }
+
+ .paper-details {
+   margin-bottom: 10px;
+   font-size: 11px;
+   color: #6b7280;
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   line-height: 1.4;
+ }
+
+ .paper-detail-item {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+ }
+
+ .paper-detail-item .label {
+   font-weight: 700;
+   color: #9ca3af;
+ }
+
+ .paper-detail-item .value {
+   font-weight: 600;
+   color: #6b7280;
+ }
+
+ .paper-detail-item.doi .value {
+   color: #2563eb;
+   text-decoration: none;
+   transition: all 0.2s;
+   word-break: break-all;
+ }
+
+ .paper-detail-item.doi .value:hover {
+   color: #1d4ed8;
+   text-decoration: underline;
+ }
+
+ .paper-foot { display: flex; gap: 8px; }
+
+ /* Index Badges */
+ .idx {
+   display: inline-flex;
+   align-items: center;
+   padding: .3rem .6rem;
+   border-radius: 9999px;
+   font-weight: 800;
+   font-size: 11px;
+   white-space: nowrap;
+   word-break: keep-all;
+   overflow-wrap: break-word;
+ }
+
+ .idx-scie, .idx-ssci, .idx-ahci { background: rgba(214,177,77,.95); color: #111; }
+ .idx-esci { background: rgba(214,177,77,.80); color: #111; }
+ .idx-scopus { background: rgba(214,177,77,.65); color: #111; }
+ .idx-other-intl { background: rgba(214,177,77,.45); color: #111; }
+ .idx-kci-exc { background: rgba(214,177,77,.35); color: #111; }
+ .idx-kci { background: rgba(214,177,77,.25); color: #111; }
+ .idx-other-domestic { background: rgba(214,177,77,.15); color: #111; }
+ .idx-intl-conf { background: rgba(172,14,14,.85); color: #fff; }
+ .idx-domestic-conf { background: rgba(172,14,14,.45); color: #111; }
+ .idx-joint-conf { background: rgba(217,119,6,.85); color: #fff; }
+ .idx-book { background: var(--book-pink); color: #fff; }
+ .idx-report { background: var(--report-pink); color: #fff; }
+ .idx-thesis { background: var(--thesis-black); color: #fff; }
+ .idx-preprint, .idx-working { background: #fff; border: 1px solid #e5e7eb; color: #6b7280; }
+
+ /* Buttons */
+ .btn {
+   padding: .4rem .8rem;
+   border: 1px solid #e5e7eb;
+   border-radius: .6rem;
+   background: #fff;
+   font-weight: 700;
+   font-size: 12px;
+   cursor: pointer;
+   transition: all .2s;
+ }
+
+ .btn:hover { background: #f8fafc; }
+
+ /* Modal */
+ .modal-backdrop {
+   position: fixed;
+   inset: 0;
+   background: rgba(0,0,0,.5);
+   display: none;
+   align-items: center;
+   justify-content: center;
+   padding: 20px;
+   z-index: 99999;
+ }
+
+ .modal {
+   background: #fff;
+   border-radius: 1rem;
+   max-width: 720px;
+   width: 100%;
+   max-height: 80vh;
+   overflow: auto;
+ }
+
+ .modal header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 16px 20px;
+   border-bottom: 1px solid #e5e7eb;
+   background: #f8fafc;
+ }
+
+ .modal-title {
+   font-size: 18px;
+   font-weight: 900;
+   color: #111827;
+ }
+
+ .cite-block {
+   border: 1px solid #e5e7eb;
+   border-radius: .75rem;
+   padding: 12px 14px;
+   background: #f8fafc;
+   margin-bottom: 12px;
+ }
+
+ .cite-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 8px;
+ }
+
+ .cite-label {
+   font-weight: 800;
+   font-size: 13px;
+   color: #111827;
+ }
+
+ .cite-text {
+   font-size: 13px;
+   color: #374151;
+   line-height: 1.5;
+ }
+
+ .cite-text em {
+   font-style: italic;
+ }
+
+ .copy-btn {
+   border: 1px solid #e5e7eb;
+   border-radius: .5rem;
+   padding: .3rem .6rem;
+   font-size: 11px;
+   font-weight: 800;
+   background: #fff;
+   cursor: pointer;
+ }
+
+ .copy-btn:hover { background: #f8fafc; }
+
+ /* Empty */
+ .empty-state {
+   padding: 48px 20px;
+   text-align: center;
+   color: #6b7280;
+   font-size: 14px;
+   font-weight: 600;
+   border: 1px dashed #e5e7eb;
+   border-radius: 1rem;
+   background: #fff;
+   margin-top: 20px;
+ }
+
+ /* Mobile Tweaks */
+ @media (max-width: 640px) {
+   .search-container { flex-direction: column; align-items: stretch; }
+   .search { width: 100%; }
+   .count { text-align: center; width: 100%; }
+   .paper-row { grid-template-columns: 48px 1fr; }
+   .paper-title { font-size: 14px; }
+   .chip { font-size: 11px; padding: .4rem .8rem; }
+   .authorship-grid { grid-template-columns: 1fr; }
+   .authorship-item { padding: 10px; }
+   
+   .paper-header {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 6px;
+   }
+   
+   .indexing-wrapper { width: 100%; }
+   
+   .indexing-row {
+     flex-wrap: wrap;
+     justify-content: space-between;
+     width: 100%;
+   }
+   
+   .indexing-badge { font-size: 10px; padding: .25rem .5rem; }
+   .badge-lang { height: 22px; padding: 0 6px; font-size: 9px; }
+   .badge-pub { height: 22px; padding: 0 6px; font-size: 9px; }
+   .award-trophy { font-size: 16px; }
+   .awards-container { margin-left: 0; }
+ }
+
+ @media (max-width: 380px) {
+   .badge-pub { padding: 0 5px; font-size: 8px; }
+   .badge-lang { font-size: 8px; padding: 0 5px; }
+   
+   .authorship-mark {
+     min-width: 24px;
+     height: 24px;
+     font-size: 10px;
+   }
+   
+   .authorship-en { font-size: 11px; }
+   .authorship-ko { font-size: 10px; }
+   .award-trophy { font-size: 14px; }
+   .indexing-badge { font-size: 9px; padding: .2rem .4rem; }
+ }
 </style>
 
 <!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="toolbar">
-    <div class="search-container">
-      <div class="search">
-        <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
-        <button id="searchClear" class="search-clear" title="Clear search">×</button>
-      </div>
-      <div class="count" id="count"></div>
-    </div>
-  </div>
+ <div class="toolbar">
+   <div class="search-container">
+     <div class="search">
+       <input id="pubSearch" type="text" placeholder="Search by title, author, venue..." />
+       <button id="searchClear" class="search-clear" title="Clear search">×</button>
+     </div>
+     <div class="count" id="count"></div>
+   </div>
+ </div>
 </section>
 
 <!-- ===== Authorship Legend ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="authorship-legend">
-    <h3 class="authorship-title">Authorship Remarks</h3>
-    <div class="authorship-grid">
-      <div class="authorship-item">
-        <span class="authorship-mark">P</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Principal Investigator</span>
-          <span class="authorship-ko">연구 책임자</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">L</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Leading Researcher</span>
-          <span class="authorship-ko">책임 연구원</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">R</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Researcher</span>
-          <span class="authorship-ko">참여 연구원</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">A</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Advisor (Thesis / Dissertation)</span>
-          <span class="authorship-ko">지도교수 (학위논문)</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">1</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">First Author</span>
-          <span class="authorship-ko">제1저자</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">2</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Second Author / Co-author</span>
-          <span class="authorship-ko">제2저자 / 공동저자</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark">3</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Third Author</span>
-          <span class="authorship-ko">제3저자</span>
-        </div>
-      </div>
-      
-      <div class="authorship-item">
-        <span class="authorship-mark asterisk">*</span>
-        <div class="authorship-desc">
-          <span class="authorship-en">Corresponding Author</span>
-          <span class="authorship-ko">교신저자</span>
-        </div>
-      </div>
-    </div>
-  </div>
+ <div class="authorship-legend">
+   <h3 class="authorship-title">Authorship Remarks</h3>
+   <div class="authorship-grid">
+     <div class="authorship-item">
+       <span class="authorship-mark">P</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Principal Investigator</span>
+         <span class="authorship-ko">연구 책임자</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">L</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Leading Researcher</span>
+         <span class="authorship-ko">책임 연구원</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">R</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Researcher</span>
+         <span class="authorship-ko">참여 연구원</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">A</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Advisor (Thesis / Dissertation)</span>
+         <span class="authorship-ko">지도교수 (학위논문)</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">1</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">First Author</span>
+         <span class="authorship-ko">제1저자</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">2</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Second Author / Co-author</span>
+         <span class="authorship-ko">제2저자 / 공동저자</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark">3</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Third Author</span>
+         <span class="authorship-ko">제3저자</span>
+       </div>
+     </div>
+     
+     <div class="authorship-item">
+       <span class="authorship-mark asterisk">*</span>
+       <div class="authorship-desc">
+         <span class="authorship-en">Corresponding Author</span>
+         <span class="authorship-ko">교신저자</span>
+       </div>
+     </div>
+   </div>
+ </div>
 </section>
 
 <!-- ===== Filter Sections ===== -->
 <section class="max-w-7xl mx-auto px-4">
-  <div class="toolbar" style="padding: 0;">
-    <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #f8fafc; border-radius: 1rem 1rem 0 0; border-bottom: 1px solid #e5e7eb;">
-      <h3 style="font-size: 14px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Filters</h3>
-      <button id="toggleFilters" style="padding: .4rem .8rem; border: 1px solid #e5e7eb; border-radius: .6rem; font-size: 12px; font-weight: 700; background: #fff; cursor: pointer; color: #374151; transition: all .2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='#fff'">Expand</button>
-    </div>
-    
+ <div class="toolbar" style="padding: 0;">
+   <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #f8fafc; border-radius: 1rem 1rem 0 0; border-bottom: 1px solid #e5e7eb;">
+     <h3 style="font-size: 14px; font-weight: 800; color: #111827; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Filters</h3>
+     <button id="toggleFilters" style="padding: .4rem .8rem; border: 1px solid #e5e7eb; border-radius: .6rem; font-size: 12px; font-weight: 700; background: #fff; cursor: pointer; color: #374151; transition: all .2s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='#fff'">Expand</button>
+   </div>
+   
 <div id="filterContent" style="display: none; padding: 16px;">
-  <button id="clearAllFilters" style="width: 100%; padding: .5rem 1rem; border: 2px solid rgb(214, 177, 77); border-radius: .6rem; font-size: 12px; font-weight: 800; background: rgba(214, 177, 77, 0.1); cursor: pointer; color: rgb(194, 157, 57); transition: all .2s; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.background='rgba(214, 177, 77, 0.2)'" onmouseout="this.style.background='rgba(214, 177, 77, 0.1)'">Clear all filters</button>
-  
-  <div class="filter-section">
-    <label class="filter-label">Publication Type</label>
-    <div class="chips" id="typeChips"></div>
-  </div>
+ <button id="clearAllFilters" style="width: 100%; padding: .5rem 1rem; border: 2px solid rgb(214, 177, 77); border-radius: .6rem; font-size: 12px; font-weight: 800; background: rgba(214, 177, 77, 0.1); cursor: pointer; color: rgb(194, 157, 57); transition: all .2s; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;" onmouseover="this.style.background='rgba(214, 177, 77, 0.2)'" onmouseout="this.style.background='rgba(214, 177, 77, 0.1)'">Clear all filters</button>
+ 
+ <div class="filter-section">
+   <label class="filter-label">Publication Type</label>
+   <div class="chips" id="typeChips"></div>
+ </div>
 
-  <div class="filter-section">
-    <label class="filter-label">Journal Indexing</label>
-    <div class="chips" id="journalChips"></div>
-  </div>
+ <div class="filter-section">
+   <label class="filter-label">Journal Indexing</label>
+   <div class="chips" id="journalChips"></div>
+ </div>
 
-  <div class="filter-section">
-    <label class="filter-label">Conference</label>
-    <div class="chips" id="conferenceChips"></div>
-  </div>
+ <div class="filter-section">
+   <label class="filter-label">Conference</label>
+   <div class="chips" id="conferenceChips"></div>
+ </div>
 </div>
-  </div>
+ </div>
 </section>
 
 <!-- ===== Publications ===== -->
@@ -1078,384 +1084,369 @@ permalink: /publications.html
 
 <!-- ===== Cite Modal ===== -->
 <div id="citeModal" class="modal-backdrop">
-  <div class="modal">
-    <header>
-      <h3 class="modal-title">Citation Formats</h3>
-      <button id="btnCloseCite" class="copy-btn">Close</button>
-    </header>
-    <div class="p-4" id="citeBody"></div>
-  </div>
+ <div class="modal">
+   <header>
+     <h3 class="modal-title">Citation Formats</h3>
+     <button id="btnCloseCite" class="copy-btn">Close</button>
+   </header>
+   <div class="p-4" id="citeBody"></div>
+ </div>
 </div>
 
 <script>
-  /* ===== Title Case Function ===== */
-  function toTitleCase(str) {
-    if (!str) return str;
-    const hasLowerCase = /[a-z]/.test(str);
-    const hasUpperCase = /[A-Z]/.test(str);
-    const needsTitleCase = !hasLowerCase || !hasUpperCase;
-    if (!needsTitleCase) return str;
-    const lowercaseWords = ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','or','the','to','via','with'];
-    const words = str.split(' ');
-    return words.map((word, index) => {
-      if (/^[A-Z0-9]+$/.test(word) && word.length > 1) return word;
-      if (index === 0 || index === words.length - 1)
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-      if (lowercaseWords.includes(word.toLowerCase())) return word.toLowerCase();
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    }).join(' ');
-  }
+ /* ===== Title Case Function ===== */
+ function toTitleCase(str) {
+   if (!str) return str;
+   const hasLowerCase = /[a-z]/.test(str);
+   const hasUpperCase = /[A-Z]/.test(str);
+   const needsTitleCase = !hasLowerCase || !hasUpperCase;
+   if (!needsTitleCase) return str;
+   const lowercaseWords = ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','or','the','to','via','with'];
+   const words = str.split(' ');
+   return words.map((word, index) => {
+     if (/^[A-Z0-9]+$/.test(word) && word.length > 1) return word;
+     if (index === 0 || index === words.length - 1)
+       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+     if (lowercaseWords.includes(word.toLowerCase())) return word.toLowerCase();
+     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+   }).join(' ');
+ }
 
-  /* ===== Load data from _data/pubs.json ===== */
-  const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
+ /* ===== Load data from _data/pubs.json ===== */
+ const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
 
-  /* ===== ADDED: small helpers for arrays/types/indexing ===== */
-  function arr(v){ return Array.isArray(v) ? v : (v != null ? [v] : []); }
-  function hasAny(haystack, needles){ const hs = arr(haystack); return arr(needles).some(x => hs.includes(x)); }
-  function primaryType(pub){
-    const t = arr(pub.type);
-    if (t.includes('conference')) return 'conference';
-    if (t.includes('journal'))    return 'journal';
-    if (t.includes('book'))       return 'book';
-    if (t.includes('report'))     return 'report';
-    if (t.includes('thesis'))     return 'thesis';
-    return pub.type || '';
-  }
-  function primaryIndexing(pub){
-    const ig = arr(pub.indexing_group);
-    return ig[0] || '';
-  }
+ /* ===== ADDED: small helpers for arrays/types/indexing ===== */
+ function arr(v){ return Array.isArray(v) ? v : (v != null ? [v] : []); }
+ function hasAny(haystack, needles){ const hs = arr(haystack); return arr(needles).some(x => hs.includes(x)); }
+ function primaryType(pub){
+   const t = arr(pub.type);
+   if (t.includes('conference')) return 'conference';
+   if (t.includes('journal'))    return 'journal';
+   if (t.includes('book'))       return 'book';
+   if (t.includes('report'))     return 'report';
+   if (t.includes('thesis'))     return 'thesis';
+   return pub.type || '';
+ }
+ function primaryIndexing(pub){
+   const ig = arr(pub.indexing_group);
+   return ig[0] || '';
+ }
 
-  /* ===== UPDATED: handle multiple code_label prefixes and output code_labels array ===== */
-  function autoNumberCodeLabels(pubs) {
-    // Sort oldest->newest for numbering order
-    const sorted = [...pubs].sort((a, b) => {
-      if (a.published_date && b.published_date) {
-        return new Date(a.published_date) - new Date(b.published_date);
-      }
-      if (a.published_date && !b.published_date) return -1;
-      if (!a.published_date && b.published_date) return 1;
-      return (a.year || 0) - (b.year || 0);
-    });
+ /* ===== UPDATED: handle multiple code_label prefixes and output code_labels array ===== */
+ function autoNumberCodeLabels(pubs) {
+   const sorted = [...pubs].sort((a, b) => {
+     if (a.published_date && b.published_date) {
+       return new Date(a.published_date) - new Date(b.published_date);
+     }
+     if (a.published_date && !b.published_date) return -1;
+     if (!a.published_date && b.published_date) return 1;
+     return (a.year || 0) - (b.year || 0);
+   });
 
-    const counts = { J:0, K:0, C:0, B:0, R:0, T:0 }; // add more if needed
+   const counts = { J:0, K:0, C:0, B:0, R:0, T:0 };
 
-    for (let i = 0; i < sorted.length; i++) {
-      const pub = sorted[i];
-      const prefixes = arr(pub.code_label).map(x => String(x).replace(/[0-9]/g, ''));
-      const labels = [];
+   for (let i = 0; i < sorted.length; i++) {
+     const pub = sorted[i];
+     const prefixes = arr(pub.code_label).map(x => String(x).replace(/[0-9]/g, ''));
+     const labels = [];
 
-      if (prefixes.length === 0 && typeof pub.code_label === 'string') {
-        // Back-compat single string
-        const pfx = pub.code_label.replace(/[0-9]/g, '');
-        if (pfx && counts[pfx] != null) {
-          counts[pfx]++;
-          labels.push(`${pfx}${counts[pfx]}`);
-        }
-      } else {
-        prefixes.forEach(pfx => {
-          if (!pfx) return;
-          if (counts[pfx] == null) counts[pfx] = 0;
-          counts[pfx]++;
-          labels.push(`${pfx}${counts[pfx]}`);
-        });
-      }
+     if (prefixes.length === 0 && typeof pub.code_label === 'string') {
+       const pfx = pub.code_label.replace(/[0-9]/g, '');
+       if (pfx && counts[pfx] != null) {
+         counts[pfx]++;
+         labels.push(`${pfx}${counts[pfx]}`);
+       }
+     } else {
+       prefixes.forEach(pfx => {
+         if (!pfx) return;
+         if (counts[pfx] == null) counts[pfx] = 0;
+         counts[pfx]++;
+         labels.push(`${pfx}${counts[pfx]}`);
+       });
+     }
 
-      // Store as array; keep first as legacy string
-      pub.code_labels = labels;
-      pub.code_label  = labels[0] || pub.code_label || '';
-    }
+     pub.code_labels = labels;
+     pub.code_label  = labels[0] || pub.code_label || '';
+   }
 
-    // Helper to sort by the largest assigned number among code_labels
-    const getMaxNum = (p) => {
-      const labels = arr(p.code_labels).length ? p.code_labels : arr(p.code_label);
-      let max = 0;
-      labels.forEach(l => {
-        const m = (String(l).match(/\d+/) || [0])[0];
-        max = Math.max(max, parseInt(m, 10) || 0);
-      });
-      return max;
-    };
+   const getMaxNum = (p) => {
+     const labels = arr(p.code_labels).length ? p.code_labels : arr(p.code_label);
+     let max = 0;
+     labels.forEach(l => {
+       const m = (String(l).match(/\d+/) || [0])[0];
+       max = Math.max(max, parseInt(m, 10) || 0);
+     });
+     return max;
+   };
 
-    // Display: year desc, date desc, then code number desc
-    return sorted.sort((a, b) => {
-      if ((b.year||0) !== (a.year||0)) return (b.year||0) - (a.year||0);
-      if (a.published_date && b.published_date) {
-        const dateComp = new Date(b.published_date) - new Date(a.published_date);
-        if (dateComp !== 0) return dateComp;
-      }
-      return getMaxNum(b) - getMaxNum(a);
-    });
-  }
+   return sorted.sort((a, b) => {
+     if ((b.year||0) !== (a.year||0)) return (b.year||0) - (a.year||0);
+     if (a.published_date && b.published_date) {
+       const dateComp = new Date(b.published_date) - new Date(a.published_date);
+       if (dateComp !== 0) return dateComp;
+     }
+     return getMaxNum(b) - getMaxNum(a);
+   });
+ }
 
-  const PUBS = autoNumberCodeLabels(PUBS_RAW);
+ const PUBS = autoNumberCodeLabels(PUBS_RAW);
 
-  /* ===== Filters ===== */
-  const FILTER_GROUPS = {
-    type: [
-      {value: "journal", label: "Journal"},
-      {value: "conference", label: "Conference"},
-      {value: "book", label: "Book"},
-      {value: "report", label: "Report"},
-      {value: "thesis", label: "Thesis / Dissertation"}
-    ],
-    journal: [
-      {value: "SCIE", label: "SCIE"},
-      {value: "SSCI", label: "SSCI"},
-      {value: "A&HCI", label: "A&HCI"},
-      {value: "ESCI", label: "ESCI"},
-      {value: "Scopus", label: "Scopus"},
-      {value: "Other International", label: "Other International"},
-      {value: "KCI Excellent", label: "KCI Excellent"},
-      {value: "KCI Accredited", label: "KCI Accredited"},
-      {value: "Other Domestic", label: "Other Domestic"},
-      {value: "Preprint", label: "Preprint"}
-    ],
-    conference: [
-      {value: "International Conference", label: "International Conference"},
-      {value: "Domestic Conference", label: "Domestic Conference"}
-    ]
-  };
+ /* ===== Filters ===== */
+ const FILTER_GROUPS = {
+   type: [
+     {value: "journal", label: "Journal"},
+     {value: "conference", label: "Conference"},
+     {value: "book", label: "Book"},
+     {value: "report", label: "Report"},
+     {value: "thesis", label: "Thesis / Dissertation"}
+   ],
+   journal: [
+     {value: "SCIE", label: "SCIE"},
+     {value: "SSCI", label: "SSCI"},
+     {value: "A&HCI", label: "A&HCI"},
+     {value: "ESCI", label: "ESCI"},
+     {value: "Scopus", label: "Scopus"},
+     {value: "Other International", label: "Other International"},
+     {value: "KCI Excellent", label: "KCI Excellent"},
+     {value: "KCI Accredited", label: "KCI Accredited"},
+     {value: "Other Domestic", label: "Other Domestic"},
+     {value: "Preprint", label: "Preprint"}
+   ],
+   conference: [
+     {value: "International Conference", label: "International Conference"},
+     {value: "Domestic Conference", label: "Domestic Conference"}
+   ]
+ };
 
-  /* ===== State ===== */
-  let q = "";
-  const onFilters = {type: new Set(), journal: new Set(), conference: new Set()};
+ /* ===== State ===== */
+ let q = "";
+ const onFilters = {type: new Set(), journal: new Set(), conference: new Set()};
 
-  /* ===== DOM ===== */
-  const searchInput = document.getElementById('pubSearch');
-  const searchClear = document.getElementById('searchClear');
-  const countEl = document.getElementById('count');
-  const pubWrap = document.getElementById('pubWrap');
-  const modal = document.getElementById('citeModal');
-  const citeBody = document.getElementById('citeBody');
+ /* ===== DOM ===== */
+ const searchInput = document.getElementById('pubSearch');
+ const searchClear = document.getElementById('searchClear');
+ const countEl = document.getElementById('count');
+ const pubWrap = document.getElementById('pubWrap');
+ const modal = document.getElementById('citeModal');
+ const citeBody = document.getElementById('citeBody');
 
-  /* ===== UPDATED: indexing_group/type can be arrays ===== */
-  function determineLanguageMode(pub) {
-    const ig = arr(pub.indexing_group);
-    const t  = arr(pub.type);
+ /* ===== UPDATED: indexing_group/type can be arrays ===== */
+ function determineLanguageMode(pub) {
+   const ig = arr(pub.indexing_group);
+   const t  = arr(pub.type);
 
-    if (ig.includes("International Conference") || ig.includes("International - Domestic Joint Conference")) {
-      return 'english';
-    }
-    if (t.includes("journal") &&
-        !ig.some(x => String(x).includes("KCI") || String(x).includes("Domestic"))) {
-      return 'english';
-    }
-    if (ig.includes("Domestic Conference") || ig.some(x => String(x).includes("KCI"))) {
-      return 'korean';
-    }
-    if (t.includes("book") || t.includes("report") || ig.includes("Preprint") || ig.includes("Working Paper")) {
-      return (pub.language === 'Korean') ? 'korean' : 'english';
-    }
-    return (pub.language === 'Korean') ? 'korean' : 'english';
-  }
+   if (ig.includes("International Conference") || ig.includes("International - Domestic Joint Conference")) {
+     return 'english';
+   }
+   if (t.includes("journal") &&
+       !ig.some(x => String(x).includes("KCI") || String(x).includes("Domestic"))) {
+     return 'english';
+   }
+   if (ig.includes("Domestic Conference") || ig.some(x => String(x).includes("KCI"))) {
+     return 'korean';
+   }
+   if (t.includes("book") || t.includes("report") || ig.includes("Preprint") || ig.includes("Working Paper")) {
+     return (pub.language === 'Korean') ? 'korean' : 'english';
+   }
+   return (pub.language === 'Korean') ? 'korean' : 'english';
+ }
 
-  function isDomesticPublication(indexing) {
-    const ig = arr(indexing);
-    if (ig.includes("International - Domestic Joint Conference")) return false;
-    return ig.some(x => String(x).includes("KCI") || String(x).includes("Domestic"));
-  }
+ function isDomesticPublication(indexing) {
+   const ig = arr(indexing);
+   if (ig.includes("International - Domestic Joint Conference")) return false;
+   return ig.some(x => String(x).includes("KCI") || String(x).includes("Domestic"));
+ }
 
-  function formatMDY(iso) {
-    if (!iso) return "";
-    const d = new Date(iso + "T00:00:00");
-    return d.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
-  }
+ function formatMDY(iso) {
+   if (!iso) return "";
+   const d = new Date(iso + "T00:00:00");
+   return d.toLocaleDateString("en-US", {year: "numeric", month: "long", day: "numeric"});
+ }
 
-  // ===== UPDATED: returns either "Published on ..." or "Presented on ..." with date span
-  function formatPubDateWithLabel(iso, labelText) {
-    if (!iso) return "";
-    const d = new Date(iso + "T00:00:00");
-    const dateStr = d.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
+ function formatPubDateWithLabel(iso, labelText) {
+   if (!iso) return "";
+   const d = new Date(iso + "T00:00:00");
+   const dateStr = d.toLocaleDateString("en-US", {year: "numeric", month: "short", day: "numeric"});
 
-    const parts = (labelText || "").trim().split(/\s+/);
-    const hasOn = parts.length > 1 && parts[parts.length - 1].toLowerCase() === 'on';
-    const main = hasOn ? parts.slice(0, -1).join(' ') : labelText;
+   const parts = (labelText || "").trim().split(/\s+/);
+   const hasOn = parts.length > 1 && parts[parts.length - 1].toLowerCase() === 'on';
+   const main = hasOn ? parts.slice(0, -1).join(' ') : labelText;
 
-    return `<span class="label-word">${main}</span>${hasOn ? ' <span class="label-on">on</span>' : ''} <span class="date-only">${dateStr}</span>`;
-  }
+   return `<span class="label-word">${main}</span>${hasOn ? ' <span class="label-on">on</span>' : ''} <span class="date-only">${dateStr}</span>`;
+ }
 
-  /* ===== Build Filter Chips ===== */
-  function buildChips() {
-    const typeChips = document.getElementById('typeChips');
-    typeChips.innerHTML = FILTER_GROUPS.type.map(it => {
-      const on = onFilters.type.has(it.value);
-      return `<button class="chip chip-${it.value} ${on ? 'is-on' : ''}" 
-              data-filter-type="type" data-filter-value="${it.value}">${it.label}</button>`;
-    }).join('');
+ /* ===== Build Filter Chips ===== */
+ function buildChips() {
+   const typeChips = document.getElementById('typeChips');
+   typeChips.innerHTML = FILTER_GROUPS.type.map(it => {
+     const on = onFilters.type.has(it.value);
+     return `<button class="chip chip-${it.value} ${on ? 'is-on' : ''}" 
+             data-filter-type="type" data-filter-value="${it.value}">${it.label}</button>`;
+   }).join('');
 
-    const journalChips = document.getElementById('journalChips');
-    journalChips.innerHTML = FILTER_GROUPS.journal.map(it => {
-      const on = onFilters.journal.has(it.value);
-      return `<button class="chip ${on ? 'is-on' : ''}" 
-              data-filter-type="journal" data-filter-value="${it.value}">${it.label}</button>`;
-    }).join('');
+   const journalChips = document.getElementById('journalChips');
+   journalChips.innerHTML = FILTER_GROUPS.journal.map(it => {
+     const on = onFilters.journal.has(it.value);
+     return `<button class="chip ${on ? 'is-on' : ''}" 
+             data-filter-type="journal" data-filter-value="${it.value}">${it.label}</button>`;
+   }).join('');
 
-    const conferenceChips = document.getElementById('conferenceChips');
-    conferenceChips.innerHTML = FILTER_GROUPS.conference.map(it => {
-      const on = onFilters.conference.has(it.value);
-      return `<button class="chip ${on ? 'is-on' : ''}" 
-              data-filter-type="conference" data-filter-value="${it.value}">${it.label}</button>`;
-    }).join('');
+   const conferenceChips = document.getElementById('conferenceChips');
+   conferenceChips.innerHTML = FILTER_GROUPS.conference.map(it => {
+     const on = onFilters.conference.has(it.value);
+     return `<button class="chip ${on ? 'is-on' : ''}" 
+             data-filter-type="conference" data-filter-value="${it.value}">${it.label}</button>`;
+   }).join('');
 
-    document.querySelectorAll('[data-filter-type]').forEach(btn => {
-      btn.onclick = () => {
-        const t = btn.dataset.filterType;
-        const v = btn.dataset.filterValue;
-        
-        if (onFilters[t].has(v)) {
-          onFilters[t].delete(v);
-        } else {
-          onFilters[t].add(v);
-        }
-        
-        buildChips();
-        render();
-      }
-    });
-  }
+   document.querySelectorAll('[data-filter-type]').forEach(btn => {
+     btn.onclick = () => {
+       const t = btn.dataset.filterType;
+       const v = btn.dataset.filterValue;
+       
+       if (onFilters[t].has(v)) {
+         onFilters[t].delete(v);
+       } else {
+         onFilters[t].add(v);
+       }
+       
+       buildChips();
+       render();
+     }
+   });
+ }
 
-  /* ===== Badge helper ===== */
-  function idxClass(group) {
-    const map = {
-      "SCIE": "idx-scie",
-      "SSCI": "idx-ssci",
-      "A&HCI": "idx-ahci",
-      "ESCI": "idx-esci",
-      "Scopus": "idx-scopus",
-      "Other International": "idx-other-intl",
-      "International Conference": "idx-intl-conf",
-      "Domestic Conference": "idx-domestic-conf",
-      "International - Domestic Joint Conference": "idx-joint-conf",
-      "KCI Excellent": "idx-kci-exc",
-      "KCI Accredited": "idx-kci",
-      "Other Domestic": "idx-other-domestic",
-      "Book": "idx-book",
-      "Report": "idx-report",
-      "Thesis / Dissertation": "idx-thesis",
-      "Preprint": "idx-preprint",
-      "Working Paper": "idx-working"
-    };
-    return `idx ${map[group] || ''}`;
-  }
+ /* ===== Badge helper ===== */
+ function idxClass(group) {
+   const map = {
+     "SCIE": "idx-scie",
+     "SSCI": "idx-ssci",
+     "A&HCI": "idx-ahci",
+     "ESCI": "idx-esci",
+     "Scopus": "idx-scopus",
+     "Other International": "idx-other-intl",
+     "International Conference": "idx-intl-conf",
+     "Domestic Conference": "idx-domestic-conf",
+     "International - Domestic Joint Conference": "idx-joint-conf",
+     "KCI Excellent": "idx-kci-exc",
+     "KCI Accredited": "idx-kci",
+     "Other Domestic": "idx-other-domestic",
+     "Book": "idx-book",
+     "Report": "idx-report",
+     "Thesis / Dissertation": "idx-thesis",
+     "Preprint": "idx-preprint",
+     "Working Paper": "idx-working"
+   };
+   return `idx ${map[group] || ''}`;
+ }
 
-  /* ===== UPDATED: matches() supports array fields ===== */
-  function matches(pub) {
-    // Type filter
-    if (onFilters.type.size > 0) {
-      let pubType = primaryType(pub);
-      if (arr(pub.indexing_group).includes("International - Domestic Joint Conference")) {
-        pubType = "conference";
-      }
-      if (!onFilters.type.has(pubType)) return false;
-    }
-    
-    // Indexing filters (journal + conference groups)
-    const idxFilters = [...onFilters.journal, ...onFilters.conference];
-    if (idxFilters.length > 0) {
-      const ig = arr(pub.indexing_group);
-      if (!ig.some(g => idxFilters.includes(g))) return false;
-    }
-    
-    // Search query
-    if (!q) return true;
-    
-    const langMode = determineLanguageMode(pub);
-    const useKorean = (langMode === 'korean');
-    const names = (pub.authors || []).map(id => getAuthorName(id, useKorean)).join(" ");
-    const title = (useKorean && pub.title_ko) ? pub.title_ko : (pub.title || "");
-    const venueJoined = arr((useKorean ? pub.venue_ko : pub.venue)).filter(Boolean).join(" ");
-    const text = (title + " " + names + " " + venueJoined).toLowerCase();
-    
-    return text.includes(q.toLowerCase());
-  }
+ /* ===== UPDATED: matches() supports array fields ===== */
+ function matches(pub) {
+   if (onFilters.type.size > 0) {
+     let pubType = primaryType(pub);
+     if (arr(pub.indexing_group).includes("International - Domestic Joint Conference")) {
+       pubType = "conference";
+     }
+     if (!onFilters.type.has(pubType)) return false;
+   }
+   
+   const idxFilters = [...onFilters.journal, ...onFilters.conference];
+   if (idxFilters.length > 0) {
+     const ig = arr(pub.indexing_group);
+     if (!ig.some(g => idxFilters.includes(g))) return false;
+   }
+   
+   if (!q) return true;
+   
+   const langMode = determineLanguageMode(pub);
+   const useKorean = (langMode === 'korean');
+   const names = (pub.authors || []).map(id => getAuthorName(id, useKorean)).join(" ");
+   const title = (useKorean && pub.title_ko) ? pub.title_ko : (pub.title || "");
+   const venueJoined = arr((useKorean ? pub.venue_ko : pub.venue)).filter(Boolean).join(" ");
+   const text = (title + " " + names + " " + venueJoined).toLowerCase();
+   
+   return text.includes(q.toLowerCase());
+ }
 
-  /* ===== UPDATED: render multiple indexing badges, multi-venue, and multi code labels ===== */
-  function createCard(pub, key) {
-    const codes = arr(pub.code_labels).length ? pub.code_labels : (pub.code_label ? [pub.code_label] : []);
-    const leftType = arr(pub.indexing_group).includes("International - Domestic Joint Conference")
-      ? 'conference'
-      : primaryType(pub) || 'conference';
+ /* ===== UPDATED: render multiple indexing badges, multi-venue, and multi code labels ===== */
+ function createCard(pub, key) {
+   const codes = arr(pub.code_labels).length ? pub.code_labels : (pub.code_label ? [pub.code_label] : []);
+   const leftType = arr(pub.indexing_group).includes("International - Domestic Joint Conference")
+     ? 'conference'
+     : primaryType(pub) || 'conference';
 
-    const langMode = determineLanguageMode(pub);
-    const useKorean = (langMode === 'korean');
-    const lang = pub.language || 'English';
-    const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : (pub.title || '');
-    
-    let venues = [];
-    if (useKorean) {
-      venues = arr(pub.venue_ko).filter(Boolean);
-      if (venues.length === 0) {
-        venues = arr(pub.venue).filter(Boolean);
-      }
-    } else {
-      venues = arr(pub.venue).filter(Boolean);
-    }
-    const displayVenue = venues.length ? venues.join('<br>') : '';
+   const langMode = determineLanguageMode(pub);
+   const useKorean = (langMode === 'korean');
+   const lang = pub.language || 'English';
+   const displayTitle = (useKorean && pub.title_ko) ? pub.title_ko : (pub.title || '');
+   
+   let venues = [];
+   if (useKorean) {
+     venues = arr(pub.venue_ko).filter(Boolean);
+     if (venues.length === 0) {
+       venues = arr(pub.venue).filter(Boolean);
+     }
+   } else {
+     venues = arr(pub.venue).filter(Boolean);
+   }
+   
+   // Format venue with italics for journal names
+   const isJournal = arr(pub.type).includes('journal');
+   const displayVenue = venues.length ? 
+     (isJournal ? venues.map(v => `<em>${v}</em>`).join('<br>') : venues.join('<br>')) : '';
 
-    // FIXED: Wrap each author+mark as a unit to prevent line-breaking
-    // UPDATED: Add spacing for 2-character Korean names
-    const authors = (pub.authors || []).map((id, idx) => {
-      let name = getAuthorName(id, useKorean);
-      
-      // If Korean name with exactly 2 characters, add spacing
-      if (useKorean && name && /^[가-힣]{2}$/.test(name)) {
-        name = name.split('').join('&nbsp;&nbsp;'); // Add double non-breaking space
-      }
-      
-      const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
-      // Each author+superscript is wrapped in a non-breaking span
-      return `<span class="author-with-mark">${name}${mark ? `<sup>${String(mark)}</sup>` : ''}</span>`;
-    }).join(', ');
+   const authors = (pub.authors || []).map((id, idx) => {
+     let name = getAuthorName(id, useKorean);
+     
+     if (useKorean && name && /^[가-힣]{2}$/.test(name)) {
+       name = name.split('').join('&nbsp;&nbsp;');
+     }
+     
+     const mark = Array.isArray(pub.author_marks) ? (pub.author_marks[idx] || "") : "";
+     return `<span class="author-with-mark">${name}${mark ? `<sup>${String(mark)}</sup>` : ''}</span>`;
+   }).join(', ');
 
-    const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
+   const langBadge = `<span class="badge-lang ${lang.toLowerCase()}">${lang}</span>`;
 
-    // Indexing badges (multiple)
-    const indexingBadges = arr(pub.indexing_group).map(g => 
-      `<span class="indexing-badge ${idxClass(g)}">${g}</span>`).join('');
+   const indexingBadges = arr(pub.indexing_group).map(g => 
+     `<span class="indexing-badge ${idxClass(g)}">${g}</span>`).join('');
 
-    // Decide date label: if any code starts with 'J' or indexing has journal-ish, say 'Published', else 'Presented'
-    const hasJournalish = codes.some(c => String(c).startsWith('J')) ||
-                          arr(pub.type).includes('journal') ||
-                          arr(pub.indexing_group).some(x => /SCIE|SSCI|A&HCI|ESCI|Scopus|KCI|Other/i.test(String(x)));
-    const dateLabelText = hasJournalish ? 'Published on' : 'Presented on';
+   const hasJournalish = codes.some(c => String(c).startsWith('J')) ||
+                         arr(pub.type).includes('journal') ||
+                         arr(pub.indexing_group).some(x => /SCIE|SSCI|A&HCI|ESCI|Scopus|KCI|Other/i.test(String(x)));
+   const dateLabelText = hasJournalish ? 'Published on' : 'Presented on';
 
-    // Date badge color class by dominant type
-    let pubTypeClass = '';
-    if (arr(pub.type).includes('conference') || arr(pub.indexing_group).some(x => /Conference/.test(String(x)))) {
-      pubTypeClass = 'pub-conference';
-    }
-    if (arr(pub.type).includes('journal')   || arr(pub.indexing_group).some(x => /(SCIE|SSCI|A&HCI|ESCI|Scopus|KCI|Other)/.test(String(x)))) {
-      // journal supersedes if present
-      pubTypeClass = 'pub-journal';
-    }
-    if (arr(pub.type).includes('book'))   pubTypeClass = 'pub-book';
-    if (arr(pub.type).includes('report')) pubTypeClass = 'pub-report';
-    if (arr(pub.type).includes('thesis')) pubTypeClass = 'pub-thesis';
-    if (arr(pub.indexing_group).includes('Preprint')) pubTypeClass = 'pub-preprint';
+   let pubTypeClass = '';
+   if (arr(pub.type).includes('conference') || arr(pub.indexing_group).some(x => /Conference/.test(String(x)))) {
+     pubTypeClass = 'pub-conference';
+   }
+   if (arr(pub.type).includes('journal')   || arr(pub.indexing_group).some(x => /(SCIE|SSCI|A&HCI|ESCI|Scopus|KCI|Other)/.test(String(x)))) {
+     pubTypeClass = 'pub-journal';
+   }
+   if (arr(pub.type).includes('book'))   pubTypeClass = 'pub-book';
+   if (arr(pub.type).includes('report')) pubTypeClass = 'pub-report';
+   if (arr(pub.type).includes('thesis')) pubTypeClass = 'pub-thesis';
+   if (arr(pub.indexing_group).includes('Preprint')) pubTypeClass = 'pub-preprint';
 
-    const pubDateBadge = pub.published_date ? 
-      `<span class="badge-pub ${pubTypeClass}">
-        <span class="val">${formatPubDateWithLabel(pub.published_date, dateLabelText)}</span>
-      </span>` : ``;
+   const pubDateBadge = pub.published_date ? 
+     `<span class="badge-pub ${pubTypeClass}">
+       <span class="val">${formatPubDateWithLabel(pub.published_date, dateLabelText)}</span>
+     </span>` : ``;
 
-    // Awards
-    let awardsHtml = '';
-    if (pub.awards && pub.awards > 0) {
-      const awardDetails = pub.award_details || [];
-      awardsHtml = '<div class="awards-container">';
-      for (let i = 0; i < pub.awards; i++) {
-        const tooltip = awardDetails[i] || `Award ${i + 1}`;
-        awardsHtml += `
-          <div class="award-tooltip">
-            <span class="award-trophy">🏆</span>
-            <span class="tooltiptext">${tooltip}</span>
+   let awardsHtml = '';
+   if (pub.awards && pub.awards > 0) {
+     const awardDetails = pub.award_details || [];
+     awardsHtml = '<div class="awards-container">';
+     for (let i = 0; i < pub.awards; i++) {
+       const tooltip = awardDetails[i] || `Award ${i + 1}`;
+       awardsHtml += `
+         <div class="award-tooltip">
+           <span class="award-trophy">🏆</span>
+           <span class.tooltiptext">${tooltip}</span>
           </div>`;
       }
       awardsHtml += '</div>';
     }
 
-    // Extra details
     let citationDetails = [];
     if (pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
     if (pub.issue)  citationDetails.push(`<div class="paper-detail-item"><span class="label">No.</span><span class="value">${pub.issue}</span></div>`);
@@ -1464,11 +1455,9 @@ permalink: /publications.html
     if (pub.doi)    citationDetails.push(`<div class="paper-detail-item doi"><span class="label">DOI</span><a href="https://doi.org/${pub.doi}" target="_blank" class="value">${pub.doi}</a></div>`);
     const detailsHtml = citationDetails.length ? `<div class="paper-details">${citationDetails.join('')}</div>` : '';
 
-    // pub key
     const pubKey = `pub_${key.replace('-', '_')}`;
     window[pubKey] = pub;
 
-    // LEFT code labels: allow multi-line (C23<br>J12)
     const codeHtml = codes.length ? codes.join('<br>') : '&nbsp;';
 
     return `
@@ -1547,7 +1536,7 @@ permalink: /publications.html
     countEl.textContent = `${filtered.length} of ${(PUBS || []).length}`;
   }
 
-  /* ===== Cite Modal ===== */
+  /* ===== Citation Modal Functions - FIXED ===== */
   function getAuthorName(authorId, useDomestic) {
     const a = AUTHORS?.[authorId];
     if (!a) return `Author ${authorId}`;
@@ -1556,15 +1545,51 @@ permalink: /publications.html
     return a.en || a.ko || `Author ${authorId}`;
   }
 
-  // UPDATED: Better citation formatting following standard styles
+  // 개선된 저자명 포맷팅 함수
+  function toInitials(name) {
+    const clean = (name || '').replace(/\*/g, '').trim();
+    const parts = clean.split(/\s+/);
+    const last = parts[parts.length - 1];
+    const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
+    return initials ? `${last}, ${initials}` : last;
+  }
+
+  function toInitialsReversed(name) {
+    const clean = (name || '').replace(/\*/g, '').trim();
+    const parts = clean.split(/\s+/);
+    if (parts.length === 1) return parts[0];
+    const last = parts[parts.length - 1];
+    const first = parts.slice(0, -1).join(" ");
+    return `${last}, ${first}`;
+  }
+
+  // 수정된 Citation 포맷팅 함수
   function formatAuthorsForCitation(authors, style) {
     if (!authors || authors.length === 0) return "Anonymous";
     
     const authorNames = authors.map(id => getAuthorName(id, false));
     
     switch(style) {
+      case 'APA':
+        const apaAuthors = authorNames.map(name => {
+          const clean = name.replace(/\*/g, '').trim();
+          const parts = clean.split(/\s+/);
+          const last = parts[parts.length - 1];
+          const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
+          return `${last}, ${initials}`;
+        });
+        
+        if (apaAuthors.length === 1) {
+          return apaAuthors[0];
+        } else if (apaAuthors.length === 2) {
+          return apaAuthors[0] + ", & " + apaAuthors[1];
+        } else if (apaAuthors.length <= 20) {
+          return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
+        } else {
+          return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
+        }
+        
       case 'MLA':
-        // MLA 9th Edition: Last, First, and First Last.
         if (authorNames.length === 1) {
           return toInitialsReversed(authorNames[0]);
         } else if (authorNames.length === 2) {
@@ -1573,19 +1598,7 @@ permalink: /publications.html
           return toInitialsReversed(authorNames[0]) + ", et al.";
         }
         
-      case 'APA':
-        // APA 7th Edition: Last, F. M., & Last, F. M.
-        const apaAuthors = authorNames.map(name => toInitials(name));
-        if (apaAuthors.length === 1) {
-          return apaAuthors[0];
-        } else if (apaAuthors.length <= 20) {
-          return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
-        } else {
-          return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
-        }
-        
       case 'Chicago':
-        // Chicago 17th Edition
         if (authorNames.length === 1) {
           return toInitialsReversed(authorNames[0]);
         } else if (authorNames.length <= 3) {
@@ -1595,7 +1608,6 @@ permalink: /publications.html
         }
         
       case 'Harvard':
-        // Harvard: Last, F.M. and Last, F.M.
         const harvardAuthors = authorNames.map(name => toInitials(name));
         if (harvardAuthors.length === 1) {
           return harvardAuthors[0];
@@ -1606,7 +1618,6 @@ permalink: /publications.html
         }
         
       case 'Vancouver':
-        // Vancouver: Last FM, Last FM.
         const vanAuthors = authorNames.map(name => {
           const clean = name.replace(/\*/g, '').trim();
           const parts = clean.split(/\s+/);
@@ -1625,56 +1636,121 @@ permalink: /publications.html
     }
   }
 
-  function toInitials(name) {
-    const clean = (name || '').replace(/\*/g, '').trim();
-    const parts = clean.split(/\s+/);
-    const last = parts.pop() || '';
-    const initials = parts.map(p => (p?.[0] || '').toUpperCase() + ".").join(" ");
-    return `${last}, ${initials}`.replace(/,\s*$/, '');
-  }
-
-  function toInitialsReversed(name) {
-    const clean = (name || '').replace(/\*/g, '').trim();
-    const parts = clean.split(/\s+/);
-    if (parts.length === 1) return parts[0];
-    const last = parts.pop() || '';
-    const first = parts.join(" ");
-    return `${last}, ${first}`;
-  }
-
+  // 개선된 Citation 생성 함수
   function openCite(pub) {
     const title = pub.title || "Untitled";
-    const venueJoined = arr(pub.venue).filter(Boolean).join(", ");
-    const venue = venueJoined || "Unknown Venue";
     const year = pub.year || new Date().getFullYear();
+    const venue = arr(pub.venue).filter(Boolean).join(", ") || "";
+    
+    const isJournal = arr(pub.type).includes('journal');
+    const isConference = arr(pub.type).includes('conference');
     const isBook = arr(pub.type).includes('book');
     const isThesis = arr(pub.type).includes('thesis');
     
-    // Build details string based on publication type
-    let details = '';
-    if (isBook) {
-      if (pub.isbn) details = `. ISBN: ${pub.isbn}`;
+    // APA 스타일 개선
+    let apaFormat = `${formatAuthorsForCitation(pub.authors, 'APA')} (${year}). ${title}. `;
+    if (isJournal && venue) {
+      apaFormat += `<em>${venue}</em>`;
+      if (pub.volume) apaFormat += `, <em>${pub.volume}</em>`;
+      if (pub.issue) apaFormat += `(${pub.issue})`;
+      if (pub.pages) apaFormat += `, ${pub.pages}`;
+      apaFormat += '.';
+    } else if (isConference && venue) {
+      apaFormat += `In <em>${venue}</em>`;
+      if (pub.pages) apaFormat += ` (pp. ${pub.pages})`;
+      apaFormat += '.';
+    } else if (isBook) {
+      apaFormat += `<em>${title}</em>. ${pub.publisher || venue || ''}`;
+      apaFormat += '.';
     } else if (isThesis) {
-      details = `. ${venue}`;
+      apaFormat += `<em>${title}</em> [Doctoral dissertation]. ${venue}`;
+      apaFormat += '.';
     } else {
-      // Journal or Conference
-      if (pub.volume) details += `, vol. ${pub.volume}`;
-      if (pub.issue) details += `, no. ${pub.issue}`;
-      if (pub.pages) details += `, pp. ${pub.pages}`;
+      apaFormat += venue ? `${venue}.` : '';
+    }
+    if (pub.doi) {
+      apaFormat += ` https://doi.org/${pub.doi}`;
     }
     
-    // DOI if available
-    let doiString = '';
+    // MLA 스타일
+    let mlaFormat = `${formatAuthorsForCitation(pub.authors, 'MLA')}. `;
+    if (isJournal) {
+      mlaFormat += `"${title}." <em>${venue}</em>`;
+      if (pub.volume) mlaFormat += `, vol. ${pub.volume}`;
+      if (pub.issue) mlaFormat += `, no. ${pub.issue}`;
+      mlaFormat += `, ${year}`;
+      if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
+      mlaFormat += '.';
+    } else if (isConference) {
+      mlaFormat += `"${title}." <em>${venue}</em>, ${year}`;
+      if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
+      mlaFormat += '.';
+    } else if (isBook) {
+      mlaFormat += `<em>${title}</em>. ${pub.publisher || venue || ''}, ${year}.`;
+    } else {
+      mlaFormat += `"${title}." ${venue}, ${year}.`;
+    }
     if (pub.doi) {
-      doiString = `. https://doi.org/${pub.doi}`;
+      mlaFormat += ` doi:${pub.doi}`;
+    }
+    
+    // Chicago 스타일
+    let chicagoFormat = `${formatAuthorsForCitation(pub.authors, 'Chicago')}. `;
+    if (isJournal) {
+      chicagoFormat += `"${title}." <em>${venue}</em> `;
+      if (pub.volume) chicagoFormat += `${pub.volume}`;
+      if (pub.issue) chicagoFormat += `, no. ${pub.issue}`;
+      chicagoFormat += ` (${year})`;
+      if (pub.pages) chicagoFormat += `: ${pub.pages}`;
+      chicagoFormat += '.';
+    } else if (isBook) {
+      chicagoFormat += `<em>${title}</em>. ${pub.publisher || venue || ''}, ${year}.`;
+    } else {
+      chicagoFormat += `"${title}." ${venue} (${year})`;
+      if (pub.pages) chicagoFormat += `, ${pub.pages}`;
+      chicagoFormat += '.';
+    }
+    if (pub.doi) {
+      chicagoFormat += ` https://doi.org/${pub.doi}`;
+    }
+    
+    // Harvard 스타일
+    let harvardFormat = `${formatAuthorsForCitation(pub.authors, 'Harvard')} (${year}) `;
+    if (isJournal) {
+      harvardFormat += `'${title}', <em>${venue}</em>`;
+      if (pub.volume) harvardFormat += `, vol. ${pub.volume}`;
+      if (pub.issue) harvardFormat += `, no. ${pub.issue}`;
+      if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
+      harvardFormat += '.';
+    } else if (isBook) {
+      harvardFormat += `<em>${title}</em>, ${pub.publisher || venue || ''}.`;
+    } else {
+      harvardFormat += `'${title}', ${venue}`;
+      if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
+      harvardFormat += '.';
+    }
+    if (pub.doi) {
+      harvardFormat += ` Available at: https://doi.org/${pub.doi}`;
+    }
+    
+    // Vancouver 스타일
+    let vancouverFormat = `${formatAuthorsForCitation(pub.authors, 'Vancouver')}. ${title}. `;
+    if (venue) vancouverFormat += `${venue}. `;
+    vancouverFormat += `${year}`;
+    if (pub.volume) vancouverFormat += `;${pub.volume}`;
+    if (pub.issue) vancouverFormat += `(${pub.issue})`;
+    if (pub.pages) vancouverFormat += `:${pub.pages}`;
+    vancouverFormat += '.';
+    if (pub.doi) {
+      vancouverFormat += ` doi:${pub.doi}`;
     }
     
     const formats = {
-      'MLA (9th ed.)': `${formatAuthorsForCitation(pub.authors, 'MLA')}. "${title}." ${venue}${details}, ${year}${doiString}.`,
-      'APA (7th ed.)': `${formatAuthorsForCitation(pub.authors, 'APA')} (${year}). ${title}. ${venue}${details}${doiString}.`,
-      'Chicago (17th ed.)': `${formatAuthorsForCitation(pub.authors, 'Chicago')}. "${title}." ${venue}${details} (${year})${doiString}.`,
-      'Harvard': `${formatAuthorsForCitation(pub.authors, 'Harvard')} (${year}) '${title}', ${venue}${details}${doiString}.`,
-      'Vancouver': `${formatAuthorsForCitation(pub.authors, 'Vancouver')}. ${title}. ${venue}. ${year}${details}${doiString}.`
+      'APA (7th ed.)': apaFormat,
+      'MLA (9th ed.)': mlaFormat,
+      'Chicago (17th ed.)': chicagoFormat,
+      'Harvard': harvardFormat,
+      'Vancouver': vancouverFormat
     };
 
     citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
@@ -1694,8 +1770,13 @@ permalink: /publications.html
   }
 
   function copyText(id) {
-    const t = document.getElementById(id).textContent;
-    navigator.clipboard.writeText(t);
+    const element = document.getElementById(id);
+    // HTML 태그 제거하고 텍스트만 복사
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = element.innerHTML;
+    const text = tempDiv.textContent || tempDiv.innerText || '';
+    
+    navigator.clipboard.writeText(text);
     event.target.textContent = 'Copied!';
     setTimeout(() => event.target.textContent = 'Copy', 1500);
   }
@@ -1707,7 +1788,6 @@ permalink: /publications.html
     render();
   };
 
-  // Clear button functionality
   searchClear.onclick = () => {
     searchInput.value = '';
     q = '';
@@ -1729,7 +1809,6 @@ permalink: /publications.html
   buildChips();
   render();
   
-  // Toggle filter section
   document.getElementById('toggleFilters').onclick = () => {
     const filterContent = document.getElementById('filterContent');
     const toggleBtn = document.getElementById('toggleFilters');
