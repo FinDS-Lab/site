@@ -98,7 +98,7 @@
     "title": "Farthest-first asset selection under cardinality constraints based on dynamic planar maximally filtered graphs",
     "title_ko": "동적 평면 극대 필터링 그래프 기반 최원 우선 전략을 활용한 개수 제약하에서의 자산 선택 방법론",
     "authors": [1],
-    "author_marks": ["1"],
+    "author_marks": ["1,*"],
     "venue": "2025 Fall Conference of the Korean Operations Research and Management Science Society",
     "venue_ko": "2025 한국경영과학회 추계학술대회",
     "published_date": "2025-11-01",
