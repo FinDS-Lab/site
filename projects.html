@@ -453,7 +453,8 @@ function generateDiamondNetwork() {
     const roles = project.roles || {};
     const rolesText = [roles.principalInvestigator, roles.leadResearcher, ...(roles.researchers||[])].filter(Boolean).join(' ');
     const keywordsText = (project.keywords||[]).join(' ');
-    const fundingText = project.type === 'private' ? 'industry funded' : (project.type === 'contract' ? 'contract' : 'government funded');
+    const fundingText = project.type === 'industry' ? 'industry funded' : 
+                       (project.type === 'academic' ? 'academic' : 'government funded');
     const statusText = computeStatus(project.period);
     const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${rolesText} ${keywordsText} ${fundingText} ${statusText}`.toLowerCase();
     return searchText.includes(q.toLowerCase());
