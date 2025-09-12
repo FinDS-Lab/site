@@ -10,9 +10,9 @@ permalink: /projects.html
       --gold: rgb(214, 177, 77);
       --gold-mid: rgb(234, 197, 97);
       --gold-dark: rgb(194, 157, 57);
-      --government-blue: rgb(14, 82, 172);
-      --industry-gold: rgb(214, 177, 77);
-      --academic-green: rgb(34, 139, 34);
+      --government-gold: rgb(214, 177, 77);
+      --industry-red: rgb(172, 14, 14);
+      --academic-black: #111827;
       --ongoing-black: #111827;
       --completed-gray: #9ca3af;
     }
@@ -232,14 +232,14 @@ function generateDiamondNetwork() {
   /* Card (outer tint = type color) */
   .card{border-radius:1rem;overflow:hidden;display:block}
 
-  .card.card--government-ongoing{background:rgba(14, 82, 172, 0.14) !important}
-  .card.card--industry-ongoing{background:rgba(214, 177, 77, 0.18) !important}
-  .card.card--academic-ongoing{background:rgba(34, 139, 34, 0.14) !important}
+  .card.card--government-ongoing{background:rgba(214, 177, 77, 0.18) !important}
+  .card.card--industry-ongoing{background:rgba(172, 14, 14, 0.14) !important}
+  .card.card--academic-ongoing{background:rgba(255, 255, 255, 0.95) !important}
   .card.card--completed{background:#ffffff}
 
-  .card.card--government-ongoing .inner{border-color: rgba(14, 82, 172, 0.28)}
-  .card.card--industry-ongoing .inner{border-color: rgba(214, 177, 77, 0.35)}
-  .card.card--academic-ongoing .inner{border-color: rgba(34, 139, 34, 0.28)}
+  .card.card--government-ongoing .inner{border-color: rgba(214, 177, 77, 0.35)}
+  .card.card--industry-ongoing .inner{border-color: rgba(172, 14, 14, 0.28)}
+  .card.card--academic-ongoing .inner{border-color: rgba(17, 24, 39, 0.25)}
 
   .inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
   .card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
@@ -347,14 +347,14 @@ function generateDiamondNetwork() {
 
   /* ===== Filters ===== */
   const FUNDING_TYPES = [
-    { value: "government", label: "Government-Funded", color: "var(--government-blue)" },
-    { value: "industry", label: "Industry-Funded", color: "var(--industry-gold)" },
-    { value: "academic", label: "Academic", color: "var(--academic-green)" }
+    { value: "government", label: "Government-Funded", color: "rgb(214, 177, 77)" },
+    { value: "industry", label: "Industry-Funded", color: "rgb(172, 14, 14)" },
+    { value: "academic", label: "Academic", color: "#111827" }
   ];
 
   const STATUSES = [
-    { value: "ongoing", label: "Ongoing", color: "var(--ongoing-black)" },
-    { value: "completed", label: "Completed", color: "var(--completed-gray)" }
+    { value: "ongoing", label: "Ongoing", color: "#111827" },
+    { value: "completed", label: "Completed", color: "#9ca3af" }
   ];
 
   const onFunding = new Set();
@@ -390,12 +390,12 @@ function generateDiamondNetwork() {
 
   function getFundingColor(type){
     if (type === 'industry') {
-      return 'var(--industry-red)';
+      return 'rgb(172, 14, 14)';
     } else if (type === 'academic') {
-      return 'var(--academic-black)';
+      return '#111827';
     } else {
       // government as default
-      return 'var(--government-gold)';
+      return 'rgb(214, 177, 77)';
     }
   }
 
@@ -486,6 +486,9 @@ function generateDiamondNetwork() {
 
   /* ===== Card ===== */
   function createCard(project){
+    // 디버깅용 - type 확인
+    console.log(`Project: ${project.titleEn}, Type: ${project.type}`);
+    
     const fundingColor = getFundingColor(project.type);
     const fundingLabel = getFundingLabel(project.type);
     const periodFmt = formatPeriod(project.period);
