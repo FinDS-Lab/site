@@ -454,7 +454,6 @@ function generateDiamondNetwork() {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
-
 /* Winners */
 .winners{
   display: flex;
@@ -476,35 +475,82 @@ function generateDiamondNetwork() {
   color: #374151;
   transition: all .2s ease;
   word-break: keep-all;
+  position: relative;
+  overflow: hidden;
 }
 
 .winner-pill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,.15);
 }
 
+/* PhD - 금색 그라디언트 */
 .winner-pill.phd{
-  border-color: var(--award-gold);
-  background: linear-gradient(135deg, #fef7e6, #fff7ed);
-  color: #92400e;
+  border-color: rgb(214, 177, 77);
+  background: linear-gradient(135deg, rgb(214, 177, 77), rgb(194, 157, 57));
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
 
+.winner-pill.phd:hover {
+  background: linear-gradient(135deg, rgb(234, 197, 97), rgb(214, 177, 77));
+  box-shadow: 0 4px 12px rgba(214, 177, 77, 0.4);
+  border-color: rgb(234, 197, 97);
+}
+
+/* MS - 빨간색 그라디언트 */
 .winner-pill.ms{
-  border-color: var(--honor-red);
-  background: linear-gradient(135deg, #fef2f2, #fff5f5);
-  color: #991b1b;
+  border-color: rgb(172, 14, 14);
+  background: linear-gradient(135deg, rgb(172, 14, 14), rgb(200, 40, 40));
+  color: #fff;
+  font-weight: 800;
+  text-shadow: 0 1px 2px rgba(0,0,0,.1);
 }
 
+.winner-pill.ms:hover {
+  background: linear-gradient(135deg, rgb(200, 40, 40), rgb(172, 14, 14));
+  box-shadow: 0 4px 12px rgba(172, 14, 14, 0.4);
+  border-color: rgb(200, 40, 40);
+}
+
+/* BS - 회색 그라디언트 */
 .winner-pill.bs{
   border-color: #9ca3af;
-  background: linear-gradient(135deg, #f3f4f6, #f9fafb);
-  color: #4b5563;
+  background: linear-gradient(135deg, #9ca3af, #6b7280);
+  color: #fff;
+  font-weight: 700;
 }
 
+.winner-pill.bs:hover {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  box-shadow: 0 4px 8px rgba(107, 114, 128, 0.3);
+  border-color: #6b7280;
+}
+
+/* Professor - 프리미엄 금색 */
 .winner-pill.prof{
-  border-color: var(--award-gold);
-  background: linear-gradient(135deg, #fef7e6, #fff7ed);
-  color: #92400e;
+  border-color: rgb(214, 177, 77);
+  background: linear-gradient(135deg, rgb(254, 240, 138), rgb(234, 197, 97), rgb(214, 177, 77));
+  color: rgb(92, 64, 14);
+  font-weight: 900;
+  position: relative;
+}
+
+.winner-pill.prof::before {
+  content: '★';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgb(214, 177, 77);
+  font-size: 10px;
+}
+
+.winner-pill.prof:hover {
+  background: linear-gradient(135deg, rgb(214, 177, 77), rgb(194, 157, 57), rgb(174, 137, 37));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(214, 177, 77, 0.5);
 }
 
 /* Empty state */
