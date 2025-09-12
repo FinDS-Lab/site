@@ -10,8 +10,9 @@ permalink: /projects.html
       --gold: rgb(214, 177, 77);
       --gold-mid: rgb(234, 197, 97);
       --gold-dark: rgb(194, 157, 57);
-      --public-red: rgb(172, 14, 14);
-      --private-gold: rgb(214, 177, 77);
+      --government-blue: rgb(14, 82, 172);
+      --industry-gold: rgb(214, 177, 77);
+      --academic-green: rgb(34, 139, 34);
       --ongoing-black: #111827;
       --completed-gray: #9ca3af;
     }
@@ -231,12 +232,14 @@ function generateDiamondNetwork() {
   /* Card (outer tint = type color) */
   .card{border-radius:1rem;overflow:hidden;display:block}
 
-  .card.card--public-ongoing{background:rgba(172, 14, 14, 0.14) !important}
-  .card.card--private-ongoing{background:rgba(214, 177, 77, 0.18) !important}
+  .card.card--government-ongoing{background:rgba(14, 82, 172, 0.14) !important}
+  .card.card--industry-ongoing{background:rgba(214, 177, 77, 0.18) !important}
+  .card.card--academic-ongoing{background:rgba(34, 139, 34, 0.14) !important}
   .card.card--completed{background:#ffffff}
 
-  .card.card--public-ongoing .inner{border-color: rgba(172, 14, 14, 0.28)}
-  .card.card--private-ongoing .inner{border-color: rgba(214, 177, 77, 0.35)}
+  .card.card--government-ongoing .inner{border-color: rgba(14, 82, 172, 0.28)}
+  .card.card--industry-ongoing .inner{border-color: rgba(214, 177, 77, 0.35)}
+  .card.card--academic-ongoing .inner{border-color: rgba(34, 139, 34, 0.28)}
 
   .inner{position:relative;background:#fff;border-radius:.9rem;margin:10px;overflow:hidden;border:1px solid #e5e7eb;transition:border-color .2s, box-shadow .2s}
   .card:hover .inner{box-shadow:0 6px 20px rgba(0,0,0,.06)}
@@ -344,8 +347,9 @@ function generateDiamondNetwork() {
 
   /* ===== Filters ===== */
   const FUNDING_TYPES = [
-    { value: "public", label: "Government-Funded", color: "var(--public-red)" },
-    { value: "private", label: "Industry-Funded", color: "var(--private-gold)" }
+    { value: "government", label: "Government-Funded", color: "var(--government-blue)" },
+    { value: "industry", label: "Industry-Funded", color: "var(--industry-gold)" },
+    { value: "academic", label: "Academic", color: "var(--academic-green)" }
   ];
 
   const STATUSES = [
@@ -385,10 +389,24 @@ function generateDiamondNetwork() {
   }
 
   function getFundingColor(type){
-    if (type === 'private' || type === 'contract') {
-      return 'var(--private-gold)';
+    if (type === 'industry') {
+      return 'var(--industry-red)';
+    } else if (type === 'academic') {
+      return 'var(--academic-black)';
+    } else {
+      // government as default
+      return 'var(--government-gold)';
     }
-    return 'var(--public-red)';
+  }
+
+  function getFundingLabel(type){
+    if (type === 'industry') {
+      return 'Industry-Funded';
+    } else if (type === 'academic') {
+      return 'Academic';
+    } else {
+      return 'Government-Funded';
+    }
   }
 
   function byStartDesc(a,b){
@@ -398,12 +416,6 @@ function generateDiamondNetwork() {
   function esc(s){
     return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   }
-
-  /* English → Korean agency mapping for muted secondary label */
-  const AGENCY_KO = {
-    "Korea Institute of Public Finance": "한국조세재정연구원",
-    "CRAFTA": "크래프타"
-  };
 
   /* ===== DOM ===== */
   const qInput = document.getElementById('q');
@@ -453,8 +465,7 @@ function generateDiamondNetwork() {
     const roles = project.roles || {};
     const rolesText = [roles.principalInvestigator, roles.leadResearcher, ...(roles.researchers||[])].filter(Boolean).join(' ');
     const keywordsText = (project.keywords||[]).join(' ');
-    const fundingText = project.type === 'industry' ? 'industry funded' : 
-                       (project.type === 'academic' ? 'academic' : 'government funded');
+    const fundingText = getFundingLabel(project.type);
     const statusText = computeStatus(project.period);
     const searchText = `${project.titleEn} ${project.titleKo} ${project.fundingAgency} ${rolesText} ${keywordsText} ${fundingText} ${statusText}`.toLowerCase();
     return searchText.includes(q.toLowerCase());
@@ -475,15 +486,13 @@ function generateDiamondNetwork() {
 
   /* ===== Card ===== */
   function createCard(project){
-    // 디버깅용 - 각 프로젝트의 타입 확인
-    console.log(`Project: ${project.titleEn}, Type: ${project.type}`);
-    
     const fundingColor = getFundingColor(project.type);
+    const fundingLabel = getFundingLabel(project.type);
     const periodFmt = formatPeriod(project.period);
     const status = computeStatus(project.period);
 
     const keywordBadges = (project.keywords||[]).map(k=>`<span class="badge">${esc(k)}</span>`).join('');
-    const fundingBadge = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${project.type==='private'?'Industry-Funded':(project.type==='contract'?'Contract':'Government-Funded')}</span>`;
+    const fundingBadge = `<span class="badge" style="border-color:${fundingColor};color:${fundingColor}">${fundingLabel}</span>`;
     const statusBadge = `<span class="badge" style="border-color:${status==='ongoing'?'#111827':'#9ca3af'};color:${status==='ongoing'?'#111827':'#6b7280'}">${status==='ongoing'?'Ongoing':'Completed'}</span>`;
 
     const r = project.roles || {};
@@ -495,7 +504,14 @@ function generateDiamondNetwork() {
     if (status === 'completed') {
       outerClass = 'card--completed';
     } else {
-      outerClass = (project.type === 'private' || project.type === 'contract') ? 'card--private-ongoing' : 'card--public-ongoing';
+      // For ongoing projects, use type-specific classes
+      if (project.type === 'industry') {
+        outerClass = 'card--industry-ongoing';
+      } else if (project.type === 'academic') {
+        outerClass = 'card--academic-ongoing';
+      } else {
+        outerClass = 'card--government-ongoing';
+      }
     }
 
     const notchColor = fundingColor;
