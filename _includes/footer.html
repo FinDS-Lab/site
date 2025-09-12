@@ -1,3 +1,13 @@
+<!-- Google Analytics 4 - 이 부분을 <head> 태그 안에 넣으세요 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGEYHWRHR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RSGEYHWRHR');
+</script>
+
+<!-- Footer 전체 코드 -->
 <footer class="mt-16 border-t border-slate-200 bg-white" aria-label="Site footer" id="siteFooter">
   <div class="max-w-7xl mx-auto px-4 py-10">
     <div class="flex flex-col items-center gap-3">
@@ -7,7 +17,7 @@
         <a class="link-underline" href="https://www.nrf.re.kr/" target="_blank" rel="noopener">한국연구재단</a>
       </p>
 
-      <!-- 방문자 카운터 추가 -->
+      <!-- 방문자 카운터 -->
       <div id="visitor-counter" class="flex items-center gap-4 mt-3 mb-2">
         <div class="flex items-center gap-2 text-xs text-slate-500">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -27,16 +37,6 @@
         </div>
       </div>
 
-      <!-- 실시간 온라인 사용자 수 (선택사항) -->
-      <div id="online-users" class="flex items-center gap-2 text-xs text-slate-400 mb-2">
-        <span class="relative flex h-2 w-2">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-        </span>
-        <span>현재 <span id="onlineCount" class="font-semibold">1</span>명 온라인</span>
-      </div>
-
-      <!-- ⬇️ id 추가 (스크립트에서 색 제어) -->
       <p id="copyright" class="mt-1 text-center text-xs text-slate-400">
         Copyright © <span id="year"></span> FINDS Lab. All Rights Reserved.
       </p>
@@ -46,7 +46,6 @@
   <!-- Back to Top -->
   <button id="btnTop" class="fixed bottom-5 right-5 hidden rounded-full border border-slate-300 bg-white/90 backdrop-blur p-3 shadow-md hover:shadow-lg focus:outline-none"
           aria-label="Back to top" title="Back to top">
-    <!-- Up icon -->
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
     </svg>
@@ -93,7 +92,7 @@
   }
 
   /* 방문자 카운터 스타일 */
-  #visitor-counter, #online-users {
+  #visitor-counter {
     opacity: 0;
     animation: fadeInUp 0.6s ease forwards;
     animation-delay: 0.2s;
@@ -140,25 +139,22 @@
     var y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
 
-    // ===== 방문자 카운터 로직 =====
-    // 로컬 스토리지를 사용한 간단한 구현
-    // 실제 구현시에는 서버 API를 사용하는 것을 권장
-    
+    // ===== 방문자 카운터 로직 (GA4 이벤트 + localStorage) =====
     function initVisitorCounter() {
       var todayEl = document.getElementById('todayCount');
       var totalEl = document.getElementById('totalCount');
-      var onlineEl = document.getElementById('onlineCount');
       
-      // 오늘 날짜 키 생성
-      var today = new Date().toLocaleDateString();
-      var todayKey = 'visit_' + today;
-      var totalKey = 'visit_total';
+      // 오늘 날짜 키 생성 (한국 시간 기준)
+      var koreaTime = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+      var today = koreaTime.toLocaleDateString('ko-KR');
+      var todayKey = 'findslab_visit_' + today;
+      var totalKey = 'findslab_visit_total';
       
       // 세션 스토리지로 중복 카운트 방지
-      var isNewSession = !sessionStorage.getItem('visited');
+      var isNewSession = !sessionStorage.getItem('findslab_visited');
       
       if (isNewSession) {
-        sessionStorage.setItem('visited', 'true');
+        sessionStorage.setItem('findslab_visited', 'true');
         
         // 오늘 방문자 수 증가
         var todayCount = parseInt(localStorage.getItem(todayKey) || '0');
@@ -169,12 +165,25 @@
         var totalCount = parseInt(localStorage.getItem(totalKey) || '0');
         totalCount++;
         localStorage.setItem(totalKey, totalCount.toString());
+        
+        // GA4에 커스텀 이벤트 전송 (방문자 카운팅용)
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'unique_visit', {
+            'event_category': 'engagement',
+            'event_label': 'visitor_counter',
+            'value': 1,
+            'total_visits': totalCount,
+            'today_visits': todayCount
+          });
+        }
       }
       
       // 카운터 표시 (애니메이션 효과)
       function animateCounter(element, target) {
         var current = 0;
-        var increment = Math.ceil(target / 30);
+        var increment = target > 100 ? Math.ceil(target / 30) : 1;
+        var duration = target > 100 ? 50 : 30;
+        
         var timer = setInterval(function() {
           current += increment;
           if (current >= target) {
@@ -182,43 +191,75 @@
             clearInterval(timer);
             element.classList.add('counter-animate');
           }
-          element.textContent = current.toLocaleString();
-        }, 50);
+          element.textContent = current.toLocaleString('ko-KR');
+        }, duration);
       }
       
       // 저장된 값 표시
       var todayVisits = parseInt(localStorage.getItem(todayKey) || '0');
       var totalVisits = parseInt(localStorage.getItem(totalKey) || '0');
       
-      if (todayEl) animateCounter(todayEl, todayVisits);
-      if (totalEl) animateCounter(totalEl, totalVisits);
-      
-      // 온라인 사용자 수 (시뮬레이션)
-      if (onlineEl) {
-        var onlineCount = Math.floor(Math.random() * 5) + 1;
-        onlineEl.textContent = onlineCount;
-        
-        // 주기적으로 온라인 수 업데이트 (시뮬레이션)
-        setInterval(function() {
-          var variance = Math.random() > 0.5 ? 1 : -1;
-          onlineCount = Math.max(1, onlineCount + variance);
-          onlineCount = Math.min(10, onlineCount);
-          onlineEl.textContent = onlineCount;
-        }, 30000); // 30초마다 업데이트
-      }
-      
-      // 자정에 오늘 카운터 리셋
-      var midnight = new Date();
-      midnight.setHours(24, 0, 0, 0);
-      var msToMidnight = midnight.getTime() - new Date().getTime();
+      // 페이지 로드 후 애니메이션 시작
       setTimeout(function() {
+        if (todayEl) animateCounter(todayEl, todayVisits);
+        if (totalEl) animateCounter(totalEl, totalVisits);
+      }, 300);
+      
+      // 자정에 오늘 카운터 리셋 (한국 시간 기준)
+      var now = new Date();
+      var koreaTonight = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+      koreaTonight.setHours(24, 0, 0, 0);
+      var msToMidnight = koreaTonight.getTime() - now.getTime();
+      
+      setTimeout(function() {
+        // 오늘 카운터 리셋
         localStorage.removeItem(todayKey);
         if (todayEl) todayEl.textContent = '0';
+        
+        // 다음날을 위해 재귀 호출
+        initVisitorCounter();
       }, msToMidnight);
+      
+      // 이전 날짜 데이터 정리 (30일 이상 된 데이터 삭제)
+      cleanOldData();
     }
     
-    // 방문자 카운터 초기화
-    initVisitorCounter();
+    // 오래된 데이터 정리 함수
+    function cleanOldData() {
+      var thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      
+      for (var key in localStorage) {
+        if (key.startsWith('findslab_visit_') && key !== 'findslab_visit_total') {
+          var dateStr = key.replace('findslab_visit_', '');
+          if (dateStr && dateStr !== 'total') {
+            try {
+              var keyDate = new Date(dateStr);
+              if (keyDate < thirtyDaysAgo) {
+                localStorage.removeItem(key);
+              }
+            } catch (e) {
+              // 잘못된 날짜 형식은 무시
+            }
+          }
+        }
+      }
+    }
+    
+    // GA4 로드 확인 후 카운터 초기화
+    if (window.location.hostname === 'finds-lab.github.io' || window.location.hostname === 'localhost') {
+      // 실제 사이트나 로컬 테스트 환경에서만 작동
+      initVisitorCounter();
+      
+      // GA4 페이지뷰 이벤트 (자동으로 전송되지만 명시적으로도 가능)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'page_view', {
+          page_title: document.title,
+          page_location: window.location.href,
+          page_path: window.location.pathname
+        });
+      }
+    }
 
     // Back-to-Top
     var btn = document.getElementById('btnTop');
