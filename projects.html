@@ -69,13 +69,12 @@ permalink: /projects.html
       justify-content: flex-start;
       min-height: 200px;
       word-break: keep-all;
-      overflow-wrap: anywhere;
-      hyphens: auto;
+      overflow-wrap: break-word;
     }
     .breadcrumbs-banner {
       display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
       font-size: 13px; font-weight: 600; margin-bottom: 8px;
-      word-break: keep-all; overflow-wrap: anywhere; hyphens: auto;
+      word-break: keep-all; overflow-wrap: break-word;
     }
     .breadcrumbs-banner a { color: rgba(255,255,255,.92); text-decoration: none; transition: color .2s; }
     .breadcrumbs-banner a:hover { color: #fff; text-decoration: underline; }
@@ -90,8 +89,7 @@ permalink: /projects.html
       letter-spacing: -.02em;
       margin: 0;
       word-break: keep-all;
-      overflow-wrap: anywhere;
-      hyphens: auto;
+      overflow-wrap: break-word;
     }
 
     /* Responsive */
@@ -245,28 +243,29 @@ function generateDiamondNetwork() {
 
   .type-notch{position:absolute;left:12px;top:12px;bottom:12px;width:8px;border-radius:8px;background:#ddd}
 
-  .body{padding:14px 16px 14px 44px}
+  .body{padding:16px 20px 16px 48px}
 
   .badges-status{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
   .badges-keywords{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 
-  .badge{display:inline-block;padding:.22rem .55rem;border-radius:999px;font-weight:800;font-size:10px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
+  .badge{display:inline-block;padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;background:#f8fafc;border:1px solid #e5e7eb;text-transform:uppercase;white-space:nowrap}
 
-  .project-title-en{font-size:14px;font-weight:900;color:#111827;margin-top:8px}
-  .project-title-ko{font-size:12px;color:#6b7280;margin-top:4px;word-break:keep-all}
+  .project-title-en{font-size:16px;font-weight:900;color:#111827;margin-top:8px;word-break:keep-all;overflow-wrap:break-word}
+  .project-title-ko{font-size:14px;color:#6b7280;margin-top:4px;word-break:keep-all;overflow-wrap:break-word}
 
+  /* Desktop optimized meta-info */
   .meta-info{
     display:grid;
-    grid-template-columns:max-content minmax(0, var(--value-col-w, 420px));
-    column-gap:12px;
-    row-gap:8px;
-    margin-top:12px;
-    padding-top:12px;
+    grid-template-columns:max-content minmax(0, 1fr);
+    column-gap:16px;
+    row-gap:10px;
+    margin-top:14px;
+    padding-top:14px;
     border-top:1px solid #f3f4f6
   }
-  .meta-item{display:contents;font-size:10.5px}
-  .meta-label{font-weight:800;color:#374151;font-size:10.5px;line-height:1.5;white-space:nowrap}
-  .meta-value{color:#111827;font-size:10.5px;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+  .meta-item{display:contents;font-size:12px}
+  .meta-label{font-weight:800;color:#374151;font-size:12px;line-height:1.6;white-space:nowrap}
+  .meta-value{color:#111827;font-size:12px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word}
 
   .ko-muted{color:#9ca3af}
   .amount{font-weight:800;color:#111827}
@@ -274,21 +273,24 @@ function generateDiamondNetwork() {
   .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
   .count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap}
 
+  /* Mobile specific styles */
   @media (max-width:640px){
     .search-container{flex-direction:column;align-items:stretch}
     .search{width:100%}
     .count{text-align:center;width:100%}
+
+    .body{padding:14px 16px 14px 44px}
 
     .meta-info{
       grid-template-columns:max-content 1fr;
       column-gap:10px;
       row-gap:8px;
     }
-    .meta-label{font-size:9.5px}
-    .meta-value{font-size:9.5px}
-    .project-title-en{font-size:13px}
-    .project-title-ko{font-size:11px}
-    .badge{font-size:9.5px;padding:.2rem .5rem}
+    .meta-label{font-size:10.5px}
+    .meta-value{font-size:10.5px}
+    .project-title-en{font-size:14px}
+    .project-title-ko{font-size:12px}
+    .badge{font-size:10px;padding:.22rem .5rem}
     .chip{font-size:11px;padding:.4rem .8rem}
   }
 </style>
@@ -498,6 +500,55 @@ function generateDiamondNetwork() {
       ? `${esc(agencyEn)} <span class="ko-muted">· ${esc(agencyKo)}</span>`
       : esc(agencyEn);
 
+    // Build meta items HTML - Hide amount row if N/A
+    let metaItemsHTML = `
+      <div class="meta-item">
+        <span class="meta-label">Period</span>
+        <span class="meta-value">${esc(periodFmt)}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Funding Agency</span>
+        <span class="meta-value">${agencyValue}</span>
+      </div>`;
+    
+    // Only add amount if it's not N/A
+    if (project.amount && project.amount !== 'N/A') {
+      metaItemsHTML += `
+      <div class="meta-item">
+        <span class="meta-label">Amount</span>
+        <span class="meta-value amount">${esc(project.amount)}</span>
+      </div>`;
+    }
+    
+    // Check if PI is 최인수
+    if (r.principalInvestigator === '최인수') {
+      // If PI is 최인수, show all three fields
+      metaItemsHTML += `
+      <div class="meta-item">
+        <span class="meta-label">Principal Investigator</span>
+        <span class="meta-value">${pi}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Lead Researcher</span>
+        <span class="meta-value">${lead}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Researchers</span>
+        <span class="meta-value">${res}</span>
+      </div>`;
+    } else {
+      // If PI is not 최인수, only show PI and Lead Researcher
+      metaItemsHTML += `
+      <div class="meta-item">
+        <span class="meta-label">Principal Investigator</span>
+        <span class="meta-value">${pi}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Lead Researcher</span>
+        <span class="meta-value">${lead}</span>
+      </div>`;
+    }
+
     return `<article class="card ${outerClass}">
       <div class="inner">
         <div class="type-notch" style="background:${notchColor}"></div>
@@ -512,54 +563,11 @@ function generateDiamondNetwork() {
           <div class="project-title-en">${esc(project.titleEn)}</div>
           <div class="project-title-ko"><span class="ko">${esc(project.titleKo)}</span></div>
           <div class="meta-info">
-            <div class="meta-item">
-              <span class="meta-label">Period</span>
-              <span class="meta-value">${esc(periodFmt)}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Funding Agency</span>
-              <span class="meta-value">${agencyValue}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Amount</span>
-              <span class="meta-value amount">${esc(project.amount||'—')}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Principal Investigator</span>
-              <span class="meta-value meta-value--pi">${pi}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Lead Researcher</span>
-              <span class="meta-value">${lead}</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Researchers</span>
-              <span class="meta-value">${res}</span>
-            </div>
+            ${metaItemsHTML}
           </div>
         </div>
       </div>
     </article>`;
-  }
-
-  /* ===== Compute value column width from PI and apply (per card) ===== */
-  function applyValueColWidths(){
-    const cards = document.querySelectorAll('.card .meta-info');
-    cards.forEach(mi => {
-      const piEl = mi.querySelector('.meta-value--pi');
-      if(!piEl) return;
-      const range = document.createRange();
-      range.selectNodeContents(piEl);
-      const rects = range.getBoundingClientRect ? range.getBoundingClientRect() : piEl.getBoundingClientRect();
-      let w = (rects && rects.width) ? rects.width : piEl.offsetWidth;
-
-      const PAD = 12;
-      const MIN = 140;
-      const MAX = 260;
-      const valueCol = Math.max(MIN, Math.min(MAX, Math.ceil(w + PAD)));
-
-      mi.style.setProperty('--value-col-w', valueCol + 'px');
-    });
   }
 
   /* ===== Render ===== */
@@ -571,10 +579,9 @@ function generateDiamondNetwork() {
       grid.innerHTML = data.map(createCard).join('');
     }
     count.textContent = `${data.length} of ${PROJECTS.length}`;
-    applyValueColWidths();
   }
 
-/* ===== Init ===== */
+  /* ===== Init ===== */
   qInput.addEventListener('input', (e) => {
     q = e.target.value;
     render();
@@ -599,9 +606,6 @@ function generateDiamondNetwork() {
     buildChips();
     render();
   };
-
-  window.addEventListener('load', applyValueColWidths);
-  window.addEventListener('resize', applyValueColWidths);
 
   buildChips();
   render();
