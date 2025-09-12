@@ -475,6 +475,9 @@ function generateDiamondNetwork() {
 
   /* ===== Card ===== */
   function createCard(project){
+    // 디버깅용 - 각 프로젝트의 타입 확인
+    console.log(`Project: ${project.titleEn}, Type: ${project.type}`);
+    
     const fundingColor = getFundingColor(project.type);
     const periodFmt = formatPeriod(project.period);
     const status = computeStatus(project.period);
