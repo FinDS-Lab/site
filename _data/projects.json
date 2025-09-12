@@ -2,7 +2,7 @@
   {
     "titleEn": "Portfolio Risk Assessment and Investment Transparency with Explainable AI",
     "titleKo": "설명 가능한 인공지능 기법을 활용한 투자 성향 결정 요인 분석",
-    "period": "2025-05-19 – 2025-09-12",
+    "period": "2025-05-01 – 2025-09-30",
     "fundingAgency": "Korea Institute of Public Finance",
     "amount": "₩1,000,000",
     "type": "public",
@@ -65,8 +65,8 @@
     }
   },
   {
-    "titleEn": "SK AI College <Step into AI: London> Series Script Review & Advisory (Series-wide)",
-    "titleKo": "SK AI College <Step into AI: London> 시리즈 전편 대본 검수 및 자문",
+    "titleEn": "SK AI College — <Step into AI: London Series> Script Review & Advisory (Series-wide)",
+    "titleKo": "SK AI College — <Step into AI: London> 시리즈 전편 대본 검수 및 자문",
     "period": "2022-01-05 – 2022-01-31",
     "fundingAgency": "StepintoCity, Inc.",
     "amount": "₩1,500,000",
@@ -105,13 +105,26 @@
   },
   {
     "titleEn": "SK AI College — <ICML 2021> Privacy & Security Part, Educational Content Development & Source Paper Summary",
-    "titleKo": "SK AI College — <ICML 2021> Privacy & Security 파트 교육 콘텐츠 제작 및 원문 논문 요약"
+    "titleKo": "SK AI College — <ICML 2021> Privacy & Security 파트 교육 콘텐츠 제작 및 원문 논문 요약",
     "period": "2021-07-24 – 2021-08-31",
     "fundingAgency": "Vreeze",
     "amount": "₩1,000,000",
     "type": "contract",
     "roles": {
       "principalInvestigator": "최인수",
+      "leadResearcher": "최인수",
+      "researchers": ["최인수"]
+    }
+  },
+  {
+    "titleEn": "Diabetes and Dyslipidemia Prediction Models via Natural Language Processing Techniques",
+    "titleKo": "식물성 기반 식사패턴의 만성질환 예방 및 건강영향 효과 연구",
+    "period": "2021-03-01 – 2023-12-31",
+    "fundingAgency": "National Research Foundation of Korea",
+    "amount": "N/A",
+    "type": "public",
+    "roles": {
+      "principalInvestigator": "김지혜",
       "leadResearcher": "최인수",
       "researchers": ["최인수"]
     }
@@ -124,7 +137,7 @@
     "amount": "N/A",
     "type": "academic",
     "roles": {
-      "principalInvestigator": "김우창",
+      "principalInvestigator": "박성필",
       "leadResearcher": "최인수",
       "researchers": ["최인수"]
     }
@@ -150,7 +163,7 @@
     "amount": "N/A",
     "type": "academic",
     "roles": {
-      "principalInvestigator": "김우창",
+      "principalInvestigator": "김장호",
       "leadResearcher": "최인수",
       "researchers": ["최인수"]
     }
@@ -163,7 +176,7 @@
     "amount": "N/A",
     "type": "academic",
     "roles": {
-      "principalInvestigator": "김우창",
+      "principalInvestigator": "김장호",
       "leadResearcher": "최인수",
       "researchers": ["최인수"]
     }
