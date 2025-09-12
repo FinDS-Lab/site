@@ -497,7 +497,8 @@ function generateDiamondNetwork() {
     const notchColor = fundingColor;
 
     const agencyEn = project.fundingAgency || '';
-    const agencyKo = AGENCY_KO[agencyEn];
+    const agencyKo = project.fundingAgencyKo || '';
+    
     const agencyValue = agencyKo
       ? `${esc(agencyEn)} <span class="ko-muted">· ${esc(agencyKo)}</span>`
       : esc(agencyEn);
