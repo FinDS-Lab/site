@@ -644,7 +644,71 @@ function generateDiamondNetwork() {
     render();
   };
 
+  // Calculate statistics
+  function calculateStatistics() {
+    let governmentCount = 0;
+    let industryCount = 0;
+    let academicCount = 0;
+    let totalAmountAsPI = 0;
+
+    PROJECTS.forEach(project => {
+      // Count by type
+      if (project.type === 'government') {
+        governmentCount++;
+      } else if (project.type === 'industry') {
+        industryCount++;
+      } else if (project.type === 'academic') {
+        academicCount++;
+      }
+
+      // Calculate total amount where 최인수 is Principal Investigator
+      if (project.roles && project.roles.principalInvestigator === '최인수' && 
+          project.amount && project.amount !== 'N/A') {
+        // Parse amount (remove ₩ and commas, convert to number)
+        const amountStr = project.amount.replace(/[₩,]/g, '');
+        const amountNum = parseInt(amountStr);
+        if (!isNaN(amountNum)) {
+          totalAmountAsPI += amountNum;
+        }
+      }
+    });
+
+    // Update statistics display with animation
+    animateNumber('governmentCount', governmentCount);
+    animateNumber('industryCount', industryCount);
+    animateNumber('academicCount', academicCount);
+    
+    // Format and display total amount
+    const formattedAmount = '₩' + totalAmountAsPI.toLocaleString('ko-KR');
+    document.getElementById('totalAmount').textContent = formattedAmount;
+  }
+
+  // Number animation effect
+  function animateNumber(elementId, finalValue) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    
+    const start = 0;
+    const duration = 800;
+    const startTime = performance.now();
+    
+    function tick(now) {
+      const progress = Math.min(1, (now - startTime) / duration);
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const value = Math.round(start + (finalValue - start) * easeOutQuart);
+      el.textContent = value;
+      
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      }
+    }
+    
+    requestAnimationFrame(tick);
+  }
+
+  // Initialize
   buildChips();
   render();
+  calculateStatistics();
 })();
 </script>
