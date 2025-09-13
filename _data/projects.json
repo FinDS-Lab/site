@@ -62,9 +62,9 @@
     "fundingAgency": "Federation of Intellectual Property Societies",
     "fundingAgencyKo": "지식재산단체총연합회",
     "amount": "N/A",
-    "type": "government",
+    "type": "industry",
     "roles": {
-      "principalInvestigator": "김우창",
+      "principalInvestigator": "박성필",
       "leadResearcher": "최인수",
       "researchers": ["최인수"]
     }
@@ -174,8 +174,7 @@
     "amount": "N/A",
     "type": "academic",
     "roles": {
-      "principalInvestigator": "김장호",
-      "leadResearcher": "최인수",
+      "leadResearcher": "김장호",
       "researchers": ["최인수"]
     }
   },
@@ -188,8 +187,7 @@
     "amount": "N/A",
     "type": "academic",
     "roles": {
-      "principalInvestigator": "김장호",
-      "leadResearcher": "최인수",
+      "leadResearcher": "김장호",
       "researchers": ["최인수"]
     }
   }
