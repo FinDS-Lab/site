@@ -207,6 +207,166 @@ function generateDiamondNetwork() {
 }
 </script>
 
+<!-- ===== Statistics Section ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    
+    .stat-card.government-stat::before {
+      background: linear-gradient(135deg, rgb(214, 177, 77), rgb(234, 197, 97));
+    }
+    
+    .stat-card.industry-stat::before {
+      background: linear-gradient(135deg, rgb(172, 14, 14), rgb(200, 40, 40));
+    }
+    
+    .stat-card.academic-stat::before {
+      background: linear-gradient(135deg, #111827, #374151);
+    }
+    
+    .stat-card.amount-stat::before {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+    }
+    
+    .stat-card.total-stat::before {
+      background: linear-gradient(135deg, #e5e7eb, #9ca3af);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .stat-number {
+      font-size: 32px;
+      font-weight: 900;
+      color: #111827;
+      line-height: 1.2;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+    
+    .stat-card.government-stat .stat-number {
+      color: rgb(194, 157, 57);
+    }
+    
+    .stat-card.industry-stat .stat-number {
+      color: rgb(172, 14, 14);
+    }
+    
+    .stat-card.academic-stat .stat-number {
+      color: #111827;
+    }
+    
+    .stat-card.amount-stat {
+      background: linear-gradient(135deg, #fffef7, #fffdf0);
+    }
+    
+    .stat-card.amount-stat .stat-number {
+      color: rgb(146, 64, 14);
+      font-size: 24px;
+    }
+    
+    .stat-card.total-stat .stat-number {
+      color: #374151;
+    }
+    
+    @media (max-width: 768px) {
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .stat-card {
+        padding: 16px;
+      }
+      .stat-number {
+        font-size: 26px;
+      }
+      .stat-card.amount-stat .stat-number {
+        font-size: 20px;
+      }
+      .stat-label {
+        font-size: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .stat-card {
+        padding: 14px;
+      }
+      .stat-number {
+        font-size: 22px;
+      }
+      .stat-card.amount-stat .stat-number {
+        font-size: 16px;
+      }
+      .stat-label {
+        font-size: 9px;
+        letter-spacing: 0.3px;
+      }
+    }
+  </style>
+  
+  <div class="stats-container">
+    <div class="stat-card government-stat">
+      <div class="stat-number" id="governmentCount">0</div>
+      <div class="stat-label">Government</div>
+    </div>
+    <div class="stat-card industry-stat">
+      <div class="stat-number" id="industryCount">0</div>
+      <div class="stat-label">Industry</div>
+    </div>
+    <div class="stat-card academic-stat">
+      <div class="stat-number" id="academicCount">0</div>
+      <div class="stat-label">Academic</div>
+    </div>
+    <div class="stat-card amount-stat">
+      <div class="stat-number" id="totalAmount">₩0</div>
+      <div class="stat-label">Total Funding as PI</div>
+    </div>
+    <div class="stat-card total-stat">
+      <div class="stat-number" id="totalCount">0</div>
+      <div class="stat-label">Total Projects</div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== Styles ===== -->
 <style>
   /* Toolbar */
@@ -673,10 +833,13 @@ function generateDiamondNetwork() {
       }
     });
 
+    const totalCount = PROJECTS.length;
+
     // Update statistics display with animation
     animateNumber('governmentCount', governmentCount);
     animateNumber('industryCount', industryCount);
     animateNumber('academicCount', academicCount);
+    animateNumber('totalCount', totalCount);
     
     // Format and display total amount
     const formattedAmount = '₩' + totalAmountAsPI.toLocaleString('ko-KR');
