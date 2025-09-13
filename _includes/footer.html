@@ -236,6 +236,41 @@ function updateVideoTitle() {
     text-overflow: ellipsis;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     letter-spacing: 0.01em;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  /* Marquee 효과 (긴 제목) */
+  .music-title.marquee {
+    animation: marquee 12s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(calc(-100% + 150px));
+    }
+    75% {
+      transform: translateX(calc(-100% + 150px));
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* 재생 중일 때만 marquee 활성화 */
+  #musicPlayer:not(.playing) .music-title.marquee {
+    animation: none;
+  }
+
+  /* 호버 시 일시정지 */
+  .music-title.marquee:hover {
+    animation-play-state: paused;
   }
 
   /* 볼륨 컨트롤 - 고정 너비 */
@@ -722,6 +757,9 @@ function updateVideoTitle() {
           
           // 아티스트 정보가 있고, 제목에 포함되지 않은 경우 추가
           if (author && author !== '' && !title.includes(author)) {
+            // "- Topic" 제거 (YouTube Music 자동 생성 채널)
+            author = author.replace(/\s*-\s*Topic\s*$/i, '');
+            
             // YouTube Music은 보통 author에 아티스트명이 들어옴
             displayText = displayText + ' - ' + author;
           }
@@ -740,6 +778,9 @@ function updateVideoTitle() {
           displayText = displayText.replace(/\s*(Official\s*(Video|Audio|MV|M\/V))?\s*$/i, '');
           displayText = displayText.replace(/\s*\[.*?\]\s*$/g, ''); // [태그] 제거
           displayText = displayText.replace(/\s*【.*?】\s*$/g, ''); // 【태그】 제거
+          
+          // 최종적으로 "- Topic" 한 번 더 확인 제거
+          displayText = displayText.replace(/\s*-\s*Topic\s*$/i, '');
           
           titleElement.textContent = displayText;
           titleElement.title = displayText;
@@ -772,8 +813,13 @@ function updateVideoTitle() {
           
           // author_name이 있으면 추가 (oEmbed에서 제공하는 경우)
           if (data.author_name && !displayText.includes(data.author_name)) {
-            displayText = displayText + ' - ' + data.author_name;
+            // "- Topic" 제거
+            var cleanAuthor = data.author_name.replace(/\s*-\s*Topic\s*$/i, '');
+            displayText = displayText + ' - ' + cleanAuthor;
           }
+          
+          // 최종적으로 "- Topic" 한 번 더 확인 제거
+          displayText = displayText.replace(/\s*-\s*Topic\s*$/i, '');
           
           titleElement.textContent = displayText;
           titleElement.title = displayText;
