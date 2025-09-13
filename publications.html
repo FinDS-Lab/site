@@ -270,7 +270,97 @@ permalink: /publications.html
    return svg;
  }
 </script>
-
+<!-- ===== Statistics Section ===== -->
+<section class="max-w-7xl mx-auto px-4 mt-6">
+  <style>
+    .pub-stats-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .pub-stat-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .pub-stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    
+    .pub-stat-card.journal-stat::before {
+      background: linear-gradient(135deg, rgb(214, 177, 77), rgb(234, 197, 97));
+    }
+    
+    .pub-stat-card.conference-stat::before {
+      background: linear-gradient(135deg, rgb(172, 14, 14), rgb(200, 40, 40));
+    }
+    
+    .pub-stat-card.total-stat::before {
+      background: linear-gradient(135deg, #374151, #6b7280);
+    }
+    
+    .pub-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    
+    .pub-stat-number {
+      font-size: 32px;
+      font-weight: 900;
+      color: #111827;
+      line-height: 1.2;
+    }
+    
+    .pub-stat-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+    
+    .pub-stat-card.journal-stat .pub-stat-number {
+      color: rgb(194, 157, 57);
+    }
+    
+    .pub-stat-card.conference-stat .pub-stat-number {
+      color: rgb(172, 14, 14);
+    }
+    
+    .pub-stat-card.total-stat .pub-stat-number {
+      color: #374151;
+    }
+  </style>
+  
+  <div class="pub-stats-container">
+    <div class="pub-stat-card journal-stat">
+      <div class="pub-stat-number" id="journalCount">0</div>
+      <div class="pub-stat-label">Journal Papers</div>
+    </div>
+    <div class="pub-stat-card conference-stat">
+      <div class="pub-stat-number" id="conferenceCount">0</div>
+      <div class="pub-stat-label">Conference Presentations</div>
+    </div>
+    <div class="pub-stat-card total-stat">
+      <div class="pub-stat-number" id="totalPubCount">0</div>
+      <div class="pub-stat-label">Total Publications</div>
+    </div>
+  </div>
+</section>
 <!-- ===== Styles ===== -->
 <style>
  :root {
@@ -1233,6 +1323,59 @@ permalink: /publications.html
 
  const PUBS = autoNumberCodeLabels(PUBS_RAW);
 
+// Calculate publication statistics
+ function calculatePublicationStats() {
+   let journalCount = 0;
+   let conferenceCount = 0;
+
+   PUBS.forEach(pub => {
+     const types = arr(pub.type);
+     const indexing = arr(pub.indexing_group);
+     
+     // Count journals (including all types of journals)
+     if (types.includes('journal') || 
+         indexing.some(ig => /SCIE|SSCI|A&HCI|ESCI|Scopus|KCI|Other International|Other Domestic|Preprint/i.test(String(ig)))) {
+       journalCount++;
+     }
+     
+     // Count conferences (international + domestic + joint)
+     if (types.includes('conference') || 
+         indexing.some(ig => /Conference/i.test(String(ig)))) {
+       conferenceCount++;
+     }
+   });
+
+   const totalCount = PUBS.length;
+
+   // Update display with animation
+   animateNumber('journalCount', journalCount);
+   animateNumber('conferenceCount', conferenceCount);
+   animateNumber('totalPubCount', totalCount);
+ }
+
+ // Number animation effect
+ function animateNumber(elementId, finalValue) {
+   const el = document.getElementById(elementId);
+   if (!el) return;
+   
+   const start = 0;
+   const duration = 800;
+   const startTime = performance.now();
+   
+   function tick(now) {
+     const progress = Math.min(1, (now - startTime) / duration);
+     const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+     const value = Math.round(start + (finalValue - start) * easeOutQuart);
+     el.textContent = value;
+     
+     if (progress < 1) {
+       requestAnimationFrame(tick);
+     }
+   }
+   
+   requestAnimationFrame(tick);
+ }
+ 
  /* ===== Filters ===== */
  const FILTER_GROUPS = {
    type: [
@@ -1353,6 +1496,7 @@ permalink: /publications.html
        
        buildChips();
        render();
+       calculatePublicationStats(); 
      }
    });
  }
