@@ -206,6 +206,12 @@ function generateDiamondNetwork() {
 .text-ko{word-break:keep-all;}
 .text-en{word-break:normal;overflow-wrap:anywhere;}
 
+/* Special wrapping for angle brackets content */
+.no-break-angle {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 /* Toolbar */
 .toolbar{display:flex;flex-direction:column;gap:14px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:1rem;padding:16px;margin-top:20px}
 .search input{width:100%;border:1px solid #e5e7eb;border-radius:.6rem;padding:.6rem .8rem;font-size:14px}
@@ -246,8 +252,7 @@ function generateDiamondNetwork() {
 
 /* Body */
 .lecture-body{padding:14px 16px;background:#fff}
-.meta{display:flex;flex-wrap:wrap;gap:6px}
-.meta + .meta{margin-top:6px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
 .badge{padding:.25rem .6rem;border-radius:999px;font-weight:800;font-size:11px;white-space:nowrap}
 
 /* Role badge with colored background */
@@ -257,14 +262,9 @@ function generateDiamondNetwork() {
 /* Other badges */
 .badge-school{background:#111827;color:#fff;border:1px solid #111827}
 .badge-period{background:#f8fafc;border:1px solid #e5e7eb;color:#374151}
-.badge-section{background:#e0f2fe;border:1px solid #7dd3fc;color:#0369a1;font-size:10px;padding:.2rem .5rem}
 
 .course-en{font-size:15px;font-weight:900;color:#111827;margin-top:10px}
 .course-ko{font-size:13px;color:#374151;margin-top:2px}
-
-/* For courses with sections */
-.course-with-section{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
-.course-title{flex-grow:1}
 
 /* Empty state */
 .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
@@ -319,10 +319,6 @@ function generateDiamondNetwork() {
     <label class="text-xs font-bold text-slate-600 block mb-1">Year</label>
     <div class="chips" id="yearChips"></div>
   </div>
-  <div style="margin-top:12px;">
-    <label class="text-xs font-bold text-slate-600 block mb-1">Semester</label>
-    <div class="chips" id="semChips"></div>
-  </div>
 </div>
   </div>
 </section>
@@ -334,274 +330,184 @@ function generateDiamondNetwork() {
 
 <script>
 (() => {
-  /* ===== Raw Data ===== */
-  const RAW = [
-    {
-      role:"Lecturer",
-      periods:["2025 Fall"],
-      school:"Dongduk Women's University",
-      courses:[{en:"Business Decision Making and Data Analysis (경영K0039)", ko:"경영의사결정과자료분석 (경영K0039)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2025 Fall-1", "2025 Fall-2"],
-      school:"Dongduk Women's University",
-      courses:[{en:"Python Programming Fundamentals (경융K0011)", ko:"파이썬을 활용한 프로그래밍 기초 (경융K0011)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2025 Fall"],
-      school:"Gangnam University",
-      courses:[{en:"Applied Statistics (EG14204)", ko:"응용통계 (EG14204)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2025 Spring"],
-      school:"Korea University Sejong Campus",
-      courses:[{en:"Algorithmic Trading (DIGB441)", ko:"알고리즘 투자전략 (DIGB441)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2025 Spring"],
-      school:"Gangnam University",
-      courses:[{en:"Introduction to Financial Engineering (EG14209)", ko:"금융공학입문 (EG14209)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2024 Fall"],
-      school:"KAIST",
-      courses:[{en:"Special Topics in Data Science I: Advanced Data Science for Finance (DS801)", ko:"데이터사이언스의 특수논제 I <고급금융데이터사이언스> (DS801)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2024 Spring"],
-      school:"Kyung Hee University",
-      courses:[{en:"Financial Engineering (IE329)", ko:"금융공학 (IE329)"}]
-    },
-    {
-      role:"Lecturer",
-      periods:["2024 Spring"],
-      school:"Kyung Hee University",
-      courses:[{en:"Engineering Economics (IE201)", ko:"경제성공학 (IE201)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2023 Fall"],
-      school:"KAIST",
-      courses:[{en:"Special Topics in Data Science I: Applications of Financial Data Science (DS801)", ko:"데이터사이언스의 특수논제 I <금융데이터사이언스응용> (DS801)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2024 Spring", "2023 Spring", "2022 Spring", "2021 Spring"],
-      school:"KAIST",
-      courses:[{en:"Financial Artificial Intelligence (IE471)", ko:"금융인공지능 (IE471)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2022 Fall"],
-      school:"KAIST",
-      courses:[{en:"Special Topics in Knowledge Service Engineering I: Applications of Financial Data Science (KSE801)", ko:"지식서비스공학의 특수논제 I <금융데이터사이언스응용> (KSE801)"}]
-    },
-    {
-      "role": "Teaching Assistant",
-      "periods": ["2022 Spring"],
-      "school": "KAIST",
-      "courses": [
-        {
-          "en": "Special Topics in Industrial Systems Engineering I: You&amp;IE (IE482)",
-          "ko": "산업공학특강 I &lt;You&amp;IE&gt; (IE482)"
-        }
-      ]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2021 Fall", "2020 Fall"],
-      school:"KAIST",
-      courses:[{en:"Convex Optimization (IE539)", ko:"컨벡스 최적화 (IE539)"}]
-    },
-    {
-      role:"Teaching Assistant",
-      periods:["2021 Spring", "2019 Spring"],
-      school:"KAIST",
-      courses:[{en:"Decision Analysis and Risk Management (IE432)", ko:"의사결정분석 및 위험관리 (IE432)"}]
-    }
-  ];
-
-  /* Expand courses into ITEMS */
-  const ITEMS = [];
-  RAW.forEach(r => {
-    r.courses.forEach(c => {
-      ITEMS.push({
-        ...r, 
-        courses:[c],
-        period: r.periods[0].replace(/-\d+$/, '') // Use first period (without section) for sorting
+  /* Load data from JSON */
+  fetch('{{ site.baseurl }}/_data/lectures.json')
+    .then(response => response.json())
+    .then(RAW => {
+      /* Expand courses into ITEMS */
+      const ITEMS = [];
+      RAW.forEach(r => {
+        r.courses.forEach(c => {
+          ITEMS.push({
+            ...r, 
+            courses:[c],
+            period: r.periods[0].replace(/-\d+$/, '') // Use first period (without section) for sorting
+          });
+        });
       });
-    });
-  });
 
-  /* Utils */
-  function seasonToDate(s){
-    // Handle section notation (e.g., "2025 Spring-1")
-    const baseS = s.replace(/-\d+$/, '');
-    const [yy, ss] = baseS.split(' ');
-    const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
-    return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
-  }
-  function byStartDesc(a,b){ 
-    const dateA = seasonToDate(a.period);
-    const dateB = seasonToDate(b.period);
-    return dateB - dateA;
-  }
+      /* Utils */
+      function seasonToDate(s){
+        // Handle section notation (e.g., "2025 Spring-1")
+        const baseS = s.replace(/-\d+$/, '');
+        const [yy, ss] = baseS.split(' ');
+        const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+        return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
+      }
+      function byStartDesc(a,b){ 
+        const dateA = seasonToDate(a.period);
+        const dateB = seasonToDate(b.period);
+        return dateB - dateA;
+      }
 
-  /* Filters */
-  const ROLES = ["Lecturer","Teaching Assistant"];
-  const SCHOOLS = ["Dongduk Women's University","Kyung Hee University","Korea University Sejong Campus","Gangnam University","KAIST"];
-  
-  let q = "";
-  const onRoles = new Set();
-  const onSchools = new Set();
-  // Extract ALL unique base semesters from all periods
-  const allPeriodsFlat = RAW.flatMap(r => r.periods);
-  const ALL_SEMS = Array.from(new Set(allPeriodsFlat.map(p => p.replace(/-\d+$/, '')))).sort((a,b)=>seasonToDate(b)-seasonToDate(a));
-  const onSems = new Set();
-  
-  // Extract unique years from all periods
-  const ALL_YEARS = Array.from(new Set(allPeriodsFlat.map(p => p.split(' ')[0]))).sort((a,b) => b-a);
-  const onYears = new Set();
+      /* Process text to wrap angle bracket content */
+      function processAngleBrackets(text) {
+        // Replace content within angle brackets with non-breaking span
+        return text.replace(/<([^>]+)>/g, '<span class="no-break-angle">&lt;$1&gt;</span>');
+      }
 
-  /* DOM */
-  const grid = document.getElementById('grid');
-  const count = document.getElementById('count');
-  const qInput = document.getElementById('q');
-  const roleChips = document.getElementById('roleChips');
-  const schoolChips = document.getElementById('schoolChips');
-  const semChips = document.getElementById('semChips');
-  const yearChips = document.getElementById('yearChips');
-  const clearBtn = document.getElementById('clearFilters');
+      /* Filters */
+      const ROLES = ["Lecturer","Teaching Assistant"];
+      const SCHOOLS = [...new Set(RAW.map(r => r.school))].sort();
+      
+      let q = "";
+      const onRoles = new Set();
+      const onSchools = new Set();
+      
+      // Extract ALL unique base semesters from all periods
+      const allPeriodsFlat = RAW.flatMap(r => r.periods);
+      
+      // Extract unique years from all periods
+      const ALL_YEARS = Array.from(new Set(allPeriodsFlat.map(p => p.split(' ')[0]))).sort((a,b) => b-a);
+      const onYears = new Set();
 
-  /* Chips */
-  function buildChips(){
-    roleChips.innerHTML = ROLES.map(r=>{
-      const active = onRoles.has(r);
-      return `<button class="chip ${active?'is-on':''}" data-role="${r}">${r}</button>`;
-    }).join('');
+      /* DOM */
+      const grid = document.getElementById('grid');
+      const count = document.getElementById('count');
+      const qInput = document.getElementById('q');
+      const roleChips = document.getElementById('roleChips');
+      const schoolChips = document.getElementById('schoolChips');
+      const yearChips = document.getElementById('yearChips');
+      const clearBtn = document.getElementById('clearFilters');
 
-    schoolChips.innerHTML = SCHOOLS.map(s=>{
-      const active = onSchools.has(s);
-      return `<button class="chip ${active?'is-on':''}" data-school="${s}">${s}</button>`;
-    }).join('');
+      /* Chips */
+      function buildChips(){
+        roleChips.innerHTML = ROLES.map(r=>{
+          const active = onRoles.has(r);
+          return `<button class="chip ${active?'is-on':''}" data-role="${r}">${r}</button>`;
+        }).join('');
 
-    yearChips.innerHTML = ALL_YEARS.map(y=>{
-      const active = onYears.has(y);
-      return `<button class="chip ${active?'is-on':''}" data-year="${y}">${y}</button>`;
-    }).join('');
+        schoolChips.innerHTML = SCHOOLS.map(s=>{
+          const active = onSchools.has(s);
+          return `<button class="chip ${active?'is-on':''}" data-school="${s}">${s}</button>`;
+        }).join('');
 
-    semChips.innerHTML = ALL_SEMS.map(s=>{
-      const active = onSems.has(s);
-      return `<button class="chip ${active?'is-on':''}" data-sem="${s}">${s}</button>`;
-    }).join('');
+        yearChips.innerHTML = ALL_YEARS.map(y=>{
+          const active = onYears.has(y);
+          return `<button class="chip ${active?'is-on':''}" data-year="${y}">${y}</button>`;
+        }).join('');
 
-    roleChips.querySelectorAll('[data-role]').forEach(btn=>{
-      btn.onclick = ()=>{ const v=btn.dataset.role; onRoles.has(v)?onRoles.delete(v):onRoles.add(v); buildChips(); render(); };
-    });
-    schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
-      btn.onclick = ()=>{ const v=btn.dataset.school; onSchools.has(v)?onSchools.delete(v):onSchools.add(v); buildChips(); render(); };
-    });
-    yearChips.querySelectorAll('[data-year]').forEach(btn=>{
-      btn.onclick = ()=>{ const v=btn.dataset.year; onYears.has(v)?onYears.delete(v):onYears.add(v); buildChips(); render(); };
-    });
-    semChips.querySelectorAll('[data-sem]').forEach(btn=>{
-      btn.onclick = ()=>{ const v=btn.dataset.sem; onSems.has(v)?onSems.delete(v):onSems.add(v); buildChips(); render(); };
-    });
-  }
+        roleChips.querySelectorAll('[data-role]').forEach(btn=>{
+          btn.onclick = ()=>{ const v=btn.dataset.role; onRoles.has(v)?onRoles.delete(v):onRoles.add(v); buildChips(); render(); };
+        });
+        schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
+          btn.onclick = ()=>{ const v=btn.dataset.school; onSchools.has(v)?onSchools.delete(v):onSchools.add(v); buildChips(); render(); };
+        });
+        yearChips.querySelectorAll('[data-year]').forEach(btn=>{
+          btn.onclick = ()=>{ const v=btn.dataset.year; onYears.has(v)?onYears.delete(v):onYears.add(v); buildChips(); render(); };
+        });
+      }
 
-  /* Filtering */
-  function matchesQuery(i){
-    if(!q) return true;
-    const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
-    const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
-    return t.includes(q.toLowerCase());
-  }
-  function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
-  function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
-  function passYears(i){
-    // Check if any of the periods match the selected years
-    const years = i.periods.map(p => p.split(' ')[0]);
-    return onYears.size ? years.some(y => onYears.has(y)) : true;
-  }
-  function passSems(i){
-    // Check if any of the periods match the selected semesters (ignoring section numbers)
-    const sems = i.periods.map(p => p.replace(/-\d+$/, ''));
-    return onSems.size ? sems.some(s => onSems.has(s)) : true;
-  }
-  function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passYears).filter(passSems).filter(matchesQuery).sort(byStartDesc); }
+      /* Filtering */
+      function matchesQuery(i){
+        if(!q) return true;
+        const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
+        const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
+        return t.includes(q.toLowerCase());
+      }
+      function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
+      function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
+      function passYears(i){
+        // Check if any of the periods match the selected years
+        const years = i.periods.map(p => p.split(' ')[0]);
+        return onYears.size ? years.some(y => onYears.has(y)) : true;
+      }
+      function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passYears).filter(matchesQuery).sort(byStartDesc); }
 
-  /* Card */
-  function card(item){
-    // Get all semester labels for this course
-    const semesters = item.periods;
-    const leftClass = item.role==="Lecturer" ? "lecturer" : "ta";
-    const leftLabel = item.role==="Lecturer" ? "L" : "TA";
-    const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
-    
-    const course = item.courses[0];
+      /* Card */
+      function card(item){
+        // Get all semester labels for this course
+        const semesters = item.periods;
+        const leftClass = item.role==="Lecturer" ? "lecturer" : "ta";
+        const leftLabel = item.role==="Lecturer" ? "L" : "TA";
+        const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
+        
+        const course = item.courses[0];
+        // Process Korean text to prevent line breaks in angle brackets
+        const processedKo = processAngleBrackets(course.ko);
 
-    return `
-    <article class="lecture-card">
-      <div class="lecture-row">
-        <div class="lecture-left ${leftClass}">
-          <span>${leftLabel}</span>
-        </div>
-        <div class="lecture-body">
-          <!-- Role + School -->
-          <div class="meta">
-            <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
-            <span class="badge badge-school text-en">${item.school}</span>
+        return `
+        <article class="lecture-card">
+          <div class="lecture-row">
+            <div class="lecture-left ${leftClass}">
+              <span>${leftLabel}</span>
+            </div>
+            <div class="lecture-body">
+              <!-- Role -->
+              <div class="meta">
+                <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
+              </div>
+              <!-- School -->
+              <div class="meta">
+                <span class="badge badge-school text-en">${item.school}</span>
+              </div>
+              <!-- Semesters -->
+              <div class="meta">
+                ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
+              </div>
+              <!-- Course titles -->
+              <div class="course-en text-en">${course.en}</div>
+              <div class="course-ko text-ko">${processedKo}</div>
+            </div>
           </div>
-          <!-- Semesters -->
-          <div class="meta">
-            ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
-          </div>
-          <!-- Course titles -->
-          <div class="course-en text-en">${course.en}</div>
-          <div class="course-ko text-ko">${course.ko}</div>
-        </div>
-      </div>
-    </article>`;
-  }
+        </article>`;
+      }
 
-  /* Render */
-  function render(){
-    const data = filterItems();
-    grid.innerHTML = data.length ? data.map(card).join('') : `<div class="empty">No lectures found. Try changing filters.</div>`;
-    count.textContent = `${data.length} of ${ITEMS.length}`;
-  }
+      /* Render */
+      function render(){
+        const data = filterItems();
+        grid.innerHTML = data.length ? data.map(card).join('') : `<div class="empty">No lectures found. Try changing filters.</div>`;
+        count.textContent = `${data.length} of ${ITEMS.length}`;
+      }
 
-  /* Init */
-  /* Init */
-  qInput.oninput = e => { q = e.target.value; render(); };
-  
-  // Toggle filter section
-  document.getElementById('toggleFilters').onclick = () => {
-    const filterContent = document.getElementById('filterContent');
-    const toggleBtn = document.getElementById('toggleFilters');
-    const isHidden = filterContent.style.display === 'none';
-    
-    filterContent.style.display = isHidden ? 'block' : 'none';
-    toggleBtn.textContent = isHidden ? 'Collapse' : 'Expand';
-  };
-  
-  clearBtn.onclick = () => {
-    onRoles.clear();
-    onSchools.clear();
-    onYears.clear();
-    onSems.clear();
-    qInput.value = '';
-    q = '';
-    buildChips();
-    render();
-  };
-  buildChips();
-  render();
+      /* Init */
+      qInput.oninput = e => { q = e.target.value; render(); };
+      
+      // Toggle filter section
+      document.getElementById('toggleFilters').onclick = () => {
+        const filterContent = document.getElementById('filterContent');
+        const toggleBtn = document.getElementById('toggleFilters');
+        const isHidden = filterContent.style.display === 'none';
+        
+        filterContent.style.display = isHidden ? 'block' : 'none';
+        toggleBtn.textContent = isHidden ? 'Collapse' : 'Expand';
+      };
+      
+      clearBtn.onclick = () => {
+        onRoles.clear();
+        onSchools.clear();
+        onYears.clear();
+        qInput.value = '';
+        q = '';
+        buildChips();
+        render();
+      };
+      buildChips();
+      render();
+    })
+    .catch(error => {
+      console.error('Error loading lectures data:', error);
+      document.getElementById('grid').innerHTML = '<div class="empty">Error loading lectures data</div>';
+    });
 })(); 
 </script>
