@@ -362,12 +362,18 @@ permalink: /publications.html
       color: #374151;
     }
     
-    @media (max-width: 768px) {
-      .pub-stats-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-    }
+   @media (max-width: 768px) {
+     .pub-stats-container {
+       grid-template-columns: repeat(2, 1fr);
+       grid-template-rows: repeat(3, auto);
+       gap: 12px;
+     }
+     
+     .pub-stat-card.total-stat {
+       grid-column: 1 / -1;
+       grid-row: 3;
+     }
+   }
   </style>
   
   <div class="pub-stats-container">
@@ -1505,7 +1511,6 @@ function calculatePublicationStats() {
      {value: "conference", label: "Conference"},
      {value: "book", label: "Book"},
      {value: "report", label: "Report"},
-     {value: "thesis", label: "Thesis / Dissertation"}
    ],
    journal: [
      {value: "SCIE", label: "SCIE"},
@@ -1777,12 +1782,16 @@ function calculatePublicationStats() {
           <div class="paper-body">
             <div class="paper-header">
               <div class="indexing-wrapper">
-                <div class="indexing-row">
-                  ${indexingBadges}
-                  ${langBadge}
-                  ${awardsHtml}
-                </div>
-                ${pubDateBadge}
+               <div class="indexing-row">
+                 ${indexingBadges}
+                 ${awardsHtml}
+               </div>
+               <div class="indexing-row">
+                 ${pubDateBadge}
+               </div>
+               <div class="indexing-row">
+                 ${langBadge}
+               </div>
               </div>
             </div>
             <h3 class="paper-title">${displayTitle || ''}</h3>
@@ -1880,75 +1889,66 @@ function formatAuthorsForCitation(authors, style) {
   
   switch(style) {
     case 'APA':
-      // APA 7th: 모든 저자 나열 (21명 이상일 때만 줄임)
       const apaAuthors = authorNames.map(name => {
         const clean = name.replace(/\*/g, '').trim();
         const parts = clean.split(/\s+/);
         const last = parts[parts.length - 1];
         const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-        return `${last}, ${initials}`;
+        return initials ? `${last}, ${initials}` : last;
       });
       
       if (apaAuthors.length === 1) {
         return apaAuthors[0];
       } else if (apaAuthors.length === 2) {
         return apaAuthors[0] + ", & " + apaAuthors[1];
-      } else if (apaAuthors.length <= 20) {
-        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
       } else {
-        // 21명 이상일 때만 줄임
-        return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
+        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
       }
       
     case 'MLA':
-      // MLA 9th: 3명까지는 모두 나열, 4명 이상일 때 et al.
+      // MLA: 모든 저자 나열
       if (authorNames.length === 1) {
         return toInitialsReversed(authorNames[0]);
       } else if (authorNames.length === 2) {
         return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
-      } else if (authorNames.length === 3) {
-        return toInitialsReversed(authorNames[0]) + ", " + authorNames[1] + ", and " + authorNames[2];
       } else {
-        // 4명 이상일 때만 et al. 사용
-        return toInitialsReversed(authorNames[0]) + ", et al.";
-      }
-      
-    case 'Chicago':
-      // Chicago 17th: 10명까지 모두 나열
-      if (authorNames.length === 1) {
-        return toInitialsReversed(authorNames[0]);
-      } else if (authorNames.length <= 10) {
-        // 10명까지는 모두 나열
+        // 3명 이상일 때도 모든 저자 나열
         const formattedNames = authorNames.map((name, index) => {
           if (index === 0) return toInitialsReversed(name);
           return name;
         });
         return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
+      }
+      
+    case 'Chicago':
+      // Chicago: 모든 저자 나열
+      if (authorNames.length === 1) {
+        return toInitialsReversed(authorNames[0]);
       } else {
-        // 11명 이상일 때 첫 7명 + et al.
-        const formattedNames = authorNames.slice(0, 7).map((name, index) => {
+        const formattedNames = authorNames.map((name, index) => {
           if (index === 0) return toInitialsReversed(name);
           return name;
         });
-        return formattedNames.join(", ") + ", et al.";
+        if (formattedNames.length === 2) {
+          return formattedNames[0] + " and " + formattedNames[1];
+        }
+        return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
       }
       
     case 'Harvard':
-      // Harvard: 3명까지 모두 나열
+      // Harvard: 모든 저자 나열
       const harvardAuthors = authorNames.map(name => toInitials(name));
       if (harvardAuthors.length === 1) {
         return harvardAuthors[0];
       } else if (harvardAuthors.length === 2) {
         return harvardAuthors[0] + " and " + harvardAuthors[1];
-      } else if (harvardAuthors.length === 3) {
-        return harvardAuthors[0] + ", " + harvardAuthors[1] + " and " + harvardAuthors[2];
       } else {
-        // 4명 이상일 때 et al.
-        return harvardAuthors[0] + " et al.";
+        // 3명 이상일 때도 모든 저자 나열
+        return harvardAuthors.slice(0, -1).join(", ") + " and " + harvardAuthors[harvardAuthors.length - 1];
       }
       
     case 'Vancouver':
-      // Vancouver: 6명까지 모두 나열
+      // Vancouver: 모든 저자 나열
       const vanAuthors = authorNames.map(name => {
         const clean = name.replace(/\*/g, '').trim();
         const parts = clean.split(/\s+/);
@@ -1957,19 +1957,19 @@ function formatAuthorsForCitation(authors, style) {
         return `${last} ${initials}`;
       });
       
-      if (vanAuthors.length <= 6) {
-        return vanAuthors.join(", ");
-      } else {
-        // 7명 이상일 때 처음 6명 + et al.
-        return vanAuthors.slice(0, 6).join(", ") + ", et al.";
-      }
+      // 모든 저자 나열
+      return vanAuthors.join(", ");
+      
+    case 'Korean':
+      // 한글 저자명 처리
+      const koreanAuthors = authors.map(id => getAuthorName(id, true));
+      return koreanAuthors.join(', ');
       
     default:
       // 기본: 모든 저자 나열
       return authorNames.join(", ");
   }
 }
-
 // APA용 sentence case 함수
 // Sentence case 함수 - APA, Vancouver용
 function toSentenceCase(str) {
@@ -2299,8 +2299,6 @@ function formatAuthorsForCitation(authors, style) {
   }
 }
 
-
-
 // openCite 함수에서 APA 부분 수정
 // openCite 함수 - 각 스타일별 정확한 포맷
 function openCite(pub) {
@@ -2313,6 +2311,8 @@ function openCite(pub) {
   const isBook = arr(pub.type).includes('book');
   const isThesis = arr(pub.type).includes('thesis');
   const isReport = arr(pub.type).includes('report');
+  
+  const isKorean = pub.language === 'Korean';
   
   // APA 스타일 (sentence case - 첫 글자와 콜론 뒤만 대문자)
   const apaTitle = toSentenceCase(title);
@@ -2460,6 +2460,44 @@ function openCite(pub) {
     vancouverFormat += ` doi:${pub.doi}`;
   }
   
+  // 한글 Citation (Korean APA style)
+  let koreanFormat = '';
+  if (isKorean) {
+    const titleKo = pub.title_ko || title;
+    const venueKo = arr(pub.venue_ko).filter(Boolean).join(", ") || venue;
+    
+    koreanFormat = `${formatAuthorsForCitation(pub.authors, 'Korean')} (${year}). `;
+    
+    if (isJournal && venueKo) {
+      koreanFormat += `${titleKo}. <em>${venueKo}</em>`;
+      if (pub.volume) koreanFormat += `, <em>${pub.volume}</em>`;
+      if (pub.issue) koreanFormat += `(${pub.issue})`;
+      if (pub.pages) koreanFormat += `, ${pub.pages}`;
+    } else if (isConference && venueKo) {
+      koreanFormat += `${titleKo}. <em>${venueKo}</em>`;
+      if (pub.pages) koreanFormat += ` (pp. ${pub.pages})`;
+    } else if (isBook) {
+      koreanFormat += `<em>${titleKo}</em>`;
+      if (pub.publisher) koreanFormat += `. ${pub.publisher}`;
+    } else if (isThesis) {
+      koreanFormat += `<em>${titleKo}</em> [박사학위논문`;
+      if (venueKo) koreanFormat += `, ${venueKo}`;
+      koreanFormat += `]`;
+    } else if (isReport) {
+      koreanFormat += `<em>${titleKo}</em>`;
+      if (pub.publisher || venueKo) koreanFormat += `. ${pub.publisher || venueKo}`;
+    } else {
+      koreanFormat += `${titleKo}`;
+      if (venueKo) koreanFormat += `. ${venueKo}`;
+    }
+    koreanFormat += '.';
+    
+    if (pub.doi) {
+      koreanFormat += ` https://doi.org/${pub.doi}`;
+    }
+  }
+  
+  // formats 객체 생성
   const formats = {
     'APA (7th ed.)': apaFormat,
     'MLA (9th ed.)': mlaFormat,
@@ -2467,6 +2505,11 @@ function openCite(pub) {
     'Harvard': harvardFormat,
     'Vancouver': vancouverFormat
   };
+  
+  // 한글 논문인 경우 한글 Citation 추가
+  if (isKorean && koreanFormat) {
+    formats['한글 (Korean APA)'] = koreanFormat;
+  }
 
   citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
     const id = 'cite-' + Math.random().toString(36).slice(2, 9);
