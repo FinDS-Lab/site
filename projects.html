@@ -303,9 +303,10 @@ function generateDiamondNetwork() {
       color: #374151;
     }
     
+    /* Tablet: 동일한 레이아웃 유지 */
     @media (max-width: 768px) {
       .stats-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 12px;
       }
       .stat-card {
@@ -322,11 +323,20 @@ function generateDiamondNetwork() {
       }
     }
     
+    /* Mobile: 2x2 + 1 레이아웃 */
     @media (max-width: 480px) {
       .stats-container {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
         gap: 10px;
       }
+      
+      /* Total Projects가 마지막 줄 전체를 차지 */
+      .stat-card.total-stat {
+        grid-column: 1 / span 2;
+      }
+      
       .stat-card {
         padding: 14px;
       }
@@ -646,9 +656,6 @@ function generateDiamondNetwork() {
 
   /* ===== Card ===== */
   function createCard(project){
-    // 디버깅용 - type 확인
-    console.log(`Project: ${project.titleEn}, Type: ${project.type}`);
-    
     const fundingColor = getFundingColor(project.type);
     const fundingLabel = getFundingLabel(project.type);
     const periodFmt = formatPeriod(project.period);
