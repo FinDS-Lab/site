@@ -3053,6 +3053,12 @@ function countCollaborations() {
 
  // Initialize variables
 // Initialize variables
+
+ // Animation variables (Initialize variables 섹션 바로 뒤에 추가)
+let animationFrame = null;
+let nodeAnimations = new Map();
+let time = 0;
+ 
  const isMobileInit = window.innerWidth <= 768;
  let currentThreshold = isMobileInit ? 5 : 3;
  let { counts: collaborations, typeBreakdown, directorPapers } = countCollaborations();
@@ -3142,68 +3148,87 @@ function sizeCanvas() {
   canvas.style.height = canvasHeight + 'px';
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
 }
-  // Build network structure
-  function buildNetwork() {
-    nodes = [];
-    const centerX = canvas.width / (2 * window.devicePixelRatio);
-    const centerY = canvas.height / (2 * window.devicePixelRatio);
-    const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
 
-    // Director at center
-    nodes.push({
-      id: DIRECTOR_ID,
-      name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
-      x: centerX,
-      y: centerY,
-      radius: 35 * zoomLevel,
-      isCenter: true,
-      frequency: 999
-    });
+function buildNetwork() {
+  nodes = [];
+  const centerX = canvas.width / (2 * window.devicePixelRatio);
+  const centerY = canvas.height / (2 * window.devicePixelRatio);
+  const thresholdCount = Math.ceil((currentThreshold / 100) * directorPapers);
 
-    // Get collaborators sorted by frequency and filtered by threshold
-    const coAuthors = Object.entries(collaborations)
-      .filter(([id, freq]) => freq >= thresholdCount)
-      .sort((a, b) => b[1] - a[1]);
+  // Director at center with animation
+  nodes.push({
+    id: DIRECTOR_ID,
+    name: AUTHORS[DIRECTOR_ID]?.en || 'Director',
+    x: centerX,
+    y: centerY,
+    baseX: centerX,
+    baseY: centerY,
+    radius: 35 * zoomLevel,
+    isCenter: true,
+    frequency: 999,
+    pulsePhase: 0
+  });
 
-    // Heart shape function
-// Arrange in concentric circles based on frequency
-const rings = [];
-const ringSizes = [8, 12, 16];
-let ringIndex = 0;
-let nodesInRing = [];
+  // Get collaborators sorted by frequency and filtered by threshold
+  const coAuthors = Object.entries(collaborations)
+    .filter(([id, freq]) => freq >= thresholdCount)
+    .sort((a, b) => b[1] - a[1]);
 
-coAuthors.forEach(([id, freq]) => {
-  if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
-    rings.push(nodesInRing);
-    nodesInRing = [];
-    ringIndex++;
-  }
-  nodesInRing.push({ id: parseInt(id), freq });
-});
-if (nodesInRing.length > 0) rings.push(nodesInRing);
+  // Arrange in concentric circles based on frequency
+  const rings = [];
+  const ringSizes = [8, 12, 16];
+  let ringIndex = 0;
+  let nodesInRing = [];
 
-// Place nodes in rings with zoom
-rings.forEach((ring, rIdx) => {
-  const radius = (baseRadius + rIdx * 80) * zoomLevel;
-  ring.forEach((item, nIdx) => {
-    const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
-    const freq = item.freq;
-    const percentage = Math.round((freq / directorPapers) * 100);
+  coAuthors.forEach(([id, freq]) => {
+    if (nodesInRing.length >= ringSizes[Math.min(ringIndex, ringSizes.length - 1)]) {
+      rings.push(nodesInRing);
+      nodesInRing = [];
+      ringIndex++;
+    }
+    nodesInRing.push({ id: parseInt(id), freq });
+  });
+  if (nodesInRing.length > 0) rings.push(nodesInRing);
 
-    nodes.push({
-      id: item.id,
-      name: AUTHORS[item.id]?.en || `Author ${item.id}`,
-      x: centerX + Math.cos(angle) * radius,
-      y: centerY + Math.sin(angle) * radius,
-      radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
-      frequency: freq,
-      percentage: percentage,
-      ring: rIdx,
-      typeBreakdown: typeBreakdown[item.id]
+  // Place nodes in rings with zoom and floating animation
+  rings.forEach((ring, rIdx) => {
+    const radius = (baseRadius + rIdx * 80) * zoomLevel;
+    ring.forEach((item, nIdx) => {
+      const angle = (nIdx / ring.length) * Math.PI * 2 - Math.PI / 2;
+      const freq = item.freq;
+      const percentage = Math.round((freq / directorPapers) * 100);
+      
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+
+      nodes.push({
+        id: item.id,
+        name: AUTHORS[item.id]?.en || `Author ${item.id}`,
+        x: x,
+        y: y,
+        baseX: x,
+        baseY: y,
+        radius: (10 + (freq / maxCollaborations) * 15) * zoomLevel,
+        frequency: freq,
+        percentage: percentage,
+        ring: rIdx,
+        typeBreakdown: typeBreakdown[item.id],
+        floatPhase: Math.random() * Math.PI * 2,
+        floatSpeed: 0.5 + Math.random() * 0.5
+      });
     });
   });
-});
-     }
+  
+  // Initialize animations for new nodes
+  nodes.forEach(node => {
+    if (!nodeAnimations.has(node.id)) {
+      nodeAnimations.set(node.id, {
+        hover: 0,
+        pulse: 0
+      });
+    }
+  });
+}
 
   // ===== Auto-count Publication Statistics =====
   function countPublications() {
@@ -3367,33 +3392,65 @@ document.addEventListener('DOMContentLoaded', countPublications);
       }
     });
 
-    // Hover tooltip
-// Hover tooltip - 간단한 이름만 표시
+ // Hover tooltip - 금색 테마의 세련된 디자인
     if (hoveredNode && !hoveredNode.isCenter) {
-      const nameWidth = ctx.measureText(hoveredNode.name).width + 20;
-      const tooltipHeight = 30;
+      const padding = 16;
+      const nameWidth = ctx.measureText(hoveredNode.name).width + padding * 2;
+      const tooltipHeight = 32;
       let tooltipX = hoveredNode.x - nameWidth / 2;
-      let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 10;
+      let tooltipY = hoveredNode.y - hoveredNode.radius - tooltipHeight - 15;
 
       // Keep tooltip in bounds
       tooltipX = Math.max(10, Math.min(tooltipX, canvas.width / window.devicePixelRatio - nameWidth - 10));
       tooltipY = Math.max(10, tooltipY);
 
-      // Simple tooltip background
-      ctx.fillStyle = 'rgba(17, 24, 39, 0.85)';
-      ctx.strokeStyle = 'rgba(214, 177, 77, 0.3)';
-      ctx.lineWidth = 1;
+      // 그림자 효과
+      ctx.shadowColor = 'rgba(214, 177, 77, 0.3)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 2;
+
+      // 툴팁 배경 - 흰색 배경
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#d6b14d';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.roundRect(tooltipX, tooltipY, nameWidth, tooltipHeight, 6);
+      ctx.roundRect(tooltipX, tooltipY, nameWidth, tooltipHeight, 8);
       ctx.fill();
       ctx.stroke();
 
-      // Just the name
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 11px Inter, sans-serif';
+      // 그림자 제거
+      ctx.shadowColor = 'transparent';
+
+      // 이름 텍스트 - 금색
+      ctx.fillStyle = '#92400e';
+      ctx.font = 'bold 13px Inter, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText(hoveredNode.name, tooltipX + nameWidth / 2, tooltipY + 19);
+      ctx.fillText(hoveredNode.name, tooltipX + nameWidth / 2, tooltipY + tooltipHeight / 2 + 4);
     }
+  }
+
+  // Animation loop
+  function animate() {
+    time += 0.016; // 약 60fps
+    
+    // Update node positions with floating animation
+    nodes.forEach(node => {
+      if (!node.isCenter) {
+        // 부드러운 떠다니는 효과
+        const floatX = Math.sin(time * node.floatSpeed + node.floatPhase) * 2;
+        const floatY = Math.cos(time * node.floatSpeed * 0.8 + node.floatPhase) * 2;
+        
+        node.x = node.baseX + floatX;
+        node.y = node.baseY + floatY;
+      } else {
+        // 중앙 노드는 부드럽게 펄스
+        node.pulsePhase = Math.sin(time * 0.8) * 0.05 + 1;
+      }
+    });
+    
+    drawNetwork();
+    animationFrame = requestAnimationFrame(animate);
   }
 
   // Mouse interaction
@@ -3412,12 +3469,12 @@ document.addEventListener('DOMContentLoaded', countPublications);
     });
 
     canvas.style.cursor = hoveredNode ? 'pointer' : 'default';
-    drawNetwork();
+    // drawNetwork() 제거 - animate()가 처리
   });
 
-canvas.addEventListener('mouseleave', () => {
+  canvas.addEventListener('mouseleave', () => {
     hoveredNode = null;
-    drawNetwork();
+    // drawNetwork() 제거 - animate()가 처리
   });
 
   // Click event for modal
@@ -3568,6 +3625,14 @@ canvas.addEventListener('touchend', (e) => {
     buildNetwork();
     drawNetwork();
   });
+
+   // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+    }
+  });
+ 
 }
 
  // Leadership 토글 함수
@@ -3733,6 +3798,7 @@ function closeResumeModal(event) {
 }
 
 </script>
+
 
 
 
