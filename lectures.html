@@ -330,184 +330,178 @@ function generateDiamondNetwork() {
 
 <script>
 (() => {
-  /* Load data from JSON */
-  fetch('{{ site.baseurl }}/_data/lectures.json')
-    .then(response => response.json())
-    .then(RAW => {
-      /* Expand courses into ITEMS */
-      const ITEMS = [];
-      RAW.forEach(r => {
-        r.courses.forEach(c => {
-          ITEMS.push({
-            ...r, 
-            courses:[c],
-            period: r.periods[0].replace(/-\d+$/, '') // Use first period (without section) for sorting
-          });
-        });
+  /* Jekyll이 빌드 시 _data/lectures.json을 직접 삽입 */
+  const RAW = {{ site.data.lectures | jsonify }};
+  
+  /* Expand courses into ITEMS */
+  const ITEMS = [];
+  RAW.forEach(r => {
+    r.courses.forEach(c => {
+      ITEMS.push({
+        ...r, 
+        courses:[c],
+        period: r.periods[0].replace(/-\d+$/, '') // Use first period (without section) for sorting
       });
-
-      /* Utils */
-      function seasonToDate(s){
-        // Handle section notation (e.g., "2025 Spring-1")
-        const baseS = s.replace(/-\d+$/, '');
-        const [yy, ss] = baseS.split(' ');
-        const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
-        return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
-      }
-      function byStartDesc(a,b){ 
-        const dateA = seasonToDate(a.period);
-        const dateB = seasonToDate(b.period);
-        return dateB - dateA;
-      }
-
-      /* Process text to wrap angle bracket content */
-      function processAngleBrackets(text) {
-        // Replace content within angle brackets with non-breaking span
-        return text.replace(/<([^>]+)>/g, '<span class="no-break-angle">&lt;$1&gt;</span>');
-      }
-
-      /* Filters */
-      const ROLES = ["Lecturer","Teaching Assistant"];
-      const SCHOOLS = [...new Set(RAW.map(r => r.school))].sort();
-      
-      let q = "";
-      const onRoles = new Set();
-      const onSchools = new Set();
-      
-      // Extract ALL unique base semesters from all periods
-      const allPeriodsFlat = RAW.flatMap(r => r.periods);
-      
-      // Extract unique years from all periods
-      const ALL_YEARS = Array.from(new Set(allPeriodsFlat.map(p => p.split(' ')[0]))).sort((a,b) => b-a);
-      const onYears = new Set();
-
-      /* DOM */
-      const grid = document.getElementById('grid');
-      const count = document.getElementById('count');
-      const qInput = document.getElementById('q');
-      const roleChips = document.getElementById('roleChips');
-      const schoolChips = document.getElementById('schoolChips');
-      const yearChips = document.getElementById('yearChips');
-      const clearBtn = document.getElementById('clearFilters');
-
-      /* Chips */
-      function buildChips(){
-        roleChips.innerHTML = ROLES.map(r=>{
-          const active = onRoles.has(r);
-          return `<button class="chip ${active?'is-on':''}" data-role="${r}">${r}</button>`;
-        }).join('');
-
-        schoolChips.innerHTML = SCHOOLS.map(s=>{
-          const active = onSchools.has(s);
-          return `<button class="chip ${active?'is-on':''}" data-school="${s}">${s}</button>`;
-        }).join('');
-
-        yearChips.innerHTML = ALL_YEARS.map(y=>{
-          const active = onYears.has(y);
-          return `<button class="chip ${active?'is-on':''}" data-year="${y}">${y}</button>`;
-        }).join('');
-
-        roleChips.querySelectorAll('[data-role]').forEach(btn=>{
-          btn.onclick = ()=>{ const v=btn.dataset.role; onRoles.has(v)?onRoles.delete(v):onRoles.add(v); buildChips(); render(); };
-        });
-        schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
-          btn.onclick = ()=>{ const v=btn.dataset.school; onSchools.has(v)?onSchools.delete(v):onSchools.add(v); buildChips(); render(); };
-        });
-        yearChips.querySelectorAll('[data-year]').forEach(btn=>{
-          btn.onclick = ()=>{ const v=btn.dataset.year; onYears.has(v)?onYears.delete(v):onYears.add(v); buildChips(); render(); };
-        });
-      }
-
-      /* Filtering */
-      function matchesQuery(i){
-        if(!q) return true;
-        const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
-        const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
-        return t.includes(q.toLowerCase());
-      }
-      function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
-      function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
-      function passYears(i){
-        // Check if any of the periods match the selected years
-        const years = i.periods.map(p => p.split(' ')[0]);
-        return onYears.size ? years.some(y => onYears.has(y)) : true;
-      }
-      function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passYears).filter(matchesQuery).sort(byStartDesc); }
-
-      /* Card */
-      function card(item){
-        // Get all semester labels for this course
-        const semesters = item.periods;
-        const leftClass = item.role==="Lecturer" ? "lecturer" : "ta";
-        const leftLabel = item.role==="Lecturer" ? "L" : "TA";
-        const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
-        
-        const course = item.courses[0];
-        // Process Korean text to prevent line breaks in angle brackets
-        const processedKo = processAngleBrackets(course.ko);
-
-        return `
-        <article class="lecture-card">
-          <div class="lecture-row">
-            <div class="lecture-left ${leftClass}">
-              <span>${leftLabel}</span>
-            </div>
-            <div class="lecture-body">
-              <!-- Role -->
-              <div class="meta">
-                <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
-              </div>
-              <!-- School -->
-              <div class="meta">
-                <span class="badge badge-school text-en">${item.school}</span>
-              </div>
-              <!-- Semesters -->
-              <div class="meta">
-                ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
-              </div>
-              <!-- Course titles -->
-              <div class="course-en text-en">${course.en}</div>
-              <div class="course-ko text-ko">${processedKo}</div>
-            </div>
-          </div>
-        </article>`;
-      }
-
-      /* Render */
-      function render(){
-        const data = filterItems();
-        grid.innerHTML = data.length ? data.map(card).join('') : `<div class="empty">No lectures found. Try changing filters.</div>`;
-        count.textContent = `${data.length} of ${ITEMS.length}`;
-      }
-
-      /* Init */
-      qInput.oninput = e => { q = e.target.value; render(); };
-      
-      // Toggle filter section
-      document.getElementById('toggleFilters').onclick = () => {
-        const filterContent = document.getElementById('filterContent');
-        const toggleBtn = document.getElementById('toggleFilters');
-        const isHidden = filterContent.style.display === 'none';
-        
-        filterContent.style.display = isHidden ? 'block' : 'none';
-        toggleBtn.textContent = isHidden ? 'Collapse' : 'Expand';
-      };
-      
-      clearBtn.onclick = () => {
-        onRoles.clear();
-        onSchools.clear();
-        onYears.clear();
-        qInput.value = '';
-        q = '';
-        buildChips();
-        render();
-      };
-      buildChips();
-      render();
-    })
-    .catch(error => {
-      console.error('Error loading lectures data:', error);
-      document.getElementById('grid').innerHTML = '<div class="empty">Error loading lectures data</div>';
     });
+  });
+
+  /* Utils */
+  function seasonToDate(s){
+    // Handle section notation (e.g., "2025 Spring-1")
+    const baseS = s.replace(/-\d+$/, '');
+    const [yy, ss] = baseS.split(' ');
+    const month = (ss==="Winter")?1:(ss==="Spring")?3:(ss==="Summer")?7:9;
+    return new Date(`${yy}-${String(month).padStart(2,'0')}-01T00:00:00`);
+  }
+  function byStartDesc(a,b){ 
+    const dateA = seasonToDate(a.period);
+    const dateB = seasonToDate(b.period);
+    return dateB - dateA;
+  }
+
+  /* Process text to wrap angle bracket content */
+  function processAngleBrackets(text) {
+    // Replace content within angle brackets with non-breaking span
+    return text.replace(/<([^>]+)>/g, '<span class="no-break-angle">&lt;$1&gt;</span>');
+  }
+
+  /* Filters */
+  const ROLES = ["Lecturer","Teaching Assistant"];
+  const SCHOOLS = [...new Set(RAW.map(r => r.school))].sort();
+  
+  let q = "";
+  const onRoles = new Set();
+  const onSchools = new Set();
+  
+  // Extract ALL unique base semesters from all periods
+  const allPeriodsFlat = RAW.flatMap(r => r.periods);
+  
+  // Extract unique years from all periods
+  const ALL_YEARS = Array.from(new Set(allPeriodsFlat.map(p => p.split(' ')[0]))).sort((a,b) => b-a);
+  const onYears = new Set();
+
+  /* DOM */
+  const grid = document.getElementById('grid');
+  const count = document.getElementById('count');
+  const qInput = document.getElementById('q');
+  const roleChips = document.getElementById('roleChips');
+  const schoolChips = document.getElementById('schoolChips');
+  const yearChips = document.getElementById('yearChips');
+  const clearBtn = document.getElementById('clearFilters');
+
+  /* Chips */
+  function buildChips(){
+    roleChips.innerHTML = ROLES.map(r=>{
+      const active = onRoles.has(r);
+      return `<button class="chip ${active?'is-on':''}" data-role="${r}">${r}</button>`;
+    }).join('');
+
+    schoolChips.innerHTML = SCHOOLS.map(s=>{
+      const active = onSchools.has(s);
+      return `<button class="chip ${active?'is-on':''}" data-school="${s}">${s}</button>`;
+    }).join('');
+
+    yearChips.innerHTML = ALL_YEARS.map(y=>{
+      const active = onYears.has(y);
+      return `<button class="chip ${active?'is-on':''}" data-year="${y}">${y}</button>`;
+    }).join('');
+
+    roleChips.querySelectorAll('[data-role]').forEach(btn=>{
+      btn.onclick = ()=>{ const v=btn.dataset.role; onRoles.has(v)?onRoles.delete(v):onRoles.add(v); buildChips(); render(); };
+    });
+    schoolChips.querySelectorAll('[data-school]').forEach(btn=>{
+      btn.onclick = ()=>{ const v=btn.dataset.school; onSchools.has(v)?onSchools.delete(v):onSchools.add(v); buildChips(); render(); };
+    });
+    yearChips.querySelectorAll('[data-year]').forEach(btn=>{
+      btn.onclick = ()=>{ const v=btn.dataset.year; onYears.has(v)?onYears.delete(v):onYears.add(v); buildChips(); render(); };
+    });
+  }
+
+  /* Filtering */
+  function matchesQuery(i){
+    if(!q) return true;
+    const courseText = i.courses.map(c => `${c.en} ${c.ko}`).join(' ');
+    const t = `${i.role} ${i.school} ${courseText}`.toLowerCase();
+    return t.includes(q.toLowerCase());
+  }
+  function passRoles(i){ return onRoles.size ? onRoles.has(i.role) : true; }
+  function passSchools(i){ return onSchools.size ? onSchools.has(i.school) : true; }
+  function passYears(i){
+    // Check if any of the periods match the selected years
+    const years = i.periods.map(p => p.split(' ')[0]);
+    return onYears.size ? years.some(y => onYears.has(y)) : true;
+  }
+  function filterItems(){ return ITEMS.filter(passRoles).filter(passSchools).filter(passYears).filter(matchesQuery).sort(byStartDesc); }
+
+  /* Card */
+  function card(item){
+    // Get all semester labels for this course
+    const semesters = item.periods;
+    const leftClass = item.role==="Lecturer" ? "lecturer" : "ta";
+    const leftLabel = item.role==="Lecturer" ? "L" : "TA";
+    const roleBadgeClass = item.role==="Lecturer" ? "badge-role-lect" : "badge-role-ta";
+    
+    const course = item.courses[0];
+    // Process Korean text to prevent line breaks in angle brackets
+    const processedKo = processAngleBrackets(course.ko);
+
+    return `
+    <article class="lecture-card">
+      <div class="lecture-row">
+        <div class="lecture-left ${leftClass}">
+          <span>${leftLabel}</span>
+        </div>
+        <div class="lecture-body">
+          <!-- Role -->
+          <div class="meta">
+            <span class="badge ${roleBadgeClass} text-en">${item.role}</span>
+          </div>
+          <!-- School -->
+          <div class="meta">
+            <span class="badge badge-school text-en">${item.school}</span>
+          </div>
+          <!-- Semesters -->
+          <div class="meta">
+            ${semesters.map(s => `<span class="badge badge-period text-en">${s}</span>`).join('')}
+          </div>
+          <!-- Course titles -->
+          <div class="course-en text-en">${course.en}</div>
+          <div class="course-ko text-ko">${processedKo}</div>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  /* Render */
+  function render(){
+    const data = filterItems();
+    grid.innerHTML = data.length ? data.map(card).join('') : `<div class="empty">No lectures found. Try changing filters.</div>`;
+    count.textContent = `${data.length} of ${ITEMS.length}`;
+  }
+
+  /* Init */
+  qInput.oninput = e => { q = e.target.value; render(); };
+  
+  // Toggle filter section
+  document.getElementById('toggleFilters').onclick = () => {
+    const filterContent = document.getElementById('filterContent');
+    const toggleBtn = document.getElementById('toggleFilters');
+    const isHidden = filterContent.style.display === 'none';
+    
+    filterContent.style.display = isHidden ? 'block' : 'none';
+    toggleBtn.textContent = isHidden ? 'Collapse' : 'Expand';
+  };
+  
+  clearBtn.onclick = () => {
+    onRoles.clear();
+    onSchools.clear();
+    onYears.clear();
+    qInput.value = '';
+    q = '';
+    buildChips();
+    render();
+  };
+  buildChips();
+  render();
 })(); 
 </script>
