@@ -30,6 +30,21 @@
     "awards": 0
   },
   {
+  "year": 2025,
+  "code_label": "C",
+  "indexing_group": "Domestic Conference",
+  "type": "conference",
+  "language": "Korean",
+  "title": "Analyzing Causal Risk Spillover Mechanisms in Cryptocurrency Markets Using the PCMCI+ Algorithm",
+  "title_ko": "PCMCI+ 알고리즘을 활용한 암호화폐 시장의 인과적 리스크 전이 메커니즘 분석",
+  "authors": [63, 149, 150, 151, 1],
+  "author_marks": ["1", "2", "3", "4", "*"],
+    "venue": "2025 Fall Conference of the Korean Institute of Industrial Engineers",
+    "venue_ko": "2025 대한산업공학회 추계학술대회",
+  "published_date": "2025-11-09",
+  "awards": 0
+},
+  {
     "year": 2025,
     "code_label": "C",
     "indexing_group": "Domestic Conference",
