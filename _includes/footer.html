@@ -293,8 +293,9 @@
   var YOUTUBE_CONFIG = {
     // 재생할 YouTube 비디오 목록 (모든 YouTube URL 형식 지원)
     playlist: [
+      'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',  // 일반 YouTube
+      'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr',  // 일반 YouTube
       'https://music.youtube.com/watch?v=MqcFHCNXiok&si=BgGDvfrN9NQnFOW_'  // YouTube Music
-      'https://music.youtube.com/watch?v=hh5GKVa8VtM&si=MJ8-dmmXheUwbQZG'
       // 여기에 더 많은 곡을 추가할 수 있습니다
       // 지원 형식:
       // - https://youtube.com/watch?v=VIDEO_ID
@@ -333,7 +334,22 @@
   }
 
   // 재생목록 준비
-  var videoIds = YOUTUBE_CONFIG.playlist.map(extractVideoId);
+  var videoIds = [];
+  for (var i = 0; i < YOUTUBE_CONFIG.playlist.length; i++) {
+    var id = extractVideoId(YOUTUBE_CONFIG.playlist[i]);
+    if (id) {
+      videoIds.push(id);
+    } else {
+      console.warn('잘못된 URL 건너뛰기:', YOUTUBE_CONFIG.playlist[i]);
+    }
+  }
+  
+  if (videoIds.length === 0) {
+    console.error('유효한 비디오 ID가 없습니다!');
+  } else {
+    console.log('로드된 비디오 ID들:', videoIds);
+  }
+  
   var currentVideoIndex = 0;
   var playedVideos = [0]; // 이미 재생된 비디오 인덱스 추적
   var shuffledOrder = []; // 랜덤 순서 저장
