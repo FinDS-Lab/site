@@ -1683,11 +1683,11 @@ function calculatePublicationStats() {
        awardsHtml += `
          <div class="award-tooltip">
            <span class="award-trophy">🏆</span>
-           <span class.tooltiptext">${tooltip}</span>
-          </div>`;
-      }
-      awardsHtml += '</div>';
-    }
+           <span class="tooltiptext">${tooltip}</span>
+         </div>`;
+     }
+     awardsHtml += '</div>';
+   }
 
     let citationDetails = [];
     if (pub.volume) citationDetails.push(`<div class="paper-detail-item"><span class="label">Vol.</span><span class="value">${pub.volume}</span></div>`);
