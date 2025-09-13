@@ -1260,22 +1260,88 @@ permalink: /publications.html
 
 <script>
  /* ===== Title Case Function ===== */
- function toTitleCase(str) {
-   if (!str) return str;
-   const hasLowerCase = /[a-z]/.test(str);
-   const hasUpperCase = /[A-Z]/.test(str);
-   const needsTitleCase = !hasLowerCase || !hasUpperCase;
-   if (!needsTitleCase) return str;
-   const lowercaseWords = ['a','an','and','as','at','but','by','for','from','in','into','nor','of','on','or','the','to','via','with'];
-   const words = str.split(' ');
-   return words.map((word, index) => {
-     if (/^[A-Z0-9]+$/.test(word) && word.length > 1) return word;
-     if (index === 0 || index === words.length - 1)
-       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-     if (lowercaseWords.includes(word.toLowerCase())) return word.toLowerCase();
-     return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-   }).join(' ');
- }
+// Title Case 함수 - MLA, Chicago, Harvard용
+function toTitleCase(str) {
+  if (!str) return str;
+  
+  // 소문자로 유지할 단어들
+  const lowercaseWords = new Set([
+    'a', 'an', 'the',
+    'and', 'but', 'or', 'nor', 'for', 'yet', 'so',
+    'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with'
+  ]);
+  
+  // 보존해야 할 특수 약어들 (위와 동일)
+  const preserveTerms = {
+    'pcmci+': 'PCMCI+',
+    'covid-19': 'COVID-19',
+    'arimax': 'ARIMAX',
+    'etf': 'ETF',
+    'etfs': 'ETFs',
+    'ai': 'AI',
+    'xai': 'xAI',
+    'esg': 'ESG',
+    'r&d': 'R&D',
+    'tvp-var': 'TVP-VAR',
+    'dcc-garch': 'DCC-GARCH',
+    'ux/ui': 'UX/UI',
+    'nlp': 'NLP',
+    'nft': 'NFT',
+    'shap': 'SHAP',
+    'evar': 'EVaR',
+    'edar': 'EDaR',
+    'kospi': 'KOSPI',
+    'kosdaq': 'KOSDAQ'
+  };
+  
+  // 약어 보존
+  const preservePattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
+  const preserved = {};
+  let match;
+  while ((match = preservePattern.exec(str)) !== null) {
+    preserved[match[0].toLowerCase()] = match[0];
+  }
+  
+  // preserveTerms도 추가
+  Object.entries(preserveTerms).forEach(([lower, original]) => {
+    preserved[lower] = original;
+  });
+  
+  // 나머지 코드는 동일...
+  const mainParts = str.split(/\s*[:—–-]\s*/);
+  
+  const result = mainParts.map((part, partIndex) => {
+    const words = part.split(/\s+/);
+    
+    return words.map((word, index) => {
+      if (!word) return word;
+      
+      const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
+      const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
+      let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
+      
+      if (!cleanWord) return word;
+      
+      // 약어 확인 및 복원
+      if (preserved[cleanWord.toLowerCase()]) {
+        cleanWord = preserved[cleanWord.toLowerCase()];
+      }
+      else if (index === 0 || index === words.length - 1) {
+        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
+      }
+      else if (lowercaseWords.has(cleanWord.toLowerCase())) {
+        cleanWord = cleanWord.toLowerCase();
+      }
+      else {
+        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
+      }
+      
+      return leadingPunct[0] + cleanWord + trailingPunct[0];
+    }).join(' ');
+  }).join(': ');
+  
+  return result;
+}
 
  /* ===== Load data from _data/pubs.json ===== */
  const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
@@ -1905,22 +1971,50 @@ function formatAuthorsForCitation(authors, style) {
 }
 
 // APA용 sentence case 함수
-// Sentence case 함수 수정 - APA용
-// Sentence case 함수 - APA, Vancouver용 (첫 글자와 콜론 뒤만 대문자)
+// Sentence case 함수 - APA, Vancouver용
 function toSentenceCase(str) {
   if (!str) return str;
   
-  // 약어와 고유명사 보존을 위한 패턴
-  const acronymPattern = /\b[A-Z]{2,}\b/g;
+  // 보존해야 할 특수 약어들 추가
+  const preserveTerms = {
+    'pcmci+': 'PCMCI+',
+    'covid-19': 'COVID-19',
+    'arimax': 'ARIMAX',
+    'etf': 'ETF',
+    'etfs': 'ETFs',
+    'ai': 'AI',
+    'xai': 'xAI',
+    'esg': 'ESG',
+    'r&d': 'R&D',
+    'tvp-var': 'TVP-VAR',
+    'dcc-garch': 'DCC-GARCH',
+    'ux/ui': 'UX/UI',
+    'nlp': 'NLP',
+    'nft': 'NFT',
+    'shap': 'SHAP',
+    'evar': 'EVaR',
+    'edar': 'EDaR',
+    'kospi': 'KOSPI',
+    'kosdaq': 'KOSDAQ'
+  };
+  
+  // 약어 패턴 수정 - 특수문자 포함
+  const acronymPattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
   const acronyms = str.match(acronymPattern) || [];
   const acronymPositions = {};
   
-  // 약어의 위치 저장
-  let match;
-  const tempPattern = /\b[A-Z]{2,}\b/g;
-  while ((match = tempPattern.exec(str)) !== null) {
-    acronymPositions[match[0].toLowerCase()] = match[0];
-  }
+  // 약어 위치 저장
+  acronyms.forEach(acronym => {
+    acronymPositions[acronym.toLowerCase()] = acronym;
+  });
+  
+  // preserveTerms도 추가
+  Object.entries(preserveTerms).forEach(([lower, original]) => {
+    const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
+    if (regex.test(str)) {
+      acronymPositions[lower] = original;
+    }
+  });
   
   // 기본적으로 소문자로 변환
   let result = str.toLowerCase();
@@ -1933,7 +2027,7 @@ function toSentenceCase(str) {
   
   // 약어 복원
   Object.entries(acronymPositions).forEach(([lower, original]) => {
-    const regex = new RegExp('\\b' + lower + '\\b', 'gi');
+    const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
     result = result.replace(regex, original);
   });
   
