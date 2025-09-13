@@ -423,7 +423,7 @@
         YOUTUBE_CONFIG.shuffle = (typeof json.shuffle === 'boolean') ? json.shuffle : true;
 
         if (!json.items || !Array.isArray(json.items)) {
-          console.error('playlist.json에 items 배열이 없습니다.');
+          console.error('playlist.json에 items 배열이 없습니다. JSON 구조:', json);
           handlePlaylistError();
           return;
         }
@@ -431,12 +431,14 @@
         console.log('Processing', json.items.length, 'items from playlist.json');
 
         json.items.forEach(function(item, index) {
-          var enabled = item.enabled !== false; // 기본 true
+          // enabled 속성 체크 (없으면 기본 true)
+          var enabled = item.enabled !== false;
           if (!enabled) {
             console.log('Item', index, 'is disabled, skipping');
             return;
           }
 
+          // URL에서 video ID 추출
           var id = item.id || extractVideoId(item.url);
           if (!id) {
             console.warn('Item', index, 'has no valid video ID:', item);
@@ -447,8 +449,8 @@
             id: id,
             url: item.url || null,
             weight: Math.max(1, parseInt(item.weight || 1, 10)),
-            start_at: Number.isFinite(item.start_at) ? item.start_at : null,
-            end_at: Number.isFinite(item.end_at) ? item.end_at : null,
+            start_at: item.start_at || null,
+            end_at: item.end_at || null,
             title_override: item.title_override || null
           };
           
