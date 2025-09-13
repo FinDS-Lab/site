@@ -212,7 +212,7 @@ function generateDiamondNetwork() {
   <style>
     .stats-container {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       margin-bottom: 20px;
     }
@@ -247,10 +247,6 @@ function generateDiamondNetwork() {
     
     .stat-card.academic-stat::before {
       background: linear-gradient(135deg, #111827, #374151);
-    }
-    
-    .stat-card.amount-stat::before {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
     }
     
     .stat-card.total-stat::before {
@@ -290,23 +286,14 @@ function generateDiamondNetwork() {
       color: #111827;
     }
     
-    .stat-card.amount-stat {
-      background: #ffffff;
-    }
-    
-    .stat-card.amount-stat .stat-number {
-      color: rgb(146, 64, 14);
-      font-size: 24px;
-    }
-    
     .stat-card.total-stat .stat-number {
       color: #374151;
     }
     
-    /* Tablet: 동일한 레이아웃 유지 */
+    /* Tablet */
     @media (max-width: 768px) {
       .stats-container {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 12px;
       }
       .stat-card {
@@ -315,26 +302,23 @@ function generateDiamondNetwork() {
       .stat-number {
         font-size: 26px;
       }
-      .stat-card.amount-stat .stat-number {
-        font-size: 20px;
-      }
       .stat-label {
         font-size: 10px;
       }
     }
     
-    /* Mobile: 2x2 + 1 레이아웃 */
+    /* Mobile: 3 + 1 layout */
     @media (max-width: 480px) {
       .stats-container {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, auto);
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
         gap: 10px;
       }
       
-      /* Total Projects가 마지막 줄 전체를 차지 */
+      /* Total Projects spans all 3 columns on second row */
       .stat-card.total-stat {
-        grid-column: 1 / span 2;
+        grid-column: 1 / span 3;
       }
       
       .stat-card {
@@ -342,9 +326,6 @@ function generateDiamondNetwork() {
       }
       .stat-number {
         font-size: 22px;
-      }
-      .stat-card.amount-stat .stat-number {
-        font-size: 16px;
       }
       .stat-label {
         font-size: 9px;
@@ -365,10 +346,6 @@ function generateDiamondNetwork() {
     <div class="stat-card academic-stat">
       <div class="stat-number" id="academicCount">0</div>
       <div class="stat-label">Academic</div>
-    </div>
-    <div class="stat-card amount-stat">
-      <div class="stat-number" id="totalAmount">₩0</div>
-      <div class="stat-label">Total Funding as PI</div>
     </div>
     <div class="stat-card total-stat">
       <div class="stat-number" id="totalCount">0</div>
@@ -441,7 +418,6 @@ function generateDiamondNetwork() {
   .meta-value{color:#111827;font-size:12px;line-height:1.6;word-break:keep-all;overflow-wrap:break-word}
 
   .ko-muted{color:#9ca3af}
-  .amount{font-weight:800;color:#111827}
 
   .empty{padding:32px;text-align:center;color:#6b7280;font-weight:700;border:1px dashed #e5e7eb;border-radius:1rem;background:#fff}
   .count{font-size:13px;color:#6b7280;font-weight:600;background:#fff;padding:.4rem .8rem;border:1px solid #e5e7eb;border-radius:.5rem;white-space:nowrap}
@@ -693,7 +669,7 @@ function generateDiamondNetwork() {
       ? `${esc(agencyEn)} <span class="ko-muted">· ${esc(agencyKo)}</span>`
       : esc(agencyEn);
 
-    // Build meta items HTML - Hide amount row if N/A
+    // Build meta items HTML - WITHOUT Amount
     let metaItemsHTML = `
       <div class="meta-item">
         <span class="meta-label">Period</span>
@@ -703,15 +679,6 @@ function generateDiamondNetwork() {
         <span class="meta-label">Funding Agency</span>
         <span class="meta-value">${agencyValue}</span>
       </div>`;
-    
-    // Only add amount if it's not N/A
-    if (project.amount && project.amount !== 'N/A') {
-      metaItemsHTML += `
-      <div class="meta-item">
-        <span class="meta-label">Amount</span>
-        <span class="meta-value amount">${esc(project.amount)}</span>
-      </div>`;
-    }
     
     // Check project type for role display
     if (project.type === 'academic') {
@@ -811,12 +778,11 @@ function generateDiamondNetwork() {
     render();
   };
 
-  // Calculate statistics
+  // Calculate statistics (Amount 제거)
   function calculateStatistics() {
     let governmentCount = 0;
     let industryCount = 0;
     let academicCount = 0;
-    let totalAmountAsPI = 0;
 
     PROJECTS.forEach(project => {
       // Count by type
@@ -827,17 +793,6 @@ function generateDiamondNetwork() {
       } else if (project.type === 'academic') {
         academicCount++;
       }
-
-      // Calculate total amount where 최인수 is Principal Investigator
-      if (project.roles && project.roles.principalInvestigator === '최인수' && 
-          project.amount && project.amount !== 'N/A') {
-        // Parse amount (remove ₩ and commas, convert to number)
-        const amountStr = project.amount.replace(/[₩,]/g, '');
-        const amountNum = parseInt(amountStr);
-        if (!isNaN(amountNum)) {
-          totalAmountAsPI += amountNum;
-        }
-      }
     });
 
     const totalCount = PROJECTS.length;
@@ -847,10 +802,6 @@ function generateDiamondNetwork() {
     animateNumber('industryCount', industryCount);
     animateNumber('academicCount', academicCount);
     animateNumber('totalCount', totalCount);
-    
-    // Format and display total amount
-    const formattedAmount = '₩' + totalAmountAsPI.toLocaleString('ko-KR');
-    document.getElementById('totalAmount').textContent = formattedAmount;
   }
 
   // Number animation effect
