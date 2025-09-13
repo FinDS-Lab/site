@@ -1961,13 +1961,13 @@ function formatAuthorsForCitation(authors, style) {
       return vanAuthors.join(", ");
       
     case 'Korean':
-      // 한글 저자명 처리
-      const koreanAuthors = authors.map(id => getAuthorName(id, true));
+      // 한글 저자명 처리 - AUTHORS 객체에서 ko 필드 사용
+      const koreanAuthors = authors.map(id => {
+        const author = AUTHORS?.[id];
+        if (!author) return `저자 ${id}`;
+        return author.ko || author.en || `저자 ${id}`;
+      });
       return koreanAuthors.join(', ');
-      
-    default:
-      // 기본: 모든 저자 나열
-      return authorNames.join(", ");
   }
 }
 // APA용 sentence case 함수
