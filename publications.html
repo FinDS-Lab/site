@@ -2033,34 +2033,95 @@ function toSentenceCase(str) {
   
   return result;
 }
-
 // Title Case 함수 - MLA, Chicago, Harvard용 (주요 단어 대문자)
 function toTitleCase(str) {
   if (!str) return str;
   
   // 소문자로 유지할 단어들 (관사, 전치사, 접속사)
   const lowercaseWords = new Set([
-    'a', 'an', 'the', // 관사
-    'and', 'but', 'or', 'nor', 'for', 'yet', 'so', // 접속사
-    'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with' // 전치사
+    'a', 'an', 'the',
+    'and', 'but', 'or', 'nor', 'for', 'yet', 'so',
+    'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with'
   ]);
   
+  // 보존해야 할 특수 약어들
+  const preserveTerms = {
+    'pcmci+': 'PCMCI+',
+    'covid-19': 'COVID-19',
+    'arimax': 'ARIMAX',
+    'etf': 'ETF',
+    'etfs': 'ETFs',
+    'ai': 'AI',
+    'xai': 'xAI',
+    'esg': 'ESG',
+    'r&d': 'R&D',
+    'tvp-var': 'TVP-VAR',
+    'dcc-garch': 'DCC-GARCH',
+    'ux/ui': 'UX/UI',
+    'nlp': 'NLP',
+    'nft': 'NFT',
+    'shap': 'SHAP',
+    'evar': 'EVaR',
+    'edar': 'EDaR',
+    'cpdag': 'CPDAG',
+    'kospi': 'KOSPI',
+    'kosdaq': 'KOSDAQ',
+    'ieee': 'IEEE',
+    'ijcai': 'IJCAI',
+    'aaai': 'AAAI',
+    'strl': 'STRL',
+    'ai4ts': 'AI4TS',
+    'isis': 'ISIS',
+    'inmic': 'INMIC',
+    'ack': 'ACK',
+    'ask': 'ASK',
+    'knhanes': 'KNHANES',
+    'dea': 'DEA',
+    'ahp': 'AHP',
+    'pvt': 'PVT',
+    'tlh': 'TLH',
+    'ted': 'TED'
+  };
+  
   // 약어 보존
-  const preservePattern = /\b[A-Z]{2,}\b/g;
+  const preservePattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
   const preserved = {};
   let match;
   while ((match = preservePattern.exec(str)) !== null) {
     preserved[match[0].toLowerCase()] = match[0];
   }
   
-  // 콜론이나 하이픈으로 부제목 분리
-  const mainParts = str.split(/\s*[:—–-]\s*/);
+  // preserveTerms도 추가
+  Object.entries(preserveTerms).forEach(([lower, original]) => {
+    preserved[lower] = original;
+  });
+  
+  // 콜론으로만 부제목 분리 (하이픈은 제외)
+  const mainParts = str.split(/\s*:\s+/);
   
   const result = mainParts.map((part, partIndex) => {
     const words = part.split(/\s+/);
     
     return words.map((word, index) => {
       if (!word) return word;
+      
+      // 하이픈이 포함된 단어 특별 처리
+      if (word.includes('-') && !preserved[word.toLowerCase()]) {
+        // 구두점 분리
+        const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
+        const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
+        let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
+        
+        // "Farthest-first" -> "Farthest-First" 
+        const hyphenatedParts = cleanWord.split('-').map((subword, subIndex) => {
+          if (subIndex === 0 || !lowercaseWords.has(subword.toLowerCase())) {
+            return subword.charAt(0).toUpperCase() + subword.slice(1).toLowerCase();
+          }
+          return subword.toLowerCase();
+        }).join('-');
+        
+        return leadingPunct[0] + hyphenatedParts + trailingPunct[0];
+      }
       
       // 구두점 분리
       const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
