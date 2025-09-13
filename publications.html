@@ -1975,7 +1975,7 @@ function formatAuthorsForCitation(authors, style) {
 function toSentenceCase(str) {
   if (!str) return str;
   
-  // 보존해야 할 특수 약어들 추가
+  // 보존해야 할 특수 약어들
   const preserveTerms = {
     'pcmci+': 'PCMCI+',
     'covid-19': 'COVID-19',
@@ -1994,16 +1994,32 @@ function toSentenceCase(str) {
     'shap': 'SHAP',
     'evar': 'EVaR',
     'edar': 'EDaR',
+    'cpdag': 'CPDAG',
     'kospi': 'KOSPI',
-    'kosdaq': 'KOSDAQ'
+    'kosdaq': 'KOSDAQ',
+    'ieee': 'IEEE',
+    'ijcai': 'IJCAI',
+    'aaai': 'AAAI',
+    'strl': 'STRL',
+    'ai4ts': 'AI4TS',
+    'isis': 'ISIS',
+    'inmic': 'INMIC',
+    'ack': 'ACK',
+    'ask': 'ASK',
+    'knhanes': 'KNHANES',
+    'dea': 'DEA',
+    'ahp': 'AHP',
+    'pvt': 'PVT',
+    'tlh': 'TLH',
+    'ted': 'TED'
   };
   
-  // 약어 패턴 수정 - 특수문자 포함
+  // 약어 패턴 - 특수문자 포함
   const acronymPattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
   const acronyms = str.match(acronymPattern) || [];
   const acronymPositions = {};
   
-  // 약어 위치 저장
+  // 약어의 위치 저장
   acronyms.forEach(acronym => {
     acronymPositions[acronym.toLowerCase()] = acronym;
   });
@@ -2033,6 +2049,7 @@ function toSentenceCase(str) {
   
   return result;
 }
+ 
 // Title Case 함수 - MLA, Chicago, Harvard용 (주요 단어 대문자)
 function toTitleCase(str) {
   if (!str) return str;
