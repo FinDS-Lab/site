@@ -270,8 +270,8 @@ permalink: /publications.html
    return svg;
  }
 </script>
-<!-- ===== Statistics Section ===== -->
-<!-- ===== Statistics Section ===== -->
+
+<!-- ===== Statistics Section with Mobile Grid Fix ===== -->
 <section class="max-w-7xl mx-auto px-4 mt-6">
   <style>
     .pub-stats-container {
@@ -362,10 +362,17 @@ permalink: /publications.html
       color: #374151;
     }
     
+    /* Mobile layout: 2x3 grid with Total spanning bottom */
     @media (max-width: 768px) {
       .pub-stats-container {
         grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
         gap: 12px;
+      }
+      
+      .pub-stat-card.total-stat {
+        grid-column: 1 / -1;
+        grid-row: 3;
       }
     }
   </style>
@@ -611,7 +618,6 @@ permalink: /publications.html
  .chip-conference.is-on { background: var(--conference-red); color: #fff; }
  .chip-book.is-on { background: var(--book-pink); color: #fff; }
  .chip-report.is-on { background: var(--report-pink); color: #fff; }
- .chip-thesis.is-on { background: var(--thesis-black); color: #fff; }
 
  /* Year sections */
  .year-section {
@@ -689,7 +695,7 @@ permalink: /publications.html
 
  .paper-body { padding: 14px 16px; }
 
- /* Header & Badges */
+ /* Header & Badges - 3 line layout */
  .paper-header {
    display: flex;
    align-items: flex-start;
@@ -708,6 +714,7 @@ permalink: /publications.html
    display: flex;
    align-items: center;
    gap: 8px;
+   flex-wrap: wrap;
  }
 
  .indexing-badge {
@@ -975,9 +982,9 @@ permalink: /publications.html
    padding: 16px 20px;
    border-bottom: 1px solid #e5e7eb;
    background: #f8fafc;
+   position: relative;
  }
 
-/* Modal close button X style */
 .modal-close-btn {
   position: absolute;
   right: 16px;
@@ -1003,17 +1010,6 @@ permalink: /publications.html
 .modal-close-btn:hover {
   background: #f3f4f6;
   color: #111827;
-}
-
-/* Modal header 스타일 수정 - 상대 위치 추가 */
-.modal header {
-  position: relative;  /* 추가 */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  background: #f8fafc;
 }
  
  .modal-title {
@@ -1098,8 +1094,7 @@ permalink: /publications.html
    .indexing-wrapper { width: 100%; }
    
    .indexing-row {
-     flex-wrap: wrap;
-     justify-content: space-between;
+     justify-content: flex-start;
      width: 100%;
    }
    
@@ -1125,8 +1120,6 @@ permalink: /publications.html
    .award-trophy { font-size: 14px; }
    .indexing-badge { font-size: 9px; padding: .2rem .4rem; }
  }
-
- 
 </style>
 
 <!-- ===== Toolbar (Search + Authorship Legend + Filters) ===== -->
@@ -1214,7 +1207,7 @@ permalink: /publications.html
  </div>
 </section>
 
-<!-- ===== Filter Sections ===== -->
+<!-- ===== Filter Sections (Thesis/Dissertation removed) ===== -->
 <section class="max-w-7xl mx-auto px-4">
  <div class="toolbar" style="padding: 0;">
    <div style="display: flex; align-items: center; justify-content: space-between; padding: 16px; background: #f8fafc; border-radius: 1rem 1rem 0 0; border-bottom: 1px solid #e5e7eb;">
@@ -1247,7 +1240,6 @@ permalink: /publications.html
 <section class="max-w-7xl mx-auto px-4 mt-6" id="pubWrap"></section>
 
 <!-- ===== Cite Modal ===== -->
-<!-- 수정된 코드 -->
 <div id="citeModal" class="modal-backdrop">
   <div class="modal">
     <header>
@@ -1259,90 +1251,6 @@ permalink: /publications.html
 </div>
 
 <script>
- /* ===== Title Case Function ===== */
-// Title Case 함수 - MLA, Chicago, Harvard용
-function toTitleCase(str) {
-  if (!str) return str;
-  
-  // 소문자로 유지할 단어들
-  const lowercaseWords = new Set([
-    'a', 'an', 'the',
-    'and', 'but', 'or', 'nor', 'for', 'yet', 'so',
-    'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with'
-  ]);
-  
-  // 보존해야 할 특수 약어들 (위와 동일)
-  const preserveTerms = {
-    'pcmci+': 'PCMCI+',
-    'covid-19': 'COVID-19',
-    'arimax': 'ARIMAX',
-    'etf': 'ETF',
-    'etfs': 'ETFs',
-    'ai': 'AI',
-    'xai': 'xAI',
-    'esg': 'ESG',
-    'r&d': 'R&D',
-    'tvp-var': 'TVP-VAR',
-    'dcc-garch': 'DCC-GARCH',
-    'ux/ui': 'UX/UI',
-    'nlp': 'NLP',
-    'nft': 'NFT',
-    'shap': 'SHAP',
-    'evar': 'EVaR',
-    'edar': 'EDaR',
-    'kospi': 'KOSPI',
-    'kosdaq': 'KOSDAQ'
-  };
-  
-  // 약어 보존
-  const preservePattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
-  const preserved = {};
-  let match;
-  while ((match = preservePattern.exec(str)) !== null) {
-    preserved[match[0].toLowerCase()] = match[0];
-  }
-  
-  // preserveTerms도 추가
-  Object.entries(preserveTerms).forEach(([lower, original]) => {
-    preserved[lower] = original;
-  });
-  
-  // 나머지 코드는 동일...
-  const mainParts = str.split(/\s*[:—–-]\s*/);
-  
-  const result = mainParts.map((part, partIndex) => {
-    const words = part.split(/\s+/);
-    
-    return words.map((word, index) => {
-      if (!word) return word;
-      
-      const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
-      const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
-      let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
-      
-      if (!cleanWord) return word;
-      
-      // 약어 확인 및 복원
-      if (preserved[cleanWord.toLowerCase()]) {
-        cleanWord = preserved[cleanWord.toLowerCase()];
-      }
-      else if (index === 0 || index === words.length - 1) {
-        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
-      }
-      else if (lowercaseWords.has(cleanWord.toLowerCase())) {
-        cleanWord = cleanWord.toLowerCase();
-      }
-      else {
-        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
-      }
-      
-      return leadingPunct[0] + cleanWord + trailingPunct[0];
-    }).join(' ');
-  }).join(': ');
-  
-  return result;
-}
-
  /* ===== Load data from _data/pubs.json ===== */
  const PUBS_RAW = {{ site.data.pubs | jsonify | default: '[]' }};
 
@@ -1423,7 +1331,6 @@ function toTitleCase(str) {
  const PUBS = autoNumberCodeLabels(PUBS_RAW);
 
 // Calculate publication statistics
-// Calculate publication statistics
 function calculatePublicationStats() {
   let journalCount = 0;
   let conferenceCount = 0;
@@ -1498,14 +1405,13 @@ function calculatePublicationStats() {
    requestAnimationFrame(tick);
  }
  
- /* ===== Filters ===== */
+ /* ===== Filters (Thesis/Dissertation removed) ===== */
  const FILTER_GROUPS = {
    type: [
      {value: "journal", label: "Journal"},
      {value: "conference", label: "Conference"},
      {value: "book", label: "Book"},
-     {value: "report", label: "Report"},
-     {value: "thesis", label: "Thesis / Dissertation"}
+     {value: "report", label: "Report"}
    ],
    journal: [
      {value: "SCIE", label: "SCIE"},
@@ -1605,7 +1511,7 @@ function calculatePublicationStats() {
              data-filter-type="conference" data-filter-value="${it.value}">${it.label}</button>`;
    }).join('');
 
-   document.querySelectorAll('[data-filter-type]').forEach(btn => {
+   document.queryAllSelectors('[data-filter-type]').forEach(btn => {
      btn.onclick = () => {
        const t = btn.dataset.filterType;
        const v = btn.dataset.filterValue;
@@ -1618,7 +1524,6 @@ function calculatePublicationStats() {
        
        buildChips();
        render();
-
      }
    });
  }
@@ -1675,7 +1580,7 @@ function calculatePublicationStats() {
    return text.includes(q.toLowerCase());
  }
 
- /* ===== UPDATED: render multiple indexing badges, multi-venue, and multi code labels ===== */
+ /* ===== UPDATED: render with 3-line header layout ===== */
  function createCard(pub, key) {
    const codes = arr(pub.code_labels).length ? pub.code_labels : (pub.code_label ? [pub.code_label] : []);
    const leftType = arr(pub.indexing_group).includes("International - Domestic Joint Conference")
@@ -1768,6 +1673,7 @@ function calculatePublicationStats() {
 
     const codeHtml = codes.length ? codes.join('<br>') : '&nbsp;';
 
+    // 3-line header layout
     return `
       <li class="paper-card">
         <div class="paper-row">
@@ -1779,10 +1685,14 @@ function calculatePublicationStats() {
               <div class="indexing-wrapper">
                 <div class="indexing-row">
                   ${indexingBadges}
-                  ${langBadge}
                   ${awardsHtml}
                 </div>
-                ${pubDateBadge}
+                <div class="indexing-row">
+                  ${pubDateBadge}
+                </div>
+                <div class="indexing-row">
+                  ${langBadge}
+                </div>
               </div>
             </div>
             <h3 class="paper-title">${displayTitle || ''}</h3>
@@ -1844,7 +1754,7 @@ function calculatePublicationStats() {
     countEl.textContent = `${filtered.length} of ${(PUBS || []).length}`;
   }
 
-  /* ===== Citation Modal Functions - FIXED ===== */
+  /* ===== Citation Modal Functions ===== */
   function getAuthorName(authorId, useDomestic) {
     const a = AUTHORS?.[authorId];
     if (!a) return `Author ${authorId}`;
@@ -1853,640 +1763,494 @@ function calculatePublicationStats() {
     return a.en || a.ko || `Author ${authorId}`;
   }
 
-  // 개선된 저자명 포맷팅 함수
-  function toInitials(name) {
-    const clean = (name || '').replace(/\*/g, '').trim();
-    const parts = clean.split(/\s+/);
-    const last = parts[parts.length - 1];
-    const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-    return initials ? `${last}, ${initials}` : last;
-  }
-
-  function toInitialsReversed(name) {
-    const clean = (name || '').replace(/\*/g, '').trim();
-    const parts = clean.split(/\s+/);
-    if (parts.length === 1) return parts[0];
-    const last = parts[parts.length - 1];
-    const first = parts.slice(0, -1).join(" ");
-    return `${last}, ${first}`;
-  }
-
-  // 수정된 Citation 포맷팅 함수
- // 수정된 formatAuthorsForCitation 함수
-function formatAuthorsForCitation(authors, style) {
-  if (!authors || authors.length === 0) return "Anonymous";
-  
-  const authorNames = authors.map(id => getAuthorName(id, false));
-  
-  switch(style) {
-    case 'APA':
-      // APA 7th: 모든 저자 나열 (21명 이상일 때만 줄임)
-      const apaAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-        return `${last}, ${initials}`;
-      });
-      
-      if (apaAuthors.length === 1) {
-        return apaAuthors[0];
-      } else if (apaAuthors.length === 2) {
-        return apaAuthors[0] + ", & " + apaAuthors[1];
-      } else if (apaAuthors.length <= 20) {
-        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
-      } else {
-        // 21명 이상일 때만 줄임
-        return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
-      }
-      
-    case 'MLA':
-      // MLA 9th: 3명까지는 모두 나열, 4명 이상일 때 et al.
-      if (authorNames.length === 1) {
-        return toInitialsReversed(authorNames[0]);
-      } else if (authorNames.length === 2) {
-        return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
-      } else if (authorNames.length === 3) {
-        return toInitialsReversed(authorNames[0]) + ", " + authorNames[1] + ", and " + authorNames[2];
-      } else {
-        // 4명 이상일 때만 et al. 사용
-        return toInitialsReversed(authorNames[0]) + ", et al.";
-      }
-      
-    case 'Chicago':
-      // Chicago 17th: 10명까지 모두 나열
-      if (authorNames.length === 1) {
-        return toInitialsReversed(authorNames[0]);
-      } else if (authorNames.length <= 10) {
-        // 10명까지는 모두 나열
-        const formattedNames = authorNames.map((name, index) => {
-          if (index === 0) return toInitialsReversed(name);
-          return name;
-        });
-        return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
-      } else {
-        // 11명 이상일 때 첫 7명 + et al.
-        const formattedNames = authorNames.slice(0, 7).map((name, index) => {
-          if (index === 0) return toInitialsReversed(name);
-          return name;
-        });
-        return formattedNames.join(", ") + ", et al.";
-      }
-      
-    case 'Harvard':
-      // Harvard: 3명까지 모두 나열
-      const harvardAuthors = authorNames.map(name => toInitials(name));
-      if (harvardAuthors.length === 1) {
-        return harvardAuthors[0];
-      } else if (harvardAuthors.length === 2) {
-        return harvardAuthors[0] + " and " + harvardAuthors[1];
-      } else if (harvardAuthors.length === 3) {
-        return harvardAuthors[0] + ", " + harvardAuthors[1] + " and " + harvardAuthors[2];
-      } else {
-        // 4명 이상일 때 et al.
-        return harvardAuthors[0] + " et al.";
-      }
-      
-    case 'Vancouver':
-      // Vancouver: 6명까지 모두 나열
-      const vanAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts.pop() || '';
-        const initials = parts.map(p => (p?.[0] || '').toUpperCase()).join("");
-        return `${last} ${initials}`;
-      });
-      
-      if (vanAuthors.length <= 6) {
-        return vanAuthors.join(", ");
-      } else {
-        // 7명 이상일 때 처음 6명 + et al.
-        return vanAuthors.slice(0, 6).join(", ") + ", et al.";
-      }
-      
-    default:
-      // 기본: 모든 저자 나열
-      return authorNames.join(", ");
-  }
-}
-
-// APA용 sentence case 함수
-// Sentence case 함수 - APA, Vancouver용
-function toSentenceCase(str) {
-  if (!str) return str;
-  
-  // 보존해야 할 특수 약어들
-  const preserveTerms = {
-    'pcmci+': 'PCMCI+',
-    'covid-19': 'COVID-19',
-    'arimax': 'ARIMAX',
-    'etf': 'ETF',
-    'etfs': 'ETFs',
-    'ai': 'AI',
-    'xai': 'xAI',
-    'esg': 'ESG',
-    'r&d': 'R&D',
-    'tvp-var': 'TVP-VAR',
-    'dcc-garch': 'DCC-GARCH',
-    'ux/ui': 'UX/UI',
-    'nlp': 'NLP',
-    'nft': 'NFT',
-    'shap': 'SHAP',
-    'evar': 'EVaR',
-    'edar': 'EDaR',
-    'cpdag': 'CPDAG',
-    'kospi': 'KOSPI',
-    'kosdaq': 'KOSDAQ',
-    'ieee': 'IEEE',
-    'ijcai': 'IJCAI',
-    'aaai': 'AAAI',
-    'strl': 'STRL',
-    'ai4ts': 'AI4TS',
-    'isis': 'ISIS',
-    'inmic': 'INMIC',
-    'ack': 'ACK',
-    'ask': 'ASK',
-    'knhanes': 'KNHANES',
-    'dea': 'DEA',
-    'ahp': 'AHP',
-    'pvt': 'PVT',
-    'tlh': 'TLH',
-    'ted': 'TED'
-  };
-  
-  // 약어 패턴 - 특수문자 포함
-  const acronymPattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
-  const acronyms = str.match(acronymPattern) || [];
-  const acronymPositions = {};
-  
-  // 약어의 위치 저장
-  acronyms.forEach(acronym => {
-    acronymPositions[acronym.toLowerCase()] = acronym;
-  });
-  
-  // preserveTerms도 추가
-  Object.entries(preserveTerms).forEach(([lower, original]) => {
-    const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
-    if (regex.test(str)) {
-      acronymPositions[lower] = original;
-    }
-  });
-  
-  // 기본적으로 소문자로 변환
-  let result = str.toLowerCase();
-  
-  // 첫 글자 대문자
-  result = result.charAt(0).toUpperCase() + result.slice(1);
-  
-  // 콜론, 물음표, 느낌표 뒤 첫 글자 대문자
-  result = result.replace(/([:.!?]\s+)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
-  
-  // 약어 복원
-  Object.entries(acronymPositions).forEach(([lower, original]) => {
-    const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
-    result = result.replace(regex, original);
-  });
-  
-  return result;
-}
- 
-// Title Case 함수 - MLA, Chicago, Harvard용 (주요 단어 대문자)
-function toTitleCase(str) {
-  if (!str) return str;
-  
-  // 소문자로 유지할 단어들 (관사, 전치사, 접속사)
-  const lowercaseWords = new Set([
-    'a', 'an', 'the',
-    'and', 'but', 'or', 'nor', 'for', 'yet', 'so',
-    'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with'
-  ]);
-  
-  // 보존해야 할 특수 약어들
-  const preserveTerms = {
-    'pcmci+': 'PCMCI+',
-    'covid-19': 'COVID-19',
-    'arimax': 'ARIMAX',
-    'etf': 'ETF',
-    'etfs': 'ETFs',
-    'ai': 'AI',
-    'xai': 'xAI',
-    'esg': 'ESG',
-    'r&d': 'R&D',
-    'tvp-var': 'TVP-VAR',
-    'dcc-garch': 'DCC-GARCH',
-    'ux/ui': 'UX/UI',
-    'nlp': 'NLP',
-    'nft': 'NFT',
-    'shap': 'SHAP',
-    'evar': 'EVaR',
-    'edar': 'EDaR',
-    'cpdag': 'CPDAG',
-    'kospi': 'KOSPI',
-    'kosdaq': 'KOSDAQ',
-    'ieee': 'IEEE',
-    'ijcai': 'IJCAI',
-    'aaai': 'AAAI',
-    'strl': 'STRL',
-    'ai4ts': 'AI4TS',
-    'isis': 'ISIS',
-    'inmic': 'INMIC',
-    'ack': 'ACK',
-    'ask': 'ASK',
-    'knhanes': 'KNHANES',
-    'dea': 'DEA',
-    'ahp': 'AHP',
-    'pvt': 'PVT',
-    'tlh': 'TLH',
-    'ted': 'TED'
-  };
-  
-  // 약어 보존
-  const preservePattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
-  const preserved = {};
-  let match;
-  while ((match = preservePattern.exec(str)) !== null) {
-    preserved[match[0].toLowerCase()] = match[0];
-  }
-  
-  // preserveTerms도 추가
-  Object.entries(preserveTerms).forEach(([lower, original]) => {
-    preserved[lower] = original;
-  });
-  
-  // 콜론으로만 부제목 분리 (하이픈은 제외)
-  const mainParts = str.split(/\s*:\s+/);
-  
-  const result = mainParts.map((part, partIndex) => {
-    const words = part.split(/\s+/);
+  // Sentence case 함수 - APA, Vancouver, 한글 citation용
+  function toSentenceCase(str) {
+    if (!str) return str;
     
-    return words.map((word, index) => {
-      if (!word) return word;
+    // 보존해야 할 특수 약어들
+    const preserveTerms = {
+      'pcmci+': 'PCMCI+',
+      'covid-19': 'COVID-19',
+      'arimax': 'ARIMAX',
+      'etf': 'ETF',
+      'etfs': 'ETFs',
+      'ai': 'AI',
+      'xai': 'xAI',
+      'esg': 'ESG',
+      'r&d': 'R&D',
+      'tvp-var': 'TVP-VAR',
+      'dcc-garch': 'DCC-GARCH',
+      'ux/ui': 'UX/UI',
+      'nlp': 'NLP',
+      'nft': 'NFT',
+      'shap': 'SHAP',
+      'evar': 'EVaR',
+      'edar': 'EDaR',
+      'kospi': 'KOSPI',
+      'kosdaq': 'KOSDAQ'
+    };
+    
+    // 약어 패턴
+    const acronymPattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
+    const acronyms = str.match(acronymPattern) || [];
+    const acronymPositions = {};
+    
+    // 약어의 위치 저장
+    acronyms.forEach(acronym => {
+      acronymPositions[acronym.toLowerCase()] = acronym;
+    });
+    
+    // preserveTerms도 추가
+    Object.entries(preserveTerms).forEach(([lower, original]) => {
+      const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
+      if (regex.test(str)) {
+        acronymPositions[lower] = original;
+      }
+    });
+    
+    // 기본적으로 소문자로 변환
+    let result = str.toLowerCase();
+    
+    // 첫 글자 대문자
+    result = result.charAt(0).toUpperCase() + result.slice(1);
+    
+    // 콜론, 물음표, 느낌표 뒤 첫 글자 대문자
+    result = result.replace(/([:.!?]\s+)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
+    
+    // 약어 복원
+    Object.entries(acronymPositions).forEach(([lower, original]) => {
+      const regex = new RegExp('\\b' + lower.replace(/[+\-&\/]/g, '\\$&') + '\\b', 'gi');
+      result = result.replace(regex, original);
+    });
+    
+    return result;
+  }
+
+  // Title Case 함수 - MLA, Chicago, Harvard용
+  function toTitleCase(str) {
+    if (!str) return str;
+    
+    const lowercaseWords = new Set([
+      'a', 'an', 'the',
+      'and', 'but', 'or', 'nor', 'for', 'yet', 'so',
+      'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'to', 'up', 'via', 'with'
+    ]);
+    
+    const preserveTerms = {
+      'pcmci+': 'PCMCI+',
+      'covid-19': 'COVID-19',
+      'arimax': 'ARIMAX',
+      'etf': 'ETF',
+      'etfs': 'ETFs',
+      'ai': 'AI',
+      'xai': 'xAI',
+      'esg': 'ESG',
+      'r&d': 'R&D',
+      'tvp-var': 'TVP-VAR',
+      'dcc-garch': 'DCC-GARCH',
+      'ux/ui': 'UX/UI',
+      'nlp': 'NLP',
+      'nft': 'NFT',
+      'shap': 'SHAP',
+      'evar': 'EVaR',
+      'edar': 'EDaR',
+      'kospi': 'KOSPI',
+      'kosdaq': 'KOSDAQ'
+    };
+    
+    const preservePattern = /\b[A-Z]{2,}[\+\-&\/]?\b/gi;
+    const preserved = {};
+    let match;
+    while ((match = preservePattern.exec(str)) !== null) {
+      preserved[match[0].toLowerCase()] = match[0];
+    }
+    
+    Object.entries(preserveTerms).forEach(([lower, original]) => {
+      preserved[lower] = original;
+    });
+    
+    const mainParts = str.split(/\s*:\s+/);
+    
+    const result = mainParts.map((part, partIndex) => {
+      const words = part.split(/\s+/);
       
-      // 하이픈이 포함된 단어 특별 처리
-      if (word.includes('-') && !preserved[word.toLowerCase()]) {
-        // 구두점 분리
+      return words.map((word, index) => {
+        if (!word) return word;
+        
+        if (word.includes('-') && !preserved[word.toLowerCase()]) {
+          const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
+          const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
+          let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
+          
+          const hyphenatedParts = cleanWord.split('-').map((subword, subIndex) => {
+            if (subIndex === 0 || !lowercaseWords.has(subword.toLowerCase())) {
+              return subword.charAt(0).toUpperCase() + subword.slice(1).toLowerCase();
+            }
+            return subword.toLowerCase();
+          }).join('-');
+          
+          return leadingPunct[0] + hyphenatedParts + trailingPunct[0];
+        }
+        
         const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
         const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
         let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
         
-        // "Farthest-first" -> "Farthest-First" 
-        const hyphenatedParts = cleanWord.split('-').map((subword, subIndex) => {
-          if (subIndex === 0 || !lowercaseWords.has(subword.toLowerCase())) {
-            return subword.charAt(0).toUpperCase() + subword.slice(1).toLowerCase();
-          }
-          return subword.toLowerCase();
-        }).join('-');
+        if (!cleanWord) return word;
         
-        return leadingPunct[0] + hyphenatedParts + trailingPunct[0];
-      }
-      
-      // 구두점 분리
-      const leadingPunct = word.match(/^[("'`\[{]+/) || [''];
-      const trailingPunct = word.match(/[)"'`\]},.:;!?]+$/) || [''];
-      let cleanWord = word.slice(leadingPunct[0].length, word.length - trailingPunct[0].length);
-      
-      // 빈 단어 처리
-      if (!cleanWord) return word;
-      
-      // 약어인 경우 원래 형태 유지
-      if (preserved[cleanWord.toLowerCase()]) {
-        cleanWord = preserved[cleanWord.toLowerCase()];
-      }
-      // 첫 단어와 마지막 단어는 항상 대문자
-      else if (index === 0 || index === words.length - 1) {
-        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
-      }
-      // 소문자 단어 목록에 있으면 소문자
-      else if (lowercaseWords.has(cleanWord.toLowerCase())) {
-        cleanWord = cleanWord.toLowerCase();
-      }
-      // 나머지는 첫 글자 대문자
-      else {
-        cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
-      }
-      
-      return leadingPunct[0] + cleanWord + trailingPunct[0];
-    }).join(' ');
-  }).join(': '); // 콜론으로 다시 연결
-  
-  return result;
-}
-
-// formatAuthorsForCitation 함수 - 각 스타일별 정확한 포맷
-function formatAuthorsForCitation(authors, style) {
-  if (!authors || authors.length === 0) return "Anonymous";
-  
-  const authorNames = authors.map(id => getAuthorName(id, false));
-  
-  switch(style) {
-    case 'APA':
-      // APA 7th: Last, F. M. 형식
-      const apaAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-        return initials ? `${last}, ${initials}` : last;
-      });
-      
-      if (apaAuthors.length === 1) {
-        return apaAuthors[0];
-      } else if (apaAuthors.length === 2) {
-        return apaAuthors[0] + ", & " + apaAuthors[1];
-      } else if (apaAuthors.length <= 20) {
-        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
-      } else {
-        return apaAuthors.slice(0, 19).join(", ") + ", ... " + apaAuthors[apaAuthors.length - 1];
-      }
-      
-    case 'MLA':
-      // MLA 9th: 3명까지 모두, 4명 이상 et al.
-      if (authorNames.length === 1) {
-        const parts = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last = parts[parts.length - 1];
-        const first = parts.slice(0, -1).join(' ');
-        return first ? `${last}, ${first}` : last;
-      } else if (authorNames.length === 2) {
-        const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last1 = parts1[parts1.length - 1];
-        const first1 = parts1.slice(0, -1).join(' ');
-        const formatted1 = first1 ? `${last1}, ${first1}` : last1;
-        return `${formatted1}, and ${authorNames[1].replace(/\*/g, '').trim()}`;
-      } else if (authorNames.length === 3) {
-        const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last1 = parts1[parts1.length - 1];
-        const first1 = parts1.slice(0, -1).join(' ');
-        const formatted1 = first1 ? `${last1}, ${first1}` : last1;
-        return `${formatted1}, ${authorNames[1].replace(/\*/g, '').trim()}, and ${authorNames[2].replace(/\*/g, '').trim()}`;
-      } else {
-        const parts = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last = parts[parts.length - 1];
-        const first = parts.slice(0, -1).join(' ');
-        const formatted = first ? `${last}, ${first}` : last;
-        return `${formatted}, et al.`;
-      }
-      
-    case 'Chicago':
-      // Chicago 17th: 10명까지 모두, 11명 이상 처음 7명 + et al.
-      if (authorNames.length === 1) {
-        const parts = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last = parts[parts.length - 1];
-        const first = parts.slice(0, -1).join(' ');
-        return first ? `${last}, ${first}` : last;
-      } else if (authorNames.length <= 10) {
-        const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last1 = parts1[parts1.length - 1];
-        const first1 = parts1.slice(0, -1).join(' ');
-        const formatted1 = first1 ? `${last1}, ${first1}` : last1;
-        
-        const rest = authorNames.slice(1).map(name => name.replace(/\*/g, '').trim());
-        if (rest.length === 0) return formatted1;
-        if (rest.length === 1) return `${formatted1}, and ${rest[0]}`;
-        return `${formatted1}, ${rest.slice(0, -1).join(", ")}, and ${rest[rest.length - 1]}`;
-      } else {
-        const formattedNames = [];
-        // 첫 저자는 Last, First 형식
-        const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
-        const last1 = parts1[parts1.length - 1];
-        const first1 = parts1.slice(0, -1).join(' ');
-        formattedNames.push(first1 ? `${last1}, ${first1}` : last1);
-        
-        // 나머지 6명은 일반 형식
-        for (let i = 1; i < 7; i++) {
-          formattedNames.push(authorNames[i].replace(/\*/g, '').trim());
+        if (preserved[cleanWord.toLowerCase()]) {
+          cleanWord = preserved[cleanWord.toLowerCase()];
         }
-        return formattedNames.join(", ") + ", et al.";
-      }
-      
-    case 'Harvard':
-      // Harvard: 3명까지 모두, 4명 이상 et al.
-      const harvardAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join('');
-        return initials ? `${last}, ${initials}` : last;
-      });
-      
-      if (harvardAuthors.length === 1) {
-        return harvardAuthors[0];
-      } else if (harvardAuthors.length === 2) {
-        return harvardAuthors[0] + " and " + harvardAuthors[1];
-      } else if (harvardAuthors.length === 3) {
-        return harvardAuthors[0] + ", " + harvardAuthors[1] + " and " + harvardAuthors[2];
-      } else {
-        return harvardAuthors[0] + " et al.";
-      }
-      
-    case 'Vancouver':
-      // Vancouver: 6명까지 모두, 7명 이상 처음 6명 + et al.
-      const vanAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase()).join("");
-        return initials ? `${last} ${initials}` : last;
-      });
-      
-      if (vanAuthors.length <= 6) {
+        else if (index === 0 || index === words.length - 1) {
+          cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
+        }
+        else if (lowercaseWords.has(cleanWord.toLowerCase())) {
+          cleanWord = cleanWord.toLowerCase();
+        }
+        else {
+          cleanWord = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1).toLowerCase();
+        }
+        
+        return leadingPunct[0] + cleanWord + trailingPunct[0];
+      }).join(' ');
+    }).join(': ');
+    
+    return result;
+  }
+
+  // formatAuthorsForCitation - 모든 저자 표시 (et al. 사용 안 함)
+  function formatAuthorsForCitation(authors, style) {
+    if (!authors || authors.length === 0) return "Anonymous";
+    
+    const authorNames = authors.map(id => getAuthorName(id, false));
+    
+    switch(style) {
+      case 'APA':
+        const apaAuthors = authorNames.map(name => {
+          const clean = name.replace(/\*/g, '').trim();
+          const parts = clean.split(/\s+/);
+          const last = parts[parts.length - 1];
+          const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
+          return initials ? `${last}, ${initials}` : last;
+        });
+        
+        if (apaAuthors.length === 1) {
+          return apaAuthors[0];
+        } else if (apaAuthors.length === 2) {
+          return apaAuthors[0] + ", & " + apaAuthors[1];
+        } else {
+          return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
+        }
+        
+      case 'MLA':
+        if (authorNames.length === 1) {
+          const parts = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
+          const last = parts[parts.length - 1];
+          const first = parts.slice(0, -1).join(' ');
+          return first ? `${last}, ${first}` : last;
+        } else {
+          const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
+          const last1 = parts1[parts1.length - 1];
+          const first1 = parts1.slice(0, -1).join(' ');
+          const formatted1 = first1 ? `${last1}, ${first1}` : last1;
+          
+          const rest = authorNames.slice(1).map(name => name.replace(/\*/g, '').trim());
+          if (rest.length === 1) {
+            return `${formatted1}, and ${rest[0]}`;
+          }
+          return `${formatted1}, ${rest.slice(0, -1).join(", ")}, and ${rest[rest.length - 1]}`;
+        }
+        
+      case 'Chicago':
+        if (authorNames.length === 1) {
+          const parts = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
+          const last = parts[parts.length - 1];
+          const first = parts.slice(0, -1).join(' ');
+          return first ? `${last}, ${first}` : last;
+        } else {
+          const parts1 = authorNames[0].replace(/\*/g, '').trim().split(/\s+/);
+          const last1 = parts1[parts1.length - 1];
+          const first1 = parts1.slice(0, -1).join(' ');
+          const formatted1 = first1 ? `${last1}, ${first1}` : last1;
+          
+          const rest = authorNames.slice(1).map(name => name.replace(/\*/g, '').trim());
+          if (rest.length === 1) {
+            return `${formatted1}, and ${rest[0]}`;
+          }
+          return `${formatted1}, ${rest.slice(0, -1).join(", ")}, and ${rest[rest.length - 1]}`;
+        }
+        
+      case 'Harvard':
+        const harvardAuthors = authorNames.map(name => {
+          const clean = name.replace(/\*/g, '').trim();
+          const parts = clean.split(/\s+/);
+          const last = parts[parts.length - 1];
+          const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join('');
+          return initials ? `${last}, ${initials}` : last;
+        });
+        
+        if (harvardAuthors.length === 1) {
+          return harvardAuthors[0];
+        } else if (harvardAuthors.length === 2) {
+          return harvardAuthors[0] + " and " + harvardAuthors[1];
+        } else {
+          return harvardAuthors.slice(0, -1).join(", ") + " and " + harvardAuthors[harvardAuthors.length - 1];
+        }
+        
+      case 'Vancouver':
+        const vanAuthors = authorNames.map(name => {
+          const clean = name.replace(/\*/g, '').trim();
+          const parts = clean.split(/\s+/);
+          const last = parts[parts.length - 1];
+          const initials = parts.slice(0, -1).map(p => p[0].toUpperCase()).join("");
+          return initials ? `${last} ${initials}` : last;
+        });
+        
         return vanAuthors.join(", ");
-      } else {
-        return vanAuthors.slice(0, 6).join(", ") + ", et al.";
-      }
+        
+      case 'Korean':
+        // 한글 저자명 처리
+        const koreanAuthors = authors.map(id => getAuthorName(id, true));
+        if (koreanAuthors.length === 1) {
+          return koreanAuthors[0];
+        } else if (koreanAuthors.length === 2) {
+          return koreanAuthors.join(', ');
+        } else {
+          return koreanAuthors.join(', ');
+        }
+        
+      default:
+        return authorNames.join(", ");
+    }
+  }
+
+  // openCite 함수 - 한글 citation 추가
+  function openCite(pub) {
+    const title = pub.title || "Untitled";
+    const titleKo = pub.title_ko || title;
+    const year = pub.year || new Date().getFullYear();
+    const venue = arr(pub.venue).filter(Boolean).join(", ") || "";
+    const venueKo = arr(pub.venue_ko).filter(Boolean).join(", ") || venue;
+    
+    const isJournal = arr(pub.type).includes('journal');
+    const isConference = arr(pub.type).includes('conference');
+    const isBook = arr(pub.type).includes('book');
+    const isThesis = arr(pub.type).includes('thesis');
+    const isReport = arr(pub.type).includes('report');
+    
+    const isKorean = pub.language === 'Korean';
+    
+    // APA 스타일 (sentence case 적용)
+    const apaTitle = toSentenceCase(title);
+    let apaFormat = `${formatAuthorsForCitation(pub.authors, 'APA')} (${year}). `;
+    
+    if (isJournal && venue) {
+      apaFormat += `${apaTitle}. <em>${venue}</em>`;
+      if (pub.volume) apaFormat += `, <em>${pub.volume}</em>`;
+      if (pub.issue) apaFormat += `(${pub.issue})`;
+      if (pub.pages) apaFormat += `, ${pub.pages}`;
+    } else if (isConference && venue) {
+      apaFormat += `${apaTitle}. In <em>${toTitleCase(venue)}</em>`;
+      if (pub.pages) apaFormat += ` (pp. ${pub.pages})`;
+    } else if (isBook) {
+      apaFormat += `<em>${apaTitle}</em>`;
+      if (pub.publisher) apaFormat += `. ${pub.publisher}`;
+    } else if (isThesis) {
+      apaFormat += `<em>${apaTitle}</em> [Doctoral dissertation`;
+      if (venue) apaFormat += `, ${venue}`;
+      apaFormat += `]`;
+    } else if (isReport) {
+      apaFormat += `<em>${apaTitle}</em>`;
+      if (pub.publisher || venue) apaFormat += `. ${pub.publisher || venue}`;
+    } else {
+      apaFormat += `${apaTitle}`;
+      if (venue) apaFormat += `. ${venue}`;
+    }
+    apaFormat += '.';
+    
+    if (pub.doi) {
+      apaFormat += ` https://doi.org/${pub.doi}`;
+    }
+    
+    // MLA 스타일
+    const mlaTitle = toTitleCase(title);
+    let mlaFormat = `${formatAuthorsForCitation(pub.authors, 'MLA')}. `;
+    
+    if (isJournal) {
+      mlaFormat += `"${mlaTitle}." <em>${toTitleCase(venue)}</em>`;
+      if (pub.volume) mlaFormat += `, vol. ${pub.volume}`;
+      if (pub.issue) mlaFormat += `, no. ${pub.issue}`;
+      mlaFormat += `, ${year}`;
+      if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
+    } else if (isConference) {
+      mlaFormat += `"${mlaTitle}." <em>${toTitleCase(venue)}</em>, ${year}`;
+      if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
+    } else if (isBook) {
+      mlaFormat += `<em>${mlaTitle}</em>`;
+      if (pub.publisher) mlaFormat += `. ${pub.publisher}`;
+      mlaFormat += `, ${year}`;
+    } else if (isThesis) {
+      mlaFormat += `<em>${mlaTitle}</em>. ${year}`;
+      if (venue) mlaFormat += `. ${venue}`;
+      mlaFormat += `, PhD dissertation`;
+    } else {
+      mlaFormat += `"${mlaTitle}."`;
+      if (venue) mlaFormat += ` ${venue},`;
+      mlaFormat += ` ${year}`;
+    }
+    mlaFormat += '.';
+    
+    if (pub.doi) {
+      mlaFormat += ` doi:${pub.doi}`;
+    }
+    
+    // Chicago 스타일
+    const chicagoTitle = toTitleCase(title);
+    let chicagoFormat = `${formatAuthorsForCitation(pub.authors, 'Chicago')}. `;
+    
+    if (isJournal) {
+      chicagoFormat += `"${chicagoTitle}." <em>${toTitleCase(venue)}</em>`;
+      if (pub.volume) chicagoFormat += ` ${pub.volume}`;
+      if (pub.issue) chicagoFormat += `, no. ${pub.issue}`;
+      chicagoFormat += ` (${year})`;
+      if (pub.pages) chicagoFormat += `: ${pub.pages}`;
+    } else if (isConference) {
+      chicagoFormat += `"${chicagoTitle}." Paper presented at ${toTitleCase(venue)}, ${year}`;
+      if (pub.pages) chicagoFormat += `, ${pub.pages}`;
+    } else if (isBook) {
+      chicagoFormat += `<em>${chicagoTitle}</em>. `;
+      if (pub.publisher) chicagoFormat += `${pub.publisher}, `;
+      chicagoFormat += `${year}`;
+    } else if (isThesis) {
+      chicagoFormat += `"${chicagoTitle}." PhD diss., ${venue || 'University'}, ${year}`;
+    } else {
+      chicagoFormat += `"${chicagoTitle}."`;
+      if (venue) chicagoFormat += ` ${venue}`;
+      chicagoFormat += ` (${year})`;
+    }
+    chicagoFormat += '.';
+    
+    if (pub.doi) {
+      chicagoFormat += ` https://doi.org/${pub.doi}`;
+    }
+    
+    // Harvard 스타일
+    const harvardTitle = toTitleCase(title);
+    let harvardFormat = `${formatAuthorsForCitation(pub.authors, 'Harvard')} (${year}) `;
+    
+    if (isJournal) {
+      harvardFormat += `'${harvardTitle}', <em>${toTitleCase(venue)}</em>`;
+      if (pub.volume) harvardFormat += `, vol. ${pub.volume}`;
+      if (pub.issue) harvardFormat += `, no. ${pub.issue}`;
+      if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
+    } else if (isConference) {
+      harvardFormat += `'${harvardTitle}', in <em>${toTitleCase(venue)}</em>`;
+      if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
+    } else if (isBook) {
+      harvardFormat += `<em>${harvardTitle}</em>`;
+      if (pub.publisher) harvardFormat += `, ${pub.publisher}`;
+    } else if (isThesis) {
+      harvardFormat += `'${harvardTitle}', PhD thesis, ${venue || 'University'}`;
+    } else {
+      harvardFormat += `'${harvardTitle}'`;
+      if (venue) harvardFormat += `, ${venue}`;
+    }
+    harvardFormat += '.';
+    
+    if (pub.doi) {
+      harvardFormat += ` Available at: https://doi.org/${pub.doi}`;
+    }
+    
+    // Vancouver 스타일
+    const vancouverTitle = toSentenceCase(title);
+    let vancouverFormat = `${formatAuthorsForCitation(pub.authors, 'Vancouver')}. ${vancouverTitle}. `;
+    
+    if (venue) vancouverFormat += `${venue}. `;
+    vancouverFormat += `${year}`;
+    
+    if (isJournal) {
+      if (pub.volume) vancouverFormat += `;${pub.volume}`;
+      if (pub.issue) vancouverFormat += `(${pub.issue})`;
+      if (pub.pages) vancouverFormat += `:${pub.pages}`;
+    } else if (isConference) {
+      vancouverFormat += ` [conference paper]`;
+      if (pub.pages) vancouverFormat += `;${pub.pages}`;
+    } else if (isBook) {
+      vancouverFormat += ` [book]`;
+    } else if (isThesis) {
+      vancouverFormat += ` [dissertation]`;
+    }
+    vancouverFormat += '.';
+    
+    if (pub.doi) {
+      vancouverFormat += ` doi:${pub.doi}`;
+    }
+    
+    // 한글 Citation (Korean APA style)
+    let koreanFormat = '';
+    if (isKorean) {
+      koreanFormat = `${formatAuthorsForCitation(pub.authors, 'Korean')} (${year}). `;
       
-    default:
-      return authorNames.join(", ");
-  }
-}
+      if (isJournal && venueKo) {
+        koreanFormat += `${titleKo}. <em>${venueKo}</em>`;
+        if (pub.volume) koreanFormat += `, <em>${pub.volume}</em>`;
+        if (pub.issue) koreanFormat += `(${pub.issue})`;
+        if (pub.pages) koreanFormat += `, ${pub.pages}`;
+      } else if (isConference && venueKo) {
+        koreanFormat += `${titleKo}. <em>${venueKo}</em>`;
+        if (pub.pages) koreanFormat += ` (pp. ${pub.pages})`;
+      } else if (isBook) {
+        koreanFormat += `<em>${titleKo}</em>`;
+        if (pub.publisher) koreanFormat += `. ${pub.publisher}`;
+      } else if (isThesis) {
+        koreanFormat += `<em>${titleKo}</em> [박사학위논문`;
+        if (venueKo) koreanFormat += `, ${venueKo}`;
+        koreanFormat += `]`;
+      } else if (isReport) {
+        koreanFormat += `<em>${titleKo}</em>`;
+        if (pub.publisher || venueKo) koreanFormat += `. ${pub.publisher || venueKo}`;
+      } else {
+        koreanFormat += `${titleKo}`;
+        if (venueKo) koreanFormat += `. ${venueKo}`;
+      }
+      koreanFormat += '.';
+      
+      if (pub.doi) {
+        koreanFormat += ` https://doi.org/${pub.doi}`;
+      }
+    }
+    
+    const formats = {
+      'APA (7th ed.)': apaFormat,
+      'MLA (9th ed.)': mlaFormat,
+      'Chicago (17th ed.)': chicagoFormat,
+      'Harvard': harvardFormat,
+      'Vancouver': vancouverFormat
+    };
+    
+    // 한글 논문인 경우 한글 Citation 추가
+    if (isKorean) {
+      formats['한글 (Korean APA)'] = koreanFormat;
+    }
 
-
-
-// openCite 함수에서 APA 부분 수정
-// openCite 함수 - 각 스타일별 정확한 포맷
-function openCite(pub) {
-  const title = pub.title || "Untitled";
-  const year = pub.year || new Date().getFullYear();
-  const venue = arr(pub.venue).filter(Boolean).join(", ") || "";
-  
-  const isJournal = arr(pub.type).includes('journal');
-  const isConference = arr(pub.type).includes('conference');
-  const isBook = arr(pub.type).includes('book');
-  const isThesis = arr(pub.type).includes('thesis');
-  const isReport = arr(pub.type).includes('report');
-  
-  // APA 스타일 (sentence case - 첫 글자와 콜론 뒤만 대문자)
-  const apaTitle = toSentenceCase(title);
-  let apaFormat = `${formatAuthorsForCitation(pub.authors, 'APA')} (${year}). `;
-  
-  if (isJournal && venue) {
-    apaFormat += `${apaTitle}. <em>${venue}</em>`;
-    if (pub.volume) apaFormat += `, <em>${pub.volume}</em>`;
-    if (pub.issue) apaFormat += `(${pub.issue})`;
-    if (pub.pages) apaFormat += `, ${pub.pages}`;
-  } else if (isConference && venue) {
-    apaFormat += `${apaTitle}. In <em>${toTitleCase(venue)}</em>`;
-    if (pub.pages) apaFormat += ` (pp. ${pub.pages})`;
-  } else if (isBook) {
-    apaFormat += `<em>${apaTitle}</em>`;
-    if (pub.publisher) apaFormat += `. ${pub.publisher}`;
-  } else if (isThesis) {
-    apaFormat += `<em>${apaTitle}</em> [Doctoral dissertation`;
-    if (venue) apaFormat += `, ${venue}`;
-    apaFormat += `]`;
-  } else if (isReport) {
-    apaFormat += `<em>${apaTitle}</em>`;
-    if (pub.publisher || venue) apaFormat += `. ${pub.publisher || venue}`;
-  } else {
-    apaFormat += `${apaTitle}`;
-    if (venue) apaFormat += `. ${venue}`;
-  }
-  apaFormat += '.';
-  
-  if (pub.doi) {
-    apaFormat += ` https://doi.org/${pub.doi}`;
-  }
-  
-  // MLA 스타일 (title case - 주요 단어 대문자)
-  const mlaTitle = toTitleCase(title);
-  let mlaFormat = `${formatAuthorsForCitation(pub.authors, 'MLA')}. `;
-  
-  if (isJournal) {
-    mlaFormat += `"${mlaTitle}." <em>${toTitleCase(venue)}</em>`;
-    if (pub.volume) mlaFormat += `, vol. ${pub.volume}`;
-    if (pub.issue) mlaFormat += `, no. ${pub.issue}`;
-    mlaFormat += `, ${year}`;
-    if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
-  } else if (isConference) {
-    mlaFormat += `"${mlaTitle}." <em>${toTitleCase(venue)}</em>, ${year}`;
-    if (pub.pages) mlaFormat += `, pp. ${pub.pages}`;
-  } else if (isBook) {
-    mlaFormat += `<em>${mlaTitle}</em>`;
-    if (pub.publisher) mlaFormat += `. ${pub.publisher}`;
-    mlaFormat += `, ${year}`;
-  } else if (isThesis) {
-    mlaFormat += `<em>${mlaTitle}</em>. ${year}`;
-    if (venue) mlaFormat += `. ${venue}`;
-    mlaFormat += `, PhD dissertation`;
-  } else {
-    mlaFormat += `"${mlaTitle}."`;
-    if (venue) mlaFormat += ` ${venue},`;
-    mlaFormat += ` ${year}`;
-  }
-  mlaFormat += '.';
-  
-  if (pub.doi) {
-    mlaFormat += ` doi:${pub.doi}`;
-  }
-  
-  // Chicago 스타일 (title case)
-  const chicagoTitle = toTitleCase(title);
-  let chicagoFormat = `${formatAuthorsForCitation(pub.authors, 'Chicago')}. `;
-  
-  if (isJournal) {
-    chicagoFormat += `"${chicagoTitle}." <em>${toTitleCase(venue)}</em>`;
-    if (pub.volume) chicagoFormat += ` ${pub.volume}`;
-    if (pub.issue) chicagoFormat += `, no. ${pub.issue}`;
-    chicagoFormat += ` (${year})`;
-    if (pub.pages) chicagoFormat += `: ${pub.pages}`;
-  } else if (isConference) {
-    chicagoFormat += `"${chicagoTitle}." Paper presented at ${toTitleCase(venue)}, ${year}`;
-    if (pub.pages) chicagoFormat += `, ${pub.pages}`;
-  } else if (isBook) {
-    chicagoFormat += `<em>${chicagoTitle}</em>. `;
-    if (pub.publisher) chicagoFormat += `${pub.publisher}, `;
-    chicagoFormat += `${year}`;
-  } else if (isThesis) {
-    chicagoFormat += `"${chicagoTitle}." PhD diss., ${venue || 'University'}, ${year}`;
-  } else {
-    chicagoFormat += `"${chicagoTitle}."`;
-    if (venue) chicagoFormat += ` ${venue}`;
-    chicagoFormat += ` (${year})`;
-  }
-  chicagoFormat += '.';
-  
-  if (pub.doi) {
-    chicagoFormat += ` https://doi.org/${pub.doi}`;
-  }
-  
-  // Harvard 스타일 (title case)
-  const harvardTitle = toTitleCase(title);
-  let harvardFormat = `${formatAuthorsForCitation(pub.authors, 'Harvard')} (${year}) `;
-  
-  if (isJournal) {
-    harvardFormat += `'${harvardTitle}', <em>${toTitleCase(venue)}</em>`;
-    if (pub.volume) harvardFormat += `, vol. ${pub.volume}`;
-    if (pub.issue) harvardFormat += `, no. ${pub.issue}`;
-    if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
-  } else if (isConference) {
-    harvardFormat += `'${harvardTitle}', in <em>${toTitleCase(venue)}</em>`;
-    if (pub.pages) harvardFormat += `, pp. ${pub.pages}`;
-  } else if (isBook) {
-    harvardFormat += `<em>${harvardTitle}</em>`;
-    if (pub.publisher) harvardFormat += `, ${pub.publisher}`;
-  } else if (isThesis) {
-    harvardFormat += `'${harvardTitle}', PhD thesis, ${venue || 'University'}`;
-  } else {
-    harvardFormat += `'${harvardTitle}'`;
-    if (venue) harvardFormat += `, ${venue}`;
-  }
-  harvardFormat += '.';
-  
-  if (pub.doi) {
-    harvardFormat += ` Available at: https://doi.org/${pub.doi}`;
-  }
-  
-  // Vancouver 스타일 (sentence case)
-  const vancouverTitle = toSentenceCase(title);
-  let vancouverFormat = `${formatAuthorsForCitation(pub.authors, 'Vancouver')}. ${vancouverTitle}. `;
-  
-  if (venue) vancouverFormat += `${venue}. `;
-  vancouverFormat += `${year}`;
-  
-  if (isJournal) {
-    if (pub.volume) vancouverFormat += `;${pub.volume}`;
-    if (pub.issue) vancouverFormat += `(${pub.issue})`;
-    if (pub.pages) vancouverFormat += `:${pub.pages}`;
-  } else if (isConference) {
-    vancouverFormat += ` [conference paper]`;
-    if (pub.pages) vancouverFormat += `;${pub.pages}`;
-  } else if (isBook) {
-    vancouverFormat += ` [book]`;
-  } else if (isThesis) {
-    vancouverFormat += ` [dissertation]`;
-  }
-  vancouverFormat += '.';
-  
-  if (pub.doi) {
-    vancouverFormat += ` doi:${pub.doi}`;
-  }
-  
-  const formats = {
-    'APA (7th ed.)': apaFormat,
-    'MLA (9th ed.)': mlaFormat,
-    'Chicago (17th ed.)': chicagoFormat,
-    'Harvard': harvardFormat,
-    'Vancouver': vancouverFormat
-  };
-
-  citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
-    const id = 'cite-' + Math.random().toString(36).slice(2, 9);
-    return `
-      <div class="cite-block">
-        <div class="cite-header">
-          <span class="cite-label">${label}</span>
-          <button class="copy-btn" onclick="copyText('${id}')">Copy</button>
+    citeBody.innerHTML = Object.entries(formats).map(([label, text]) => {
+      const id = 'cite-' + Math.random().toString(36).slice(2, 9);
+      return `
+        <div class="cite-block">
+          <div class="cite-header">
+            <span class="cite-label">${label}</span>
+            <button class="copy-btn" onclick="copyText('${id}')">Copy</button>
+          </div>
+          <div class="cite-text" id="${id}">${text}</div>
         </div>
-        <div class="cite-text" id="${id}">${text}</div>
-      </div>
-    `;
-  }).join('');
+      `;
+    }).join('');
 
-  document.getElementById('citeModal').style.display = 'flex';
-}
+    document.getElementById('citeModal').style.display = 'flex';
+  }
 
   function copyText(id) {
     const element = document.getElementById(id);
-    // HTML 태그 제거하고 텍스트만 복사
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = element.innerHTML;
     const text = tempDiv.textContent || tempDiv.innerText || '';
@@ -2523,7 +2287,7 @@ function openCite(pub) {
 
   buildChips();
   render();
-  calculatePublicationStats(); // ← 여기에 추가!
+  calculatePublicationStats();
 
   document.getElementById('toggleFilters').onclick = () => {
     const filterContent = document.getElementById('filterContent');
