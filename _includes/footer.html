@@ -198,6 +198,14 @@
         .volume-controls { width: 70px !important; }
         .volume-slider { width: 40px !important; }
       }
+
+      /* 에러 메시지 스타일 */
+      .error-message {
+        color: #ef4444;
+        font-size: 12px;
+        text-align: center;
+        padding: 8px;
+      }
     </style>
   </head>
   <body>
@@ -245,7 +253,7 @@
                       <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/>
                     </svg>
                   </div>
-                  <span id="musicTitle" class="music-title" title="Background Music">Loading...</span>
+                  <span id="musicTitle" class="music-title" title="Background Music">Loading playlist...</span>
                 </div>
 
                 <!-- 볼륨 조절 - 고정 너비 -->
@@ -322,7 +330,6 @@
     <script>
       // ===================== 전역 상태 =====================
       var YOUTUBE_CONFIG = {
-        playlist: [],   
         shuffle: true
       };
 
@@ -336,6 +343,7 @@
       var isPlayerReady = false;
       var updateTimer = null;
       var isDragging = false;
+      var playlistLoadError = false;
 
       // ===================== 유틸 함수 =====================
       function extractVideoId(url) {
@@ -391,20 +399,23 @@
             buildFromJson(json); 
           })
           .catch(function(err) {
-            console.warn('playlist.json 로드 실패, 폴백 사용:', err);
-            useFallbackPlaylist();
+            console.error('playlist.json 로드 실패:', err);
+            handlePlaylistError();
           });
       }
 
-      function useFallbackPlaylist() {
-        // 폴백 플레이리스트
-        YOUTUBE_CONFIG.shuffle = true;
-        YOUTUBE_CONFIG.playlist = [
-          'https://music.youtube.com/watch?v=MqcFHCNXiok&si=EF5Zu-543JuwcO8N',
-          'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',
-          'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr'
-        ];
-        buildTracksFromInlinePlaylist();
+      function handlePlaylistError() {
+        playlistLoadError = true;
+        var titleElement = document.getElementById('musicTitle');
+        titleElement.textContent = 'Playlist 로드 실패';
+        titleElement.classList.add('error-message');
+        
+        // 버튼 비활성화
+        document.getElementById('playPauseBtn').disabled = true;
+        document.getElementById('prevBtn').disabled = true;
+        document.getElementById('nextBtn').disabled = true;
+        
+        console.error('assets/playlist.json 파일을 찾을 수 없거나 형식이 잘못되었습니다.');
       }
 
       function buildFromJson(json) {
@@ -412,8 +423,8 @@
         YOUTUBE_CONFIG.shuffle = (typeof json.shuffle === 'boolean') ? json.shuffle : true;
 
         if (!json.items || !Array.isArray(json.items)) {
-          console.warn('items 배열이 없습니다. 폴백 사용');
-          useFallbackPlaylist();
+          console.error('playlist.json에 items 배열이 없습니다.');
+          handlePlaylistError();
           return;
         }
 
@@ -446,31 +457,12 @@
         });
 
         if (tracks.length === 0) {
-          console.warn('유효한 트랙이 없습니다. 폴백 사용');
-          useFallbackPlaylist();
+          console.error('playlist.json에 유효한 트랙이 없습니다.');
+          handlePlaylistError();
           return;
         }
 
         console.log('Successfully loaded', tracks.length, 'tracks');
-        finalizeTrackSetup();
-      }
-
-      function buildTracksFromInlinePlaylist() {
-        tracks = [];
-        YOUTUBE_CONFIG.playlist.forEach(function(url) {
-          var id = extractVideoId(url);
-          if (id) {
-            tracks.push({ 
-              id: id, 
-              url: url, 
-              weight: 1, 
-              start_at: null, 
-              end_at: null, 
-              title_override: null 
-            });
-          }
-        });
-        console.log('Fallback playlist loaded with', tracks.length, 'tracks');
         finalizeTrackSetup();
       }
 
@@ -494,6 +486,9 @@
 
         generateShuffleOrder();
         console.log('Track setup complete. Total tracks:', tracks.length, 'Order pool size:', orderPool.length);
+        
+        // YouTube API 로드
+        injectYouTubeAPI();
       }
 
       function generateShuffleOrder() {
@@ -510,6 +505,11 @@
 
       // ===================== YouTube IFrame API 로드 & 초기화 =====================
       function injectYouTubeAPI() {
+        if (playlistLoadError) {
+          console.error('Playlist 로드 실패로 YouTube API를 로드하지 않습니다.');
+          return;
+        }
+        
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var first = document.getElementsByTagName('script')[0];
@@ -521,6 +521,7 @@
         console.log('YouTube API ready, tracks available:', tracks.length);
         if (!tracks.length) {
           console.error('트랙이 비어있습니다.');
+          handlePlaylistError();
           return;
         }
         var firstId = tracks[currentVideoIndex].id;
@@ -682,6 +683,9 @@
           var titleElement = document.getElementById('musicTitle');
           var t = tracks[currentVideoIndex];
 
+          // 에러 클래스 제거
+          titleElement.classList.remove('error-message');
+
           if (t && t.title_override) {
             applyTitle(titleElement, t.title_override);
             return;
@@ -795,16 +799,17 @@
         // 연도
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // 초기화: playlist.json 로드 후 YouTube API 주입
+        // 초기화: playlist.json 로드
         document.addEventListener('DOMContentLoaded', function() {
-          console.log('DOM loaded, initializing player...');
-          loadPlaylistJson().then(function(){ 
-            console.log('Playlist loaded, injecting YouTube API...');
-            injectYouTubeAPI(); 
-          });
+          console.log('DOM loaded, loading playlist.json...');
+          loadPlaylistJson();
 
           // 컨트롤 바인딩
           document.getElementById('playPauseBtn').addEventListener('click', function() {
+            if (playlistLoadError) {
+              console.error('Playlist not loaded');
+              return;
+            }
             if (!isPlayerReady || !player) return;
             var state = player.getPlayerState();
             if (state == YT.PlayerState.PLAYING) {
@@ -820,11 +825,13 @@
           });
 
           document.getElementById('prevBtn').addEventListener('click', function() {
+            if (playlistLoadError) return;
             if (!isPlayerReady || !player || tracks.length <= 1) return;
             loadPreviousVideo();
           });
 
           document.getElementById('nextBtn').addEventListener('click', function() {
+            if (playlistLoadError) return;
             if (!isPlayerReady || !player || tracks.length <= 1) return;
             loadNextVideo();
           });
