@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>FINDS Lab Footer Player</title>
 
-    <!-- Google Analytics 4 - 이 부분을 <head> 태그 안에 넣으세요 -->
+    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGEYHWRHR"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -322,15 +322,14 @@
     <script>
       // ===================== 전역 상태 =====================
       var YOUTUBE_CONFIG = {
-        playlist: [],   // assets/playlist.json 로드 성공 시 사용. 실패 시 폴백 사용
+        playlist: [],   
         shuffle: true
       };
 
-      // 트랙 구조: { id, url?, weight, enabled, start_at?, end_at?, title_override? }
       var tracks = [];
-      var videoIds = [];      // 중복 제거된 id 리스트
-      var orderPool = [];     // 가중치 기반 인덱스 풀
-      var shuffledOrder = []; // 셔플 순서(인덱스)
+      var videoIds = [];      
+      var orderPool = [];     
+      var shuffledOrder = []; 
       var currentVideoIndex = 0;
 
       var player;
@@ -341,10 +340,22 @@
       // ===================== 유틸 함수 =====================
       function extractVideoId(url) {
         if (!url) return null;
-        if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url; // 이미 id만 들어온 경우
+        
+        // 이미 ID만 있는 경우
+        if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
 
         var videoId = null;
-        if (url.indexOf('v=') > -1) {
+        
+        // music.youtube.com 형식 처리
+        if (url.includes('music.youtube.com')) {
+          // v= 파라미터에서 추출
+          var match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+          if (match) {
+            videoId = match[1];
+          }
+        } 
+        // 일반 YouTube URL 처리
+        else if (url.indexOf('v=') > -1) {
           var vParam = url.split('v=')[1];
           if (vParam) videoId = vParam.split(/[&#]/)[0];
         } else if (url.indexOf('youtu.be/') > -1) {
@@ -352,28 +363,48 @@
         } else if (url.indexOf('/embed/') > -1) {
           videoId = url.split('/embed/')[1].split(/[?#&]/)[0];
         }
-        if (videoId && /^[a-zA-Z0-9_-]{11}$/.test(videoId)) return videoId;
+        
+        if (videoId && /^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+          console.log('Extracted video ID:', videoId, 'from:', url);
+          return videoId;
+        }
+        
         console.error('Video ID 추출 실패:', url);
         return null;
       }
 
       // ===================== playlist.json 로드 =====================
       function loadPlaylistJson() {
-        var url = 'assets/playlist.json';
-        return fetch(url, { cache: 'no-store' })
-          .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
-          .then(function (json) { buildFromJson(json); })
-          .catch(function (err) {
-            console.warn('playlist.json 불러오기 실패. 기본 목록으로 폴백합니다.', err);
-            // 폴백 내장 목록
-            YOUTUBE_CONFIG.shuffle = true;
-            YOUTUBE_CONFIG.playlist = [
-              'https://music.youtube.com/watch?v=MqcFHCNXiok&si=EF5Zu-543JuwcO8N',
-              'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',
-              'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr'
-            ];
-            buildTracksFromInlinePlaylist();
+        // 현재 HTML 파일의 위치를 기준으로 상대 경로 계산
+        var basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+        var url = basePath + '/assets/playlist.json';
+        
+        console.log('Loading playlist from:', url);
+        
+        return fetch(url + '?t=' + Date.now())  // 캐시 방지
+          .then(function(res) { 
+            if (!res.ok) throw new Error('HTTP ' + res.status); 
+            return res.json(); 
+          })
+          .then(function(json) { 
+            console.log('Playlist loaded successfully:', json);
+            buildFromJson(json); 
+          })
+          .catch(function(err) {
+            console.warn('playlist.json 로드 실패, 폴백 사용:', err);
+            useFallbackPlaylist();
           });
+      }
+
+      function useFallbackPlaylist() {
+        // 폴백 플레이리스트
+        YOUTUBE_CONFIG.shuffle = true;
+        YOUTUBE_CONFIG.playlist = [
+          'https://music.youtube.com/watch?v=MqcFHCNXiok&si=EF5Zu-543JuwcO8N',
+          'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',
+          'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr'
+        ];
+        buildTracksFromInlinePlaylist();
       }
 
       function buildFromJson(json) {
@@ -382,44 +413,64 @@
 
         if (!json.items || !Array.isArray(json.items)) {
           console.warn('items 배열이 없습니다. 폴백 사용');
-          buildTracksFromInlinePlaylist();
+          useFallbackPlaylist();
           return;
         }
 
-        json.items.forEach(function (item) {
+        console.log('Processing', json.items.length, 'items from playlist.json');
+
+        json.items.forEach(function(item, index) {
           var enabled = item.enabled !== false; // 기본 true
-          if (!enabled) return;
+          if (!enabled) {
+            console.log('Item', index, 'is disabled, skipping');
+            return;
+          }
 
           var id = item.id || extractVideoId(item.url);
-          if (!id) return;
+          if (!id) {
+            console.warn('Item', index, 'has no valid video ID:', item);
+            return;
+          }
 
-          tracks.push({
+          var track = {
             id: id,
             url: item.url || null,
             weight: Math.max(1, parseInt(item.weight || 1, 10)),
             start_at: Number.isFinite(item.start_at) ? item.start_at : null,
             end_at: Number.isFinite(item.end_at) ? item.end_at : null,
             title_override: item.title_override || null
-          });
+          };
+          
+          console.log('Added track:', track);
+          tracks.push(track);
         });
 
         if (tracks.length === 0) {
           console.warn('유효한 트랙이 없습니다. 폴백 사용');
-          buildTracksFromInlinePlaylist();
+          useFallbackPlaylist();
           return;
         }
 
+        console.log('Successfully loaded', tracks.length, 'tracks');
         finalizeTrackSetup();
       }
 
       function buildTracksFromInlinePlaylist() {
         tracks = [];
-        YOUTUBE_CONFIG.playlist.forEach(function (url) {
+        YOUTUBE_CONFIG.playlist.forEach(function(url) {
           var id = extractVideoId(url);
           if (id) {
-            tracks.push({ id: id, url: url, weight: 1, start_at: null, end_at: null, title_override: null });
+            tracks.push({ 
+              id: id, 
+              url: url, 
+              weight: 1, 
+              start_at: null, 
+              end_at: null, 
+              title_override: null 
+            });
           }
         });
+        console.log('Fallback playlist loaded with', tracks.length, 'tracks');
         finalizeTrackSetup();
       }
 
@@ -427,18 +478,22 @@
         // videoIds: 중복 제거
         var seen = {};
         videoIds = [];
-        tracks.forEach(function (t) {
-          if (!seen[t.id]) { videoIds.push(t.id); seen[t.id] = true; }
+        tracks.forEach(function(t) {
+          if (!seen[t.id]) { 
+            videoIds.push(t.id); 
+            seen[t.id] = true; 
+          }
         });
 
         // 가중치 풀 생성
         orderPool = [];
-        tracks.forEach(function (t, idx) {
+        tracks.forEach(function(t, idx) {
           var w = Math.max(1, parseInt(t.weight || 1, 10));
           for (var i = 0; i < w; i++) orderPool.push(idx);
         });
 
         generateShuffleOrder();
+        console.log('Track setup complete. Total tracks:', tracks.length, 'Order pool size:', orderPool.length);
       }
 
       function generateShuffleOrder() {
@@ -450,6 +505,7 @@
           shuffledOrder[j] = tmp;
         }
         currentVideoIndex = 0;
+        console.log('Shuffle order generated');
       }
 
       // ===================== YouTube IFrame API 로드 & 초기화 =====================
@@ -458,24 +514,41 @@
         tag.src = "https://www.youtube.com/iframe_api";
         var first = document.getElementsByTagName('script')[0];
         first.parentNode.insertBefore(tag, first);
+        console.log('YouTube IFrame API injected');
       }
+      
       function onYouTubeIframeAPIReady() {
+        console.log('YouTube API ready, tracks available:', tracks.length);
         if (!tracks.length) {
           console.error('트랙이 비어있습니다.');
           return;
         }
         var firstId = tracks[currentVideoIndex].id;
+        console.log('Creating player with video ID:', firstId);
+        
         player = new YT.Player('youtube-player', {
           height: '0',
           width:  '0',
           videoId: firstId,
-          playerVars: { 'autoplay': 0, 'controls': 0, 'disablekb': 1, 'fs': 0, 'modestbranding': 1, 'rel': 0 },
-          events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange, 'onError': onPlayerError }
+          playerVars: { 
+            'autoplay': 0, 
+            'controls': 0, 
+            'disablekb': 1, 
+            'fs': 0, 
+            'modestbranding': 1, 
+            'rel': 0 
+          },
+          events: { 
+            'onReady': onPlayerReady, 
+            'onStateChange': onPlayerStateChange, 
+            'onError': onPlayerError 
+          }
         });
       }
       window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
       function onPlayerReady(event) {
+        console.log('Player ready');
         isPlayerReady = true;
         event.target.setVolume(30);
         event.target.mute();
@@ -484,6 +557,7 @@
         // 시작점이 지정된 트랙이면 이동
         var t = tracks[currentVideoIndex];
         if (t && Number.isFinite(t.start_at) && t.start_at > 0) {
+          console.log('Seeking to start_at:', t.start_at);
           try { event.target.seekTo(t.start_at, true); } catch (e) {}
         }
       }
@@ -494,6 +568,7 @@
         var pauseIcon = document.getElementById('pauseIcon');
 
         if (event.data == YT.PlayerState.PLAYING) {
+          console.log('Playing');
           musicPlayer.classList.add('playing');
           playIcon.classList.add('hidden');
           pauseIcon.classList.remove('hidden');
@@ -505,7 +580,8 @@
           if (t && Number.isFinite(t.end_at) && t.end_at > 0) {
             var remaining = (t.end_at - player.getCurrentTime()) * 1000;
             if (remaining > 0) {
-              setTimeout(function () {
+              console.log('Will skip to next in', remaining, 'ms');
+              setTimeout(function() {
                 if (player && player.getPlayerState() == YT.PlayerState.PLAYING) {
                   loadNextVideo();
                 }
@@ -513,17 +589,20 @@
             }
           }
         } else if (event.data == YT.PlayerState.PAUSED) {
+          console.log('Paused');
           musicPlayer.classList.remove('playing');
           playIcon.classList.remove('hidden');
           pauseIcon.classList.add('hidden');
           stopProgressUpdate();
         } else if (event.data == YT.PlayerState.ENDED) {
+          console.log('Ended');
           musicPlayer.classList.remove('playing');
           playIcon.classList.remove('hidden');
           pauseIcon.classList.add('hidden');
           stopProgressUpdate();
           loadNextVideo();
         } else if (event.data == YT.PlayerState.CUED) {
+          console.log('Cued');
           updateVideoTitle();
           resetProgress();
         }
@@ -556,11 +635,15 @@
           currentVideoIndex = (currentVideoIndex + 1) % tracks.length;
         }
 
+        console.log('Loading next video, index:', currentVideoIndex, 'ID:', tracks[currentVideoIndex].id);
         player.loadVideoById(tracks[currentVideoIndex].id);
 
         var t = tracks[currentVideoIndex];
         if (t && Number.isFinite(t.start_at) && t.start_at > 0) {
-          setTimeout(function(){ try { player.seekTo(t.start_at, true); } catch(e){} }, 250);
+          setTimeout(function(){ 
+            console.log('Seeking to start_at:', t.start_at);
+            try { player.seekTo(t.start_at, true); } catch(e){} 
+          }, 250);
         }
       }
 
@@ -579,11 +662,15 @@
           currentVideoIndex = (currentVideoIndex - 1 + tracks.length) % tracks.length;
         }
 
+        console.log('Loading previous video, index:', currentVideoIndex, 'ID:', tracks[currentVideoIndex].id);
         player.loadVideoById(tracks[currentVideoIndex].id);
 
         var t = tracks[currentVideoIndex];
         if (t && Number.isFinite(t.start_at) && t.start_at > 0) {
-          setTimeout(function(){ try { player.seekTo(t.start_at, true); } catch(e){} }, 250);
+          setTimeout(function(){ 
+            console.log('Seeking to start_at:', t.start_at);
+            try { player.seekTo(t.start_at, true); } catch(e){} 
+          }, 250);
         }
       }
 
@@ -631,7 +718,8 @@
       function applyTitle(el, text) {
         el.textContent = text;
         el.title = text;
-        if (text.length > 32) el.classList.add('marquee'); else el.classList.remove('marquee');
+        if (text.length > 32) el.classList.add('marquee'); 
+        else el.classList.remove('marquee');
       }
 
       function fetchVideoTitle(videoId) {
@@ -665,6 +753,7 @@
         var secs = Math.floor(seconds % 60);
         return mins + ':' + (secs < 10 ? '0' : '') + secs;
       }
+      
       function updateProgress() {
         if (!isPlayerReady || !player || isDragging) return;
         try {
@@ -679,12 +768,21 @@
           }
         } catch (e) {}
       }
+      
       function startProgressUpdate() {
-        if (!updateTimer) { updateTimer = setInterval(updateProgress, 500); updateProgress(); }
+        if (!updateTimer) { 
+          updateTimer = setInterval(updateProgress, 500); 
+          updateProgress(); 
+        }
       }
+      
       function stopProgressUpdate() {
-        if (updateTimer) { clearInterval(updateTimer); updateTimer = null; }
+        if (updateTimer) { 
+          clearInterval(updateTimer); 
+          updateTimer = null; 
+        }
       }
+      
       function resetProgress() {
         document.getElementById('progressSlider').value = 0;
         document.getElementById('progressBar').style.width = '0%';
@@ -693,13 +791,17 @@
       }
 
       // ===================== DOM 바인딩 / 부가 기능 =====================
-      (function () {
+      (function() {
         // 연도
         document.getElementById('year').textContent = new Date().getFullYear();
 
         // 초기화: playlist.json 로드 후 YouTube API 주입
         document.addEventListener('DOMContentLoaded', function() {
-          loadPlaylistJson().then(function(){ injectYouTubeAPI(); });
+          console.log('DOM loaded, initializing player...');
+          loadPlaylistJson().then(function(){ 
+            console.log('Playlist loaded, injecting YouTube API...');
+            injectYouTubeAPI(); 
+          });
 
           // 컨트롤 바인딩
           document.getElementById('playPauseBtn').addEventListener('click', function() {
@@ -768,7 +870,10 @@
             }
           });
           progressSlider.addEventListener('change', function() {
-            if (!isPlayerReady || !player) { isDragging = false; return; }
+            if (!isPlayerReady || !player) { 
+              isDragging = false; 
+              return; 
+            }
             var duration = player.getDuration();
             if (duration > 0) {
               var seekTime = (this.value / 100) * duration;
@@ -809,7 +914,7 @@
 
         // Back to Top
         var btn = document.getElementById('btnTop');
-        window.addEventListener('scroll', function () {
+        window.addEventListener('scroll', function() {
           if (window.scrollY > 240) {
             btn.classList.add('is-visible');
             btn.classList.remove('hidden');
@@ -819,7 +924,7 @@
           }
         });
         if (btn) {
-          btn.addEventListener('click', function () {
+          btn.addEventListener('click', function() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });
         }
