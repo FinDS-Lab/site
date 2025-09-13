@@ -285,48 +285,94 @@
   
   // YouTube API Ready 콜백
   function onYouTubeIframeAPIReady() {
-    var playerVars = {
-      'autoplay': 0,
-      'loop': 1,
-      'controls': 0,
-      'disablekb': 1,
-      'fs': 0,
-      'modestbranding': 1,
-      'rel': 0,
-      'showinfo': 0
-    };
+    console.log('YouTube API Ready');
     
-    // 재생목록 설정
-    if (YOUTUBE_CONFIG.playlistId) {
-      playerVars.listType = 'playlist';
-      playerVars.list = YOUTUBE_CONFIG.playlistId;
-    } else if (YOUTUBE_CONFIG.videoId) {
-      playerVars.playlist = YOUTUBE_CONFIG.videoId;
-    }
-    
-    player = new YT.Player('youtube-player', {
+    // 플레이어 설정
+    var playerConfig = {
       height: '0',
       width: '0',
-      videoId: YOUTUBE_CONFIG.videoId || undefined,
-      playerVars: playerVars,
       events: {
         'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+        'onStateChange': onPlayerStateChange,
+        'onError': onPlayerError
       }
-    });
+    };
+    
+    // 재생목록 또는 단일 비디오 설정
+    if (YOUTUBE_CONFIG.playlistId) {
+      // 재생목록 사용
+      playerConfig.playerVars = {
+        listType: 'playlist',
+        list: YOUTUBE_CONFIG.playlistId,
+        autoplay: 0,
+        loop: 1,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        modestbranding: 1,
+        rel: 0
+      };
+    } else if (YOUTUBE_CONFIG.videoId) {
+      // 단일 비디오 사용
+      playerConfig.videoId = YOUTUBE_CONFIG.videoId;
+      playerConfig.playerVars = {
+        autoplay: 0,
+        loop: 1,
+        playlist: YOUTUBE_CONFIG.videoId, // 반복 재생을 위해
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        modestbranding: 1,
+        rel: 0
+      };
+    }
+    
+    player = new YT.Player('youtube-player', playerConfig);
   }
 
   // 플레이어 준비 완료
   function onPlayerReady(event) {
+    console.log('Player Ready');
     isPlayerReady = true;
     event.target.setVolume(30);
     event.target.mute();
     
+    // 재생목록 셔플 설정
     if (YOUTUBE_CONFIG.playlistId && YOUTUBE_CONFIG.shuffle) {
       event.target.setShuffle(true);
     }
     
-    updateVideoTitle();
+    // 재생목록의 첫 번째 비디오 큐
+    if (YOUTUBE_CONFIG.playlistId) {
+      event.target.cuePlaylist({
+        list: YOUTUBE_CONFIG.playlistId,
+        listType: 'playlist',
+        index: 0,
+        startSeconds: 0
+      });
+    }
+    
+    setTimeout(updateVideoTitle, 1000); // 1초 후 제목 업데이트
+  }
+
+  // 에러 처리 추가
+  function onPlayerError(event) {
+    console.error('YouTube Player Error:', event.data);
+    var errorMessages = {
+      2: '요청에 잘못된 매개변수 값이 포함되어 있습니다.',
+      5: 'HTML5 플레이어에서 콘텐츠를 재생할 수 없습니다.',
+      100: '요청한 비디오를 찾을 수 없습니다.',
+      101: '비디오 소유자가 내장 플레이어를 허용하지 않았습니다.',
+      150: '비디오 소유자가 내장 플레이어를 허용하지 않았습니다.'
+    };
+    
+    var titleElement = document.getElementById('musicTitle');
+    titleElement.textContent = errorMessages[event.data] || '재생 오류가 발생했습니다.';
+    
+    // 재생목록이 비공개인 경우 안내
+    if (event.data === 101 || event.data === 150) {
+      titleElement.textContent = '재생목록을 공개로 설정해주세요';
+    }
   }
 
   // 플레이어 상태 변경
