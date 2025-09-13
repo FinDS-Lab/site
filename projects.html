@@ -546,8 +546,19 @@ function generateDiamondNetwork() {
       </div>`;
     }
     
-    // Check if PI is 최인수
-    if (r.principalInvestigator === '최인수') {
+    // Check project type for role display
+    if (project.type === 'academic') {
+      // For academic projects, show only Lead Researcher and Researchers
+      metaItemsHTML += `
+      <div class="meta-item">
+        <span class="meta-label">Lead Researcher</span>
+        <span class="meta-value">${lead}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Researchers</span>
+        <span class="meta-value">${res}</span>
+      </div>`;
+    } else if (r.principalInvestigator === '최인수') {
       // If PI is 최인수, show all three fields
       metaItemsHTML += `
       <div class="meta-item">
