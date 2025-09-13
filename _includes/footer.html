@@ -291,11 +291,17 @@
 <script>
   // ===== YouTube 설정 =====
   var YOUTUBE_CONFIG = {
-    // 재생할 YouTube 비디오 목록 (URL 또는 Video ID)
+    // 재생할 YouTube 비디오 목록 (모든 YouTube URL 형식 지원)
     playlist: [
-      'https://music.youtube.com/watch?v=MqcFHCNXiok&si=srFntsRtGQdd-_mZ',  // 첫 번째 곡 (고정)
-      'https://music.youtube.com/watch?v=7sJES_4FiAs&si=d2bFhitOa_tS-EO7'   // 두 번째 곡
+      'https://music.youtube.com/watch?v=MqcFHCNXiok&si=BgGDvfrN9NQnFOW_'  // YouTube Music
+      'https://music.youtube.com/watch?v=hh5GKVa8VtM&si=MJ8-dmmXheUwbQZG'
       // 여기에 더 많은 곡을 추가할 수 있습니다
+      // 지원 형식:
+      // - https://youtube.com/watch?v=VIDEO_ID
+      // - https://youtu.be/VIDEO_ID
+      // - https://music.youtube.com/watch?v=VIDEO_ID
+      // - https://m.youtube.com/watch?v=VIDEO_ID
+      // - VIDEO_ID (11자리 ID만)
     ],
     shuffle: true  // 두 번째 곡부터 랜덤 재생
   };
