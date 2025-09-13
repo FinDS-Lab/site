@@ -267,10 +267,61 @@
 <script>
   // ===== YouTube 설정 =====
   var YOUTUBE_CONFIG = {
-    videoId: null,
-    playlistId: 'PL8d7NdcNQoL1tuXOGD7jQYbBeu3bJRjTT',
-    shuffle: false
+    // 재생할 YouTube 비디오 목록 (URL 또는 Video ID)
+    playlist: [
+      'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',  // 첫 번째 곡 (고정)
+      'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr'   // 두 번째 곡
+      // 여기에 더 많은 곡을 추가할 수 있습니다
+    ],
+    shuffle: true  // 두 번째 곡부터 랜덤 재생
   };
+
+  // URL에서 Video ID 추출
+  function extractVideoId(url) {
+    var videoId = url;
+    
+    // 이미 ID만 있는 경우
+    if (url.length === 11 && !url.includes('/') && !url.includes('.')) {
+      return url;
+    }
+    
+    // youtu.be 형식
+    if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    }
+    // youtube.com/watch 형식
+    else if (url.includes('youtube.com/watch')) {
+      var urlParams = new URLSearchParams(url.split('?')[1]);
+      videoId = urlParams.get('v');
+    }
+    // youtube.com/embed 형식
+    else if (url.includes('youtube.com/embed/')) {
+      videoId = url.split('youtube.com/embed/')[1].split('?')[0];
+    }
+    
+    return videoId;
+  }
+
+  // 재생목록 준비
+  var videoIds = YOUTUBE_CONFIG.playlist.map(extractVideoId);
+  var currentVideoIndex = 0;
+  var playedVideos = [0]; // 이미 재생된 비디오 인덱스 추적
+  var shuffledOrder = []; // 랜덤 순서 저장
+
+  // 랜덤 순서 생성 (첫 번째 제외)
+  function generateShuffleOrder() {
+    shuffledOrder = [];
+    for (var i = 1; i < videoIds.length; i++) {
+      shuffledOrder.push(i);
+    }
+    // Fisher-Yates 셔플
+    for (var i = shuffledOrder.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = shuffledOrder[i];
+      shuffledOrder[i] = shuffledOrder[j];
+      shuffledOrder[j] = temp;
+    }
+  }
 
   // YouTube IFrame API 로드
   var tag = document.createElement('script');
@@ -287,47 +338,29 @@
   function onYouTubeIframeAPIReady() {
     console.log('YouTube API Ready');
     
-    // 플레이어 설정
-    var playerConfig = {
+    if (videoIds.length === 0) {
+      console.error('재생할 비디오가 없습니다.');
+      return;
+    }
+    
+    player = new YT.Player('youtube-player', {
       height: '0',
       width: '0',
+      videoId: videoIds[0], // 첫 번째 비디오로 시작
+      playerVars: {
+        'autoplay': 0,
+        'controls': 0,
+        'disablekb': 1,
+        'fs': 0,
+        'modestbranding': 1,
+        'rel': 0
+      },
       events: {
         'onReady': onPlayerReady,
         'onStateChange': onPlayerStateChange,
         'onError': onPlayerError
       }
-    };
-    
-    // 재생목록 또는 단일 비디오 설정
-    if (YOUTUBE_CONFIG.playlistId) {
-      // 재생목록 사용
-      playerConfig.playerVars = {
-        listType: 'playlist',
-        list: YOUTUBE_CONFIG.playlistId,
-        autoplay: 0,
-        loop: 1,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        modestbranding: 1,
-        rel: 0
-      };
-    } else if (YOUTUBE_CONFIG.videoId) {
-      // 단일 비디오 사용
-      playerConfig.videoId = YOUTUBE_CONFIG.videoId;
-      playerConfig.playerVars = {
-        autoplay: 0,
-        loop: 1,
-        playlist: YOUTUBE_CONFIG.videoId, // 반복 재생을 위해
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        modestbranding: 1,
-        rel: 0
-      };
-    }
-    
-    player = new YT.Player('youtube-player', playerConfig);
+    });
   }
 
   // 플레이어 준비 완료
@@ -337,42 +370,58 @@
     event.target.setVolume(30);
     event.target.mute();
     
-    // 재생목록 셔플 설정
-    if (YOUTUBE_CONFIG.playlistId && YOUTUBE_CONFIG.shuffle) {
-      event.target.setShuffle(true);
+    // 셔플 순서 생성
+    if (YOUTUBE_CONFIG.shuffle && videoIds.length > 1) {
+      generateShuffleOrder();
     }
     
-    // 재생목록의 첫 번째 비디오 큐
-    if (YOUTUBE_CONFIG.playlistId) {
-      event.target.cuePlaylist({
-        list: YOUTUBE_CONFIG.playlistId,
-        listType: 'playlist',
-        index: 0,
-        startSeconds: 0
-      });
-    }
-    
-    setTimeout(updateVideoTitle, 1000); // 1초 후 제목 업데이트
+    updateVideoTitle();
   }
 
-  // 에러 처리 추가
-  function onPlayerError(event) {
-    console.error('YouTube Player Error:', event.data);
-    var errorMessages = {
-      2: '요청에 잘못된 매개변수 값이 포함되어 있습니다.',
-      5: 'HTML5 플레이어에서 콘텐츠를 재생할 수 없습니다.',
-      100: '요청한 비디오를 찾을 수 없습니다.',
-      101: '비디오 소유자가 내장 플레이어를 허용하지 않았습니다.',
-      150: '비디오 소유자가 내장 플레이어를 허용하지 않았습니다.'
-    };
+  // 다음 비디오 로드
+  function loadNextVideo() {
+    if (videoIds.length <= 1) return;
     
-    var titleElement = document.getElementById('musicTitle');
-    titleElement.textContent = errorMessages[event.data] || '재생 오류가 발생했습니다.';
-    
-    // 재생목록이 비공개인 경우 안내
-    if (event.data === 101 || event.data === 150) {
-      titleElement.textContent = '재생목록을 공개로 설정해주세요';
+    if (currentVideoIndex === 0) {
+      // 첫 번째 곡 재생 후
+      if (YOUTUBE_CONFIG.shuffle && shuffledOrder.length > 0) {
+        currentVideoIndex = shuffledOrder[0];
+        shuffledOrder.push(shuffledOrder.shift()); // 순환
+      } else {
+        currentVideoIndex = 1;
+      }
+    } else {
+      // 그 다음 곡들
+      if (YOUTUBE_CONFIG.shuffle) {
+        // 셔플된 순서에서 다음 곡
+        var currentShuffleIndex = shuffledOrder.indexOf(currentVideoIndex);
+        if (currentShuffleIndex === -1 || currentShuffleIndex === shuffledOrder.length - 1) {
+          // 마지막 곡이거나 찾을 수 없으면 처음으로
+          currentVideoIndex = 0;
+        } else {
+          currentVideoIndex = shuffledOrder[currentShuffleIndex + 1];
+        }
+      } else {
+        // 순차 재생
+        currentVideoIndex = (currentVideoIndex + 1) % videoIds.length;
+      }
     }
+    
+    console.log('다음 곡 재생:', videoIds[currentVideoIndex]);
+    player.loadVideoById(videoIds[currentVideoIndex]);
+  }
+
+  // 이전 비디오 로드 (옵션)
+  function loadPreviousVideo() {
+    if (videoIds.length <= 1) return;
+    
+    if (currentVideoIndex === 0) {
+      currentVideoIndex = videoIds.length - 1;
+    } else {
+      currentVideoIndex = (currentVideoIndex - 1 + videoIds.length) % videoIds.length;
+    }
+    
+    player.loadVideoById(videoIds[currentVideoIndex]);
   }
 
   // 플레이어 상태 변경
@@ -387,14 +436,35 @@
       pauseIcon.classList.remove('hidden');
       updateVideoTitle();
       startProgressUpdate();
-    } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+    } else if (event.data == YT.PlayerState.PAUSED) {
       musicPlayer.classList.remove('playing');
       playIcon.classList.remove('hidden');
       pauseIcon.classList.add('hidden');
       stopProgressUpdate();
+    } else if (event.data == YT.PlayerState.ENDED) {
+      // 곡이 끝나면 다음 곡 자동 재생
+      musicPlayer.classList.remove('playing');
+      playIcon.classList.remove('hidden');
+      pauseIcon.classList.add('hidden');
+      stopProgressUpdate();
+      loadNextVideo();
     } else if (event.data == YT.PlayerState.CUED) {
       updateVideoTitle();
       resetProgress();
+    }
+  }
+  
+  // 에러 처리
+  function onPlayerError(event) {
+    console.error('YouTube Player Error:', event.data);
+    var titleElement = document.getElementById('musicTitle');
+    
+    // 에러 발생 시 다음 곡으로 자동 이동
+    if (videoIds.length > 1) {
+      titleElement.textContent = '오류 발생, 다음 곡 재생 중...';
+      setTimeout(loadNextVideo, 2000);
+    } else {
+      titleElement.textContent = '재생 오류가 발생했습니다.';
     }
   }
   
@@ -410,7 +480,8 @@
         titleElement.textContent = videoData.title;
         titleElement.title = videoData.title;
       } else {
-        fetchVideoTitle(YOUTUBE_CONFIG.videoId || player.getVideoData().video_id);
+        // 현재 비디오 ID로 제목 가져오기
+        fetchVideoTitle(videoIds[currentVideoIndex]);
       }
     } catch (e) {
       document.getElementById('musicTitle').textContent = 'Background Music';
