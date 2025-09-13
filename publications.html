@@ -1879,97 +1879,7 @@ function calculatePublicationStats() {
     const first = parts.slice(0, -1).join(" ");
     return `${last}, ${first}`;
   }
-
-  // 수정된 Citation 포맷팅 함수
- // 수정된 formatAuthorsForCitation 함수
-function formatAuthorsForCitation(authors, style) {
-  if (!authors || authors.length === 0) return "Anonymous";
-  
-  const authorNames = authors.map(id => getAuthorName(id, false));
-  
-  switch(style) {
-    case 'APA':
-      const apaAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts[parts.length - 1];
-        const initials = parts.slice(0, -1).map(p => p[0].toUpperCase() + '.').join(' ');
-        return initials ? `${last}, ${initials}` : last;
-      });
-      
-      if (apaAuthors.length === 1) {
-        return apaAuthors[0];
-      } else if (apaAuthors.length === 2) {
-        return apaAuthors[0] + ", & " + apaAuthors[1];
-      } else {
-        return apaAuthors.slice(0, -1).join(", ") + ", & " + apaAuthors[apaAuthors.length - 1];
-      }
-      
-    case 'MLA':
-      // MLA: 모든 저자 나열
-      if (authorNames.length === 1) {
-        return toInitialsReversed(authorNames[0]);
-      } else if (authorNames.length === 2) {
-        return toInitialsReversed(authorNames[0]) + ", and " + authorNames[1];
-      } else {
-        // 3명 이상일 때도 모든 저자 나열
-        const formattedNames = authorNames.map((name, index) => {
-          if (index === 0) return toInitialsReversed(name);
-          return name;
-        });
-        return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
-      }
-      
-    case 'Chicago':
-      // Chicago: 모든 저자 나열
-      if (authorNames.length === 1) {
-        return toInitialsReversed(authorNames[0]);
-      } else {
-        const formattedNames = authorNames.map((name, index) => {
-          if (index === 0) return toInitialsReversed(name);
-          return name;
-        });
-        if (formattedNames.length === 2) {
-          return formattedNames[0] + " and " + formattedNames[1];
-        }
-        return formattedNames.slice(0, -1).join(", ") + ", and " + formattedNames[formattedNames.length - 1];
-      }
-      
-    case 'Harvard':
-      // Harvard: 모든 저자 나열
-      const harvardAuthors = authorNames.map(name => toInitials(name));
-      if (harvardAuthors.length === 1) {
-        return harvardAuthors[0];
-      } else if (harvardAuthors.length === 2) {
-        return harvardAuthors[0] + " and " + harvardAuthors[1];
-      } else {
-        // 3명 이상일 때도 모든 저자 나열
-        return harvardAuthors.slice(0, -1).join(", ") + " and " + harvardAuthors[harvardAuthors.length - 1];
-      }
-      
-    case 'Vancouver':
-      // Vancouver: 모든 저자 나열
-      const vanAuthors = authorNames.map(name => {
-        const clean = name.replace(/\*/g, '').trim();
-        const parts = clean.split(/\s+/);
-        const last = parts.pop() || '';
-        const initials = parts.map(p => (p?.[0] || '').toUpperCase()).join("");
-        return `${last} ${initials}`;
-      });
-      
-      // 모든 저자 나열
-      return vanAuthors.join(", ");
-      
-    case 'Korean':
-      // 한글 저자명 처리 - AUTHORS 객체에서 ko 필드 사용
-      const koreanAuthors = authors.map(id => {
-        const author = AUTHORS?.[id];
-        if (!author) return `저자 ${id}`;
-        return author.ko || author.en || `저자 ${id}`;
-      });
-      return koreanAuthors.join(', ');
-  }
-}
+ 
 // APA용 sentence case 함수
 // Sentence case 함수 - APA, Vancouver용
 function toSentenceCase(str) {
@@ -2293,7 +2203,16 @@ function formatAuthorsForCitation(authors, style) {
       } else {
         return vanAuthors.slice(0, 6).join(", ") + ", et al.";
       }
-      
+
+case 'Korean':
+  // 한글 저자명 처리 - AUTHORS 객체에서 ko 필드 사용
+  const koreanAuthors = authors.map(id => {
+    const author = AUTHORS?.[id];
+    if (!author) return `저자 ${id}`;
+    return author.ko || author.en || `저자 ${id}`;
+  });
+  return koreanAuthors.join(', ');
+    
     default:
       return authorNames.join(", ");
   }
