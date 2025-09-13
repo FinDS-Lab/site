@@ -1,4 +1,18 @@
-<!-- Google Analytics 4 - 이 부분을 <head> 태그 안에 넣으세요 -->
+function updateVideoTitle() {
+    if (!isPlayerReady || !player) return;
+    
+    try {
+      var videoData = player.getVideoData();
+      var titleElement = document.getElementById('musicTitle');
+      
+      if (videoData && videoData.title && videoData.title !== '') {
+        // YouTube 제목 포맷 처리
+        var title = videoData.title;
+        
+        // 일반적인 YouTube Music 제목 패턴 처리
+        // "아티스트 - 곡명" 형식을 "곡명 - 아티스트"로 변경
+        if (title.includes(' - ')) {
+          var parts = title.split(' - ');<!-- Google Analytics 4 - 이 부분을 <head> 태그 안에 넣으세요 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGEYHWRHR"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -695,13 +709,48 @@
       var videoData = player.getVideoData();
       var titleElement = document.getElementById('musicTitle');
       
-      if (videoData && videoData.title && videoData.title !== '') {
-        titleElement.textContent = videoData.title;
-        titleElement.title = videoData.title;
-      } else {
-        fetchVideoTitle(videoIds[currentVideoIndex]);
+      if (videoData) {
+        var title = videoData.title || '';
+        var author = videoData.author || '';
+        
+        // 제목이 있는 경우
+        if (title && title !== '') {
+          var displayText = title;
+          
+          // YouTube Music 형식 처리
+          // "제목 (제목)" 같은 중복 제거
+          displayText = displayText.replace(/\s*\([^)]*\)\s*$/, '');
+          
+          // 아티스트 정보가 있고, 제목에 포함되지 않은 경우 추가
+          if (author && author !== '' && !title.includes(author)) {
+            // YouTube Music은 보통 author에 아티스트명이 들어옴
+            displayText = displayText + ' - ' + author;
+          }
+          
+          // 일반적인 YouTube 제목 패턴 정리
+          // "아티스트 - 곡명" 형식이면 그대로 유지
+          // "곡명 | 아티스트" 형식 처리
+          if (displayText.includes(' | ')) {
+            var parts = displayText.split(' | ');
+            if (parts.length === 2) {
+              displayText = parts[0].trim() + ' - ' + parts[1].trim();
+            }
+          }
+          
+          // Official Video, Official Audio, MV 등 불필요한 태그 제거
+          displayText = displayText.replace(/\s*(Official\s*(Video|Audio|MV|M\/V))?\s*$/i, '');
+          displayText = displayText.replace(/\s*\[.*?\]\s*$/g, ''); // [태그] 제거
+          displayText = displayText.replace(/\s*【.*?】\s*$/g, ''); // 【태그】 제거
+          
+          titleElement.textContent = displayText;
+          titleElement.title = displayText;
+        } else {
+          // 제목을 못 가져온 경우 API로 시도
+          fetchVideoTitle(videoIds[currentVideoIndex]);
+        }
       }
     } catch (e) {
+      console.log('제목 업데이트 실패:', e);
       document.getElementById('musicTitle').textContent = 'Background Music';
     }
   }
@@ -714,8 +763,21 @@
       .then(function(data) {
         if (data && data.title) {
           var titleElement = document.getElementById('musicTitle');
-          titleElement.textContent = data.title;
-          titleElement.title = data.title;
+          var displayText = data.title;
+          
+          // 제목 포맷 정리
+          displayText = displayText.replace(/\s*\([^)]*\)\s*$/, ''); // (중복) 제거
+          displayText = displayText.replace(/\s*(Official\s*(Video|Audio|MV|M\/V))?\s*$/i, '');
+          displayText = displayText.replace(/\s*\[.*?\]\s*$/g, '');
+          displayText = displayText.replace(/\s*【.*?】\s*$/g, '');
+          
+          // author_name이 있으면 추가 (oEmbed에서 제공하는 경우)
+          if (data.author_name && !displayText.includes(data.author_name)) {
+            displayText = displayText + ' - ' + data.author_name;
+          }
+          
+          titleElement.textContent = displayText;
+          titleElement.title = displayText;
         }
       })
       .catch(function(error) {
