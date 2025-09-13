@@ -252,16 +252,36 @@
     footer .text-slate-700 { color: #e2e8f0; }
     #btnTop { background: rgba(15, 23, 42, .85); border-color: #334155; }
     #btnTop svg { color: #e2e8f0; }
-    #musicPlayer > div { 
-      background-color: rgba(30, 41, 59, 0.5); 
+    
+    /* 음악 플레이어 다크모드 */
+    .music-player-box {
+      background: rgba(30, 41, 59, 0.8);
       border-color: #334155;
     }
-    #musicPlayer button {
-      background-color: rgba(51, 65, 85, 0.5);
+    
+    .play-pause-btn {
+      background: rgba(51, 65, 85, 0.8);
       border-color: #475569;
     }
+    
+    .play-pause-btn:hover {
+      background: rgba(71, 85, 105, 0.8);
+    }
+    
+    .volume-slider, .progress-slider {
+      background: #334155;
+    }
+    
+    .progress-bar-fill {
+      background: #64748b;
+    }
+    
+    .time-display {
+      color: #94a3b8;
+    }
+    
     /* 다크모드에서도 음악 제목은 동일한 색상 유지 */
-    #musicTitle {
+    .music-title {
       color: rgb(214, 177, 77) !important;
     }
   }
@@ -273,8 +293,8 @@
   var YOUTUBE_CONFIG = {
     // 재생할 YouTube 비디오 목록 (URL 또는 Video ID)
     playlist: [
-      'https://youtu.be/6ZUIwj3FgUY?si=TJkFtMQl13BPRnpP',  // 첫 번째 곡 (고정)
-      'https://youtu.be/38xYeot-ciM?si=DvBBlyylAKidtFmr'   // 두 번째 곡
+      'https://music.youtube.com/watch?v=MqcFHCNXiok&si=srFntsRtGQdd-_mZ',  // 첫 번째 곡 (고정)
+      'https://music.youtube.com/watch?v=7sJES_4FiAs&si=d2bFhitOa_tS-EO7'   // 두 번째 곡
       // 여기에 더 많은 곡을 추가할 수 있습니다
     ],
     shuffle: true  // 두 번째 곡부터 랜덤 재생
