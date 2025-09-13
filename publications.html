@@ -1496,7 +1496,7 @@ permalink: /publications.html
        
        buildChips();
        render();
-       calculatePublicationStats(); 
+
      }
    });
  }
@@ -2295,7 +2295,8 @@ function openCite(pub) {
 
   buildChips();
   render();
-  
+  calculatePublicationStats(); // ← 여기에 추가!
+
   document.getElementById('toggleFilters').onclick = () => {
     const filterContent = document.getElementById('filterContent');
     const toggleBtn = document.getElementById('toggleFilters');
